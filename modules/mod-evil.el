@@ -69,7 +69,6 @@
   :after evil
   :functions evil-collection-init
   :custom
-  ;; It has to be defined before evil-colllection
   (evil-collection-setup-minibuffer t)
   :config
   (evil-collection-init))
