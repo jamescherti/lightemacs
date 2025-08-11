@@ -13,9 +13,19 @@
 
 ;;; Code:
 
-(load (expand-file-name "lisp/init/init.el" user-emacs-directory)
-      nil
-      (not init-file-debug))
+;; Load minimal-emacs.d init.el
+(lightemacs-load-init-file "init.el")
+
+;;; Load modules
+
+(defun lightemacs-load-modules ()
+  "Load all modules listed in `lightemacs-modules'."
+  (let ((modules-dir (expand-file-name "modules" lightemacs-user-emacs-directory)))
+    (dolist (mod lightemacs-modules)
+      (let ((mod-file (expand-file-name (format "mod-%s.el" mod) modules-dir)))
+        (load-file mod-file)))))
+
+(lightemacs-load-modules)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
