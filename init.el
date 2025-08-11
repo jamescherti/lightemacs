@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(load "lisp/init/init.el" nil 'no-message (not init-file-debug))
+
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
