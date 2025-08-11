@@ -13,7 +13,9 @@
 
 ;;; Code:
 
-(load "lisp/init/init.el" nil 'no-message (not init-file-debug))
+(load (expand-file-name "lisp/init/init.el" user-emacs-directory)
+      nil
+      (not init-file-debug))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
