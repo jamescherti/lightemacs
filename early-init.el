@@ -49,7 +49,8 @@
   (load (expand-file-name (format "lisp/init/%s" filename)
                           lightemacs-user-emacs-directory)
         nil
-        (not (bound-and-true-p init-file-debug))))
+        (not (bound-and-true-p init-file-debug))
+        'nosuffix))
 
 ;; Load minimal-emacs.d early-init.el
 (lightemacs-load-init-file "early-init.el")
