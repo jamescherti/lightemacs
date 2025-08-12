@@ -26,25 +26,25 @@
   ;; TODO: use on-first-input
   ;; (on-first-input . global-corfu-mode)
 
-  :custom
-  (corfu-auto nil)
-  (corfu-auto-delay 0.25)
-  (corfu-auto-prefix 2)
-  (corfu-count 14)
-  (corfu-cycle nil)  ; Enable cycling for `corfu-next/previous'
-  (corfu-scroll-margin 1)
-  (corfu-quit-no-match nil)  ; Never quit, even if there is no match.
-  (corfu-preselect 'directory)  ; Select the first candidate, except for directories
-  (corfu-preview-current nil)  ; Disable current candidate preview
-  (corfu-min-width 38)
-  (corfu-separator ?\s)  ; Orderless field separator
+  :init
+  (setq corfu-auto nil)
+  (setq corfu-auto-delay 0.25)
+  (setq corfu-auto-prefix 2)
+  (setq corfu-count 14)
+  (setq corfu-cycle nil)  ; Enable cycling for `corfu-next/previous'
+  (setq corfu-scroll-margin 1)
+  (setq corfu-quit-no-match nil)  ; Never quit, even if there is no match.
+  (setq corfu-preselect 'directory)  ; Select the first candidate, except for directories
+  (setq corfu-preview-current nil)  ; Disable current candidate preview
+  (setq corfu-min-width 38)
+  (setq corfu-separator ?\s)  ; Orderless field separator
 
   ;; Prevent quitting at completion boundaries
   ;; (such as when pressing "-" in sh-mode)
-  (corfu-quit-at-boundary nil)
+  (setq corfu-quit-at-boundary nil)
 
   ;; Configure handling of exact matches
-  (corfu-on-exact-match 'insert))
+  (setq corfu-on-exact-match 'insert))
 
 (provide 'mod-corfu)
 

@@ -97,9 +97,9 @@
   :after consult
   :ensure nil
   :commands consult-xref
-  :custom
-  (xref-show-xrefs-function #'consult-xref)
-  (xref-show-definitions-function #'consult-xref))
+  :init
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref))
 
 (use-package consult-info
   :after consult

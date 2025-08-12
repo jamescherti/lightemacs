@@ -29,12 +29,12 @@
              embark-bindings
              embark-prefix-help-command
              embark-eldoc-first-target)
-  :custom
-  (prefix-help-command #'embark-prefix-help-command)
-  (embark-quit-after-action nil)
-  (embark-mixed-indicator-delay 1)
-  (embark-verbose-indicator-display-action
-   '(display-buffer-at-bottom (window-height . fit-window-to-buffer))))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  (setq embark-quit-after-action nil)
+  (setq embark-mixed-indicator-delay 1)
+  (setq embark-verbose-indicator-display-action
+        '(display-buffer-at-bottom (window-height . fit-window-to-buffer))))
 
 ;;; Provide
 (provide 'mod-embark)

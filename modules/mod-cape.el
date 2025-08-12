@@ -22,11 +22,10 @@
   :commands (cape-dabbrev
              cape-file)
 
-  :custom
-  (cape-dabbrev-min-length 1)
-  (cape-dabbrev-check-other-buffers t)
-
   :init
+  (setq cape-dabbrev-min-length 1)
+  (setq cape-dabbrev-check-other-buffers t)
+
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
 

@@ -32,11 +32,6 @@
   ;; TODO: use lightemacs-on-first-buffer
   ;; (lightemacs-on-first-buffer . mod-recentf--setup)
 
-  :custom
-  (recentf-auto-cleanup (if (daemonp) 300 'never))
-  (recentf-max-menu-items 10)
-  (recentf-max-saved-items 750)
-
   :preface
   (defun mod-recentf--setup ()
     "Setup `recentf'."
@@ -49,6 +44,11 @@
                (bound-and-true-p recentf-mode)
                (fboundp 'recentf-cleanup))
       (recentf-cleanup)))
+
+  :init
+  (setq recentf-auto-cleanup (if (daemonp) 300 'never))
+  (setq recentf-max-menu-items 10)
+  (setq recentf-max-saved-items 750)
 
   :config
   (setq recentf-exclude

@@ -27,10 +27,10 @@
   ;; TODO: Use lightemacs-on-first-file
   ;; (lightemacs-on-first-file . global-auto-revert-mode)
 
-  :custom
-  (auto-revert-interval 3)
-  (auto-revert-use-notify t)
-  (auto-revert-avoid-polling t))
+  :init
+  (setq auto-revert-interval 3)
+  (setq auto-revert-use-notify t)
+  (setq auto-revert-avoid-polling t))
 
 (provide 'mod-autorevert)
 

@@ -31,12 +31,12 @@
   ;; TODO: use on-first-input
   ;; (add-hook 'lightemacs-on-first-input-hook #'vertico-mode)
 
-  :custom
-  (vertico-scroll-margin 0)
-  (vertico-count 10)
-  (vertico-resize 'grow-only)
-  (vertico-cycle nil)
-  (vertico-count-format nil) ; No prefix with number of entries
+  :init
+  (setq vertico-scroll-margin 0)
+  (setq vertico-count 10)
+  (setq vertico-resize 'grow-only)
+  (setq vertico-cycle nil)
+  (setq vertico-count-format nil) ; No prefix with number of entries
 
   :config
   ;; Prefix current candidate with arrow
