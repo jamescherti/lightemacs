@@ -1,4 +1,4 @@
-;;; mod-evil.el --- Module: evil -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-evil.el --- mod-evil -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -74,25 +74,6 @@
   (evil-set-leader 'normal ",")
   (evil-set-leader 'visual ","))
 
-;;; Toggle comment
-
-(with-eval-after-load 'evil
-  (evil-define-operator mod-evil-comment-or-uncomment-visual (beg end)
-    "Toggle comment from BEG to END."
-    (interactive "<r>")
-    (unless (derived-mode-p 'org-mode)
-      (comment-or-uncomment-region beg end)))
-
-  (defun mod-evil-comment-or-uncomment-line ()
-    "Toggle comment in the current line."
-    (interactive)
-    (unless (derived-mode-p 'org-mode)
-      (comment-or-uncomment-region (line-beginning-position)
-                                   (line-end-position))))
-
-  (evil-define-key 'normal 'global (kbd "gc") 'mod-evil-comment-or-uncomment-line)
-  (evil-define-key 'visual 'global (kbd "gc") 'mod-evil-comment-or-uncomment-visual))
-
 ;;; evil-collection
 
 ;; This has to be defined before evil-collection
@@ -102,16 +83,6 @@
   :functions evil-collection-init
   :config
   (evil-collection-init))
-
-;;; Other Evil modules
-
-(use-package evil-surround
-  :after evil
-  :hook (evil-mode . global-evil-surround-mode))
-
-(use-package evil-snipe
-  :after evil
-  :hook (evil-mode . evil-snipe-mode))
 
 (provide 'mod-evil)
 

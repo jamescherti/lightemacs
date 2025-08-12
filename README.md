@@ -4,7 +4,7 @@ WIP (Work in progress)
 
 ## Default modules
 
-### mod-evil (Vim keybindings)
+### Vim keybindings
 
 By default, **evil-mode** is enabled. (Users who prefer not to use Vim keybindings can easily disable it.)
 
@@ -12,19 +12,17 @@ Interesting default parameters:
 
 - The default leader key is: `,`
 
-Features added by mod-evil:
-
-- Comment or uncomment text in Normal or Visual mode by pressing `gc`.
-
 The following packages are enabled alongside **evil-mode**:
 
-- **evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
+- **mod-evil-toggle-comment**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 
-- **evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
+- **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
+
+- **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 
 ### Other modules enabled by default
 
-- compile-angel: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
+- **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 
 ## Features

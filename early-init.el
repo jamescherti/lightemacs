@@ -21,6 +21,9 @@
 
                              ;; Vim keybindings
                              evil
+                             evil-toggle-comment
+                             evil-snipe
+                             evil-surround
 
                              ;; Vim tab bar
                              vim-tab-bar)

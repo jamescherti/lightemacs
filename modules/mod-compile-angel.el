@@ -1,4 +1,4 @@
-;;; mod-compile-angel.el --- Module: compile-angel -*- lexical-binding: t -*-
+;;; mod-compile-angel.el --- mod-compile-angel -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
