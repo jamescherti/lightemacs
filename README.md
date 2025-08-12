@@ -1,23 +1,23 @@
-# lightemacs - Fast and lightweight Emacs framework
+# Lightemacs - Fast and lightweight Emacs framework
 
 The Lightemacs project is a fast and lightweight Emacs framework.
 
-## Install lightemacs
+## Install Lightemacs
 
 - **Important:** Ensure that the `~/.emacs` and `~/.emacs.el` files do not exist. These files cause Emacs to ignore `~/.emacs.d/init.el`. This behavior is due to the way Emacs searches for initialization files ([more information](https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html#Find-Init)). **Simply delete the *~/.emacs* and *~/.emacs.el* files avoid this issue.**
 - **Debug:** If a package or any other functionality is not working as expected, start Emacs with `emacs --debug-init` to enable debug mode and obtain the backtrace.
 - **Prerequisite:** git
 
-### Install lightemacs into `~/.emacs.d`
+### Install Lightemacs into ~/.emacs.d
 
 Execute the following command install this repository into `~/.emacs.d`:
 ```
 git clone --recursive https://github.com/jamescherti/lightemacs ~/.emacs.d
 ```
 
-### Alternative: Install lightemacs into `~/.lightemacs.d`
+### Alternative: Install Lightemacs into ~/.lightemacs.d
 
-To install *lightemacs* in a non-default directory, use the `--init-directory` Emacs option to specify your desired configuration path. For example, to install *lightemacs* in `~/.lightemacs.d/`, follow these steps:
+To install *Lightemacs* in a non-default directory, use the `--init-directory` Emacs option to specify your desired configuration path. For example, to install *Lightemacs* in `~/.lightemacs.d/`, follow these steps:
 
 1. Clone the repository into `~/.lightemacs.d/` using:
    ```
@@ -29,9 +29,9 @@ To install *lightemacs* in a non-default directory, use the `--init-directory` E
    emacs --init-directory ~/.lightemacs.d/
    ```
 
-## Update lightemacs
+## Update Lightemacs
 
-To keep your Emacs configuration up to date, you can pull the latest changes from the repository. Run the following command in your terminal:
+To update your Lightemacs configuration and its submodules, run the following commands:
 ```
 git -C ~/.emacs.d pull --recurse-submodules
 git -C ~/.emacs.d submodule update --init --recursive
