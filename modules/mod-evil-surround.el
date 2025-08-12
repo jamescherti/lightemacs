@@ -1,4 +1,4 @@
-;;; mod-evil-surround.el --- mod-evil-surround -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-evil-surround.el --- mod-evil-surround -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

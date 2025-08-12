@@ -1,4 +1,4 @@
-;;; mod-evil-toggle-comment.el --- mod-evil-toggle-comment -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-evil-toggle-comment.el --- mod-evil-toggle-comment -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

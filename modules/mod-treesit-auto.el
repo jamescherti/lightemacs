@@ -1,4 +1,4 @@
-;;; mod-treesit-auto.el --- mod-treesit-auto -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-treesit-auto.el --- mod-treesit-auto -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

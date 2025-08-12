@@ -1,4 +1,4 @@
-;;; mod-recentf.el --- mod-recentf -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-recentf.el --- mod-recentf -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

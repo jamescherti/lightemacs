@@ -1,4 +1,4 @@
-;;; mod-autorevert.el --- mod-autorevert -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-autorevert.el --- mod-autorevert -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

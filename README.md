@@ -55,6 +55,14 @@ Embark integrates with these tools to provide context-sensitive actions and quic
 
 Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 
+### Better completion (mod-corfu and mod-cape)
+
+[Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
+
+[Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
+
+![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
+
 ### Better Syntax highlighting (mod-treesit-auto)
 
 The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.

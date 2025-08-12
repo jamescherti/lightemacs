@@ -1,4 +1,4 @@
-;;; mod-keybindings.el --- mod-keybindings -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-keybindings.el --- mod-keybindings -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

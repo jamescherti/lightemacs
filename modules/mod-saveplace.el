@@ -1,4 +1,4 @@
-;;; mod-saveplace.el --- mod-saveplace -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-saveplace.el --- mod-saveplace -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

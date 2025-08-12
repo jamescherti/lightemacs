@@ -1,4 +1,4 @@
-;;; mod-vertico.el --- mod-vertico -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-vertico.el --- mod-vertico -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

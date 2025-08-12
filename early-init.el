@@ -19,6 +19,22 @@
                              ;; native-compiled.
                              compile-angel
 
+                             ;; Corfu enhances in-buffer completion by
+                             ;; displaying a compact popup with current
+                             ;; candidates, positioned either below or above the
+                             ;; point. Candidates can be selected by navigating
+                             ;; up or down.
+                             corfu
+
+                             ;; (Cape integrates with corfu)
+                             ;;
+                             ;; Cape, or Completion At Point Extensions, extends
+                             ;; the capabilities of in-buffer completion. It
+                             ;; integrates with Corfu or the default completion
+                             ;; UI, by providing additional backends through
+                             ;; completion-at-point-functions.
+                             cape
+
                              ;; Configure `dired' to hide details such as file
                              ;; ownership and permissions, and to group
                              ;; directories first.

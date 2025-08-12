@@ -1,4 +1,4 @@
-;;; mod-savehist.el --- mod-savehist -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-savehist.el --- mod-savehist -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

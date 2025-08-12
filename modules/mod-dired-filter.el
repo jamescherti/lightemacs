@@ -1,4 +1,4 @@
-;;; mod-dired-filter.el --- mod-dired-filter -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-dired-filter.el --- mod-dired-filter -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

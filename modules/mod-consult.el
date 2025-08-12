@@ -1,4 +1,4 @@
-;;; mod-consult.el --- mod-consult -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-consult.el --- mod-consult -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
