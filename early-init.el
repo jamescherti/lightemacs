@@ -127,6 +127,18 @@
                              ;; Custom keybindings
                              keybindings
 
+                             ;; The undo-fu package is a lightweight wrapper
+                             ;; around Emacs' built-in undo system, providing
+                             ;; more convenient undo/redo functionality while
+                             ;; preserving access to the full undo history.
+                             undo-fu
+
+                             ;; The undo-fu-session package complements undo-fu
+                             ;; by enabling the saving and restoration of undo
+                             ;; history across Emacs sessions, even after
+                             ;; restarting.
+                             undo-fu-session
+
                              ;; Vim keybindings
                              evil
                              evil-toggle-comment

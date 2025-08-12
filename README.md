@@ -77,6 +77,19 @@ The **mod-treesit-auto** module automatically installs and enables Tree-sitter m
 
 Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
+### Better undo/redo (mod-undo-fu and undo-fu-session)
+
+The mod-undo-fu and undo-fu-session configure:
+- [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu), a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history.
+- [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session), which complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
+
+The default undo system in Emacs has two main issues that undo-fu fixes:
+
+1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
+2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
+
+If you use Evil mode, the `mod-undo-fu` module will replace Evil’s undo system with `undo-fu`.
+
 ### Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)
 
 By default, **evil-mode** is enabled. (Users who prefer not to use Vim keybindings can easily disable it.)
