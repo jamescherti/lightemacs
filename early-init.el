@@ -146,7 +146,16 @@
                              evil-surround
 
                              ;; Vim tab bar
-                             vim-tab-bar)
+                             vim-tab-bar
+
+                             ;; Filetype: Markdown
+                             ;; The markdown-mode package provides a major mode
+                             ;; for Emacs for syntax highlighting, editing
+                             ;; commands, and preview support for Markdown
+                             ;; documents. It supports core Markdown syntax as
+                             ;; well as extensions like GitHub Flavored Markdown
+                             ;; (GFM).
+                             markdown-mode)
   "Modules that are enabled by default.")
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory
