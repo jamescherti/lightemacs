@@ -25,6 +25,12 @@
                              ;; and other prompts, to a file.
                              savehist
 
+                             ;; Remember the last location within a file upon
+                             ;; reopening. This is beneficial for resuming work
+                             ;; at the precise point where you previously left
+                             ;; off.
+                             saveplace
+
                              ;; Custom keybindings
                              keybindings
 

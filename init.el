@@ -32,6 +32,8 @@
           (message "[LOAD MODULE] %s" module-file))
         (require feature-symbol module-file)))))
 
+(let ((lightemacs-modules '(lightemacs)))
+  (lightemacs-load-modules))
 (lightemacs-load-modules)
 
 ;; Local variables:
