@@ -14,7 +14,9 @@
 ;;; Code:
 
 ;; Load minimal-emacs.d init.el
-(lightemacs-load-init-file "init.el")
+(if (fboundp 'lightemacs-load-init-file)
+    (lightemacs-load-init-file "init.el")
+  (error "The early-init.el file was not loaded"))
 
 ;;; Load modules
 
@@ -23,8 +25,13 @@
   (let ((modules-dir (expand-file-name "modules"
                                        lightemacs-user-emacs-directory)))
     (dolist (mod lightemacs-modules)
-      (let ((mod-file (expand-file-name (format "mod-%s.el" mod) modules-dir)))
-        (load mod-file nil nil)))))
+      (let* ((feature-str (format "mod-%s" mod))
+             (feature-symbol (intern feature-str))
+             (module-file (expand-file-name (format "%s.el" feature-str)
+                                            modules-dir)))
+        (when init-file-debug
+          (message "[LOAD MODULE] %s" module-file))
+        (require feature-symbol module-file)))))
 
 (lightemacs-load-modules)
 
