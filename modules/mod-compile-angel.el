@@ -1,4 +1,4 @@
-;;; mod-compile-angel.el --- Mod: compile-angel -*- lexical-binding: t -*-
+;;; mod-compile-angel.el --- Module: compile-angel -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -9,7 +9,17 @@
 
 ;;; Commentary:
 ;; The compile-angel package speeds up Emacs by ensuring that all Elisp
-;; libraries are both byte-compiled and native-compiled.
+;; libraries are both byte-compiled and native-compiled:
+;;
+;; - Byte compilation reduces the overhead of loading Emacs Lisp code at
+;;   runtime.
+;; - Native compilation improves performance by generating machine code that
+;;   runs directly on the hardware, leveraging the full capabilities of the host
+;;   CPU. The actual speedup varies with the characteristics of the Lisp code,
+;;   but it is typically 2.5 to 5 times faster than the equivalent byte-compiled
+;;   version.
+;;
+;; URL: https://github.com/jamescherti/compile-angel.el
 
 ;;; Code:
 
@@ -17,22 +27,19 @@
   :demand t
   :commands (compile-angel-on-load-mode
              compile-angel-on-save-mode)
-  :custom
-  ;; Set `compile-angel-verbose' to nil to suppress output from compile-angel.
-  ;; Drawback: The minibuffer will not display compile-angel's actions.
-  (compile-angel-verbose t)
-
   :config
+  (setq compile-angel-verbose init-file-debug)
+  (setq compile-angel-debug init-file-debug)
+
   (defun mod-compile-angel-exclude (path)
-    "Exclude STRING."
+    "Exclude PATH."
     (when (and (stringp path)
                (not (member path compile-angel-excluded-files)))
       (push (concat "/" (file-name-nondirectory path))
             compile-angel-excluded-files)))
 
-  (setq compile-angel-verbose minimal-emacs-debug)
-  (setq compile-angel-debug minimal-emacs-debug)
   (push "/org-version.el" compile-angel-excluded-files)
+
   (with-eval-after-load 'savehist
     (mod-compile-angel-exclude savehist-file))
   (with-eval-after-load 'recentf
@@ -41,10 +48,8 @@
     (mod-compile-angel-exclude custom-file))
   (with-eval-after-load 'prescient
     (mod-compile-angel-exclude prescient-save-file))
-  (push "/tmp-file.el" compile-angel-excluded-files)
-  (push "/.dir-settings.el" compile-angel-excluded-files)
 
-  ;; A global mode that compiles .el files before they are loaded.
+  ;; A global mode that compiles .el files before they are loaded
   (compile-angel-on-load-mode))
 
 (provide 'mod-compile-angel)

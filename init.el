@@ -24,7 +24,7 @@
                                        lightemacs-user-emacs-directory)))
     (dolist (mod lightemacs-modules)
       (let ((mod-file (expand-file-name (format "mod-%s.el" mod) modules-dir)))
-        (load-file mod-file)))))
+        (load mod-file nil nil)))))
 
 (lightemacs-load-modules)
 

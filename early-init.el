@@ -21,7 +21,8 @@
                              compile-angel
 
                              ;; Vim keybindings
-                             evil)
+                             evil
+                             vim-tab-bar)
   "Modules that are enabled by default.")
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory

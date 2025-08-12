@@ -1,4 +1,4 @@
-;;; mod-evil.el --- Mod: evil -*- lexical-binding: t -*-
+;;; mod-evil.el --- Module: evil -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -10,15 +10,20 @@
 ;;; Commentary:
 ;; The evil package speeds up Emacs by ensuring that all Elisp
 ;; libraries are both byte-compiled and native-compiled.
+;;
+;; URL: https://github.com/emacs-evil/evil
 
 ;;; Code:
+
+;;; Evil
+
+;; This has to be defined before evil
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
 
 (use-package evil
   :hook (after-init . evil-mode)
   :init
-  ;; It has to be defined before evil
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
 
   ;; Delete selected text on paste in visual state
   (setq evil-kill-on-visual-paste t)
@@ -65,13 +70,17 @@
   ;; Disable wrapping of search around buffer
   (setq evil-search-wrap nil))
 
+;;; evil-collection
+
+;; This has to be defined before evil-collection
+(setq evil-collection-setup-minibuffer t)
+
 (use-package evil-collection
-  :after evil
   :functions evil-collection-init
-  :custom
-  (evil-collection-setup-minibuffer t)
   :config
   (evil-collection-init))
+
+;;; Other Evil modules
 
 (use-package evil-surround
   :after evil
@@ -80,9 +89,6 @@
 (use-package evil-snipe
   :after evil
   :hook (evil-mode . evil-snipe-mode))
-
-(use-package vim-tab-bar
-  :hook (after-init . vim-tab-bar-mode))
 
 (provide 'mod-evil)
 
