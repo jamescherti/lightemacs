@@ -1,4 +1,4 @@
-# Lightemacs - Fast and lightweight Emacs framework
+# Lightemacs - Fast and Lightweight Emacs framework
 
 The Lightemacs project is a fast and lightweight Emacs framework.
 
@@ -37,7 +37,7 @@ git -C ~/.emacs.d pull --recurse-submodules
 git -C ~/.emacs.d submodule update --init --recursive
 ```
 
-## Default modules
+## Features and modules enabled by default
 
 ### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico)
 
@@ -102,7 +102,7 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 
-## Features
+### Other features
 
 - Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
 - Ensure that all Elisp libraries undergo both byte-compilation and native-compilation via the compile-angel package.
