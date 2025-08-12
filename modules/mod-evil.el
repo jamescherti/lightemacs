@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; Evil is an extensible vi layer for Emacs. It emulates the main features of
 ;; Vim, and provides facilities for writing custom extensions.
 ;;

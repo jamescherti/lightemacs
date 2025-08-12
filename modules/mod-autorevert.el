@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; Auto-revert is a feature that automatically updates the contents of a buffer
 ;; to reflect changes made to the underlying file on disk.
 ;;

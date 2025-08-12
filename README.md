@@ -4,6 +4,22 @@ WIP (Work in progress)
 
 ## Default modules
 
+### mod-consult, mod-embark, and mod-vertico
+
+[Vertico](https://github.com/minad/vertico), [Consult](https://github.com/minad/consult), and [Embark](https://github.com/oantolin/embark) collectively enhance Emacs' completion and navigation capabilities.
+
+Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
+
+Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks.
+
+Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
+
+### mod-treesit-auto
+
+The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.
+
+Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
+
 ### Vim keybindings
 
 By default, **evil-mode** is enabled. (Users who prefer not to use Vim keybindings can easily disable it.)

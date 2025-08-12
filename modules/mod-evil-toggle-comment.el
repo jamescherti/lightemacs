@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; Comment or uncomment text in Normal or Visual mode by pressing gc.
 
 ;;; Code:

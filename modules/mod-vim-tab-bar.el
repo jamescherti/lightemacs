@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; The vim-tab-bar Emacs package enhances the built-in tab-bar with a
 ;; minimalist, Vim-inspired design that automatically adapts to the current
 ;; Emacs theme as well as any themes loaded subsequently. This ensures the

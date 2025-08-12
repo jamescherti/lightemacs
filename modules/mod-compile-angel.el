@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; The compile-angel package speeds up Emacs by ensuring that all Elisp
 ;; libraries are both byte-compiled and native-compiled:
 ;;

@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; Saveplace mode enables Emacs to remember the last location within a file upon
 ;; reopening. This is beneficial for resuming work at the precise point where
 ;; you previously left off.

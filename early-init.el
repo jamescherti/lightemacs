@@ -36,6 +36,49 @@
                              ;; you have worked on recently.
                              recentf
 
+                             ;; (Vertico, Consult, and Embark collectively
+                             ;; enhance Emacs' completion and navigation
+                             ;; capabilities.)
+                             ;;
+                             ;; Embark integrates with these tools to provide
+                             ;; context-sensitive actions and quick access to
+                             ;; commands based on the current selection, further
+                             ;; improving user efficiency and workflow within
+                             ;; Emacs. Together, they create a cohesive and
+                             ;; powerful environment for managing completions
+                             ;; and interactions.
+                             embark
+
+                             ;; (Vertico, Consult, and Embark collectively
+                             ;; enhance Emacs' completion and navigation
+                             ;; capabilities.)
+                             ;;
+                             ;; Vertico provides a vertical completion
+                             ;; interface, making it easier to navigate and
+                             ;; select from completion candidates (e.g., when
+                             ;; M-x is pressed).
+                             vertico
+
+                             ;; (Vertico, Consult, and Embark collectively
+                             ;; enhance Emacs' completion and navigation
+                             ;; capabilities.)
+                             ;;
+                             ;; Consult offers a suite of commands for efficient
+                             ;; searching, previewing, and interacting with
+                             ;; buffers, file contents, and more, improving
+                             ;; various tasks.
+                             consult
+
+                             ;; Tree-sitter is an incremental parsing system
+                             ;; introduced in Emacs 29 that provides precise,
+                             ;; high-performance syntax highlighting. It
+                             ;; supports a broad set of programming languages,
+                             ;; including Bash, C, C++, C#, CMake, CSS,
+                             ;; Dockerfile, Go, Java, JavaScript, JSON, Python,
+                             ;; Rust, TOML, TypeScript, YAML, Elisp, Lua,
+                             ;; and many others.
+                             treesit-auto
+
                              ;; Autorevert is a feature that automatically
                              ;; updates the contents of a buffer to reflect
                              ;; changes made to the underlying file on disk.

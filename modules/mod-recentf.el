@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; Recentf maintains a list of recently accessed files, making it easier to
 ;; reopen files you have worked on recently.
 ;;

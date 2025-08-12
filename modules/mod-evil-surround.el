@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; Evil-surround enables text surrounding in visual state using S<textobject> or
 ;; gS<textobject>.
 ;;
