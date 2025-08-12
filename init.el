@@ -20,7 +20,8 @@
 
 (defun lightemacs-load-modules ()
   "Load all modules listed in `lightemacs-modules'."
-  (let ((modules-dir (expand-file-name "modules" lightemacs-user-emacs-directory)))
+  (let ((modules-dir (expand-file-name "modules"
+                                       lightemacs-user-emacs-directory)))
     (dolist (mod lightemacs-modules)
       (let ((mod-file (expand-file-name (format "mod-%s.el" mod) modules-dir)))
         (load-file mod-file)))))

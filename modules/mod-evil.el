@@ -77,8 +77,11 @@
   :after evil
   :hook (evil-mode . global-evil-surround-mode))
 
-(use-package vim-tab-bar
+(use-package evil-snipe
   :after evil
+  :hook (evil-mode . evil-snipe-mode))
+
+(use-package vim-tab-bar
   :hook (after-init . vim-tab-bar-mode))
 
 (provide 'mod-evil)
