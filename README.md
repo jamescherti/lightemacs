@@ -57,7 +57,7 @@ The **mod-treesit-auto** module automatically installs and enables Tree-sitter m
 
 Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
-### Vim keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)
+### Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)
 
 By default, **evil-mode** is enabled. (Users who prefer not to use Vim keybindings can easily disable it.)
 
@@ -78,15 +78,15 @@ The following packages are enabled alongside **evil-mode**:
 Defines the following key bindings:
 - Increase or decrease the text scale using Ctrl combined with `+` or `-`.
 
-### Save history (mod-savehist)
+### Save History (mod-savehist)
 
 The **mod-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
 
-### Save and restore cursor (mod-saveplace)
+### Save and Restore Cursor (mod-saveplace)
 
 The **mod-saveplace** module enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off.
 
-### Auto revert buffer to reflect changes made to the underlying file on disk (mod-autorevert)
+### Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (mod-autorevert)
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
@@ -99,12 +99,12 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
 
-### Other modules enabled by default
+### Other Modules Enabled by Default
 
 - **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 
-### Other features
+### Other Features
 
 - Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
 - Ensure that all Elisp libraries undergo both byte-compilation and native-compilation via the compile-angel package.
