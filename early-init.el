@@ -155,7 +155,15 @@
                              ;; documents. It supports core Markdown syntax as
                              ;; well as extensions like GitHub Flavored Markdown
                              ;; (GFM).
-                             markdown-mode)
+                             markdown-mode
+
+                             ;; Filetype: Elisp
+                             ;; `aggressive-indent-mode' is a minor mode that
+                             ;; Elisp code remains consistently indented. It
+                             ;; automatically reindents after every
+                             ;; modification, providing greater reliability than
+                             ;; `electric-indent-mode'.
+                             aggressive-indent)
   "Modules that are enabled by default.")
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory
