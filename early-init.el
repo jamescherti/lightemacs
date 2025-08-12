@@ -8,12 +8,11 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; The Light Emacs project is an Emacs framework.
-;; Do not modify this file; instead, modify pre-init.el or post-init.el.
+;; The Lightemacs project is an Emacs framework.
 
 ;;; Code:
 
-;;; Reduce cluttering
+;;; Global variables
 
 (defvar lightemacs-modules '(;; Compile-angel speeds up Emacs by ensuring that
                              ;; all Elisp libraries are both byte-compiled and
@@ -22,11 +21,15 @@
 
                              ;; Vim keybindings
                              evil
+
+                             ;; Vim tab bar
                              vim-tab-bar)
   "Modules that are enabled by default.")
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory
   "Directory beneath lightemacs files are placed.")
+
+;;; Reduce cluttering
 
 ;; Emacs, by default, stores various configuration files, caches, backups, and
 ;; other data in the ~/.emacs.d directory. Over time, this directory can become
@@ -42,7 +45,7 @@
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq minimal-emacs-user-directory lightemacs-user-emacs-directory)
 
-;;; Load early-init.el
+;;; Load minimal-emacs.d early-init.el
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."

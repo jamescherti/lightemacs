@@ -8,8 +8,8 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; The evil package speeds up Emacs by ensuring that all Elisp
-;; libraries are both byte-compiled and native-compiled.
+;; Evil is an extensible vi layer for Emacs. It emulates the main features of
+;; Vim, and provides facilities for writing custom extensions.
 ;;
 ;; URL: https://github.com/emacs-evil/evil
 
@@ -68,7 +68,19 @@
   (setq evil-want-Y-yank-to-eol t)
 
   ;; Disable wrapping of search around buffer
-  (setq evil-search-wrap nil))
+  (setq evil-search-wrap nil)
+
+  :config
+  (evil-set-leader 'normal ",")
+  (evil-set-leader 'visual ",")
+
+  ;; Comment/uncomment
+  (evil-define-operator mod-evil-comment-or-uncomment-visual (beg end)
+    "Toggle comment from BEG to END."
+    (interactive "<r>")
+    (unless (derived-mode-p 'org-mode)
+      (comment-or-uncomment-region beg end)))
+  (evil-define-key 'visual 'global (kbd "gc") 'mod-evil-comment-or-uncomment-visual))
 
 ;;; evil-collection
 

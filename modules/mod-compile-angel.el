@@ -27,16 +27,18 @@
   :demand t
   :commands (compile-angel-on-load-mode
              compile-angel-on-save-mode)
-  :config
-  (setq compile-angel-verbose init-file-debug)
-  (setq compile-angel-debug init-file-debug)
 
+  :preface
   (defun mod-compile-angel-exclude (path)
     "Exclude PATH."
     (when (and (stringp path)
                (not (member path compile-angel-excluded-files)))
       (push (concat "/" (file-name-nondirectory path))
             compile-angel-excluded-files)))
+
+  :config
+  (setq compile-angel-verbose init-file-debug)
+  (setq compile-angel-debug init-file-debug)
 
   (push "/org-version.el" compile-angel-excluded-files)
 

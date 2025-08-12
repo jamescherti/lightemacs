@@ -8,8 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; The Light Emacs project is an Emacs framework.
-;; Do not modify this file; instead, modify pre-init.el or post-init.el.
+;; The Lightemacs project is an Emacs framework.
 
 ;;; Code:
 
