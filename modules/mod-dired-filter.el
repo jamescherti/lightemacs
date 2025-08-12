@@ -23,10 +23,16 @@
              dired-filter-by-dot-files
              dired-filter-by-omit)
 
-  :hook
-  (dired-mode . mod-dired-filter--setup)
-
   :init
+  ;; Hide details such as file ownership and permissions
+  (defun mod-dired-filter--setup ()
+    "Dired only hide didden files in ~/home"
+    (dired-filter-by-omit)
+    (dired-filter-by-git-ignored)
+    (dired-filter-by-dot-files))
+  (add-hook 'dired-mode-hook #'mod-dired-filter--setup)
+
+  ;; Toggle dired-filter
   (defun mod-dired-filter--toggle-filter ()
     "Toggle the `dired' filter."
     (interactive)
@@ -40,13 +46,7 @@
           (dired-filter-by-git-ignored))
 
         (when dired-file
-          (dired-goto-file dired-file)))))
-
-  (defun mod-dired-filter--setup ()
-    "Dired only hide didden files in ~/home"
-    (dired-filter-by-omit)
-    (dired-filter-by-git-ignored)
-    (dired-filter-by-dot-files)))
+          (dired-goto-file dired-file))))))
 
 (provide 'mod-dired-filter)
 

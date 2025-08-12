@@ -9,7 +9,8 @@
 
 ;;; Commentary:
 
-;; Configure `dired' to group directories first.
+;; Configure `dired' to hide details such as file ownership and permissions, and
+;; to group directories first.
 
 ;;; Code:
 
@@ -22,9 +23,6 @@
              dired-get-file-for-visit
              dired-guess-shell-command
              dired-hide-details-mode)
-  :hook
-  ;; Hide details such as file ownership and permissions
-  (dired-mode . dired-hide-details-mode)
 
   :init
   ;; Group directories first
@@ -37,7 +35,10 @@
           (setq insert-directory-program gls)
         (setq args nil)))
     (when args
-      (setq dired-listing-switches args))))
+      (setq dired-listing-switches args)))
+
+  ;; Hide details such as file ownership and permissions
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode))
 
 (provide 'mod-dired)
 

@@ -19,7 +19,9 @@
                              ;; native-compiled.
                              compile-angel
 
-                             ;; Configure `dired' to group directories first.
+                             ;; Configure `dired' to hide details such as file
+                             ;; ownership and permissions, and to group
+                             ;; directories first.
                              dired
 
                              ;; `dired': Filter dotfiles, omit files, and files
