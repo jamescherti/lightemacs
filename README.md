@@ -6,7 +6,7 @@ Fast and lightweight Emacs framework.
 
 ### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico)
 
-[Vertico](https://github.com/minad/vertico), [Consult](https://github.com/minad/consult), and [Embark](https://github.com/oantolin/embark) collectively enhance Emacs' completion and navigation capabilities.
+Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities.
 
 Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
 
