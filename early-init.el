@@ -19,6 +19,9 @@
                              ;; native-compiled.
                              compile-angel
 
+                             ;; Custom keybindings
+                             keybindings
+
                              ;; Vim keybindings
                              evil
                              evil-toggle-comment

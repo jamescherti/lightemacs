@@ -20,6 +20,11 @@ The following packages are enabled alongside **evil-mode**:
 
 - **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 
+### mod-keybindings
+
+Defines the following key bindings:
+- Increase or decrease the text scale using Ctrl combined with `+` or `-`.
+
 ### Other modules enabled by default
 
 - **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
