@@ -1,4 +1,4 @@
-;;; early-init.el --- Early Init -*- lexical-binding: t; -*-
+;;; early-init.el --- Early Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -18,6 +18,12 @@
                              ;; all Elisp libraries are both byte-compiled and
                              ;; native-compiled.
                              compile-angel
+
+                             ;; The Emacs theme Tomorrow Night Deepblue is a
+                             ;; beautiful deep blue variant of the Tomorrow
+                             ;; Night theme, which is renowned for its elegant
+                             ;; color palette that is pleasing to the eyes.
+                             tomorrow-night-deepblue-theme
 
                              ;; Corfu enhances in-buffer completion by
                              ;; displaying a compact popup with current

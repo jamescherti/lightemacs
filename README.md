@@ -39,6 +39,14 @@ git -C ~/.emacs.d submodule update --init --recursive
 
 ## Features and modules enabled by default
 
+## Default theme: tomorrow-night-deepblue-theme
+
+The **Tomorrow Night Deepblue Emacs theme** is a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes.
+
+The **Tomorrow Night Deepblue theme** features a deep blue background color that creates a calming atmosphere. The theme is also a great choice for those who miss the blue themes that were trendy a few years ago.
+
+![](https://raw.githubusercontent.com/jamescherti/tomorrow-night-deepblue-theme.el/master/.images/screenshot.png)
+
 ### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico)
 
 Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities.
