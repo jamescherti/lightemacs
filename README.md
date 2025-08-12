@@ -39,7 +39,7 @@ git -C ~/.emacs.d submodule update --init --recursive
 
 ## Features and modules enabled by default
 
-## Default theme: tomorrow-night-deepblue-theme
+### Default theme: tomorrow-night-deepblue-theme
 
 The **Tomorrow Night Deepblue Emacs theme** is a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes.
 
@@ -109,6 +109,17 @@ The **mod-saveplace** module enables `save-place-mode`, which makes Emacs rememb
 ### Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (mod-autorevert)
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
+
+### Persist and Restore Text Scale
+
+The [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) Emacs package provides `persist-text-scale-mode`, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs.
+
+This package also facilitates grouping buffers into categories, allowing buffers within the same category to share a consistent text scale. This ensures uniform font sizes when adjusting text scaling. By default:
+- Each file-visiting buffer has its own independent text scale.
+- Special buffers, identified by their buffer names, each retain their own text scale setting.
+- All Dired buffers maintain the same font size, treating Dired as a unified "file explorer" where the text scale remains consistent across different buffers.
+
+This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
 
 ### Recent files (mod-recentf)
 

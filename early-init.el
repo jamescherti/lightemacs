@@ -25,6 +25,15 @@
                              ;; color palette that is pleasing to the eyes.
                              tomorrow-night-deepblue-theme
 
+                             ;; The persist-text-scale Emacs package provides
+                             ;; `persist-text-scale-mode', which ensures that
+                             ;; all adjustments made with `text-scale-increase'
+                             ;; and `text-scale-decrease' are persisted and
+                             ;; restored across sessions. As a result, the text
+                             ;; size in each buffer remains consistent, even
+                             ;; after restarting Emacs.
+                             persist-text-scale
+
                              ;; Corfu enhances in-buffer completion by
                              ;; displaying a compact popup with current
                              ;; candidates, positioned either below or above the
