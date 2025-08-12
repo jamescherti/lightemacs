@@ -19,6 +19,13 @@
                              ;; native-compiled.
                              compile-angel
 
+                             ;; Configure `dired' to group directories first.
+                             dired
+
+                             ;; `dired': Filter dotfiles, omit files, and files
+                             ;; listed in .gitignore
+                             dired-filter
+
                              ;; Preserve the minibuffer history between
                              ;; sessions. It saves the history of inputs in the
                              ;; minibuffer, such as commands, search strings,
@@ -115,6 +122,10 @@
 (setq user-emacs-directory (expand-file-name "var/" lightemacs-user-emacs-directory))
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq minimal-emacs-user-directory lightemacs-user-emacs-directory)
+
+;;; Other parameters
+
+(setq package-install-upgrade-built-in t)
 
 ;;; Load minimal-emacs.d early-init.el
 

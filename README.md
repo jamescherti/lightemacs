@@ -51,6 +51,10 @@ Embark integrates with these tools to provide context-sensitive actions and quic
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
+### Better File Manager (mod-dired and mod-dired-filter)
+
+Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
+
 ### Better Syntax highlighting (mod-treesit-auto)
 
 The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.
