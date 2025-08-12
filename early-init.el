@@ -25,6 +25,25 @@
                              ;; color palette that is pleasing to the eyes.
                              tomorrow-night-deepblue-theme
 
+                             ;; Vim keybindings
+                             evil
+                             evil-toggle-comment
+                             evil-snipe
+                             evil-surround
+
+                             ;; The yasnippet package provides a template system
+                             ;; that enhances text editing by enabling users to
+                             ;; define and use snippets, which are predefined
+                             ;; templates of code or text.
+                             yasnippet
+
+                             ;; The yasnippet-snippets package with a
+                             ;; comprehensive collection of bundled templates
+                             ;; for numerous programming and markup languages,
+                             ;; including C, C++, C#, Perl, Python, Ruby, SQL,
+                             ;; LaTeX, HTML, CSS...
+                             yasnippet-snippets
+
                              ;; The persist-text-scale Emacs package provides
                              ;; `persist-text-scale-mode', which ensures that
                              ;; all adjustments made with `text-scale-increase'
@@ -138,12 +157,6 @@
                              ;; history across Emacs sessions, even after
                              ;; restarting.
                              undo-fu-session
-
-                             ;; Vim keybindings
-                             evil
-                             evil-toggle-comment
-                             evil-snipe
-                             evil-surround
 
                              ;; Vim tab bar
                              vim-tab-bar
