@@ -19,6 +19,12 @@
                              ;; native-compiled.
                              compile-angel
 
+                             ;; Preserve the minibuffer history between
+                             ;; sessions. It saves the history of inputs in the
+                             ;; minibuffer, such as commands, search strings,
+                             ;; and other prompts, to a file.
+                             savehist
+
                              ;; Custom keybindings
                              keybindings
 

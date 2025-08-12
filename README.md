@@ -25,6 +25,10 @@ The following packages are enabled alongside **evil-mode**:
 Defines the following key bindings:
 - Increase or decrease the text scale using Ctrl combined with `+` or `-`.
 
+### mod-savehist
+
+The **mod-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
+
 ### Other modules enabled by default
 
 - **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
