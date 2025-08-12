@@ -14,7 +14,7 @@ Interesting default parameters:
 
 Features added by mod-evil:
 
-- Commenting or uncommenting the selected text in Visual mode using the `gc` keybinding.
+- Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 
 The following packages are enabled alongside **evil-mode**:
 
@@ -22,11 +22,10 @@ The following packages are enabled alongside **evil-mode**:
 
 - **evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 
-- **vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
-
 ### Other modules enabled by default
 
 - compile-angel: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
+- **vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 
 ## Features
 

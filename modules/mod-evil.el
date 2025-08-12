@@ -72,14 +72,25 @@
 
   :config
   (evil-set-leader 'normal ",")
-  (evil-set-leader 'visual ",")
+  (evil-set-leader 'visual ","))
 
-  ;; Comment/uncomment
+;;; Toggle comment
+
+(with-eval-after-load 'evil
   (evil-define-operator mod-evil-comment-or-uncomment-visual (beg end)
     "Toggle comment from BEG to END."
     (interactive "<r>")
     (unless (derived-mode-p 'org-mode)
       (comment-or-uncomment-region beg end)))
+
+  (defun mod-evil-comment-or-uncomment-line ()
+    "Toggle comment in the current line."
+    (interactive)
+    (unless (derived-mode-p 'org-mode)
+      (comment-or-uncomment-region (line-beginning-position)
+                                   (line-end-position))))
+
+  (evil-define-key 'normal 'global (kbd "gc") 'mod-evil-comment-or-uncomment-line)
   (evil-define-key 'visual 'global (kbd "gc") 'mod-evil-comment-or-uncomment-visual))
 
 ;;; evil-collection
