@@ -31,6 +31,11 @@
                              ;; off.
                              saveplace
 
+                             ;; Recentf is an maintains a list of recently
+                             ;; accessed files, making it easier to reopen files
+                             ;; you have worked on recently.
+                             recentf
+
                              ;; Autorevert is a feature that automatically
                              ;; updates the contents of a buffer to reflect
                              ;; changes made to the underlying file on disk.

@@ -37,6 +37,15 @@ The **mod-saveplace** module enables `save-place-mode`, which makes Emacs rememb
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
+### mod-recentf
+
+Recentf maintains a list of recently accessed files, making it easier to reopen files you have worked on recently.
+
+In addition to its built-in capabilities, the **mod-recentf** module provides the following enhancements:
+- Inserts the current file at the beginning of the recent files list upon buffer switch.
+- Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
+- Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
+
 ### Other modules enabled by default
 
 - **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
