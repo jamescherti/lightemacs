@@ -8,7 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; evil-snipe provides two-character motions for rapid navigation within text,
+;; Evil-snipe provides two-character motions for rapid navigation within text,
 ;; similar to Evil’s built-in f/F/t/T commands, but with incremental
 ;; highlighting of potential targets as you type. By default, s (forward) and
 ;; S (backward) are bound to evil-snipe-s and evil-snipe-S, respectively.

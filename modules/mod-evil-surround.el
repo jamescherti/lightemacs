@@ -11,7 +11,7 @@
 ;; Evil-surround enables text surrounding in visual state using S<textobject> or
 ;; gS<textobject>.
 ;;
-;; For example, selecting text and pressing S " will wrap it in double quotes.
+;; For example, selecting text and pressing S" will wrap it in double quotes.
 ;;
 ;; URL: https://github.com/emacs-evil/evil-surround
 
