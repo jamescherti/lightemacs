@@ -39,7 +39,7 @@ git -C ~/.emacs.d submodule update --init --recursive
 
 ## Features and modules enabled by default
 
-### Default theme: tomorrow-night-deepblue-theme
+### Default theme (mod-tomorrow-night-deepblue-theme)
 
 The **Tomorrow Night Deepblue Emacs theme** is a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes.
 
