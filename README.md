@@ -164,7 +164,7 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 
 ## Author and license
 
-The *Lightemacs* project has been written by [James Cherti](https://www.jamescherti.com/) and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
+The *Lightemacs* project has been written by James Cherti and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
 
 Copyright (C) 2025 [James Cherti](https://www.jamescherti.com)
 
