@@ -33,6 +33,10 @@ The **mod-savehist** module configures **savehist**, a built-in Emacs feature th
 
 The **mod-saveplace** module enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off.
 
+### mod-autorevert
+
+Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
+
 ### Other modules enabled by default
 
 - **compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.

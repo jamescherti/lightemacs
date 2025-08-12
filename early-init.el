@@ -31,6 +31,11 @@
                              ;; off.
                              saveplace
 
+                             ;; Autorevert is a feature that automatically
+                             ;; updates the contents of a buffer to reflect
+                             ;; changes made to the underlying file on disk.
+                             autorevert
+
                              ;; Custom keybindings
                              keybindings
 
