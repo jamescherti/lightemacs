@@ -110,9 +110,11 @@ The **mod-saveplace** module enables `save-place-mode`, which makes Emacs rememb
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
-### Persist and Restore Text Scale
+### Persist and Restore Text Scale (mod-persist-text-scale)
 
-The [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) Emacs package provides `persist-text-scale-mode`, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs.
+The text scale can be adjusted by pressing **Ctrl** together with `+` to increase it (`text-scale-increase`) or `-` to decrease it (`text-scale-decrease`).
+
+The mod-persist-text-scale module configures the [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) package, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs.
 
 This package also facilitates grouping buffers into categories, allowing buffers within the same category to share a consistent text scale. This ensures uniform font sizes when adjusting text scaling. By default:
 - Each file-visiting buffer has its own independent text scale.
