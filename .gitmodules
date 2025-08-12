@@ -1,0 +1,3 @@
+[submodule "modules/init"]
+	path = modules/init
+	url = https://github.com/jamescherti/minimal-emacs.d

@@ -120,7 +120,7 @@
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."
-  (load (expand-file-name (format "lisp/init/%s" filename)
+  (load (expand-file-name (format "modules/init/%s" filename)
                           lightemacs-user-emacs-directory)
         nil
         (not (bound-and-true-p init-file-debug))
