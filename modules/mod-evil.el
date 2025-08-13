@@ -74,8 +74,8 @@
   (setq evil-search-wrap nil)
 
   :config
-  (evil-set-leader 'normal ",")
-  (evil-set-leader 'visual ","))
+  (evil-set-leader 'normal (kbd ","))
+  (evil-set-leader 'visual (kbd ",")))
 
 ;;; evil-collection
 
