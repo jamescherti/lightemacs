@@ -44,10 +44,6 @@
   ;; correct target but requires remembering or seeing the full path.
   (setq org-refile-use-outline-path t)
 
-  ;; Disable automatic alignment of tags; keeps tags where typed but may result
-  ;; in uneven or inconsistent tag placement across headings.
-  (setq org-auto-align-tags nil)
-
   ;; Ctrl-A/E moves to beginning/end of heading instead of line; improves
   ;; navigation.
   (setq org-special-ctrl-a/e t)
@@ -59,9 +55,6 @@
   ;; Hide markers like * / _ = ~; cleaner view but markers are not visible for
   ;; editing emphasis.
   (setq org-hide-emphasis-markers t)
-
-  ;; Show entities as UTF8 characters.
-  (setq org-pretty-entities t)
 
   ;; Do not truncate long lines on startup; easier reading for wide text but may
   ;; wrap long lines visually.
@@ -105,33 +98,11 @@
 
   ;; Allow alphabetical lists; flexible list styles but may confuse automatic
   ;; numbering.
-  (setq org-list-allow-alphabetical t)  ; allow alphabetical list
-
-  ;; Set sub-item indent; improves nested list readability but reduces spacing
-  ;; flexibility.
-  (setq org-list-indent-offset 1)
-
-  ;; Prevent editing invisible content; avoids accidental changes but may block
-  ;; some advanced edits.
-  (setq org-catch-invisible-edits 'smart)  ; Obsolete
-  (setq org-fold-catch-invisible-edits 'smart)
+  (setq org-list-allow-alphabetical t)
 
   ;; Log completion time; provides audit trail but adds automatic notes that may
   ;; clutter logs.
   (setq org-log-done 'time)
-
-  ;; Do not add notes when clocking out; keeps logs cleaner but loses contextual
-  ;; info.
-  (setq org-log-note-clock-out nil)
-
-  ;; Skip logging for rescheduled tasks; reduces unnecessary log entries but may
-  ;; hide changes.
-  (setq org-log-redeadline nil)
-
-  ;; When a TODO keyword is changed, Org adds a state-change log with a
-  ;; timestamp under the heading. Setting this to nil keeps these logs in the
-  ;; main content instead of placing them in a drawer.
-  (setq org-log-into-drawer nil)
 
   ;; RET follows links; intuitive navigation but may conflict with normal line
   ;; breaks.
@@ -139,10 +110,6 @@
 
   ;; More comprehensive imenu
   (setq org-imenu-depth 6)
-
-  ;; Prettify entities without sub/superscripts; cleaner symbols but loses
-  ;; fine-grained formatting.
-  (setq org-pretty-entities-include-sub-superscripts nil)
 
   ;; Disable stepwise path completion; direct path completion but may be harder
   ;; to navigate long hierarchies.
@@ -172,10 +139,6 @@
 
   ;; When nil, it will go to the end of the line before making a new line.
   (setq org-M-RET-may-split-line nil)
-
-  ;; Prefer future dates when entering incomplete dates; useful for planning
-  ;; upcoming tasks
-  (setq org-read-date-prefer-future 'time)
 
   ;; Display descriptive text for links instead of raw URLs; improves
   ;; readability
