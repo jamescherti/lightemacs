@@ -115,15 +115,13 @@ The `mod-default-theme` loads the default theme. It can be configured via the `l
 The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes:
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
-### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico)
+### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)
 
-Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities.
-
-Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
-
-Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. *(Try `M-x consult-rg` to search your project using ripgrep, or `M-x consult-fd` to quickly locate files in your workspace.)*
-
-Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
+Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion and navigation capabilities:
+- [Vertico](https://github.com/minad/vertico) provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
+- [Consult](https://github.com/minad/consult) offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. *(Try `M-x consult-rg` to search your project using ripgrep, or `M-x consult-fd` to quickly locate files in your workspace.)*
+- [Embark](https://github.com/oantolin/embark) integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
+- [Marginalia](https://github.com/minad/marginalia) enriches minibuffer completions with contextual annotations. It Enhances Vertico by adding rich annotations to completion candidates, such as file sizes, documentation, or metadata.
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 

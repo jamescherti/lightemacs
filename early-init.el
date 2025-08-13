@@ -143,6 +143,13 @@ Set this to nil to disable early theme loading.")
                              ;; various tasks.
                              consult
 
+                             ;; Marginalia enriches minibuffer completions with
+                             ;; contextual annotations.
+                             ;; It Enhances Vertico by adding rich annotations
+                             ;; to completion candidates, such as file sizes,
+                             ;; documentation, or metadata.
+                             marginalia
+
                              ;; Tree-sitter is an incremental parsing system
                              ;; introduced in Emacs 29 that provides precise,
                              ;; high-performance syntax highlighting. It
