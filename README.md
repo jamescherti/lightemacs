@@ -113,7 +113,7 @@ The `mod-default-theme` loads the default theme. It can be configured via the `l
 ```
 
 The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes:
-![](https://raw.githubusercontent.com/jamescherti/tomorrow-night-deepblue-theme.el/master/.images/screenshot.png)
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
 ### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico)
 
@@ -121,9 +121,9 @@ Vertico, Consult, and Embark collectively enhance Emacs' completion and navigati
 
 Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
 
-Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks.
+Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. *(Try `M-x consult-rg` to search your project using ripgrep, or `M-x consult-fd` to quickly locate files in your workspace.)*
 
-Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
+Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
