@@ -30,14 +30,8 @@
 (when (eq lightemacs-default-theme 'tomorrow-night-deepblue)
   (use-package tomorrow-night-deepblue-theme))
 
-(defun mod-default-theme-load ()
-  "Load the theme defined in `lightemacs-default-theme' if it is installed."
-  (when (member (intern lightemacs-default-theme) (custom-available-themes))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme (intern lightemacs-default-theme) t)))
-
 (when lightemacs-default-theme
-  (mod-default-theme-load))
+  (lightemacs-load-default-theme))
 
 (provide 'mod-default-theme)
 

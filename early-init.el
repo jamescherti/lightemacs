@@ -233,6 +233,12 @@ Set this to nil to disable early theme loading.")
           (message "[LOAD MODULE] %s" module-file))
         (require feature-symbol module-file)))))
 
+(defun lightemacs-load-default-theme ()
+  "Load the theme defined in `lightemacs-default-theme' if it is installed."
+  (when (member (intern lightemacs-default-theme) (custom-available-themes))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme (intern lightemacs-default-theme) t)))
+
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."
   (load (expand-file-name (format "modules/init/%s" filename)
