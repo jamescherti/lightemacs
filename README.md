@@ -1,6 +1,6 @@
 # Lightemacs - Fast and Lightweight Emacs framework
 
-The Lightemacs project is a fast and lightweight Emacs framework.
+The Lightemacs project is a fast, lightweight Emacs framework that uses modern Emacs features and modern packages.
 
 Here are the features that are enabled by default:
 - Automatically removes trailing whitespace and blank lines at the end of the buffer when saving
