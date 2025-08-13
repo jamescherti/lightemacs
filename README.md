@@ -3,21 +3,26 @@
 The Lightemacs project is a fast, lightweight Emacs framework that uses modern Emacs features and modern packages.
 
 Here are the features that are enabled by default:
-- Automatically removes trailing whitespace and blank lines at the end of the buffer when saving
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
+- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
 - Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 - Additional filetypes: markdown-mode.
+- Automatically removes trailing whitespace and blank lines at the end of the buffer when saving
 - Emacs Lisp editing: Maintain consistent indentation of Elisp code during editing.
-- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 - Save and restore the default theme using the `lightemacs-default-theme` variable.
 - And more.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
+
+## Requirements
+
+- Emacs >= 29.1
+- Git
 
 ## Install Lightemacs
 
