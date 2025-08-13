@@ -19,6 +19,41 @@ Here are the features that are enabled by default:
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+## Table of Contents
+
+- [Lightemacs - Fast and Lightweight Emacs framework](#lightemacs---fast-and-lightweight-emacs-framework)
+  - [Requirements](#requirements)
+  - [Install Lightemacs](#install-lightemacs)
+    - [Install Lightemacs into ~/.emacs.d](#install-lightemacs-into-emacsd)
+    - [Alternative: Install Lightemacs into ~/.lightemacs.d](#alternative-install-lightemacs-into-lightemacsd)
+  - [Update Lightemacs](#update-lightemacs)
+  - [Customizations](#customizations)
+    - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
+    - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
+  - [Features and modules enabled by default](#features-and-modules-enabled-by-default)
+    - [Default theme (mod-default-theme)](#default-theme-mod-default-theme)
+    - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
+    - [Better File Manager (mod-dired and mod-dired-filter)](#better-file-manager-mod-dired-and-mod-dired-filter)
+    - [Better completion (mod-corfu and mod-cape)](#better-completion-mod-corfu-and-mod-cape)
+    - [Better Syntax highlighting (mod-treesit-auto)](#better-syntax-highlighting-mod-treesit-auto)
+    - [Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)](#efficient-template-expansion-with-snippets-mod-yasnippet-and-mod-yasnippet-snippets)
+    - [Better undo/redo (mod-undo-fu and undo-fu-session)](#better-undoredo-mod-undo-fu-and-undo-fu-session)
+    - [Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)](#vim-keybindings-mod-evil-mod-evil-snipe-mod-evil-surround-and-evil-toggle-comment)
+    - [Keybindings (mod-keybindings)](#keybindings-mod-keybindings)
+    - [Save History (mod-savehist)](#save-history-mod-savehist)
+    - [Save and Restore Cursor (mod-saveplace)](#save-and-restore-cursor-mod-saveplace)
+    - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (mod-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-mod-autorevert)
+    - [Persist and Restore Text Scale (mod-persist-text-scale)](#persist-and-restore-text-scale-mod-persist-text-scale)
+    - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
+    - [Recent files (mod-recentf)](#recent-files-mod-recentf)
+    - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
+    - [Other Features](#other-features)
+  - [Author and license](#author-and-license)
+  - [Links](#links)
+
+<!-- markdown-toc end -->
+
 ## Requirements
 
 - Emacs >= 29.1
