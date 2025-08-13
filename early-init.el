@@ -49,6 +49,10 @@ display of folded text.")
                              evil-snipe
                              evil-surround
 
+                             ;; Modern code folding based on indentation levels.
+                             ;; Automatically enabled for Python and Yaml.
+                             outline-indent
+
                              ;; The stripspace Emacs package provides minor mode
                              ;; that automatically removes trailing whitespace
                              ;; and blank lines at the end of the buffer when
@@ -203,6 +207,12 @@ display of folded text.")
 
                              ;; Configure `org-mode' and `org-agenda'
                              org
+
+                             ;; Org-appear temporarily reveals normally hidden
+                             ;; elements (such as emphasis markers, links, or
+                             ;; entities) when the cursor enters them, and hides
+                             ;; them again when the cursor leaves.
+                             org-appear
 
                              ;; Filetype: Elisp
                              ;; `aggressive-indent-mode' is a minor mode that

@@ -42,6 +42,7 @@ Here are the features that are enabled by default:
     - [Better undo/redo (mod-undo-fu and undo-fu-session)](#better-undoredo-mod-undo-fu-and-undo-fu-session)
     - [Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)](#vim-keybindings-mod-evil-mod-evil-snipe-mod-evil-surround-and-evil-toggle-comment)
     - [Keybindings (mod-keybindings)](#keybindings-mod-keybindings)
+    - [Code folding based on indentation (mod-outline-indent)](#code-folding-based-on-indentation-mod-outline-indent)
     - [Save History (mod-savehist)](#save-history-mod-savehist)
     - [Save and Restore Cursor (mod-saveplace)](#save-and-restore-cursor-mod-saveplace)
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (mod-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-mod-autorevert)
@@ -221,6 +222,19 @@ The following packages are enabled alongside **evil-mode**:
 Defines the following key bindings:
 - Increase or decrease the text scale using Ctrl combined with `+` or `-`.
 
+### Code folding based on indentation (mod-outline-indent)
+
+The `mod-outline-indent` module configures the [outline-indent](https://github.com/jamescherti/outline-indent.el) package, which provides `outline-indent-minor-mode`, a minor mode that enables code folding according to indentation levels.
+
+In addition to code folding, *outline-indent* allows:
+- Moving indented blocks up and down
+- Indenting/unindenting to adjust indentation levels
+- Inserting a new line with the same indentation level as the current line
+- Move backward/forward to the indentation level of the current line
+- and other features.
+
+The `mod-outline-indent` module enabled `outline-indent-minor-mode` by default for YAML and Python files.
+
 ### Save History (mod-savehist)
 
 The **mod-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
@@ -268,7 +282,8 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **mod-compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **mod-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **mod-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
-- **mod-org**: Configures Org mode, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
+- **mod-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
+- **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 - **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
 
 ### Other Features

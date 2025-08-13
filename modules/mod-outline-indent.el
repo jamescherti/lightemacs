@@ -1,0 +1,77 @@
+;;; mod-outline-indent.el --- mod-outline-indent -*- lexical-binding: t -*-
+
+;; Author: James Cherti
+;; URL: https://github.com/jamescherti/lightemacs
+;; Package-Requires: ((emacs "29.1"))
+;; Keywords: maint
+;; Version: 0.0.9
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;;; Commentary:
+
+;; The outline-indent Emacs package provides a minor mode that enables code
+;; folding based on indentation levels.
+;;
+;; In addition to code folding, *outline-indent* allows:
+;; - Moving indented blocks up and down
+;; - Indenting/unindenting to adjust indentation levels
+;; - Inserting a new line with the same indentation level as the current line
+;; - Move backward/forward to the indentation level of the current line
+;; - and other features.
+;;
+;; This mode is enabled by default for YAML and Python files.
+
+;;; Code:
+
+(use-package outline-indent
+  :diminish outline-indent-minor-mode
+  :commands (outline-indent-minor-mode
+             outline-indent-insert-heading)
+  :hook ((yaml-mode . outline-indent-minor-mode)
+         (yaml-ts-mode . outline-indent-minor-mode)
+
+         (python-mode . outline-indent-minor-mode)
+         (python-ts-mode . outline-indent-minor-mode))
+
+  :preface
+  (defun mod-outline-indent--setup-yaml-indent-offset ()
+    "Setup Yaml indent offset."
+    (let ((offset (cond
+                   ((bound-and-true-p yaml-indent-offset)
+                    yaml-indent-offset)
+
+                   ((bound-and-true-p tab-width)
+                    tab-width)
+
+                   (t
+                    2))))
+      (setq-local outline-indent-default-offset offset)
+      (setq-local outline-indent-shift-width offset)))
+
+  (defun mod-outline-indent--setup-python-indent-offset ()
+    "Setup Python indent offset."
+    (let ((offset (cond
+                   ((bound-and-true-p python-indent-offset)
+                    python-indent-offset)
+
+                   ((bound-and-true-p tab-width)
+                    tab-width)
+
+                   (t
+                    4))))
+      (setq-local outline-indent-default-offset offset)
+      (setq-local outline-indent-shift-width offset)))
+
+  :init
+  (dolist (hook '(python-mode python-ts-mode-hook))
+    (add-hook hook #'outline-indent-minor-mode)
+    (add-hook hook #'mod-outline-indent--setup-python-indent-offset))
+
+  (dolist (hook '(yaml-mode yaml-ts-mode-hook))
+    (add-hook hook #'mod-outline-indent--setup-yaml-indent-offset))
+
+  (setq outline-indent-ellipsis lightemacs-ellipsis))
+
+(provide 'mod-outline-indent)
+
+;;; mod-outline-indent.el ends here

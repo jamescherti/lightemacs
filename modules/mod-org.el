@@ -17,7 +17,15 @@
   :commands (org-mode
              org-indent-mode
              org-set-tags-command
-             org-version)
+             org-version
+             org-agenda
+             org-capture
+             org-schedule
+             org-agenda-filter
+             org-agenda-todo
+             org-agenda-set-tags
+             org-agenda-filter-remove-all
+             org-agenda-goto)
 
   :mode
   ("\\.org\\'" . org-mode)
@@ -205,19 +213,8 @@
   (setq org-src-window-setup 'other-window)
 
   ;; Display indirect tree buffers in the current window
-  (setq org-indirect-buffer-display 'current-window))
+  (setq org-indirect-buffer-display 'current-window)
 
-(use-package org-agenda
-  :commands (org-agenda
-             org-capture
-             org-schedule
-             org-agenda-filter
-             org-agenda-todo
-             org-agenda-set-tags
-             org-agenda-filter-remove-all
-             org-agenda-goto)
-
-  :init
   ;; Show agenda in the current window, keeping all other windows.
   (setq org-agenda-window-setup 'current-window)
 
