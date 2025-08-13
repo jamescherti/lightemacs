@@ -42,7 +42,7 @@ Here are some of the features that are enabled by default:
     - [Better Syntax highlighting (mod-treesit-auto)](#better-syntax-highlighting-mod-treesit-auto)
     - [Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)](#efficient-template-expansion-with-snippets-mod-yasnippet-and-mod-yasnippet-snippets)
     - [Better undo/redo (mod-undo-fu and undo-fu-session)](#better-undoredo-mod-undo-fu-and-undo-fu-session)
-    - [Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)](#vim-keybindings-mod-evil-mod-evil-snipe-mod-evil-surround-and-evil-toggle-comment)
+    - [Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and mod-evil-toggle-comment)](#vim-keybindings-mod-evil-mod-evil-snipe-mod-evil-surround-and-mod-evil-toggle-comment)
     - [Keybindings (mod-keybindings)](#keybindings-mod-keybindings)
     - [Code folding based on indentation (mod-outline-indent)](#code-folding-based-on-indentation-mod-outline-indent)
     - [Save History (mod-savehist)](#save-history-mod-savehist)
@@ -203,7 +203,7 @@ The default undo system in Emacs has two main issues that undo-fu fixes:
 
 If you use Evil mode, the `mod-undo-fu` module will replace Evil’s undo system with `undo-fu`.
 
-### Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and evil-toggle-comment)
+### Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and mod-evil-toggle-comment)
 
 By default, [evil-mode](https://github.com/emacs-evil/evil) is enabled. (Users who prefer not to use Vim keybindings can easily disable it.)
 
