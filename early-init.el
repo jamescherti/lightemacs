@@ -23,7 +23,7 @@
                              ;; beautiful deep blue variant of the Tomorrow
                              ;; Night theme, which is renowned for its elegant
                              ;; color palette that is pleasing to the eyes.
-                             tomorrow-night-deepblue-theme
+                             default-theme
 
                              ;; Vim keybindings
                              evil
@@ -32,9 +32,9 @@
                              evil-surround
 
                              ;; The stripspace Emacs package provides minor mode
-                             ;;  that automatically removes trailing whitespace
-                             ;;  and blank lines at the end of the buffer when
-                             ;;  saving.
+                             ;; that automatically removes trailing whitespace
+                             ;; and blank lines at the end of the buffer when
+                             ;; saving.
                              stripspace
 
                              ;; The yasnippet package provides a template system

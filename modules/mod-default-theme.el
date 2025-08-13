@@ -1,4 +1,4 @@
-;;; mod-tomorrow-night-deepblue-theme.el --- Module: tomorrow-night-deepblue-theme -*- lexical-binding: t -*-
+;;; mod-default-theme.el --- Module: tomorrow-night-deepblue-theme -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -34,10 +34,10 @@
   ;; Load the tomorrow-night-deepblue theme
   (load-theme 'tomorrow-night-deepblue t))
 
-(provide 'mod-tomorrow-night-deepblue-theme)
+(provide 'mod-default-theme)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; mod-tomorrow-night-deepblue-theme.el ends here
+;;; mod-default-theme.el ends here

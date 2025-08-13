@@ -96,7 +96,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ## Features and modules enabled by default
 
-### Default theme (mod-tomorrow-night-deepblue-theme)
+### Default theme (mod-default-theme)
 
 The **Tomorrow Night Deepblue Emacs theme** is a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes.
 
