@@ -150,7 +150,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 The `mod-default-theme` loads the default theme. It can be configured via the `lightemacs-default-theme` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/post-init.el` as follows:
 
 ```emacs-lisp
-(setq lightemacs-default-theme "tomorrow-night-deepblue")
+(setq lightemacs-default-theme 'tomorrow-night-deepblue)
 ```
 
 The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes:

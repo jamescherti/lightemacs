@@ -198,6 +198,11 @@ display of folded text.")
                              ;; (GFM).
                              markdown-mode
 
+                             ;; Automatically generate or refresh the table of
+                             ;; contents in Markdown files using
+                             ;; 'M-x markdown-toc-generate-or-refresh-toc'
+                             markdown-toc
+
                              ;; Configure `org-mode' and `org-agenda'
                              org
 
@@ -240,12 +245,7 @@ display of folded text.")
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq minimal-emacs-user-directory lightemacs-user-emacs-directory)
 
-;;; Other parameters
-
-;; Allow Emacs to upgrade built-in packages, such as Org mode
-(setq package-install-upgrade-built-in t)
-
-;;; Load minimal-emacs.d early-init.el
+;;; Functions
 
 (defun lightemacs-load-modules (lightemacs-modules)
   "Load all modules listed in LIGHTEMACS-MODULES."
@@ -275,7 +275,13 @@ display of folded text.")
         (not (bound-and-true-p init-file-debug))
         'nosuffix))
 
-;; Load minimal-emacs.d early-init.el
+;;; Other parameters
+
+;; Allow Emacs to upgrade built-in packages, such as Org mode
+(setq package-install-upgrade-built-in t)
+
+;;; Load minimal-emacs.d early-init.el
+
 (lightemacs-load-init-file "early-init.el")
 
 ;; Local variables:
