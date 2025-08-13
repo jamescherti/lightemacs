@@ -130,6 +130,11 @@
   ;; hide changes.
   (setq org-log-redeadline nil)
 
+  ;; When a TODO keyword is changed, Org adds a state-change log with a
+  ;; timestamp under the heading. Setting this to nil keeps these logs in the
+  ;; main content instead of placing them in a drawer.
+  (setq org-log-into-drawer nil)
+
   ;; RET follows links; intuitive navigation but may conflict with normal line
   ;; breaks.
   (setq org-return-follows-link t)
