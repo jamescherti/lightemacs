@@ -36,6 +36,15 @@ display of folded text.")
                              ;; color palette that is pleasing to the eyes.
                              default-theme
 
+                             ;; Gcmh optimizes
+                             ;; Emacs’ garbage collection behavior by adjusting
+                             ;; the garbage collection threshold dynamically.
+                             ;; Instead of collecting memory frequently during
+                             ;; normal editing, gcmh increases the threshold
+                             ;; while Emacs is idle, reducing interruptions and
+                             ;; improving perceived performance.
+                             gcmh
+
                              ;; Vim keybindings
                              evil
                              evil-commentary
