@@ -314,4 +314,4 @@ You should have received a copy of the GNU General Public License along with thi
 
 ## Links
 
-- [lightemacs @GitHub](https://github.com/jamescherti/lightemacs)
+- [Lightemacs @GitHub](https://github.com/jamescherti/lightemacs)
