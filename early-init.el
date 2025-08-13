@@ -16,8 +16,6 @@
 
 (defvar lightemacs-default-theme 'tomorrow-night-deepblue
   "Name of the default theme to load, if available.
-The theme is loaded in `early-init.el' to prevent a visual flash during
-startup.
 Set this to nil to disable early theme loading.")
 
 (defvar lightemacs-ellipsis " ▼"
@@ -264,7 +262,8 @@ display of folded text.")
 
 (defun lightemacs-load-default-theme ()
   "Load the theme defined in `lightemacs-default-theme' if it is installed."
-  (when (member lightemacs-default-theme (custom-available-themes))
+  (when (and lightemacs-default-theme
+             (member lightemacs-default-theme (custom-available-themes)))
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme lightemacs-default-theme t)))
 
