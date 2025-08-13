@@ -32,8 +32,8 @@
   ;; allows flexible refiling but may slow completion in very large files and
   ;; requires remembering hierarchy.
   (setq org-refile-targets
-        '((org-agenda-files . (:maxlevel . 5))
-          (nil . (:maxlevel . 5))))
+        '((nil :maxlevel . 3)
+          (org-agenda-files :maxlevel . 3)))
 
   ;; Allow creating new parent nodes when refiling, but ask for confirmation;
   ;; provides flexibility in organization but adds an extra prompt that may
@@ -86,19 +86,18 @@
   ;; with other syntax highlighting.
   (setq org-fontify-quote-and-verse-blocks t)
 
-  ;; Do not fontify the whole block delimiter line; prevents color bleeding
+  ;; Do not fontify the entire block delimiter line; prevents color bleeding
+  ;; when folding headings or blocks.
   (setq org-fontify-whole-block-delimiter-line nil)
 
-  ;; Disable sub/superscript interpretation (_ and ^); avoids accidental
-  ;; formatting but loses math-style notation.
-  (setq org-use-sub-superscripts nil)
+  ;; Disable sub/superscript interpretation (_ and ^)
+  (setq org-use-sub-superscripts '{})
 
   ;; Indentation per heading level; controls visual hierarchy but tight spacing
   ;; may feel cramped.
   (setq org-indent-indentation-per-level 2)
 
-  ;; No extra indentation for source blocks; keeps code aligned with text but
-  ;; may reduce readability.
+  ;; No extra indentation for source blocks. It keeps code aligned with text.
   (setq org-edit-src-content-indentation 0)
 
   ;; Set ellipsis for folded sections; improves folding visibility but may not
@@ -140,7 +139,7 @@
   (setq org-return-follows-link t)
 
   ;; More comprehensive imenu
-  (setq org-imenu-depth 5)
+  (setq org-imenu-depth 6)
 
   ;; Fast todo selection without popup; efficient for experts but hides guidance
   ;; for beginners.
@@ -195,14 +194,12 @@
   ;; after yanking.
   (setq org-yank-folded-subtrees t)
 
-  ;; To prevent agenda commands to honor startup options when visiting an agenda
-  ;; file for the first time, use this:
-  ;; https://orgmode.org/worg/agenda-optimization.html
-  (setq org-agenda-inhibit-startup t)
-
   ;; Insert new headings after the current subtree instead of at point;
   ;; maintains logical structure
   (setq org-insert-heading-respect-content t)
+
+  ;; When nil, it will go to the end of the line before making a new line.
+  (setq org-M-RET-may-split-line nil)
 
   ;; Prefer future dates when entering incomplete dates; useful for planning
   ;; upcoming tasks
@@ -212,13 +209,81 @@
   ;; readability
   (setq org-link-descriptive t)
 
-  ;; Do not preserve leading indentation in source blocks; normalizes code
-  ;; indentation
-  (setq org-src-preserve-indentation nil)
+  ;; Use native major-mode indentation
+  (setq org-src-preserve-indentation t)
 
   ;; Make TAB behave according to the language mode inside source blocks;
   ;; consistent editing experience
-  (setq org-src-tab-acts-natively t))
+  (setq org-src-tab-acts-natively t)
+
+  ;; No need to ask. Just exercise caution.
+  (setq org-confirm-babel-evaluate nil
+        ;; Do not ask for confirmation before executing Emacs Lisp links.
+        org-link-elisp-confirm-function nil)
+
+  ;; Show src buffer in popup
+  (setq org-src-window-setup 'other-window)
+
+  ;; Display indirect tree buffers in the current window
+  (setq org-indirect-buffer-display 'current-window)
+
+  (setq org-hide-leading-stars t
+        ;; showeverything is Org's default, but it ignores
+        ;; org-hide-block-startup (#+startup: hideblocks), archived trees,
+        ;; hidden drawers, and VISIBILITY properties. Setting it to nil has the
+        ;; same effect functionally, but respects these settings.
+        org-startup-folded nil
+        org-image-actual-width nil
+        org-priority-faces
+        '((?A . error)
+          (?B . warning)
+          (?C . shadow)))
+
+  (setq org-todo-keywords
+        '((sequence
+           "TODO(t)"
+           "PROJ(p)"  ; A project
+           "LOOP(r)"  ; A recurring task
+           "STRT(s)"  ; A task that is in progress
+           "WAIT(w)"  ; Something external is holding up this task
+           "HOLD(h)"  ; This task is paused/on hold because of me
+           "IDEA(i)"  ; An unconfirmed and unapproved task or notion
+           "|"
+           "DONE(d)"  ; Task successfully completed
+           "KILL(k)") ; Task was cancelled, aborted, or is no longer applicable
+          (sequence
+           "[ ](T)"   ; A task that needs doing
+           "[-](S)"   ; Task is in progress
+           "[?](W)"   ; Task is being held up or paused
+           "|"
+           "[X](D)")  ; Task was completed
+          (sequence
+           "|"
+           "OKAY(o)"
+           "YES(y)"
+           "NO(n)"))
+        org-todo-keyword-faces
+        '(("[-]"  . +org-todo-active)
+          ("STRT" . +org-todo-active)
+          ("[?]"  . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)
+          ("PROJ" . +org-todo-project)
+          ("NO"   . +org-todo-cancel)
+          ("KILL" . +org-todo-cancel)))
+
+  ;; To prevent agenda commands to honor startup options when visiting an agenda
+  ;; file for the first time, use this:
+  ;; https://orgmode.org/worg/agenda-optimization.html
+  (setq org-agenda-inhibit-startup t)
+
+  ;; Show agenda in the current window, keeping all other windows.
+  (setq org-agenda-window-setup 'current-window)
+
+  (setq org-agenda-skip-unavailable-files t
+        org-agenda-start-day "-3d"
+        org-agenda-start-on-weekday nil
+        org-agenda-span 10))
 
 (provide 'mod-org)
 
