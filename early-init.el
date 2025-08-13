@@ -14,7 +14,7 @@
 
 ;;; Global variables
 
-(defvar lightemacs-default-theme "tomorrow-night-deepblue"
+(defvar lightemacs-default-theme 'tomorrow-night-deepblue
   "Name of the default theme to load, if available.
 The theme is loaded in `early-init.el' to prevent a visual flash during
 startup.
@@ -171,7 +171,7 @@ display of folded text.")
                              ;; Dockerfile, Go, Java, JavaScript, JSON, Python,
                              ;; Rust, TOML, TypeScript, YAML, Elisp, Lua,
                              ;; and many others.
-                             treesit-auto
+                             ;; treesit-auto
 
                              ;; Autorevert is a feature that automatically
                              ;; updates the contents of a buffer to reflect
@@ -264,9 +264,9 @@ display of folded text.")
 
 (defun lightemacs-load-default-theme ()
   "Load the theme defined in `lightemacs-default-theme' if it is installed."
-  (when (member (intern lightemacs-default-theme) (custom-available-themes))
+  (when (member lightemacs-default-theme (custom-available-themes))
     (mapc #'disable-theme custom-enabled-themes)
-    (load-theme (intern lightemacs-default-theme) t)))
+    (load-theme lightemacs-default-theme t)))
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."
