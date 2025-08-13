@@ -201,7 +201,7 @@ display of folded text.")
                              ;; (GFM).
                              markdown-mode
 
-                             ;; Filetype: org
+                             ;; Configure `org-mode' and `org-agenda'
                              org
 
                              ;; Filetype: Elisp

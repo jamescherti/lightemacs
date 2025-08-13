@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Configure `org-mode'.
+;; Configure `org-mode' and `org-agenda'.
 
 ;;; Code:
 
@@ -48,10 +48,6 @@
   ;; in uneven or inconsistent tag placement across headings.
   (setq org-auto-align-tags nil)
 
-  ;; Set tag column to 0 (tags appear immediately after heading); simplifies
-  ;; layout but may make long headings with tags harder to read.
-  (setq org-tags-column 0)
-
   ;; Ctrl-A/E moves to beginning/end of heading instead of line; improves
   ;; navigation.
   (setq org-special-ctrl-a/e t)
@@ -63,6 +59,9 @@
   ;; Hide markers like * / _ = ~; cleaner view but markers are not visible for
   ;; editing emphasis.
   (setq org-hide-emphasis-markers t)
+
+  ;; Show entities as UTF8 characters.
+  (setq org-pretty-entities t)
 
   ;; Do not truncate long lines on startup; easier reading for wide text but may
   ;; wrap long lines visually.
@@ -141,17 +140,9 @@
   ;; More comprehensive imenu
   (setq org-imenu-depth 6)
 
-  ;; Fast todo selection without popup; efficient for experts but hides guidance
-  ;; for beginners.
-  (setq org-use-fast-todo-selection 'expert)
-
   ;; Prettify entities without sub/superscripts; cleaner symbols but loses
   ;; fine-grained formatting.
   (setq org-pretty-entities-include-sub-superscripts nil)
-
-  ;; Loop only over headlines in active region; faster processing but ignores
-  ;; headlines outside region.
-  (setq org-loop-over-headlines-in-active-region 'start-level)
 
   ;; Disable stepwise path completion; direct path completion but may be harder
   ;; to navigate long hierarchies.
@@ -174,25 +165,6 @@
   ;; incomplete; preserves logical consistency but may frustrate users if
   ;; subtasks are partially complete.
   (setq org-enforce-todo-checkbox-dependencies t)
-
-  ;; When non-nil, adjust the indentation level of yanked (pasted) Org subtrees
-  ;; to match the context. This ensures that subtrees are inserted at the
-  ;; correct depth, relative to the surrounding content.
-  ;;
-  ;; Benefit:
-  ;; - Maintains structural consistency in Org documents when pasting subtrees
-  ;; into different outline levels.
-  ;; - Prevents malformed hierarchies by adapting subtree heading levels
-  ;; automatically.
-  (setq org-yank-adjusted-subtrees t)
-
-  ;; When non-nil, automatically fold (hide) yanked Org subtrees after insertion.
-  ;;
-  ;; Benefit:
-  ;; - Reduces visual clutter by collapsing inserted content immediately.
-  ;; - Preserves the folding state of the document and improves readability
-  ;; after yanking.
-  (setq org-yank-folded-subtrees t)
 
   ;; Insert new headings after the current subtree instead of at point;
   ;; maintains logical structure
@@ -220,12 +192,6 @@
   (setq org-confirm-babel-evaluate nil
         ;; Do not ask for confirmation before executing Emacs Lisp links.
         org-link-elisp-confirm-function nil)
-
-  ;; Show src buffer in popup
-  (setq org-src-window-setup 'other-window)
-
-  ;; Display indirect tree buffers in the current window
-  (setq org-indirect-buffer-display 'current-window)
 
   (setq org-hide-leading-stars t
         ;; showeverything is Org's default, but it ignores
@@ -272,18 +238,41 @@
           ("NO"   . +org-todo-cancel)
           ("KILL" . +org-todo-cancel)))
 
+  ;; Show src buffer in popup
+  (setq org-src-window-setup 'other-window)
+
+  ;; Display indirect tree buffers in the current window
+  (setq org-indirect-buffer-display 'current-window))
+
+(use-package org-agenda
+  :commands (org-agenda
+             org-capture
+             org-schedule
+             org-agenda-filter
+             org-agenda-todo
+             org-agenda-set-tags
+             org-agenda-filter-remove-all
+             org-agenda-goto)
+
+  :init
+  ;; Show agenda in the current window, keeping all other windows.
+  (setq org-agenda-window-setup 'current-window)
+
   ;; To prevent agenda commands to honor startup options when visiting an agenda
   ;; file for the first time, use this:
   ;; https://orgmode.org/worg/agenda-optimization.html
   (setq org-agenda-inhibit-startup t)
 
-  ;; Show agenda in the current window, keeping all other windows.
-  (setq org-agenda-window-setup 'current-window)
-
   (setq org-agenda-skip-unavailable-files t
-        org-agenda-start-day "-3d"
         org-agenda-start-on-weekday nil
-        org-agenda-span 10))
+        org-agenda-start-day "-3d"
+        org-agenda-span 10)
+
+  ;; Prevents clutter in agenda by skipping already done scheduled tasks.
+  (setq org-agenda-skip-scheduled-if-done t)
+
+  ;; Reduces clutter for completed tasks with deadlines.
+  (setq org-agenda-skip-deadline-if-done t))
 
 (provide 'mod-org)
 
