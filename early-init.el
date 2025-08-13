@@ -20,6 +20,15 @@ The theme is loaded in `early-init.el' to prevent a visual flash during
 startup.
 Set this to nil to disable early theme loading.")
 
+(defvar lightemacs-ellipsis " ▼"
+  "String used to indicate folded sections in Org-mode and Outline-mode.
+This ellipsis appears at the end of a heading or section that has been
+collapsed. It provides a visual cue that more content is hidden. You can
+customize this variable to use a different character or string (such as '…',
+'▶', or other Unicode symbols) to match your visual preference or theme. This
+variable is buffer-local in Org-mode and Outline-mode, affecting only the
+display of folded text.")
+
 (defvar lightemacs-modules '(;; This loaded the default theme specified
                              ;; in the `lightemacs-default-theme' variable.
                              ;;
@@ -191,6 +200,9 @@ Set this to nil to disable early theme loading.")
                              ;; well as extensions like GitHub Flavored Markdown
                              ;; (GFM).
                              markdown-mode
+
+                             ;; Filetype: org
+                             org
 
                              ;; Filetype: Elisp
                              ;; `aggressive-indent-mode' is a minor mode that
