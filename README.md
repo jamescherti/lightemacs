@@ -4,7 +4,7 @@ The Lightemacs project is a fast, lightweight Emacs framework that uses modern E
 
 All modules and packages are activated only when required, allowing Lightemacs to start very quickly.
 
-Here are the features that are enabled by default:
+Here are some of the features that are enabled by default:
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
