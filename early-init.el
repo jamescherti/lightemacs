@@ -31,6 +31,12 @@
                              evil-snipe
                              evil-surround
 
+                             ;; The stripspace Emacs package provides minor mode
+                             ;;  that automatically removes trailing whitespace
+                             ;;  and blank lines at the end of the buffer when
+                             ;;  saving.
+                             stripspace
+
                              ;; The yasnippet package provides a template system
                              ;; that enhances text editing by enabling users to
                              ;; define and use snippets, which are predefined

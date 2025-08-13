@@ -2,6 +2,22 @@
 
 The Lightemacs project is a fast and lightweight Emacs framework.
 
+Here are the features that are enabled by default:
+- Automatically removes trailing whitespace and blank lines at the end of the buffer when saving
+- Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
+- Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
+- Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state.
+- Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
+- The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
+- Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
+- Additional filetypes: markdown-mode.
+- Emacs Lisp editing: Maintain consistent indentation of Elisp code during editing.
+- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
+- Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
+- And more.
+
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
+
 ## Install Lightemacs
 
 - **Important:** Ensure that the `~/.emacs` and `~/.emacs.el` files do not exist. These files cause Emacs to ignore `~/.emacs.d/init.el`. This behavior is due to the way Emacs searches for initialization files ([more information](https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html#Find-Init)). **Simply delete the *~/.emacs* and *~/.emacs.el* files avoid this issue.**
@@ -36,6 +52,47 @@ To update your Lightemacs configuration and its submodules, run the following co
 git -C ~/.emacs.d pull --recurse-submodules
 git -C ~/.emacs.d submodule update --init --recursive
 ```
+
+## Customizations
+
+### Never modify init.el and early-init.el. Modify these instead...
+
+**The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
+
+The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
+
+These files allow you to further customize the initialization sequence:
+
+- `~/.emacs.d/pre-init.el`: This file is loaded before `init.el`. Use it to set up variables or configurations that need to be available early in the initialization process but after `early-init.el`.
+
+- `~/.emacs.d/post-init.el`: This file is loaded after `init.el`. It is useful for additional configurations or package setups that depend on the configurations in `init.el`.
+
+- `~/.emacs.d/pre-early-init.el`: This file is loaded before `early-init.el`. Use it for configurations that need to be set even earlier in the startup sequence, typically affecting the initial setup of the Emacs environment.
+
+- `~/.emacs.d/post-early-init.el`: This file is loaded after `early-init.el` but before `init.el`. It is useful for setting up configurations that depend on the early initialization but need to be set before the main initialization begins.
+
+Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-early-init.el` files with the following header to prevent them from being byte-compiled and to activate lexical binding:
+```elisp
+;;; FILENAME.el --- DESCRIPTION -*- no-byte-compile: t; lexical-binding: t; -*-
+```
+
+Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
+
+*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded.)*
+
+**Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the files `pre-early-init.el`, `post-early-init.el`, `pre-init.el`, and `post-init.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
+
+### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
+
+**Note:** Enabling the tool-bar or menu-bar may slightly increase your startup time.
+
+To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
+
+``` emacs-lisp
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+```
+
+These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
 ## Features and modules enabled by default
 
@@ -141,6 +198,14 @@ This package also facilitates grouping buffers into categories, allowing buffers
 - All Dired buffers maintain the same font size, treating Dired as a unified "file explorer" where the text scale remains consistent across different buffers.
 
 This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
+
+### Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
+
+The **mod-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
+
+It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
 
 ### Recent files (mod-recentf)
 
