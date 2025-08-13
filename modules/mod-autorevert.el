@@ -29,8 +29,7 @@
 
   :init
   (setq auto-revert-interval 3)
-  (setq auto-revert-use-notify t)
-  (setq auto-revert-avoid-polling t))
+  (setq auto-revert-use-notify t))
 
 (provide 'mod-autorevert)
 
