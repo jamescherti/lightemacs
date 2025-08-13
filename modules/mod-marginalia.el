@@ -18,6 +18,8 @@
 (use-package marginalia
   :commands (marginalia-mode
              marginalia-cycle)
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
 
   :hook
   (after-init . marginalia-mode)
