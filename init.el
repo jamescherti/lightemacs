@@ -19,22 +19,8 @@
 
 ;;; Load modules
 
-(defun lightemacs-load-modules ()
-  "Load all modules listed in `lightemacs-modules'."
-  (let ((modules-dir (expand-file-name "modules"
-                                       lightemacs-user-emacs-directory)))
-    (dolist (mod lightemacs-modules)
-      (let* ((feature-str (format "mod-%s" mod))
-             (feature-symbol (intern feature-str))
-             (module-file (expand-file-name (format "%s.el" feature-str)
-                                            modules-dir)))
-        (when init-file-debug
-          (message "[LOAD MODULE] %s" module-file))
-        (require feature-symbol module-file)))))
-
-(let ((lightemacs-modules '(lightemacs)))
-  (lightemacs-load-modules))
-(lightemacs-load-modules)
+(lightemacs-load-modules '(lightemacs))
+(lightemacs-load-modules lightemacs-modules)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)

@@ -14,16 +14,25 @@
 
 ;;; Global variables
 
-(defvar lightemacs-modules '(;; Compile-angel speeds up Emacs by ensuring that
-                             ;; all Elisp libraries are both byte-compiled and
-                             ;; native-compiled.
-                             compile-angel
+(defvar lightemacs-default-theme "tomorrow-night-deepblue"
+  "Name of the default theme to load, if available.
+The theme is loaded in `early-init.el' to prevent a visual flash during
+startup.
+Set this to nil to disable early theme loading.")
 
-                             ;; The Emacs theme Tomorrow Night Deepblue is a
+(defvar lightemacs-modules '(;; This loaded the default theme specified
+                             ;; in the `lightemacs-default-theme' variable.
+                             ;;
+                             ;; The default theme tomorrow-night-deepblue is a
                              ;; beautiful deep blue variant of the Tomorrow
                              ;; Night theme, which is renowned for its elegant
                              ;; color palette that is pleasing to the eyes.
                              default-theme
+
+                             ;; Compile-angel speeds up Emacs by ensuring that
+                             ;; all Elisp libraries are both byte-compiled and
+                             ;; native-compiled.
+                             compile-angel
 
                              ;; Vim keybindings
                              evil
@@ -210,6 +219,19 @@
 (setq package-install-upgrade-built-in t)
 
 ;;; Load minimal-emacs.d early-init.el
+
+(defun lightemacs-load-modules (lightemacs-modules)
+  "Load all modules listed in LIGHTEMACS-MODULES."
+  (let ((modules-dir (expand-file-name "modules"
+                                       lightemacs-user-emacs-directory)))
+    (dolist (mod lightemacs-modules)
+      (let* ((feature-str (format "mod-%s" mod))
+             (feature-symbol (intern feature-str))
+             (module-file (expand-file-name (format "%s.el" feature-str)
+                                            modules-dir)))
+        (when init-file-debug
+          (message "[LOAD MODULE] %s" module-file))
+        (require feature-symbol module-file)))))
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."

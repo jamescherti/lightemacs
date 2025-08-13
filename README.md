@@ -14,6 +14,7 @@ Here are the features that are enabled by default:
 - Emacs Lisp editing: Maintain consistent indentation of Elisp code during editing.
 - Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
+- Save and restore the default theme using the `lightemacs-default-theme` variable.
 - And more.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
@@ -83,6 +84,8 @@ Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief descript
 **Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the files `pre-early-init.el`, `post-early-init.el`, `pre-init.el`, and `post-init.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
+
+The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
 
 **Note:** Enabling the tool-bar or menu-bar may slightly increase your startup time.
 
