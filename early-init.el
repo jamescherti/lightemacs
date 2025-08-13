@@ -38,7 +38,7 @@ display of folded text.")
 
                              ;; Vim keybindings
                              evil
-                             evil-toggle-comment
+                             evil-commentary
                              evil-snipe
                              evil-surround
 
