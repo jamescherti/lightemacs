@@ -5,8 +5,8 @@ The Lightemacs project is a fast, lightweight Emacs framework that uses modern E
 Here are the features that are enabled by default:
 - Automatically removes trailing whitespace and blank lines at the end of the buffer when saving
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
+- Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
-- Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state.
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
 - The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
 - Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
