@@ -24,7 +24,11 @@ Optionally, you can enable the following features that are disabled by default:
 - **mod-group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
 - **mod-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 
+**What is the difference with minimal-emacs.d?**
+
 The Lightemacs project is built upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files (`init.el` and `early-init.el`), allowing it to be configured identically to minimal-emacs.d while inheriting its high-quality default settings and efficient startup performance.
+
+Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs configuration with only essential defaults, Lightemacs extends this foundation by enabling a curated set of modern features and optimizations out of the box. While minimal-emacs.d requires users to manually configure and enable most enhancements, Lightemacs activates performance improvements, advanced completion systems, persistent undo, snippet support, and additional filetype modes automatically, while still retaining full configurability and compatibility with minimal-emacs.d’s initialization files.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
@@ -155,7 +159,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ### Disabled by default: mod-treesit-auto (better syntax highlighting)
 
-Module: mod-treesit-auto
+Module: **mod-treesit-auto**
 
 The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
