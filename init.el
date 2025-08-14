@@ -13,14 +13,14 @@
 ;;; Code:
 
 ;; Load minimal-emacs.d init.el
-(if (fboundp 'lightemacs-load-init-file)
-    (lightemacs-load-init-file "init.el")
+(if (fboundp 'lightemacs--load-init-file)
+    (lightemacs--load-init-file "init.el")
   (error "The early-init.el file was not loaded"))
 
 ;;; Load modules
 
-(lightemacs-load-modules '(lightemacs))
-(lightemacs-load-modules lightemacs-modules)
+(lightemacs--load-modules '(lightemacs))
+(lightemacs--load-modules lightemacs-modules)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)

@@ -256,10 +256,14 @@ display of folded text.")
 
 ;;; Functions
 
-(defun lightemacs-load-modules (lightemacs-modules)
+(defun lightemacs--modules-dir ()
+  "Return the path to the modules directory."
+  (expand-file-name "lisp/modules"
+                    lightemacs-user-emacs-directory))
+
+(defun lightemacs--load-modules (lightemacs-modules)
   "Load all modules listed in LIGHTEMACS-MODULES."
-  (let ((modules-dir (expand-file-name "modules"
-                                       lightemacs-user-emacs-directory)))
+  (let ((modules-dir (lightemacs--modules-dir)))
     (dolist (mod lightemacs-modules)
       (let* ((feature-str (format "mod-%s" mod))
              (feature-symbol (intern feature-str))
@@ -269,17 +273,17 @@ display of folded text.")
           (message "[LOAD MODULE] %s" module-file))
         (require feature-symbol module-file)))))
 
-(defun lightemacs-load-default-theme ()
+(defun lightemacs--load-default-theme ()
   "Load the theme defined in `lightemacs-default-theme' if it is installed."
   (when (and lightemacs-default-theme
              (member lightemacs-default-theme (custom-available-themes)))
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme lightemacs-default-theme t)))
 
-(defun lightemacs-load-init-file (filename)
+(defun lightemacs--load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."
-  (load (expand-file-name (format "modules/init/%s" filename)
-                          lightemacs-user-emacs-directory)
+  (load (expand-file-name (format "init/%s" filename)
+                          (lightemacs--modules-dir))
         nil
         (not (bound-and-true-p init-file-debug))
         'nosuffix))
@@ -291,7 +295,7 @@ display of folded text.")
 
 ;;; Load minimal-emacs.d early-init.el
 
-(lightemacs-load-init-file "early-init.el")
+(lightemacs--load-init-file "early-init.el")
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
