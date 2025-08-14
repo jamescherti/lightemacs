@@ -27,16 +27,21 @@ customize this variable to use a different character or string (such as '…',
 variable is buffer-local in Org-mode and Outline-mode, affecting only the
 display of folded text.")
 
-
-;; Modules not enabled by default:
-;; - treesit-auto: Tree-sitter is an incremental parsing system introduced in
-;;   Emacs 29 that provides precise, high-performance syntax highlighting. It
-;;   supports a broad set of programming languages, including Bash, C, C++, C#,
-;;   CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML,
-;;   TypeScript, YAML, Elisp, Lua, and many others.
-;;
 ;; Modules enabled by default:
-(defvar lightemacs-modules '(;; This loaded the default theme specified
+(defvar lightemacs-modules '(;; Vim keybindings (Disabled):
+                             ;; ---------------------------
+                             ;; evil
+                             ;; evil-commentary
+                             ;; evil-snipe
+                             ;; evil-surround
+
+                             ;; Treesitter (Better syntax highlighting)
+                             ;; ---------------------------------------
+                             ;; treesit-auto
+
+                             ;; Modules enabled by default
+                             ;; --------------------------
+                             ;; This loaded the default theme specified
                              ;; in the `lightemacs-default-theme' variable.
                              ;;
                              ;; The default theme tomorrow-night-deepblue is a
@@ -57,12 +62,6 @@ display of folded text.")
                              ;; while Emacs is idle, reducing interruptions and
                              ;; improving perceived performance.
                              gcmh
-
-                             ;; Vim keybindings
-                             evil
-                             evil-commentary
-                             evil-snipe
-                             evil-surround
 
                              ;; Modern code folding based on indentation levels.
                              ;; Automatically enabled for Python and Yaml.
