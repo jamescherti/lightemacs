@@ -1,1 +1,7 @@
-/var/
+*
+!README.md
+!early-init.el
+!init.el
+!.github/
+!.LICENSE
+!/lisp/modules/
