@@ -171,6 +171,26 @@ display of folded text.")
                              ;; various tasks.
                              consult
 
+                             ;; prescient.el is a library for sorting and
+                             ;; filtering lists of candidates, such as those
+                             ;; presented by packages like Vertico or Corfu.
+                             prescient
+
+                             ;; When used with Vertico, prescient.el enhances
+                             ;; minibuffer completion by dynamically reordering
+                             ;; candidates based on frequency and recency,
+                             ;; making it faster to select commonly used options
+                             ;; while preserving consistent, predictable
+                             ;; filtering.
+                             prescient-vertico
+
+                             ;; When used with Corfu, prescient.el improves both
+                             ;; in-buffer completions and pop-up completion
+                             ;; menus by making candidate ordering more
+                             ;; predictable and adaptive to recent usage, thus
+                             ;; speeding up repeated selections.
+                             prescient-corfu
+
                              ;; Marginalia enriches minibuffer completions with
                              ;; contextual annotations.
                              ;; It Enhances Vertico by adding rich annotations

@@ -37,8 +37,9 @@ Here are some of the features that are enabled by default:
   - [Features and modules enabled by default](#features-and-modules-enabled-by-default)
     - [Default theme (mod-default-theme)](#default-theme-mod-default-theme)
     - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
-    - [Better File Manager (mod-dired and mod-dired-filter)](#better-file-manager-mod-dired-and-mod-dired-filter)
     - [Better completion (mod-corfu and mod-cape)](#better-completion-mod-corfu-and-mod-cape)
+    - [Better sorting and ordering (mod-prescient, mod-prescient-corfu, and mod-prescient-vertico)](#better-sorting-and-ordering-mod-prescient-mod-prescient-corfu-and-mod-prescient-vertico)
+    - [Better File Manager (mod-dired and mod-dired-filter)](#better-file-manager-mod-dired-and-mod-dired-filter)
     - [Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)](#efficient-template-expansion-with-snippets-mod-yasnippet-and-mod-yasnippet-snippets)
     - [Better undo/redo (mod-undo-fu and undo-fu-session)](#better-undoredo-mod-undo-fu-and-undo-fu-session)
     - [Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and mod-evil-commentary)](#vim-keybindings-mod-evil-mod-evil-snipe-mod-evil-surround-and-mod-evil-commentary)
@@ -175,10 +176,6 @@ Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion 
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
-### Better File Manager (mod-dired and mod-dired-filter)
-
-Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
-
 ### Better completion (mod-corfu and mod-cape)
 
 [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
@@ -186,6 +183,19 @@ Configure dired to group directories first and enable dired-filter to hide dotfi
 [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
+
+### Better sorting and ordering (mod-prescient, mod-prescient-corfu, and mod-prescient-vertico)
+
+The **mod-prescient** configures [prescient.el](https://github.com/radian-software/prescient.el) is a library for sorting and filtering lists of candidates, such as those presented by packages like Vertico or Corfu.
+
+The main benefit of *prescient.el* is that it adaptively orders candidates based on both frequency and recency of selection, making frequently used options appear first without sacrificing predictable filtering results.
+
+- Vertico and Prescient (mod-prescient-vertico): When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
+- Corfu and Prescient (mod-prescient-corfu): When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
+
+### Better File Manager (mod-dired and mod-dired-filter)
+
+Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 
 ### Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)
 
