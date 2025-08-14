@@ -292,7 +292,7 @@ The **mod-stripspace** module configures the [stripspace](https://github.com/jam
 
 It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
 
-To enable stripspace for all prog-mode:
+To enable `stripspace-local-mode` for `prog-mode` (affecting all programming languages), add the following to your `~/.emacs.d/config.el`:
 ```elisp
 ;; Enable it for `prog-mode-hook'
 (add-hook 'prog-mode-hook #'stripspace-local-mode)
