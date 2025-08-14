@@ -2,7 +2,7 @@
 
 The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which enhance Emacs by improving completion, navigation, editing efficiency, and overall usability.
 
-Lightemacs offers multiple modules that can be enabled or disabled according to your preferences. All modules and packages are activated only when required, **allowing Lightemacs to start very quickly**.
+Lightemacs provides a range of modules that can be selectively enabled or disabled according to your preferences, with all modules ensuring packages are loaded only when needed, **enabling exceptionally fast, deferred startup**.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
