@@ -39,7 +39,6 @@ Here are some of the features that are enabled by default:
     - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
     - [Better File Manager (mod-dired and mod-dired-filter)](#better-file-manager-mod-dired-and-mod-dired-filter)
     - [Better completion (mod-corfu and mod-cape)](#better-completion-mod-corfu-and-mod-cape)
-    - [Better Syntax highlighting (mod-treesit-auto)](#better-syntax-highlighting-mod-treesit-auto)
     - [Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)](#efficient-template-expansion-with-snippets-mod-yasnippet-and-mod-yasnippet-snippets)
     - [Better undo/redo (mod-undo-fu and undo-fu-session)](#better-undoredo-mod-undo-fu-and-undo-fu-session)
     - [Vim Keybindings (mod-evil, mod-evil-snipe, mod-evil-surround, and mod-evil-commentary)](#vim-keybindings-mod-evil-mod-evil-snipe-mod-evil-surround-and-mod-evil-commentary)
@@ -52,6 +51,8 @@ Here are some of the features that are enabled by default:
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
+  - [Modules disabled by default](#modules-disabled-by-default)
+    - [Disabled by default: mod-treesit-auto (Better Syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
     - [Other Features](#other-features)
     - [Useful variables](#useful-variables)
       - [Ellipsis](#ellipsis)
@@ -178,12 +179,6 @@ Configure dired to group directories first and enable dired-filter to hide dotfi
 
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
 
-### Better Syntax highlighting (mod-treesit-auto)
-
-The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.
-
-Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
-
 ### Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)
 
 The **mod-yasnippet** configures [yasnippet](https://github.com/joaotavora/yasnippet), a package that provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
@@ -242,8 +237,8 @@ The following example can be added to the `~/.emacs.d/post-init.el` file to auto
 (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
 (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
 
-(add-hook 'python-mode #'outline-indent-minor-mode)
-(add-hook 'python-ts-mode #'outline-indent-minor-mode)
+(add-hook 'python-mode-hook #'outline-indent-minor-mode)
+(add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
 ```
 
 ### Save History (mod-savehist)
@@ -297,6 +292,22 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 - **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
+
+## Modules disabled by default
+
+### Disabled by default: mod-treesit-auto (Better Syntax highlighting)
+
+The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
+
+To enable it, add the following to your `~/.emacs.d/config.el` file:
+```elisp
+;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
+;; provides precise, high-performance syntax highlighting. It supports a broad
+;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, and many others. treesit-auto
+(push 'treesit-auto lightemacs-modules)
+```
 
 ### Other Features
 

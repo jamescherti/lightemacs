@@ -27,6 +27,15 @@ customize this variable to use a different character or string (such as '…',
 variable is buffer-local in Org-mode and Outline-mode, affecting only the
 display of folded text.")
 
+
+;; Modules not enabled by default:
+;; - treesit-auto: Tree-sitter is an incremental parsing system introduced in
+;;   Emacs 29 that provides precise, high-performance syntax highlighting. It
+;;   supports a broad set of programming languages, including Bash, C, C++, C#,
+;;   CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML,
+;;   TypeScript, YAML, Elisp, Lua, and many others.
+;;
+;; Modules enabled by default:
 (defvar lightemacs-modules '(;; This loaded the default theme specified
                              ;; in the `lightemacs-default-theme' variable.
                              ;;
@@ -164,16 +173,6 @@ display of folded text.")
                              ;; to completion candidates, such as file sizes,
                              ;; documentation, or metadata.
                              marginalia
-
-                             ;; Tree-sitter is an incremental parsing system
-                             ;; introduced in Emacs 29 that provides precise,
-                             ;; high-performance syntax highlighting. It
-                             ;; supports a broad set of programming languages,
-                             ;; including Bash, C, C++, C#, CMake, CSS,
-                             ;; Dockerfile, Go, Java, JavaScript, JSON, Python,
-                             ;; Rust, TOML, TypeScript, YAML, Elisp, Lua,
-                             ;; and many others.
-                             treesit-auto
 
                              ;; Autorevert is a feature that automatically
                              ;; updates the contents of a buffer to reflect
