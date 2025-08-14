@@ -22,8 +22,6 @@
 
 (use-package aggressive-indent
   :commands aggressive-indent-mode
-  :hook
-  (emacs-lisp-mode . aggressive-indent-mode)
   :config
   (add-to-list 'aggressive-indent-protected-commands 'evil-delete)
   (add-to-list 'aggressive-indent-protected-commands 'evil-redo)

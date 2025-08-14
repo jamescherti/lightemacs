@@ -278,7 +278,7 @@ The **mod-stripspace** module configures the [stripspace](https://github.com/jam
 
 It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
 
-To enable `stripspace-local-mode` for `prog-mode` (affecting all programming languages), add the following to your `~/.emacs.d/config.el`:
+To enable `stripspace-local-mode` for `prog-mode` (affecting all programming languages), add the following to the `~/.emacs.d/config.el` file:
 ```elisp
 ;; Enable it for `prog-mode-hook'
 (add-hook 'prog-mode-hook #'stripspace-local-mode)
@@ -295,7 +295,7 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 
 ### Other Modules Enabled by Default
 
-- **mod-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to your `~/.emacs.d/config.el`:
+- **mod-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
   ```elisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
   ```
@@ -315,7 +315,10 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **mod-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
 - **mod-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
-- **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
+- **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable it for Elisp files, add the following to the `~/.emacs.d/config.el` file:
+  ```elisp
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  ```
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 
 ## Modules disabled by default
