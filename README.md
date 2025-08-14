@@ -154,16 +154,16 @@ The `mod-default-theme` loads the default theme. It can be configured via the `l
 (setq lightemacs-default-theme 'tomorrow-night-deepblue)
 ```
 
-Here are examples of a built-in themes:
+The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes:
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
+
+Here are examples of alternative built-in themes:
 ```elisp
 (setq lightemacs-default-theme 'modus-operandi)
 (setq lightemacs-default-theme 'modus-vivendi)
 (setq lightemacs-default-theme 'tango)
 (setq lightemacs-default-theme 'tango-dark)
 ```
-
-The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes:
-![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
 ### Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)
 
