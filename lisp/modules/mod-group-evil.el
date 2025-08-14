@@ -23,7 +23,12 @@
 (lightemacs--load-modules '(evil
                             evil-commentary
                             evil-snipe
-                            evil-surround))
+                            evil-surround
+
+                            ;; Goto-chg is Used by `evil-mode' for the motions
+                            ;; 'g;' and 'g,' as well as for the last-change
+                            ;; register '.'.
+                            goto-chg))
 
 (provide 'mod-group-evil)
 
