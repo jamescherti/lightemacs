@@ -1,6 +1,8 @@
 # Lightemacs - Fast and Lightweight Emacs framework
 
-Author: James Cherti
+**Author:** James Cherti
+
+**Introduction:**
 
 The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which enhance Emacs by improving completion, navigation, editing efficiency, and overall usability.
 
