@@ -36,6 +36,9 @@ Optionally, you can enable the following features that are disabled by default:
   - [Customizations](#customizations)
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
+  - [Modules disabled by default](#modules-disabled-by-default)
+    - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
+    - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
   - [Features and modules enabled by default](#features-and-modules-enabled-by-default)
     - [Default theme (mod-default-theme)](#default-theme-mod-default-theme)
     - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
@@ -53,9 +56,6 @@ Optionally, you can enable the following features that are disabled by default:
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
-  - [Modules disabled by default](#modules-disabled-by-default)
-    - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
-    - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
     - [Other Features](#other-features)
     - [Useful variables](#useful-variables)
       - [Ellipsis](#ellipsis)
@@ -146,6 +146,40 @@ To customize your Emacs setup to include various user interface elements, you ca
 ```
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
+
+## Modules disabled by default
+
+### Disabled by default: mod-treesit-auto (better syntax highlighting)
+
+Module: mod-treesit-auto
+
+The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
+;; provides precise, high-performance syntax highlighting. It supports a broad
+;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, and many others. treesit-auto
+(push 'treesit-auto lightemacs-modules)
+```
+
+### Disabled by default: mod-group-evil (Vim Keybindings)
+
+By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+;; Enable Vim key bindings
+(push 'mod-group-evil lightemacs-modules)
+```
+
+The `mod-group-evil` group of modules includes:
+- **mod-evil**: Vim keybindings (evil and evil-collection).
+- **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
+- **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
+- **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 
 ## Features and modules enabled by default
 
@@ -320,40 +354,6 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   ```
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
-
-## Modules disabled by default
-
-### Disabled by default: mod-treesit-auto (better syntax highlighting)
-
-Module: mod-treesit-auto
-
-The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
-
-To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
-;; provides precise, high-performance syntax highlighting. It supports a broad
-;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
-;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
-;; Elisp, Lua, and many others. treesit-auto
-(push 'treesit-auto lightemacs-modules)
-```
-
-### Disabled by default: mod-group-evil (Vim Keybindings)
-
-By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
-
-To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Enable Vim key bindings
-(push 'mod-group-evil lightemacs-modules)
-```
-
-The `mod-group-evil` group of modules includes:
-- **mod-evil**: Vim keybindings (evil and evil-collection).
-- **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
-- **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
-- **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 
 ### Other Features
 
