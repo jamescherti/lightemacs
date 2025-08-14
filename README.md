@@ -65,6 +65,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (mod-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-mod-autorevert)
     - [Persist and Restore Text Scale (mod-persist-text-scale)](#persist-and-restore-text-scale-mod-persist-text-scale)
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
+    - [Indentation bars (mod-indent-bars)](#indentation-bars-mod-indent-bars)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
     - [Other Features](#other-features)
@@ -329,6 +330,28 @@ To enable `stripspace-local-mode` for `prog-mode` (affecting all programming lan
 ;; Enable it for `prog-mode-hook'
 (add-hook 'prog-mode-hook #'stripspace-local-mode)
 ```
+
+### Indentation bars (mod-indent-bars)
+
+The **mod-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.)
+
+It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern.
+
+Depth-based coloring with a customizable cyclical palette adds clarity to nested structures. The package also features fast current-depth highlighting, configurable bar changes, and the ability to display bars on blank lines. Additionally, it maintains consistent bar depth within multi-line strings and lists, and it works seamlessly in terminal environments using a vertical bar character.
+
+It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
+
+```elisp
+;; Enable indent-bars-mode automatically for Python files
+(add-hook 'python-ts-mode-hook #'indent-bars-mode)
+(add-hook 'python-mode-hook #'indent-bars-mode)
+
+;; Enable indent-bars-mode automatically for YAML files
+(add-hook 'yaml-mode-hook #'indent-bars-mode)
+(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
+```
+
+(By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
 
 ### Recent files (mod-recentf)
 
