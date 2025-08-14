@@ -113,7 +113,7 @@ These files allow you to further customize the initialization sequence:
 
 - `~/.emacs.d/pre-init.el`: This file is loaded before `init.el`. Use it to set up variables or configurations that need to be available early in the initialization process but after `early-init.el`.
 
-- `~/.emacs.d/post-init.el`: This file is loaded after `init.el`. It is useful for additional configurations or package setups that depend on the configurations in `init.el`.
+- `~/.emacs.d/post-init.el` or `~/.emacs.d/config.el` (the `config.el` file is specific to lightemacs): This file is loaded after `init.el`. It is useful for additional configurations or package setups that depend on the configurations in `init.el`.
 
 - `~/.emacs.d/pre-early-init.el`: This file is loaded before `early-init.el`. Use it for configurations that need to be set even earlier in the startup sequence, typically affecting the initial setup of the Emacs environment.
 
@@ -148,7 +148,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ### Default theme (mod-default-theme)
 
-The `mod-default-theme` loads the default theme. It can be configured via the `lightemacs-default-theme` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/post-init.el` as follows:
+The `mod-default-theme` loads the default theme. It can be configured via the `lightemacs-default-theme` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
 
 ```emacs-lisp
 (setq lightemacs-default-theme 'tomorrow-night-deepblue)
@@ -232,7 +232,7 @@ In addition to code folding, *outline-indent* allows:
 
 The `mod-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
 
-The following example can be added to the `~/.emacs.d/post-init.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
+The following example can be added to the `~/.emacs.d/config.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
 ```elisp
 (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
 (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
@@ -285,6 +285,10 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 
 ### Other Modules Enabled by Default
 
+- **mod-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to your `~/.emacs.d/config.el`:
+  ```elisp
+  (add-hook 'prog-mode-hook #'outline-minor-mode)
+  ```
 - **mod-compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **mod-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **mod-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
@@ -316,7 +320,7 @@ To enable it, add the following to your `~/.emacs.d/config.el` file:
 ### Useful variables
 
 #### Ellipsis
-Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/post-init.el` as follows:
+Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
 ```elisp
 (setq lightemacs-ellipsis " ▼")
 ```

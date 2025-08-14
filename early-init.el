@@ -64,6 +64,10 @@ display of folded text.")
                              ;; Automatically enabled for Python and Yaml.
                              outline-indent
 
+                             ;; Update the ellipsis in `outline-mode' and
+                             ;; `outline-minor-mode' using `lightemacs-ellipsis'
+                             outline
+
                              ;; The stripspace Emacs package provides minor mode
                              ;; that automatically removes trailing whitespace
                              ;; and blank lines at the end of the buffer when
