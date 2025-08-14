@@ -299,6 +299,17 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
   ```elisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
   ```
+
+  You can also, as an alternative to prog-mode-hook, add hook to specific modes:
+  ```elisp
+  (add-hook 'grep-mode-hook #'outline-minor-mode)
+  (add-hook 'conf-mode-hook #'outline-minor-mode)
+  (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+  (add-hook 'js-mode-hook #'outline-minor-mode)
+  (add-hook 'js-ts-mode-hook #'outline-minor-mode)
+  (add-hook 'markdown-ts-mode-hook #'outline-minor-mode)
+  (add-hook 'markdown-mode-hook #'outline-minor-mode)
+  ```
 - **mod-compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **mod-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **mod-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
@@ -315,7 +326,7 @@ Module: mod-treesit-auto
 
 The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
-To enable it, add the following to your `~/.emacs.d/config.el` file:
+To enable it, add the following to the `~/.emacs.d/config.el` file:
 ```elisp
 ;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
 ;; provides precise, high-performance syntax highlighting. It supports a broad
@@ -327,7 +338,12 @@ To enable it, add the following to your `~/.emacs.d/config.el` file:
 
 ### Disabled by default: mod-evil* (Vim Keybindings)
 
-By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
+By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled. To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+(push 'mod-evil lightemacs-modules)  ; Vim keybindings
+(push 'mod-evil-commentary lightemacs-modules)  ; Comment or uncomment by pressing gc
+(push 'mod-evil-snipe lightemacs-modules)  ; Search by using the s key
+```
 
 Modules:
 - **mod-evil**: Vim keybindings (evil and evil-collection).
