@@ -5,12 +5,14 @@ The Lightemacs project is a fast, lightweight Emacs framework that uses modern E
 All modules and packages are activated only when required, allowing Lightemacs to start very quickly.
 
 Here are some of the features that are enabled by default:
+
+- Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
-- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
-- Additional filetypes: markdown-mode.
+- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
+- Additional filetypes: markdown-mode and org-mode.
 - Automatically removes trailing whitespace and blank lines at the end of the buffer when saving
 - Emacs Lisp editing: Maintain consistent indentation of Elisp code during editing.
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
@@ -19,8 +21,8 @@ Here are some of the features that are enabled by default:
 - And more.
 
 Optionally, you can enable the following features that are disabled by default:
-- Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
-- Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
+- **mod-group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
+- **mod-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
