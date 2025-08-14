@@ -55,7 +55,7 @@ Optionally, you can enable the following features that are disabled by default:
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules disabled by default](#modules-disabled-by-default)
     - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
-    - [Disabled by default: mod-evil* (Vim Keybindings)](#disabled-by-default-mod-evil-vim-keybindings)
+    - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
     - [Other Features](#other-features)
     - [Useful variables](#useful-variables)
       - [Ellipsis](#ellipsis)
@@ -336,16 +336,16 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 (push 'treesit-auto lightemacs-modules)
 ```
 
-### Disabled by default: mod-evil* (Vim Keybindings)
+### Disabled by default: mod-group-evil (Vim Keybindings)
 
-By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled. To enable it, add the following to the `~/.emacs.d/config.el` file:
+By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
 ```elisp
-(push 'mod-evil lightemacs-modules)  ; Vim keybindings
-(push 'mod-evil-commentary lightemacs-modules)  ; Comment or uncomment by pressing gc
-(push 'mod-evil-snipe lightemacs-modules)  ; Search by using the s key
+(push 'mod-group-evil lightemacs-modules)
 ```
 
-Modules:
+The `mod-group-evil` group of modules includes:
 - **mod-evil**: Vim keybindings (evil and evil-collection).
 - **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.

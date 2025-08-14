@@ -30,10 +30,7 @@ display of folded text.")
 ;; Modules enabled by default:
 (defvar lightemacs-modules '(;; Vim keybindings (Disabled):
                              ;; ---------------------------
-                             ;; evil
-                             ;; evil-commentary
-                             ;; evil-snipe
-                             ;; evil-surround
+                             group-evil
 
                              ;; Treesitter (Better syntax highlighting)
                              ;; ---------------------------------------
@@ -290,14 +287,18 @@ display of folded text.")
 (defun lightemacs--load-modules (lightemacs-modules)
   "Load all modules listed in LIGHTEMACS-MODULES."
   (let ((modules-dir (lightemacs--modules-dir)))
-    (dolist (mod lightemacs-modules)
-      (let* ((feature-str (format "mod-%s" mod))
+    (dolist (feature-symbol lightemacs-modules)
+      (let* ((feature-str (format "mod-%s" feature-symbol))
              (feature-symbol (intern feature-str))
              (module-file (expand-file-name (format "%s.el" feature-str)
                                             modules-dir)))
         (when init-file-debug
-          (message "[LOAD MODULE] %s" module-file))
-        (require feature-symbol module-file)))))
+          (message "[LIGHTEMACS LOAD MODULE] %s" module-file))
+        (require feature-symbol module-file)
+        ;; (if (file-exists-p module-file)
+        ;;     (require feature-symbol module-file)
+        ;;   (message "The module '%s' could not be found" module-file))
+        ))))
 
 (defun lightemacs--load-default-theme ()
   "Load the theme defined in `lightemacs-default-theme' if it is installed."
