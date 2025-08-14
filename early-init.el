@@ -173,7 +173,7 @@ display of folded text.")
                              ;; Dockerfile, Go, Java, JavaScript, JSON, Python,
                              ;; Rust, TOML, TypeScript, YAML, Elisp, Lua,
                              ;; and many others.
-                             ;; treesit-auto
+                             treesit-auto
 
                              ;; Autorevert is a feature that automatically
                              ;; updates the contents of a buffer to reflect
