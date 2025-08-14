@@ -3,5 +3,5 @@
 !early-init.el
 !init.el
 !.github/
-!.LICENSE
+!LICENSE
 !/lisp/modules/
