@@ -4,6 +4,8 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 Lightemacs offers multiple modules that can be enabled or disabled according to your preferences. All modules and packages are activated only when required, **allowing Lightemacs to start very quickly**.
 
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
+
 Here are some of the modules that are enabled by default:
 
 - Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
@@ -28,8 +30,6 @@ Optionally, you can enable the following features that are disabled by default:
 The Lightemacs project is built upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files (`init.el` and `early-init.el`), allowing it to be configured identically to minimal-emacs.d while inheriting its high-quality default settings and efficient startup performance.
 
 Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs configuration with only essential defaults, Lightemacs extends this foundation by enabling a curated set of modern features and optimizations out of the box. While minimal-emacs.d requires users to manually configure and enable most enhancements, Lightemacs activates performance improvements, advanced completion systems, persistent undo, snippet support, and additional filetype modes automatically, while still retaining full configurability and compatibility with minimal-emacs.d’s initialization files.
-
-![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
