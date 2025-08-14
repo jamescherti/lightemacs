@@ -71,7 +71,15 @@
   (setq evil-want-Y-yank-to-eol t)
 
   ;; Disable wrapping of search around buffer
-  (setq evil-search-wrap nil))
+  (setq evil-search-wrap nil)
+
+  :config
+  (with-eval-after-load 'aggressive-indent
+    (add-to-list 'aggressive-indent-protected-commands 'evil-delete)
+    (add-to-list 'aggressive-indent-protected-commands 'evil-redo)
+    (add-to-list 'aggressive-indent-protected-commands 'evil-undo)
+    (add-to-list 'aggressive-indent-protected-commands 'evil-delete-char)
+    (add-to-list 'aggressive-indent-protected-commands 'evil-delete-line)))
 
 ;;; evil-collection
 

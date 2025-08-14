@@ -21,13 +21,7 @@
 ;;; Code:
 
 (use-package aggressive-indent
-  :commands aggressive-indent-mode
-  :config
-  (add-to-list 'aggressive-indent-protected-commands 'evil-delete)
-  (add-to-list 'aggressive-indent-protected-commands 'evil-redo)
-  (add-to-list 'aggressive-indent-protected-commands 'evil-undo)
-  (add-to-list 'aggressive-indent-protected-commands 'evil-delete-char)
-  (add-to-list 'aggressive-indent-protected-commands 'evil-delete-line))
+  :commands aggressive-indent-mode)
 
 (provide 'mod-aggressive-indent)
 
