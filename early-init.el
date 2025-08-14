@@ -45,6 +45,10 @@ display of folded text.")
                              ;; color palette that is pleasing to the eyes.
                              default-theme
 
+                             ;; Default settings (minibuffer, Emacs...)
+                             ;; TODO: Add it to README.md
+                             default-settings
+
                              ;; Gcmh optimizes
                              ;; Emacs’ garbage collection behavior by adjusting
                              ;; the garbage collection threshold dynamically.

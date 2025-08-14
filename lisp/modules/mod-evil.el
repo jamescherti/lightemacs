@@ -71,11 +71,7 @@
   (setq evil-want-Y-yank-to-eol t)
 
   ;; Disable wrapping of search around buffer
-  (setq evil-search-wrap nil)
-
-  :config
-  (evil-set-leader 'normal (kbd ","))
-  (evil-set-leader 'visual (kbd ",")))
+  (setq evil-search-wrap nil))
 
 ;;; evil-collection
 

@@ -220,10 +220,6 @@ If you use Evil mode, the `mod-undo-fu` module will replace Evil’s undo system
 
 By default, [evil-mode](https://github.com/emacs-evil/evil) is enabled. (Users who prefer not to use Vim keybindings can easily disable it.)
 
-Interesting default parameters:
-
-- The default leader key is: `,`
-
 The following packages are enabled alongside **evil-mode**:
 
 - **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.

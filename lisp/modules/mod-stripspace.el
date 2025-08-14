@@ -16,7 +16,6 @@
 ;;; Code:
 
 (use-package stripspace
-  :ensure t
   :commands stripspace-local-mode
 
   :init
