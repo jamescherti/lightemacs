@@ -31,7 +31,7 @@
   (use-package tomorrow-night-deepblue-theme))
 
 (when lightemacs-default-theme
-  (lightemacs-load-default-theme))
+  (lightemacs--load-default-theme))
 
 (provide 'mod-default-theme)
 
