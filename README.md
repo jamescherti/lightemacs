@@ -235,7 +235,16 @@ In addition to code folding, *outline-indent* allows:
 - Move backward/forward to the indentation level of the current line
 - and other features.
 
-The `mod-outline-indent` module enabled `outline-indent-minor-mode` by default for YAML and Python files.
+The `mod-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
+
+The following example can be added to the `~/.emacs.d/post-init.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
+```elisp
+(add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+(add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+
+(add-hook 'python-mode #'outline-indent-minor-mode)
+(add-hook 'python-ts-mode #'outline-indent-minor-mode)
+```
 
 ### Save History (mod-savehist)
 

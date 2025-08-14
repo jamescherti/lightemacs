@@ -27,49 +27,7 @@
   :diminish outline-indent-minor-mode
   :commands (outline-indent-minor-mode
              outline-indent-insert-heading)
-  :hook ((yaml-mode . outline-indent-minor-mode)
-         (yaml-ts-mode . outline-indent-minor-mode)
-
-         (python-mode . outline-indent-minor-mode)
-         (python-ts-mode . outline-indent-minor-mode))
-
-  :preface
-  (defun mod-outline-indent--setup-yaml-indent-offset ()
-    "Setup Yaml indent offset."
-    (let ((offset (cond
-                   ((bound-and-true-p yaml-indent-offset)
-                    yaml-indent-offset)
-
-                   ((bound-and-true-p tab-width)
-                    tab-width)
-
-                   (t
-                    2))))
-      (setq-local outline-indent-default-offset offset)
-      (setq-local outline-indent-shift-width offset)))
-
-  (defun mod-outline-indent--setup-python-indent-offset ()
-    "Setup Python indent offset."
-    (let ((offset (cond
-                   ((bound-and-true-p python-indent-offset)
-                    python-indent-offset)
-
-                   ((bound-and-true-p tab-width)
-                    tab-width)
-
-                   (t
-                    4))))
-      (setq-local outline-indent-default-offset offset)
-      (setq-local outline-indent-shift-width offset)))
-
   :init
-  (dolist (hook '(python-mode python-ts-mode-hook))
-    (add-hook hook #'outline-indent-minor-mode)
-    (add-hook hook #'mod-outline-indent--setup-python-indent-offset))
-
-  (dolist (hook '(yaml-mode yaml-ts-mode-hook))
-    (add-hook hook #'mod-outline-indent--setup-yaml-indent-offset))
-
   (setq outline-indent-ellipsis lightemacs-ellipsis))
 
 (provide 'mod-outline-indent)
