@@ -140,6 +140,7 @@
 
   :config
   (require 'consult-imenu)
+  (require 'consult-xref)
 
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)

@@ -65,6 +65,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (mod-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-mod-autorevert)
     - [Persist and Restore Text Scale (mod-persist-text-scale)](#persist-and-restore-text-scale-mod-persist-text-scale)
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
+    - [Expand Region (mod-expand-region)](#expand-region-mod-expand-region)
     - [Indentation bars (mod-indent-bars)](#indentation-bars-mod-indent-bars)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
@@ -330,6 +331,14 @@ To enable `stripspace-local-mode` for `prog-mode` (affecting all programming lan
 ;; Enable it for `prog-mode-hook'
 (add-hook 'prog-mode-hook #'stripspace-local-mode)
 ```
+
+### Expand Region (mod-expand-region)
+
+The **mod-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
+
+Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
+
+Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
 ### Indentation bars (mod-indent-bars)
 

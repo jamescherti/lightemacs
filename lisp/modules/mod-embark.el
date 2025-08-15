@@ -29,12 +29,28 @@
              embark-bindings
              embark-prefix-help-command
              embark-eldoc-first-target)
+
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings))
+
   :init
+  ;; Replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
+
+
   (setq embark-quit-after-action nil)
   (setq embark-mixed-indicator-delay 1)
   (setq embark-verbose-indicator-display-action
-        '(display-buffer-at-bottom (window-height . fit-window-to-buffer))))
+        '(display-buffer-at-bottom (window-height . fit-window-to-buffer)))
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+  ;;                nil
+  ;;                (window-parameters (mode-line-format . none))))
+  )
 
 ;;; Provide
 (provide 'mod-embark)

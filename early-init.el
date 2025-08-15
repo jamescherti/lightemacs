@@ -154,6 +154,11 @@
                              ;; and interactions.
                              embark
 
+                             ;; Integration between Embark and Consult
+                             embark-consult
+
+                             expand-region
+
                              ;; (Vertico, Consult, and Embark collectively
                              ;; enhance Emacs' completion and navigation
                              ;; capabilities.)
