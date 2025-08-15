@@ -30,7 +30,7 @@ display of folded text.")
 ;; Modules enabled by default:
 (defvar lightemacs-modules '(;; Vim keybindings (Disabled):
                              ;; ---------------------------
-                             group-evil
+                             ;; group-evil
 
                              ;; Treesitter (Better syntax highlighting)
                              ;; ---------------------------------------
