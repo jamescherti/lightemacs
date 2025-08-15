@@ -23,6 +23,7 @@ Here are some of the modules that are enabled by default:
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
 - Save and restore the default theme using the `lightemacs-default-theme` variable.
+- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - And more.
 
 Optionally, you can enable the following features that are disabled by default:
