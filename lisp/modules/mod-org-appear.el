@@ -14,7 +14,6 @@
 ;;; Code:
 
 (use-package org-appear
-  :defer t
   :commands org-appear-mode
   :hook (org-mode . org-appear-mode))
 

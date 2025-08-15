@@ -39,7 +39,6 @@
 ;;; Evil
 
 (use-package corfu-prescient
-  :defer t
   :commands corfu-prescient-mode
   :hook
   (corfu-mode . corfu-prescient-mode)

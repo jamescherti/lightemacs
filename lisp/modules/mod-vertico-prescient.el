@@ -38,7 +38,6 @@
 ;;; Evil
 
 (use-package vertico-prescient
-  :defer t
   :commands vertico-prescient-mode
   :hook
   (vertico-mode . vertico-prescient-mode)

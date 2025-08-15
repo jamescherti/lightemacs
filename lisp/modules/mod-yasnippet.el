@@ -21,7 +21,6 @@
 ;;; Code:
 
 (use-package yasnippet
-  :defer t
   :commands (yas-minor-mode
              yas-minor-mode-on
              yas-global-mode
