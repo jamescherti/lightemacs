@@ -14,19 +14,6 @@
 
 ;;; Global variables
 
-(defvar lightemacs-default-theme 'tomorrow-night-deepblue
-  "Name of the default theme to load, if available.
-Set this to nil to disable early theme loading.")
-
-(defvar lightemacs-ellipsis " ▼"
-  "String used to indicate folded sections in Org-mode and Outline-mode.
-This ellipsis appears at the end of a heading or section that has been
-collapsed. It provides a visual cue that more content is hidden. You can
-customize this variable to use a different character or string (such as '…',
-'▶', or other Unicode symbols) to match your visual preference or theme. This
-variable is buffer-local in Org-mode and Outline-mode, affecting only the
-display of folded text.")
-
 ;; Modules enabled by default:
 (defvar lightemacs-modules '(;; Vim keybindings (Disabled):
                              ;; ---------------------------
@@ -35,6 +22,11 @@ display of folded text.")
                              ;; Treesitter (Better syntax highlighting)
                              ;; ---------------------------------------
                              ;; treesit-auto
+
+                             ;; Compile-angel speeds up Emacs by ensuring that
+                             ;; all Elisp libraries are both byte-compiled and
+                             ;; native-compiled.
+                             compile-angel
 
                              ;; Modules enabled by default
                              ;; --------------------------
@@ -256,13 +248,21 @@ display of folded text.")
                              ;; automatically reindents after every
                              ;; modification, providing greater reliability than
                              ;; `electric-indent-mode'.
-                             aggressive-indent
-
-                             ;; Compile-angel speeds up Emacs by ensuring that
-                             ;; all Elisp libraries are both byte-compiled and
-                             ;; native-compiled.
-                             compile-angel)
+                             aggressive-indent)
   "Modules that are enabled by default.")
+
+(defvar lightemacs-default-theme 'tomorrow-night-deepblue
+  "Name of the default theme to load, if available.
+Set this to nil to disable early theme loading.")
+
+(defvar lightemacs-ellipsis " ▼"
+  "String used to indicate folded sections in Org-mode and Outline-mode.
+This ellipsis appears at the end of a heading or section that has been
+collapsed. It provides a visual cue that more content is hidden. You can
+customize this variable to use a different character or string (such as '…',
+'▶', or other Unicode symbols) to match your visual preference or theme. This
+variable is buffer-local in Org-mode and Outline-mode, affecting only the
+display of folded text.")
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory
   "Directory beneath lightemacs files are placed.")

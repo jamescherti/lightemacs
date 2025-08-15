@@ -25,24 +25,42 @@
 ;;; Code:
 
 (use-package compile-angel
-  :demand t
   :commands (compile-angel-on-load-mode
              compile-angel-on-save-mode)
 
+  :init
+  ;; Verbose
+  (setq compile-angel-verbose init-file-debug)
+  (setq compile-angel-debug init-file-debug)
+
+  ;; Enable `compile-angel-on-load-mode', a global mode that compiles .el files,
+  ;; including those already loaded via `load' or `require' and those loaded
+  ;; subsequently after the mode is activated.
+  ;;
+  ;; Since this uses `after-init-hook', it is necessary to ensure that
+  ;; `compile-angel-on-load-compile-features' and
+  ;; `compile-angel-on-load-compile-load-history' are both set to t.
+  (setq compile-angel-on-load-compile-load-history t)
+  (setq compile-angel-on-load-compile-features t)
+  (add-hook 'after-init-hook #'compile-angel-on-load-mode)
+
   :preface
   (defun mod-compile-angel-exclude (path)
-    "Exclude PATH."
+    "Add a file or directory to the list of exclusions for compilation.
+
+PATH should be a string representing a file or directory path. If PATH is not
+already present in `compile-angel-excluded-files', the basename of PATH,
+prefixed with a forward slash, is appended to that list. This ensures that the
+specified file or directory is ignored during the compilation process managed by
+`compile-angel-on-load-mode'."
     (when (and (stringp path)
                (not (member path compile-angel-excluded-files)))
       (push (concat "/" (file-name-nondirectory path))
             compile-angel-excluded-files)))
 
   :config
-  (setq compile-angel-verbose init-file-debug)
-  (setq compile-angel-debug init-file-debug)
-
+  ;; Exclude files
   (push "/org-version.el" compile-angel-excluded-files)
-
   (with-eval-after-load 'savehist
     (mod-compile-angel-exclude savehist-file))
   (with-eval-after-load 'recentf
@@ -50,10 +68,7 @@
   (with-eval-after-load 'cus-edit
     (mod-compile-angel-exclude custom-file))
   (with-eval-after-load 'prescient
-    (mod-compile-angel-exclude prescient-save-file))
-
-  ;; A global mode that compiles .el files before they are loaded
-  (compile-angel-on-load-mode))
+    (mod-compile-angel-exclude prescient-save-file)))
 
 (provide 'mod-compile-angel)
 
