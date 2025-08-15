@@ -27,6 +27,7 @@
   :ensure nil
   :commands (recentf-mode
              recentf-cleanup)
+  :functions (recentf-expand-file-name)
   :hook
   (after-init . mod-recentf--setup)
   ;; TODO: use lightemacs-on-first-buffer
@@ -50,7 +51,18 @@
   (setq recentf-max-menu-items 10)
   (setq recentf-max-saved-items 750)
 
+  :preface
+  (defun mod-recentf--track-buffer-change (&rest _args)
+    "Add file at the beginning of the recent list after switching buffer."
+    (when (and (bound-and-true-p recentf-mode)
+               (fboundp 'recentf-add-file))
+      (let ((file-name (buffer-file-name (buffer-base-buffer))))
+        (when file-name
+          (recentf-add-file file-name)))))
+
   :config
+  (add-hook 'window-buffer-change-functions #'mod-recentf--track-buffer-change)
+
   (setq recentf-exclude
         (append recentf-exclude
                 (list
@@ -86,18 +98,7 @@
 
   ;; Depth -90 ensures it is cleaned up before it is saved with
   ;; `recentf-save-list'
-  (add-hook 'kill-emacs-hook #'mod-recentf--cleanup-and-save -90)
-
-  ;; Track opened files
-  (defun mod-recentf--track-buffer-change (&rest _args)
-    "Add file at the beginning of the recent list after switching buffer."
-    (when (and (bound-and-true-p recentf-mode)
-               (fboundp 'recentf-add-file))
-      (let ((file-name (buffer-file-name (buffer-base-buffer))))
-        (when file-name
-          (recentf-add-file file-name)))))
-
-  (add-hook 'window-buffer-change-functions #'mod-recentf--track-buffer-change))
+  (add-hook 'kill-emacs-hook #'mod-recentf--cleanup-and-save -90))
 
 (provide 'mod-recentf)
 
