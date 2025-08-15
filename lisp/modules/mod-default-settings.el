@@ -22,8 +22,6 @@
 
 (setq treesit-font-lock-level 4) ; Max: 4
 
-(setq confirm-kill-emacs 'y-or-n-p)
-
 ;; Emacs automatically saves your changes to a file intermittently
 (setq make-backup-files t)
 
