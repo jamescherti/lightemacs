@@ -59,7 +59,9 @@
              consult-register-store
              consult-register-format
              consult-theme
-             consult-yank-pop)
+             consult-yank-pop
+             consult-imenu
+             consult-xref)
   :functions consult--customize-put
 
   :hook
@@ -79,7 +81,20 @@
   ;; and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
+  ;; Consult xref
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
+
   :config
+  (use-package consult-imenu
+    :ensure nil
+    :commands (consult-imenu
+               consult-imenu-multi))
+
+  (use-package consult-xref
+    :ensure nil
+    :commands consult-xref)
+
   (consult-customize consult-ripgrep
                      ;; consult-xref
                      consult-fd :preview-key '(:debounce 0.1 any)
@@ -91,43 +106,6 @@
                      consult-theme :preview-key '(:debounce 0.1 any)
                      consult--source-bookmark
                      :preview-key '(:debounce 0.1 any)))
-
-;;; Consult extensions
-
-(use-package consult-xref
-  :after consult
-  :ensure nil
-  :commands consult-xref
-  :init
-  (setq xref-show-xrefs-function #'consult-xref)
-  (setq xref-show-definitions-function #'consult-xref))
-
-(use-package consult-info
-  :after consult
-  :ensure nil
-  :commands consult-info
-  :init
-  (defun consult-info-emacs ()
-    "Search through Emacs info pages."
-    (interactive)
-    (consult-info "emacs" "efaq" "elisp" "cl"))
-
-  (defun consult-info-org ()
-    "Search through the Org info page."
-    (interactive)
-    (consult-info "org"))
-
-  (defun consult-info-completion ()
-    "Search through completion info pages."
-    (interactive)
-    (consult-info "vertico" "consult" "marginalia" "orderless" "embark"
-                  "corfu" "cape" "tempel")))
-
-(use-package consult-imenu
-  :after consult
-  :ensure nil
-  :commands (consult-imenu
-             consult-imenu-multi))
 
 ;;; Completing indicator
 
