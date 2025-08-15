@@ -42,7 +42,10 @@
                              default-theme
 
                              ;; Default settings (minibuffer, Emacs...)
-                             ;; TODO: Add it to README.md
+                             ;; Configure enhanced default settings, including
+                             ;; improved defaults, backup files, warnings to
+                             ;; ignore, a minibuffer depth indicator, window
+                             ;; behavior...
                              default-settings
 
                              ;; Gcmh optimizes
@@ -324,9 +327,6 @@ display of folded text.")
         'nosuffix))
 
 ;;; Other parameters
-
-;; Allow Emacs to upgrade built-in packages, such as Org mode
-(setq package-install-upgrade-built-in t)
 
 ;;; Load minimal-emacs.d early-init.el
 

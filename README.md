@@ -384,6 +384,7 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **mod-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
 - **mod-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
+* **mod-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
 - **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable it for Elisp files, add the following to the `~/.emacs.d/config.el` file:
   ```elisp
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)

@@ -13,10 +13,30 @@
 
 ;;; Code:
 
-;;; minibuffer
+;;; Better defaults
+
+;; Allow Emacs to upgrade built-in packages, such as Org mode
+(setq package-install-upgrade-built-in t)
 
 (setq warning-suppress-types '((lexical-binding)))
+
+(setq treesit-font-lock-level 4) ; Max: 4
+
+(setq confirm-kill-emacs 'y-or-n-p)
+
+;; Emacs automatically saves your changes to a file intermittently
+(setq make-backup-files t)
+
+;;; Minibuffer
+
 (setq minibuffer-default-prompt-format " [%s]")
+(add-hook 'after-init #'minibuffer-depth-indicate-mode)
+;; TODO use on-first-input
+;; (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
+
+;;; Frame
+
+(add-hook 'after-init-hook #'window-divider-mode)
 
 (provide 'mod-default-settings)
 

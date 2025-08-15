@@ -94,8 +94,7 @@
                consult-imenu-multi))
 
   (use-package consult-xref
-    :ensure nil
-    :commands consult-xref)
+    :ensure nil)
 
   (use-package consult-info
     :ensure nil
