@@ -54,4 +54,8 @@
 
 (provide 'mod-dired-filter)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-dired-filter.el ends here

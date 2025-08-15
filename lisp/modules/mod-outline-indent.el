@@ -32,4 +32,8 @@
 
 (provide 'mod-outline-indent)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-outline-indent.el ends here

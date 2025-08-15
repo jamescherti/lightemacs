@@ -32,4 +32,8 @@
 
 (provide 'mod-marginalia)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-marginalia.el ends here

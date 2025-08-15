@@ -44,4 +44,8 @@
 
 (provide 'mod-outline)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-outline.el ends here

@@ -39,4 +39,8 @@
 ;;; Provide
 (provide 'mod-embark)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-embark.el ends here

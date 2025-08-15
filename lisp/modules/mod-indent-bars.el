@@ -38,4 +38,8 @@
 
 (provide 'mod-indent-bars)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-indent-bars.el ends here

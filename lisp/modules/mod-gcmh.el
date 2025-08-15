@@ -40,4 +40,8 @@
 
 (provide 'mod-gcmh)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-gcmh.el ends here

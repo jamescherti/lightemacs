@@ -81,16 +81,6 @@
     (add-to-list 'aggressive-indent-protected-commands 'evil-delete-char)
     (add-to-list 'aggressive-indent-protected-commands 'evil-delete-line)))
 
-;;; evil-collection
-
-;; This has to be defined before evil-collection
-(setq evil-collection-setup-minibuffer t)
-
-(use-package evil-collection
-  :functions evil-collection-init
-  :config
-  (evil-collection-init))
-
 (provide 'mod-evil)
 
 ;; Local variables:

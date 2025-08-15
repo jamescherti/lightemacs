@@ -21,6 +21,7 @@
 ;;; Evil
 
 (lightemacs--load-modules '(evil
+                            evil-collection
                             evil-commentary
                             evil-snipe
                             evil-surround

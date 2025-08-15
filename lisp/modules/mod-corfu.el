@@ -48,4 +48,8 @@
 
 (provide 'mod-corfu)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-corfu.el ends here

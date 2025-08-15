@@ -23,4 +23,8 @@
 
 (provide 'mod-goto-chg)
 
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; mod-goto-chg.el ends here

@@ -60,6 +60,7 @@
              consult-register-format
              consult-theme
              consult-yank-pop)
+  :functions consult--customize-put
 
   :hook
   ;; Enable automatic preview at point in the *Completions* buffer.
@@ -110,8 +111,6 @@
     "Search through Emacs info pages."
     (interactive)
     (consult-info "emacs" "efaq" "elisp" "cl"))
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal 'global (kbd "<leader>ci") #'consult-info))
 
   (defun consult-info-org ()
     "Search through the Org info page."
@@ -133,7 +132,7 @@
 ;;; Completing indicator
 
 (defun crm-indicator (args)
-  "Add a prompt indicator for `completing-read-multiple` when using Consult.
+  "Add a prompt indicator for `completing-read-multiple' when using Consult.
 Displays `[CRM<separator>]` in the minibuffer to clarify multi-selection.
 
 ARGS are the arguments.
