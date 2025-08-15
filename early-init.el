@@ -185,14 +185,14 @@
                              ;; making it faster to select commonly used options
                              ;; while preserving consistent, predictable
                              ;; filtering.
-                             prescient-vertico
+                             vertico-prescient
 
                              ;; When used with Corfu, prescient.el improves both
                              ;; in-buffer completions and pop-up completion
                              ;; menus by making candidate ordering more
                              ;; predictable and adaptive to recent usage, thus
                              ;; speeding up repeated selections.
-                             prescient-corfu
+                             corfu-prescient
 
                              ;; Marginalia enriches minibuffer completions with
                              ;; contextual annotations.
