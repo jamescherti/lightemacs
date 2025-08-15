@@ -157,6 +157,10 @@
                              ;; Integration between Embark and Consult
                              embark-consult
 
+                             ;; The expand-region package grows your selection
+                             ;; step by step with 'C-=', starting from a word
+                             ;; and expanding to larger units like a sentence,
+                             ;; paragraph, or entire function.
                              expand-region
 
                              ;; (Vertico, Consult, and Embark collectively
