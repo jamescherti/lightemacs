@@ -60,8 +60,10 @@
              consult-register-format
              consult-theme
              consult-yank-pop
+             ;; Extensions
              consult-imenu
-             consult-xref)
+             consult-xref
+             consult-info)
   :functions consult--customize-put
 
   :hook
@@ -94,6 +96,26 @@
   (use-package consult-xref
     :ensure nil
     :commands consult-xref)
+
+  (use-package consult-info
+    :ensure nil
+    :commands consult-info
+    :init
+    (defun consult-info-emacs ()
+      "Search through Emacs info pages."
+      (interactive)
+      (consult-info "emacs" "efaq" "elisp" "cl"))
+
+    (defun consult-info-org ()
+      "Search through the Org info page."
+      (interactive)
+      (consult-info "org"))
+
+    (defun consult-info-completion ()
+      "Search through completion info pages."
+      (interactive)
+      (consult-info "vertico" "consult" "marginalia" "orderless" "embark"
+                    "corfu" "cape" "tempel")))
 
   (consult-customize consult-ripgrep
                      ;; consult-xref

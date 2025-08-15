@@ -15,6 +15,7 @@
 
 ;;; minibuffer
 
+(setq warning-suppress-types '((lexical-binding)))
 (setq minibuffer-default-prompt-format " [%s]")
 
 (provide 'mod-default-settings)
