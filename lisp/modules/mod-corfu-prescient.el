@@ -1,4 +1,4 @@
-;;; mod-prescient-corfu.el --- mod-prescient-corfu -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-corfu-prescient.el --- mod-corfu-prescient -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -53,10 +53,10 @@
   ;; to the function ‘prescient-completion-sort’.
   (setq corfu-prescient-override-sorting t))
 
-(provide 'mod-prescient-corfu)
+(provide 'mod-corfu-prescient)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; mod-prescient-corfu.el ends here
+;;; mod-corfu-prescient.el ends here

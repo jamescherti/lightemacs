@@ -54,7 +54,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Default theme (mod-default-theme)](#default-theme-mod-default-theme)
     - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
     - [Better completion (mod-corfu and mod-cape)](#better-completion-mod-corfu-and-mod-cape)
-    - [Better sorting and ordering (mod-prescient, mod-prescient-corfu, and mod-prescient-vertico)](#better-sorting-and-ordering-mod-prescient-mod-prescient-corfu-and-mod-prescient-vertico)
+    - [Better sorting and ordering (mod-prescient, mod-corfu-prescient, and mod-vertico-prescient)](#better-sorting-and-ordering-mod-prescient-mod-corfu-prescient-and-mod-vertico-prescient)
     - [Better File Manager (mod-dired and mod-dired-filter)](#better-file-manager-mod-dired-and-mod-dired-filter)
     - [Efficient template expansion with snippets (mod-yasnippet and mod-yasnippet-snippets)](#efficient-template-expansion-with-snippets-mod-yasnippet-and-mod-yasnippet-snippets)
     - [Better undo/redo (mod-undo-fu and undo-fu-session)](#better-undoredo-mod-undo-fu-and-undo-fu-session)
@@ -233,14 +233,14 @@ Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion 
 
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
 
-### Better sorting and ordering (mod-prescient, mod-prescient-corfu, and mod-prescient-vertico)
+### Better sorting and ordering (mod-prescient, mod-corfu-prescient, and mod-vertico-prescient)
 
 The **mod-prescient** configures [prescient.el](https://github.com/radian-software/prescient.el) is a library for sorting and filtering lists of candidates, such as those presented by packages like Vertico or Corfu.
 
 The main benefit of *prescient.el* is that it adaptively orders candidates based on both frequency and recency of selection, making frequently used options appear first without sacrificing predictable filtering results.
 
-- Vertico and Prescient (mod-prescient-vertico): When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
-- Corfu and Prescient (mod-prescient-corfu): When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
+- Vertico and Prescient (mod-vertico-prescient): When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
+- Corfu and Prescient (mod-corfu-prescient): When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
 
 ### Better File Manager (mod-dired and mod-dired-filter)
 

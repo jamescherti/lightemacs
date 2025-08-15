@@ -1,4 +1,4 @@
-;;; mod-prescient-vertico.el --- mod-prescient-vertico -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-vertico-prescient.el --- mod-vertico-prescient -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -53,10 +53,10 @@
   ;; Disabled here to avoid overriding sorting in `recentf'.
   (setq vertico-prescient-override-sorting nil))
 
-(provide 'mod-prescient-vertico)
+(provide 'mod-vertico-prescient)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; mod-prescient-vertico.el ends here
+;;; mod-vertico-prescient.el ends here
