@@ -14,13 +14,15 @@
 
 ;;; Global variables
 
-;; Modules enabled by default:
-(defvar lightemacs-modules '(;; Vim keybindings (Disabled):
-                             ;; ---------------------------
+;; Lightemacs provides a range of modules that can be selectively enabled or
+;; disabled according to your preferences, with all modules ensuring packages
+;; are loaded only when needed, enabling exceptionally fast, deferred startup.
+(defvar lightemacs-modules '(;; Vim keybindings (DISABLED)
+                             ;; --------------------------
                              ;; group-evil
 
-                             ;; Treesitter (Better syntax highlighting)
-                             ;; ---------------------------------------
+                             ;; Treesitter, Better syntax highlighting (DISABLED)
+                             ;; -------------------------------------------------
                              ;; treesit-auto
 
                              ;; Compile-angel speeds up Emacs by ensuring that
