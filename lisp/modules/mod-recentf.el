@@ -75,26 +75,7 @@
                  "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
 
                  "-autoloads\\.el$"
-                 "autoload\\.el$"
-
-                 "^~/\\.vim-spell\\.en\\.utf8\\.add$"
-                 ;; Prevent this from being added two times (~/.emacs.d)
-                 "^~/\\.emacs\\.d/"
-                 "^~/\\.minimal-emacs\\.d/"
-
-                 (concat (let ((dir (getenv "TMPDIR")))
-                           (when (and dir (not (string= dir "")))
-                             (concat "^" (regexp-quote dir)))))
-
-                 "^/tmp"
-
-                 (concat (let ((dir (or (getenv "XDG_RUNTIME_DIR")
-                                        "/run")))
-                           (when (and dir (not (string= dir "")))
-                             (concat "^" (regexp-quote dir)))))
-
-                 (concat "^" (regexp-quote
-                              (recentf-expand-file-name package-user-dir))))))
+                 "autoload\\.el$")))
 
   ;; Depth -90 ensures it is cleaned up before it is saved with
   ;; `recentf-save-list'
