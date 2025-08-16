@@ -27,7 +27,7 @@ Here are some of the modules that are enabled by default:
 - And more.
 
 Optionally, you can enable the following features that are disabled by default:
-- **mod-group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state. (Vim keybindings can be disabled.)
+- **mod-group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state.
 - **mod-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 
 **What is the difference between Lightemacs and minimal-emacs.d?**
@@ -124,28 +124,18 @@ git -C ~/.emacs.d submodule update --init --recursive
 
 **The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
 
-The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
+Modify `~/.emacs.d/config.el` instead. This file is loaded after `init.el` but before the Lightemacs modules are initialized. It is intended for supplementary configurations or package setups.
 
-These files allow you to further customize the initialization sequence:
-
-- `~/.emacs.d/pre-init.el`: This file is loaded before `init.el`. Use it to set up variables or configurations that need to be available early in the initialization process but after `early-init.el`.
-
-- `~/.emacs.d/post-init.el` or `~/.emacs.d/config.el` (the `config.el` file is specific to lightemacs): This file is loaded after `init.el`. It is useful for additional configurations or package setups that depend on the configurations in `init.el`.
-
-- `~/.emacs.d/pre-early-init.el`: This file is loaded before `early-init.el`. Use it for configurations that need to be set even earlier in the startup sequence, typically affecting the initial setup of the Emacs environment.
-
-- `~/.emacs.d/post-early-init.el`: This file is loaded after `early-init.el` but before `init.el`. It is useful for setting up configurations that depend on the early initialization but need to be set before the main initialization begins.
-
-Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-early-init.el` files with the following header to prevent them from being byte-compiled and to activate lexical binding:
+Always begin your `config.el` file with the following header to prevent them from being byte-compiled and to activate lexical binding:
 ```elisp
-;;; FILENAME.el --- DESCRIPTION -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
 ```
-
-Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
 
 *(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded.)*
 
-**Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the files `pre-early-init.el`, `post-early-init.el`, `pre-init.el`, and `post-init.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
+**Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
+
+The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d. (pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el)
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
