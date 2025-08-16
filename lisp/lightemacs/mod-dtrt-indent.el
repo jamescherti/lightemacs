@@ -19,7 +19,6 @@
 ;;; Code:
 
 (use-package dtrt-indent
-  :defer t
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode
              dtrt-indent-adapt
