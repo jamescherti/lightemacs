@@ -102,7 +102,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
 
 Execute the following command install this repository into `~/.emacs.d`:
 ```
-git clone --recursive https://github.com/jamescherti/lightemacs ~/.emacs.d
+git clone https://github.com/jamescherti/lightemacs ~/.emacs.d
 ```
 
 ### Alternative: Install Lightemacs into ~/.lightemacs.d
@@ -123,8 +123,7 @@ To install *Lightemacs* in a non-default directory, use the `--init-directory` E
 
 To update your Lightemacs configuration and its submodules, run the following commands:
 ```
-git -C ~/.emacs.d pull --recurse-submodules
-git -C ~/.emacs.d submodule update --init --recursive
+git -C ~/.emacs.d pull
 ```
 
 ## The hierarchy of Lightemacs files
