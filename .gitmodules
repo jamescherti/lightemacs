@@ -1,3 +1,6 @@
 [submodule "lisp/modules/init"]
 	path = lisp/modules/init
 	url = https://github.com/jamescherti/minimal-emacs.d
+[submodule "lisp/lightemacs/init"]
+	path = lisp/lightemacs/init
+	url = https://github.com/jamescherti/minimal-emacs.d
