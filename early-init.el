@@ -80,17 +80,10 @@ compilation process, providing feedback on the compilation status."
   "Load all modules listed in LIGHTEMACS-MODULES."
   (let ((modules-dir (lightemacs--modules-dir)))
     (dolist (feature-symbol lightemacs-modules)
-      (let* ((feature-str (format "%s" feature-symbol))
-             (feature-symbol (intern feature-str))
-             (module-file (expand-file-name (format "%s.el" feature-str)
-                                            modules-dir)))
-        (when init-file-debug
-          (message "[LIGHTEMACS LOAD MODULE] %s" module-file))
-        (require feature-symbol module-file)
-        ;; (if (file-exists-p module-file)
-        ;;     (require feature-symbol module-file)
-        ;;   (message "The module '%s' could not be found" module-file))
-        ))))
+      (let ((inhibit-message t))
+        (lightemacs-verbose-message "Load module: %s" feature-symbol))
+      (let ((load-path (cons modules-dir load-path)))
+        (require feature-symbol)))))
 
 (defun lightemacs--load-default-theme ()
   "Load the theme defined in `lightemacs-default-theme' if it is installed."

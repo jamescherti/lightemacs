@@ -1,4 +1,4 @@
-;;; mod-lightemacs.el --- mod-lightemacs -*- lexical-binding: t -*-
+;;; lib-lightemacs.el --- lib-lightemacs -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -59,10 +59,10 @@
   (add-hook 'server-visit-hook #'on--run-first-buffer-hook))
 
 
-(provide 'mod-lightemacs)
+(provide 'lib-lightemacs)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; mod-lightemacs.el ends here
+;;; lib-lightemacs.el ends here
