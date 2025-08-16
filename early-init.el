@@ -25,6 +25,10 @@
                              ;; -------------------------------------------------
                              ;; treesit-auto
 
+                             ;; Visual indentation guides
+                             ;; -------------------------
+                             ;; indent-bars
+
                              ;; Custom keybindings
                              keybindings
 
@@ -58,12 +62,6 @@
                              ;; Modern code folding based on indentation levels.
                              ;; Automatically enabled for Python and Yaml.
                              outline-indent
-
-                             ;; The indent-bars package enhances code
-                             ;; readability by providing visual indentation
-                             ;; guides, optimized for speed and customization.
-                             ;; (Useful for Yaml or Python files.)
-                             indent-bars
 
                              ;; Update the ellipsis in `outline-mode' and
                              ;; `outline-minor-mode' using `lightemacs-ellipsis'

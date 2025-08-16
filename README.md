@@ -51,6 +51,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
   - [Modules disabled by default](#modules-disabled-by-default)
     - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
+    - [Disabled by default: Indentation bars (mod-indent-bars)](#disabled-by-default-indentation-bars-mod-indent-bars)
   - [Features and modules enabled by default](#features-and-modules-enabled-by-default)
     - [Default theme (mod-default-theme)](#default-theme-mod-default-theme)
     - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
@@ -67,7 +68,6 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Persist and Restore Text Scale (mod-persist-text-scale)](#persist-and-restore-text-scale-mod-persist-text-scale)
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Expand Region (mod-expand-region)](#expand-region-mod-expand-region)
-    - [Indentation bars (mod-indent-bars)](#indentation-bars-mod-indent-bars)
     - [A better way to rename or delete files (mod-buffer-file)](#a-better-way-to-rename-or-delete-files-mod-buffer-file)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
@@ -186,6 +186,29 @@ The `mod-group-evil` group of modules includes:
 - **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 * **mod-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+
+### Disabled by default: Indentation bars (mod-indent-bars)
+
+The **mod-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.)
+
+<img width="600" src="https://github.com/jdtsmith/indent-bars/assets/93749/0eaa0d85-0893-4893-8a56-a63ab6eeac1c"/>
+
+It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern.
+
+It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
+
+```elisp
+;; Enable indent-bars-mode automatically for Python files
+(add-hook 'python-ts-mode-hook #'indent-bars-mode)
+(add-hook 'python-mode-hook #'indent-bars-mode)
+
+;; Enable indent-bars-mode automatically for YAML files
+(add-hook 'yaml-mode-hook #'indent-bars-mode)
+(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
+```
+
+(By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
+
 
 ## Features and modules enabled by default
 
@@ -331,28 +354,6 @@ The **mod-expand-region** module configures the [expand-region](https://github.c
 Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
 
 Continue pressing `C-=` until the selection encompasses exactly the text you want.
-
-### Indentation bars (mod-indent-bars)
-
-The **mod-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.)
-
-<img width="600" src="https://github.com/jdtsmith/indent-bars/assets/93749/0eaa0d85-0893-4893-8a56-a63ab6eeac1c"/>
-
-It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern.
-
-It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
-
-```elisp
-;; Enable indent-bars-mode automatically for Python files
-(add-hook 'python-ts-mode-hook #'indent-bars-mode)
-(add-hook 'python-mode-hook #'indent-bars-mode)
-
-;; Enable indent-bars-mode automatically for YAML files
-(add-hook 'yaml-mode-hook #'indent-bars-mode)
-(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
-```
-
-(By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
 
 ### A better way to rename or delete files (mod-buffer-file)
 
