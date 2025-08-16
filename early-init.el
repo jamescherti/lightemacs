@@ -25,11 +25,6 @@
                              ;; -------------------------------------------------
                              ;; treesit-auto
 
-                             ;; Compile-angel speeds up Emacs by ensuring that
-                             ;; all Elisp libraries are both byte-compiled and
-                             ;; native-compiled.
-                             compile-angel
-
                              ;; Custom keybindings
                              keybindings
 
@@ -266,7 +261,12 @@
                              ;; automatically reindents after every
                              ;; modification, providing greater reliability than
                              ;; `electric-indent-mode'.
-                             aggressive-indent)
+                             aggressive-indent
+
+                             ;; Compile-angel speeds up Emacs by ensuring that
+                             ;; all Elisp libraries are both byte-compiled and
+                             ;; native-compiled.
+                             compile-angel)
   "Modules that are enabled by default.")
 
 (defvar lightemacs-default-theme 'tomorrow-night-deepblue
