@@ -25,8 +25,8 @@
                              ;; -------------------------------------------------
                              ;; treesit-auto
 
-                             ;; Visual indentation guides
-                             ;; -------------------------
+                             ;; Visual indentation guides (DISABLED)
+                             ;; ------------------------------------
                              ;; indent-bars
 
                              ;; Custom keybindings
@@ -253,13 +253,19 @@
                              ;; them again when the cursor leaves.
                              org-appear
 
-                             ;; Filetype: Elisp
+                             ;; Filetype: Emacs Lisp
                              ;; `aggressive-indent-mode' is a minor mode that
                              ;; Elisp code remains consistently indented. It
                              ;; automatically reindents after every
                              ;; modification, providing greater reliability than
                              ;; `electric-indent-mode'.
                              aggressive-indent
+
+                             ;; Filetype: Emacs Lisp
+                             ;; Enable `highlight-defined', a minor mode that
+                             ;; highlights defined Emacs Lisp symbols in
+                             ;; `emacs-lisp-mode' buffers.
+                             highlight-defined
 
                              ;; Compile-angel speeds up Emacs by ensuring that
                              ;; all Elisp libraries are both byte-compiled and
@@ -280,8 +286,15 @@ customize this variable to use a different character or string (such as '…',
 variable is buffer-local in Org-mode and Outline-mode, affecting only the
 display of folded text.")
 
+(defcustom lightemacs-verbose nil
+  "Enable displaying messages.
+When set to non-nil, this option will cause messages to be shown during the
+compilation process, providing feedback on the compilation status."
+  :type 'boolean
+  :group 'lightemacs)
+
 (defvar lightemacs-user-emacs-directory user-emacs-directory
-  "Directory beneath lightemacs files are placed.")
+  "Directory beneath Lightemacs files are placed.")
 
 ;;; Reduce cluttering
 
@@ -336,6 +349,12 @@ display of folded text.")
         nil
         (not (bound-and-true-p init-file-debug))
         'nosuffix))
+
+(defmacro lightemacs-verbose-message (&rest args)
+  "Display a verbose message with the same ARGS arguments as `message'."
+  `(progn
+     (when lightemacs-verbose
+       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
 
 ;;; Other parameters
 

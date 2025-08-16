@@ -48,11 +48,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
   - [Customizations](#customizations)
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
-  - [Modules disabled by default](#modules-disabled-by-default)
-    - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
-    - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
-    - [Disabled by default: Indentation bars (mod-indent-bars)](#disabled-by-default-indentation-bars-mod-indent-bars)
-  - [Features and modules enabled by default](#features-and-modules-enabled-by-default)
+  - [Modules Enabled by Default](#modules-enabled-by-default)
     - [Default theme (mod-default-theme)](#default-theme-mod-default-theme)
     - [Better minibuffer and navigation (mod-consult, mod-embark, and mod-vertico, mod-marginalia)](#better-minibuffer-and-navigation-mod-consult-mod-embark-and-mod-vertico-mod-marginalia)
     - [Better completion (mod-corfu and mod-cape)](#better-completion-mod-corfu-and-mod-cape)
@@ -71,9 +67,13 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [A better way to rename or delete files (mod-buffer-file)](#a-better-way-to-rename-or-delete-files-mod-buffer-file)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
-    - [Other Features](#other-features)
-    - [Useful variables](#useful-variables)
-      - [Ellipsis](#ellipsis)
+  - [Modules disabled by Default](#modules-disabled-by-default)
+    - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
+    - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
+    - [Disabled by default: Indentation bars (mod-indent-bars)](#disabled-by-default-indentation-bars-mod-indent-bars)
+  - [Other Features](#other-features)
+  - [Useful variables](#useful-variables)
+    - [Ellipsis](#ellipsis)
   - [Author and license](#author-and-license)
   - [Links](#links)
 
@@ -152,65 +152,7 @@ To customize your Emacs setup to include various user interface elements, you ca
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
-## Modules disabled by default
-
-### Disabled by default: mod-treesit-auto (better syntax highlighting)
-
-Module: **mod-treesit-auto**
-
-The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
-
-To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
-;; provides precise, high-performance syntax highlighting. It supports a broad
-;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
-;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
-;; Elisp, Lua, and many others. treesit-auto
-(push 'treesit-auto lightemacs-modules)
-```
-
-### Disabled by default: mod-group-evil (Vim Keybindings)
-
-By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
-
-To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Enable Vim key bindings
-(push 'group-evil lightemacs-modules)
-```
-
-The `mod-group-evil` group of modules includes:
-- **mod-evil**: Vim keybindings (evil and evil-collection).
-- **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
-- **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
-- **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
-* **mod-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
-
-### Disabled by default: Indentation bars (mod-indent-bars)
-
-The **mod-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.)
-
-<img width="600" src="https://github.com/jdtsmith/indent-bars/assets/93749/0eaa0d85-0893-4893-8a56-a63ab6eeac1c"/>
-
-It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern.
-
-It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
-
-```elisp
-;; Enable indent-bars-mode automatically for Python files
-(add-hook 'python-ts-mode-hook #'indent-bars-mode)
-(add-hook 'python-mode-hook #'indent-bars-mode)
-
-;; Enable indent-bars-mode automatically for YAML files
-(add-hook 'yaml-mode-hook #'indent-bars-mode)
-(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
-```
-
-(By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
-
-
-## Features and modules enabled by default
+## Modules Enabled by Default
 
 ### Default theme (mod-default-theme)
 
@@ -415,19 +357,80 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **mod-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 * **mod-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
+- **mod-highlight-defined.el**: Enable `highlight-defined`, a minor mode that highlights defined Emacs Lisp symbols in `emacs-lisp-mode` buffers.
 - **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable it for Elisp files, add the following to the `~/.emacs.d/config.el` file:
   ```elisp
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   ```
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 
-### Other Features
+## Modules disabled by Default
 
+### Disabled by default: mod-treesit-auto (better syntax highlighting)
+
+Module: **mod-treesit-auto**
+
+The **mod-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
+;; provides precise, high-performance syntax highlighting. It supports a broad
+;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, and many others. treesit-auto
+(push 'treesit-auto lightemacs-modules)
+```
+
+### Disabled by default: mod-group-evil (Vim Keybindings)
+
+By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+;; Enable Vim key bindings
+(push 'group-evil lightemacs-modules)
+```
+
+The `mod-group-evil` group of modules includes:
+- **mod-evil**: Vim keybindings (evil and evil-collection).
+- **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
+- **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
+- **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
+* **mod-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+
+### Disabled by default: Indentation bars (mod-indent-bars)
+
+The **mod-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.)
+
+<img width="600" src="https://github.com/jdtsmith/indent-bars/assets/93749/0eaa0d85-0893-4893-8a56-a63ab6eeac1c"/>
+
+It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern.
+
+It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
+
+```elisp
+;; Enable indent-bars-mode automatically for Python files
+(add-hook 'python-ts-mode-hook #'indent-bars-mode)
+(add-hook 'python-mode-hook #'indent-bars-mode)
+
+;; Enable indent-bars-mode automatically for YAML files
+(add-hook 'yaml-mode-hook #'indent-bars-mode)
+(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
+```
+
+(By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
+
+
+## Other Features
+
+In addition to modules, Lightemacs provides the following features:
 - Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
+- Lightemacs configures `use-package` to automatically refresh Emacs package archives once per session when installing a package that isn’t already present. This allows missing packages to be installed without manually running `package-refresh-contents` and prevents repeated refreshes in the same session, resolving issues such as invalid GPG keys when installing packages after the package list has become outdated.
 
-### Useful variables
+## Useful variables
 
-#### Ellipsis
+### Ellipsis
 Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
 ```elisp
 (setq lightemacs-ellipsis " ▼")
