@@ -27,7 +27,7 @@
              undo-fu-only-redo
              undo-fu-only-redo-all
              undo-fu-disable-checkpoint)
-  :config
+  :init
   (setq evil-undo-system 'undo-fu))
 
 (provide 'mod-undo-fu)

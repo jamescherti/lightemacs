@@ -68,6 +68,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Expand Region (mod-expand-region)](#expand-region-mod-expand-region)
     - [Indentation bars (mod-indent-bars)](#indentation-bars-mod-indent-bars)
+    - [A better way to rename or delete files (mod-buffer-file)](#a-better-way-to-rename-or-delete-files-mod-buffer-file)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
     - [Other Features](#other-features)
@@ -352,6 +353,34 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 ```
 
 (By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
+
+### A better way to rename or delete files (mod-buffer-file)
+
+The **mod-buffer-file** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
+- `M-x bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name.
+- `M-x bufferfile-delete`: Delete the file associated with a buffer and kill all buffers visiting the file, including clones/indirect buffers.
+- `M-x bufferfile-copy`: Ensures that the destination directory exists and copies the file visited by the current buffer to a new file.
+
+The functions above also ensures that any modified buffers are saved prior to executing operations like renaming, deleting, or copying.
+
+To replace the default *dired* rename command with `bufferfile-rename`, add the following to your `~/.emacs.d/config.el` file:
+
+```elisp
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "R") #'bufferfile-dired-do-rename)
+
+  ;; For users of `evil-mode', uncomment the following sexp:
+  ;; (with-eval-after-load 'evil
+  ;;   (evil-define-key 'normal dired-mode-map (kbd "R") #'bufferfile-dired-do-rename))
+  )
+```
+
+To make *bufferfile* use version control when renaming or deleting files, add the following to your `~/.emacs.d/config.el` file:
+
+```elisp
+;; Use version control when renaming or deleting files with `bufferfile-rename'
+(setq bufferfile-use-vc t)
+```
 
 ### Recent files (mod-recentf)
 
