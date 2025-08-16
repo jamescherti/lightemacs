@@ -72,6 +72,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Expand Region (mod-expand-region)](#expand-region-mod-expand-region)
     - [A better way to rename or delete files (mod-buffer-file)](#a-better-way-to-rename-or-delete-files-mod-buffer-file)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
+    - [Detect indentation offset (mod-dtrt-indent)](#detect-indentation-offset-mod-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
     - [Enhanced Emacs Lisp (Elisp) Editing Experience (group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-group-emacs-lisp)
   - [Modules disabled by Default](#modules-disabled-by-default)
@@ -357,6 +358,29 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - Inserts the current file at the beginning of the recent files list upon buffer switch.
 - Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
+
+### Detect indentation offset (mod-dtrt-indent)
+
+The **mod-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
+
+By default, the *dtrt-indent* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
+
+To use it, you have multiple options: you can activate `dtrt-indent-global-mode` to automatically detect and adjust the indentation offset in all buffers; alternatively, you can enable `dtrt-indent-mode` (local mode) to restrict the behavior to the current buffer; or you can invoke the function `dtrt-indent-adapt` directly whenever you need to adjust the indentation settings for a specific file or buffer.
+
+For instance, configure it to run automatically in programming modes by adding the following to the `~/.emacs.d/config.el` file:
+
+```emacs-lisp
+;; Adjusting indentation settings for `prog-mode-hook` buffers.
+(add-hook 'prog-mode-hook #'dtrt-indent-adapt 80)
+```
+
+(In this example, the function `dtrt-indent-adapt` is invoked for all buffers in `prog-mode` with a priority of 80, enabling Emacs to automatically detect and adjust to the file’s indentation style after the standard `prog-mode-hook` hooks.)
+
+To prevent `dtrt-indent` from displaying a message each time it adjusts the indentation offset, silence these notifications by adding the following line to the `~/.emacs.d/config.el` file:
+
+```emacs-lisp
+(setq dtrt-indent-verbosity 0)
+```
 
 ### Other Modules Enabled by Default
 

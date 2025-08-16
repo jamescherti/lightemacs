@@ -267,6 +267,13 @@
                            ;; unified and easily navigable buffer.
                            mod-helpful
 
+                           ;; This package provides functions to detects the
+                           ;; indentation offset used in existing source code
+                           ;; files and automatically adjusts Emacs settings
+                           ;; accordingly, thereby simplifying the editing of
+                           ;; files created in external environments.
+                           dtrt-indent
+
                            ;; Compile-angel speeds up Emacs by ensuring that
                            ;; all Elisp libraries are both byte-compiled and
                            ;; native-compiled.
