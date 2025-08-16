@@ -112,6 +112,15 @@
                            ;; and other prompts, to a file.
                            mod-savehist
 
+                           ;; Automatically insert matching delimiters (), {}...
+                           mod-elec-pair
+
+                           ;; `show-paren-mode' highlights matching pairs of
+                           ;; parentheses and other paired characters, improving
+                           ;; code readability and helping to quickly identify
+                           ;; unbalanced expressions.
+                           mod-paren
+
                            ;; Remember the last location within a file upon
                            ;; reopening. This is beneficial for resuming work
                            ;; at the precise point where you previously left
@@ -272,7 +281,7 @@
                            ;; files and automatically adjusts Emacs settings
                            ;; accordingly, thereby simplifying the editing of
                            ;; files created in external environments.
-                           dtrt-indent
+                           mod-dtrt-indent
 
                            ;; Compile-angel speeds up Emacs by ensuring that
                            ;; all Elisp libraries are both byte-compiled and

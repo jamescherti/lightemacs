@@ -18,7 +18,7 @@
 ;; Allow Emacs to upgrade built-in packages, such as Org mode
 (setq package-install-upgrade-built-in t)
 
-(setq warning-suppress-types '((lexical-binding)))
+(setq warning-suppress-types '((obsolete lexical-binding)))
 
 (setq treesit-font-lock-level 4) ; Max: 4
 
