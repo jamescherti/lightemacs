@@ -323,7 +323,7 @@ compilation process, providing feedback on the compilation status."
   (expand-file-name "lisp/modules"
                     lightemacs-user-emacs-directory))
 
-(defun lightemacs--load-modules (lightemacs-modules)
+(defun lightemacs-load-modules (lightemacs-modules)
   "Load all modules listed in LIGHTEMACS-MODULES."
   (let ((modules-dir (lightemacs--modules-dir)))
     (dolist (feature-symbol lightemacs-modules)

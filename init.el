@@ -21,8 +21,8 @@
 
 (minimal-emacs-load-user-init "config.el")
 
-(lightemacs--load-modules '(lightemacs))
-(lightemacs--load-modules lightemacs-modules)
+(lightemacs-load-modules '(lightemacs))
+(lightemacs-load-modules lightemacs-modules)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
