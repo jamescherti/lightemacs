@@ -30,6 +30,9 @@
                              ;; native-compiled.
                              compile-angel
 
+                             ;; Custom keybindings
+                             keybindings
+
                              ;; Modules enabled by default
                              ;; --------------------------
                              ;; This loaded the default theme specified
@@ -215,9 +218,6 @@
                              ;; changes made to the underlying file on disk.
                              autorevert
 
-                             ;; Custom keybindings
-                             keybindings
-
                              ;; The undo-fu package is a lightweight wrapper
                              ;; around Emacs' built-in undo system, providing
                              ;; more convenient undo/redo functionality while
@@ -229,6 +229,10 @@
                              ;; history across Emacs sessions, even after
                              ;; restarting.
                              undo-fu-session
+
+                             ;; The bufferfile package provides helper functions
+                             ;; to delete, rename, or copy buffer files.
+                             bufferfile
 
                              ;; Vim tab bar
                              vim-tab-bar
