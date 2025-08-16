@@ -177,7 +177,7 @@ By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 To enable it, add the following to the `~/.emacs.d/config.el` file:
 ```elisp
 ;; Enable Vim key bindings
-(push 'mod-group-evil lightemacs-modules)
+(push 'group-evil lightemacs-modules)
 ```
 
 The `mod-group-evil` group of modules includes:
