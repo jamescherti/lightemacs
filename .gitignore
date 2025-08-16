@@ -1,9 +1,6 @@
-*
-!README.md
-!early-init.el
-!init.el
-!.github/
-!.LICENSE
-!/lisp
-!/lisp/modules
-!/lisp/modules/**
+/pre-early-init.el
+/pre-init.el
+/post-early-init.el
+/post-early-init.el
+/config.el
+/lisp/local
