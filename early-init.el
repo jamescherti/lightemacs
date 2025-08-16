@@ -73,7 +73,7 @@ compilation process, providing feedback on the compilation status."
 
 (defun lightemacs--modules-dir ()
   "Return the path to the modules directory."
-  (expand-file-name "lisp/modules"
+  (expand-file-name "lisp/lightemacs"
                     lightemacs-user-emacs-directory))
 
 (defun lightemacs-load-modules (lightemacs-modules)

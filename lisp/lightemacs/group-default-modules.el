@@ -257,6 +257,16 @@
                            ;; `electric-indent-mode'.
                            group-emacs-lisp
 
+                           ;; Helpful enhances the built-in help system by
+                           ;; providing richer, more contextual information
+                           ;; about symbols, functions, variables, and macros.
+                           ;; Unlike the default `describe-*` commands, Helpful
+                           ;; integrates additional metadata such as source
+                           ;; code, documentation strings, keybindings,
+                           ;; references, and interactive examples, all within a
+                           ;; unified and easily navigable buffer.
+                           mod-helpful
+
                            ;; Compile-angel speeds up Emacs by ensuring that
                            ;; all Elisp libraries are both byte-compiled and
                            ;; native-compiled.
