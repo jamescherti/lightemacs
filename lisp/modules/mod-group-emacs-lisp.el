@@ -38,7 +38,7 @@
                            ;; `electric-indent-mode'. To enable it for Elisp
                            ;; files, add the following to the
                            ;; ~/.emacs.d/config.el file:
-                           aggressive-indent-mode))
+                           aggressive-indent))
 
 (add-hook 'emacs-lisp-mode-hook #'highlight-defined-mode)
 (add-hook 'emacs-lisp-mode-hook #'page-break-lines-mode)
