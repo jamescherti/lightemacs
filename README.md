@@ -48,6 +48,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Install Lightemacs into ~/.emacs.d](#install-lightemacs-into-emacsd)
     - [Alternative: Install Lightemacs into ~/.lightemacs.d](#alternative-install-lightemacs-into-lightemacsd)
   - [Update Lightemacs](#update-lightemacs)
+  - [The hierarchy of Lightemacs files](#the-hierarchy-of-lightemacs-files)
   - [Customizations](#customizations)
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
@@ -122,6 +123,21 @@ To update your Lightemacs configuration and its submodules, run the following co
 git -C ~/.emacs.d pull --recurse-submodules
 git -C ~/.emacs.d submodule update --init --recursive
 ```
+
+## The hierarchy of Lightemacs files
+
+If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follows:
+
+- `~/.emacs.d/var/`: Contains all files generated dynamically by Emacs and its plugins. Lightemacs redirects such files here to prevent cluttering `~/.emacs.d/`.
+- `~/.emacs.d/lisp/lightemacs/`: Contains the modules and libraries used by Lightemacs (do not modify these files).
+- `~/.emacs.d/early-init.el` and `~/.emacs.d/init.el`: Initialization files (do not modify these files).
+
+Files you may edit:
+
+- `~/.emacs.d/config.el`: The main configuration file, where you may adjust settings or install packages.
+- `~/.emacs.d/lisp/local/`: A directory for your personal Elisp files.
+
+*(Files and directories intended for user modification, such as `~/.emacs.d/config.el` or any files within `~/.emacs.d/lisp/local/`, are not tracked by Git.)*
 
 ## Customizations
 
