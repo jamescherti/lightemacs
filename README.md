@@ -19,7 +19,10 @@ Here are some of the modules that are enabled by default:
 - The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
 - Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - Additional filetypes: `markdown-mode` and `org-mode`.
-- Emacs Lisp editing: Maintain consistent indentation of Elisp code during editing.
+- Enhanced Emacs Lisp (Elisp) Editing Experience:
+    - Highlights defined Emacs Lisp symbols.
+    - Maintain consistent indentation of Elisp code during editing.
+    - Visually replace ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see.
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
 - Save and restore the default theme using the `lightemacs-default-theme` variable.
@@ -67,6 +70,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [A better way to rename or delete files (mod-buffer-file)](#a-better-way-to-rename-or-delete-files-mod-buffer-file)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
+    - [Enhanced Emacs Lisp (Elisp) Editing Experience (mod-group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-mod-group-emacs-lisp)
   - [Modules disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
@@ -357,12 +361,14 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 - **mod-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 * **mod-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
-- **mod-highlight-defined.el**: Enable `highlight-defined`, a minor mode that highlights defined Emacs Lisp symbols in `emacs-lisp-mode` buffers.
-- **mod-aggressive-indent**: `aggressive-indent-mode` is a minor mode that Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable it for Elisp files, add the following to the `~/.emacs.d/config.el` file:
-  ```elisp
-  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-  ```
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
+
+### Enhanced Emacs Lisp (Elisp) Editing Experience (mod-group-emacs-lisp)
+
+The **mod-group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
+- **mod-highlight-defined**: Enables `highlight-defined-mode`, a minor mode that highlights defined Emacs Lisp symbols.
+- **mod-aggressive-indent**: Enables `aggressive-indent-mode`, a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
+- **mod-page-break-lines**: Enables `page-break-lines-mode`, a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text.
 
 ## Modules disabled by Default
 

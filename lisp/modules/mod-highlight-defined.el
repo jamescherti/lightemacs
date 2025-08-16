@@ -12,14 +12,12 @@
 ;; Enable `highlight-defined', a minor mode that highlights defined Emacs Lisp
 ;; symbols in `emacs-lisp-mode' buffers.
 ;;
-;; URL: https://github.com/jamescherti/highlight-defined
+;; URL: https://github.com/Fanael/highlight-defined
 
 ;;; Code:
 
 (use-package highlight-defined
-  :commands highlight-defined-mode
-  :hook
-  (emacs-lisp-mode . highlight-defined-mode))
+  :commands highlight-defined-mode)
 
 (provide 'mod-highlight-defined)
 
