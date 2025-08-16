@@ -21,7 +21,7 @@
 
 (minimal-emacs-load-user-init "config.el")
 
-(lightemacs-load-modules '(lightemacs))
+(lightemacs-load-modules '(mod-lightemacs))
 (lightemacs-load-modules lightemacs-modules)
 
 ;; Local variables:

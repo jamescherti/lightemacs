@@ -30,7 +30,7 @@ Here are some of the modules that are enabled by default:
 - And more.
 
 Optionally, you can enable the following features that are disabled by default:
-- **mod-group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state.
+- **group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state.
 - **mod-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 
 **What is the difference between Lightemacs and minimal-emacs.d?**
@@ -70,10 +70,10 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [A better way to rename or delete files (mod-buffer-file)](#a-better-way-to-rename-or-delete-files-mod-buffer-file)
     - [Recent files (mod-recentf)](#recent-files-mod-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
-    - [Enhanced Emacs Lisp (Elisp) Editing Experience (mod-group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-mod-group-emacs-lisp)
+    - [Enhanced Emacs Lisp (Elisp) Editing Experience (group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-group-emacs-lisp)
   - [Modules disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
-    - [Disabled by default: mod-group-evil (Vim Keybindings)](#disabled-by-default-mod-group-evil-vim-keybindings)
+    - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
     - [Disabled by default: Indentation bars (mod-indent-bars)](#disabled-by-default-indentation-bars-mod-indent-bars)
   - [Other Features](#other-features)
   - [Useful variables](#useful-variables)
@@ -363,9 +363,9 @@ In addition to its built-in capabilities, the **mod-recentf** module provides th
 * **mod-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 
-### Enhanced Emacs Lisp (Elisp) Editing Experience (mod-group-emacs-lisp)
+### Enhanced Emacs Lisp (Elisp) Editing Experience (group-emacs-lisp)
 
-The **mod-group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
+The **group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
 - **mod-highlight-defined**: Enables `highlight-defined-mode`, a minor mode that highlights defined Emacs Lisp symbols.
 - **mod-aggressive-indent**: Enables `aggressive-indent-mode`, a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
 - **mod-page-break-lines**: Enables `page-break-lines-mode`, a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text.
@@ -388,7 +388,7 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 (push 'treesit-auto lightemacs-modules)
 ```
 
-### Disabled by default: mod-group-evil (Vim Keybindings)
+### Disabled by default: group-evil (Vim Keybindings)
 
 By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 
@@ -398,7 +398,7 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 (push 'group-evil lightemacs-modules)
 ```
 
-The `mod-group-evil` group of modules includes:
+The `group-evil` group of modules includes:
 - **mod-evil**: Vim keybindings (evil and evil-collection).
 - **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.

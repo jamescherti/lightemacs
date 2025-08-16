@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Comment or uncomment text in Normal or Visual mode by pressing gc.
+;; Comment or uncomment text in Normal or Visual mode by pressing 'gc'.
 
 ;;; Code:
 

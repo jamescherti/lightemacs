@@ -23,14 +23,14 @@
 
                              ;; Treesitter, Better syntax highlighting (DISABLED)
                              ;; -------------------------------------------------
-                             ;; treesit-auto
+                             ;; mod-treesit-auto
 
                              ;; Visual indentation guides (DISABLED)
                              ;; ------------------------------------
-                             ;; indent-bars
+                             ;; mod-indent-bars
 
                              ;; Custom keybindings
-                             keybindings
+                             mod-keybindings
 
                              ;; Modules enabled by default
                              ;; --------------------------
@@ -41,14 +41,14 @@
                              ;; beautiful deep blue variant of the Tomorrow
                              ;; Night theme, which is renowned for its elegant
                              ;; color palette that is pleasing to the eyes.
-                             default-theme
+                             mod-default-theme
 
                              ;; Default settings (minibuffer, Emacs...)
                              ;; Configure enhanced default settings, including
                              ;; improved defaults, backup files, warnings to
                              ;; ignore, a minibuffer depth indicator, window
                              ;; behavior...
-                             default-settings
+                             mod-default-settings
 
                              ;; Gcmh optimizes
                              ;; Emacs’ garbage collection behavior by adjusting
@@ -57,34 +57,34 @@
                              ;; normal editing, gcmh increases the threshold
                              ;; while Emacs is idle, reducing interruptions and
                              ;; improving perceived performance.
-                             gcmh
+                             mod-gcmh
 
                              ;; Modern code folding based on indentation levels.
                              ;; Automatically enabled for Python and Yaml.
-                             outline-indent
+                             mod-outline-indent
 
                              ;; Update the ellipsis in `outline-mode' and
                              ;; `outline-minor-mode' using `lightemacs-ellipsis'
-                             outline
+                             mod-outline
 
                              ;; The stripspace Emacs package provides minor mode
                              ;; that automatically removes trailing whitespace
                              ;; and blank lines at the end of the buffer when
                              ;; saving.
-                             stripspace
+                             mod-stripspace
 
                              ;; The yasnippet package provides a template system
                              ;; that enhances text editing by enabling users to
                              ;; define and use snippets, which are predefined
                              ;; templates of code or text.
-                             yasnippet
+                             mod-yasnippet
 
                              ;; The yasnippet-snippets package with a
                              ;; comprehensive collection of bundled templates
                              ;; for numerous programming and markup languages,
                              ;; including C, C++, C#, Perl, Python, Ruby, SQL,
                              ;; LaTeX, HTML, CSS...
-                             yasnippet-snippets
+                             mod-yasnippet-snippets
 
                              ;; The persist-text-scale Emacs package provides
                              ;; `persist-text-scale-mode', which ensures that
@@ -93,14 +93,14 @@
                              ;; restored across sessions. As a result, the text
                              ;; size in each buffer remains consistent, even
                              ;; after restarting Emacs.
-                             persist-text-scale
+                             mod-persist-text-scale
 
                              ;; Corfu enhances in-buffer completion by
                              ;; displaying a compact popup with current
                              ;; candidates, positioned either below or above the
                              ;; point. Candidates can be selected by navigating
                              ;; up or down.
-                             corfu
+                             mod-corfu
 
                              ;; (Cape integrates with corfu)
                              ;;
@@ -109,33 +109,33 @@
                              ;; integrates with Corfu or the default completion
                              ;; UI, by providing additional backends through
                              ;; completion-at-point-functions.
-                             cape
+                             mod-cape
 
                              ;; Configure `dired' to hide details such as file
                              ;; ownership and permissions, and to group
                              ;; directories first.
-                             dired
+                             mod-dired
 
                              ;; `dired': Filter dotfiles, omit files, and files
                              ;; listed in .gitignore
-                             dired-filter
+                             mod-dired-filter
 
                              ;; Preserve the minibuffer history between
                              ;; sessions. It saves the history of inputs in the
                              ;; minibuffer, such as commands, search strings,
                              ;; and other prompts, to a file.
-                             savehist
+                             mod-savehist
 
                              ;; Remember the last location within a file upon
                              ;; reopening. This is beneficial for resuming work
                              ;; at the precise point where you previously left
                              ;; off.
-                             saveplace
+                             mod-saveplace
 
                              ;; Recentf is an maintains a list of recently
                              ;; accessed files, making it easier to reopen files
                              ;; you have worked on recently.
-                             recentf
+                             mod-recentf
 
                              ;; (Vertico, Consult, and Embark collectively
                              ;; enhance Emacs' completion and navigation
@@ -148,16 +148,16 @@
                              ;; Emacs. Together, they create a cohesive and
                              ;; powerful environment for managing completions
                              ;; and interactions.
-                             embark
+                             mod-embark
 
                              ;; Integration between Embark and Consult
-                             embark-consult
+                             mod-embark-consult
 
                              ;; The expand-region package grows your selection
                              ;; step by step with 'C-=', starting from a word
                              ;; and expanding to larger units like a sentence,
                              ;; paragraph, or entire function.
-                             expand-region
+                             mod-expand-region
 
                              ;; (Vertico, Consult, and Embark collectively
                              ;; enhance Emacs' completion and navigation
@@ -167,7 +167,7 @@
                              ;; interface, making it easier to navigate and
                              ;; select from completion candidates (e.g., when
                              ;; M-x is pressed).
-                             vertico
+                             mod-vertico
 
                              ;; (Vertico, Consult, and Embark collectively
                              ;; enhance Emacs' completion and navigation
@@ -177,12 +177,12 @@
                              ;; searching, previewing, and interacting with
                              ;; buffers, file contents, and more, improving
                              ;; various tasks.
-                             consult
+                             mod-consult
 
                              ;; prescient.el is a library for sorting and
                              ;; filtering lists of candidates, such as those
                              ;; presented by packages like Vertico or Corfu.
-                             prescient
+                             mod-prescient
 
                              ;; When used with Vertico, prescient.el enhances
                              ;; minibuffer completion by dynamically reordering
@@ -190,45 +190,45 @@
                              ;; making it faster to select commonly used options
                              ;; while preserving consistent, predictable
                              ;; filtering.
-                             vertico-prescient
+                             mod-vertico-prescient
 
                              ;; When used with Corfu, prescient.el improves both
                              ;; in-buffer completions and pop-up completion
                              ;; menus by making candidate ordering more
                              ;; predictable and adaptive to recent usage, thus
                              ;; speeding up repeated selections.
-                             corfu-prescient
+                             mod-corfu-prescient
 
                              ;; Marginalia enriches minibuffer completions with
                              ;; contextual annotations.
                              ;; It Enhances Vertico by adding rich annotations
                              ;; to completion candidates, such as file sizes,
                              ;; documentation, or metadata.
-                             marginalia
+                             mod-marginalia
 
                              ;; Autorevert is a feature that automatically
                              ;; updates the contents of a buffer to reflect
                              ;; changes made to the underlying file on disk.
-                             autorevert
+                             mod-autorevert
 
                              ;; The undo-fu package is a lightweight wrapper
                              ;; around Emacs' built-in undo system, providing
                              ;; more convenient undo/redo functionality while
                              ;; preserving access to the full undo history.
-                             undo-fu
+                             mod-undo-fu
 
                              ;; The undo-fu-session package complements undo-fu
                              ;; by enabling the saving and restoration of undo
                              ;; history across Emacs sessions, even after
                              ;; restarting.
-                             undo-fu-session
+                             mod-undo-fu-session
 
                              ;; The bufferfile package provides helper functions
                              ;; to delete, rename, or copy buffer files.
-                             bufferfile
+                             mod-bufferfile
 
                              ;; Vim tab bar
-                             vim-tab-bar
+                             mod-vim-tab-bar
 
                              ;; Filetype: Markdown
                              ;; The markdown-mode package provides a major mode
@@ -237,21 +237,21 @@
                              ;; documents. It supports core Markdown syntax as
                              ;; well as extensions like GitHub Flavored Markdown
                              ;; (GFM).
-                             markdown-mode
+                             mod-markdown-mode
 
                              ;; Automatically generate or refresh the table of
                              ;; contents in Markdown files using
                              ;; 'M-x markdown-toc-generate-or-refresh-toc'
-                             markdown-toc
+                             mod-markdown-toc
 
                              ;; Configure `org-mode' and `org-agenda'
-                             org
+                             mod-org
 
                              ;; Org-appear temporarily reveals normally hidden
                              ;; elements (such as emphasis markers, links, or
                              ;; entities) when the cursor enters them, and hides
                              ;; them again when the cursor leaves.
-                             org-appear
+                             mod-org-appear
 
                              ;; Filetype: Emacs Lisp
                              ;;
@@ -274,7 +274,7 @@
                              ;; Compile-angel speeds up Emacs by ensuring that
                              ;; all Elisp libraries are both byte-compiled and
                              ;; native-compiled.
-                             compile-angel)
+                             mod-compile-angel)
   "Modules that are enabled by default.")
 
 (defvar lightemacs-default-theme 'tomorrow-night-deepblue
@@ -327,7 +327,7 @@ compilation process, providing feedback on the compilation status."
   "Load all modules listed in LIGHTEMACS-MODULES."
   (let ((modules-dir (lightemacs--modules-dir)))
     (dolist (feature-symbol lightemacs-modules)
-      (let* ((feature-str (format "mod-%s" feature-symbol))
+      (let* ((feature-str (format "%s" feature-symbol))
              (feature-symbol (intern feature-str))
              (module-file (expand-file-name (format "%s.el" feature-str)
                                             modules-dir)))

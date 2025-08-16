@@ -1,4 +1,4 @@
-;;; mod-group-emacs-lisp.el --- mod-group-emacs-lisp -*- no-byte-compile: t; lexical-binding: t -*-
+;;; group-emacs-lisp.el --- group-emacs-lisp -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -22,14 +22,14 @@
 (lightemacs-load-modules '(;; Enable `highlight-defined-mode', a minor mode
                            ;; that highlights defined Emacs Lisp symbols in
                            ;; `emacs-lisp-mode' buffers.
-                           highlight-defined
+                           mod-highlight-defined
 
                            ;; Enable `page-break-lines', a minor mode that
                            ;; visually replaces ASCII form-feed characters
                            ;; (typically ^L) with horizontal line separators in
                            ;; buffers, making page breaks easier to see without
                            ;; affecting the actual text.
-                           page-break-lines
+                           mod-page-break-lines
 
                            ;; `aggressive-indent-mode' is a minor mode that
                            ;; Elisp code remains consistently indented. It
@@ -38,16 +38,16 @@
                            ;; `electric-indent-mode'. To enable it for Elisp
                            ;; files, add the following to the
                            ;; ~/.emacs.d/config.el file:
-                           aggressive-indent))
+                           mod-aggressive-indent))
 
 (add-hook 'emacs-lisp-mode-hook #'highlight-defined-mode)
 (add-hook 'emacs-lisp-mode-hook #'page-break-lines-mode)
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
-(provide 'mod-group-emacs-lisp)
+(provide 'group-emacs-lisp)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; mod-group-emacs-lisp.el ends here
+;;; group-emacs-lisp.el ends here
