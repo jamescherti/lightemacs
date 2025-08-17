@@ -287,6 +287,13 @@ The **mod-saveplace** module enables `save-place-mode`, which makes Emacs rememb
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
+To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/config.el`:
+
+```elisp
+;; To suppress minibuffer messages when Auto Revert reverts a buffer
+(setq auto-revert-verbose nil)
+```
+
 ### Persist and Restore Text Scale (mod-persist-text-scale)
 
 The text scale can be adjusted by pressing **Ctrl** together with `+` to increase it (`text-scale-increase`) or `-` to decrease it (`text-scale-decrease`).
