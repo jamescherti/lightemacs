@@ -43,7 +43,7 @@
     ;; Suppress prompts for terminating active processes when closing vterm
     (setq-local confirm-kill-processes nil))
 
-  (setq vterm-timer-delay 0.001)
+  (setq vterm-timer-delay 0.05)
   (setq vterm-kill-buffer-on-exit t)
   (setq vterm-max-scrollback 5000))
 
