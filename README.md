@@ -452,6 +452,9 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 (push 'group-evil lightemacs-modules)
 ```
 
+Here are a few interesting features that Lightemacs provides:
+- Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
+
 The `group-evil` group of modules includes:
 - **mod-evil**: Vim keybindings (evil and evil-collection).
 - **mod-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.

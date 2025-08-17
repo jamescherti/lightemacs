@@ -138,6 +138,26 @@
                            ;; enhance Emacs' completion and navigation
                            ;; capabilities.)
                            ;;
+                           ;; Vertico provides a vertical completion
+                           ;; interface, making it easier to navigate and
+                           ;; select from completion candidates (e.g., when
+                           ;; M-x is pressed).
+                           mod-vertico
+
+                           ;; (Vertico, Consult, and Embark collectively
+                           ;; enhance Emacs' completion and navigation
+                           ;; capabilities.)
+                           ;;
+                           ;; Consult offers a suite of commands for efficient
+                           ;; searching, previewing, and interacting with
+                           ;; buffers, file contents, and more, improving
+                           ;; various tasks.
+                           mod-consult
+
+                           ;; (Vertico, Consult, and Embark collectively
+                           ;; enhance Emacs' completion and navigation
+                           ;; capabilities.)
+                           ;;
                            ;; Embark integrates with these tools to provide
                            ;; context-sensitive actions and quick access to
                            ;; commands based on the current selection, further
@@ -155,26 +175,6 @@
                            ;; and expanding to larger units like a sentence,
                            ;; paragraph, or entire function.
                            mod-expand-region
-
-                           ;; (Vertico, Consult, and Embark collectively
-                           ;; enhance Emacs' completion and navigation
-                           ;; capabilities.)
-                           ;;
-                           ;; Vertico provides a vertical completion
-                           ;; interface, making it easier to navigate and
-                           ;; select from completion candidates (e.g., when
-                           ;; M-x is pressed).
-                           mod-vertico
-
-                           ;; (Vertico, Consult, and Embark collectively
-                           ;; enhance Emacs' completion and navigation
-                           ;; capabilities.)
-                           ;;
-                           ;; Consult offers a suite of commands for efficient
-                           ;; searching, previewing, and interacting with
-                           ;; buffers, file contents, and more, improving
-                           ;; various tasks.
-                           mod-consult
 
                            ;; prescient.el is a library for sorting and
                            ;; filtering lists of candidates, such as those

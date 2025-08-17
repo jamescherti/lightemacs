@@ -12,7 +12,8 @@
 
 ;;; Code:
 
-;; Load minimal-emacs.d init.el
+;;; Load minimal-emacs.d init.el
+
 (if (fboundp 'lightemacs-load-init-file)
     (lightemacs-load-init-file "init.el")
   (error "The early-init.el file was not loaded"))

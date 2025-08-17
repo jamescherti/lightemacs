@@ -13,9 +13,13 @@
 
 ;;; Code:
 
-;;; Functions
+;;; Modules
 
-(defvar lightemacs--load-module-method 'require)
+;; require-file/load-file are better.
+;;
+;; (require/load-any couldn't find some files when those files are already
+;; compiled.)
+(defvar lightemacs--load-module-method 'require-file)
 
 (defun lightemacs-load-modules (modules)
   "Load all modules listed in MODULES."
@@ -26,28 +30,34 @@
                ;; (feature-symbol (intern feature-str))
                (module-file (expand-file-name (format "%s.el" feature-str)
                                               modules-dir)))
+          ;; (unless (file-exists-p module-file)
+          ;;   (message "The module '%s' could not be found" module-file))
+
           (when init-file-debug
             (message "[LIGHTEMACS LOAD MODULE] %s" module-file))
-          (if (file-exists-p module-file)
-              (cond
-               ((eq lightemacs--load-module-method 'require)
-                (let ((load-path (cons lightemacs--modules-dir load-path)))
-                  (require feature-symbol module-file)))
 
-               ((eq lightemacs--load-module-method 'require-file)
-                (require feature-symbol module-file))
+          (cond
+           ((eq lightemacs--load-module-method 'require)
+            (let ((load-path (cons lightemacs--modules-dir load-path)))
+              (require feature-symbol)))
 
-               ((eq lightemacs--load-module-method 'load)
-                (load (expand-file-name feature-str modules-dir)
-                      nil
-                      (not (bound-and-true-p init-file-debug))
-                      'nosuffix))
+           ((eq lightemacs--load-module-method 'require-file)
+            (require feature-symbol module-file))
 
-               (t
-                (error "Invalid method for lightemacs--load-module-method %s"
-                       lightemacs--load-module-method)))
+           ((eq lightemacs--load-module-method 'load-any)
+            (load (expand-file-name feature-str modules-dir)
+                  nil
+                  (not (bound-and-true-p init-file-debug))))
 
-            (message "The module '%s' could not be found" module-file)))))))
+           ((eq lightemacs--load-module-method 'load-file)
+            (load module-file
+                  nil
+                  (not (bound-and-true-p init-file-debug))
+                  'nosuffix))
+
+           (t
+            (error "Invalid method for lightemacs--load-module-method %s"
+                   lightemacs--load-module-method))))))))
 
 (defun lightemacs-load-default-theme ()
   "Load the theme defined in `lightemacs-default-theme' if it is installed."
@@ -70,6 +80,22 @@
   `(progn
      (when lightemacs-verbose
        (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
+
+;;; Useful macros
+
+(defun lightemacs-recenter-maybe (&optional arg)
+  "Recenter maybe. ARG is the same argument as `recenter'."
+  (when (eq (current-buffer) (window-buffer))
+    (let ((point (point))
+          (wend (window-end nil t))
+          (wstart (window-start nil)))
+      (cond
+       ((or (> point wend)
+            (< point wstart))
+        ;; If the end of the buffer is not already on the screen, scroll to
+        ;; position it near the bottom.
+        (overlay-recenter (point))
+        (recenter arg))))))
 
 ;;; On first input/file/buffer
 

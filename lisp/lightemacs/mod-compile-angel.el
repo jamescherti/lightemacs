@@ -29,6 +29,8 @@
              compile-angel-on-save-mode)
 
   :init
+  (setq package-native-compile nil)
+
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
   (setq compile-angel-debug init-file-debug)
