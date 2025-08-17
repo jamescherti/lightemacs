@@ -27,7 +27,8 @@
   ;; TODO: Change hook to on-first-buffer
   :hook (emacs-startup . gcmh-mode)
   :init
-  (setq gcmh-auto-idle-delay-factor 10
+  (setq gcmh-verbose init-file-debug
+        gcmh-auto-idle-delay-factor 10
         gcmh-high-cons-threshold (* 128 1024 1024))
 
   ;; This variable determines how long Emacs should wait (in seconds) while

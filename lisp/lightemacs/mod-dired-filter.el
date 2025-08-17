@@ -16,38 +16,42 @@
 
 ;;; Code:
 
+(defvar mod-dired-filter-setup-hook '()
+  "Hook of Dired filter functions to apply when entering `dired-mode'.
+
+For instance:
+  (add-hook \\='mod-dired-filter-setup-hook #\\='dired-filter-by-dot-files)
+  (add-hook \\='mod-dired-filter-setup-hook #\\='dired-filter-by-omit)
+  (add-hook \\='mod-dired-filter-setup-hook #\\='dired-filter-by-git-ignored)")
+
 (use-package dired-filter
-  :commands (dired-filter-by-git-ignored
-             dired-filter-pop-all
+  :commands (dired-filter-pop-all
+             dired-filter-by-git-ignored
              dired-filter-by-git-ignored
              dired-filter-by-dot-files
              dired-filter-by-omit)
 
   :preface
-  (defun mod-dired-filter--setup ()
+  (defun mod-dired-filter--enable-filters ()
     "Dired only hide didden files in ~/home"
-    (dired-filter-by-omit)
-    (dired-filter-by-git-ignored)
-    (dired-filter-by-dot-files))
+    (when (derived-mode-p 'dired-mode)
+      (run-hooks 'mod-dired-filter-setup-hook)))
 
   :init
   ;; Hide details such as file ownership and permissions
-  (add-hook 'dired-mode-hook #'mod-dired-filter--setup)
+  (add-hook 'dired-mode-hook #'mod-dired-filter--enable-filters)
 
   ;; Toggle dired-filter
-  (defun mod-dired-filter--toggle-filter ()
+  (defun mod-dired-filter--toggle-filters ()
     "Toggle the `dired' filter."
     (interactive)
     (when (and (boundp 'dired-filter-stack)
                (fboundp 'dired-goto-file)
                (fboundp 'dired-get-file-for-visit))
       (let ((dired-file (dired-get-file-for-visit)))
-        (if (member '(omit) dired-filter-stack)
-            (progn
-              (dired-filter-pop-all))
-          (dired-filter-pop-all)
-          (dired-filter-by-omit)
-          (dired-filter-by-git-ignored))
+        (dired-filter-pop-all)
+        (unless (member '(omit) dired-filter-stack)
+          (mod-dired-filter--enable-filters))
 
         (when dired-file
           (dired-goto-file dired-file))))))
