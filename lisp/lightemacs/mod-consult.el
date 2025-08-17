@@ -59,10 +59,10 @@
              consult-register-format
              consult-theme
              consult-yank-pop
-             consult-imenu)
+             consult-imenu
+             consult-xref)
   :functions (consult--customize-put
-              consult-narrow-help
-              consult-xref)
+              consult-narrow-help)
 
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
@@ -135,11 +135,12 @@
   ;; and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
+
   :config
   (require 'consult-imenu)
   (require 'consult-xref)
-  (setq xref-show-xrefs-function #'consult-xref)
-  (setq xref-show-definitions-function #'consult-xref)
 
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
