@@ -28,7 +28,8 @@
 ;;; Code:
 
 (when (eq lightemacs-default-theme 'tomorrow-night-deepblue)
-  (use-package tomorrow-night-deepblue-theme))
+  (use-package tomorrow-night-deepblue-theme
+    :demand t))
 
 (when lightemacs-default-theme
   (lightemacs--load-default-theme))

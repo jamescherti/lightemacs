@@ -75,9 +75,10 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Detect indentation offset (mod-dtrt-indent)](#detect-indentation-offset-mod-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
     - [Enhanced Emacs Lisp (Elisp) Editing Experience (group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-group-emacs-lisp)
-  - [Modules disabled by Default](#modules-disabled-by-default)
+  - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: mod-treesit-auto (better syntax highlighting)](#disabled-by-default-mod-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
+    - [Disabled by default: An alternative terminal (mod-vterm)](#disabled-by-default-an-alternative-terminal-mod-vterm)
     - [Disabled by default: Indentation bars (mod-indent-bars)](#disabled-by-default-indentation-bars-mod-indent-bars)
   - [Other Features](#other-features)
   - [Useful variables](#useful-variables)
@@ -416,7 +417,7 @@ The **group-emacs-lisp** package automatically enables the following modules whe
 - **mod-aggressive-indent**: Enables `aggressive-indent-mode`, a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
 - **mod-page-break-lines**: Enables `page-break-lines-mode`, a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text.
 
-## Modules disabled by Default
+## Modules Disabled by Default
 
 ### Disabled by default: mod-treesit-auto (better syntax highlighting)
 
@@ -450,6 +451,22 @@ The `group-evil` group of modules includes:
 - **mod-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **mod-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 * **mod-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+
+### Disabled by default: An alternative terminal (mod-vterm)
+
+The mod-vterm configures [vterm](https://github.com/akermu/emacs-libvterm) is an Emacs terminal emulator that provides a fully interactive shell experience within Emacs, supporting features such as color, cursor movement, and advanced terminal capabilities.
+
+Unlike simpler Emacs terminal modes, `vterm` leverages the underlying libvterm C library for high-performance, accurate terminal emulation, allowing users to run shell programs, text-based applications, and REPLs seamlessly.
+
+**You can launch `vterm` using:** `M-x vterm`
+
+**Requirements:**
+
+Before installing emacs-libvterm, you need to make sure you have installed
+ 1. GNU Emacs (>= 25.1) with [module support](https://www.gnu.org/software/emacs/manual/html_node/elisp/Dynamic-Modules.html). You can check that, by verifying that `module-file-suffix` is not `nil`.
+ 2. cmake (>= 3.11)
+ 3. libtool-bin (related issues: [#66](https://github.com/akermu/emacs-libvterm/issues/66) [#85](https://github.com/akermu/emacs-libvterm/issues/85#issuecomment-491845136))
+ 4. OPTIONAL: [libvterm](https://github.com/Sbozzolo/libvterm-mirror.git) (>= 0.2). This library can be found in the official repositories of most distributions (e.g., Arch, Debian, Fedora, Gentoo, openSUSE, Ubuntu). Typical names are `libvterm` (Arch, Fedora, Gentoo, openSUSE), or `libvterm-dev` (Debian, Ubuntu). If not available, `libvterm` will be downloaded during the compilation process. Some distributions (e.g. Ubuntu < 20.04, Debian < 11) have versions of `libvterm` that are too old. If you find compilation errors related to `VTERM_COLOR`, you should not use your system libvterm. See [FAQ](#frequently-asked-questions-and-problems) for more details.
 
 ### Disabled by default: Indentation bars (mod-indent-bars)
 
