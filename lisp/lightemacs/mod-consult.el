@@ -135,12 +135,11 @@
   ;; and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
-  (setq xref-show-xrefs-function #'consult-xref)
-  (setq xref-show-definitions-function #'consult-xref)
-
   :config
   (require 'consult-imenu)
   (require 'consult-xref)
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
 
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
