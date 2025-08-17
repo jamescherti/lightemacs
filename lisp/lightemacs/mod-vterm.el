@@ -32,6 +32,14 @@
   :hook
   (vterm-mode . mod-vterm--setup)
 
+  :preface
+  (when noninteractive
+    ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
+    ;; This prevents that during byte-compilation (`use-package' eagerly loads
+    ;; packages when compiling).
+    (advice-add #'vterm-module-compile :override #'ignore)
+    (provide 'vterm-module))
+
   :init
   (defun mod-vterm--setup ()
     ;; Hide the mode-line
