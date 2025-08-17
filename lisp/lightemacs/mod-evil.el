@@ -27,62 +27,46 @@
 (setq evil-want-keybinding nil)
 
 (use-package evil
-  :hook
-  (after-init . evil-mode)
+  :hook (after-init . evil-mode)
   :functions define-key
   :init
-  ;; Delete selected text on paste in visual state
-  (setq evil-kill-on-visual-paste t)
-
-  ;; Enable C-u to delete in insert state
-  (setq evil-want-C-u-delete t)
-
   ;; Use evil-search instead of isearch
   (setq evil-search-module 'evil-search)
-
-  ;; Enable C-h delete
-  (setq evil-want-C-h-delete t)
-
-  ;; Make `v$` exclude the final newline
-  (setq evil-v$-excludes-newline t)
-
-  ;; Prevent Evil state from being echoed, preserving Eldoc display in the
-  ;; minibuffer (If set to t, Eldoc output in the minibuffer will be overridden)
-  (setq evil-echo-state nil)
-
-  ;; Use Vim-style regular expressions in search and substitute commands,
-  ;; allowing features like \v (very magic), \zs, and \ze for precise matches
-  (setq evil-ex-search-vim-style-regexp t)
 
   ;; Make :s in visual mode operate only on the actual visual selection
   ;; (character or block), instead of the full lines covered by the selection
   (setq evil-ex-visual-char-range t)
 
-  ;; Enable automatic horizontal split below
-  (setq evil-split-window-below t)
+  ;; Use Vim-style regular expressions in search and substitute commands,
+  ;; allowing features like \v (very magic), \zs, and \ze for precise matches
+  (setq evil-ex-search-vim-style-regexp t)
 
-  ;; Enable automatic vertical split to the right
-  (setq evil-vsplit-window-right t)
+  ;; Disable copying the selection to the clipboard on every cursor move in
+  ;; visual mode to increase performance
+  (setq evil-visual-update-x-selection-p nil)
 
-  ;; Enable fine-grained undo behavior
-  (setq evil-want-fine-undo t)
+  ;; Do not modify the mode line to show Evil state
+  (setq evil-mode-line-format nil)
 
-  ;; Enable C-w to delete in insert state
-  (setq evil-want-C-w-delete t)
+  ;; Highlight only in the selected window to reduce Emacs' workload
+  (setq evil-ex-interactive-search-highlight 'selected-window)
 
-  ;; 'Y' yanks to the end of the line.
+  ;; Suppress motion errors during keyboard macro execution in Evil
+  (setq evil-kbd-macro-suppress-motion-error t)
+
+  ;; Time in seconds of idle before updating search highlighting.
+  (setq evil-ex-hl-update-delay 0.01)
+
+  ;; Better Vim emulation
+  (setq evil-symbol-word-search t)
   (setq evil-want-Y-yank-to-eol t)
-
-  ;; Disable wrapping of search around buffer
-  (setq evil-search-wrap nil)
-
-  :config
-  (with-eval-after-load 'aggressive-indent
-    (add-to-list 'aggressive-indent-protected-commands 'evil-delete)
-    (add-to-list 'aggressive-indent-protected-commands 'evil-redo)
-    (add-to-list 'aggressive-indent-protected-commands 'evil-undo)
-    (add-to-list 'aggressive-indent-protected-commands 'evil-delete-char)
-    (add-to-list 'aggressive-indent-protected-commands 'evil-delete-line)))
+  (setq evil-want-abbrev-expand-on-insert-exit nil)
+  (setq evil-respect-visual-line-mode nil)
+  (setq evil-want-C-i-jump t)
+  (setq evil-want-C-g-bindings t)
+  (setq evil-want-C-h-delete t)
+  (setq evil-want-C-u-delete t)
+  (setq evil-want-C-w-delete t))
 
 ;;; Press '-' to open dired
 
