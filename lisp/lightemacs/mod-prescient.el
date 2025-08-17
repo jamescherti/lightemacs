@@ -1,4 +1,4 @@
-;;; mod-prescient.el --- mod-prescient -*- no-byte-compile: t; lexical-binding: t -*-
+;;; mod-prescient.el --- mod-prescient -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

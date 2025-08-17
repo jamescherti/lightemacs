@@ -21,7 +21,7 @@
 ;;; Code:
 
 (use-package vterm
-  :when (featurep 'dynamic-modules)
+  :if (bound-and-true-p module-file-suffix)
   :commands (vterm
              vterm-send-string
              vterm-send-return

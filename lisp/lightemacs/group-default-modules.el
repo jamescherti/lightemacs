@@ -1,4 +1,4 @@
-;;; group-default-modules.el --- group-default-modules -*- no-byte-compile: t; lexical-binding: t -*-
+;;; group-default-modules.el --- group-default-modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

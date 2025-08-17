@@ -1,4 +1,4 @@
-;;; group-evil.el --- group-evil -*- no-byte-compile: t; lexical-binding: t -*-
+;;; group-evil.el --- group-evil -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
