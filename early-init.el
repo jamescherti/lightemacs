@@ -82,8 +82,8 @@ compilation process, providing feedback on the compilation status."
 
 ;;; Load minimal-emacs.d early-init.el
 
-(let ((load-path (cons lightemacs--modules-dir load-path)))
-  (require 'lightemacs))
+(add-to-list 'load-path lightemacs--modules-dir)
+(require 'lightemacs)
 
 (lightemacs-load-init-file "early-init.el")
 

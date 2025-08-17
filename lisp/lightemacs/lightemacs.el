@@ -30,11 +30,11 @@
                ;; (feature-symbol (intern feature-str))
                (module-file (expand-file-name (format "%s.el" feature-str)
                                               modules-dir)))
-          ;; (unless (file-exists-p module-file)
-          ;;   (message "The module '%s' could not be found" module-file))
-
           (when init-file-debug
-            (message "[LIGHTEMACS LOAD MODULE] %s" module-file))
+            (if (file-exists-p module-file)
+                (message "[lightemacs] Load: %s" feature-str)
+              (message "[lightemacs] Error: The module '%s' could not be found"
+                       module-file)))
 
           (cond
            ((eq lightemacs--load-module-method 'require)
@@ -141,6 +141,29 @@
   (add-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
   (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
   (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
+
+;;; FIX
+
+(defun lightemacs-find-dired-parent ()
+  "Open a `dired' buffer for the current file's directory and select the file.
+If the buffer is not visiting a file, opens the current `default-directory'."
+  (interactive)
+  (when (fboundp 'dired-goto-file)
+    (let* ((buf (or (buffer-base-buffer)
+                    (current-buffer)))
+           (file (buffer-file-name buf))
+           dir)
+      (if file
+          (setq dir (file-name-directory file))
+        (setq dir default-directory))
+      (when dir
+        (when-let* ((dired-buf (find-file-noselect dir)))
+          (switch-to-buffer dired-buf nil t)
+          (when file
+            (with-current-buffer dired-buf
+              (when (derived-mode-p 'dired-mode)
+                (dired-goto-file file)
+                (lightemacs-recenter-maybe)))))))))
 
 ;;; Provide lightemacs
 

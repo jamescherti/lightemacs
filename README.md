@@ -439,7 +439,7 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 ;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
 ;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
 ;; Elisp, Lua, and many others. treesit-auto
-(push 'treesit-auto lightemacs-modules)
+(add-to-list 'lightemacs-modules 'treesit-auto)
 ```
 
 ### Disabled by default: group-evil (Vim Keybindings)
@@ -449,7 +449,7 @@ By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 To enable it, add the following to the `~/.emacs.d/config.el` file:
 ```elisp
 ;; Enable Vim key bindings
-(push 'group-evil lightemacs-modules)
+(add-to-list 'lightemacs-modules 'group-evil)
 ```
 
 Here are a few interesting features that Lightemacs provides:

@@ -90,29 +90,8 @@
 ;; file, automatically selecting that file. This provides a fast way to navigate
 ;; and manage files without manually switching to the directory.
 
-(defun mod-evil-find-dired-parent ()
-  "Open a `dired' buffer for the current file's directory and select the file.
-If the buffer is not visiting a file, opens the current `default-directory'."
-  (interactive)
-  (when (fboundp 'dired-goto-file)
-    (let* ((buf (or (buffer-base-buffer)
-                    (current-buffer)))
-           (file (buffer-file-name buf))
-           dir)
-      (if file
-          (setq dir (file-name-directory file))
-        (setq dir default-directory))
-      (when dir
-        (when-let* ((dired-buf (find-file-noselect dir)))
-          (switch-to-buffer dired-buf nil t)
-          (when file
-            (with-current-buffer dired-buf
-              (when (derived-mode-p 'dired-mode)
-                (dired-goto-file file)
-                (lightemacs-recenter-maybe)))))))))
-
 (with-eval-after-load 'evil
-  (evil-define-key 'normal 'global (kbd "-") #'mod-evil-find-dired-parent))
+  (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-dired-parent))
 
 (provide 'mod-evil)
 
