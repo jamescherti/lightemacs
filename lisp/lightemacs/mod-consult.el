@@ -15,6 +15,8 @@
 ;; Vertico, Consult, and Embark collectively enhance Emacs' completion and
 ;; navigation capabilities.
 ;;
+;; This module configures: consult, consult-xref, and consult-imenu.
+;;
 ;; URL: https://github.com/minad/consult
 
 ;;; Code:
