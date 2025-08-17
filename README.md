@@ -80,6 +80,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
     - [Disabled by default: An alternative terminal (mod-vterm)](#disabled-by-default-an-alternative-terminal-mod-vterm)
     - [Disabled by default: Indentation bars (mod-indent-bars)](#disabled-by-default-indentation-bars-mod-indent-bars)
+    - [Other modules disabled by default](#other-modules-disabled-by-default)
   - [Other Features](#other-features)
   - [Useful variables](#useful-variables)
     - [Ellipsis](#ellipsis)
@@ -412,7 +413,6 @@ To prevent `dtrt-indent` from displaying a message each time it adjusts the inde
 - **mod-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **mod-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 * **mod-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
-- **mod-helpful**: Helpful enhances the built-in help system by providing richer, more contextual information about symbols, functions, variables, and macros. Unlike the default `describe-*` commands, Helpful integrates additional metadata such as source code, documentation strings, keybindings, references, and interactive examples, all within a unified and easily navigable buffer.
 - **mod-elec-pair**: Automatically insert matching delimiters (), {}...
 - **mod-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
 - **mod-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
@@ -497,6 +497,11 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 
 (By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
 
+
+### Other modules disabled by default
+
+Here are a few other modules disabled by default:
+- **mod-helpful**: Helpful enhances the built-in help system by providing richer, more contextual information about symbols, functions, variables, and macros. Unlike the default `describe-*` commands, Helpful integrates additional metadata such as source code, documentation strings, keybindings, references, and interactive examples, all within a unified and easily navigable buffer.
 
 ## Other Features
 

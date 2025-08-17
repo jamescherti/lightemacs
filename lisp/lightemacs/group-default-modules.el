@@ -268,16 +268,6 @@
                            ;; `electric-indent-mode'.
                            group-emacs-lisp
 
-                           ;; Helpful enhances the built-in help system by
-                           ;; providing richer, more contextual information
-                           ;; about symbols, functions, variables, and macros.
-                           ;; Unlike the default `describe-*` commands, Helpful
-                           ;; integrates additional metadata such as source
-                           ;; code, documentation strings, keybindings,
-                           ;; references, and interactive examples, all within a
-                           ;; unified and easily navigable buffer.
-                           mod-helpful
-
                            ;; This package provides functions to detects the
                            ;; indentation offset used in existing source code
                            ;; files and automatically adjusts Emacs settings
