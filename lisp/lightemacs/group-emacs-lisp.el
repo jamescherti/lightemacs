@@ -19,6 +19,8 @@
 
 ;;; Evil
 
+(require 'lightemacs)
+
 (lightemacs-load-modules '(;; Enable `highlight-defined-mode', a minor mode
                            ;; that highlights defined Emacs Lisp symbols in
                            ;; `emacs-lisp-mode' buffers.
@@ -40,9 +42,9 @@
                            ;; ~/.emacs.d/config.el file:
                            mod-aggressive-indent))
 
-(add-hook 'emacs-lisp-mode-hook #'highlight-defined-mode)
-(add-hook 'emacs-lisp-mode-hook #'page-break-lines-mode)
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
+(add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
+(add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
 
 (provide 'group-emacs-lisp)
 

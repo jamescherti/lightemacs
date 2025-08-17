@@ -13,16 +13,19 @@
 ;;; Code:
 
 ;; Load minimal-emacs.d init.el
-(if (fboundp 'lightemacs--load-init-file)
-    (lightemacs--load-init-file "init.el")
+(if (fboundp 'lightemacs-load-init-file)
+    (lightemacs-load-init-file "init.el")
   (error "The early-init.el file was not loaded"))
 
 ;;; Load modules
 
-(minimal-emacs-load-user-init "config.el")
+(if (fboundp 'minimal-emacs-load-user-init)
+    (minimal-emacs-load-user-init "config.el")
+  (error "Undefined function: minimal-emacs-load-user-init"))
 
-(lightemacs-load-modules '(lib-lightemacs))
-(lightemacs-load-modules lightemacs-modules)
+(if (fboundp 'lightemacs-load-modules)
+    (lightemacs-load-modules lightemacs-modules)
+  (error "Undefined function: lightemacs-load-modules"))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)

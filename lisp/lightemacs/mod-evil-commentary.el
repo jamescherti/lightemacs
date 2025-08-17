@@ -14,7 +14,6 @@
 ;;; Code:
 
 (use-package evil-commentary
-  :after evil
   :commands evil-commentary-mode
   :hook (evil-mode . evil-commentary-mode))
 

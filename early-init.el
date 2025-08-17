@@ -69,48 +69,23 @@ compilation process, providing feedback on the compilation status."
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq minimal-emacs-user-directory lightemacs-user-emacs-directory)
 
-;;; Functions
+;;; Variables
 
-(defun lightemacs--modules-dir ()
-  "Return the path to the modules directory."
-  (expand-file-name "lisp/lightemacs"
-                    lightemacs-user-emacs-directory))
+(setq load-prefer-newer t)
+(setq use-package-always-ensure t)
 
-(defun lightemacs-load-modules (lightemacs-modules)
-  "Load all modules listed in LIGHTEMACS-MODULES."
-  (let ((modules-dir (lightemacs--modules-dir)))
-    (dolist (feature-symbol lightemacs-modules)
-      (let ((inhibit-message t))
-        (lightemacs-verbose-message "Load module: %s" feature-symbol))
-      (let ((load-path (cons modules-dir load-path)))
-        (require feature-symbol)))))
+;;; Internal variables
 
-(defun lightemacs--load-default-theme ()
-  "Load the theme defined in `lightemacs-default-theme' if it is installed."
-  (when (and lightemacs-default-theme
-             (member lightemacs-default-theme (custom-available-themes)))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme lightemacs-default-theme t)))
-
-(defun lightemacs--load-init-file (filename)
-  "Load a file of Lisp init file named FILENAME."
-  (load (expand-file-name (format "init/%s" filename)
-                          (lightemacs--modules-dir))
-        nil
-        (not (bound-and-true-p init-file-debug))
-        'nosuffix))
-
-(defmacro lightemacs-verbose-message (&rest args)
-  "Display a verbose message with the same ARGS arguments as `message'."
-  `(progn
-     (when lightemacs-verbose
-       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
-
-;;; Other parameters
+(defvar lightemacs--modules-dir (expand-file-name
+                                 "lisp/lightemacs"
+                                 lightemacs-user-emacs-directory))
 
 ;;; Load minimal-emacs.d early-init.el
 
-(lightemacs--load-init-file "early-init.el")
+(let ((load-path (cons lightemacs--modules-dir load-path)))
+  (require 'lightemacs))
+
+(lightemacs-load-init-file "early-init.el")
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)

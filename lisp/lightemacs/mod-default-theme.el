@@ -32,7 +32,7 @@
     :demand t))
 
 (when lightemacs-default-theme
-  (lightemacs--load-default-theme))
+  (lightemacs-load-default-theme))
 
 (provide 'mod-default-theme)
 

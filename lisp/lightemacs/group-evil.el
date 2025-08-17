@@ -20,6 +20,8 @@
 
 ;;; Evil
 
+(require 'lightemacs)
+
 (lightemacs-load-modules '(;; Evil keybindings
                            mod-evil
                            mod-evil-collection

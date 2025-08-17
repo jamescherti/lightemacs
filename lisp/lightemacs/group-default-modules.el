@@ -1,4 +1,4 @@
-;;; group-default-modules.el --- group-default-modules -*- lexical-binding: t -*-
+;;; group-default-modules.el --- Group: Default modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -15,10 +15,9 @@
 
 ;;; Evil
 
-(lightemacs-load-modules '(;; Custom keybindings
-                           mod-keybindings
+(require 'lightemacs)
 
-                           ;; Modules enabled by default
+(lightemacs-load-modules '(;; Modules enabled by default
                            ;; --------------------------
                            ;; This loaded the default theme specified
                            ;; in the `lightemacs-default-theme' variable.
@@ -28,6 +27,9 @@
                            ;; Night theme, which is renowned for its elegant
                            ;; color palette that is pleasing to the eyes.
                            mod-default-theme
+
+                           ;; Custom keybindings
+                           mod-keybindings
 
                            ;; Default settings (minibuffer, Emacs...)
                            ;; Configure enhanced default settings, including

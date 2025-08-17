@@ -25,6 +25,8 @@
              dired-hide-details-mode)
 
   :init
+  (setq dired-movement-style 'bounded-files)
+
   ;; Group directories first
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))

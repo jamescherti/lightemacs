@@ -23,7 +23,7 @@
 ;;; Code:
 
 (use-package evil-snipe
-  :after evil
+  :commands evil-snipe-mode
   :hook (evil-mode . evil-snipe-mode))
 
 (provide 'mod-evil-snipe)
