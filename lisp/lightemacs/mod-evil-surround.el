@@ -19,7 +19,10 @@
 ;;; Code:
 
 (use-package evil-surround
-  :commands global-evil-surround-mode
+  :commands (evil-Surround-edit
+             evil-surround-edit
+             evil-surround-region
+             global-evil-surround-mode)
   :hook (evil-mode . global-evil-surround-mode))
 
 (provide 'mod-evil-surround)

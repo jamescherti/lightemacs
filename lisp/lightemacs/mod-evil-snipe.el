@@ -24,7 +24,19 @@
 
 (use-package evil-snipe
   :commands evil-snipe-mode
-  :hook (evil-mode . evil-snipe-mode))
+  ;; TODO: on first input
+  :hook (evil-mode . evil-snipe-mode)
+  :init
+  ;; Enable smart case sensitivity: uppercase searches are case-sensitive,
+  ;; lowercase are case-insensitive
+  (setq evil-snipe-smart-case t)
+
+  ;; Restrict repeat operations to the visible region only
+  (setq evil-snipe-repeat-scope 'visible)
+
+  ;; Allow character folding so equivalent characters match (e.g.,
+  ;; accents/diacritics)
+  (setq evil-snipe-char-fold t))
 
 (provide 'mod-evil-snipe)
 
