@@ -27,7 +27,7 @@
                            ;;
                            ;; NOTE: Load this first, before any other packages,
                            ;; to ensure proper initialization.
-                           lem-compile-angel
+                           ;; lem-compile-angel
 
                            ;; Modules enabled by default
                            ;; --------------------------

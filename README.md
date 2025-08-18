@@ -430,7 +430,6 @@ To prevent `dtrt-indent` from displaying a message each time it adjusts the inde
   (add-hook 'markdown-ts-mode-hook #'outline-minor-mode)
   (add-hook 'markdown-mode-hook #'outline-minor-mode)
   ```
-- **lem-compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 - **lem-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **lem-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
 - **lem-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
@@ -529,6 +528,7 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 
 Here are a few other modules disabled by default:
 - **lem-helpful**: Helpful enhances the built-in help system by providing richer, more contextual information about symbols, functions, variables, and macros. Unlike the default `describe-*` commands, Helpful integrates additional metadata such as source code, documentation strings, keybindings, references, and interactive examples, all within a unified and easily navigable buffer.
+- **lem-compile-angel**: Compile-angel speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 
 ## Other Features
 
