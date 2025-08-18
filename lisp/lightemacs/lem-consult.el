@@ -113,24 +113,29 @@
   (setq consult--process-chunk (* 2 1024 1024))
 
   (setq consult-fd-args
-        (list (if lightemacs--fdfind-executable
-                  lightemacs--fdfind-executable
-                "fd")
-              " --hidden --exclude .git"
-              "--color=never"
-              "--full-path --absolute-path"
-              (if (memq system-type '(cygwin windows-nt ms-dos))
-                  "--path-separator=/"
-                "")))
-
-  (setq consult-ripgrep-args
         (concat (if lightemacs--fdfind-executable
                     lightemacs--fdfind-executable
+                  "fd")
+                ;; Lightemacs
+                " --hidden --exclude .git --absolute-path"
+                (if (memq system-type '(cygwin windows-nt ms-dos))
+                    " --path-separator=/"
+                  "")
+
+                ;; Default
+                " --full-path --color=never"))
+
+  (setq consult-ripgrep-args
+        (concat (if lightemacs--ripgrep-executable
+                    lightemacs--ripgrep-executable
                   "rg")
-                " --null --line-buffered --color=never --max-columns=1000 "
-                "--with-filename --line-number --search-zip "
-                "--hidden -g !.git -g !.svn -g !.hg "
-                "--path-separator / --smart-case --no-heading "))
+                ;; Lightemacs
+                " --hidden -g !.git -g !.svn -g !.hg"
+
+                ;; Default
+                " --null --line-buffered --color=never --max-columns=1000"
+                " --path-separator / --smart-case --no-heading"
+                " --with-filename --line-number --search-zip"))
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.

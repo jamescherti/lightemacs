@@ -42,7 +42,8 @@
               (require feature-symbol)))
 
            ((eq lightemacs--load-module-method 'require-file)
-            (require feature-symbol module-file))
+            (let ((load-path (cons lightemacs--modules-dir load-path)))
+              (require feature-symbol module-file)))
 
            ((eq lightemacs--load-module-method 'load-any)
             (load (expand-file-name feature-str modules-dir)
