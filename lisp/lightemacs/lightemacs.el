@@ -16,15 +16,15 @@
 ;;; Variables
 
 (defvar lightemacs-modules '(;; Default modules
-                             lem-group-default-modules
+                             le-group-default-modules
 
                              ;; Vim keybindings (DISABLED)
                              ;; --------------------------
-                             ;; lem-group-evil
+                             ;; le-group-evil
 
                              ;; Treesitter, Better syntax highlighting (DISABLED)
                              ;; -------------------------------------------------
-                             ;; lem-treesit-auto
+                             ;; le-treesit-auto
                              )
   "Modules that are enabled by default.
 
