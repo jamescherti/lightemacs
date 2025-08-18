@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-;; Conflicts with: lem-orderless
-;;
 ;; When prescient.el is used with Corfu, prescient.el improves both in-buffer
 ;; completions and pop-up completion menus by making candidate ordering more
 ;; predictable and adaptive to recent usage, thus speeding up repeated
@@ -46,13 +44,13 @@
   (corfu-mode . corfu-prescient-mode)
 
   :init
-  (setq corfu-prescient-enable-filtering t)
   (setq corfu-prescient-enable-sorting t)
 
-  ;; Force sorting by ‘corfu-prescient’.
-  ;; If non-nil, then ‘corfu-prescient-mode’ sets ‘corfu-sort-override-function’
-  ;; to the function ‘prescient-completion-sort’.
-  (setq corfu-prescient-override-sorting t))
+  ;; Do not override `display-sort-function'
+  (setq corfu-prescient-override-sorting nil)
+
+  ;; Use Orderless instead
+  (setq corfu-prescient-enable-filtering nil))
 
 (provide 'lem-corfu-prescient)
 

@@ -184,31 +184,25 @@
                            ;; paragraph, or entire function.
                            lem-expand-region
 
-                           ;; Conflicts with: lem-orderless
-                           ;;
                            ;; prescient.el is a library for sorting and
                            ;; filtering lists of candidates, such as those
                            ;; presented by packages like Vertico or Corfu.
-                           ;; lem-prescient
+                           lem-prescient
 
-                           ;; Conflicts with: lem-orderless
-                           ;;
                            ;; When used with Vertico, prescient.el enhances
                            ;; minibuffer completion by dynamically reordering
                            ;; candidates based on frequency and recency,
                            ;; making it faster to select commonly used options
                            ;; while preserving consistent, predictable
                            ;; filtering.
-                           ;; lem-vertico-prescient
+                           lem-vertico-prescient
 
-                           ;; Conflicts with: lem-orderless
-                           ;;
                            ;; When used with Corfu, prescient.el improves both
                            ;; in-buffer completions and pop-up completion
                            ;; menus by making candidate ordering more
                            ;; predictable and adaptive to recent usage, thus
                            ;; speeding up repeated selections.
-                           ;; lem-corfu-prescient
+                           lem-corfu-prescient
 
                            ;; Enable flexible, unordered matching (Orderless)
                            ;; for Vertico. This allows typing multiple

@@ -12,6 +12,7 @@ Lightemacs tweaks packages to improve performance. For example, adjusting the de
 Here are some of the modules that are enabled by default:
 
 - Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless)
+- Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.

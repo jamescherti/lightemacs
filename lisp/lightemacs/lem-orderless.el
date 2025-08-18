@@ -31,7 +31,7 @@
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)
   (setq completion-category-overrides '((file (styles
-                                               orderless
+                                               ;; orderless
                                                partial-completion)))))
 
 (provide 'lem-orderless)

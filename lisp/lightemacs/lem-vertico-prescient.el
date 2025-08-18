@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-;; Conflicts with: lem-orderless
-;;
 ;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
 ;; completion by dynamically reordering candidates based on frequency and
 ;; recency, making it faster to select commonly used options while preserving
@@ -44,15 +42,13 @@
   :hook
   (vertico-mode . vertico-prescient-mode)
   :init
-  (setq vertico-prescient-enable-filtering t)
   (setq vertico-prescient-enable-sorting t)
 
-  ;; If non-nil, `vertico-sort-override-function' is set to
-  ;; `prescient-completion-sort' and sorting is forced on
-  ;; (`vertico-prescient-enable-sorting' becomes non-nil).
-  ;;
-  ;; Disabled here to avoid overriding sorting in `recentf'.
-  (setq vertico-prescient-override-sorting nil))
+  ;; Don't override `display-sort-function'
+  (setq vertico-prescient-override-sorting nil)
+
+  ;; Use Orderless instead
+  (setq vertico-prescient-enable-filtering nil))
 
 (provide 'lem-vertico-prescient)
 
