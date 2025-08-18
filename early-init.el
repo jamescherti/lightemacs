@@ -12,49 +12,7 @@
 
 ;;; Code:
 
-;;; Global variables
-
-;; Lightemacs provides a range of modules that can be selectively enabled or
-;; disabled according to your preferences, with all modules ensuring packages
-;; are loaded only when needed, enabling exceptionally fast, deferred startup.
-(defvar lightemacs-modules '(;; Default modules
-                             lem-group-default-modules
-
-                             ;; Vim keybindings (DISABLED)
-                             ;; --------------------------
-                             ;; lem-group-evil
-
-                             ;; Treesitter, Better syntax highlighting (DISABLED)
-                             ;; -------------------------------------------------
-                             ;; lem-treesit-auto
-                             )
-  "Modules that are enabled by default.")
-
-(defvar lightemacs-default-theme 'tomorrow-night-deepblue
-  "Name of the default theme to load, if available.
-Set this to nil to disable early theme loading.")
-
-(defvar lightemacs-ellipsis " ▼"
-  "String used to indicate folded sections in Org-mode and Outline-mode.
-This ellipsis appears at the end of a heading or section that has been
-collapsed. It provides a visual cue that more content is hidden. You can
-customize this variable to use a different character or string (such as '…',
-'▶', or other Unicode symbols) to match your visual preference or theme. This
-variable is buffer-local in Org-mode and Outline-mode, affecting only the
-display of folded text.")
-
-(defvar lightemacs-cycle nil
-  "If non-nil, enables cycling through candidates in supported plugins.
-This enabled or disable cycling in plugins such as Vertico and Consult.
-When nil, cycling is disabled, so selection stops at the first or last candidate
-instead of wrapping around.")
-
-(defcustom lightemacs-verbose nil
-  "Enable displaying messages.
-When set to non-nil, this option will cause messages to be shown during the
-compilation process, providing feedback on the compilation status."
-  :type 'boolean
-  :group 'lightemacs)
+;;; Variables
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory
   "Directory beneath Lightemacs files are placed.")

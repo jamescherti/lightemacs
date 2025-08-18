@@ -22,9 +22,7 @@
               ("M-A" . marginalia-cycle))
 
   :hook
-  (after-init . marginalia-mode)
-  ;; TODO: Use on-first-input
-  ;; (on-first-input . marginalia-mode)
+  (lightemacs-on-first-input . marginalia-mode)
 
   :init
   (setq marginalia-max-relative-age 0)

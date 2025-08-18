@@ -34,9 +34,7 @@
 ;;; Minibuffer
 
 (setq minibuffer-default-prompt-format " [%s]")
-(add-hook 'after-init-hook #'minibuffer-depth-indicate-mode)
-;; TODO use on-first-input
-;; (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
+(add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
 
 ;;; Frame
 

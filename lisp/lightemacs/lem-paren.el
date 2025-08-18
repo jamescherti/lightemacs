@@ -20,10 +20,7 @@
   :commands (show-paren-mode
              show-paren-local-mode)
   :hook
-  (after-init . show-paren-mode)
-  ;; TODO on first buffer
-  ;; (on-first-buffer . show-paren-mode)
-  )
+  (lightemacs-on-first-buffer . show-paren-mode))
 
 ;;; Provide
 (provide 'lem-paren)

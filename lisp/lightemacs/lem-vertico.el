@@ -19,6 +19,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package vertico
   :commands vertico-mode
   :bind (:map vertico-map
@@ -27,9 +29,7 @@
               ("C-k" . vertico-previous))
 
   :hook
-  (after-init . vertico-mode)
-  ;; TODO: use on-first-input
-  ;; (add-hook 'lightemacs-on-first-input-hook #'vertico-mode)
+  (lightemacs-on-first-input . vertico-mode)
 
   :init
   (setq vertico-scroll-margin 0)

@@ -13,6 +13,51 @@
 
 ;;; Code:
 
+;;; Variables
+
+(defvar lightemacs-modules '(;; Default modules
+                             lem-group-default-modules
+
+                             ;; Vim keybindings (DISABLED)
+                             ;; --------------------------
+                             ;; lem-group-evil
+
+                             ;; Treesitter, Better syntax highlighting (DISABLED)
+                             ;; -------------------------------------------------
+                             ;; lem-treesit-auto
+                             )
+  "Modules that are enabled by default.
+
+Lightemacs provides a range of modules that can be selectively enabled or
+disabled according to your preferences, with all modules ensuring packages are
+loaded only when needed, enabling exceptionally fast, deferred startup.")
+
+(defvar lightemacs-default-theme 'tomorrow-night-deepblue
+  "Name of the default theme to load, if available.
+Set this to nil to disable early theme loading.")
+
+(defcustom lightemacs-verbose nil
+  "Enable displaying messages.
+When set to non-nil, this option will cause messages to be shown during the
+compilation process, providing feedback on the compilation status."
+  :type 'boolean
+  :group 'lightemacs)
+
+(defvar lightemacs-ellipsis " ▼"
+  "String used to indicate folded sections in Org-mode and Outline-mode.
+This ellipsis appears at the end of a heading or section that has been
+collapsed. It provides a visual cue that more content is hidden. You can
+customize this variable to use a different character or string (such as '…',
+'▶', or other Unicode symbols) to match your visual preference or theme. This
+variable is buffer-local in Org-mode and Outline-mode, affecting only the
+display of folded text.")
+
+(defvar lightemacs-cycle nil
+  "If non-nil, enables cycling through candidates in supported plugins.
+This enabled or disable cycling in plugins such as Vertico and Consult.
+When nil, cycling is disabled, so selection stops at the first or last candidate
+instead of wrapping around.")
+
 ;;; Modules
 
 ;; require-file/load-file are better.
@@ -38,12 +83,10 @@
 
           (cond
            ((eq lightemacs--load-module-method 'require)
-            (let ((load-path (cons lightemacs--modules-dir load-path)))
-              (require feature-symbol)))
+            (require feature-symbol))
 
            ((eq lightemacs--load-module-method 'require-file)
-            (let ((load-path (cons lightemacs--modules-dir load-path)))
-              (require feature-symbol module-file)))
+            (require feature-symbol module-file))
 
            ((eq lightemacs--load-module-method 'load-any)
             (load (expand-file-name feature-str modules-dir)

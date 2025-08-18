@@ -24,8 +24,7 @@
 
 (use-package gcmh
   :commands gcmh-mode
-  ;; TODO: Change hook to on-first-buffer
-  :hook (emacs-startup . gcmh-mode)
+  :hook (lightemacs-on-first-buffer . gcmh-mode)
   :init
   (setq gcmh-verbose init-file-debug
         gcmh-auto-idle-delay-factor 10

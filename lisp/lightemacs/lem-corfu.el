@@ -22,9 +22,7 @@
              corfu-mode)
 
   :hook
-  (after-init . global-corfu-mode)
-  ;; TODO: use on-first-input
-  ;; (on-first-input . global-corfu-mode)
+  (lightemacs-on-first-input . global-corfu-mode)
 
   :init
   (setq tab-always-indent 'complete)

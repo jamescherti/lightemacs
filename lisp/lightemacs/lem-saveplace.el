@@ -21,8 +21,7 @@
 
   :hook
   (after-init . save-place-mode)
-  ;; TODO: change it to lightemacs-on-first-file-hook
-  ;; (lightemacs-on-first-file . save-place-mode)
+  (lightemacs-on-first-file . save-place-mode)
 
   :init
   (setq save-place-limit 500))

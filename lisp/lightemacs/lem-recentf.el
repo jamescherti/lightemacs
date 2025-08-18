@@ -29,9 +29,7 @@
              recentf-cleanup)
   :functions (recentf-expand-file-name)
   :hook
-  (after-init . lem-recentf--setup)
-  ;; TODO: use lightemacs-on-first-buffer
-  ;; (lightemacs-on-first-buffer . lem-recentf--setup)
+  (lightemacs-on-first-buffer . lem-recentf--setup)
 
   :preface
   (defun lem-recentf--setup ()

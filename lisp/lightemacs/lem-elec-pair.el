@@ -19,8 +19,7 @@
              electric-pair-local-mode
              electric-pair-delete-pair)
   :hook
-  ;; TODO on-first-buffer?
-  (after-init . electric-pair-mode))
+  (lightemacs-on-first-buffer . electric-pair-mode))
 
 ;;; Provide
 (provide 'lem-elec-pair)
