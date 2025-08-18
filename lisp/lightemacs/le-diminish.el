@@ -20,10 +20,13 @@
   :commands (diminish
              diminish-undo
              diminished-modes)
-  ;; :config
-  ;; (diminish 'abbrev-mode)
-  ;; (diminish 'eldoc-mode)
   )
+
+(with-eval-after-load 'eldoc
+  (diminish 'eldoc-mode))
+
+(with-eval-after-load 'abbrev
+  (diminish 'abbrev-mode))
 
 (provide 'le-diminish)
 
