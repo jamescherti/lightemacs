@@ -28,7 +28,9 @@
   (setq tab-always-indent 'complete)
 
   (setq corfu-auto nil)
-  (setq corfu-preselect 'prompt)  ; Select first candidate, except for directories
+
+  ;; Select first candidate, except for directories
+  (setq corfu-preselect 'directory)
 
   (setq global-corfu-modes '((not erc-mode
                                   circe-mode
