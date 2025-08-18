@@ -22,8 +22,11 @@
   "Hook of Dired filter functions to apply when entering `dired-mode'.
 
 For instance:
+  ;; Hide dotfiles
   (add-hook \\='lightemacs-dired-filter-setup-hook
             #\\='dired-filter-by-dot-files)
+
+  ;; Hide files that are ignored by Git
   (add-hook \\='lightemacs-dired-filter-setup-hook
             #\\='dired-filter-by-git-ignored)")
 

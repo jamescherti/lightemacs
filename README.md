@@ -61,7 +61,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Better minibuffer and navigation (lem-consult, lem-embark, and lem-vertico, lem-marginalia)](#better-minibuffer-and-navigation-lem-consult-lem-embark-and-lem-vertico-lem-marginalia)
     - [Better completion (lem-corfu and lem-cape)](#better-completion-lem-corfu-and-lem-cape)
     - [Better sorting and ordering (lem-prescient, lem-corfu-prescient, and lem-vertico-prescient)](#better-sorting-and-ordering-lem-prescient-lem-corfu-prescient-and-lem-vertico-prescient)
-    - [Better File Manager (lem-dired and lem-dired-filter)](#better-file-manager-lem-dired-and-lem-dired-filter)
+    - [Enhanced File Management (lem-dired and lem-dired-filter)](#enhanced-file-management-lem-dired-and-lem-dired-filter)
     - [Efficient template expansion with snippets (lem-yasnippet and lem-yasnippet-snippets)](#efficient-template-expansion-with-snippets-lem-yasnippet-and-lem-yasnippet-snippets)
     - [Better undo/redo (lem-undo-fu and undo-fu-session)](#better-undoredo-lem-undo-fu-and-undo-fu-session)
     - [Keybindings (lem-keybindings)](#keybindings-lem-keybindings)
@@ -228,9 +228,29 @@ The main benefit of *prescient.el* is that it adaptively orders candidates based
 - Vertico and Prescient (lem-vertico-prescient): When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
 - Corfu and Prescient (lem-corfu-prescient): When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
 
-### Better File Manager (lem-dired and lem-dired-filter)
+### Enhanced File Management (lem-dired and lem-dired-filter)
 
-Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
+* **lem-dired**: Configures Dired to display directories first.
+* **lem-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
+
+By default the **lem-dired-filter** module, only enables `dired-filter-by-omit`:
+
+```elisp
+;; By default, `dired-filter-by-omit' excludes "."
+(setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit))
+```
+
+To add additional filters, include them in your `~/.emacs.d/config.el`. For example:
+
+```elisp
+;; Hide dotfiles
+(add-hook 'lightemacs-dired-filter-setup-hook #'dired-filter-by-dot-files)
+
+;; Hide files ignored by Git
+(add-hook 'lightemacs-dired-filter-setup-hook #'dired-filter-by-git-ignored)
+```
+
+This setup keeps your Dired buffer clean by showing only relevant and tracked files.
 
 ### Efficient template expansion with snippets (lem-yasnippet and lem-yasnippet-snippets)
 
