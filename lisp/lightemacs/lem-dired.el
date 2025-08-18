@@ -25,6 +25,7 @@
              dired-hide-details-mode)
 
   :init
+  (setq dired-omit-files (concat "\\`[.]\\'\\|^\\.git$"))
   (setq dired-movement-style 'bounded-files)
 
   ;; Group directories first

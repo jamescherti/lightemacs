@@ -243,12 +243,11 @@ By default the **lem-dired-filter** module, only enables `dired-filter-by-omit`:
 To add additional filters, include them in your `~/.emacs.d/config.el`. For example:
 
 ```elisp
-(with-eval-after-load 'dired-filter
-  (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit
-                                             ;; Hide files ignored by Git
-                                             dired-filter-by-git-ignored
-                                             ;; Hide dotfiles
-                                             dired-filter-by-dot-files)))
+(setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit
+                                           ;; Hide files ignored by Git
+                                           dired-filter-by-git-ignored
+                                           ;; Hide dotfiles
+                                           dired-filter-by-dot-files))
 ```
 
 This setup keeps your Dired buffer clean by showing only relevant and tracked files.
