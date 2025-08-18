@@ -244,10 +244,10 @@ To add additional filters, include them in your `~/.emacs.d/config.el`. For exam
 
 ```elisp
 ;; Hide dotfiles
-(add-hook 'lightemacs-dired-filter-setup-hook #'dired-filter-by-dot-files)
+(add-hook 'lightemacs-dired-filter-setup-hook 'dired-filter-by-dot-files)
 
 ;; Hide files ignored by Git
-(add-hook 'lightemacs-dired-filter-setup-hook #'dired-filter-by-git-ignored)
+(add-hook 'lightemacs-dired-filter-setup-hook 'dired-filter-by-git-ignored)
 ```
 
 This setup keeps your Dired buffer clean by showing only relevant and tracked files.
