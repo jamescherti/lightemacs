@@ -25,7 +25,8 @@
 ;;; Code:
 
 (use-package vim-tab-bar
-  :hook (after-init . vim-tab-bar-mode))
+  :hook (after-init . vim-tab-bar-mode)
+  :diminish vim-tab-bar-mode)
 
 (provide 'lem-vim-tab-bar)
 

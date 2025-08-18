@@ -17,7 +17,11 @@
 
 (require 'lightemacs)
 
-(lightemacs-load-modules '(;; Compile-angel speeds up Emacs by ensuring that
+(lightemacs-load-modules '(;; Hides or abbreviates mode indicators in the Emacs
+                           ;; mode line for a cleaner display
+                           lem-diminish
+
+                           ;; Compile-angel speeds up Emacs by ensuring that
                            ;; all Elisp libraries are both byte-compiled and
                            ;; native-compiled.
                            ;;

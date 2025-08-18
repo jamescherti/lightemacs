@@ -28,7 +28,6 @@
   :commands (consult-fd
              consult-register-window
              consult-ripgrep
-             consult-ripgrep
              consult-bookmark
              consult-buffer
              consult-buffer-other-frame

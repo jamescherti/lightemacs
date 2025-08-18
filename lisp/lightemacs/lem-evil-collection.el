@@ -24,6 +24,7 @@
 (setq evil-collection-setup-minibuffer t)
 
 (use-package evil-collection
+  :diminish (evil-collection-unimpaired-mode)
   :config
   (evil-collection-init))
 

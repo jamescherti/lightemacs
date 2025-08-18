@@ -15,6 +15,7 @@
 
 (use-package evil-commentary
   :commands evil-commentary-mode
+  :diminish evil-commentary-mode
   :hook (evil-mode . evil-commentary-mode))
 
 (provide 'lem-evil-commentary)

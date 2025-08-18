@@ -38,9 +38,8 @@
 (use-package persist-text-scale
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
-
+  :diminish persist-text-scale-mode
   :hook (after-init . persist-text-scale-mode)
-
   :init
   (setq text-scale-mode-step 1.07))
 
