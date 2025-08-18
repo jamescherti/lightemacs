@@ -42,14 +42,9 @@
                            ;; ~/.emacs.d/config.el file:
                            mod-aggressive-indent))
 
-(with-eval-after-load 'mod-highlight-defined
-  (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode))
-
-(with-eval-after-load 'mod-page-break-lines
-  (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode))
-
-(with-eval-after-load 'aggressive-indent-mode
-  (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode))
+(add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
+(add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
+(add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
 
 (provide 'group-emacs-lisp)
 
