@@ -35,7 +35,7 @@
   (setq vertico-scroll-margin 0)
   (setq vertico-count 16)
   (setq vertico-resize 'grow-only)
-  (setq vertico-cycle t)
+  (setq vertico-cycle nil)
   (setq vertico-count-format nil) ; No prefix with number of entries
 
   :config
