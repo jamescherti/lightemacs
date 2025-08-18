@@ -552,12 +552,22 @@ The `lightemacs-cycle` variable controls whether cycling through completion cand
 To disable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
 
 ```elisp
+;; Disable cycling
+;;
+;; Navigating past the last candidate stops at the first or last candidate
+;; without wrapping. This applies to Vertico minibuffer completions, Corfu code
+;; completions, and Evil search candidates.
 (setq lightemacs-cycle nil)
 ```
 
 To enable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
 
 ```elisp
+;; Enable cycling
+;;
+;; Navigating past the last candidate wraps around to the first, and vice versa.
+;; This applies to Vertico minibuffer completions, Corfu code completions, and
+;; Evil search candidates.
 (setq lightemacs-cycle t)
 ```
 
