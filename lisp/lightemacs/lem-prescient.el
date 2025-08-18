@@ -39,11 +39,14 @@
   (setq prescient-save-file (expand-file-name "prescient-save.el"
                                               user-emacs-directory))
 
-  ;; TODO
+  ;; Other parameters:
+  ;; (setq prescient-aggressive-file-save t)
+  ;; (setq prescient-frequency-decay 0.997)
+  ;; (setq prescient-frequency-threshold 0.05)
+  ;; (setq prescient-history-length 200)
+  ;; (setq prescient-sort-full-matches-first t)
   ;; (setq prescient-completion-highlight-matches nil)
   ;; (setq completion-preview-sort-function #'prescient-completion-sort)
-  ;; (setq prescient-sort-full-matches-first t)
-  ;; (setq prescient-use-char-folding t)
 
   ;; Disabling length-based sorting. You might have noticed M-x is now sorting
   ;; all commands by shortest-first. If this is distracting to you, it can be

@@ -57,7 +57,7 @@
   (setq evil-kbd-macro-suppress-motion-error t)
 
   ;; Time in seconds of idle before updating search highlighting.
-  (setq evil-ex-hl-update-delay 0.005)
+  (setq evil-ex-hl-update-delay 0.001)
 
   ;; Better Vim emulation
   (setq evil-symbol-word-search t)

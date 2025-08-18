@@ -24,8 +24,6 @@
 ;;; Consult
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'lem-lib)
-
 (use-package consult
   :commands (consult-fd
              consult-register-window
@@ -69,6 +67,67 @@
   :functions (consult--customize-put
               consult-narrow-help)
 
+  :bind (;; C-c bindings in `mode-specific-map'
+         ("C-c M-x" . consult-mode-command)
+         ("C-c h" . consult-history)
+         ;; ("C-c k" . consult-kmacro)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
+         ;; C-x bindings in `ctl-x-map'
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
+         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ;; M-g bindings in `goto-map'
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings in `search-map'
+         ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+         ("M-s c" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+
+         :map isearch-mode-map
+         ;; orig. isearch-edit-string
+         ("M-e" . consult-isearch-history)
+         ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history)
+         ;; needed by consult-line to detect isearch
+         ("M-s l" . consult-line)
+         ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)
+
+         ;; Minibuffer history
+         :map minibuffer-local-map
+         ;; orig. next-matching-history-element
+         ("M-s" . consult-history)
+         ;; orig. previous-matching-history-element
+         ("M-r" . consult-history))
+
   :hook
   ;; Enable automatic preview at point in the *Completions* buffer.
   (completion-list-mode . consult-preview-at-point-mode)
@@ -94,21 +153,21 @@
   (require 'consult-xref)
 
   (consult-customize
-   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-theme :preview-key '(:debounce 0.1 any)
    consult-ripgrep consult-git-grep consult-grep consult-man
    consult-bookmark consult-recent-file consult-xref
    consult--source-bookmark consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
    ;; :preview-key "M-."
-   :preview-key '(:debounce 0.4 any))
+   :preview-key '(:debounce 0.1 any))
 
   ;; Configure the narrowing key. Both < and C-+ work reasonably well. "C-+"
   (setq consult-narrow-key "<")
 
   (setq consult-async-min-input 2
-        consult-async-refresh-delay 0.1
-        consult-async-input-throttle 0.2
-        consult-async-input-debounce 0.1)
+        consult-async-refresh-delay 0.05
+        consult-async-input-throttle 0.1
+        consult-async-input-debounce 0.05)
   (setq consult--gc-threshold (* 2 64 1024 1024))
   (setq consult--process-chunk (* 2 1024 1024))
 
@@ -141,6 +200,8 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
+(require 'lem-lib)
+
 
 ;;; Completing indicator
 
