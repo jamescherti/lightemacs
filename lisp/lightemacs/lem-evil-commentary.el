@@ -1,0 +1,26 @@
+;;; lem-evil-commentary.el --- lem-evil-commentary -*- lexical-binding: t -*-
+
+;; Author: James Cherti
+;; URL: https://github.com/jamescherti/lightemacs
+;; Package-Requires: ((emacs "29.1"))
+;; Keywords: maint
+;; Version: 0.0.9
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;;; Commentary:
+
+;; Comment or uncomment text in Normal or Visual mode by pressing 'gc'.
+
+;;; Code:
+
+(use-package evil-commentary
+  :commands evil-commentary-mode
+  :hook (evil-mode . evil-commentary-mode))
+
+(provide 'lem-evil-commentary)
+
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
+;;; lem-evil-commentary.el ends here

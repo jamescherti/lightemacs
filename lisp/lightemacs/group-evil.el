@@ -23,30 +23,30 @@
 (require 'lightemacs)
 
 (lightemacs-load-modules '(;; Evil keybindings
-                           mod-evil
-                           mod-evil-collection
+                           lem-evil
+                           lem-evil-collection
 
                            ;; Comment or uncomment text in Normal or Visual mode
                            ;; by pressing 'gc'.
-                           mod-evil-commentary
+                           lem-evil-commentary
 
                            ;; two-character motions for rapid navigation within
                            ;; text. Pressing s in normal mode prompts you to
                            ;; type two characters, then jumps the cursor to the
                            ;; nearest matching occurrence while highlighting all
                            ;; matches incrementally.
-                           mod-evil-snipe
+                           lem-evil-snipe
 
                            ;; Evil-surround enables text surrounding in visual
                            ;; state using S<textobject> or gS<textobject>. For
                            ;; example, selecting text and pressing S" will wrap
                            ;; it in double quotes.
-                           mod-evil-surround
+                           lem-evil-surround
 
                            ;; Goto-chg is Used by `evil-mode' for the motions
                            ;; 'g;' and 'g,' as well as for the last-change
                            ;; register '.'.
-                           mod-goto-chg))
+                           lem-goto-chg))
 
 (provide 'group-evil)
 

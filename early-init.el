@@ -26,7 +26,7 @@
 
                              ;; Treesitter, Better syntax highlighting (DISABLED)
                              ;; -------------------------------------------------
-                             ;; mod-treesit-auto
+                             ;; lem-treesit-auto
                              )
   "Modules that are enabled by default.")
 

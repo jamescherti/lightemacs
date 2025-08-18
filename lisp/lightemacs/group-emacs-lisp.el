@@ -24,14 +24,14 @@
 (lightemacs-load-modules '(;; Enable `highlight-defined-mode', a minor mode
                            ;; that highlights defined Emacs Lisp symbols in
                            ;; `emacs-lisp-mode' buffers.
-                           mod-highlight-defined
+                           lem-highlight-defined
 
                            ;; Enable `page-break-lines', a minor mode that
                            ;; visually replaces ASCII form-feed characters
                            ;; (typically ^L) with horizontal line separators in
                            ;; buffers, making page breaks easier to see without
                            ;; affecting the actual text.
-                           mod-page-break-lines
+                           lem-page-break-lines
 
                            ;; `aggressive-indent-mode' is a minor mode that
                            ;; Elisp code remains consistently indented. It
@@ -40,7 +40,7 @@
                            ;; `electric-indent-mode'. To enable it for Elisp
                            ;; files, add the following to the
                            ;; ~/.emacs.d/config.el file:
-                           mod-aggressive-indent))
+                           lem-aggressive-indent))
 
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
 (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
