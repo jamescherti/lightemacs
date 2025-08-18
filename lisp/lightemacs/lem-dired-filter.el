@@ -51,7 +51,12 @@ For instance:
 ;; Toggle filters
 
 (defun lightemacs-dired-filter-toggle ()
-  "Toggle the `dired' filter."
+  "Toggle `dired' filters on or off in the current buffer.
+
+This function enables or disables all filters listed in
+`lightemacs-dired-filter-setup-hook'. When toggled on, the filters are applied
+to the current Dired buffer; when toggled off, all filters are removed,
+restoring the full file listing."
   (interactive)
   (when (and (boundp 'dired-filter-stack)
              (fboundp 'dired-goto-file)
