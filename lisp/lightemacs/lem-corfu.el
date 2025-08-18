@@ -43,7 +43,7 @@
   (setq corfu-auto-prefix 2)
   (setq corfu-count 16)
   (setq corfu-max-width 120)
-  (setq corfu-cycle nil)  ; Enable cycling for `corfu-next/previous'
+  (setq corfu-cycle lightemacs-cycle)
   (setq corfu-scroll-margin 1)
   (setq corfu-preview-current nil)  ; Disable current candidate preview
   (setq corfu-min-width 38)

@@ -30,6 +30,8 @@
   :hook (after-init . evil-mode)
   :functions define-key
   :init
+  (setq evil-search-wrap lightemacs-cycle)
+
   ;; Use evil-search instead of isearch
   (setq evil-search-module 'evil-search)
 

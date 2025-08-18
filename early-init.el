@@ -43,6 +43,12 @@ customize this variable to use a different character or string (such as '…',
 variable is buffer-local in Org-mode and Outline-mode, affecting only the
 display of folded text.")
 
+(defvar lightemacs-cycle nil
+  "If non-nil, enables cycling through candidates in supported plugins.
+This enabled or disable cycling in plugins such as Vertico and Consult.
+When nil, cycling is disabled, so selection stops at the first or last candidate
+instead of wrapping around.")
+
 (defcustom lightemacs-verbose nil
   "Enable displaying messages.
 When set to non-nil, this option will cause messages to be shown during the

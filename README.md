@@ -83,6 +83,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
   - [Other Features](#other-features)
   - [Useful variables](#useful-variables)
     - [Ellipsis](#ellipsis)
+    - [Cycling](#cycling)
   - [Author and license](#author-and-license)
   - [Links](#links)
 
@@ -539,6 +540,19 @@ In addition to modules, Lightemacs provides the following features:
 Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
 ```elisp
 (setq lightemacs-ellipsis " ▼")
+```
+
+### Cycling
+
+The `lightemacs-cycle` variable controls whether cycling through completion candidates is enabled.
+
+* If non-nil (default), navigating past the last candidate wraps around to the first, and vice versa. This applies to Vertico minibuffer completions, Corfu code completions, and Evil search candidates.
+* If nil, selection stops at the first or last candidate without wrapping.
+
+To disable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
+
+```elisp
+(setq lightemacs-cycle nil)
 ```
 
 ## Author and license
