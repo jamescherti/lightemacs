@@ -156,7 +156,12 @@
   ;; Configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
   ;; "C-+"
-  ;; (setq consult-narrow-key "<")
+  (setq consult-narrow-key "<")
+
+  (setq consult-async-min-input 2
+        consult-async-refresh-delay 0.1
+        consult-async-input-throttle 0.2
+        consult-async-input-debounce 0.1)
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.

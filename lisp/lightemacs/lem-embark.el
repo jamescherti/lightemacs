@@ -33,7 +33,9 @@
   :bind
   (("C-." . embark-act)
    ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings))
+   ("C-h B" . embark-bindings)
+   ("C-c C-;" . embark-export)
+   ("C-c C-l" . embark-collect))
 
   :init
   ;; Replace the key help with a completing-read interface

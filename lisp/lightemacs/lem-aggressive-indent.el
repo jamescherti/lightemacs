@@ -21,7 +21,8 @@
 ;;; Code:
 
 (use-package aggressive-indent
-  :commands aggressive-indent-mode)
+  :commands (aggressive-indent-mode
+             global-aggressive-indent-mode))
 
 (provide 'lem-aggressive-indent)
 

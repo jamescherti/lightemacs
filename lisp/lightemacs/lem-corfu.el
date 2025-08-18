@@ -28,23 +28,24 @@
 
   :init
   (setq corfu-auto nil)
-  (setq corfu-auto-delay 0.25)
+  (setq corfu-auto-delay 0.24)
   (setq corfu-auto-prefix 2)
-  (setq corfu-count 14)
+  (setq corfu-count 15)
+  (setq corfu-max-width 120)
   (setq corfu-cycle nil)  ; Enable cycling for `corfu-next/previous'
   (setq corfu-scroll-margin 1)
-  (setq corfu-quit-no-match nil)  ; Never quit, even if there is no match.
   (setq corfu-preselect 'directory)  ; Select the first candidate, except for directories
   (setq corfu-preview-current nil)  ; Disable current candidate preview
   (setq corfu-min-width 38)
   (setq corfu-separator ?\s)  ; Orderless field separator
 
-  ;; Prevent quitting at completion boundaries
-  ;; (such as when pressing "-" in sh-mode)
-  (setq corfu-quit-at-boundary nil)
+  (setq corfu-quit-at-boundary 'separator)
+  (setq corfu-quit-no-match 'separator)
+
+  (setq tab-always-indent 'complete)
 
   ;; Configure handling of exact matches
-  (setq corfu-on-exact-match 'insert))
+  (setq corfu-on-exact-match nil))
 
 (provide 'lem-corfu)
 

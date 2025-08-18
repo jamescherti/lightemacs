@@ -37,6 +37,7 @@
 (use-package bufferfile
   :commands (bufferfile-rename
              bufferfile-delete
+             bufferfile-copy
              bufferfile-dired-do-rename))
 
 (provide 'lem-bufferfile)
