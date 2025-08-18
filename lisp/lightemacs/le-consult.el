@@ -165,9 +165,9 @@
   (setq consult-narrow-key "<")
 
   (setq consult-async-min-input 2
-        consult-async-refresh-delay 0.05
-        consult-async-input-throttle 0.1
-        consult-async-input-debounce 0.05)
+        consult-async-refresh-delay 0.1
+        consult-async-input-throttle 0.2
+        consult-async-input-debounce 0.1)
   (setq consult--gc-threshold (* 2 64 1024 1024))
   (setq consult--process-chunk (* 2 1024 1024))
 
