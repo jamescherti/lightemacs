@@ -14,19 +14,35 @@
 
 ;;; Load minimal-emacs.d init.el
 
+(require 'cl-lib)
+
 (if (fboundp 'lightemacs-load-init-file)
-    (lightemacs-load-init-file "init.el")
+    (progn
+      (if (fboundp 'minimal-emacs-load-user-init)
+          (minimal-emacs-load-user-init "pre-init.el")
+        (error "The early-init.el file failed to loaded"))
+
+      (cl-letf (((symbol-function 'minimal-emacs-load-user-init)
+                 (lambda (&rest _)
+                   nil)))
+        (lightemacs-load-init-file "init.el")))
   (error "The early-init.el file was not loaded"))
 
 ;;; Load modules
 
+;; Load config.el
 (if (fboundp 'minimal-emacs-load-user-init)
     (minimal-emacs-load-user-init "config.el")
   (error "Undefined function: minimal-emacs-load-user-init"))
 
+;; Load all modules
 (if (fboundp 'lightemacs-load-modules)
     (lightemacs-load-modules lightemacs-modules)
   (error "Undefined function: lightemacs-load-modules"))
+
+;; Load post-init.el
+(when (fboundp 'minimal-emacs-load-user-init)
+  (minimal-emacs-load-user-init "post-init.el"))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
