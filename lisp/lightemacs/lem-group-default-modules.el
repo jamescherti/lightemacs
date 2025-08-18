@@ -280,7 +280,7 @@
                            ;; native-compiled.
                            lem-compile-angel))
 
-(provide 'group-default-modules)
+(provide 'lem-group-default-modules)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)

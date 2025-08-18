@@ -18,7 +18,7 @@
 ;; disabled according to your preferences, with all modules ensuring packages
 ;; are loaded only when needed, enabling exceptionally fast, deferred startup.
 (defvar lightemacs-modules '(;; Default modules
-                             group-default-modules
+                             lem-group-default-modules
 
                              ;; Vim keybindings (DISABLED)
                              ;; --------------------------
