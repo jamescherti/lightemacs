@@ -16,6 +16,8 @@
 
 ;;; Code:
 
+;;; Variables
+
 ;; By default, `dired-filter-by-omit' excludes `"."`, which is generally
 ;; unnecessary.
 (defvar lightemacs-dired-filter-setup-hook '(dired-filter-by-omit)
@@ -31,6 +33,8 @@ For instance:
             \\='dired-filter-by-git-ignored)")
 
 (defvar lightemacs--dired-filter-filters-enabled t)
+
+;;; Use-package dired-filter
 
 (use-package dired-filter
   :commands (dired-filter-pop-all
