@@ -151,6 +151,7 @@
   :config
   (require 'consult-imenu)
   (require 'consult-xref)
+  (require 'consult-info)
 
   (consult-customize
    consult-theme :preview-key '(:debounce 0.1 any)
