@@ -1,4 +1,4 @@
-;;; group-emacs-lisp.el --- group-emacs-lisp -*- lexical-binding: t -*-
+;;; lem-group-emacs-lisp.el --- group-emacs-lisp -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -46,10 +46,10 @@
 (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
 (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
 
-(provide 'group-emacs-lisp)
+(provide 'lem-group-emacs-lisp)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; group-emacs-lisp.el ends here
+;;; lem-group-emacs-lisp.el ends here

@@ -74,7 +74,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Recent files (lem-recentf)](#recent-files-lem-recentf)
     - [Detect indentation offset (lem-dtrt-indent)](#detect-indentation-offset-lem-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
-    - [Enhanced Emacs Lisp (Elisp) Editing Experience (group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-group-emacs-lisp)
+    - [Enhanced Emacs Lisp (Elisp) Editing Experience (lem-group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-lem-group-emacs-lisp)
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: lem-treesit-auto (better syntax highlighting)](#disabled-by-default-lem-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
@@ -417,9 +417,9 @@ To prevent `dtrt-indent` from displaying a message each time it adjusts the inde
 - **lem-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
 - **lem-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 
-### Enhanced Emacs Lisp (Elisp) Editing Experience (group-emacs-lisp)
+### Enhanced Emacs Lisp (Elisp) Editing Experience (lem-group-emacs-lisp)
 
-The **group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
+The **lem-group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
 - **lem-highlight-defined**: Enables `highlight-defined-mode`, a minor mode that highlights defined Emacs Lisp symbols.
 - **lem-aggressive-indent**: Enables `aggressive-indent-mode`, a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
 - **lem-page-break-lines**: Enables `page-break-lines-mode`, a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text.

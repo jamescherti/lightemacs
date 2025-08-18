@@ -1,4 +1,4 @@
-;;; group-default-modules.el --- Group: Default modules -*- lexical-binding: t -*-
+;;; lem-group-default-modules.el --- Group: Default modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -266,7 +266,7 @@
                            ;; It automatically reindents after every
                            ;; modification, providing greater reliability than
                            ;; `electric-indent-mode'.
-                           group-emacs-lisp
+                           lem-group-emacs-lisp
 
                            ;; This package provides functions to detects the
                            ;; indentation offset used in existing source code
@@ -286,4 +286,4 @@
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; group-default-modules.el ends here
+;;; lem-group-default-modules.el ends here

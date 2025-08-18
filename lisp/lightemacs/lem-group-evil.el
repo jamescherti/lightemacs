@@ -1,4 +1,4 @@
-;;; group-evil.el --- group-evil -*- lexical-binding: t -*-
+;;; lem-group-evil.el --- group-evil -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -48,10 +48,10 @@
                            ;; register '.'.
                            lem-goto-chg))
 
-(provide 'group-evil)
+(provide 'lem-group-evil)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; group-evil.el ends here
+;;; lem-group-evil.el ends here
