@@ -555,6 +555,12 @@ To disable cycling (default: enabled), add the following to your `~/.emacs.d/con
 (setq lightemacs-cycle nil)
 ```
 
+To enable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
+
+```elisp
+(setq lightemacs-cycle t)
+```
+
 ## Author and license
 
 The *Lightemacs* project has been written by James Cherti and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
