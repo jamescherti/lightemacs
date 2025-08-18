@@ -15,6 +15,9 @@
 
 ;;; Better defaults
 
+;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
+(require 'lem-lib)
+
 ;; Allow Emacs to upgrade built-in packages, such as Org mode
 (setq package-install-upgrade-built-in t)
 
@@ -25,15 +28,8 @@
 ;; Emacs automatically saves your changes to a file intermittently
 (setq make-backup-files t)
 
-(when (executable-find "ripgrep")
-  (setq xref-search-program 'ripgrep)
-  (setq consult-ripgrep-args
-        (concat "rg "
-                "--null --line-buffered --color=never --max-columns=1000 "
-                "--with-filename --line-number --search-zip "
-                "--hidden -g !.git -g !.svn -g !.hg "
-                "--path-separator / --smart-case --no-heading "
-                (mapconcat #'identity args " "))))
+(when lightemacs--ripgrep-executable
+  (setq xref-search-program 'ripgrep))
 
 ;;; Minibuffer
 

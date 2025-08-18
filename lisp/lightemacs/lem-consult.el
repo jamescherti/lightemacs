@@ -23,6 +23,9 @@
 
 ;;; Consult
 
+;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
+(require 'lem-lib)
+
 (use-package consult
   :commands (consult-fd
              consult-register-window
@@ -110,14 +113,24 @@
   (setq consult--process-chunk (* 2 1024 1024))
 
   (setq consult-fd-args
-        '((if (executable-find "fdfind" 'remote)
-              "fdfind"
-            "fd")
-          "--hidden --exclude .git"
-          "--color=never"
-          "--full-path --absolute-path"
-          (if (memq system-type '(cygwin windows-nt ms-dos))
-              "--path-separator=/")))
+        (list (if lightemacs--fdfind-executable
+                  lightemacs--fdfind-executable
+                "fd")
+              " --hidden --exclude .git"
+              "--color=never"
+              "--full-path --absolute-path"
+              (if (memq system-type '(cygwin windows-nt ms-dos))
+                  "--path-separator=/"
+                "")))
+
+  (setq consult-ripgrep-args
+        (concat (if lightemacs--fdfind-executable
+                    lightemacs--fdfind-executable
+                  "rg")
+                " --null --line-buffered --color=never --max-columns=1000 "
+                "--with-filename --line-number --search-zip "
+                "--hidden -g !.git -g !.svn -g !.hg "
+                "--path-separator / --smart-case --no-heading "))
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.

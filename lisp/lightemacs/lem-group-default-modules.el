@@ -17,7 +17,15 @@
 
 (require 'lightemacs)
 
-(lightemacs-load-modules '(;; Modules enabled by default
+(lightemacs-load-modules '(;; Compile-angel speeds up Emacs by ensuring that
+                           ;; all Elisp libraries are both byte-compiled and
+                           ;; native-compiled.
+                           ;;
+                           ;; NOTE: Load this first, before any other packages,
+                           ;; to ensure proper initialization.
+                           lem-compile-angel
+
+                           ;; Modules enabled by default
                            ;; --------------------------
                            ;; This loaded the default theme specified
                            ;; in the `lightemacs-default-theme' variable.
@@ -290,12 +298,7 @@
                            ;; files and automatically adjusts Emacs settings
                            ;; accordingly, thereby simplifying the editing of
                            ;; files created in external environments.
-                           lem-dtrt-indent
-
-                           ;; Compile-angel speeds up Emacs by ensuring that
-                           ;; all Elisp libraries are both byte-compiled and
-                           ;; native-compiled.
-                           lem-compile-angel))
+                           lem-dtrt-indent))
 
 (provide 'lem-group-default-modules)
 

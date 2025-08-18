@@ -25,10 +25,7 @@
 ;;; Code:
 
 (use-package compile-angel
-  :commands (compile-angel-on-load-mode
-             compile-angel-on-save-mode
-             compile-angel-on-save-local-mode)
-
+  :demand t
   :init
   (setq package-native-compile nil)
 
@@ -45,7 +42,7 @@
   ;; `compile-angel-on-load-compile-load-history' are both set to t.
   (setq compile-angel-on-load-compile-load-history t)
   (setq compile-angel-on-load-compile-features t)
-  (add-hook 'after-init-hook #'compile-angel-on-load-mode)
+  ;; (add-hook 'after-init-hook #'compile-angel-on-load-mode)
 
   :preface
   (defun lem-compile-angel-exclude (path)
@@ -71,7 +68,8 @@ specified file or directory is ignored during the compilation process managed by
   (with-eval-after-load 'cus-edit
     (lem-compile-angel-exclude custom-file))
   (with-eval-after-load 'prescient
-    (lem-compile-angel-exclude prescient-save-file)))
+    (lem-compile-angel-exclude prescient-save-file))
+  (compile-angel-on-load-mode))
 
 (provide 'lem-compile-angel)
 
