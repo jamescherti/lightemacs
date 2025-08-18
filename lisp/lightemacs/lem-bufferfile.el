@@ -16,7 +16,7 @@
 ;;   ensures that the destination directory exists, and updates the buffer name
 ;;   for all associated buffers, including clones/indirect buffers. It also
 ;;   ensures that buffer-local features referencing the file, such as Eglot or
-;;   dired buffers, are correctly updated to reflect the new file name.
+;;   `dired' buffers, are correctly updated to reflect the new file name.
 ;; - `bufferfile-delete': Delete the file associated with a buffer and kill all
 ;;   buffers visiting the file, including clones/indirect buffers.
 ;; - `bufferfile-copy': Ensures that the destination directory exists and copies

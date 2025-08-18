@@ -1,6 +1,9 @@
 /pre-early-init.el
+/post-early-init.el
 /pre-init.el
-/post-early-init.el
-/post-early-init.el
+/post-init.el
 /config.el
 /lisp/local
+/eln-cache
+/var
+/etc
