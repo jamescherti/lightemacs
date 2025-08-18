@@ -16,12 +16,11 @@
 
 ;;; Code:
 
-(defvar lem-dired-filter-setup-hook '()
+(defvar lem-dired-filter-setup-hook '(dired-filter-by-omit)
   "Hook of Dired filter functions to apply when entering `dired-mode'.
 
 For instance:
   (add-hook \\='lem-dired-filter-setup-hook #\\='dired-filter-by-dot-files)
-  (add-hook \\='lem-dired-filter-setup-hook #\\='dired-filter-by-omit)
   (add-hook \\='lem-dired-filter-setup-hook #\\='dired-filter-by-git-ignored)")
 
 (use-package dired-filter

@@ -8,6 +8,8 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 Lightemacs provides a range of modules that can be selectively enabled or disabled according to your preferences, with all modules ensuring packages are loaded only when needed, **enabling exceptionally fast, deferred startup**.
 
+Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimize Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
+
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
 Here are some of the modules that are enabled by default:
