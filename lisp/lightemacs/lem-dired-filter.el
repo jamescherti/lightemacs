@@ -16,12 +16,16 @@
 
 ;;; Code:
 
-(defvar lem-dired-filter-setup-hook '(dired-filter-by-omit)
+;; By default, `dired-filter-by-omit' excludes `"."`, which is generally
+;; unnecessary.
+(defvar lightemacs-dired-filter-setup-hook '(dired-filter-by-omit)
   "Hook of Dired filter functions to apply when entering `dired-mode'.
 
 For instance:
-  (add-hook \\='lem-dired-filter-setup-hook #\\='dired-filter-by-dot-files)
-  (add-hook \\='lem-dired-filter-setup-hook #\\='dired-filter-by-git-ignored)")
+  (add-hook \\='lightemacs-dired-filter-setup-hook
+            #\\='dired-filter-by-dot-files)
+  (add-hook \\='lightemacs-dired-filter-setup-hook
+            #\\='dired-filter-by-git-ignored)")
 
 (use-package dired-filter
   :commands (dired-filter-pop-all
@@ -34,7 +38,7 @@ For instance:
   (defun lem-dired-filter--enable-filters ()
     "Dired only hide didden files in ~/home"
     (when (derived-mode-p 'dired-mode)
-      (run-hooks 'lem-dired-filter-setup-hook)))
+      (run-hooks 'lightemacs-dired-filter-setup-hook)))
 
   :init
   ;; Hide details such as file ownership and permissions

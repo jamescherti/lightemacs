@@ -153,9 +153,7 @@
    ;; :preview-key "M-."
    :preview-key '(:debounce 0.4 any))
 
-  ;; Configure the narrowing key.
-  ;; Both < and C-+ work reasonably well.
-  ;; "C-+"
+  ;; Configure the narrowing key. Both < and C-+ work reasonably well. "C-+"
   (setq consult-narrow-key "<")
 
   (setq consult-async-min-input 2
