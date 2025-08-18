@@ -25,6 +25,16 @@
 ;; Emacs automatically saves your changes to a file intermittently
 (setq make-backup-files t)
 
+(when (executable-find "ripgrep")
+  (setq xref-search-program 'ripgrep)
+  (setq consult-ripgrep-args
+        (concat "rg "
+                "--null --line-buffered --color=never --max-columns=1000 "
+                "--with-filename --line-number --search-zip "
+                "--hidden -g !.git -g !.svn -g !.hg "
+                "--path-separator / --smart-case --no-heading "
+                (mapconcat #'identity args " "))))
+
 ;;; Minibuffer
 
 (setq minibuffer-default-prompt-format " [%s]")

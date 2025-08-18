@@ -18,6 +18,8 @@
 
 ;;; Code:
 
+;; Conflicts with: lem-orderless
+;;
 ;; prescient.el is a library for sorting and filtering lists of candidates, such
 ;; as those presented by packages like Vertico or Corfu.
 ;;

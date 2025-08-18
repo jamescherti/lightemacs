@@ -22,7 +22,7 @@
 
                              ;; Vim keybindings (DISABLED)
                              ;; --------------------------
-                             ;; group-evil
+                             ;; lem-group-evil
 
                              ;; Treesitter, Better syntax highlighting (DISABLED)
                              ;; -------------------------------------------------

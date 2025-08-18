@@ -18,6 +18,8 @@
 
 ;;; Code:
 
+;; Conflicts with: lem-orderless
+;;
 ;; When prescient.el is used with Corfu, prescient.el improves both in-buffer
 ;; completions and pop-up completion menus by making candidate ordering more
 ;; predictable and adaptive to recent usage, thus speeding up repeated

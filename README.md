@@ -11,7 +11,7 @@ Lightemacs tweaks packages to improve performance. For example, adjusting the de
 
 Here are some of the modules that are enabled by default:
 
-- Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
+- Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless)
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
@@ -29,7 +29,7 @@ Here are some of the modules that are enabled by default:
 - And more.
 
 Optionally, you can enable the following features that are disabled by default:
-- **group-evil**: Vim keybindings (Evil) with additional functionality, including commenting/uncommenting, two-character search using the `s` key (as an alternative to the `f` key), and surrounding text in visual state.
+* **lem-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
 - **lem-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 
 **What is the difference between Lightemacs and minimal-emacs.d?**
@@ -55,7 +55,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Modules Enabled by Default](#modules-enabled-by-default)
     - [Default theme (lem-default-theme)](#default-theme-lem-default-theme)
-    - [Better minibuffer and navigation (lem-consult, lem-embark, and lem-vertico, lem-marginalia)](#better-minibuffer-and-navigation-lem-consult-lem-embark-and-lem-vertico-lem-marginalia)
+    - [Better minibuffer and navigation (lem-consult, lem-embark, and lem-vertico, lem-marginalia, lem-orderless)](#better-minibuffer-and-navigation-lem-consult-lem-embark-and-lem-vertico-lem-marginalia-lem-orderless)
     - [Better completion (lem-corfu and lem-cape)](#better-completion-lem-corfu-and-lem-cape)
     - [Better sorting and ordering (lem-prescient, lem-corfu-prescient, and lem-vertico-prescient)](#better-sorting-and-ordering-lem-prescient-lem-corfu-prescient-and-lem-vertico-prescient)
     - [Enhanced File Management (lem-dired and lem-dired-filter)](#enhanced-file-management-lem-dired-and-lem-dired-filter)
@@ -157,12 +157,12 @@ Always begin your `config.el` file with the following header to prevent them fro
 ;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
 ```
 
-*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded.)*
+*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of initialization files to ensure all necessary `use-package` variables and functions are loaded.)*
 
-**Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
+**Important:** The examples in this README.md file pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as Lightemacs `init.el` and `early-init.el`, regardless of their location.
 
-The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d. (pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el)
-
+(The Lightemacs project builds upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, allowing it to be configured identically to *minimal-emacs.d* and providing support for the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`.)
+p
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
 The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
@@ -198,13 +198,14 @@ Here are examples of alternative built-in themes:
 (setq lightemacs-default-theme 'tango-dark)
 ```
 
-### Better minibuffer and navigation (lem-consult, lem-embark, and lem-vertico, lem-marginalia)
+### Better minibuffer and navigation (lem-consult, lem-embark, and lem-vertico, lem-marginalia, lem-orderless)
 
 Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion and navigation capabilities:
 - **lem-vertico** configures [Vertico](https://github.com/minad/vertico), a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
 - **lem-consult** configures [Consult](https://github.com/minad/consult), a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. *(Try `M-x consult-rg` to search your project using ripgrep, or `M-x consult-fd` to quickly locate files in your workspace.)* This module configures: consult, consult-xref, and consult-imenu.
 - **lem-embark** configures [Embark](https://github.com/oantolin/embark), a tool that provides context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
 - **lem-marginalia** configures [Marginalia](https://github.com/minad/marginalia), a package that enriches minibuffer completions with contextual annotations. It Enhances Vertico by adding rich annotations to completion candidates, such as file sizes, documentation, or metadata.
+- **lem-orderless**: Enable flexible, unordered matching (Orderless) for Vertico. This allows you to type multiple parts of a candidate in any order, making it easier to find functions, variables, or files even if you only remember fragments. It speeds up navigation by removing the need to type exact prefixes. For example, typing "main test" matches "test_main.py", "read me" matches "README.md".
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
@@ -459,7 +460,7 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 ;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
 ;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
 ;; Elisp, Lua, and many others. treesit-auto
-(add-to-list 'lightemacs-modules 'treesit-auto)
+(add-to-list 'lightemacs-modules 'lem-treesit-auto)
 ```
 
 ### Disabled by default: group-evil (Vim Keybindings)
@@ -469,13 +470,13 @@ By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 To enable it, add the following to the `~/.emacs.d/config.el` file:
 ```elisp
 ;; Enable Vim key bindings
-(add-to-list 'lightemacs-modules 'group-evil)
+(add-to-list 'lightemacs-modules 'lem-group-evil)
 ```
 
 Here are a few interesting features that Lightemacs provides:
 - Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
 
-The `group-evil` group of modules includes:
+The `lem-group-evil` group of modules includes:
 - **lem-evil**: Vim keybindings (evil and evil-collection).
 - **lem-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **lem-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
