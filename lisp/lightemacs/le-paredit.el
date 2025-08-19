@@ -22,11 +22,11 @@
 ;;; Code:
 
 (defvar lightemacs-paredit-hook-list '(emacs-lisp-mode-hook
-                                       scheme-mode-hook
                                        lisp-interaction-mode-hook
-                                       ielm-mode-hook
                                        lisp-mode-hook
                                        eval-expression-minibuffer-setup-hook
+                                       scheme-mode-hook
+                                       ielm-mode-hook
                                        cider-repl-mode-hook
                                        clojure-mode-hook
                                        geiser-repl-mode-hook
