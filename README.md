@@ -234,7 +234,7 @@ The main benefit of *prescient.el* is that it adaptively orders candidates based
 * **le-dired**: Configures Dired to display directories first.
 * **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
 
-By default the **le-dired-filter** module, only enables `dired-filter-by-omit`:
+The **le-dired-filter** module only enables `dired-filter-by-omit`:
 
 ```elisp
 ;; By default, `dired-filter-by-omit' excludes "."
@@ -361,7 +361,7 @@ Apheleia solves both problems across all languages, replacing language-specific 
 
 To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
 
-By default, the *apheleia* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
+The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
 
 Here is an example you could place in `~/.emacs.d/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
 ```elisp
@@ -418,7 +418,7 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 
 The **le-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
 
-By default, the *dtrt-indent* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
+The *dtrt-indent* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
 
 To use it, you have multiple options: you can activate `dtrt-indent-global-mode` to automatically detect and adjust the indentation offset in all buffers; alternatively, you can enable `dtrt-indent-mode` (local mode) to restrict the behavior to the current buffer; or you can invoke the function `dtrt-indent-adapt` directly whenever you need to adjust the indentation settings for a specific file or buffer.
 
@@ -466,10 +466,15 @@ To prevent `dtrt-indent` from displaying a message each time it adjusts the inde
 
 ### Enhanced Emacs Lisp (Elisp) Editing Experience (le-group-emacs-lisp)
 
+The *le-group-emacs-lisp* group enhances Emacs Lisp (Elisp) editing.
+
+The packages configured by *le-group-emacs-lisp* are loaded in a deferred manner and remain inactive until an Emacs Lisp file is opened, thereby reducing startup time and conserving system resources.
+
 The **le-group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
-- **le-highlight-defined**: Enables `highlight-defined-mode`, a minor mode that highlights defined Emacs Lisp symbols.
-- **le-aggressive-indent**: Enables `aggressive-indent-mode`, a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
-- **le-page-break-lines**: Enables `page-break-lines-mode`, a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text.
+- **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols.
+- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
+- **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text.
+- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`.
 
 ## Modules Disabled by Default
 

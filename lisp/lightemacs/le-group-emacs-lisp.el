@@ -14,6 +14,7 @@
 ;;   - Maintain consistent indentation of Elisp code during editing.
 ;;   - Visually replace ASCII form-feed characters (typically `^L`) with
 ;;     horizontal lines to make page breaks easier to see.
+;;   - Advanced code search for Emacs Lisp.
 
 ;;; Code:
 
@@ -38,7 +39,18 @@
                            ;; `electric-indent-mode'. To enable it for Elisp
                            ;; files, add the following to the
                            ;; ~/.emacs.d/config.el file:
-                           le-aggressive-indent))
+                           le-aggressive-indent
+
+                           ;; elisp-refs provides an advanced code search for
+                           ;; Emacs Lisp.
+                           ;;
+                           ;; It locates references to functions, macros, or
+                           ;; variables by parsing the code rather than
+                           ;; performing a simple text search. This ensures
+                           ;; accuracy, avoiding false matches caused by
+                           ;; comments or variables sharing names with
+                           ;; functions.
+                           le-elisp-refs))
 
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
 (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)

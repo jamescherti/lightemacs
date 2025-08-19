@@ -17,6 +17,8 @@
 ;; `aggressive-indent-mode' is a minor mode that ensures code remains
 ;; consistently indented. It automatically reindents after every modification,
 ;; providing greater reliability than `electric-indent-mode'.
+;;
+;; URL: https://github.com/Malabarba/aggressive-indent-mode
 
 ;;; Code:
 
