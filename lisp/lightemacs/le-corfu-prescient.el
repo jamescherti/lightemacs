@@ -36,7 +36,7 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
-;;; Evil
+(require 'le-prescient)
 
 (use-package corfu-prescient
   :commands corfu-prescient-mode

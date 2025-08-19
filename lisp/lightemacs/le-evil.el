@@ -20,8 +20,6 @@
 
 (require 'lightemacs)
 
-;;; Evil
-
 ;; This has to be defined before evil
 (setq evil-want-integration t)
 (setq evil-want-keybinding nil)

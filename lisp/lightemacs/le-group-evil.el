@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-;;; Evil
-
 (require 'lightemacs)
 
 (lightemacs-load-modules '(;; Evil keybindings

@@ -27,8 +27,6 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
-;;; Evil
-
 (use-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)

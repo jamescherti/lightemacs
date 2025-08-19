@@ -18,6 +18,7 @@
 ;;; Code:
 
 (use-package corfu
+  :after corfu
   :commands (global-corfu-mode
              corfu-mode)
 

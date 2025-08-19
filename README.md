@@ -1,7 +1,6 @@
-# Lightemacs - Fast and Lightweight Emacs framework
+# Lightemacs - Fast and Lightweight Emacs Framework
 
-
-The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which enhance Emacs by improving completion, navigation, editing efficiency, and overall usability.
+The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which enhance Emacs by improving completion, navigation, editing efficiency, and overall usability. It offers a minimalist alternative to frameworks like Doom Emacs or Spacemacs, allowing full customization to adapt the environment to your specific workflow.
 
 Lightemacs provides a range of modules that can be selectively enabled or disabled according to your preferences, with all modules ensuring packages are loaded only when needed, **enabling exceptionally fast, deferred startup**.
 
@@ -43,7 +42,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
-- [Lightemacs - Fast and Lightweight Emacs framework](#lightemacs---fast-and-lightweight-emacs-framework)
+- [Lightemacs - Fast and Lightweight Emacs Framework](#lightemacs---fast-and-lightweight-emacs-framework)
   - [Requirements](#requirements)
   - [Install Lightemacs](#install-lightemacs)
     - [Install Lightemacs into ~/.emacs.d](#install-lightemacs-into-emacsd)

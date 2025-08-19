@@ -35,9 +35,8 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
-;;; Evil
-
 (use-package vertico-prescient
+  :after vertico
   :commands vertico-prescient-mode
   :hook
   (vertico-mode . vertico-prescient-mode)

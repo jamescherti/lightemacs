@@ -17,8 +17,6 @@
 
 ;;; Code:
 
-;;; Evil
-
 (require 'lightemacs)
 
 (lightemacs-load-modules '(;; Enable `highlight-defined-mode', a minor mode
