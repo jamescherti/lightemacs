@@ -1,4 +1,4 @@
-;;; le-evil-snipe.el --- le-evil-snipe -*- lexical-binding: t -*-
+;;; le-evil-snipe.el --- le-evil-snipe -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

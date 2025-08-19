@@ -1,4 +1,4 @@
-;;; le-autorevert.el --- le-autorevert -*- lexical-binding: t -*-
+;;; le-autorevert.el --- le-autorevert -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

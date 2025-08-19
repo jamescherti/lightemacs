@@ -1,4 +1,4 @@
-;;; le-vertico.el --- le-vertico -*- lexical-binding: t -*-
+;;; le-vertico.el --- le-vertico -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

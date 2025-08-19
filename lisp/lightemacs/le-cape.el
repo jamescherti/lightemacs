@@ -1,4 +1,4 @@
-;;; le-cape.el --- le-cape -*- lexical-binding: t -*-
+;;; le-cape.el --- le-cape -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

@@ -1,4 +1,4 @@
-;;; le-helpful.el --- le-helpful -*- lexical-binding: t -*-
+;;; le-helpful.el --- le-helpful -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

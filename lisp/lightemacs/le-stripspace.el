@@ -1,4 +1,4 @@
-;;; le-stripspace.el --- le-stripspace -*- lexical-binding: t -*-
+;;; le-stripspace.el --- le-stripspace -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

@@ -1,4 +1,4 @@
-;;; le-evil-surround.el --- le-evil-surround -*- lexical-binding: t -*-
+;;; le-evil-surround.el --- le-evil-surround -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

@@ -1,4 +1,4 @@
-;;; le-page-break-lines.el --- le-page-break-lines -*- lexical-binding: t -*-
+;;; le-page-break-lines.el --- le-page-break-lines -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

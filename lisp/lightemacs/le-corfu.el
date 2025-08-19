@@ -1,4 +1,4 @@
-;;; le-corfu.el --- le-corfu -*- lexical-binding: t -*-
+;;; le-corfu.el --- le-corfu -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

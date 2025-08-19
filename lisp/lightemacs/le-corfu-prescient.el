@@ -1,4 +1,4 @@
-;;; le-corfu-prescient.el --- le-corfu-prescient -*- lexical-binding: t -*-
+;;; le-corfu-prescient.el --- le-corfu-prescient -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -35,6 +35,9 @@
 ;; first without sacrificing predictable filtering results.)
 
 ;; URL: https://github.com/radian-software/prescient.el
+
+(require 'le-corfu)
+(require 'le-prescient)
 
 (use-package corfu-prescient
   :commands corfu-prescient-mode

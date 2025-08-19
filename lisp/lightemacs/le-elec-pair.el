@@ -1,4 +1,4 @@
-;;; le-elec-pair.el --- le-elec-pair -*- lexical-binding: t -*-
+;;; le-elec-pair.el --- le-elec-pair -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

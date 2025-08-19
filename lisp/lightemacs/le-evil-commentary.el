@@ -1,4 +1,4 @@
-;;; le-evil-commentary.el --- le-evil-commentary -*- lexical-binding: t -*-
+;;; le-evil-commentary.el --- le-evil-commentary -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

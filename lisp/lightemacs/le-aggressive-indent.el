@@ -1,4 +1,4 @@
-;;; le-aggressive-indent.el --- le-aggressive-indent -*- lexical-binding: t -*-
+;;; le-aggressive-indent.el --- le-aggressive-indent -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

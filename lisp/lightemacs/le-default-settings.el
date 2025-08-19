@@ -1,4 +1,4 @@
-;;; le-default-settings.el --- le-default-settings -*- lexical-binding: t -*-
+;;; le-default-settings.el --- le-default-settings -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

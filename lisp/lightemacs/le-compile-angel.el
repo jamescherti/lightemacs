@@ -1,4 +1,4 @@
-;;; le-compile-angel.el --- le-compile-angel -*- lexical-binding: t -*-
+;;; le-compile-angel.el --- le-compile-angel -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

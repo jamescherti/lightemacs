@@ -1,4 +1,4 @@
-;;; le-expand-region.el --- le-expand-region -*- lexical-binding: t -*-
+;;; le-expand-region.el --- le-expand-region -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

@@ -1,4 +1,4 @@
-;;; le-dired.el --- le-dired -*- lexical-binding: t -*-
+;;; le-dired.el --- le-dired -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

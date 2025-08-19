@@ -1,4 +1,4 @@
-;;; le-vertico-prescient.el --- le-vertico-prescient -*- lexical-binding: t -*-
+;;; le-vertico-prescient.el --- le-vertico-prescient -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -34,6 +34,9 @@
 ;; first without sacrificing predictable filtering results.)
 
 ;; URL: https://github.com/radian-software/prescient.el
+
+(require 'le-vertico)
+(require 'le-prescient)
 
 (use-package vertico-prescient
   :after vertico

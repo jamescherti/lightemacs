@@ -1,4 +1,4 @@
-;;; le-yasnippet-snippets.el --- le-yasnippet-snippets -*- lexical-binding: t -*-
+;;; le-yasnippet-snippets.el --- le-yasnippet-snippets -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

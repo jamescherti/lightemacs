@@ -1,4 +1,4 @@
-;;; le-org.el --- le-org -*- lexical-binding: t -*-
+;;; le-org.el --- le-org -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

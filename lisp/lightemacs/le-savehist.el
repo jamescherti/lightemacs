@@ -1,4 +1,4 @@
-;;; le-savehist.el --- le-savehist -*- lexical-binding: t -*-
+;;; le-savehist.el --- le-savehist -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

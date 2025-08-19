@@ -1,4 +1,4 @@
-;;; le-elisp-refs.el --- le-elisp-refs -*- lexical-binding: t -*-
+;;; le-elisp-refs.el --- le-elisp-refs -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

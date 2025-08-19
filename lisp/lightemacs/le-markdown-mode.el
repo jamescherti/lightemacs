@@ -1,4 +1,4 @@
-;;; le-markdown-mode.el --- le-markdown-mode -*- lexical-binding: t -*-
+;;; le-markdown-mode.el --- le-markdown-mode -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

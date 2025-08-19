@@ -1,4 +1,4 @@
-;;; le-default-theme.el --- Module: tomorrow-night-deepblue-theme -*- lexical-binding: t -*-
+;;; le-default-theme.el --- Module: tomorrow-night-deepblue-theme -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

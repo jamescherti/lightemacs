@@ -1,4 +1,4 @@
-;;; le-persist-text-scale.el --- le-persist-text-scale -*- lexical-binding: t -*-
+;;; le-persist-text-scale.el --- le-persist-text-scale -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

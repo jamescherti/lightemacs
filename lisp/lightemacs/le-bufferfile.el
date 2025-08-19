@@ -1,4 +1,4 @@
-;;; le-bufferfile.el --- le-bufferfile -*- lexical-binding: t -*-
+;;; le-bufferfile.el --- le-bufferfile -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

@@ -1,4 +1,4 @@
-;;; le-easy-escape.el --- le-easy-escape -*- lexical-binding: t -*-
+;;; le-easy-escape.el --- le-easy-escape -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

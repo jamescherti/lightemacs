@@ -1,4 +1,4 @@
-;;; le-org-appear.el --- le-org-appear -*- lexical-binding: t -*-
+;;; le-org-appear.el --- le-org-appear -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

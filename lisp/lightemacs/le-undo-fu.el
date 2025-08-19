@@ -1,4 +1,4 @@
-;;; le-undo-fu.el --- le-undo-fu -*- lexical-binding: t -*-
+;;; le-undo-fu.el --- le-undo-fu -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

@@ -1,4 +1,4 @@
-;;; le-goto-chg.el --- le-goto-chg -*- lexical-binding: t -*-
+;;; le-goto-chg.el --- le-goto-chg -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

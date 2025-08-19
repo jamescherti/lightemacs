@@ -1,4 +1,4 @@
-;;; le-evil.el --- le-evil -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-evil.el --- le-evil -*- no-byte-compile: t; no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

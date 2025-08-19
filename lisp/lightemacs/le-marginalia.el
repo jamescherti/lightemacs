@@ -1,4 +1,4 @@
-;;; le-marginalia.el --- le-marginalia -*- lexical-binding: t -*-
+;;; le-marginalia.el --- le-marginalia -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
