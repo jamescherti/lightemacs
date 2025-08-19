@@ -27,6 +27,8 @@
 
 ;;; Code:
 
+;; Variables
+
 (defvar lightemacs-theme-name 'doom-one
   "Default theme to load during initialization, if available.
 Set to nil to disable loading a theme at startup.")
@@ -34,6 +36,8 @@ Set to nil to disable loading a theme at startup.")
 (defvar lightemacs-theme-package 'doom-themes
   "Theme package to install and use for `lightemacs-theme-name'.
 Set to nil to disable installing this package at startup.")
+
+;;; Functions
 
 (defun lightemacs-load-default-theme ()
   "Load the theme defined in `lightemacs-theme-name' if it is installed."
@@ -48,10 +52,12 @@ Set to nil to disable installing this package at startup.")
     (eval `(use-package ,lightemacs-theme-package
              :demand t))))
 
-;; Install
+;;; Main
+
+;; Install theme
 (lightemacs-theme-install)
 
-;; Load
+;; Load theme
 (when lightemacs-theme-name
   (lightemacs-load-default-theme))
 

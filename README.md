@@ -165,7 +165,7 @@ Always begin your `config.el` file with the following header to prevent them fro
 **Important:** The examples in this README.md file pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as Lightemacs `init.el` and `early-init.el`, regardless of their location.
 
 (The Lightemacs project builds upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, allowing it to be configured identically to *minimal-emacs.d* and providing support for the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`.)
-p
+
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
 The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
