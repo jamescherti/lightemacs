@@ -30,7 +30,7 @@
                            ;; Modules enabled by default
                            ;; --------------------------
                            ;; This loaded the default theme specified
-                           ;; in the `lightemacs-theme' variable.
+                           ;; in the `lightemacs-theme-name' variable.
                            ;;
                            ;; The default theme tomorrow-night-deepblue is a
                            ;; beautiful deep blue variant of the Tomorrow

@@ -32,10 +32,6 @@ Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
-(defvar lightemacs-theme 'tomorrow-night-deepblue
-  "Name of the default theme to load, if available.
-Set this to nil to disable early theme loading.")
-
 (defcustom lightemacs-verbose nil
   "Enable displaying messages.
 When set to non-nil, this option will cause messages to be shown during the
@@ -102,13 +98,6 @@ instead of wrapping around.")
            (t
             (error "Invalid method for lightemacs--load-module-method %s"
                    lightemacs--load-module-method))))))))
-
-(defun lightemacs-load-default-theme ()
-  "Load the theme defined in `lightemacs-theme' if it is installed."
-  (when (and lightemacs-theme
-             (member lightemacs-theme (custom-available-themes)))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme lightemacs-theme t)))
 
 (defmacro lightemacs-verbose-message (&rest args)
   "Display a verbose message with the same ARGS arguments as `message'."

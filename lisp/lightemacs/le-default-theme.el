@@ -27,18 +27,33 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(defvar lightemacs-theme-name 'doom-one
+  "Default theme to load during initialization, if available.
+Set to nil to disable loading a theme at startup.")
 
-(cond
- ((eq lightemacs-theme 'tomorrow-night-deepblue)
-  (use-package tomorrow-night-deepblue-theme
-    :demand t
-    :config
-    (lightemacs-load-default-theme)))
+(defvar lightemacs-theme-package 'doom-themes
+  "Theme package to install and use for `lightemacs-theme-name'.
+Set to nil to disable installing this package at startup.")
 
- (t
-  (when lightemacs-theme
-    (lightemacs-load-default-theme))))
+(defun lightemacs-load-default-theme ()
+  "Load the theme defined in `lightemacs-theme-name' if it is installed."
+  (when (and lightemacs-theme-name
+             (member lightemacs-theme-name (custom-available-themes)))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme lightemacs-theme-name t)))
+
+(defun lightemacs-theme-install ()
+  "Install and configure `lightemacs-theme-package' using `use-package'."
+  (when lightemacs-theme-package
+    (eval `(use-package ,lightemacs-theme-package
+             :demand t))))
+
+;; Install
+(lightemacs-theme-install)
+
+;; Load
+(when lightemacs-theme-name
+  (lightemacs-load-default-theme))
 
 (provide 'le-default-theme)
 
