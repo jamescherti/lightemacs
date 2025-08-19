@@ -25,9 +25,9 @@
 (use-package evil-snipe
   :commands evil-snipe-mode
   :diminish evil-snipe-local-mode
-  ;; TODO: on first input
-  :hook (evil-mode . evil-snipe-mode)
   :init
+  ;; TODO: on first input
+  (add-hook 'evil-mode-hook #'evil-snipe-mode)
   ;; Enable smart case sensitivity: uppercase searches are case-sensitive,
   ;; lowercase are case-insensitive
   (setq evil-snipe-smart-case t)

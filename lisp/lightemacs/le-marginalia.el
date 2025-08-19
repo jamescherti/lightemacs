@@ -21,10 +21,8 @@
   :bind (:map minibuffer-local-map
               ("M-A" . marginalia-cycle))
 
-  :hook
-  (lightemacs-on-first-input . marginalia-mode)
-
   :init
+  (add-hook 'lightemacs-on-first-input-hook #'marginalia-mode)
   (setq marginalia-max-relative-age 0)
   (setq marginalia-align 'right))
 

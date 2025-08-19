@@ -30,10 +30,9 @@
 (use-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)
-  :hook
-  (after-init . prescient-persist-mode)
 
   :init
+  (add-hook 'after-init-hook #'prescient-persist-mode)
   (setq prescient-save-file (expand-file-name "prescient-save.el"
                                               user-emacs-directory))
 

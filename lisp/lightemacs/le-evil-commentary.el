@@ -16,7 +16,8 @@
 (use-package evil-commentary
   :commands evil-commentary-mode
   :diminish evil-commentary-mode
-  :hook (evil-mode . evil-commentary-mode))
+  :init
+  (add-hook 'evil-mode-hook #'evil-commentary-mode))
 
 (provide 'le-evil-commentary)
 

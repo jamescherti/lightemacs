@@ -36,14 +36,12 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
-(require 'le-prescient)
-
 (use-package corfu-prescient
   :commands corfu-prescient-mode
-  :hook
-  (corfu-mode . corfu-prescient-mode)
 
   :init
+  (add-hook 'corfu-mode-hook #'corfu-prescient-mode)
+
   (setq corfu-prescient-enable-sorting t)
 
   ;; Do not override `display-sort-function'

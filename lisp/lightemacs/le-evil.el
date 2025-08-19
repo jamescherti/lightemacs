@@ -25,9 +25,11 @@
 (setq evil-want-keybinding nil)
 
 (use-package evil
-  :hook (after-init . evil-mode)
+  :commands evil-mode
   :functions define-key
   :init
+  (add-hook 'after-init-hook #'evil-mode)
+
   (setq evil-search-wrap lightemacs-cycle)
 
   ;; Use evil-search instead of isearch

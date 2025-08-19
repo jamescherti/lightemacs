@@ -19,8 +19,8 @@
 (use-package savehist
   :ensure nil
   :commands savehist-mode
-  :hook
-  (after-init . savehist-mode))
+  :init
+  (add-hook 'after-init-hook #'savehist-mode))
 
 (provide 'le-savehist)
 

@@ -127,11 +127,10 @@
          ;; orig. previous-matching-history-element
          ("M-r" . consult-history))
 
-  :hook
-  ;; Enable automatic preview at point in the *Completions* buffer.
-  (completion-list-mode . consult-preview-at-point-mode)
-
   :init
+  ;; Enable automatic preview at point in the *Completions* buffer.
+  (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
+
   (with-eval-after-load 'embark
     (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 

@@ -18,8 +18,8 @@
   :commands (electric-pair-mode
              electric-pair-local-mode
              electric-pair-delete-pair)
-  :hook
-  (lightemacs-on-first-buffer . electric-pair-mode))
+  :init
+  (add-hook 'lightemacs-on-first-buffer-hook #'electric-pair-mode))
 
 ;;; Provide
 (provide 'le-elec-pair)

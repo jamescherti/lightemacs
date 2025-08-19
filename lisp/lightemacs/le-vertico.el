@@ -28,15 +28,14 @@
               ("C-j" . vertico-next)
               ("C-k" . vertico-previous))
 
-  :hook
-  (lightemacs-on-first-input . vertico-mode)
-
   :init
   (setq vertico-scroll-margin 0)
   (setq vertico-count 16)
   (setq vertico-resize 'grow-only)
   (setq vertico-cycle lightemacs-cycle)
   (setq vertico-count-format nil) ; No prefix with number of entries
+
+  (add-hook 'lightemacs-on-first-input-hook #'vertico-mode)
 
   :config
   ;; Prefix current candidate with arrow

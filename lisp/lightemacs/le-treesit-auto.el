@@ -24,11 +24,11 @@
 ;;; Code:
 
 (use-package treesit-auto
-  :hook
-  (after-init . global-treesit-auto-mode)
+  :commands global-treesit-auto-mode
   :functions treesit-auto-add-to-auto-mode-alist
   :init
   (setq treesit-auto-install 'prompt)
+  (add-hook 'after-init-hook 'global-treesit-auto-mode)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all))
 

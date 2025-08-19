@@ -20,7 +20,8 @@
 
 (use-package undo-fu-session
   :commands undo-fu-session-global-mode
-  :hook (after-init . undo-fu-session-global-mode))
+  :init
+  (add-hook 'after-init-hook #'undo-fu-session-global-mode))
 
 (provide 'le-undo-fu-session)
 

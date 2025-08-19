@@ -29,10 +29,8 @@
              yas-expand-snippet)
   :functions yas-filtered-definition
 
-  :hook
-  (after-init . yas-global-mode)
-
   :init
+  (add-hook 'after-init-hook #'yas-global-mode)
   (setq yas-verbosity 0)
   (setq yas-indent-line 'fixed)
   (setq yas-triggers-in-field nil)  ; Snippet inside of snippets

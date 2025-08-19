@@ -189,7 +189,8 @@
                            ;; prescient.el is a library for sorting and
                            ;; filtering lists of candidates, such as those
                            ;; presented by packages like Vertico or Corfu.
-                           ;;
+                           le-prescient
+
                            ;; When used with Vertico, prescient.el enhances
                            ;; minibuffer completion by dynamically reordering
                            ;; candidates based on frequency and recency,
@@ -198,10 +199,6 @@
                            ;; filtering.
                            le-vertico-prescient
 
-                           ;; prescient.el is a library for sorting and
-                           ;; filtering lists of candidates, such as those
-                           ;; presented by packages like Vertico or Corfu.
-                           ;;
                            ;; When used with Corfu, prescient.el improves both
                            ;; in-buffer completions and pop-up completion
                            ;; menus by making candidate ordering more

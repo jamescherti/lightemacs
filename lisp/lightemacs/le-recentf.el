@@ -28,8 +28,6 @@
   :commands (recentf-mode
              recentf-cleanup)
   :functions (recentf-expand-file-name)
-  :hook
-  (lightemacs-on-first-buffer . le-recentf--setup)
 
   :preface
   (defun le-recentf--setup ()
@@ -45,6 +43,8 @@
       (recentf-cleanup)))
 
   :init
+  (add-hook 'lightemacs-on-first-buffer-hook #'le-recentf--setup)
+
   (setq recentf-auto-cleanup (if (daemonp) 300 'never))
   (setq recentf-max-menu-items 10)
   (setq recentf-max-saved-items 750)

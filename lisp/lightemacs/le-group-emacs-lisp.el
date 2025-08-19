@@ -50,9 +50,19 @@
                            ;; accuracy, avoiding false matches caused by
                            ;; comments or variables sharing names with
                            ;; functions.
-                           le-elisp-refs))
+                           le-elisp-refs
 
-(add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
+                           ;; `easy-escape-minor-mode' improves the readability
+                           ;; of Emacs Lisp regular expressions through syntax
+                           ;; highlighting and character composition.
+                           ;; Specifically, it hides double backslashes before
+                           ;; regexp special characters '()|', renders other
+                           ;; doubled backslashes as single ones, and highlights
+                           ;; them with a distinct face. These transformations
+                           ;; affect only the visual presentation; the
+                           ;; underlying buffer text remains unchanged.
+                           le-easy-escape))
+
 (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
 (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
 

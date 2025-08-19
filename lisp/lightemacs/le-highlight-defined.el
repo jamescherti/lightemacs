@@ -17,7 +17,9 @@
 ;;; Code:
 
 (use-package highlight-defined
-  :commands highlight-defined-mode)
+  :commands highlight-defined-mode
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'highlight-defined-mode))
 
 (provide 'le-highlight-defined)
 

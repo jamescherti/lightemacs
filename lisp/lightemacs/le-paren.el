@@ -19,9 +19,8 @@
   :ensure nil
   :commands (show-paren-mode
              show-paren-local-mode)
-  :hook
-  (lightemacs-on-first-buffer . show-paren-mode)
   :init
+  (add-hook 'lightemacs-on-first-buffer-hook #'show-paren-mode)
   (setq show-paren-delay 0.08))
 
 ;;; Provide

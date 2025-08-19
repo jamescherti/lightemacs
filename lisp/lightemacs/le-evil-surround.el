@@ -23,7 +23,8 @@
              evil-surround-edit
              evil-surround-region
              global-evil-surround-mode)
-  :hook (evil-mode . global-evil-surround-mode))
+  :init
+  (add-hook 'evil-mode-hook #'global-evil-surround-mode))
 
 (provide 'le-evil-surround)
 

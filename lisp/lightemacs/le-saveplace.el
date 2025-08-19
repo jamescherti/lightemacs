@@ -19,12 +19,9 @@
   :ensure nil
   :commands save-place-mode
 
-  :hook
-  (after-init . save-place-mode)
-  (lightemacs-on-first-file . save-place-mode)
-
   :init
-  (setq save-place-limit 500))
+  (setq save-place-limit 500)
+  (add-hook 'lightemacs-on-first-file-hook #'save-place-mode))
 
 (provide 'le-saveplace)
 

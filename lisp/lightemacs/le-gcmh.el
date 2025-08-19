@@ -25,8 +25,8 @@
 (use-package gcmh
   :commands gcmh-mode
   :diminish gcmh-mode
-  :hook (lightemacs-on-first-buffer . gcmh-mode)
   :init
+  (add-hook 'lightemacs-on-first-buffer-hook #'gcmh-mode)
   (setq gcmh-verbose init-file-debug
         gcmh-auto-idle-delay-factor 10
         gcmh-high-cons-threshold (* 128 1024 1024))

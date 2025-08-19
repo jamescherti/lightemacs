@@ -22,8 +22,8 @@
 ;;; Code:
 
 (use-package embark-consult
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+  :init
+  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 
 ;;; Provide
 (provide 'le-embark-consult)

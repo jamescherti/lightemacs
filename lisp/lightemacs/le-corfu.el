@@ -22,10 +22,9 @@
   :commands (global-corfu-mode
              corfu-mode)
 
-  :hook
-  (lightemacs-on-first-input . global-corfu-mode)
-
   :init
+  (add-hook 'lightemacs-on-first-input-hook #'global-corfu-mode)
+
   (setq tab-always-indent 'complete)
 
   (setq corfu-auto nil)

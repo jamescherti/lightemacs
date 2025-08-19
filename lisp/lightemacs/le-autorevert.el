@@ -22,10 +22,8 @@
              global-auto-revert-mode
              auto-revert-handler)
 
-  :hook
-  (lightemacs-on-first-file . global-auto-revert-mode)
-
   :init
+  (add-hook 'lightemacs-on-first-file-hook #'global-auto-revert-mode)
   (setq auto-revert-interval 4)
   (setq auto-revert-use-notify t))
 

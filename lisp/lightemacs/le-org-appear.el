@@ -15,7 +15,8 @@
 
 (use-package org-appear
   :commands org-appear-mode
-  :hook (org-mode . org-appear-mode))
+  :init
+  (add-hook 'org-mode-hook #'org-appear-mode))
 
 (provide 'le-org-appear)
 

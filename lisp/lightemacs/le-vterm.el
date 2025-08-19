@@ -29,9 +29,6 @@
   :functions (vterm--self-insert
               vterm-send-key)
 
-  :hook
-  (vterm-mode . le-vterm--setup)
-
   :preface
   (when noninteractive
     ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
@@ -41,6 +38,8 @@
     (provide 'vterm-module))
 
   :init
+  (add-hook 'vterm-mode-hook #'le-vterm--setup)
+
   (defun le-vterm--setup ()
     ;; Hide the mode-line
     (setq mode-line-format nil)
