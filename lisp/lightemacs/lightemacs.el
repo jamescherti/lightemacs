@@ -64,7 +64,7 @@ instead of wrapping around.")
 ;;
 ;; (require/load-any couldn't find some files when those files are already
 ;; compiled.)
-(defvar lightemacs--load-module-method 'require)
+(defvar lightemacs--load-module-method 'require-file)
 
 (defun lightemacs-load-modules (modules)
   "Load all modules listed in MODULES."
