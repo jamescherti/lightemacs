@@ -116,39 +116,6 @@ instead of wrapping around.")
      (when lightemacs-verbose
        (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
 
-;;; Functions: lightemacs-use-package
-
-(defvar lightemacs--use-package-refreshed nil
-  "Whether package contents have been refreshed for `lightemacs-use-package'.")
-
-(defun lightemacs--use-package-ensure-refresh (name)
-  "Refresh package NAME contents once before installing a missing package."
-  (when (and (not lightemacs--use-package-refreshed)
-             (not (package-installed-p name)))
-    (lightemacs-verbose-message "Refresh package contents before installing %s"
-                                name)
-    (package-refresh-contents)
-    (setq lightemacs--use-package-refreshed t)))
-
-(defun lightemacs--before-use-package (name args)
-  "Run this function before `lightemacs-use-package' if :ensure is non-nil.
-NAME is the symbol identifying the package, and ARGS is the plist of keywords
-passed to `lightemacs-use-package'."
-  (let ((ensure (if (memq :ensure args)
-                    (plist-get args :ensure)
-                  t)))
-    (when ensure
-      (lightemacs--use-package-ensure-refresh name))))
-
-(defmacro lightemacs-use-package (name &rest args)
-  "Wrap `use-package' to provide additional features.
-NAME is the symbol identifying the package, and ARGS is the plist of keywords
-passed to `lightemacs-use-package'."
-  (declare (indent defun))
-  `(progn
-     (lightemacs--before-use-package ',name ',args)
-     (use-package ,name ,@args)))
-
 ;;; Useful macros
 
 (defun lightemacs-recenter-maybe (&optional arg)
