@@ -472,7 +472,6 @@ The packages configured by *le-group-emacs-lisp* are loaded in a deferred manner
 
 The **le-group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
 - **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols.
-- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`.
 
 ## Modules Disabled by Default
 
@@ -528,6 +527,12 @@ Before installing emacs-libvterm, you need to make sure you have installed
  3. libtool-bin (related issues: [#66](https://github.com/akermu/emacs-libvterm/issues/66) [#85](https://github.com/akermu/emacs-libvterm/issues/85#issuecomment-491845136))
  4. OPTIONAL: [libvterm](https://github.com/Sbozzolo/libvterm-mirror.git) (>= 0.2). This library can be found in the official repositories of most distributions (e.g., Arch, Debian, Fedora, Gentoo, openSUSE, Ubuntu). Typical names are `libvterm` (Arch, Fedora, Gentoo, openSUSE), or `libvterm-dev` (Debian, Ubuntu). If not available, `libvterm` will be downloaded during the compilation process. Some distributions (e.g. Ubuntu < 20.04, Debian < 11) have versions of `libvterm` that are too old. If you find compilation errors related to `VTERM_COLOR`, you should not use your system libvterm. See [FAQ](#frequently-asked-questions-and-problems) for more details.
 
+To enable **le-vterm**, add the following to `~/.emacs.d/config.el`:
+```elisp
+;; Enable the `le-vterm' module
+(add-to-list 'lightemacs-modules 'le-vterm)
+```
+
 ### Disabled by default: Indentation bars (le-indent-bars)
 
 The **le-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.)
@@ -539,6 +544,9 @@ It supports both space and tab-based indentation and offers optional tree-sitter
 It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
 
 ```elisp
+;; Enable the `le-indent-bars' module
+(add-to-list 'lightemacs-modules 'le-indent-bars)
+
 ;; Enable indent-bars-mode automatically for Python files
 (add-hook 'python-ts-mode-hook #'indent-bars-mode)
 (add-hook 'python-mode-hook #'indent-bars-mode)
@@ -553,16 +561,46 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 ### Other modules disabled by default
 
 Here are a few other modules disabled by default:
-- **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals.
-- **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
+- **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-helpful' module
+  (add-to-list 'lightemacs-modules 'le-helpful)
+  ```
+
+- **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-compile-angel' module by pushing it above other modules
+  (add-to-list 'lightemacs-modules 'le-compile-angel)
+  ```
 
 Elisp file-type modules are disabled by default:
-- **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors.
-- **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged.
-- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`.
-- **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. After enabling this module, ensure it is loaded for elisp mode by adding the following to ~/.emacs.d/config.el:
+- **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```elisp
+  ;; Enable the `le-paredit' module
+  (add-to-list 'lightemacs-modules 'le-paredit)
+  ```
+- **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-easy-escape' module
+  (add-to-list 'lightemacs-modules 'le-easy-escape)
+  ```
+
+- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-elisp-refs' module
+  (add-to-list 'lightemacs-modules 'le-elisp-refs)
+  ```
+- **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-page-break-lines' module
+  (add-to-list 'lightemacs-modules 'le-page-break-lines)
   (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
+  ```
+- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-aggressive-indent' module
+  (add-to-list 'lightemacs-modules 'le-aggressive-indent)
+  (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
   ```
 
 ## Other Features

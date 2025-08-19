@@ -23,18 +23,7 @@
 (lightemacs-load-modules '(;; Enable `highlight-defined-mode', a minor mode
                            ;; that highlights defined Emacs Lisp symbols in
                            ;; `emacs-lisp-mode' buffers.
-                           le-highlight-defined
-
-                           ;; `aggressive-indent-mode' is a minor mode that
-                           ;; Elisp code remains consistently indented. It
-                           ;; automatically reindents after every modification,
-                           ;; providing greater reliability than
-                           ;; `electric-indent-mode'. To enable it for Elisp
-                           ;; files, add the following to the
-                           ;; ~/.emacs.d/config.el file:
-                           le-aggressive-indent))
-
-(add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
+                           le-highlight-defined))
 
 (provide 'le-group-emacs-lisp)
 
