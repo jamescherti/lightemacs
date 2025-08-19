@@ -20,13 +20,13 @@
 
 ;;; evil-collection
 
-;; This has to be defined before evil-collection
-(setq evil-collection-setup-minibuffer t)
+(require 'le-evil)
 
 (use-package evil-collection
-  :after evil
-  ;; :diminish (evil-collection-unimpaired-mode)
   :if (not noninteractive)
+  :after evil
+  :commands evil-collection-init
+  ;; :diminish (evil-collection-unimpaired-mode)
   :config
   (evil-collection-init))
 

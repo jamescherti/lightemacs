@@ -21,14 +21,35 @@
 
 ;;; Code:
 
+(defvar lightemacs-paredit-hook-list '(emacs-lisp-mode-hook
+                                       scheme-mode-hook
+                                       lisp-interaction-mode-hook
+                                       ielm-mode-hook
+                                       lisp-mode-hook
+                                       eval-expression-minibuffer-setup-hook
+                                       cider-repl-mode-hook
+                                       clojure-mode-hook
+                                       geiser-repl-mode-hook
+                                       racket-mode-hook
+                                       racket-repl-mode-hook
+                                       slime-repl-mode-hook)
+  "The modes where `paredit-mode' is activated.")
+
 (use-package paredit
   :commands paredit-mode
+  ;; :bind (:map paredit-mode-map
+  ;;             ("RET" . nil)
+  ;;             ("M-s" . nil))
+
   :init
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (dolist (hook lightemacs-paredit-hook-list)
+    (add-hook hook #'paredit-mode))
+
   :config
-  (define-key paredit-mode-map (kbd "M-s") nil)  ; Conflict with Consult
-  ;; (define-key paredit-mode-map (kbd "RET") nil)
-  )
+  (unbind-key "M-?" paredit-mode-map)  ; Conflict with xref-find-references
+  (unbind-key "M-;" paredit-mode-map)  ; Conflict with comment-dwim
+  (unbind-key "M-s" paredit-mode-map)  ; Conflict with Consult
+  (unbind-key "RET" paredit-mode-map))
 
 (provide 'le-paredit)
 

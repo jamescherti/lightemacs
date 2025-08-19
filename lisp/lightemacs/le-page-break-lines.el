@@ -22,9 +22,15 @@
 
 ;;; Code:
 
+(defvar lightemacs-page-break-lines-hook-list '(emacs-lisp-mode-hook)
+  "The modes where `page-break-lines-mode' is activated.")
+
 (use-package page-break-lines
   :commands (page-break-lines-mode
-             global-page-break-lines-mode))
+             global-page-break-lines-mode)
+  :init
+  (dolist (hook lightemacs-page-break-lines-hook-list)
+    (add-hook hook #'page-break-lines-mode)))
 
 (provide 'le-page-break-lines)
 

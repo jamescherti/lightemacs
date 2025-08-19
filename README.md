@@ -579,28 +579,29 @@ Elisp file-type modules are disabled by default:
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-paredit)
   ```
+  (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`. The list of hooks that activate this mode can be customized by modifying `lightemacs-paredit-hook-list`.)
 - **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```elisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'le-easy-escape)
   ```
-
-- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
-  ;; Enable the `le-elisp-refs' module
-  (add-to-list 'lightemacs-modules 'le-elisp-refs)
-  ```
+  (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-easyescape-hook-list`.)
 - **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```elisp
   ;; Enable the `le-page-break-lines' module
   (add-to-list 'lightemacs-modules 'le-page-break-lines)
-  (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
   ```
+  (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-page-break-lines-hook-list`.)
 - **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/config.el`:
   ```elisp
   ;; Enable the `le-aggressive-indent' module
   (add-to-list 'lightemacs-modules 'le-aggressive-indent)
-  (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
+  ```
+  (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-aggressive-indent-hook-list`.)
+- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-elisp-refs' module
+  (add-to-list 'lightemacs-modules 'le-elisp-refs)
   ```
 
 ## Other Features

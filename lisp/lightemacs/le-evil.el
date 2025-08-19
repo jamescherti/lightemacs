@@ -20,14 +20,15 @@
 
 (require 'lightemacs)
 
-;; This has to be defined before evil
-(setq evil-want-integration t)
-(setq evil-want-keybinding nil)
-
 (use-package evil
   :commands evil-mode
   :functions define-key
   :init
+  ;; This has to be defined before evil
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-collection-setup-minibuffer t)
+
   (add-hook 'after-init-hook #'evil-mode)
 
   (setq evil-search-wrap lightemacs-cycle)

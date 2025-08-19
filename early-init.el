@@ -41,12 +41,11 @@
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."
-  (when (boundp 'lightemacs--modules-dir)
-    (load (expand-file-name (format "init/%s" filename)
-                            lightemacs--modules-dir)
-          nil
-          (not (bound-and-true-p init-file-debug))
-          'nosuffix)))
+  (load (expand-file-name (format "init/%s" filename)
+                          lightemacs--modules-dir)
+        nil
+        (not (bound-and-true-p init-file-debug))
+        'nosuffix))
 
 ;;; Variables
 

@@ -22,9 +22,22 @@
 
 ;;; Code:
 
+(defvar lightemacs-aggressive-indent-hook-list '(emacs-lisp-mode-hook
+                                                 scheme-mode-hook)
+  "The modes where `aggressive-indent-mode' is activated.")
+
 (use-package aggressive-indent
   :commands (aggressive-indent-mode
-             global-aggressive-indent-mode))
+             global-aggressive-indent-mode)
+  :init
+  (dolist (hook lightemacs-aggressive-indent-hook-list)
+    (add-hook hook #'aggressive-indent-mode))
+
+  :config
+  (add-to-list 'aggressive-indent-protected-commands 'comment-dwim)
+  (add-to-list 'aggressive-indent-protected-commands 'comment-box)
+
+  (setq aggressive-indent-excluded-modes 'html-mode))
 
 (provide 'le-aggressive-indent)
 
