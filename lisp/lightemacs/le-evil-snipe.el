@@ -24,7 +24,7 @@
 
 (use-package evil-snipe
   :commands evil-snipe-mode
-  :diminish evil-snipe-local-mode
+  ;; :diminish evil-snipe-local-mode
   :init
   ;; TODO: on first input
   (add-hook 'evil-mode-hook #'evil-snipe-mode)

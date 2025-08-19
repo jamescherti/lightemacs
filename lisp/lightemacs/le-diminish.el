@@ -19,8 +19,7 @@
 (use-package diminish
   :commands (diminish
              diminish-undo
-             diminished-modes)
-  )
+             diminished-modes))
 
 (with-eval-after-load 'eldoc
   (diminish 'eldoc-mode))

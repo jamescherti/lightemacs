@@ -26,7 +26,7 @@
 
 (use-package compile-angel
   :demand t
-  :diminish compile-angel-on-load-mode
+  ;; :diminish compile-angel-on-load-mode
   :init
   (setq package-native-compile nil)
 
