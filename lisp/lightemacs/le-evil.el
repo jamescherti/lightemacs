@@ -78,7 +78,7 @@
 ;; and manage files without manually switching to the directory.
 
 (with-eval-after-load 'evil
-  (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-dired-parent))
+  (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory))
 
 (provide 'le-evil)
 

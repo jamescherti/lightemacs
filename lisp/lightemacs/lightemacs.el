@@ -186,9 +186,9 @@ instead of wrapping around.")
   (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
   (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
 
-;;; FIX
+;;; Find parent directory
 
-(defun lightemacs-find-dired-parent ()
+(defun lightemacs-find-parent-directory ()
   "Open a `dired' buffer for the current file's directory and select the file.
 If the buffer is not visiting a file, opens the current `default-directory'."
   (interactive)

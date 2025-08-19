@@ -33,13 +33,11 @@
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq minimal-emacs-user-directory lightemacs-user-emacs-directory)
 
-;;; Internal variables
+;;; Functions
 
 (defvar lightemacs--modules-dir (expand-file-name
                                  "lisp/lightemacs"
                                  lightemacs-user-emacs-directory))
-
-;;; Load minimal-emacs.d early-init.el
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."
@@ -49,6 +47,12 @@
           nil
           (not (bound-and-true-p init-file-debug))
           'nosuffix)))
+
+;;; Variables
+
+(setq minimal-emacs-frame-title-format "%b – LightEmacs")
+
+;;; Load minimal-emacs.d early-init.el
 
 (lightemacs-load-init-file "early-init.el")
 
