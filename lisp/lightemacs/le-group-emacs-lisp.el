@@ -25,13 +25,6 @@
                            ;; `emacs-lisp-mode' buffers.
                            le-highlight-defined
 
-                           ;; Enable `page-break-lines', a minor mode that
-                           ;; visually replaces ASCII form-feed characters
-                           ;; (typically ^L) with horizontal line separators in
-                           ;; buffers, making page breaks easier to see without
-                           ;; affecting the actual text.
-                           le-page-break-lines
-
                            ;; `aggressive-indent-mode' is a minor mode that
                            ;; Elisp code remains consistently indented. It
                            ;; automatically reindents after every modification,
@@ -39,31 +32,8 @@
                            ;; `electric-indent-mode'. To enable it for Elisp
                            ;; files, add the following to the
                            ;; ~/.emacs.d/config.el file:
-                           le-aggressive-indent
+                           le-aggressive-indent))
 
-                           ;; elisp-refs provides an advanced code search for
-                           ;; Emacs Lisp.
-                           ;;
-                           ;; It locates references to functions, macros, or
-                           ;; variables by parsing the code rather than
-                           ;; performing a simple text search. This ensures
-                           ;; accuracy, avoiding false matches caused by
-                           ;; comments or variables sharing names with
-                           ;; functions.
-                           le-elisp-refs
-
-                           ;; `easy-escape-minor-mode' improves the readability
-                           ;; of Emacs Lisp regular expressions through syntax
-                           ;; highlighting and character composition.
-                           ;; Specifically, it hides double backslashes before
-                           ;; regexp special characters '()|', renders other
-                           ;; doubled backslashes as single ones, and highlights
-                           ;; them with a distinct face. These transformations
-                           ;; affect only the visual presentation; the
-                           ;; underlying buffer text remains unchanged.
-                           le-easy-escape))
-
-(add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
 (add-hook 'emacs-lisp-mode-hook 'aggressive-indent-mode)
 
 (provide 'le-group-emacs-lisp)
