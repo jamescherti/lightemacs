@@ -70,15 +70,12 @@
   (setq evil-want-C-g-bindings t)
   (setq evil-want-C-h-delete t)
   (setq evil-want-C-u-delete t)
-  (setq evil-want-C-w-delete t))
+  (setq evil-want-C-w-delete t)
 
-;;; Press '-' to open dired
-
-;; Pressing '-' opens a `dired' buffer for the directory containing the current
-;; file, automatically selecting that file. This provides a fast way to navigate
-;; and manage files without manually switching to the directory.
-
-(with-eval-after-load 'evil
+  :config
+  ;; Pressing '-' opens a `dired' buffer for the directory containing the
+  ;; current file, automatically selecting that file. This provides a fast way
+  ;; to navigate and manage files without manually switching to the directory.
   (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory))
 
 (provide 'le-evil)

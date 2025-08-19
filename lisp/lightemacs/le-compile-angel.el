@@ -42,7 +42,6 @@
   ;; `compile-angel-on-load-compile-load-history' are both set to t.
   (setq compile-angel-on-load-compile-load-history t)
   (setq compile-angel-on-load-compile-features t)
-  ;; (add-hook 'after-init-hook #'compile-angel-on-load-mode)
 
   :preface
   (defun le-compile-angel-exclude (path)
@@ -60,7 +59,8 @@ specified file or directory is ignored during the compilation process managed by
 
   :config
   ;; Exclude files
-  (push "/org-version.el" compile-angel-excluded-files)
+  (with-eval-after-load 'org
+    (push "/org-version.el" compile-angel-excluded-files))
   (with-eval-after-load 'savehist
     (le-compile-angel-exclude savehist-file))
   (with-eval-after-load 'recentf
@@ -69,6 +69,8 @@ specified file or directory is ignored during the compilation process managed by
     (le-compile-angel-exclude custom-file))
   (with-eval-after-load 'prescient
     (le-compile-angel-exclude prescient-save-file))
+
+  ;; On load mode
   (compile-angel-on-load-mode))
 
 (provide 'le-compile-angel)

@@ -1,4 +1,4 @@
-;;; lightemacs.el --- Lightemacs -*- lexical-binding: t -*-
+;;; lightemacs.el --- Lightweight and fast framework -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Useful functions. This is always loaded.
+;; Lightemacs, Lightweight and Fast Emacs Framework.
 
 ;;; Code:
 
@@ -58,7 +58,7 @@ This enabled or disable cycling in plugins such as Vertico and Consult.
 When nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
-;;; Modules
+;;; Functions
 
 ;; require-file/load-file are better.
 ;;
@@ -110,20 +110,44 @@ instead of wrapping around.")
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme lightemacs-theme t)))
 
-(defun lightemacs-load-init-file (filename)
-  "Load a file of Lisp init file named FILENAME."
-  (when (boundp 'lightemacs--modules-dir)
-    (load (expand-file-name (format "init/%s" filename)
-                            lightemacs--modules-dir)
-          nil
-          (not (bound-and-true-p init-file-debug))
-          'nosuffix)))
-
 (defmacro lightemacs-verbose-message (&rest args)
   "Display a verbose message with the same ARGS arguments as `message'."
   `(progn
      (when lightemacs-verbose
        (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
+
+;;; Functions: lightemacs-use-package
+
+(defvar lightemacs--use-package-refreshed nil
+  "Whether package contents have been refreshed for `lightemacs-use-package'.")
+
+(defun lightemacs--use-package-ensure-refresh (name)
+  "Refresh package NAME contents once before installing a missing package."
+  (when (and (not lightemacs--use-package-refreshed)
+             (not (package-installed-p name)))
+    (lightemacs-verbose-message "Refresh package contents before installing %s"
+                                name)
+    (package-refresh-contents)
+    (setq lightemacs--use-package-refreshed t)))
+
+(defun lightemacs--before-use-package (name args)
+  "Run this function before `lightemacs-use-package' if :ensure is non-nil.
+NAME is the symbol identifying the package, and ARGS is the plist of keywords
+passed to `lightemacs-use-package'."
+  (let ((ensure (if (memq :ensure args)
+                    (plist-get args :ensure)
+                  t)))
+    (when ensure
+      (lightemacs--use-package-ensure-refresh name))))
+
+(defmacro lightemacs-use-package (name &rest args)
+  "Wrap `use-package' to provide additional features.
+NAME is the symbol identifying the package, and ARGS is the plist of keywords
+passed to `lightemacs-use-package'."
+  (declare (indent defun))
+  `(progn
+     (lightemacs--before-use-package ',name ',args)
+     (use-package ,name ,@args)))
 
 ;;; Useful macros
 
@@ -192,22 +216,21 @@ instead of wrapping around.")
   "Open a `dired' buffer for the current file's directory and select the file.
 If the buffer is not visiting a file, opens the current `default-directory'."
   (interactive)
-  (when (fboundp 'dired-goto-file)
-    (let* ((buf (or (buffer-base-buffer)
-                    (current-buffer)))
-           (file (buffer-file-name buf))
-           dir)
-      (if file
-          (setq dir (file-name-directory file))
-        (setq dir default-directory))
-      (when dir
-        (when-let* ((dired-buf (find-file-noselect dir)))
-          (switch-to-buffer dired-buf nil t)
-          (when file
-            (with-current-buffer dired-buf
-              (when (derived-mode-p 'dired-mode)
-                (dired-goto-file file)
-                (lightemacs-recenter-maybe)))))))))
+  (let* ((buf (or (buffer-base-buffer) (current-buffer)))
+         (file (buffer-file-name buf))
+         dir)
+    (if file
+        (setq dir (file-name-directory file))
+      (setq dir default-directory))
+    (when dir
+      (when-let* ((dired-buf (find-file-noselect dir)))
+        (switch-to-buffer dired-buf nil t)
+        (when file
+          (with-current-buffer dired-buf
+            (when (derived-mode-p 'dired-mode)
+              (when (fboundp 'dired-goto-file)
+                (dired-goto-file file))
+              (lightemacs-recenter-maybe))))))))
 
 ;;; Provide lightemacs
 

@@ -21,6 +21,9 @@
 
 ;;; Code:
 
+;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
+(require 'le-lib)
+
 ;;; Consult
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
@@ -130,9 +133,7 @@
   :init
   ;; Enable automatic preview at point in the *Completions* buffer.
   (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
-
-  (with-eval-after-load 'embark
-    (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
+  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
 
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
