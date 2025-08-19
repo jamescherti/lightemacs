@@ -30,6 +30,10 @@
 
 ;;; Load modules
 
+;; Require lightemacs
+(add-to-list 'load-path lightemacs--modules-dir)
+(require 'lightemacs)
+
 ;; Load config.el
 (if (fboundp 'minimal-emacs-load-user-init)
     (minimal-emacs-load-user-init "config.el")
