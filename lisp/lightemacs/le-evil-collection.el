@@ -25,7 +25,7 @@
 (use-package evil-collection
   :if (not noninteractive)
   :after evil
-  :commands evil-collection-init
+  :functions evil-collection-init
   ;; :diminish (evil-collection-unimpaired-mode)
   :config
   (evil-collection-init))

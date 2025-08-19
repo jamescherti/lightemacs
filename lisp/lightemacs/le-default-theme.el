@@ -27,12 +27,18 @@
 
 ;;; Code:
 
-(when (eq lightemacs-theme 'tomorrow-night-deepblue)
-  (use-package tomorrow-night-deepblue-theme
-    :demand t))
+(require 'lightemacs)
 
-(when lightemacs-theme
-  (lightemacs-load-default-theme))
+(cond
+ ((eq lightemacs-theme 'tomorrow-night-deepblue)
+  (use-package tomorrow-night-deepblue-theme
+    :demand t
+    :config
+    (lightemacs-load-default-theme)))
+
+ (t
+  (when lightemacs-theme
+    (lightemacs-load-default-theme))))
 
 (provide 'le-default-theme)
 
