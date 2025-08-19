@@ -37,9 +37,6 @@
     (advice-add #'vterm-module-compile :override #'ignore)
     (provide 'vterm-module))
 
-  :init
-  (add-hook 'vterm-mode-hook #'le-vterm--setup)
-
   (defun le-vterm--setup ()
     ;; Hide the mode-line
     (setq mode-line-format nil)
@@ -49,6 +46,9 @@
 
     ;; Suppress prompts for terminating active processes when closing vterm
     (setq-local confirm-kill-processes nil))
+
+  :init
+  (add-hook 'vterm-mode-hook #'le-vterm--setup)
 
   (setq vterm-timer-delay 0.05)
   (setq vterm-kill-buffer-on-exit t)

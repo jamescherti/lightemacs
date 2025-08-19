@@ -35,6 +35,9 @@
   ;; Use evil-search instead of isearch
   (setq evil-search-module 'evil-search)
 
+  ;; Time in seconds of idle before updating search highlighting.
+  (setq evil-ex-hl-update-delay 0.05)
+
   ;; Make :s in visual mode operate only on the actual visual selection
   ;; (character or block), instead of the full lines covered by the selection
   (setq evil-ex-visual-char-range t)
@@ -55,9 +58,6 @@
 
   ;; Suppress motion errors during keyboard macro execution in Evil
   (setq evil-kbd-macro-suppress-motion-error t)
-
-  ;; Time in seconds of idle before updating search highlighting.
-  (setq evil-ex-hl-update-delay 0.001)
 
   ;; Better Vim emulation
   (setq evil-symbol-word-search t)
