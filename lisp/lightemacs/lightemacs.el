@@ -32,7 +32,7 @@ Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
-(defvar lightemacs-default-theme 'tomorrow-night-deepblue
+(defvar lightemacs-theme 'tomorrow-night-deepblue
   "Name of the default theme to load, if available.
 Set this to nil to disable early theme loading.")
 
@@ -104,11 +104,11 @@ instead of wrapping around.")
                    lightemacs--load-module-method))))))))
 
 (defun lightemacs-load-default-theme ()
-  "Load the theme defined in `lightemacs-default-theme' if it is installed."
-  (when (and lightemacs-default-theme
-             (member lightemacs-default-theme (custom-available-themes)))
+  "Load the theme defined in `lightemacs-theme' if it is installed."
+  (when (and lightemacs-theme
+             (member lightemacs-theme (custom-available-themes)))
     (mapc #'disable-theme custom-enabled-themes)
-    (load-theme lightemacs-default-theme t)))
+    (load-theme lightemacs-theme t)))
 
 (defun lightemacs-load-init-file (filename)
   "Load a file of Lisp init file named FILENAME."

@@ -24,7 +24,7 @@ Here are some of the modules that are enabled by default:
     - Visually replace ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see.
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
-- Save and restore the default theme using the `lightemacs-default-theme` variable.
+- Save and restore the default theme using the `lightemacs-theme` variable.
 - Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 - And more.
@@ -184,10 +184,10 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ### Default theme (le-default-theme)
 
-The `le-default-theme` loads the default theme. It can be configured via the `lightemacs-default-theme` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
+The `le-default-theme` loads the default theme. It can be configured via the `lightemacs-theme` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
 
 ```emacs-lisp
-(setq lightemacs-default-theme 'tomorrow-night-deepblue)
+(setq lightemacs-theme 'tomorrow-night-deepblue)
 ```
 
 The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes:
@@ -195,10 +195,10 @@ The default theme, Tomorrow Night Deepblue Emacs Theme, is a a beautiful deep bl
 
 Here are examples of alternative built-in themes:
 ```elisp
-(setq lightemacs-default-theme 'modus-operandi)
-(setq lightemacs-default-theme 'modus-vivendi)
-(setq lightemacs-default-theme 'tango)
-(setq lightemacs-default-theme 'tango-dark)
+(setq lightemacs-theme 'modus-operandi)
+(setq lightemacs-theme 'modus-vivendi)
+(setq lightemacs-theme 'tango)
+(setq lightemacs-theme 'tango-dark)
 ```
 
 ### Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless)
