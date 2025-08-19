@@ -24,6 +24,7 @@
 
 (use-package gcmh
   :commands gcmh-mode
+  :diminish gcmh-mode
   :hook (lightemacs-on-first-buffer . gcmh-mode)
   :init
   (setq gcmh-verbose init-file-debug
