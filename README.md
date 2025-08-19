@@ -70,6 +70,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Expand Region (le-expand-region)](#expand-region-le-expand-region)
+    - [Runs code formatters asynchronously (le-apheleia)](#runs-code-formatters-asynchronously-le-apheleia)
     - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
     - [Recent files (le-recentf)](#recent-files-le-recentf)
     - [Detect indentation offset (le-dtrt-indent)](#detect-indentation-offset-le-dtrt-indent)
@@ -351,6 +352,30 @@ The **le-expand-region** module configures the [expand-region](https://github.co
 Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
 
 Continue pressing `C-=` until the selection encompasses exactly the text you want.
+
+### Runs code formatters asynchronously (le-apheleia)
+
+The **le-apheleia** module configures, [Apheleia](https://github.com/radian-software/apheleia), a package that runs code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
+
+Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
+
+To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
+
+By default, the *apheleia* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
+
+Here is an example you could place in `~/.emacs.d/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
+```elisp
+;; Bash/sh
+(add-hook 'sh-mode-hook #'apheleia-mode)
+(add-hook 'bash-ts-mode-hook #'apheleia-mode)
+
+;; Python
+(add-hook 'python-ts-mode-hook #'apheleia-mode)
+(add-hook 'python-mode-hook #'apheleia-mode)
+
+;; Emacs Lisp
+(add-hook 'emacs-lisp-mode-hook #'apheleia-mode)
+```
 
 ### A better way to rename or delete files (le-buffer-file)
 

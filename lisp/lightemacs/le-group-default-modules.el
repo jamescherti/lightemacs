@@ -292,6 +292,17 @@
                            ;; `electric-indent-mode'.
                            le-group-emacs-lisp
 
+                           ;; Apheleia is a package that runs code formatters
+                           ;; asynchronously without disrupting the cursor
+                           ;; position. Code formatters like Shfmt, Black and
+                           ;; Prettier ensure consistency and improve
+                           ;; collaboration by automating formatting, but
+                           ;; running them on save can introduce latency (e.g.,
+                           ;; Black takes around 200ms on an empty file) and
+                           ;; unpredictably move the cursor when modifying
+                           ;; nearby text.
+                           le-apheleia
+
                            ;; This package provides functions to detects the
                            ;; indentation offset used in existing source code
                            ;; files and automatically adjusts Emacs settings
