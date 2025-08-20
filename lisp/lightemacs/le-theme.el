@@ -1,4 +1,4 @@
-;;; le-default-theme.el --- Module: tomorrow-night-deepblue-theme -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-theme.el --- Module: tomorrow-night-deepblue-theme -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -61,10 +61,10 @@ Set to nil to disable installing this package at startup.")
 (when lightemacs-theme-name
   (lightemacs-load-default-theme))
 
-(provide 'le-default-theme)
+(provide 'le-theme)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; le-default-theme.el ends here
+;;; le-theme.el ends here

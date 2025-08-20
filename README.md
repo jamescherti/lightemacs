@@ -55,7 +55,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Modules Enabled by Default](#modules-enabled-by-default)
-    - [Default theme (le-default-theme)](#default-theme-le-default-theme)
+    - [Default theme (le-theme)](#default-theme-le-theme)
     - [Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless)](#better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless)
     - [Better completion (le-corfu and le-cape)](#better-completion-le-corfu-and-le-cape)
     - [Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
@@ -181,9 +181,9 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ## Modules Enabled by Default
 
-### Default theme (le-default-theme)
+### Default theme (le-theme)
 
-The `le-default-theme` loads the default theme. It can be configured via the `lightemacs-theme-name` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
+The `le-theme` loads the default theme. It can be configured via the `lightemacs-theme-name` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
 
 ```emacs-lisp
 ;; Default theme to load during initialization, if available. Set to nil to
