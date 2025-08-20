@@ -6,7 +6,7 @@ Lightemacs provides a range of modules that can be selectively enabled or disabl
 
 Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimize Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
 
-![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
 
 Here are some of the modules that are enabled by default:
 
