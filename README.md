@@ -12,26 +12,30 @@ Here are some of the modules that are enabled by default:
 
 - Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless)
 - Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
-- Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
-- The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
 - Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
-- Additional filetypes: `markdown-mode` and `org-mode`.
-- Enhanced Emacs Lisp (Elisp) Editing Experience:
-    - Highlights defined Emacs Lisp symbols.
-    - Maintain consistent indentation of Elisp code during editing.
-    - Visually replace ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see.
+- Additional file types: Markdown, Yaml, and Org.
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
 - Save and restore the default theme using the `lightemacs-theme-name` variable.
-- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-- And more.
 
-Optionally, you can enable the following features that are disabled by default:
-* **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
+Optionally, the following features can be enabled by loading additional Lightemacs modules:
+- **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
 - **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
+- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
+- Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
+- The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
+- Enhanced Emacs Lisp (Elisp) Editing Experience:
+    - Maintain consistent indentation of Elisp code during editing.
+    - Visually replace ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see.
+* Functions for automatically detecting indentation offsets
+* A faster, more efficient terminal
+* Visual indentation guides, optimized for performance and customization
+* An enhanced replacement for the built-in help system
+* A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions
+- And many others.
 
 **What is the difference between Lightemacs and minimal-emacs.d?**
 
