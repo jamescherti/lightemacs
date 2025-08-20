@@ -19,6 +19,7 @@ Here are some of the modules that are enabled by default:
 - Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
 - Save and restore the default theme using the `lightemacs-theme-name` variable.
+- Functions for automatically detecting indentation offsets.
 - Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
 Optionally, the following features can be enabled by loading additional Lightemacs modules:
@@ -27,7 +28,6 @@ Optionally, the following features can be enabled by loading additional Lightema
 - **le-expand-region**: Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - **le-yasnippet** and **le-yasnippet**: A template system that enhances text editing by enabling users to define and use snippets.
-- **le-dtrt-indent**: Functions for automatically detecting indentation offsets.
 - **le-vterm** A faster, more efficient terminal.
 - **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
 - **le-helpful**: An enhanced replacement for the built-in help system.
@@ -71,13 +71,13 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
     - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
     - [Recent files (le-recentf)](#recent-files-le-recentf)
+    - [Detect indentation offset (le-dtrt-indent)](#detect-indentation-offset-le-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
     - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
-    - [Disabled by default: Detect indentation offset (le-dtrt-indent)](#disabled-by-default-detect-indentation-offset-le-dtrt-indent)
     - [Disabled by default: Expand Region (le-expand-region)](#disabled-by-default-expand-region-le-expand-region)
     - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
     - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
@@ -399,6 +399,24 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 - Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
 
+### Detect indentation offset (le-dtrt-indent)
+
+The **le-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
+
+To make `dtrt-indent` display a message whenever it adjusts the indentation offset, add the following line to your `~/.emacs.d/config.el`:
+
+```emacs-lisp
+(setq dtrt-indent-verbosity 1)
+```
+
+The `le-dtrt-indent` module allows controlling automatic indentation detection via:
+* `lightemacs-dtrt-indent-inhibit`: When non-nil, disables automatic indentation detection in the current buffer.
+* `lightemacs-dtrt-indent-excluded-modes`: List of major modes where `dtrt-indent` should not run. For example:
+  ```elisp
+  ;; Exclude Markdown mode and org-mode
+  (setq lightemacs-dtrt-indent-excluded-modes '(markdown-mode org-mode))
+  ```
+
 ### Other Modules Enabled by Default
 
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for multiple programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump' does not parse code semantically, which makes it lightweight and fast, but sometimes less precise. It integrates with popular navigation packages like `xref', allowing implementations with minimal configuration. users to jump to definitions, references, or
@@ -497,35 +515,6 @@ Here is an example you could place in `~/.emacs.d/config.el` to configure Aphele
 The **le-yasnippet** configures [yasnippet](https://github.com/joaotavora/yasnippet), a package that provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
 
 The **le-yasnippet-snippets** configures the [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package, which provides a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
-
-### Disabled by default: Detect indentation offset (le-dtrt-indent)
-
-The **le-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
-
-To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
-(add-to-list 'lightemacs-modules 'le-dtrt-indent)
-```
-
-The *dtrt-indent* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
-
-To use it, you have multiple options: you can activate `dtrt-indent-global-mode` to automatically detect and adjust the indentation offset in all buffers; alternatively, you can enable `dtrt-indent-mode` (local mode) to restrict the behavior to the current buffer; or you can invoke the function `dtrt-indent-adapt` directly whenever you need to adjust the indentation settings for a specific file or buffer.
-
-For instance, configure it to run automatically in programming modes by adding the following to the `~/.emacs.d/config.el` file:
-
-```emacs-lisp
-;; Adjusting indentation settings for `prog-mode-hook` buffers.
-(add-hook 'prog-mode-hook #'dtrt-indent-adapt 80)
-```
-
-(In this example, the function `dtrt-indent-adapt` is invoked for all buffers in `prog-mode` with a priority of 80, enabling Emacs to automatically detect and adjust to the file’s indentation style after the standard `prog-mode-hook` hooks.)
-
-To prevent `dtrt-indent` from displaying a message each time it adjusts the indentation offset, silence these notifications by adding the following line to the `~/.emacs.d/config.el` file:
-
-```emacs-lisp
-(setq dtrt-indent-verbosity 0)
-```
-
 
 ### Disabled by default: Expand Region (le-expand-region)
 

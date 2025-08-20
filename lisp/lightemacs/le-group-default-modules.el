@@ -71,19 +71,6 @@
                            ;; saving.
                            le-stripspace
 
-                           ;; The yasnippet package provides a template system
-                           ;; that enhances text editing by enabling users to
-                           ;; define and use snippets, which are predefined
-                           ;; templates of code or text.
-                           ;; le-yasnippet
-
-                           ;; The yasnippet-snippets package with a
-                           ;; comprehensive collection of bundled templates
-                           ;; for numerous programming and markup languages,
-                           ;; including C, C++, C#, Perl, Python, Ruby, SQL,
-                           ;; LaTeX, HTML, CSS...
-                           ;; le-yasnippet-snippets
-
                            ;; The persist-text-scale Emacs package provides
                            ;; `persist-text-scale-mode', which ensures that
                            ;; all adjustments made with `text-scale-increase'
@@ -300,7 +287,20 @@
                            ;; files and automatically adjusts Emacs settings
                            ;; accordingly, thereby simplifying the editing of
                            ;; files created in external environments.
-                           ;; le-dtrt-indent
+                           le-dtrt-indent
+
+                           ;; The yasnippet package provides a template system
+                           ;; that enhances text editing by enabling users to
+                           ;; define and use snippets, which are predefined
+                           ;; templates of code or text.
+                           ;; le-yasnippet
+
+                           ;; The yasnippet-snippets package with a
+                           ;; comprehensive collection of bundled templates
+                           ;; for numerous programming and markup languages,
+                           ;; including C, C++, C#, Perl, Python, Ruby, SQL,
+                           ;; LaTeX, HTML, CSS...
+                           ;; le-yasnippet-snippets
 
                            ;; Apheleia is a package that runs code formatters
                            ;; asynchronously without disrupting the cursor
