@@ -10,9 +10,9 @@ Lightemacs tweaks packages to improve performance. For example, adjusting the de
 
 Here are some of the modules that are enabled by default:
 
-- Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless)
+- Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless).
 - Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
-- Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions
+- Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions.
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
 - Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - Additional file types: Markdown, Yaml, and Org.
@@ -24,17 +24,14 @@ Here are some of the modules that are enabled by default:
 Optionally, the following features can be enabled by loading additional Lightemacs modules:
 - **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
 - **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
-- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
+- **le-expand-region**: Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
-- The Yasnippet template system that enhances text editing by enabling users to define and use snippets.
-- Enhanced Emacs Lisp (Elisp) Editing Experience:
-    - Maintain consistent indentation of Elisp code during editing.
-    - Visually replace ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see.
-* Functions for automatically detecting indentation offsets
-* A faster, more efficient terminal
-* Visual indentation guides, optimized for performance and customization
-* An enhanced replacement for the built-in help system
-* A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions
+- **le-yasnippet** and **le-yasnippet**: A template system that enhances text editing by enabling users to define and use snippets.
+- **le-dtrt-indent**: Functions for automatically detecting indentation offsets.
+- **le-vterm** A faster, more efficient terminal.
+- **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
+- **le-helpful**: An enhanced replacement for the built-in help system.
+- **le-paredit**: A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions.
 - And many others.
 
 **What is the difference between Lightemacs and minimal-emacs.d?**
