@@ -69,7 +69,7 @@
                            ;; that automatically removes trailing whitespace
                            ;; and blank lines at the end of the buffer when
                            ;; saving.
-                           le-stripspace
+                           ;; le-stripspace
 
                            ;; The yasnippet package provides a template system
                            ;; that enhances text editing by enabling users to
@@ -329,7 +329,8 @@
                            ;; It automatically reindents after every
                            ;; modification, providing greater reliability than
                            ;; `electric-indent-mode'.
-                           le-group-emacs-lisp))
+                           ;; le-group-emacs-lisp
+                           ))
 
 (provide 'le-group-default-modules)
 

@@ -68,13 +68,13 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Save and Restore Cursor (le-saveplace)](#save-and-restore-cursor-le-saveplace)
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
-    - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
     - [Recent files (le-recentf)](#recent-files-le-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules Disabled by Default](#modules-disabled-by-default)
-    - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
+    - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
+    - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
     - [Disabled by default: Detect indentation offset (le-dtrt-indent)](#disabled-by-default-detect-indentation-offset-le-dtrt-indent)
@@ -343,20 +343,6 @@ This package also facilitates grouping buffers into categories, allowing buffers
 
 This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
 
-### Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
-
-The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
-
-(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
-
-It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
-
-To enable `stripspace-local-mode` for `prog-mode` (affecting all programming languages), add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Enable it for `prog-mode-hook'
-(add-hook 'prog-mode-hook #'stripspace-local-mode)
-```
-
 ### A better way to rename or delete files (le-buffer-file)
 
 The **le-buffer-file** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
@@ -421,26 +407,9 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 - **le-elec-pair**: Automatically insert matching delimiters (), {}...
 - **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-- **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols.
 - **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 
 ## Modules Disabled by Default
-
-### Disabled by default: le-treesit-auto (better syntax highlighting)
-
-Module: **le-treesit-auto**
-
-The **le-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
-
-To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
-;; provides precise, high-performance syntax highlighting. It supports a broad
-;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
-;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
-;; Elisp, Lua, and many others. treesit-auto
-(add-to-list 'lightemacs-modules 'le-treesit-auto)
-```
 
 ### Disabled by default: group-evil (Vim Keybindings)
 
@@ -461,6 +430,36 @@ The `le-group-evil` group of modules includes:
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **le-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 * **le-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+
+### Disabled by default: le-treesit-auto (better syntax highlighting)
+
+Module: **le-treesit-auto**
+
+The **le-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
+;; provides precise, high-performance syntax highlighting. It supports a broad
+;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, and many others. treesit-auto
+(add-to-list 'lightemacs-modules 'le-treesit-auto)
+```
+
+### Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
+
+The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
+
+It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
+
+To enable `stripspace-local-mode` for `prog-mode` (affecting all programming languages), add the following to the `~/.emacs.d/config.el` file:
+```elisp
+;; Enable it for `prog-mode-hook'
+(add-hook 'prog-mode-hook #'stripspace-local-mode)
+```
 
 ### Disabled by default: Runs code formatters asynchronously (le-apheleia)
 
@@ -614,6 +613,11 @@ Elisp file-type modules are disabled by default:
   ```
   (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-easyescape-minor-mode-hook-list`.)
 
+- **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols. To enable the module, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; Enable the `le-easy-escape' module
+  (add-to-list 'lightemacs-modules 'highlight-defined)
+  ```
 - **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```elisp
   ;; Enable the `le-page-break-lines' module
