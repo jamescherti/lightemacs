@@ -63,6 +63,13 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
   (add-hook 'change-major-mode-after-body-hook #'le-dtrt-indent--detect-indentation)
   (setq dtrt-indent-verbosity (if init-file-debug 1 0))
   (setq dtrt-indent-max-lines 1900)  ; Faster
+
+  ;; By default, `dtrt-indent' detects SMIE-based modes and lets
+  ;; `smie-config-guess' handle indentation. However, `dtrt-indent' also sets
+  ;; additional variables that SMIE does not (for example,
+  ;; `dtrt-indent-hook-generic-mapping-list'). Setting this option to non-nil
+  ;; forces `dtrt-indent' to run in SMIE-based modes as well, ensuring these
+  ;; extra settings are applied.
   (setq dtrt-indent-run-after-smie t))
 
 (provide 'le-dtrt-indent)
