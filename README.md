@@ -68,7 +68,6 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
-    - [Expand Region (le-expand-region)](#expand-region-le-expand-region)
     - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
     - [Recent files (le-recentf)](#recent-files-le-recentf)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
@@ -78,6 +77,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
     - [Disabled by default: Detect indentation offset (le-dtrt-indent)](#disabled-by-default-detect-indentation-offset-le-dtrt-indent)
+    - [Disabled by default: Expand Region (le-expand-region)](#disabled-by-default-expand-region-le-expand-region)
     - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
     - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
     - [Other modules disabled by default](#other-modules-disabled-by-default)
@@ -348,14 +348,6 @@ To enable `stripspace-local-mode` for `prog-mode` (affecting all programming lan
 (add-hook 'prog-mode-hook #'stripspace-local-mode)
 ```
 
-### Expand Region (le-expand-region)
-
-The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
-
-Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
-
-Continue pressing `C-=` until the selection encompasses exactly the text you want.
-
 ### A better way to rename or delete files (le-buffer-file)
 
 The **le-buffer-file** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
@@ -519,6 +511,14 @@ To prevent `dtrt-indent` from displaying a message each time it adjusts the inde
 (setq dtrt-indent-verbosity 0)
 ```
 
+
+### Disabled by default: Expand Region (le-expand-region)
+
+The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
+
+Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
+
+Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
 ### Disabled by default: An alternative terminal (le-vterm)
 
