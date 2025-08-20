@@ -61,7 +61,7 @@
   (setq evil-kbd-macro-suppress-motion-error t)
 
   ;; Better Vim emulation
-  (setq evil-symbol-word-search t)
+  ;; (setq evil-symbol-word-search t)
   (setq evil-want-Y-yank-to-eol t)
   (setq evil-want-abbrev-expand-on-insert-exit nil)
   (setq evil-respect-visual-line-mode nil)

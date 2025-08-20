@@ -185,6 +185,21 @@
                            ;; Integration between Embark and Consult
                            le-embark-consult
 
+                           ;; Dumb-jump/Dumber-jump provide context-aware 'go to
+                           ;; definition' functionality for multiple programming
+                           ;; languages without requiring a language server. It
+                           ;; works by using simple heuristics and regular
+                           ;; expression searches to locate the definitions of
+                           ;; functions, variables, and symbols across project
+                           ;; files. Unlike more sophisticated language-aware
+                           ;; tools, `dumb-jump' does not parse code
+                           ;; semantically, which makes it lightweight and fast,
+                           ;; but sometimes less precise. It integrates with
+                           ;; popular navigation packages like `xref', allowing
+                           ;; implementations with minimal configuration. users
+                           ;; to jump to definitions, references, or
+                           le-dumb-jump
+
                            ;; The expand-region package grows your selection
                            ;; step by step with 'C-=', starting from a word
                            ;; and expanding to larger units like a sentence,
