@@ -24,7 +24,10 @@
              dtrt-indent-adapt
              dtrt-indent-undo
              dtrt-indent-diagnosis
-             dtrt-indent-highlight))
+             dtrt-indent-highlight)
+  :init
+  (setq dtrt-indent-max-lines 1950)  ; Faster
+  (setq dtrt-indent-run-after-smie t))
 
 (provide 'le-dtrt-indent)
 

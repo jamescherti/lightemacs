@@ -15,33 +15,39 @@
 
 ;;; Better defaults
 
+;; Treesit-fold
+
+(setq-default display-fill-column-indicator-character ?\N{U+2502})
+;; (setq-default display-fill-column-indicator-character ?┊)
+
 ;; Allow Emacs to upgrade built-in packages, such as Org mode
 (setq package-install-upgrade-built-in t)
 
 ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 ;; (setq byte-compile-warnings '(not lexical))
 ;; (setq warning-suppress-types '((lexical-binding)))
-(setq warning-minimum-level :emergency)
+(setq warning-minimum-level :error)
 
 (setq treesit-font-lock-level 4) ; Max: 4
-
-;; Emacs automatically saves your changes to a file intermittently
-(setq make-backup-files t)
 
 ;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
 ;; `recover-session' to restore unsaved changes.
 (setq auto-save-default t)
-(setq auto-save-interval 300)
-(setq auto-save-timeout 30)
+(setq auto-save-interval 300)  ; Number of input events between auto-saves
+(setq auto-save-timeout 30)  ; Number of seconds idle time before auto-save
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-lib)
 (when lightemacs--ripgrep-executable
   (setq xref-search-program 'ripgrep))
 
+;;; VC
+
+(setq vc-git-print-log-follow t)
+
 ;;; Minibuffer
 
-(setq minibuffer-default-prompt-format " [%s]")
+(setq minibuffer-default-prompt-format " [default %s]")
 (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
 
 ;;; Mode line
