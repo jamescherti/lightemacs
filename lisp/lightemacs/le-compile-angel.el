@@ -35,7 +35,7 @@
   :init
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
-  (setq compile-angel-debug t)
+  (setq compile-angel-debug init-file-debug)
 
   ;; Enable `compile-angel-on-load-mode', a global mode that compiles .el files,
   ;; including those already loaded via `load' or `require' and those loaded
