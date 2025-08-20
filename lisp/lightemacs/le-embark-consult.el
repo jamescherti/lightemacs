@@ -22,6 +22,7 @@
 ;;; Code:
 
 (use-package embark-consult
+  :after (embark consult)
   :init
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 

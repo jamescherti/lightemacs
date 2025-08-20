@@ -26,7 +26,6 @@
 
 ;;; Consult
 
-;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (use-package consult
   :commands (consult-fd
              consult-register-window
@@ -200,8 +199,6 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
-(require 'le-lib)
-
 
 ;;; Completing indicator
 
