@@ -59,7 +59,9 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
 
   :init
   (add-hook 'change-major-mode-after-body-hook #'le-dtrt-indent--detect-indentation)
-  (setq dtrt-indent-verbosity 0)
+  (setq dtrt-indent-verbosity (if init-file-debug
+                                  1
+                                0))
   (setq dtrt-indent-max-lines 1950)  ; Faster
   (setq dtrt-indent-run-after-smie t))
 
