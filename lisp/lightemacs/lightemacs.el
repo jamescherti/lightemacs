@@ -56,6 +56,12 @@ instead of wrapping around.")
 
 ;;; Functions
 
+(defmacro lightemacs-verbose-message (&rest args)
+  "Display a verbose message with the same ARGS arguments as `message'."
+  `(progn
+     (when lightemacs-verbose
+       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
+
 ;; require-file/load-file are better.
 ;;
 ;; (require/load-any couldn't find some files when those files are already
@@ -71,11 +77,7 @@ instead of wrapping around.")
                ;; (feature-symbol (intern feature-str))
                (module-file (expand-file-name (format "%s.el" feature-str)
                                               modules-dir)))
-          (when init-file-debug
-            (if (file-exists-p module-file)
-                (message "[lightemacs] Load: %s" feature-str)
-              (message "[lightemacs] Error: The module '%s' could not be found"
-                       module-file)))
+          (lightemacs-verbose-message "Load: %s" feature-str)
 
           (cond
            ((eq lightemacs--load-module-method 'require)
@@ -98,12 +100,6 @@ instead of wrapping around.")
            (t
             (error "Invalid method for lightemacs--load-module-method %s"
                    lightemacs--load-module-method))))))))
-
-(defmacro lightemacs-verbose-message (&rest args)
-  "Display a verbose message with the same ARGS arguments as `message'."
-  `(progn
-     (when lightemacs-verbose
-       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
 
 ;;; Useful macros
 
