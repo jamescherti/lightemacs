@@ -186,7 +186,7 @@
                            le-embark-consult
 
                            ;; Dumb-jump/Dumber-jump provide context-aware 'go to
-                           ;; definition' functionality for multiple programming
+                           ;; definition' functionality for 50+ programming
                            ;; languages without requiring a language server. It
                            ;; works by using simple heuristics and regular
                            ;; expression searches to locate the definitions of

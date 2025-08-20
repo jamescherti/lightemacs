@@ -9,11 +9,11 @@
 
 ;;; Commentary:
 
-;; Dumb-jump provides context-aware 'go to definition' functionality for
-;; multiple programming languages without requiring a language server. It works
-;; by using simple heuristics and regular expression searches to locate the
-;; definitions of functions, variables, and symbols across project files. Unlike
-;; more sophisticated language-aware tools, `dumb-jump' does not parse code
+;; Dumb-jump provides context-aware 'go to definition' functionality for 50+
+;; programming languages without requiring a language server. It works by using
+;; simple heuristics and regular expression searches to locate the definitions
+;; of functions, variables, and symbols across project files. Unlike more
+;; sophisticated language-aware tools, `dumb-jump' does not parse code
 ;; semantically, which makes it lightweight and fast, but sometimes less
 ;; precise. It integrates with popular navigation packages like `xref', allowing
 ;; users to jump to definitions, references, or implementations with minimal
@@ -30,29 +30,33 @@
   :commands dumb-jump-xref-activate
 
   :init
-  ;; Enable the xref backend
+  ;; Register `dumb-jump' as an xref backend so it integrates with
+  ;; `xref-find-definitions'
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
-  ;; (add-hook 'after-init-hook #'dumb-jump-mode)
-
-  ;; Xref can be customized to use completing-read to select a target. That way
-  ;; a completion framework of your choice (Icomplete, Helm, Ivy, ...) will be
-  ;; used instead of the default pop-up buffer. To do this, evaluate
-  ;;
-  ;; Note that the function xref-show-definitions-completing-read requires at
-  ;; least Xref 1.1.0. This can either be downloaded from ELPA or is bundled
-  ;; with Emacs 28.1 or newer.
-  ;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-
   ;; (setq dumb-jump-quiet t)
-  ;; (setq dumb-jump-aggressive t)
-  ;; (setq dumb-jump-selector 'completing-read)
-  ;; (setq dumb-jump-max-find-time 5)
-  ;; (add-to-list 'dumb-jump-project-denoters ".project")
+  (setq dumb-jump-aggressive nil)
 
+  ;; Number of seconds a rg/grep/find command can take before being warned to
+  ;; use ag and config.
+  (setq dumb-jump-max-find-time 3)
+
+  ;; Use `completing-read' so that selection of jump targets integrates with the
+  ;; active completion framework (e.g., Vertico, Ivy, Helm, Icomplete),
+  ;; providing a consistent minibuffer-based interface whenever multiple
+  ;; definitions are found.
+  (setq dumb-jump-selector 'completing-read)
+
+  ;; If ripgrep is available, force `dumb-jump' to use it because it is
+  ;; significantly faster and more accurate than the default searchers (grep,
+  ;; ag, etc.).
   (when lightemacs--ripgrep-executable
     (setq dumb-jump-force-searcher 'rg)
-    (setq dumb-jump-prefer-searcher 'rg)))
+    (setq dumb-jump-prefer-searcher 'rg))
+
+  :config
+  (with-eval-after-load 'project
+    (cl-callf cl-union dumb-jump-project-denoters project-vc-extra-root-markers)))
 
 (provide 'le-dumb-jump)
 
