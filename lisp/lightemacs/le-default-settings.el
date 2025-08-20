@@ -15,19 +15,27 @@
 
 ;;; Better defaults
 
-;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-lib)
-
 ;; Allow Emacs to upgrade built-in packages, such as Org mode
 (setq package-install-upgrade-built-in t)
 
-(setq warning-suppress-types '((obsolete lexical-binding)))
+;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+;; (setq byte-compile-warnings '(not lexical))
+;; (setq warning-suppress-types '((lexical-binding)))
+(setq warning-minimum-level :emergency)
 
 (setq treesit-font-lock-level 4) ; Max: 4
 
 ;; Emacs automatically saves your changes to a file intermittently
 (setq make-backup-files t)
 
+;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
+;; `recover-session' to restore unsaved changes.
+(setq auto-save-default t)
+(setq auto-save-interval 300)
+(setq auto-save-timeout 30)
+
+;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
+(require 'le-lib)
 (when lightemacs--ripgrep-executable
   (setq xref-search-program 'ripgrep))
 
@@ -35,6 +43,12 @@
 
 (setq minibuffer-default-prompt-format " [%s]")
 (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
+
+;;; Mode line
+
+(setq line-number-mode t)
+(setq column-number-mode t)
+(setq mode-line-position-column-line-format '("%l:%C"))
 
 ;;; Frame
 

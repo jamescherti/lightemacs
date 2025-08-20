@@ -40,8 +40,22 @@
     (when args
       (setq dired-listing-switches args)))
 
-  ;; Hide details such as file ownership and permissions
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode))
+  ;; Dired buffers: Automatically hide file details (permissions, size,
+  ;; modification date, etc.) and all the files in the `dired-omit-files'
+  ;; regular expression for a cleaner display.
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+
+  (setq dired-omit-files (concat "\\`[.]\\'"
+                                 "\\|\\(?:\\.js\\)?\\.meta\\'"
+                                 "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
+                                 "\\|^\\.DS_Store\\'"
+                                 "\\|^\\.\\(?:svn\\|git\\)\\'"
+                                 "\\|^\\.ccls-cache\\'"
+                                 "\\|^__pycache__\\'"
+                                 "\\|^\\.project\\(?:ile\\)?\\'"
+                                 "\\|^flycheck_.*"
+                                 "\\|^flymake_.*"))
+  (add-hook 'dired-mode-hook #'dired-omit-mode))
 
 (provide 'le-dired)
 

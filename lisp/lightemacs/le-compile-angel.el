@@ -32,7 +32,11 @@
   ;;            compile-angel-on-save-local-mode
   ;;            compile-angel-on-save-mode)
   :diminish compile-angel-on-load-mode
+
   :init
+  ;; Compile-angel replaces `package-native-compile'
+  (setq package-native-compile nil)
+
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
   (setq compile-angel-debug init-file-debug)
@@ -44,8 +48,8 @@
   ;; Since this uses `after-init-hook', it is necessary to ensure that
   ;; `compile-angel-on-load-compile-features' and
   ;; `compile-angel-on-load-compile-load-history' are both set to t.
-  (setq compile-angel-on-load-compile-load-history t)
-  (setq compile-angel-on-load-compile-features t)
+  ;; (setq compile-angel-on-load-compile-load-history t)
+  ;; (setq compile-angel-on-load-compile-features t)
 
   :preface
   (defun le-compile-angel-exclude (path)
@@ -75,9 +79,7 @@ specified file or directory is ignored during the compilation process managed by
     (le-compile-angel-exclude prescient-save-file))
 
   ;; On load mode
-  (compile-angel-on-load-mode)
-  ;; (add-hook 'after-init-hook #'compile-angel-on-load-mode)
-  )
+  (compile-angel-on-load-mode))
 
 (provide 'le-compile-angel)
 
