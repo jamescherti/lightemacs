@@ -26,7 +26,7 @@
 
   (setq tab-always-indent 'complete)
 
-  (setq corfu-auto nil)
+  (setq corfu-auto t)
 
   ;; Select first candidate, except for directories
   (setq corfu-preselect 'directory)

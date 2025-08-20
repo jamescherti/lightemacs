@@ -217,9 +217,16 @@ Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion 
 
 ### Better completion (le-corfu and le-cape)
 
-[Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
+- [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab. To make Corfu complete only when the user presses Tab, add the following to `~/.emacs.d/config.el`:
+  ```elisp
+  ;; By default, Corfu shows completions automatically without requiring the user
+  ;; to press Tab. To make Corfu complete only when the user presses Tab:
+  ;;
+  ;; To make Corfu complete only when the user presses Tab:
+  (setq corfu-auto nil)
+  ```
 
-[Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
+- [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
 
