@@ -16,6 +16,8 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 ;;; Variables
 
 ;; By default, `dired-filter-by-omit' excludes `"."`, which is generally
@@ -37,6 +39,7 @@ For instance:
 ;;; Use-package dired-filter
 
 (use-package dired-filter
+  :diminish dired-filter-mode
   :commands (dired-filter-pop-all
              dired-filter-by-git-ignored
              dired-filter-by-git-ignored
