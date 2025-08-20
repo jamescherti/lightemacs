@@ -31,7 +31,9 @@ Setting this variable to nil forces `yaml-mode' to load even if
 Tree-sitter is available.")
 
 (if (or (not lightemacs-group-yaml-prefer-treesitter)
-        (not (my-treesit-language-available-p 'yaml)))
+        (not (if (fboundp 'treesit-language-available-p)
+                 (treesit-language-available-p 'yaml)
+               nil)))
     (lightemacs-load-modules '(le-yaml-mode)))
 
 (provide 'le-group-yaml)

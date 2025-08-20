@@ -27,7 +27,11 @@
 (require 'le-diminish)
 
 (use-package compile-angel
+  :commands (compile-angel-on-load-mode
+             compile-angel-on-save-local-mode
+             compile-angel-on-save-mode)
   :diminish compile-angel-on-load-mode
+  :hook (after-init . compile-angel-on-load-mode)
   :init
   (setq package-native-compile nil)
 
@@ -73,7 +77,8 @@ specified file or directory is ignored during the compilation process managed by
     (le-compile-angel-exclude prescient-save-file))
 
   ;; On load mode
-  (compile-angel-on-load-mode))
+  ;; (compile-angel-on-load-mode)
+  )
 
 (provide 'le-compile-angel)
 
