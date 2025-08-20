@@ -12,6 +12,11 @@
 
 ;;; Code:
 
+;;; Internal variables
+
+(setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
+(setq gc-cons-threshold most-positive-fixnum)
+
 ;;; Variables
 
 (defvar lightemacs-user-emacs-directory user-emacs-directory
