@@ -413,8 +413,12 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 * `lightemacs-dtrt-indent-inhibit`: When non-nil, disables automatic indentation detection in the current buffer.
 * `lightemacs-dtrt-indent-excluded-modes`: List of major modes where `dtrt-indent` should not run. For example:
   ```elisp
-  ;; Exclude Markdown mode and org-mode
-  (setq lightemacs-dtrt-indent-excluded-modes '(markdown-mode org-mode))
+  ;; Exclude Python and Yaml/Ansible
+  (setq lightemacs-dtrt-indent-excluded-modes '(python-mode
+                                                python-ts-mode
+                                                yaml-mode
+                                                yaml-ts-mode
+                                                ansible-mode))
   ```
 
 ### Other Modules Enabled by Default

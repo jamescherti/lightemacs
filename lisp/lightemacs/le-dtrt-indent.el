@@ -23,7 +23,11 @@
 This variable can be set buffer-locally to prevent `dtrt-indent' from adjusting
 the indentation settings automatically in the current buffer.")
 
-(defvar lightemacs-dtrt-indent-excluded-modes nil
+(defvar lightemacs-dtrt-indent-excluded-modes '(python-mode
+                                                python-ts-mode
+                                                yaml-mode
+                                                yaml-ts-mode
+                                                ansible-mode)
   "List of major modes excluded from automatic indentation detection.
 Modes in this list will not trigger `dtrt-indent' when buffers of those types
 are opened or their major mode changes.")
@@ -39,9 +43,7 @@ are opened or their major mode changes.")
   :preface
   (defun le-dtrt-indent--detect-indentation ()
     "Automatically enable `dtrt-indent-mode' unless inhibited.
-This function checks several conditions before enabling indentation
-detection:
-
+This function checks several conditions before enabling indentation detection:
 1. Emacs has completed initialization (`after-init-time').
 2. `lightemacs-dtrt-indent-inhibit' is nil.
 3. The buffer is not in `fundamental-mode'.
@@ -59,10 +61,8 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
 
   :init
   (add-hook 'change-major-mode-after-body-hook #'le-dtrt-indent--detect-indentation)
-  (setq dtrt-indent-verbosity (if init-file-debug
-                                  1
-                                0))
-  (setq dtrt-indent-max-lines 1950)  ; Faster
+  (setq dtrt-indent-verbosity (if init-file-debug 1 0))
+  (setq dtrt-indent-max-lines 1900)  ; Faster
   (setq dtrt-indent-run-after-smie t))
 
 (provide 'le-dtrt-indent)
