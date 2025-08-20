@@ -75,14 +75,14 @@
                            ;; that enhances text editing by enabling users to
                            ;; define and use snippets, which are predefined
                            ;; templates of code or text.
-                           le-yasnippet
+                           ;; le-yasnippet
 
                            ;; The yasnippet-snippets package with a
                            ;; comprehensive collection of bundled templates
                            ;; for numerous programming and markup languages,
                            ;; including C, C++, C#, Perl, Python, Ruby, SQL,
                            ;; LaTeX, HTML, CSS...
-                           le-yasnippet-snippets
+                           ;; le-yasnippet-snippets
 
                            ;; The persist-text-scale Emacs package provides
                            ;; `persist-text-scale-mode', which ensures that
@@ -271,6 +271,24 @@
                            ;; them again when the cursor leaves.
                            le-org-appear
 
+                           ;; This package provides functions to detects the
+                           ;; indentation offset used in existing source code
+                           ;; files and automatically adjusts Emacs settings
+                           ;; accordingly, thereby simplifying the editing of
+                           ;; files created in external environments.
+                           ;; le-dtrt-indent
+
+                           ;; Apheleia is a package that runs code formatters
+                           ;; asynchronously without disrupting the cursor
+                           ;; position. Code formatters like Shfmt, Black and
+                           ;; Prettier ensure consistency and improve
+                           ;; collaboration by automating formatting, but
+                           ;; running them on save can introduce latency (e.g.,
+                           ;; Black takes around 200ms on an empty file) and
+                           ;; unpredictably move the cursor when modifying
+                           ;; nearby text.
+                           ;; le-apheleia
+
                            ;; Filetype: Emacs Lisp
                            ;;
                            ;; 1. Enable `highlight-defined-mode', a minor mode
@@ -287,25 +305,7 @@
                            ;; It automatically reindents after every
                            ;; modification, providing greater reliability than
                            ;; `electric-indent-mode'.
-                           le-group-emacs-lisp
-
-                           ;; Apheleia is a package that runs code formatters
-                           ;; asynchronously without disrupting the cursor
-                           ;; position. Code formatters like Shfmt, Black and
-                           ;; Prettier ensure consistency and improve
-                           ;; collaboration by automating formatting, but
-                           ;; running them on save can introduce latency (e.g.,
-                           ;; Black takes around 200ms on an empty file) and
-                           ;; unpredictably move the cursor when modifying
-                           ;; nearby text.
-                           le-apheleia
-
-                           ;; This package provides functions to detects the
-                           ;; indentation offset used in existing source code
-                           ;; files and automatically adjusts Emacs settings
-                           ;; accordingly, thereby simplifying the editing of
-                           ;; files created in external environments.
-                           le-dtrt-indent))
+                           le-group-emacs-lisp))
 
 (provide 'le-group-default-modules)
 

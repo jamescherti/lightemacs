@@ -60,7 +60,6 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Better completion (le-corfu and le-cape)](#better-completion-le-corfu-and-le-cape)
     - [Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
     - [Enhanced File Management (le-dired and le-dired-filter)](#enhanced-file-management-le-dired-and-le-dired-filter)
-    - [Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
     - [Better undo/redo (le-undo-fu and undo-fu-session)](#better-undoredo-le-undo-fu-and-undo-fu-session)
     - [Keybindings (le-keybindings)](#keybindings-le-keybindings)
     - [Code folding based on indentation (le-outline-indent)](#code-folding-based-on-indentation-le-outline-indent)
@@ -70,15 +69,15 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Expand Region (le-expand-region)](#expand-region-le-expand-region)
-    - [Runs code formatters asynchronously (le-apheleia)](#runs-code-formatters-asynchronously-le-apheleia)
     - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
     - [Recent files (le-recentf)](#recent-files-le-recentf)
-    - [Detect indentation offset (le-dtrt-indent)](#detect-indentation-offset-le-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
-    - [Enhanced Emacs Lisp (Elisp) Editing Experience (le-group-emacs-lisp)](#enhanced-emacs-lisp-elisp-editing-experience-le-group-emacs-lisp)
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
+    - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
+    - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
+    - [Disabled by default: Detect indentation offset (le-dtrt-indent)](#disabled-by-default-detect-indentation-offset-le-dtrt-indent)
     - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
     - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
     - [Other modules disabled by default](#other-modules-disabled-by-default)
@@ -256,11 +255,12 @@ To add additional filters, include them in your `~/.emacs.d/config.el`. For exam
 
 This setup keeps your Dired buffer clean by showing only relevant and tracked files.
 
-### Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)
+The `dired-filter-by-omit` filter can be extended to conceal additional entries. For instance, it can be configured to hide `.`, `..`, and `.git` directories:
+```elisp
+(setq dired-omit-files "^\.$\\|^\\.\\.$\\|^\\.git$")
+```
 
-The **le-yasnippet** configures [yasnippet](https://github.com/joaotavora/yasnippet), a package that provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
-
-The **le-yasnippet-snippets** configures the [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package, which provides a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
+(Hiding `..` is acceptable since the `-` key provides a way to navigate to the parent directory.)
 
 ### Better undo/redo (le-undo-fu and undo-fu-session)
 
@@ -356,30 +356,6 @@ Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word.
 
 Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
-### Runs code formatters asynchronously (le-apheleia)
-
-The **le-apheleia** module configures, [Apheleia](https://github.com/radian-software/apheleia), a package that runs code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
-
-Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
-
-To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
-
-The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
-
-Here is an example you could place in `~/.emacs.d/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
-```elisp
-;; Bash/sh
-(add-hook 'sh-mode-hook #'apheleia-mode)
-(add-hook 'bash-ts-mode-hook #'apheleia-mode)
-
-;; Python
-(add-hook 'python-ts-mode-hook #'apheleia-mode)
-(add-hook 'python-mode-hook #'apheleia-mode)
-
-;; Emacs Lisp
-(add-hook 'emacs-lisp-mode-hook #'apheleia-mode)
-```
-
 ### A better way to rename or delete files (le-buffer-file)
 
 The **le-buffer-file** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
@@ -417,29 +393,6 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 - Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
 
-### Detect indentation offset (le-dtrt-indent)
-
-The **le-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
-
-The *dtrt-indent* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
-
-To use it, you have multiple options: you can activate `dtrt-indent-global-mode` to automatically detect and adjust the indentation offset in all buffers; alternatively, you can enable `dtrt-indent-mode` (local mode) to restrict the behavior to the current buffer; or you can invoke the function `dtrt-indent-adapt` directly whenever you need to adjust the indentation settings for a specific file or buffer.
-
-For instance, configure it to run automatically in programming modes by adding the following to the `~/.emacs.d/config.el` file:
-
-```emacs-lisp
-;; Adjusting indentation settings for `prog-mode-hook` buffers.
-(add-hook 'prog-mode-hook #'dtrt-indent-adapt 80)
-```
-
-(In this example, the function `dtrt-indent-adapt` is invoked for all buffers in `prog-mode` with a priority of 80, enabling Emacs to automatically detect and adjust to the file’s indentation style after the standard `prog-mode-hook` hooks.)
-
-To prevent `dtrt-indent` from displaying a message each time it adjusts the indentation offset, silence these notifications by adding the following line to the `~/.emacs.d/config.el` file:
-
-```emacs-lisp
-(setq dtrt-indent-verbosity 0)
-```
-
 ### Other Modules Enabled by Default
 
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
@@ -465,16 +418,8 @@ To prevent `dtrt-indent` from displaying a message each time it adjusts the inde
 - **le-elec-pair**: Automatically insert matching delimiters (), {}...
 - **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-- **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
-
-### Enhanced Emacs Lisp (Elisp) Editing Experience (le-group-emacs-lisp)
-
-The *le-group-emacs-lisp* group enhances Emacs Lisp (Elisp) editing.
-
-The packages configured by *le-group-emacs-lisp* are loaded in a deferred manner and remain inactive until an Emacs Lisp file is opened, thereby reducing startup time and conserving system resources.
-
-The **le-group-emacs-lisp** package automatically enables the following modules whenever an Emacs Lisp file is opened (`emacs-lisp-mode-hook`):
 - **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols.
+- **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 
 ## Modules Disabled by Default
 
@@ -513,6 +458,67 @@ The `le-group-evil` group of modules includes:
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **le-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 * **le-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+
+### Disabled by default: Runs code formatters asynchronously (le-apheleia)
+
+The **le-apheleia** module configures, [Apheleia](https://github.com/radian-software/apheleia), a package that runs code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
+
+Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
+
+To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
+
+The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
+
+Here is an example you could place in `~/.emacs.d/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
+```elisp
+(add-to-list 'lightemacs-modules 'le-apheleia)
+
+;; Bash/sh
+(add-hook 'sh-mode-hook #'apheleia-mode)
+(add-hook 'bash-ts-mode-hook #'apheleia-mode)
+
+;; Python
+(add-hook 'python-ts-mode-hook #'apheleia-mode)
+(add-hook 'python-mode-hook #'apheleia-mode)
+
+;; Emacs Lisp
+(add-hook 'emacs-lisp-mode-hook #'apheleia-mode)
+```
+
+### Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)
+
+The **le-yasnippet** configures [yasnippet](https://github.com/joaotavora/yasnippet), a package that provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
+
+The **le-yasnippet-snippets** configures the [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package, which provides a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
+
+### Disabled by default: Detect indentation offset (le-dtrt-indent)
+
+The **le-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
+
+To enable it, add the following to the `~/.emacs.d/config.el` file:
+```elisp
+(add-to-list 'lightemacs-modules 'le-dtrt-indent)
+```
+
+The *dtrt-indent* package is loaded in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
+
+To use it, you have multiple options: you can activate `dtrt-indent-global-mode` to automatically detect and adjust the indentation offset in all buffers; alternatively, you can enable `dtrt-indent-mode` (local mode) to restrict the behavior to the current buffer; or you can invoke the function `dtrt-indent-adapt` directly whenever you need to adjust the indentation settings for a specific file or buffer.
+
+For instance, configure it to run automatically in programming modes by adding the following to the `~/.emacs.d/config.el` file:
+
+```emacs-lisp
+;; Adjusting indentation settings for `prog-mode-hook` buffers.
+(add-hook 'prog-mode-hook #'dtrt-indent-adapt 80)
+```
+
+(In this example, the function `dtrt-indent-adapt` is invoked for all buffers in `prog-mode` with a priority of 80, enabling Emacs to automatically detect and adjust to the file’s indentation style after the standard `prog-mode-hook` hooks.)
+
+To prevent `dtrt-indent` from displaying a message each time it adjusts the indentation offset, silence these notifications by adding the following line to the `~/.emacs.d/config.el` file:
+
+```emacs-lisp
+(setq dtrt-indent-verbosity 0)
+```
+
 
 ### Disabled by default: An alternative terminal (le-vterm)
 
