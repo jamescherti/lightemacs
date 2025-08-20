@@ -139,6 +139,11 @@
                            ;; off.
                            le-saveplace
 
+                           ;; Track changes in the window configuration,
+                           ;; allowing undoing actions such as closing windows
+                           ;; using `winner-undo'.
+                           le-winner
+
                            ;; Recentf is an maintains a list of recently
                            ;; accessed files, making it easier to reopen files
                            ;; you have worked on recently.

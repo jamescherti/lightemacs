@@ -58,7 +58,6 @@
   ;; Configure handling of exact matches
   (setq corfu-on-exact-match nil))
 
-
 (provide 'le-corfu)
 
 ;; Local variables:
