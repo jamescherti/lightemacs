@@ -21,18 +21,18 @@
 
 ;;; Code:
 
-(defvar lightemacs-paredit-hook-list '(emacs-lisp-mode-hook
-                                       lisp-interaction-mode-hook
-                                       lisp-mode-hook
-                                       eval-expression-minibuffer-setup-hook
-                                       scheme-mode-hook
-                                       ielm-mode-hook
-                                       cider-repl-mode-hook
-                                       clojure-mode-hook
-                                       geiser-repl-mode-hook
-                                       racket-mode-hook
-                                       racket-repl-mode-hook
-                                       slime-repl-mode-hook)
+(defvar lightemacs-paredit-mode-hook-list '(emacs-lisp-mode-hook
+                                            lisp-interaction-mode-hook
+                                            lisp-mode-hook
+                                            eval-expression-minibuffer-setup-hook
+                                            scheme-mode-hook
+                                            ielm-mode-hook
+                                            cider-repl-mode-hook
+                                            clojure-mode-hook
+                                            geiser-repl-mode-hook
+                                            racket-mode-hook
+                                            racket-repl-mode-hook
+                                            slime-repl-mode-hook)
   "The modes where `paredit-mode' is activated.")
 
 (use-package paredit
@@ -42,7 +42,7 @@
   ;;             ("M-s" . nil))
 
   :init
-  (dolist (hook lightemacs-paredit-hook-list)
+  (dolist (hook lightemacs-paredit-mode-hook-list)
     (add-hook hook #'paredit-mode))
 
   :config

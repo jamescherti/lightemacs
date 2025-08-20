@@ -29,13 +29,13 @@
 
 ;;; Code:
 
-(defvar lightemacs-indent-bars-hook-list nil
+(defvar lightemacs-indent-bars-mode-hook-list nil
   "The modes where `indent-bars-mode' is activated.")
 
 (use-package indent-bars
   :commands indent-bars-mode
   :init
-  (dolist (hook lightemacs-indent-bars-hook-list)
+  (dolist (hook lightemacs-indent-bars-mode-hook-list)
     (add-hook hook #'indent-bars-mode))
 
   ;; Setting this to nil is not reliable
