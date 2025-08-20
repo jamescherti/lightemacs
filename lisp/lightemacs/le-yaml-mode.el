@@ -26,6 +26,8 @@
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode)))
 
+(provide 'le-yaml-mode)
+
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
