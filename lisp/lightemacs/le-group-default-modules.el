@@ -57,13 +57,13 @@
                            ;; improving perceived performance.
                            le-gcmh
 
-                           ;; Modern code folding based on indentation levels.
-                           ;; Automatically enabled for Python and Yaml.
-                           le-outline-indent
-
                            ;; Update the ellipsis in `outline-mode' and
                            ;; `outline-minor-mode' using `lightemacs-ellipsis'
                            le-outline
+
+                           ;; Modern code folding based on indentation levels.
+                           ;; Automatically enabled for Python and Yaml.
+                           le-outline-indent
 
                            ;; The stripspace Emacs package provides minor mode
                            ;; that automatically removes trailing whitespace

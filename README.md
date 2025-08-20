@@ -296,11 +296,12 @@ The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mo
 
 The following example can be added to the `~/.emacs.d/config.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
 ```elisp
-(add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-(add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+(with-eval-after-load 'le-outline-indent
+  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
 
-(add-hook 'python-mode-hook #'outline-indent-minor-mode)
-(add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
 ### Save History (le-savehist)
