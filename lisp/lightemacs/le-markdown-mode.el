@@ -13,6 +13,8 @@
 ;; highlighting, editing commands, and preview support for Markdown documents.
 ;; It supports core Markdown syntax as well as extensions like GitHub Flavored
 ;; Markdown (GFM).
+;;
+;; URL: https://github.com/jrblevin/markdown-mode
 
 ;;; Code:
 
@@ -24,7 +26,6 @@
 
   :mode (("\\.markdown\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
-         ("\\.md\\.asc\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
 
   :bind

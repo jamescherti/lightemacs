@@ -13,9 +13,11 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 (use-package evil-commentary
+  :diminish evil-commentary-mode
   :commands evil-commentary-mode
-  ;; :diminish evil-commentary-mode
   :init
   (add-hook 'evil-mode-hook #'evil-commentary-mode))
 

@@ -404,6 +404,7 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
   ```
 - **le-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **le-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
+* **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to nil forces `yaml-mode` to load even if Tree-sitter is available.)
 - **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 * **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
@@ -556,13 +557,11 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 ;; Enable the `le-indent-bars' module
 (add-to-list 'lightemacs-modules 'le-indent-bars)
 
-;; Enable indent-bars-mode automatically for Python files
-(add-hook 'python-ts-mode-hook #'indent-bars-mode)
-(add-hook 'python-mode-hook #'indent-bars-mode)
-
-;; Enable indent-bars-mode automatically for YAML files
-(add-hook 'yaml-mode-hook #'indent-bars-mode)
-(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
+;; Enable indent-bars-mode automatically for Python files and Yaml files
+(setq lightemacs-indent-bars-hook-list '(yaml-ts-mode-hook
+                                         yaml-mode-hook
+                                         python-ts-mode-hook
+                                         python-mode-hook))
 ```
 
 (By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)

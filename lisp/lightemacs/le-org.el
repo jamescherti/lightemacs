@@ -29,7 +29,6 @@
 
   :mode
   ("\\.org\\'" . org-mode)
-  ("\\.[Oo][Rr][Gg]\\.[aA][sS][cC]\\'" . org-mode)  ;; .org.asc (GPG Encrypted)
 
   :init
   ;; Disable saving a bookmark when capturing; avoids cluttering the bookmark

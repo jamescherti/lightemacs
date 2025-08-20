@@ -257,6 +257,10 @@
                            ;; (GFM).
                            le-markdown-mode
 
+                           ;; Configure `yaml-mode' if Tree-sitter's
+                           ;; `yaml-ts-mode' is not available.
+                           le-group-yaml
+
                            ;; Automatically generate or refresh the table of
                            ;; contents in Markdown files using
                            ;; 'M-x markdown-toc-generate-or-refresh-toc'

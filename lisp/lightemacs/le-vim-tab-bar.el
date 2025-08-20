@@ -24,9 +24,11 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 (use-package vim-tab-bar
+  :diminish vim-tab-bar-mode
   :commands vim-tab-bar-mode
-  ;; :diminish vim-tab-bar-mode
   :init
   (add-hook 'after-init-hook #'vim-tab-bar-mode))
 

@@ -24,8 +24,10 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 (use-package compile-angel
-  ;; :diminish compile-angel-on-load-mode
+  :diminish compile-angel-on-load-mode
   :init
   (setq package-native-compile nil)
 

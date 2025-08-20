@@ -21,12 +21,14 @@
 ;;; evil-collection
 
 (require 'le-evil)
+(require 'le-diminish)
+
 
 (use-package evil-collection
   :if (not noninteractive)
+  :diminish (evil-collection-unimpaired-mode)
   :after evil
   :functions evil-collection-init
-  ;; :diminish (evil-collection-unimpaired-mode)
   :config
   (evil-collection-init))
 

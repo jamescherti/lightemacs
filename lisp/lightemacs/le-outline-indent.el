@@ -23,8 +23,10 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 (use-package outline-indent
-  ;; :diminish outline-indent-minor-mode
+  :diminish outline-indent-minor-mode
   :commands (outline-indent-minor-mode
              outline-indent-insert-heading)
   :init

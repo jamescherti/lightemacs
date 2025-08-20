@@ -22,9 +22,11 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 (use-package gcmh
+  :diminish gcmh-mode
   :commands gcmh-mode
-  ;; :diminish gcmh-mode
   :init
   (add-hook 'lightemacs-on-first-buffer-hook #'gcmh-mode)
   (setq gcmh-verbose init-file-debug

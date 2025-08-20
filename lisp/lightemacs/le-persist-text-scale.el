@@ -35,10 +35,12 @@
 
 ;;; Code:
 
+(require 'le-diminish)
+
 (use-package persist-text-scale
+  :diminish persist-text-scale-mode
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
-  ;; :diminish persist-text-scale-mode
   :init
   (add-hook 'after-init-hook #'persist-text-scale-mode)
   (setq text-scale-mode-step 1.07))
