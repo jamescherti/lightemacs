@@ -47,18 +47,17 @@
   (setq corfu-preview-current nil)  ; Disable current candidate preview
   (setq corfu-min-width 38)
 
-  ;; Keep the completion popup open at boundaries, such as when inserting a space.
-  ;; Also, keep it open even if there are no matching candidates. This is beneficial because
-  ;; you can continue editing without the popup closing, allowing you to refine your input,
-  ;; apply filters, and more easily find the candidate you are searching for.
+  ;; Keep the completion popup open at boundaries, such as when inserting a
+  ;; space. Also, keep it open even if there are no matching candidates. This is
+  ;; beneficial because you can continue editing without the popup closing,
+  ;; allowing you to refine your input, apply filters, and more easily find the
+  ;; candidate you are searching for.
   (setq corfu-quit-at-boundary nil)
   (setq corfu-quit-no-match nil)
 
   ;; Configure handling of exact matches
-  (setq corfu-on-exact-match nil)
+  (setq corfu-on-exact-match nil))
 
-  :config
-  (require 'corfu-history))
 
 (provide 'le-corfu)
 
