@@ -64,6 +64,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Better undo/redo (le-undo-fu and undo-fu-session)](#better-undoredo-le-undo-fu-and-undo-fu-session)
     - [Keybindings (le-keybindings)](#keybindings-le-keybindings)
     - [Code folding based on indentation (le-outline-indent)](#code-folding-based-on-indentation-le-outline-indent)
+    - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Save History (le-savehist)](#save-history-le-savehist)
     - [Save and Restore Cursor (le-saveplace)](#save-and-restore-cursor-le-saveplace)
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
@@ -74,7 +75,6 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
     - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
-    - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
     - [Disabled by default: Detect indentation offset (le-dtrt-indent)](#disabled-by-default-detect-indentation-offset-le-dtrt-indent)
@@ -311,6 +311,25 @@ The following example can be added to the `~/.emacs.d/config.el` file to automat
   (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
+### Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
+
+The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
+
+It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
+
+By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`. To enable `stripspace-local-mode` in additional modes, add their hooks to your `~/.emacs.d/config.el` file:
+```elisp
+;; Automatically remove trailing whitespace before saving
+(setq lightemacs-stripspace-local-mode-hook-list '(;; Programming
+                                                   prog-mode-hook
+                                                   ;; Text files
+                                                   text-mode-hook
+                                                   ;; Configuration files
+                                                   conf-mode-hook))
+```
+
 ### Save History (le-savehist)
 
 The **le-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
@@ -445,20 +464,6 @@ To enable it, add the following to the `~/.emacs.d/config.el` file:
 ;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
 ;; Elisp, Lua, and many others. treesit-auto
 (add-to-list 'lightemacs-modules 'le-treesit-auto)
-```
-
-### Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
-
-The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
-
-(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
-
-It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
-
-To enable `stripspace-local-mode` for `prog-mode` (affecting all programming languages), add the following to the `~/.emacs.d/config.el` file:
-```elisp
-;; Enable it for `prog-mode-hook'
-(add-hook 'prog-mode-hook #'stripspace-local-mode)
 ```
 
 ### Disabled by default: Runs code formatters asynchronously (le-apheleia)

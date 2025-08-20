@@ -69,7 +69,7 @@
                            ;; that automatically removes trailing whitespace
                            ;; and blank lines at the end of the buffer when
                            ;; saving.
-                           ;; le-stripspace
+                           le-stripspace
 
                            ;; The yasnippet package provides a template system
                            ;; that enhances text editing by enabling users to
@@ -312,24 +312,6 @@
                            ;; unpredictably move the cursor when modifying
                            ;; nearby text.
                            ;; le-apheleia
-
-                           ;; Filetype: Emacs Lisp
-                           ;;
-                           ;; 1. Enable `highlight-defined-mode', a minor mode
-                           ;; that highlights defined Emacs Lisp symbols in
-                           ;; `emacs-lisp-mode' buffers.
-                           ;;
-                           ;; 2. Enable `page-break-lines-mode', a minor mode
-                           ;; that visually replaces ASCII form-feed
-                           ;; characters (typically `^L`) with horizontal line
-                           ;; separators in buffers.
-                           ;;
-                           ;; 3. Enable `aggressive-indent-mode', a minor mode
-                           ;; that Elisp code remains consistently indented.
-                           ;; It automatically reindents after every
-                           ;; modification, providing greater reliability than
-                           ;; `electric-indent-mode'.
-                           ;; le-group-emacs-lisp
                            ))
 
 (provide 'le-group-default-modules)
