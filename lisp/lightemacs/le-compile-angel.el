@@ -27,17 +27,15 @@
 (require 'le-diminish)
 
 (use-package compile-angel
-  :commands (compile-angel-on-load-mode
-             compile-angel-on-save-local-mode
-             compile-angel-on-save-mode)
+  :demand t
+  ;; :commands (compile-angel-on-load-mode
+  ;;            compile-angel-on-save-local-mode
+  ;;            compile-angel-on-save-mode)
   :diminish compile-angel-on-load-mode
-  :hook (after-init . compile-angel-on-load-mode)
   :init
-  (setq package-native-compile nil)
-
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
-  (setq compile-angel-debug init-file-debug)
+  (setq compile-angel-debug t)
 
   ;; Enable `compile-angel-on-load-mode', a global mode that compiles .el files,
   ;; including those already loaded via `load' or `require' and those loaded
@@ -77,7 +75,8 @@ specified file or directory is ignored during the compilation process managed by
     (le-compile-angel-exclude prescient-save-file))
 
   ;; On load mode
-  ;; (compile-angel-on-load-mode)
+  (compile-angel-on-load-mode)
+  ;; (add-hook 'after-init-hook #'compile-angel-on-load-mode)
   )
 
 (provide 'le-compile-angel)
