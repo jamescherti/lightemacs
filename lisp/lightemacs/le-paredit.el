@@ -37,9 +37,6 @@
 
 (use-package paredit
   :commands paredit-mode
-  ;; :bind (:map paredit-mode-map
-  ;;             ("RET" . nil)
-  ;;             ("M-s" . nil))
 
   :init
   (dolist (hook lightemacs-paredit-mode-hook-list)

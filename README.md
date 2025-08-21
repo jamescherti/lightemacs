@@ -67,6 +67,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
     - [Save History (le-savehist)](#save-history-le-savehist)
     - [Save and Restore Cursor (le-saveplace)](#save-and-restore-cursor-le-saveplace)
+    - [Expand Region (le-expand-region)](#expand-region-le-expand-region)
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
     - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
@@ -78,7 +79,6 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
-    - [Disabled by default: Expand Region (le-expand-region)](#disabled-by-default-expand-region-le-expand-region)
     - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
     - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
     - [Other modules disabled by default](#other-modules-disabled-by-default)
@@ -338,6 +338,14 @@ The **le-savehist** module configures **savehist**, a built-in Emacs feature tha
 
 The **le-saveplace** module enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off.
 
+### Expand Region (le-expand-region)
+
+The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
+
+Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
+
+Continue pressing `C-=` until the selection encompasses exactly the text you want.
+
 ### Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
@@ -519,14 +527,6 @@ Here is an example you could place in `~/.emacs.d/config.el` to configure Aphele
 The **le-yasnippet** configures [yasnippet](https://github.com/joaotavora/yasnippet), a package that provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
 
 The **le-yasnippet-snippets** configures the [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package, which provides a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
-
-### Disabled by default: Expand Region (le-expand-region)
-
-The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
-
-Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
-
-Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
 ### Disabled by default: An alternative terminal (le-vterm)
 

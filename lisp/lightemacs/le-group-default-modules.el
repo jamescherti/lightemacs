@@ -183,7 +183,7 @@
 ;; step by step with 'C-=', starting from a word
 ;; and expanding to larger units like a sentence,
 ;; paragraph, or entire function.
-;; le-expand-region
+(require 'le-expand-region)
 
 ;; prescient.el is a library for sorting and
 ;; filtering lists of candidates, such as those
