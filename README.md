@@ -474,7 +474,7 @@ Here are a few interesting features that Lightemacs provides:
 - Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
 
 The `le-group-evil` group of modules includes:
-- **le-evil**: Vim keybindings (evil and evil-collection).
+- **le-evil**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file’s directory with the file preselected by pressing the `-` key, and includes additional enhancements.
 - **le-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **le-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
