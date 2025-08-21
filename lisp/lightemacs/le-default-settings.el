@@ -13,28 +13,27 @@
 
 ;;; Code:
 
-;;; Better defaults
-
-;; Treesit-fold
-
-(setq-default display-fill-column-indicator-character ?\N{U+2502})
-;; (setq-default display-fill-column-indicator-character ?┊)
-
-;; Allow Emacs to upgrade built-in packages, such as Org mode
-(setq package-install-upgrade-built-in t)
+;;; Misc
 
 ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 ;; (setq byte-compile-warnings '(not lexical))
 ;; (setq warning-suppress-types '((lexical-binding)))
 (setq warning-minimum-level :error)
 
+(setq-default display-fill-column-indicator-character ?\N{U+2502})
+;; (setq-default display-fill-column-indicator-character ?┊)
+
 (setq treesit-font-lock-level 4) ; Max: 4
+
+;;; Autosave
 
 ;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
 ;; `recover-session' to restore unsaved changes.
 (setq auto-save-default t)
 (setq auto-save-interval 300)  ; Number of input events between auto-saves
 (setq auto-save-timeout 30)  ; Number of seconds idle time before auto-save
+
+;;; Tools (ripgrep and fd)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-lib)

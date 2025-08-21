@@ -20,31 +20,31 @@
 
 (require 'lightemacs)
 
-(lightemacs-load-modules '(;; Evil keybindings
-                           le-evil
-                           le-evil-collection
+;; Evil keybindings
+(require 'le-evil)
+(require 'le-evil-collection)
 
-                           ;; Comment or uncomment text in Normal or Visual mode
-                           ;; by pressing 'gc'.
-                           le-evil-commentary
+;; Comment or uncomment text in Normal or Visual mode
+;; by pressing 'gc'.
+(require 'le-evil-commentary)
 
-                           ;; two-character motions for rapid navigation within
-                           ;; text. Pressing s in normal mode prompts you to
-                           ;; type two characters, then jumps the cursor to the
-                           ;; nearest matching occurrence while highlighting all
-                           ;; matches incrementally.
-                           le-evil-snipe
+;; two-character motions for rapid navigation within
+;; text. Pressing s in normal mode prompts you to
+;; type two characters, then jumps the cursor to the
+;; nearest matching occurrence while highlighting all
+;; matches incrementally.
+(require 'le-evil-snipe)
 
-                           ;; Evil-surround enables text surrounding in visual
-                           ;; state using S<textobject> or gS<textobject>. For
-                           ;; example, selecting text and pressing S" will wrap
-                           ;; it in double quotes.
-                           le-evil-surround
+;; Evil-surround enables text surrounding in visual
+;; state using S<textobject> or gS<textobject>. For
+;; example, selecting text and pressing S" will wrap
+;; it in double quotes.
+(require 'le-evil-surround)
 
-                           ;; Goto-chg is Used by `evil-mode' for the motions
-                           ;; 'g;' and 'g,' as well as for the last-change
-                           ;; register '.'.
-                           le-goto-chg))
+;; Goto-chg is Used by `evil-mode' for the motions
+;; 'g;' and 'g,' as well as for the last-change
+;; register '.'.
+(require 'le-goto-chg)
 
 (provide 'le-group-evil)
 

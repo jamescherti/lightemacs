@@ -66,40 +66,13 @@ instead of wrapping around.")
 ;;
 ;; (require/load-any couldn't find some files when those files are already
 ;; compiled.)
-(defvar lightemacs--load-module-method 'require)
 
 (defun lightemacs-load-modules (modules)
   "Load all modules listed in MODULES."
-  (when (boundp 'lightemacs--modules-dir)
-    (let ((modules-dir lightemacs--modules-dir))
-      (dolist (feature-symbol modules)
-        (let* ((feature-str (format "%s" feature-symbol))
-               ;; (feature-symbol (intern feature-str))
-               (module-file (expand-file-name (format "%s.el" feature-str)
-                                              modules-dir)))
-          (lightemacs-verbose-message "Load: %s" feature-str)
-
-          (cond
-           ((eq lightemacs--load-module-method 'require)
-            (require feature-symbol))
-
-           ((eq lightemacs--load-module-method 'require-file)
-            (require feature-symbol module-file))
-
-           ((eq lightemacs--load-module-method 'load-any)
-            (load (expand-file-name feature-str modules-dir)
-                  nil
-                  (not (bound-and-true-p init-file-debug))))
-
-           ((eq lightemacs--load-module-method 'load-file)
-            (load module-file
-                  nil
-                  (not (bound-and-true-p init-file-debug))
-                  'nosuffix))
-
-           (t
-            (error "Invalid method for lightemacs--load-module-method %s"
-                   lightemacs--load-module-method))))))))
+  (dolist (feature-symbol modules)
+    (let* ((feature-str (format "%s" feature-symbol)))
+      (lightemacs-verbose-message "Load: %s" feature-str)
+      (require feature-symbol))))
 
 ;;; Useful macros
 

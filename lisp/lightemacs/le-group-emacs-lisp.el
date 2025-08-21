@@ -15,24 +15,24 @@
 
 (require 'lightemacs)
 
-(lightemacs-load-modules '(;; Enable `highlight-defined-mode', a minor mode
-                           ;; that highlights defined Emacs Lisp symbols in
-                           ;; `emacs-lisp-mode' buffers.
-                           le-highlight-defined
+;; Enable `highlight-defined-mode', a minor mode
+;; that highlights defined Emacs Lisp symbols in
+;; `emacs-lisp-mode' buffers.
+(require 'le-highlight-defined)
 
-                           ;; Enable `page-break-lines-mode', a minor mode
-                           ;; that visually replaces ASCII form-feed
-                           ;; characters (typically `^L`) with horizontal line
-                           ;; separators in buffers.
-                           le-page-break-lines
+;; Enable `page-break-lines-mode', a minor mode
+;; that visually replaces ASCII form-feed
+;; characters (typically `^L`) with horizontal line
+;; separators in buffers.
+(require 'le-page-break-lines)
 
-                           ;; Enable `aggressive-indent-mode', a minor mode
-                           ;; that Elisp code remains consistently indented.
-                           ;; It automatically reindents after every
-                           ;; modification, providing greater reliability than
-                           ;; `electric-indent-mode'.
-                           ;; le-group-emacs-lisp
-                           le-aggressive-indent))
+;; Enable `aggressive-indent-mode', a minor mode
+;; that Elisp code remains consistently indented.
+;; It automatically reindents after every
+;; modification, providing greater reliability than
+;; `electric-indent-mode'.
+;; le-group-emacs-lisp
+(require 'le-aggressive-indent)
 
 (provide 'le-group-emacs-lisp)
 
