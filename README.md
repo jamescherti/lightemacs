@@ -21,11 +21,11 @@ Here are some of the modules that are enabled by default:
 - Save and restore the default theme using the `lightemacs-theme-name` variable.
 - Functions for automatically detecting indentation offsets.
 - Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
+- **le-expand-region**: Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 
 Optionally, the following features can be enabled by loading additional Lightemacs modules:
 - **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
 - **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
-- **le-expand-region**: Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - **le-yasnippet** and **le-yasnippet**: A template system that enhances text editing by enabling users to define and use snippets.
 - **le-vterm** A faster, more efficient terminal.
@@ -75,7 +75,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Detect indentation offset (le-dtrt-indent)](#detect-indentation-offset-le-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules Disabled by Default](#modules-disabled-by-default)
-    - [Disabled by default: group-evil (Vim Keybindings)](#disabled-by-default-group-evil-vim-keybindings)
+    - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
     - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
@@ -460,7 +460,7 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 
 ## Modules Disabled by Default
 
-### Disabled by default: group-evil (Vim Keybindings)
+### Disabled by default: le-group-evil (Vim Keybindings)
 
 By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 
