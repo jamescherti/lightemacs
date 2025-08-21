@@ -49,7 +49,13 @@
   (unbind-key "M-?" paredit-mode-map)  ; Conflict with xref-find-references
   (unbind-key "M-;" paredit-mode-map)  ; Conflict with comment-dwim
   (unbind-key "M-s" paredit-mode-map)  ; Conflict with Consult
-  (unbind-key "RET" paredit-mode-map))
+  (unbind-key "RET" paredit-mode-map)
+
+  ;; Prevent ElDoc help from disappearing in the minibuffer when executing
+  ;; certain Evil commands in Emacs.
+  (eval-after-load 'eldoc
+    '(when (fboundp 'eldoc-add-command-completions)
+       (eldoc-add-command-completions "paredit-"))))
 
 (provide 'le-paredit)
 
