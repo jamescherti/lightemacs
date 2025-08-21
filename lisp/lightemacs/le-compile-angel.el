@@ -34,9 +34,6 @@
   :diminish compile-angel-on-load-mode
 
   :init
-  ;; Compile-angel replaces `package-native-compile'
-  (setq package-native-compile nil)
-
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
   (setq compile-angel-debug init-file-debug)
