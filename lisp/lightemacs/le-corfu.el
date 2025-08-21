@@ -24,10 +24,6 @@
   :init
   (add-hook 'lightemacs-on-first-input-hook #'global-corfu-mode)
 
-  (setq tab-always-indent 'complete)
-
-  (setq corfu-auto t)
-
   ;; Select first candidate, except for directories
   (setq corfu-preselect 'directory)
 
@@ -38,6 +34,8 @@
                                   eat-mode
                                   vterm-mode)
                              t))
+  (setq tab-always-indent 'complete)
+  (setq corfu-auto nil)
   (setq corfu-auto-delay 0.24)
   (setq corfu-auto-prefix 2)
   (setq corfu-count 16)
