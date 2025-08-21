@@ -14,6 +14,10 @@
 
 ;;; Code:
 
+(defvar lightemacs-dired-omit-parent-directory nil
+  "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.
+The user can navigate to the parent directory by pressing the - key instead.")
+
 (use-package dired
   :ensure nil
   :commands (dired
@@ -29,7 +33,6 @@
   ;; modification date, etc.) and all the files in the `dired-omit-files'
   ;; regular expression for a cleaner display.
   (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-  (setq dired-omit-files (concat "\\`[.]\\'\\|^\\.git$"))
 
   ;; Other options
   (setq dired-movement-style 'bounded-files)
@@ -55,6 +58,11 @@
                                  "\\|^\\.project\\(?:ile\\)?\\'"
                                  "\\|^flycheck_.*"
                                  "\\|^flymake_.*"))
+
+  :config
+  (when lightemacs-dired-omit-parent-directory
+    (setq dired-omit-files (concat dired-omit-files "\\|^\\.\\.$")))
+
   (add-hook 'dired-mode-hook #'dired-omit-mode))
 
 (provide 'le-dired)

@@ -242,7 +242,7 @@ The main benefit of *prescient.el* is that it adaptively orders candidates based
 
 ### Enhanced File Management (le-dired and le-dired-filter)
 
-* **le-dired**: Configures Dired to display directories first.
+* **le-dired**: Configures Dired to list directories first and to omit specific files and directories (e.g., `.git`, `*.pyc`, `*.o`). Optionally, the parent directory (`..`) can be hidden by setting the `lightemacs-dired-omit-parent-directory` variable to `t`; the `..` directory is unnecessary because pressing the `-` key navigates to the parent directory.
 * **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
 
 The **le-dired-filter** module only enables `dired-filter-by-omit`:
