@@ -17,6 +17,7 @@
 ;;; Code:
 
 (require 'le-diminish)
+(require 'le-dired)
 
 ;;; Variables
 
@@ -44,16 +45,16 @@ For instance:
              dired-filter-by-git-ignored
              dired-filter-by-git-ignored
              dired-filter-by-dot-files
-             dired-filter-by-omit))
+             dired-filter-by-omit)
+  :init
+  ;; Enable filters
+  (defun lightemacs-dired-filter--enable-filters ()
+    "Enable `dired' filters."
+    (when (derived-mode-p 'dired-mode)
+      (run-hooks 'lightemacs-dired-filter-setup-hook)))
 
-;; Enable filters
-
-(defun le-dired-filter--enable-filters ()
-  "Enable `dired' filters."
-  (when (derived-mode-p 'dired-mode)
-    (run-hooks 'lightemacs-dired-filter-setup-hook)))
-
-(add-hook 'dired-mode-hook #'le-dired-filter--enable-filters)
+  (remove-hook 'dired-mode-hook #'dired-omit-mode)  ; Managed by dired-filter
+  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--enable-filters))
 
 ;; Toggle filters
 
@@ -73,7 +74,7 @@ restoring the full file listing."
       (if lightemacs--dired-filter-filters-enabled
           (setq lightemacs--dired-filter-filters-enabled nil)
         (setq lightemacs--dired-filter-filters-enabled t)
-        (le-dired-filter--enable-filters))
+        (lightemacs-dired-filter--enable-filters))
 
       (when dired-file
         (dired-goto-file dired-file)))))

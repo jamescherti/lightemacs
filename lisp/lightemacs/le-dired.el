@@ -25,13 +25,18 @@
              dired-hide-details-mode)
 
   :init
+  ;; Dired buffers: Automatically hide file details (permissions, size,
+  ;; modification date, etc.) and all the files in the `dired-omit-files'
+  ;; regular expression for a cleaner display.
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
   (setq dired-omit-files (concat "\\`[.]\\'\\|^\\.git$"))
+
+  ;; Other options
   (setq dired-movement-style 'bounded-files)
 
   ;; Group directories first
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))
-
   (let ((args "--group-directories-first -ahlv"))
     (when (or (eq system-type 'darwin) (eq system-type 'berkeley-unix))
       (if-let* ((gls (executable-find "gls")))
@@ -40,16 +45,11 @@
     (when args
       (setq dired-listing-switches args)))
 
-  ;; Dired buffers: Automatically hide file details (permissions, size,
-  ;; modification date, etc.) and all the files in the `dired-omit-files'
-  ;; regular expression for a cleaner display.
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-
   (setq dired-omit-files (concat "\\`[.]\\'"
                                  "\\|\\(?:\\.js\\)?\\.meta\\'"
                                  "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
                                  "\\|^\\.DS_Store\\'"
-                                 "\\|^\\.\\(?:svn\\|git\\)\\'"
+                                 "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
                                  "\\|^\\.ccls-cache\\'"
                                  "\\|^__pycache__\\'"
                                  "\\|^\\.project\\(?:ile\\)?\\'"
