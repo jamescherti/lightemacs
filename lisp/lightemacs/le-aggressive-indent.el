@@ -36,6 +36,8 @@
   :config
   (add-to-list 'aggressive-indent-protected-commands 'evil-redo)
   (add-to-list 'aggressive-indent-protected-commands 'evil-undo)
+  (add-to-list 'aggressive-indent-protected-commands 'evil-commentary)
+  (add-to-list 'aggressive-indent-protected-commands 'comment-or-uncomment-region)
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim)
   (add-to-list 'aggressive-indent-protected-commands 'comment-box)
 
