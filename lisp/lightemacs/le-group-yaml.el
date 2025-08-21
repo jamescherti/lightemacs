@@ -36,7 +36,7 @@ Tree-sitter is available.")
         (not (if (fboundp 'treesit-language-available-p)
                  (treesit-language-available-p 'yaml)
                nil)))
-    (lightemacs-load-modules '(le-yaml-mode)))
+    (require 'le-yaml-mode))
 
 ;; Fix `yaml-ts-mode' comment-start-skip
 
