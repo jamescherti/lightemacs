@@ -72,32 +72,39 @@
   (setq evil-want-C-u-delete t)
   (setq evil-want-C-w-delete t)
 
+  ;; Synchronize `evil-shift-width' with `tab-width'.
+  (defun lightemacs-evil--update-shift-width ()
+    "Synchronize `evil-shift-width' with `tab-width'.
+  Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
+    (unless (derived-mode-p 'org-mode)
+      (setq-local evil-shift-width tab-width)))
+  (add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
+
   :config
   ;; Pressing '-' opens a `dired' buffer for the directory containing the
   ;; current file, automatically selecting that file. This provides a fast way
   ;; to navigate and manage files without manually switching to the directory.
-  (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory))
+  (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory)
 
-;; Fixes: https://github.com/emacs-evil/evil/pull/1980
-(eval-after-load 'eldoc
-  ;; The following prevents ElDoc help from disappearing in the minibuffer when
-  ;; executing certain Evil commands in Emacs, such as
-  ;; `evil-delete-back-to-indentation', `evil-delete-backward-word',
-  ;; `evil-insert', `evil-insert-line', `evil-append', `evil-append-line'...
-  '(when (fboundp 'eldoc-add-command-completions)
-     (eldoc-add-command-completions "evil-window-")
+  ;; Prevent ElDoc help from disappearing in the minibuffer when executing
+  ;; certain Evil commands in Emacs.
+  ;; Fixes: https://github.com/emacs-evil/evil/pull/1980
+  (eval-after-load 'eldoc
+    '(when (fboundp 'eldoc-add-command-completions)
+       ;; `evil-delete-back-to-indentation', `evil-delete-backward-word',
+       ;; `evil-insert', `evil-insert-line', `evil-append', `evil-append-line'...
 
-     ;; Add evil-delete commands to ElDoc to display help while deleting using:
-     ;; - evil-delete-backward-word (C-w)
-     ;; - evil-delete-back-to-indentation (C-u)
-     ;; - evil-delete-backward-char-and-join (C-h)
-     ;; - And other evil-delete-* commands.
-     (eldoc-add-command-completions "evil-delete-")
+       ;; Add evil-delete commands to ElDoc to display help while deleting using:
+       ;; - evil-delete-backward-word (C-w)
+       ;; - evil-delete-back-to-indentation (C-u)
+       ;; - evil-delete-backward-char-and-join (C-h)
+       ;; - And other evil-delete-* commands.
+       (eldoc-add-command-completions "evil-delete-")
 
-     ;; Add insert and append commands to ElDoc to display help after switching
-     ;; to insert mode.
-     (eldoc-add-command-completions "evil-insert-")
-     (eldoc-add-command-completions "evil-append-")))
+       ;; Add insert and append commands to ElDoc to display help after switching
+       ;; to insert mode.
+       (eldoc-add-command-completions "evil-insert-")
+       (eldoc-add-command-completions "evil-append-"))))
 
 (provide 'le-evil)
 
