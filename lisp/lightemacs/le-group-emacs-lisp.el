@@ -34,6 +34,21 @@
 ;; le-group-emacs-lisp
 (require 'le-aggressive-indent)
 
+;; elisp-refs provides an advanced code search for Emacs Lisp.
+;;
+;; It locates references to functions, macros, or variables by parsing the code
+;; rather than performing a simple text search. This ensures accuracy, avoiding
+;; false matches caused by comments or variables sharing names with functions.
+(require 'le-elisp-refs)
+
+;; `easy-escape-minor-mode' improves the readability of Emacs Lisp regular
+;; expressions through syntax highlighting and character composition.
+;; Specifically, it hides double backslashes before regexp special characters
+;; '()|', renders other doubled backslashes as single ones, and highlights them
+;; with a distinct face. These transformations affect only the visual
+;; presentation; the underlying buffer text remains unchanged.
+(require 'le-easy-escape)
+
 (provide 'le-group-emacs-lisp)
 
 ;; Local variables:
