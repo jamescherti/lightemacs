@@ -29,15 +29,11 @@
 
 ;;; Code:
 
-(defvar lightemacs-indent-bars-mode-hook-list nil
-  "The modes where `indent-bars-mode' is activated.")
+(require 'lightemacs)
 
 (use-package indent-bars
   :commands indent-bars-mode
   :init
-  (dolist (hook lightemacs-indent-bars-mode-hook-list)
-    (add-hook hook #'indent-bars-mode))
-
   ;; Setting this to nil is not reliable
   ;; https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples
   (setq indent-bars-prefer-character t)
@@ -46,6 +42,10 @@
   ;; blank lines causes cursor movement issues when moving downward, resulting
   ;; in abrupt shifts of the window start or cursor position.
   (setq indent-bars-display-on-blank-lines nil))
+
+;; Define the global variable `lightemacs-indent-bars-mode-hook-list'
+(lightemacs-enable-local-mode indent-bars-mode
+                              nil)
 
 (provide 'le-indent-bars)
 

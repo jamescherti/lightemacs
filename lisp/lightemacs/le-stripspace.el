@@ -15,21 +15,12 @@
 
 ;;; Code:
 
-(defvar lightemacs-stripspace-local-mode-hook-list '(;; Programming
-                                                     prog-mode-hook
-                                                     ;; Text files
-                                                     text-mode-hook
-                                                     ;; Configuration files
-                                                     conf-mode-hook)
-  "The modes where `stripspace-local-mode' is activated.")
+(require 'lightemacs)
 
 (use-package stripspace
   :commands stripspace-local-mode
 
   :init
-  (dolist (hook lightemacs-stripspace-local-mode-hook-list)
-    (add-hook hook #'stripspace-local-mode))
-
   ;; The `stripspace-only-if-initially-clean' option:
   ;; - nil to always delete trailing whitespace.
   ;; - Non-nil to only delete whitespace when the buffer is clean initially.
@@ -43,6 +34,15 @@
   ;; saved file, the cursor remains in the same position, ensuring a consistent
   ;; editing experience without affecting cursor placement.
   (setq stripspace-restore-column t))
+
+;; Define the global variable `lightemacs-stripspace-local-mode-hook-list'
+(lightemacs-enable-local-mode stripspace-local-mode
+                              '(;; Programming
+                                prog-mode-hook
+                                ;; Text files
+                                text-mode-hook
+                                ;; Configuration files
+                                conf-mode-hook))
 
 (provide 'le-stripspace)
 

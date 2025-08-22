@@ -14,11 +14,26 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package markdown-toc
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc
              markdown-toc--toc-already-present-p))
+
+;;; Restore window-start after generating a table of contents
+
+(defun le-markdown-toc--markdown-toc-generate-toc-advice (fn &rest args)
+  "FN is the advised function. ARGS are the function arguments."
+  (lightemacs-save-window-start
+    (lightemacs-save-window-hscroll
+      (save-mark-and-excursion
+        (apply fn args)))))
+
+(with-eval-after-load 'markdown-toc
+  (advice-add 'markdown-toc-generate-toc :around
+              #'le-markdown-toc--markdown-toc-generate-toc-advice))
 
 (provide 'le-markdown-toc)
 

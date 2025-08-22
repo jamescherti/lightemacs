@@ -58,6 +58,7 @@ instead of wrapping around.")
 
 (defmacro lightemacs-verbose-message (&rest args)
   "Display a verbose message with the same ARGS arguments as `message'."
+  (declare (indent 0) (debug t))
   `(progn
      (when lightemacs-verbose
        (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
@@ -156,6 +157,117 @@ If the buffer is not visiting a file, opens the current `default-directory'."
               (when (fboundp 'dired-goto-file)
                 (dired-goto-file file))
               (lightemacs-recenter-maybe))))))))
+
+
+;;; Useful macros
+
+(defmacro lightemacs-recenter-if-out-of-view (&rest body)
+  "Execute BODY and recenter if point is outside the original window bounds."
+  (declare (indent 0) (debug t))
+  (let ((window-start (make-symbol "window-start"))
+        (window-end (make-symbol "window-end")))
+    `(let ((,window-start (window-start))
+           (,window-end (window-end)))
+       (unwind-protect
+           (progn ,@body)
+         (let ((point (point)))
+           (when (not (and (>= point ,window-start)
+                           (<= point ,window-end)))
+             (recenter)))))))
+
+(defmacro lightemacs-save-window-hscroll (&rest body)
+  "Execute BODY while preserving the horizontal scroll of the selected window.
+
+This macro saves the current `window-hscroll` of the selected window.
+After BODY executes, the horizontal scroll is restored exactly, leaving
+the vertical position and window start unchanged.
+
+Use this macro when you only need to maintain horizontal alignment,
+without restoring the lines above the cursor."
+  (declare (indent 0) (debug t))
+  (let ((window (make-symbol "window"))
+        (hscroll (make-symbol "window-hscroll")))
+    `(let ((,window (selected-window))
+           (,hscroll (window-hscroll)))
+       (unwind-protect
+           (progn ,@body)
+         (set-window-hscroll ,window ,hscroll)))))
+
+(defmacro lightemacs-save-window-start (&rest body)
+  "Preserve and restore `window-start' relative to the lines above the cursor.
+
+This macro saves the first visible line in the selected window. After BODY
+executes, the window is restored so that the same lines remain visible above the
+cursor, maintaining the relative vertical position of the cursor within the
+window.
+
+To also restore the mark, this macro can be combined with
+`save-mark-and-excursion'. For preservation of horizontal scroll only (hscroll),
+consider using the `lightemacs-save-window-hscroll' macro.
+
+Example:
+  (lightemacs-save-window-hscroll
+        (lightemacs-save-window-start
+          (save-mark-and-excursion
+            ;;; Add code here
+            t))
+
+This macro is appropriate when it is necessary to maintain the visual layout of
+the buffer, particularly if BODY may scroll the window or otherwise move the
+cursor."
+  (declare (indent 0) (debug t))
+  (let ((window (make-symbol "window"))
+        (buffer (make-symbol "buffer"))
+        (restore-window-settings-p (make-symbol "restore-window-settings-p"))
+        (lines-before-cursor (make-symbol "lines-before-cursor")))
+    `(let* ((,window (selected-window))
+            (,buffer (window-buffer ,window))
+            (,restore-window-settings-p (eq ,buffer
+                                            (current-buffer)))
+            (,lines-before-cursor nil))
+       (when ,restore-window-settings-p
+         (with-current-buffer ,buffer
+           (setq ,lines-before-cursor (count-screen-lines
+                                       (save-excursion
+                                         (goto-char (window-start))
+                                         (beginning-of-visual-line)
+                                         (point))
+                                       (save-excursion
+                                         (beginning-of-visual-line)
+                                         (point))
+                                       nil
+                                       ,window))))
+       (unwind-protect
+           (progn ,@body)
+         (when ,restore-window-settings-p
+           (set-window-start ,window
+                             ;; Dotimes and (line-move-visual -1) is more accurate
+                             ;; than (line-move-visual N).
+                             (save-excursion
+                               (dotimes (_ ,lines-before-cursor)
+                                 (condition-case nil
+                                     (let ((line-move-visual t)
+                                           (line-move-ignore-invisible t))
+                                       (line-move -1))
+                                   (error nil)))
+
+                               (beginning-of-visual-line)
+                               (point))))))))
+
+;;; Macros
+
+(defmacro lightemacs-enable-local-mode (mode hook-list)
+  "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
+
+Defines `lightemacs-MODE-hook-list` initialized with HOOK-LIST.
+Each hook in HOOK-LIST will have MODE added via `add-hook`."
+  (declare (indent 0) (debug (symbolp sexp)))
+  (let ((var (intern (format "lightemacs-%s-hook-list" mode))))
+    `(progn
+       (defvar ,var ,hook-list
+         ,(format "Hooks where `%s' is enabled." mode))
+       (dolist (hook ,var)
+         (add-hook hook #',mode)))))
 
 ;;; Provide lightemacs
 

@@ -21,26 +21,10 @@
 
 ;;; Code:
 
-(defvar lightemacs-paredit-mode-hook-list '(emacs-lisp-mode-hook
-                                            lisp-interaction-mode-hook
-                                            lisp-mode-hook
-                                            eval-expression-minibuffer-setup-hook
-                                            scheme-mode-hook
-                                            ielm-mode-hook
-                                            cider-repl-mode-hook
-                                            clojure-mode-hook
-                                            geiser-repl-mode-hook
-                                            racket-mode-hook
-                                            racket-repl-mode-hook
-                                            slime-repl-mode-hook)
-  "The modes where `paredit-mode' is activated.")
+(require 'lightemacs)
 
 (use-package paredit
   :commands paredit-mode
-
-  :init
-  (dolist (hook lightemacs-paredit-mode-hook-list)
-    (add-hook hook #'paredit-mode))
 
   :config
   (unbind-key "M-?" paredit-mode-map)  ; Conflict with xref-find-references
@@ -53,6 +37,21 @@
   (eval-after-load 'eldoc
     '(when (fboundp 'eldoc-add-command-completions)
        (eldoc-add-command-completions "paredit-"))))
+
+;; This defines the global variable `lightemacs-paredit-mode-hook-list'
+(lightemacs-enable-local-mode paredit-mode
+                              '(emacs-lisp-mode-hook
+                                lisp-interaction-mode-hook
+                                lisp-mode-hook
+                                eval-expression-minibuffer-setup-hook
+                                scheme-mode-hook
+                                ielm-mode-hook
+                                cider-repl-mode-hook
+                                clojure-mode-hook
+                                geiser-repl-mode-hook
+                                racket-mode-hook
+                                racket-repl-mode-hook
+                                slime-repl-mode-hook))
 
 (provide 'le-paredit)
 

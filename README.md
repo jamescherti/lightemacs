@@ -83,9 +83,11 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
     - [Other modules disabled by default](#other-modules-disabled-by-default)
   - [Other Features](#other-features)
-  - [Useful variables](#useful-variables)
+  - [Useful variables, functions, and macros](#useful-variables-functions-and-macros)
+    - [Useful variables](#useful-variables)
     - [Ellipsis](#ellipsis)
     - [Cycling](#cycling)
+    - [Useful functions and macros](#useful-functions-and-macros)
   - [Author and license](#author-and-license)
   - [Links](#links)
 
@@ -330,6 +332,23 @@ By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and 
                                                    conf-mode-hook))
 ```
 
+Here are some customizations for `stripspace-local-mode`:
+```elisp
+;; The `stripspace-only-if-initially-clean' option:
+;; - nil to always delete trailing whitespace.
+;; - Non-nil to only delete whitespace when the buffer is clean initially. (The
+;; initial cleanliness check is performed when `stripspace-local-mode' is
+;; enabled.)
+(setq stripspace-only-if-initially-clean nil)
+
+;; Enabling `stripspace-restore-column' preserves the cursor's column position
+;; even after stripping spaces. This is useful in scenarios where you add extra
+;; spaces and then save the file. Although the spaces are removed in the saved
+;; file, the cursor remains in the same position, ensuring a consistent editing
+;; experience without affecting cursor placement.
+(setq stripspace-restore-column t)
+```
+
 ### Save History (le-savehist)
 
 The **le-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
@@ -431,7 +450,6 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 
 ### Other Modules Enabled by Default
 
-- **le-helpful**: An enhanced replacement for the built-in help system.
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
   ```elisp
@@ -647,7 +665,9 @@ In addition to modules, Lightemacs provides the following features:
 - Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
 - Lightemacs configures `use-package` to automatically refresh Emacs package archives once per session when installing a package that isn’t already present. This allows missing packages to be installed without manually running `package-refresh-contents` and prevents repeated refreshes in the same session, resolving issues such as invalid GPG keys when installing packages after the package list has become outdated.
 
-## Useful variables
+## Useful variables, functions, and macros
+
+### Useful variables
 
 ### Ellipsis
 Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
@@ -683,6 +703,10 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/conf
 ;; Evil search candidates.
 (setq lightemacs-cycle t)
 ```
+
+### Useful functions and macros
+
+-
 
 ## Author and license
 

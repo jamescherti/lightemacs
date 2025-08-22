@@ -277,13 +277,6 @@
 ;; files created in external environments.
 (require 'le-dtrt-indent)
 
-;; Helpful enhances the built-in help system by providing richer, more
-;; contextual information about symbols, functions, variables, and macros.
-;; Unlike the default `describe-*` commands, Helpful integrates additional
-;; metadata such as source code, documentation strings, keybindings, references,
-;; and interactive examples, all within a unified and easily navigable buffer.
-(require 'le-helpful)
-
 ;; The wgrep (Writable Grep) package enables you to convert a grep, rgrep,
 ;; Embark Export buffers into an editable interface. It allows in-place
 ;; modification of matched lines within the results buffer, which can then be

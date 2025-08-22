@@ -26,14 +26,14 @@
 
 ;;; Code:
 
-(defvar lightemacs-easyescape-minor-mode-hook-list '(emacs-lisp-mode-hook)
-  "The modes where `easy-escape-minor-mode' is activated.")
+(require 'lightemacs)
 
 (use-package easy-escape
-  :commands easy-escape-minor-mode
-  :init
-  (dolist (hook lightemacs-easyescape-minor-mode-hook-list)
-    (add-hook hook #'easy-escape-minor-mode)))
+  :commands easy-escape-minor-mode)
+
+;; Define the global variable `lightemacs-easy-escape-minor-mode-hook-list'
+(lightemacs-enable-local-mode easy-escape-minor-mode
+                              '(emacs-lisp-mode-hook))
 
 (provide 'le-easy-escape)
 
