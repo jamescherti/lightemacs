@@ -277,6 +277,13 @@
 ;; files created in external environments.
 (require 'le-dtrt-indent)
 
+;; Helpful enhances the built-in help system by providing richer, more
+;; contextual information about symbols, functions, variables, and macros.
+;; Unlike the default `describe-*` commands, Helpful integrates additional
+;; metadata such as source code, documentation strings, keybindings, references,
+;; and interactive examples, all within a unified and easily navigable buffer.
+(require 'le-helpful)
+
 (provide 'le-group-default-modules)
 
 ;; Local variables:

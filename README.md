@@ -30,7 +30,6 @@ Optionally, the following features can be enabled by loading additional Lightema
 - **le-yasnippet** and **le-yasnippet**: A template system that enhances text editing by enabling users to define and use snippets.
 - **le-vterm** A faster, more efficient terminal.
 - **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
-- **le-helpful**: An enhanced replacement for the built-in help system.
 - **le-paredit**: A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions.
 - And many others.
 
@@ -432,6 +431,7 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 
 ### Other Modules Enabled by Default
 
+- **le-helpful**: An enhanced replacement for the built-in help system.
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for multiple programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump' does not parse code semantically, which makes it lightweight and fast, but sometimes less precise. It integrates with popular navigation packages like `xref', allowing implementations with minimal configuration. users to jump to definitions, references, or
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
   ```elisp
