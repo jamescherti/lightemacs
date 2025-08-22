@@ -23,7 +23,8 @@
 
 ;; By default, `dired-filter-by-omit' excludes `"."`, which is generally
 ;; unnecessary.
-(defvar lightemacs-dired-filter-setup-hook '(dired-filter-by-omit)
+(defvar lightemacs-dired-filter-setup-hook '(dired-filter-by-omit
+                                             dired-filter-by-dot-files)
   "Hook of Dired filter functions to apply when entering `dired-mode'.
 
 For instance:
@@ -78,6 +79,9 @@ restoring the full file listing."
 
       (when dired-file
         (dired-goto-file dired-file)))))
+
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-toggle))
 
 (provide 'le-dired-filter)
 

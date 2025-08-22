@@ -16,7 +16,7 @@ Here are some of the modules that are enabled by default:
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
 - Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - Additional file types: Markdown, Yaml, and Org.
-- Dired: Configure dired to group directories first and enable dired-filter to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`.
+- **Dired:** Configure Dired to display directories first and enable `dired-filter` to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`. **Usage:** Use `C-c f` to toggle the filters on and off, showing or hiding the relevant files.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
 - Save and restore the default theme using the `lightemacs-theme-name` variable.
 - Functions for automatically detecting indentation offsets.
