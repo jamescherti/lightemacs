@@ -16,8 +16,7 @@
 ;; sophisticated language-aware tools, `dumb-jump' does not parse code
 ;; semantically, which makes it lightweight and fast, but sometimes less
 ;; precise. It integrates with popular navigation packages like `xref', allowing
-;; users to jump to definitions, references, or implementations with minimal
-;; configuration.
+;; users to jump to definitions or references.
 ;;
 ;; URL: https://github.com/jacktasia/dumb-jump
 
