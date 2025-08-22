@@ -21,14 +21,14 @@
                                                      text-mode-hook
                                                      ;; Configuration files
                                                      conf-mode-hook)
-  "The modes where `easy-escape-minor-mode' is activated.")
+  "The modes where `stripspace-local-mode' is activated.")
 
 (use-package stripspace
   :commands stripspace-local-mode
 
   :init
   (dolist (hook lightemacs-stripspace-local-mode-hook-list)
-    (add-hook hook #'easy-escape-minor-mode))
+    (add-hook hook #'stripspace-local-mode))
 
   ;; The `stripspace-only-if-initially-clean' option:
   ;; - nil to always delete trailing whitespace.

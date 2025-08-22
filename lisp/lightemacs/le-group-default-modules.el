@@ -284,6 +284,16 @@
 ;; and interactive examples, all within a unified and easily navigable buffer.
 (require 'le-helpful)
 
+;; The wgrep (Writable Grep) package enables you to convert a grep, rgrep,
+;; Embark Export buffers into an editable interface. It allows in-place
+;; modification of matched lines within the results buffer, which can then be
+;; propagated back to the corresponding files upon confirmation. This
+;; facilitates precise, bulk edits across multiple files efficiently,
+;; eliminating the need to open each file individually, and effectively
+;; transforms the grep results buffer into a controlled, multi-file editing
+;; environment.
+(require 'le-wgrep)
+
 (provide 'le-group-default-modules)
 
 ;; Local variables:
