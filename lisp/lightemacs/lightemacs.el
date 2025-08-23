@@ -254,8 +254,6 @@ cursor."
                                (beginning-of-visual-line)
                                (point))))))))
 
-;;; Macros
-
 (defmacro lightemacs-enable-local-mode (mode hook-list)
   "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
 
