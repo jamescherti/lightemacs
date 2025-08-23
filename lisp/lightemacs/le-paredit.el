@@ -23,35 +23,38 @@
 
 (require 'lightemacs)
 
-(use-package paredit
+(lightemacs-use-package
+  paredit
   :commands paredit-mode
 
   :config
-  (unbind-key "M-?" paredit-mode-map)  ; Conflict with xref-find-references
-  (unbind-key "M-;" paredit-mode-map)  ; Conflict with comment-dwim
-  (unbind-key "M-s" paredit-mode-map)  ; Conflict with Consult
-  (unbind-key "RET" paredit-mode-map)
-
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing
   ;; certain Evil commands in Emacs.
-  (eval-after-load 'eldoc
-    '(when (fboundp 'eldoc-add-command-completions)
-       (eldoc-add-command-completions "paredit-"))))
+  (with-eval-after-load 'eldoc
+    (eldoc-add-command-completions "paredit-")))
+
+;; lightemacs-%s-inhibit-keybindings
+(lightemacs-define-keybindings paredit
+  (with-eval-after-load 'paredit
+    (unbind-key "M-?" paredit-mode-map)  ; Conflict with xref-find-references
+    (unbind-key "M-;" paredit-mode-map)  ; Conflict with comment-dwim
+    (unbind-key "M-s" paredit-mode-map)  ; Conflict with Consult
+    (unbind-key "RET" paredit-mode-map)))
 
 ;; This defines the global variable `lightemacs-paredit-mode-hook-list'
-(lightemacs-enable-local-mode paredit-mode
-                              '(emacs-lisp-mode-hook
-                                lisp-interaction-mode-hook
-                                lisp-mode-hook
-                                eval-expression-minibuffer-setup-hook
-                                scheme-mode-hook
-                                ielm-mode-hook
-                                cider-repl-mode-hook
-                                clojure-mode-hook
-                                geiser-repl-mode-hook
-                                racket-mode-hook
-                                racket-repl-mode-hook
-                                slime-repl-mode-hook))
+(lightemacs-define-mode-hook-list paredit-mode
+                                  '(emacs-lisp-mode-hook
+                                    lisp-interaction-mode-hook
+                                    lisp-mode-hook
+                                    eval-expression-minibuffer-setup-hook
+                                    scheme-mode-hook
+                                    ielm-mode-hook
+                                    cider-repl-mode-hook
+                                    clojure-mode-hook
+                                    geiser-repl-mode-hook
+                                    racket-mode-hook
+                                    racket-repl-mode-hook
+                                    slime-repl-mode-hook))
 
 (provide 'le-paredit)
 

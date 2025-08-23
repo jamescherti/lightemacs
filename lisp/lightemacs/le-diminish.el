@@ -16,7 +16,10 @@
 
 ;;; Code:
 
-(use-package diminish
+(require 'lightemacs)
+
+(lightemacs-use-package
+  diminish
   :commands (diminish
              diminish-undo
              diminished-modes))

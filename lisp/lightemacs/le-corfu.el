@@ -17,13 +17,14 @@
 
 ;;; Code:
 
-(use-package corfu
+(require 'lightemacs)
+
+(lightemacs-use-package
+  corfu
   :commands (global-corfu-mode
              corfu-mode)
 
   :init
-  (add-hook 'lightemacs-on-first-input-hook #'global-corfu-mode)
-
   ;; Select first candidate, except for directories
   (setq corfu-preselect 'directory)
 
@@ -55,6 +56,9 @@
 
   ;; Configure handling of exact matches
   (setq corfu-on-exact-match nil))
+
+(lightemacs-define-mode-hook-list global-corfu-mode
+                                  '(lightemacs-on-first-input-hook))
 
 (provide 'le-corfu)
 

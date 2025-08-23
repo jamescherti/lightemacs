@@ -9,25 +9,19 @@
 
 ;;; Commentary:
 
-;; Evil is an extensible vi layer for Emacs. It emulates the main features of
-;; Vim, and provides facilities for writing custom extensions.
+;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
+;; completion by dynamically reordering candidates based on frequency and
+;; recency, making it faster to select commonly used options while preserving
+;; consistent, predictable filtering.
 ;;
-;; This configures the packages evil and evil-collection.
-;;
-;; URL: https://github.com/emacs-evil/evil
+;; URL: https://github.com/radian-software/prescient.el
 
 ;;; Code:
 
-;; prescient.el is a library for sorting and filtering lists of candidates, such
-;; as those presented by packages like Vertico or Corfu.
-;;
-;; The main benefit of prescient.el is that it adaptively orders candidates
-;; based on both frequency and recency of selection, making frequently used
-;; options appear first without sacrificing predictable filtering results.
+(require 'lightemacs)
 
-;; URL: https://github.com/radian-software/prescient.el
-
-(use-package prescient
+(lightemacs-use-package
+  prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)
 

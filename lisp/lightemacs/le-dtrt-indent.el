@@ -18,11 +18,15 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'le-diminish)
+
 (defvar lightemacs-dtrt-indent-inhibit nil
   "Non-nil inhibits automatic indentation detection via `dtrt-indent'.
 This variable can be set buffer-locally to prevent `dtrt-indent' from adjusting
 the indentation settings automatically in the current buffer.")
 
+;; TODO: use macro
 (defvar lightemacs-dtrt-indent-excluded-modes '(python-mode
                                                 python-ts-mode
                                                 yaml-mode
@@ -32,7 +36,9 @@ the indentation settings automatically in the current buffer.")
 Modes in this list will not trigger `dtrt-indent' when buffers of those types
 are opened or their major mode changes.")
 
-(use-package dtrt-indent
+(lightemacs-use-package
+  dtrt-indent
+  :diminish dtrt-indent-mode
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode
              dtrt-indent-adapt

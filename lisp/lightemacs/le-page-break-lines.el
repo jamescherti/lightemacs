@@ -24,13 +24,14 @@
 
 (require 'lightemacs)
 
-(use-package page-break-lines
+(lightemacs-use-package
+  page-break-lines
   :commands (page-break-lines-mode
              global-page-break-lines-mode))
 
 ;; Define the global variable `lightemacs-page-break-lines-mode-hook-list'
-(lightemacs-enable-local-mode page-break-lines-mode
-                              '(emacs-lisp-mode-hook))
+(lightemacs-define-mode-hook-list page-break-lines-mode
+                                  '(emacs-lisp-mode-hook))
 
 (provide 'le-page-break-lines)
 

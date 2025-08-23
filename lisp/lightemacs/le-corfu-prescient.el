@@ -36,15 +36,14 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
+(require 'lightemacs)
 (require 'le-corfu)
 (require 'le-prescient)
 
-(use-package corfu-prescient
+(lightemacs-use-package
+  corfu-prescient
   :commands corfu-prescient-mode
-
   :init
-  (add-hook 'corfu-mode-hook #'corfu-prescient-mode)
-
   (setq corfu-prescient-enable-sorting t)
 
   ;; Do not override `display-sort-function'
@@ -52,6 +51,9 @@
 
   ;; Use Orderless instead
   (setq corfu-prescient-enable-filtering nil))
+
+(lightemacs-define-mode-hook-list corfu-prescient-mode
+                                  '(corfu-mode-hook))
 
 (provide 'le-corfu-prescient)
 

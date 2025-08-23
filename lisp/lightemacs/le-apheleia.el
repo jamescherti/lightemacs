@@ -33,7 +33,10 @@
 
 ;;; Code:
 
-(use-package apheleia
+(require 'lightemacs)
+
+(lightemacs-use-package
+  apheleia
   :commands (apheleia-mode
              apheleia-global-mode))
 

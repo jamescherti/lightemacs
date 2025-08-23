@@ -15,6 +15,9 @@
 
 ;;; Misc
 
+;; TODO: move to m.e.
+(setq eldoc-documentation-strategy #'eldoc-documentation-compose)
+
 ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 ;; (setq byte-compile-warnings '(not lexical))
 ;; (setq warning-suppress-types '((lexical-binding)))
@@ -36,7 +39,7 @@
 ;;; Tools (ripgrep and fd)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-lib)
+(require 'le-core-cli-tools)
 (when lightemacs--ripgrep-executable
   (setq xref-search-program 'ripgrep))
 
@@ -47,6 +50,7 @@
 ;;; Minibuffer
 
 (setq minibuffer-default-prompt-format " [default %s]")
+;; TODO use macro?
 (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
 
 ;;; Mode line
@@ -57,6 +61,7 @@
 
 ;;; Frame
 
+;; TODO use macro?
 (add-hook 'after-init-hook #'window-divider-mode)
 
 (provide 'le-default-settings)

@@ -19,7 +19,10 @@
 
 ;;; Code:
 
-(use-package elisp-refs
+(require 'lightemacs)
+
+(lightemacs-use-package
+  elisp-refs
   :commands (elisp-refs-function
              elisp-refs-macro
              elisp-refs-variable

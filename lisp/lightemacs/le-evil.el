@@ -20,7 +20,8 @@
 
 (require 'lightemacs)
 
-(use-package evil
+(lightemacs-use-package
+  evil
   :commands evil-mode
   :functions define-key
   :init
@@ -28,8 +29,6 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t)
-
-  (add-hook 'after-init-hook #'evil-mode)
 
   (setq evil-search-wrap lightemacs-cycle)
 
@@ -81,11 +80,6 @@
   (add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
 
   :config
-  ;; Pressing '-' opens a `dired' buffer for the directory containing the
-  ;; current file, automatically selecting that file. This provides a fast way
-  ;; to navigate and manage files without manually switching to the directory.
-  (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory)
-
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing
   ;; certain Evil commands in Emacs.
   ;; Fixes: https://github.com/emacs-evil/evil/pull/1980
@@ -105,6 +99,16 @@
        ;; to insert mode.
        (eldoc-add-command-completions "evil-insert-")
        (eldoc-add-command-completions "evil-append-"))))
+
+(lightemacs-define-keybindings evil
+  (with-eval-after-load 'evil
+    ;; Pressing '-' opens a `dired' buffer for the directory containing the
+    ;; current file, automatically selecting that file. This provides a fast way
+    ;; to navigate and manage files without manually switching to the directory.
+    (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory)))
+
+(lightemacs-define-mode-hook-list evil-mode
+                                  '(after-init-hook))
 
 (provide 'le-evil)
 

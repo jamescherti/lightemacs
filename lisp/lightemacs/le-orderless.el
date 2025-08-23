@@ -26,7 +26,10 @@
 
 ;;; Code:
 
-(use-package orderless
+(require 'lightemacs)
+
+(lightemacs-use-package
+  orderless
   :init
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)

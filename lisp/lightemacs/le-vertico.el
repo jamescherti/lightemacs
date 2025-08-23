@@ -21,12 +21,9 @@
 
 (require 'lightemacs)
 
-(use-package vertico
+(lightemacs-use-package
+  vertico
   :commands vertico-mode
-  :bind (:map vertico-map
-              ("C-d" . vertico-exit-input)
-              ("C-j" . vertico-next)
-              ("C-k" . vertico-previous))
 
   :init
   (setq vertico-scroll-margin 0)
@@ -34,8 +31,6 @@
   (setq vertico-resize 'grow-only)
   (setq vertico-cycle lightemacs-cycle)
   (setq vertico-count-format nil) ; No prefix with number of entries
-
-  (add-hook 'lightemacs-on-first-input-hook #'vertico-mode)
 
   :config
   ;; Prefix current candidate with arrow
@@ -50,6 +45,15 @@
     (if (= vertico--index index)
         (concat #("► " 0 2 (face vertico-current)) cand)
       (concat #("_ " 0 1 (display " ")) cand))))
+
+(lightemacs-define-mode-hook-list vertico-mode
+                                  '(lightemacs-on-first-input-hook))
+
+(lightemacs-define-keybindings vertico
+  (with-eval-after-load 'vertico
+    (define-key vertico-map (kbd "C-d") #'vertico-exit-input)
+    (define-key vertico-map (kbd "C-j") #'vertico-next)
+    (define-key vertico-map (kbd "C-k") #'vertico-previous)))
 
 ;;; Provide
 (provide 'le-vertico)

@@ -24,7 +24,8 @@
 
 (require 'lightemacs)
 
-(use-package aggressive-indent
+(lightemacs-use-package
+  aggressive-indent
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
 
@@ -40,9 +41,9 @@
 
 ;; This defines the global variable
 ;; `lightemacs-aggressive-indent-mode-hook-list'
-(lightemacs-enable-local-mode aggressive-indent-mode
-                              '(emacs-lisp-mode-hook
-                                scheme-mode-hook))
+(lightemacs-define-mode-hook-list aggressive-indent-mode
+                                  '(emacs-lisp-mode-hook
+                                    scheme-mode-hook))
 
 (provide 'le-aggressive-indent)
 

@@ -14,15 +14,16 @@
 
 ;;; Code:
 
-(use-package winner
+(require 'lightemacs)
+
+(lightemacs-use-package
+  winner
   :ensure nil
   :commands (winner-mode
              winner-undo
              winner-redo)
 
   :init
-  (add-hook 'lightemacs-on-first-buffer-hook #'winner-mode)
-
   ;; (setq winner-ring-size 40)
   ;; (setq winner-dont-bind-my-keys t)
   (setq winner-boring-buffers '("*Completions*"
@@ -40,6 +41,9 @@
                                 "*Buffer List*"
                                 "*Ibuffer*"
                                 "*esh command on file*")))
+
+(lightemacs-define-mode-hook-list winner-mode
+                                  '(lightemacs-on-first-buffer-hook))
 
 (provide 'le-winner)
 

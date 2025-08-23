@@ -23,14 +23,19 @@
 
 ;;; Code:
 
-(use-package treesit-auto
+(require 'lightemacs)
+
+(lightemacs-use-package
+  treesit-auto
   :commands global-treesit-auto-mode
   :functions treesit-auto-add-to-auto-mode-alist
   :init
   (setq treesit-auto-install 'prompt)
-  (add-hook 'after-init-hook 'global-treesit-auto-mode)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all))
+
+(lightemacs-define-mode-hook-list global-treesit-auto-mode
+                                  '(after-init-hook))
 
 (provide 'le-treesit-auto)
 

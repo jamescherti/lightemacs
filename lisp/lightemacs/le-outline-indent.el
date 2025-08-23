@@ -23,9 +23,11 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (require 'le-diminish)
 
-(use-package outline-indent
+(lightemacs-use-package
+  outline-indent
   :diminish outline-indent-minor-mode
   :commands (outline-indent-minor-mode
              outline-indent-insert-heading)

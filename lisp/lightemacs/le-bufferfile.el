@@ -34,7 +34,10 @@
 
 ;;; Code:
 
-(use-package bufferfile
+(require 'lightemacs)
+
+(lightemacs-use-package
+  bufferfile
   :commands (bufferfile-rename
              bufferfile-delete
              bufferfile-copy

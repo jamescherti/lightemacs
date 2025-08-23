@@ -17,7 +17,8 @@
 
 (require 'lightemacs)
 
-(use-package stripspace
+(lightemacs-use-package
+  stripspace
   :commands stripspace-local-mode
 
   :init
@@ -36,13 +37,13 @@
   (setq stripspace-restore-column t))
 
 ;; Define the global variable `lightemacs-stripspace-local-mode-hook-list'
-(lightemacs-enable-local-mode stripspace-local-mode
-                              '(;; Programming
-                                prog-mode-hook
-                                ;; Text files
-                                text-mode-hook
-                                ;; Configuration files
-                                conf-mode-hook))
+(lightemacs-define-mode-hook-list stripspace-local-mode
+                                  '(;; Programming
+                                    prog-mode-hook
+                                    ;; Text files
+                                    text-mode-hook
+                                    ;; Configuration files
+                                    conf-mode-hook))
 
 (provide 'le-stripspace)
 

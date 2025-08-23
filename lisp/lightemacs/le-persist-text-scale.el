@@ -35,15 +35,19 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (require 'le-diminish)
 
-(use-package persist-text-scale
+(lightemacs-use-package
+  persist-text-scale
   :diminish persist-text-scale-mode
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
   :init
-  (add-hook 'after-init-hook #'persist-text-scale-mode)
   (setq text-scale-mode-step 1.07))
+
+(lightemacs-define-mode-hook-list persist-text-scale-mode
+                                  '(after-init-hook))
 
 (provide 'le-persist-text-scale)
 

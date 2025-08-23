@@ -16,16 +16,21 @@
 
 ;;; Code:
 
-(use-package autorevert
+(require 'lightemacs)
+
+(lightemacs-use-package
+  autorevert
   :ensure nil
   :commands (auto-revert-mode
              global-auto-revert-mode
              auto-revert-handler)
 
   :init
-  (add-hook 'lightemacs-on-first-file-hook #'global-auto-revert-mode)
   (setq auto-revert-interval 4)
   (setq auto-revert-use-notify t))
+
+(lightemacs-define-mode-hook-list global-auto-revert-mode
+                                  '(lightemacs-on-first-file-hook))
 
 (provide 'le-autorevert)
 

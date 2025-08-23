@@ -18,13 +18,18 @@
 
 ;;; Code:
 
-(use-package evil-surround
+(require 'lightemacs)
+
+(lightemacs-use-package
+  evil-surround
   :commands (evil-Surround-edit
              evil-surround-edit
              evil-surround-region
-             global-evil-surround-mode)
-  :init
-  (add-hook 'evil-mode-hook #'global-evil-surround-mode))
+             evil-surround-mode
+             global-evil-surround-mode))
+
+(lightemacs-define-mode-hook-list global-evil-surround-mode
+                                  '(evil-mode-hook))
 
 (provide 'le-evil-surround)
 

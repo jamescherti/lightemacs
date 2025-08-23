@@ -17,7 +17,11 @@
 
 ;;; Code:
 
-(use-package yasnippet-snippets
+(require 'lightemacs)
+(require 'le-yasnippet)
+
+(lightemacs-use-package
+  yasnippet-snippets
   :after yasnippet)
 
 (provide 'le-yasnippet-snippets)

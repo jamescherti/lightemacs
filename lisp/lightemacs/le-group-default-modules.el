@@ -287,6 +287,19 @@
 ;; environment.
 (require 'le-wgrep)
 
+;; The `which-key' mode dynamically displays available keybindings in a popup or
+;; dedicated buffer as a key sequence is entered. It facilitates discovery and
+;; retention of key combinations by presenting context-sensitive completions,
+;; thereby enhancing navigation through complex or highly customized keymaps.
+(require 'le-which-key)
+
+;; Show line numbers on the left side of the buffer. The numbers update
+;; automatically as you add, remove, or scroll lines, but they don’t change the
+;; actual text.
+(require 'le-display-line-numbers)
+
+;;; Provide
+
 (provide 'le-group-default-modules)
 
 ;; Local variables:

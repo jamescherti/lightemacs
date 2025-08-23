@@ -22,9 +22,11 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (require 'le-diminish)
 
-(use-package gcmh
+(lightemacs-use-package
+  gcmh
   :diminish gcmh-mode
   :commands gcmh-mode
   :init

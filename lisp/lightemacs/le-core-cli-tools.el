@@ -1,4 +1,4 @@
-;;; le-lib.el --- le-lib -*- lexical-binding: t -*-
+;;; le-core-cli-tools.el --- le-core-cli-tools -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -20,10 +20,10 @@
         fdfind-executable
       (executable-find "fd" 'remote))))
 
-(provide 'le-lib)
+(provide 'le-core-cli-tools)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; le-lib.el ends here
+;;; le-core-cli-tools.el ends here

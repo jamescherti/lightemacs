@@ -16,6 +16,9 @@
 
 ;;; Code:
 
+;;; Require
+
+(require 'lightemacs)
 (require 'le-diminish)
 (require 'le-dired)
 
@@ -40,7 +43,8 @@ For instance:
 
 ;;; Use-package dired-filter
 
-(use-package dired-filter
+(lightemacs-use-package
+  dired-filter
   :diminish dired-filter-mode
   :commands (dired-filter-pop-all
              dired-filter-by-git-ignored
@@ -80,8 +84,9 @@ restoring the full file listing."
       (when dired-file
         (dired-goto-file dired-file)))))
 
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-toggle))
+(lightemacs-define-keybindings dired-filter
+  (with-eval-after-load 'dired
+    (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-toggle)))
 
 (provide 'le-dired-filter)
 

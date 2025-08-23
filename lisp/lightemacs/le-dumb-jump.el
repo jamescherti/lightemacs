@@ -23,9 +23,12 @@
 ;;; Code:
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-lib)
+(require 'le-core-cli-tools)
 
-(use-package dumb-jump
+(require 'lightemacs)
+
+(lightemacs-use-package
+  dumb-jump
   :commands dumb-jump-xref-activate
 
   :init

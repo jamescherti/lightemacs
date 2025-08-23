@@ -29,11 +29,14 @@
 
 ;; Variables
 
-(defvar lightemacs-theme-name 'doom-one
+;; Alternative:
+;; - doom-one (Package: doom-themes)
+(defvar lightemacs-theme-name 'ef-melissa-light
   "Default theme to load during initialization, if available.
 Set to nil to disable loading a theme at startup.")
 
-(defvar lightemacs-theme-package 'doom-themes
+;; Alternative: doom-themes
+(defvar lightemacs-theme-package 'ef-themes
   "Theme package to install and use for `lightemacs-theme-name'.
 Set to nil to disable installing this package at startup.")
 
@@ -49,7 +52,7 @@ Set to nil to disable installing this package at startup.")
 (defun lightemacs-theme-install ()
   "Install and configure `lightemacs-theme-package' using `use-package'."
   (when lightemacs-theme-package
-    (eval `(use-package ,lightemacs-theme-package
+    (eval `(lightemacs-use-package ,lightemacs-theme-package
              :demand t))))
 
 ;;; Main

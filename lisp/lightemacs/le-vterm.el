@@ -20,7 +20,10 @@
 
 ;;; Code:
 
-(use-package vterm
+(require 'lightemacs)
+
+(lightemacs-use-package
+  vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
              vterm-send-string

@@ -15,16 +15,22 @@
 
 ;;; Code:
 
-(use-package marginalia
+(require 'lightemacs)
+
+(lightemacs-use-package
+  marginalia
   :commands (marginalia-mode
              marginalia-cycle)
-  :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle))
 
   :init
-  (add-hook 'lightemacs-on-first-input-hook #'marginalia-mode)
   (setq marginalia-max-relative-age 0)
   (setq marginalia-align 'right))
+
+(lightemacs-define-keybindings marginalia
+  (define-key minibuffer-local-map (kbd "M-A") #'marginalia-cycle))
+
+(lightemacs-define-mode-hook-list marginalia-mode
+                                  '(lightemacs-on-first-input-hook))
 
 (provide 'le-marginalia)
 

@@ -18,13 +18,12 @@
 
 ;;; Code:
 
-;;; evil-collection
-
+(require 'lightemacs)
 (require 'le-evil)
 (require 'le-diminish)
 
-
-(use-package evil-collection
+(lightemacs-use-package
+  evil-collection
   :if (not noninteractive)
   :diminish (evil-collection-unimpaired-mode)
   :after evil

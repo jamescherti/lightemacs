@@ -32,17 +32,17 @@
 ;; of prescient.el is that it adaptively orders candidates based on both
 ;; frequency and recency of selection, making frequently used options appear
 ;; first without sacrificing predictable filtering results.)
-
+;;
 ;; URL: https://github.com/radian-software/prescient.el
 
+(require 'lightemacs)
 (require 'le-vertico)
 (require 'le-prescient)
 
-(use-package vertico-prescient
+(lightemacs-use-package
+  vertico-prescient
   :after vertico
   :commands vertico-prescient-mode
-  :hook
-  (vertico-mode . vertico-prescient-mode)
   :init
   (setq vertico-prescient-enable-sorting t)
 
@@ -51,6 +51,9 @@
 
   ;; Use Orderless instead
   (setq vertico-prescient-enable-filtering nil))
+
+(lightemacs-define-mode-hook-list vertico-prescient-mode
+                                  '(vertico-mode-hook))
 
 (provide 'le-vertico-prescient)
 

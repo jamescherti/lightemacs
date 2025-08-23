@@ -13,10 +13,14 @@
 
 ;;; Code:
 
-(use-package org-appear
-  :commands org-appear-mode
-  :init
-  (add-hook 'org-mode-hook #'org-appear-mode))
+(require 'lightemacs)
+
+(lightemacs-use-package
+  org-appear
+  :commands org-appear-mode)
+
+(lightemacs-define-mode-hook-list org-appear-mode
+                                  '(org-mode-hook))
 
 (provide 'le-org-appear)
 

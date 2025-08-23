@@ -2,7 +2,12 @@
 
 The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which enhance Emacs by improving completion, navigation, editing efficiency, and overall usability. It offers a minimalist alternative to frameworks like Doom Emacs or Spacemacs, allowing full customization to adapt the environment to your specific workflow.
 
-Lightemacs provides a range of modules that can be selectively enabled or disabled according to your preferences, with all modules ensuring packages are loaded only when needed, **enabling exceptionally fast, deferred startup**.
+**Features:**
+
+- Fast startup with optimized default settings.
+- Minimalistic, distraction-free user interface.
+- Modular design: Lightemacs provides a set of modules that can be enabled or disabled individually. Each module loads its packages only when needed, ensuring fast, deferred startup. By default, only essential modules are enabled; if the user disables modules in `config.el`, Lightemacs activates no local/global modes.
+* Lightemacs modules load packages lazily, keeping them inactive until explicitly enabled or triggered by hooks or file associations. This optimizes startup performance and minimizes resource consumption.
 
 Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimize Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
 
@@ -97,6 +102,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
 
 - Emacs >= 29.1
 - Git
+- Optional: [ripgrep](https://github.com/BurntSushi/ripgrep) and [fd](which-key-allow-multiple-replacements) (Useful for `consult-ripgrep` and `consult-fd` commands)
 
 ## Install Lightemacs
 
@@ -108,7 +114,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
 
 Execute the following command install this repository into `~/.emacs.d`:
 ```
-git clone https://github.com/jamescherti/lightemacs ~/.emacs.d
+git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.emacs.d
 ```
 
 ### Alternative: Install Lightemacs into ~/.lightemacs.d
@@ -117,7 +123,7 @@ To install *Lightemacs* in a non-default directory, use the `--init-directory` E
 
 1. Clone the repository into `~/.lightemacs.d/` using:
    ```
-   git clone https://github.com/jamescherti/lightemacs ~/.lightemacs.d
+   git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.lightemacs.d
    ```
 
 2. Start Emacs with the new configuration directory:
@@ -477,6 +483,7 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 - **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 - **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
+- **le-which-key**: The built-in which-key package dynamically displays available keybindings in a popup or dedicated buffer as a key sequence is entered. It facilitates discovery and retention of key combinations by presenting context-sensitive completions, thereby enhancing navigation through complex or highly customized keymaps.
 
 ## Modules Disabled by Default
 
@@ -632,6 +639,13 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 
 Here are a few other modules disabled by default:
 
+- **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-hook-list`. For example:
+  ```elisp
+  (setq lightemacs-diff-hl-mode-hook-list '(prog-mode-hook))
+  ```
+
+- **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don’t change the actual text.
+
 - **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```elisp
   ;; Enable the `le-helpful' module
@@ -658,6 +672,8 @@ Elisp file-type modules are disabled by default:
   (add-to-list 'lightemacs-modules 'le-paredit)
   ```
   (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`. The list of hooks that activate this mode can be customized by modifying `lightemacs-paredit-mode-hook-list`.)
+
+- *le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated. (This behavior can be customized using the `lightemacs-enhanced-evil-paredit-mode-hook-list` variable.)
 
 ## Other Features
 

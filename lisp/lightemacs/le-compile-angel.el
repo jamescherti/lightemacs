@@ -24,9 +24,11 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (require 'le-diminish)
 
-(use-package compile-angel
+(lightemacs-use-package
+  compile-angel
   :demand t
   ;; :commands (compile-angel-on-load-mode
   ;;            compile-angel-on-save-local-mode

@@ -15,13 +15,18 @@
 
 ;;; Code:
 
-(use-package saveplace
+(require 'lightemacs)
+
+(lightemacs-use-package
+  saveplace
   :ensure nil
   :commands save-place-mode
 
   :init
-  (setq save-place-limit 500)
-  (add-hook 'lightemacs-on-first-file-hook #'save-place-mode))
+  (setq save-place-limit 500))
+
+(lightemacs-define-mode-hook-list save-place-mode
+                                  '(lightemacs-on-first-file-hook))
 
 (provide 'le-saveplace)
 

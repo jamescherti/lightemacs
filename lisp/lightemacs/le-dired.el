@@ -14,11 +14,14 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (defvar lightemacs-dired-omit-parent-directory nil
   "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.
 The user can navigate to the parent directory by pressing the - key instead.")
 
-(use-package dired
+(lightemacs-use-package
+  dired
   :ensure nil
   :commands (dired
              dired-goto-file

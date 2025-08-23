@@ -21,7 +21,10 @@
 
 ;;; Code:
 
-(use-package embark
+(require 'lightemacs)
+
+(lightemacs-use-package
+  embark
   :commands (embark-act
              embark-export
              embark-collect
@@ -29,13 +32,6 @@
              embark-bindings
              embark-prefix-help-command
              embark-eldoc-first-target)
-
-  :bind
-  (("C-." . embark-act)
-   ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings)
-   ("C-c C-;" . embark-export)
-   ("C-c C-l" . embark-collect))
 
   :init
   ;; Replace the key help with a completing-read interface
@@ -53,6 +49,13 @@
   ;;                nil
   ;;                (window-parameters (mode-line-format . none))))
   )
+
+(lightemacs-define-keybindings embark
+  (global-set-key (kbd "C-.") #'embark-act)
+  (global-set-key (kbd "C-;") #'embark-dwim)
+  (global-set-key (kbd "C-h B") #'embark-bindings)
+  (global-set-key (kbd "C-c C-;") #'embark-export)
+  (global-set-key (kbd "C-c C-l") #'embark-collect))
 
 ;;; Provide
 (provide 'le-embark)

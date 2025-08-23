@@ -13,13 +13,17 @@
 
 ;;; Code:
 
-(use-package elec-pair
+(require 'lightemacs)
+
+(lightemacs-use-package
+  elec-pair
   :ensure nil
   :commands (electric-pair-mode
              electric-pair-local-mode
-             electric-pair-delete-pair)
-  :init
-  (add-hook 'lightemacs-on-first-buffer-hook #'electric-pair-mode))
+             electric-pair-delete-pair))
+
+(lightemacs-define-mode-hook-list electric-pair-mode
+                                  '(lightemacs-on-first-buffer-hook))
 
 ;;; Provide
 (provide 'le-elec-pair)

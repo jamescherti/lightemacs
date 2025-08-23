@@ -54,6 +54,16 @@ This enabled or disable cycling in plugins such as Vertico and Consult.
 When nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
+(defvar lightemacs-use-package-disabled-packages nil
+  "A list of package symbols that are disabled.
+Packages listed here will be ignored by `lightemacs-use-package', preventing
+their declaration and configuration.")
+
+(defvar lightemacs-use-package-refresh-contents t
+  "If non-nil, `lightemacs-use-package' may refresh package contents once.
+Refresh package contents when `lightemacs-use-package-refresh-contents' is
+non-nil and the package is not installed.")
+
 ;;; Functions
 
 (defmacro lightemacs-verbose-message (&rest args)
@@ -254,11 +264,36 @@ cursor."
                                (beginning-of-visual-line)
                                (point))))))))
 
-(defmacro lightemacs-enable-local-mode (mode hook-list)
+;;; Modules Macros
+
+(defmacro lightemacs-define-keybindings (module &rest body)
+  "Define key bindings for MODULE with BODY, unless inhibited.
+
+This macro introduces an inhibition variable named
+`lightemacs-MODULE-inhibit-keybindings'. When non-nil, BODY will
+not be evaluated, thereby preventing the installation of the
+specified key bindings."
+  (declare (indent 1) (debug t))
+  (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings" module))))
+    `(progn
+       (defvar ,inhibit-var nil
+         ,(format
+           "Non-nil prevents Lightemacs from configuring key bindings for `%s'.
+
+When this variable is set to a non-nil value, any key bindings that would
+normally be defined for `%s' through `lightemacs-define-*' macros are skipped.
+This allows users to disable or override the default Lightemacs key
+configuration for that mode without modifying the macro definition itself."
+           module
+           module))
+       (unless ,inhibit-var
+         ,@body))))
+
+(defmacro lightemacs-define-mode-hook-list (mode hook-list)
   "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
 
-Defines `lightemacs-MODE-hook-list` initialized with HOOK-LIST.
-Each hook in HOOK-LIST will have MODE added via `add-hook`."
+Defines `lightemacs-MODE-hook-list' initialized with HOOK-LIST.
+Each hook in HOOK-LIST will have MODE added via `add-hook'."
   (declare (indent 0) (debug (symbolp sexp)))
   (let ((var (intern (format "lightemacs-%s-hook-list" mode))))
     `(progn
@@ -266,6 +301,52 @@ Each hook in HOOK-LIST will have MODE added via `add-hook`."
          ,(format "Hooks where `%s' is enabled." mode))
        (dolist (hook ,var)
          (add-hook hook #',mode)))))
+
+;;; lightemacs-use-package
+
+(defvar lightemacs--use-package-refreshed nil
+  "Whether package contents have been refreshed for `lightemacs-use-package'.")
+
+(defun lightemacs--before-use-package (name args)
+  "Run this function before `lightemacs-use-package' if :ensure is non-nil.
+NAME is the symbol identifying the package, and ARGS is the plist of keywords
+passed to `lightemacs-use-package'."
+  (when-let* ((ensure (cond
+                       ((memq :ensure args)
+                        (plist-get args :ensure))
+
+                       (t
+                        use-package-always-ensure))))
+    ;; Refresh package NAME contents once before installing a missing package.
+    (when lightemacs-use-package-refresh-contents
+      (when (and (not lightemacs--use-package-refreshed)
+                 (not (package-installed-p name)))
+        (lightemacs-verbose-message
+          "Refresh package contents before installing %s"
+          name)
+        (package-refresh-contents)
+        (setq lightemacs--use-package-refreshed t)))))
+
+(defmacro lightemacs-use-package (name &rest plist)
+  "Configure an Emacs package, skipping it if disabled or unavailable.
+NAME is the package symbol.
+PLIST contains keyword arguments for `use-package`.
+
+This macro checks:
+1. If NAME is present in `lightemacs-use-package-disabled-packages', the package
+is skipped.
+2. Refresh package contents when `lightemacs-use-package-refresh-contents' is
+non-nil and the package is not installed."
+  (declare (indent 0) (debug t))
+  (unless (or (memq name lightemacs-use-package-disabled-packages)
+              ;; During byte-compilation, `use-package' loads packages to avoid
+              ;; errors. If a user disables packages, this causes missing-file
+              ;; errors, so we check availability at compile time.
+              (and (bound-and-true-p byte-compile-current-file)
+                   (not (locate-library (symbol-name name)))))
+    `(progn
+       (lightemacs--before-use-package ',name ',plist)
+       (use-package ,name ,@plist))))
 
 ;;; Provide lightemacs
 

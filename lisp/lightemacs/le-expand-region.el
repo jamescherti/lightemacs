@@ -23,7 +23,10 @@
 
 ;;; Code:
 
-(use-package expand-region
+(require 'lightemacs)
+
+(lightemacs-use-package
+  expand-region
   :commands (er/expand-region
              er/mark-word
              er/mark-symbol
@@ -38,9 +41,10 @@
              er/mark-url
              er/mark-email
              er/mark-defun)
-  :bind
-  ("C-=" . er/expand-region)
   :commands er/expand-region)
+
+(lightemacs-define-keybindings expand-region
+  (global-set-key (kbd "C-=") #'er/expand-region))
 
 (provide 'le-expand-region)
 

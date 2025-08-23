@@ -18,7 +18,10 @@
 
 ;;; Code:
 
-(use-package markdown-mode
+(require 'lightemacs)
+
+(lightemacs-use-package
+  markdown-mode
   :commands (gfm-mode
              gfm-view-mode
              markdown-mode
@@ -26,11 +29,12 @@
 
   :mode (("\\.markdown\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
-         ("README\\.md\\'" . gfm-mode))
+         ("README\\.md\\'" . gfm-mode)))
 
-  :bind
-  (:map markdown-mode-map
-        ("C-c C-e" . markdown-do)))
+(lightemacs-define-keybindings markdown-mode
+  (with-eval-after-load 'markdown-mode
+    (define-key markdown-mode-map (kbd "C-c C-e") #'markdown-do)))
+
 
 (provide 'le-markdown-mode)
 

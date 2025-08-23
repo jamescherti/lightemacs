@@ -13,7 +13,10 @@
 
 ;;; Code:
 
-(use-package org
+(require 'lightemacs)
+
+(lightemacs-use-package
+  org
   :commands (org-mode
              org-indent-mode
              org-set-tags-command

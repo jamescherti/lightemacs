@@ -18,7 +18,10 @@
 
 ;;; Code:
 
-(use-package undo-fu-session
+(require 'lightemacs)
+
+(lightemacs-use-package
+  undo-fu-session
   :commands undo-fu-session-global-mode
   :init
   (add-hook 'after-init-hook #'undo-fu-session-global-mode))

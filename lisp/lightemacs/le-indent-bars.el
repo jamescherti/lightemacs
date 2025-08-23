@@ -31,7 +31,8 @@
 
 (require 'lightemacs)
 
-(use-package indent-bars
+(lightemacs-use-package
+  indent-bars
   :commands indent-bars-mode
   :init
   ;; Setting this to nil is not reliable
@@ -44,8 +45,8 @@
   (setq indent-bars-display-on-blank-lines nil))
 
 ;; Define the global variable `lightemacs-indent-bars-mode-hook-list'
-(lightemacs-enable-local-mode indent-bars-mode
-                              nil)
+(lightemacs-define-mode-hook-list indent-bars-mode
+                                  nil)
 
 (provide 'le-indent-bars)
 

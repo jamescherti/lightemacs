@@ -23,7 +23,10 @@
 
 ;;; Code:
 
-(use-package recentf
+(require 'lightemacs)
+
+(lightemacs-use-package
+  recentf
   :ensure nil
   :commands (recentf-mode
              recentf-cleanup)
@@ -43,6 +46,7 @@
       (recentf-cleanup)))
 
   :init
+  ;; TODO use (lightemacs-define-mode-hook-list -mode '())
   (add-hook 'lightemacs-on-first-buffer-hook #'le-recentf--setup)
 
   (setq recentf-auto-cleanup (if (daemonp) 300 'never))
