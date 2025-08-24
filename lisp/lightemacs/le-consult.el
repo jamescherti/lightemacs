@@ -95,6 +95,11 @@
   (require 'consult-xref)
   (require 'consult-info)
 
+  ;; TODO defer
+  (require 'consult-register)
+  (require 'consult-compile)
+  (require 'consult-kmacro)
+
   (consult-customize
    consult-theme :preview-key '(:debounce 0.1 any)
    consult-ripgrep consult-git-grep consult-grep consult-man

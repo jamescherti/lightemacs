@@ -22,6 +22,7 @@
 ;; (setq byte-compile-warnings '(not lexical))
 ;; (setq warning-suppress-types '((lexical-binding)))
 (setq warning-minimum-level :error)
+;; (setq warning-minimum-level (if minimal-emacs-debug :warning :emergency))
 
 (setq-default display-fill-column-indicator-character ?\N{U+2502})
 ;; (setq-default display-fill-column-indicator-character ?┊)

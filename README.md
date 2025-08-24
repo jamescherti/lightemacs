@@ -11,7 +11,7 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimize Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
 
-![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
 Here are some of the modules that are enabled by default:
 
@@ -222,6 +222,126 @@ Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion 
 - **le-orderless**: Enable flexible, unordered matching (Orderless) for Vertico. This allows you to type multiple parts of a candidate in any order, making it easier to find functions, variables, or files even if you only remember fragments. It speeds up navigation by removing the need to type exact prefixes. For example, typing "main test" matches "test_main.py", "read me" matches "README.md".
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
+
+Keybindings for Consult:
+
+* `C-c M-x` → `consult-mode-command`
+  Invoke a command specific to the current major mode using Consult.
+
+* `C-c h` → `consult-history`
+  Browse and select from the minibuffer history.
+
+* `C-c m` → `consult-man`
+  Access Unix manual pages interactively.
+
+* `C-c i` → `consult-info`
+  Search and navigate Info documentation.
+
+* `Info-search` remapped → `consult-info`
+  Redirects standard Info search to use Consult.
+
+* `C-x M-:` → `consult-complex-command`
+  Browse and execute complex commands from history.
+
+* `C-x b` → `consult-buffer`
+  Switch between buffers interactively.
+
+* `C-x 4 b` → `consult-buffer-other-window`
+  Open a buffer in another window.
+
+* `C-x 5 b` → `consult-buffer-other-frame`
+  Open a buffer in a new frame.
+
+* `C-x t b` → `consult-buffer-other-tab`
+  Open a buffer in a new tab (if tab support is enabled).
+
+* `C-x r b` → `consult-bookmark`
+  Jump to a bookmark using Consult’s interface.
+
+* `C-x p b` → `consult-project-buffer`
+  Switch buffers within the current project.
+
+* `M-#` → `consult-register-load`
+  Load a value from a register.
+
+* `M-'` → `consult-register-store`
+  Store a value into a register.
+
+* `C-M-#` → `consult-register`
+  Access all register operations interactively.
+
+* `M-y` → `consult-yank-pop`
+  Browse and yank from kill-ring entries.
+
+* `M-g e` → `consult-compile-error`
+  Navigate compilation errors.
+
+* `M-g f` → `consult-flymake`
+  Jump to Flymake diagnostics.
+
+* `M-g g` / `M-g M-g` → `consult-goto-line`
+  Jump to a specific line number.
+
+* `M-g o` → `consult-outline`
+  Navigate headings in the current buffer.
+
+* `M-g m` → `consult-mark`
+  Jump to local marks.
+
+* `M-g k` → `consult-global-mark`
+  Jump to global marks across buffers.
+
+* `M-g i` → `consult-imenu`
+  Jump to an Imenu entry in the current buffer.
+
+* `M-g I` → `consult-imenu-multi`
+  Jump to Imenu entries across multiple buffers.
+
+* `M-s d` → `consult-find`
+  Locate files in the current project or directory.
+
+* `M-s c` → `consult-locate`
+  Search files using `locate` database.
+
+* `M-s g` → `consult-grep`
+  Search for a string using `grep`.
+
+* `M-s G` → `consult-git-grep`
+  Perform `git grep` in the repository.
+
+* `M-s r` → `consult-ripgrep`
+  Perform `ripgrep` searches.
+
+* `M-s l` → `consult-line`
+  Jump to a line matching a query in the buffer.
+
+* `M-s L` → `consult-line-multi`
+  Search for multiple lines simultaneously.
+
+* `M-s k` → `consult-keep-lines`
+  Keep only lines matching a pattern.
+
+* `M-s u` → `consult-focus-lines`
+  Focus on lines matching a pattern.
+
+* `M-s e` → `consult-isearch-history`
+  Browse previous search strings from `isearch`.
+
+**Isearch Mode Specific Bindings:**
+
+* `M-e`, `M-s e` → `consult-isearch-history`
+  Access previous search history during incremental search.
+
+* `M-s l` → `consult-line`
+  Jump to matching lines while in `isearch`.
+
+* `M-s L` → `consult-line-multi`
+  Search multiple lines during `isearch`.
+
+**Minibuffer Specific Bindings:**
+
+* `M-s`, `M-r` → `consult-history`
+  Access minibuffer history while inside the minibuffer.
 
 ### Better completion (le-corfu and le-cape)
 
@@ -457,6 +577,8 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 ### Other Modules Enabled by Default
 
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
+- **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
+- **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
   ```elisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)

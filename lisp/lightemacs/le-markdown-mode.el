@@ -29,7 +29,15 @@
 
   :mode (("\\.markdown\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
-         ("README\\.md\\'" . gfm-mode)))
+         ("README\\.md\\'" . gfm-mode))
+
+  :init
+  (setq markdown-fontify-code-blocks-natively t
+        markdown-asymmetric-header t
+        markdown-gfm-additional-languages '("sh")
+        markdown-italic-underscore t
+        markdown-make-gfm-checkboxes-buttons t
+        markdown-fontify-whole-heading-line t))
 
 (lightemacs-define-keybindings markdown-mode
   (with-eval-after-load 'markdown-mode

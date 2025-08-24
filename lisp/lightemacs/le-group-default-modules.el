@@ -298,6 +298,20 @@
 ;; actual text.
 (require 'le-display-line-numbers)
 
+;; Avy is an Emacs package that provides a fast and efficient method for
+;; navigating to visible text in a buffer by jumping directly to characters,
+;; words, or lines. It allows the user to type a sequence of characters or
+;; select from highlighted targets to move the cursor instantly, reducing the
+;; need for repetitive cursor motions or scrolling.
+(require 'le-avy)
+
+;; Ace Window provides a fast and efficient method for switching between windows
+;; in a frame. Instead of cycling through windows sequentially or using more
+;; cumbersome key sequences, Ace Window displays a single-letter label on each
+;; visible window, allowing the user to jump directly to a target window by
+;; pressing the corresponding key.
+(require 'ace-window)
+
 ;;; Provide
 
 (provide 'le-group-default-modules)
