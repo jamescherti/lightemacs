@@ -6,7 +6,7 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 - Fast startup with optimized default settings.
 - Minimalistic, distraction-free user interface.
-- Modular design: Lightemacs provides a set of modules that can be enabled or disabled individually. Each module loads its packages only when needed, ensuring fast, deferred startup. By default, only essential modules are enabled; if the user disables modules in `config.el`, Lightemacs activates no local/global modes.
+- Modular design: Lightemacs provides a set of modules that can be enabled or disabled individually. Each module loads its packages only when needed, ensuring fast, deferred startup. By default, only essential modules are enabled.
 * Lightemacs modules load packages lazily, keeping them inactive until explicitly enabled or triggered by hooks or file associations. This optimizes startup performance and minimizes resource consumption.
 
 Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimize Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
@@ -844,7 +844,9 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/conf
 
 ### Useful functions and macros
 
--
+- `lightemacs-recenter-if-out-of-view` (macro): Execute BODY and recenter if point is outside the original window bounds.
+- `lightemacs-save-window-hscroll` (macro): Execute BODY while preserving the horizontal scroll of the selected window. This macro saves the current `window-hscroll` of the selected window. After BODY executes, the horizontal scroll is restored exactly, leaving the vertical position and window start unchanged. Use this macro when you only need to maintain horizontal alignment, without restoring the lines above the cursor.
+- `lightemacs-save-window-start` (macro): Preserve and restore `window-start` relative to the lines above the cursor. This macro saves the first visible line in the selected window. After BODY executes, the window is restored so that the same lines remain visible above the cursor, maintaining the relative vertical position of the cursor within the window. To also restore the mark, this macro can be combined with `save-mark-and-excursion`. For preservation of horizontal scroll only (hscroll), consider using the `lightemacs-save-window-hscroll` macro.
 
 ## Author and license
 
