@@ -19,8 +19,7 @@
 ;;; Code:
 
 (require 'lightemacs)
-
-(lightemacs-load-modules '(le-diminish))
+(require 'le-diminish)
 
 (defvar lightemacs-dtrt-indent-inhibit nil
   "Non-nil inhibits automatic indentation detection via `dtrt-indent'.

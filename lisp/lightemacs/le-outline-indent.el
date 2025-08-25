@@ -24,8 +24,7 @@
 ;;; Code:
 
 (require 'lightemacs)
-
-(lightemacs-load-modules '(le-diminish))
+(require 'le-diminish)
 
 (lightemacs-use-package
   outline-indent
