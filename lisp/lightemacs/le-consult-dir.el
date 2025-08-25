@@ -42,9 +42,16 @@ found in PATH, this option has no effect.")
              consult-dir-default-command)
   :init
   ;; Disable prepending of `/` to paths by consult-dir
+  ;;
+  ;; The purpose of prepending paths with / when consult-dir-shadow-filenames
+  ;; set to t is unclear.
+  ;; Issue: https://github.com/karthink/consult-dir/issues/44
   (setq consult-dir-shadow-filenames nil)
 
   ;; Fixes: https://github.com/karthink/consult-dir/issues/43
+  ;; Issues fixed: Typing Alt + Shift + :edit and then pressing C-x C-d to
+  ;; invoke consult-dir causes the selected directory to be inserted before
+  ;; :edit, rather than at the cursor position after :edit.
   (defun lightemacs-consult-dir ()
     "Choose a directory and act on it.
 
@@ -58,11 +65,10 @@ the value of `consult-dir-shadow-filenames'.
 The list of sources for directory paths is `consult-dir-sources', which can be
 customized."
     (interactive)
-    (if (or (not (minibufferp))
-            (not (bound-and-true-p evil-mode)))
+    (if (not (minibufferp))
         (consult-dir)
       ;; Minibuffer
-      ;; Fix this bug in Evil: https://github.com/karthink/consult-dir/issues/43
+      ;; Fix this bug: https://github.com/karthink/consult-dir/issues/43
       (let* ((enable-recursive-minibuffers t)
              (new-dir (consult-dir--pick))
              (new-full-name (file-name-as-directory new-dir)))
