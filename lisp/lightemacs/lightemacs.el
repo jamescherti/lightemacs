@@ -78,12 +78,53 @@ non-nil and the package is not installed.")
 ;; (require/load-any couldn't find some files when those files are already
 ;; compiled.)
 
+;; (defun lightemacs-load-modules (modules)
+;;   "Load all modules listed in MODULES."
+;;   (dolist (feature-symbol modules)
+;;     (let* ((feature-str (format "%s" feature-symbol)))
+;;       (lightemacs-verbose-message "Load: %s" feature-str)
+;;       (require feature-symbol))))
+
+(defvar lightemacs--load-module-method 'require)
+(defvar lightemacs--loaded-modules nil)
+
 (defun lightemacs-load-modules (modules)
   "Load all modules listed in MODULES."
-  (dolist (feature-symbol modules)
-    (let* ((feature-str (format "%s" feature-symbol)))
-      (lightemacs-verbose-message "Load: %s" feature-str)
-      (require feature-symbol))))
+  (when (boundp 'lightemacs--modules-dir)
+    (let ((modules-dir lightemacs--modules-dir))
+      (dolist (feature-symbol modules)
+        (unless (memq feature-symbol lightemacs--loaded-modules)
+          (let* ((feature-str (format "%s" feature-symbol))
+                 (module-file
+                  (when (or (eq lightemacs--load-module-method 'require-file)
+                            (eq lightemacs--load-module-method 'load-file))
+                    (expand-file-name (format "%s.el" feature-str)
+                                      modules-dir))))
+            (lightemacs-verbose-message "Load: %s" feature-str)
+
+            (cond
+             ((eq lightemacs--load-module-method 'require)
+              (require feature-symbol))
+
+             ((eq lightemacs--load-module-method 'require-file)
+              (require feature-symbol module-file))
+
+             ((eq lightemacs--load-module-method 'load-any)
+              (load (expand-file-name feature-str modules-dir)
+                    nil
+                    (not (bound-and-true-p init-file-debug))))
+
+             ((eq lightemacs--load-module-method 'load-file)
+              (load module-file
+                    nil
+                    (not (bound-and-true-p init-file-debug))
+                    'nosuffix))
+
+             (t
+              (error "Invalid method for lightemacs--load-module-method %s"
+                     lightemacs--load-module-method)))
+
+            (push feature-symbol lightemacs--loaded-modules)))))))
 
 ;;; Useful macros
 

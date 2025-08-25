@@ -22,10 +22,10 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-core-cli-tools)
-
-(require 'lightemacs)
 
 (lightemacs-use-package
   dumb-jump
