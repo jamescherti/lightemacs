@@ -798,6 +798,8 @@ Here are a few other modules disabled by default:
 
 - **le-magit**: Configures [Magit](https://github.com/magit/magit/) provides a comprehensive interface to the Git version control system. It aims to serve as a full-featured Git porcelain. Although it does not yet cover every Git command, it is sufficiently complete to enable even experienced Git users to perform nearly all their routine version control tasks entirely within Emacs.
 
+- **git-modes**: Emacs major modes for managing Git configuration files, such as `.gitattributes`, `.gitconfig`, and `.gitignore`.
+
 - **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-hook-list`. For example:
   ```emacs-lisp
   (setq lightemacs-diff-hl-mode-hook-list '(prog-mode-hook))
