@@ -17,16 +17,43 @@
 
 (require 'lightemacs)
 
+(defvar lightemacs-saveplace-recenter-after-find-file nil
+  "If non-nil, recenter the buffer after restoring the cursor position.")
+
 (lightemacs-use-package
   saveplace
   :ensure nil
   :commands save-place-mode
 
   :init
-  (setq save-place-limit 500))
+  (setq save-place-limit 500)
 
-(lightemacs-define-mode-hook-list save-place-mode
-                                  '(lightemacs-on-first-file-hook))
+  :config
+  (defun lightemacs-saveplace--recenter ()
+    "Recenter the current window."
+    (when (and (get-buffer-window)
+               (not (minibufferp)))
+      (ignore-errors
+        (recenter))))
+
+  (defun lightemacs-saveplace--after-find-file ()
+    "Recenter the current window when `scroll-conservatively' >= 101.
+This function is called by `save-place-after-find-file-hook'.
+It avoids recentering while an EasySession session is in progress."
+    (when (and (or (>= scroll-conservatively 101)
+                   lightemacs-saveplace-recenter-after-find-file)
+               (> (point) (point-min)))
+      ;; Use a timer to ensure a window exists when recenter is called
+      (run-with-timer 0 nil #'lightemacs-saveplace--recenter)))
+
+  (add-hook 'save-place-after-find-file-hook
+            'lightemacs-saveplace--after-find-file))
+
+(lightemacs-define-mode-hook-list save-place-mode '(after-init-hook))
+
+;; TODO use on first file?
+;; (lightemacs-define-mode-hook-list save-place-mode
+;;                                   '(lightemacs-on-first-file-hook))
 
 (provide 'le-saveplace)
 

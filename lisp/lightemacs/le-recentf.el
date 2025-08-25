@@ -25,63 +25,91 @@
 
 (require 'lightemacs)
 
+;; Global variables
+
+(defvar lightemacs-recentf-cleanup-and-auto-save-interval 550
+  "Interval in seconds for running `recentf-cleanup' and `recentf-save-list'.")
+
+(defvar lightemacs-recentf-track-switch-to-buffer t
+  "Non-nil means track buffer switches and add the visited file to `recentf'.
+When enabled, switching to a buffer visiting a file automatically
+adds that file to the recentf list.")
+
+(defvar lightemacs-recentf-quiet t
+  "Non-nil means suppress messages during recentf cleanup and save operations.")
+
+;; Local variables
+(defvar lightemacs-recentf--auto-save-timer nil)
+
 (lightemacs-use-package
   recentf
   :ensure nil
   :commands (recentf-mode
              recentf-cleanup)
-  :functions (recentf-expand-file-name)
-
-  :preface
-  (defun le-recentf--setup ()
-    "Setup `recentf'."
-    (let ((inhibit-message t))
-      (recentf-mode)))
-
-  (defun le-recentf--cleanup-and-save ()
-    "Run `recentf-cleanup' if `recentf' is loaded and `recentf-mode' is enabled."
-    (when (and (featurep 'recentf)
-               (bound-and-true-p recentf-mode)
-               (fboundp 'recentf-cleanup))
-      (recentf-cleanup)))
 
   :init
-  ;; TODO use (lightemacs-define-mode-hook-list -mode '())
-  (add-hook 'lightemacs-on-first-buffer-hook #'le-recentf--setup)
+  (defun lightemacs-recentf--cleanup ()
+    "Run `recentf-cleanup' if `recentf-mode' is enabled."
+    (when (and (bound-and-true-p recentf-mode)
+               (fboundp 'recentf-cleanup))
+      (let ((inhibit-message lightemacs-recentf-quiet))
+        (recentf-cleanup))))
 
-  (setq recentf-auto-cleanup (if (daemonp) 300 'never))
+  (defun lightemacs-recentf--cleanup-and-save ()
+    "Run `recentf-cleanup' and `recentf-save-list' if `recentf-mode' is enabled."
+    ;; Cleanup
+    (lightemacs-recentf--cleanup)
+    ;; Save
+    (when (and (bound-and-true-p recentf-mode)
+               (fboundp 'recentf-save-list))
+      (let ((inhibit-message lightemacs-recentf-quiet))
+        (recentf-save-list))))
+
+  (defun lightemacs-recentf--enable ()
+    "Enable `recentf'."
+    ;; Mode
+    (let ((inhibit-message lightemacs-recentf-quiet))
+      (recentf-mode 1))
+
+    ;; Timer
+    (when (timerp lightemacs-recentf--auto-save-timer)
+      (cancel-timer lightemacs-recentf--auto-save-timer))
+    (setq lightemacs-recentf--auto-save-timer
+          (run-with-timer lightemacs-recentf-cleanup-and-auto-save-interval
+                          lightemacs-recentf-cleanup-and-auto-save-interval
+                          #'lightemacs-recentf--cleanup-and-save)))
+
+  (defun lightemacs-recentf--disable ()
+    "Disable `recentf' and cancel the auto-save timer."
+    (when (timerp lightemacs-recentf--auto-save-timer)
+      (cancel-timer lightemacs-recentf--auto-save-timer)
+      (setq lightemacs-recentf--auto-save-timer nil))
+    (recentf-mode -1))
+
+  ;; Settings
   (setq recentf-max-menu-items 10)
   (setq recentf-max-saved-items 750)
+  (setq recentf-auto-cleanup 'never)  ; Managed by this module
 
-  :preface
-  (defun le-recentf--track-buffer-change (&rest _args)
+  ;; Enable
+  (add-hook 'lightemacs-on-first-buffer-hook #'lightemacs-recentf--enable)
+
+  :config
+  ;; Add file at the beginning of the recent list after switching buffer.
+  (defun lightemacs-recentf--add-file-on-buffer-change (&rest _args)
     "Add file at the beginning of the recent list after switching buffer."
     (when (and (bound-and-true-p recentf-mode)
                (fboundp 'recentf-add-file))
-      (let ((file-name (buffer-file-name (buffer-base-buffer))))
-        (when file-name
-          (recentf-add-file file-name)))))
+      (when-let* ((file-name (buffer-file-name (buffer-base-buffer))))
+        (recentf-add-file file-name))))
 
-  :config
-  (add-hook 'window-buffer-change-functions #'le-recentf--track-buffer-change)
-
-  (setq recentf-exclude
-        (append recentf-exclude
-                (list
-                 "\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$" "\\.bz$"
-                 "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zpaq$" "\\.lz$" "\\.lrz$"
-                 "\\.lzo$" "\\.lzma$" "\\.shar$" "\\.kgb$" "\\.zip$" "\\.Z$"
-                 "\\.7z$" "\\.rar$"
-
-                 "COMMIT_EDITMSG\\'"
-                 "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
-
-                 "-autoloads\\.el$"
-                 "autoload\\.el$")))
+  (when lightemacs-recentf-track-switch-to-buffer
+    (add-hook 'window-buffer-change-functions
+              #'lightemacs-recentf--add-file-on-buffer-change))
 
   ;; Depth -90 ensures it is cleaned up before it is saved with
   ;; `recentf-save-list'
-  (add-hook 'kill-emacs-hook #'le-recentf--cleanup-and-save -90))
+  (add-hook 'kill-emacs-hook #'lightemacs-recentf--cleanup -90))
 
 (provide 'le-recentf)
 

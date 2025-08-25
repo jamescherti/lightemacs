@@ -24,11 +24,11 @@
 
 (require 'lightemacs)
 
-(use-package diff-hl
+(lightemacs-use-package
+  diff-hl
   :commands (diff-hl-mode
              global-diff-hl-mode)
   :init
-  (setq vc-git-diff-switches '("--histogram"))  ; Faster
   (setq diff-hl-flydiff-delay 0.4)  ; Faster
   (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
   (setq diff-hl-update-async t)  ; Do not block Emacs

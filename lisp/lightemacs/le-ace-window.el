@@ -25,7 +25,7 @@
   ace-window
   :commands ace-window
   :init
-  (setq aw-background t
+  (setq aw-background nil  ; t is not compatible with all themes
         aw-scope 'frame))
 
 (lightemacs-define-keybindings ace-window

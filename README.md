@@ -2,6 +2,10 @@
 
 The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which enhance Emacs by improving completion, navigation, editing efficiency, and overall usability. It offers a minimalist alternative to frameworks like Doom Emacs or Spacemacs, allowing full customization to adapt the environment to your specific workflow.
 
+<p align="center">
+<img src="https://jamescherti.com/misc/lightemacs-m.png" width="40%" />
+</p>
+
 **Features:**
 
 - Fast startup with optimized default settings.
@@ -82,6 +86,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
     - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
     - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
+    - [Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)](#disabled-by-default-persisting-and-restoring-all-buffers-windowssplit-tab-bar-frames-le-easysession)
     - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
     - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
     - [Disabled by default: Better Elisp editing (le-group-emacs-lisp)](#disabled-by-default-better-elisp-editing-le-group-emacs-lisp)
@@ -483,6 +488,8 @@ The **le-savehist** module configures **savehist**, a built-in Emacs feature tha
 
 The **le-saveplace** module enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off.
 
+(When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
+
 ### Expand Region (le-expand-region)
 
 The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
@@ -550,6 +557,7 @@ Recentf maintains a list of recently accessed files, making it easier to reopen 
 In addition to its built-in capabilities, the **le-recentf** module provides the following enhancements:
 - Inserts the current file at the beginning of the recent files list upon buffer switch.
 - Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
+- Cleans up and saves the recentf list every `lightemacs-recentf--auto-save-timer-interval` seconds (default: 550).
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
 
 ### Detect indentation offset (le-dtrt-indent)
@@ -670,6 +678,32 @@ Here is an example you could place in `~/.emacs.d/config.el` to configure Aphele
 ;; Emacs Lisp
 (add-hook 'emacs-lisp-mode-hook #'apheleia-mode)
 ```
+
+### Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)
+
+The **le-easysession** module configures [easysession](https://github.com/jamescherti/easysession.el), a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
+
+With **easysession**, your Emacs setup is restored automatically when you restart. All files, Dired buffers, and window layouts come back as they were, so you can continue working right where you left off. While editing, you can also switch to another session, switch back, rename sessions, or delete them, giving you full control over multiple work environments.
+
+To enable the module, add the following to `~/.emacs.d/config.el`:
+```elisp
+;; Enable the `le-easysession' module
+(add-to-list 'lightemacs-modules 'le-easysession)
+```
+
+Usage:
+- `M-x easysession-switch-to` to switch to another session or `easysession-load` to reload the current one,
+- `M-x easysession-save-as` to save the current session as the current name or another name.
+
+The following key bindings are defined for working with **EasySession**. All commands are grouped under the prefix `C-c s` for consistency and ease of recall:
+
+* **`C-c ss`** → Save the current session under a new name (`easysession-save-as`).
+* **`C-c sl`** → Switch to an existing session (`easysession-switch-to`).
+* **`C-c sr`** → Rename the current session (`easysession-rename`).
+* **`C-c sL`** → Load a previously saved session (`easysession-load`).
+* **`C-c sw`** → Save the current session (`easysession-save`).
+
+The **le-easysession** module automatically persists and restores the *scratch* buffer. This behavior is enabled by default, but it can be disabled by setting the variable `lightemacs-easysession-save-scratch` to nil.
 
 ### Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)
 

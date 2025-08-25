@@ -15,7 +15,7 @@
 
 ;;; Misc
 
-;; TODO: move to m.e.
+;; TODO: move to m.e.?
 (setq eldoc-documentation-strategy #'eldoc-documentation-compose)
 
 ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
