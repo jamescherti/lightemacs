@@ -11,9 +11,9 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 - Fast startup with optimized default settings.
 - Minimalistic, distraction-free user interface.
 - Modular design: Lightemacs provides a set of modules that can be enabled or disabled individually. Each module loads its packages only when needed, ensuring fast, deferred startup. By default, only essential modules are enabled.
-* Lightemacs modules load packages lazily, keeping them inactive until explicitly enabled or triggered by hooks or file associations. This optimizes startup performance and minimizes resource consumption.
+- Lightemacs modules load packages lazily, keeping them inactive until explicitly enabled or triggered by hooks or file associations. This optimizes startup performance and minimizes resource consumption.
 
-Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimize Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
+Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimizing Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
@@ -25,18 +25,18 @@ Here are some of the modules that are enabled by default:
 - Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
 - Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
 - Additional file types: Markdown, Yaml, and Org.
-- **Dired:** Configure Dired to display directories first and enable `dired-filter` to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`. **Usage:** Use `C-c f` to toggle the filters on and off, showing or hiding the relevant files.
+- Configure Dired to display directories first and enable `dired-filter` to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`. **Usage:** Use `C-c f` to toggle the filters on and off, showing or hiding the relevant files.
 - Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
 - Save and restore the default theme using the `lightemacs-theme-name` variable.
 - Functions for automatically detecting indentation offsets.
 - Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-- **le-expand-region**: Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
+- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 
 Optionally, the following features can be enabled by loading additional Lightemacs modules:
 - **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
 - **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
-- **le-yasnippet** and **le-yasnippet**: A template system that enhances text editing by enabling users to define and use snippets.
+- **le-yasnippet** and **le-yasnippet-snippets**: A template system that enhances text editing by enabling users to define and use snippets.
 - **le-vterm** A faster, more efficient terminal.
 - **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
 - **le-paredit**: A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions.
@@ -65,7 +65,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Modules Enabled by Default](#modules-enabled-by-default)
     - [Default theme (le-theme)](#default-theme-le-theme)
-    - [Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless)](#better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless)
+    - [Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)](#better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless-le-consult-dir)
     - [Better completion (le-corfu and le-cape)](#better-completion-le-corfu-and-le-cape)
     - [Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
     - [Enhanced File Management (le-dired and le-dired-filter)](#enhanced-file-management-le-dired-and-le-dired-filter)
@@ -78,7 +78,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Expand Region (le-expand-region)](#expand-region-le-expand-region)
     - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
     - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
-    - [A better way to rename or delete files (le-buffer-file)](#a-better-way-to-rename-or-delete-files-le-buffer-file)
+    - [A better way to rename or delete files (le-bufferfile)](#a-better-way-to-rename-or-delete-files-le-bufferfile)
     - [Recent files (le-recentf)](#recent-files-le-recentf)
     - [Detect indentation offset (le-dtrt-indent)](#detect-indentation-offset-le-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
@@ -107,7 +107,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
 
 - Emacs >= 29.1
 - Git
-- Optional: [ripgrep](https://github.com/BurntSushi/ripgrep) and [fd](which-key-allow-multiple-replacements) (Useful for `consult-ripgrep` and `consult-fd` commands)
+- Optional: [ripgrep](https://github.com/BurntSushi/ripgrep) and [fd](https://github.com/sharkdp/fd) (Useful for `consult-ripgrep` and `consult-fd` commands)
 
 ## Install Lightemacs
 
@@ -133,7 +133,7 @@ To install *Lightemacs* in a non-default directory, use the `--init-directory` E
 
 2. Start Emacs with the new configuration directory:
    ```
-   emacs --init-directory ~/.lightemacs.d/
+   emacs --init-directory ~/.lightemacs.d
    ```
 
 ## Update Lightemacs
@@ -169,7 +169,7 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 Modify `~/.emacs.d/config.el` instead. This file is loaded after `init.el` but before the Lightemacs modules are initialized. It is intended for supplementary configurations or package setups.
 
 Always begin your `config.el` file with the following header to prevent them from being byte-compiled and to activate lexical binding:
-```elisp
+```emacs-lisp
 ;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
 ```
 
@@ -210,148 +210,149 @@ The `le-theme` loads the default theme. It can be configured via the `lightemacs
 ```
 
 Here are examples of alternative built-in themes:
-```elisp
+```emacs-lisp
 (setq lightemacs-theme-name 'modus-operandi)
 (setq lightemacs-theme-name 'modus-vivendi)
 (setq lightemacs-theme-name 'tango)
 (setq lightemacs-theme-name 'tango-dark)
 ```
 
-### Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless)
+### Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)
 
 Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion and navigation capabilities:
 - **le-vertico** configures [Vertico](https://github.com/minad/vertico), a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
 - **le-consult** configures [Consult](https://github.com/minad/consult), a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. *(Try `M-x consult-rg` to search your project using ripgrep, or `M-x consult-fd` to quickly locate files in your workspace.)* This module configures: consult, consult-xref, and consult-imenu. This module also provides improved default settings for `consult-fd`, `consult-find`, `consult-grep`, and `consult-ripgrep`, enhancing file and text search performance and usability.
 - **le-embark** configures [Embark](https://github.com/oantolin/embark), a tool that provides context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
-- **le-marginalia** configures [Marginalia](https://github.com/minad/marginalia), a package that enriches minibuffer completions with contextual annotations. It Enhances Vertico by adding rich annotations to completion candidates, such as file sizes, documentation, or metadata.
+- **le-marginalia** configures [Marginalia](https://github.com/minad/marginalia), a package that enriches minibuffer completions with contextual annotations. It enhances Vertico by adding rich annotations to completion candidates, such as file sizes, documentation, or metadata.
 - **le-orderless**: Enable flexible, unordered matching (Orderless) for Vertico. This allows you to type multiple parts of a candidate in any order, making it easier to find functions, variables, or files even if you only remember fragments. It speeds up navigation by removing the need to type exact prefixes. For example, typing "main test" matches "test_main.py", "read me" matches "README.md".
+- **le-consult-dir**: Configures the [consult-dir](https://github.com/karthink/consult-dir) package which extends the Consult framework by providing convenient ways to quickly switch to and insert directory paths. It supports switching to recent directories, project roots (if available), bookmarks, or TRAMP hosts. Similar to tools like *autojump* or *fasd*, it enables fast directory-jumping in Emacs. The command `M-x consult-dir` is globally available on `C-x C-d`, and is also bound within the minibuffer completion map to allow directory switching while completing file paths. Additionally, `consult-dir-jump-file` is bound to `C-x C-j` in the minibuffer, enabling direct navigation to files within a chosen directory, thereby extending the file-jumping workflow directly from minibuffer-based commands. (By default, this module also integrates with `fasd`, providing directory candidates from it when `fasd` is installed.)
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
 Keybindings for Consult:
 
-* `C-c M-x` → `consult-mode-command`
+- `C-c M-x` → `consult-mode-command`
   Invoke a command specific to the current major mode using Consult.
 
-* `C-c h` → `consult-history`
+- `C-c h` → `consult-history`
   Browse and select from the minibuffer history.
 
-* `C-c m` → `consult-man`
+- `C-c m` → `consult-man`
   Access Unix manual pages interactively.
 
-* `C-c i` → `consult-info`
+- `C-c i` → `consult-info`
   Search and navigate Info documentation.
 
-* `Info-search` remapped → `consult-info`
+- `Info-search` remapped → `consult-info`
   Redirects standard Info search to use Consult.
 
-* `C-x M-:` → `consult-complex-command`
+- `C-x M-:` → `consult-complex-command`
   Browse and execute complex commands from history.
 
-* `C-x b` → `consult-buffer`
+- `C-x b` → `consult-buffer`
   Switch between buffers interactively.
 
-* `C-x 4 b` → `consult-buffer-other-window`
+- `C-x 4 b` → `consult-buffer-other-window`
   Open a buffer in another window.
 
-* `C-x 5 b` → `consult-buffer-other-frame`
+- `C-x 5 b` → `consult-buffer-other-frame`
   Open a buffer in a new frame.
 
-* `C-x t b` → `consult-buffer-other-tab`
+- `C-x t b` → `consult-buffer-other-tab`
   Open a buffer in a new tab (if tab support is enabled).
 
-* `C-x r b` → `consult-bookmark`
+- `C-x r b` → `consult-bookmark`
   Jump to a bookmark using Consult’s interface.
 
-* `C-x p b` → `consult-project-buffer`
+- `C-x p b` → `consult-project-buffer`
   Switch buffers within the current project.
 
-* `M-#` → `consult-register-load`
+- `M-#` → `consult-register-load`
   Load a value from a register.
 
-* `M-'` → `consult-register-store`
+- `M-'` → `consult-register-store`
   Store a value into a register.
 
-* `C-M-#` → `consult-register`
+- `C-M-#` → `consult-register`
   Access all register operations interactively.
 
-* `M-y` → `consult-yank-pop`
+- `M-y` → `consult-yank-pop`
   Browse and yank from kill-ring entries.
 
-* `M-g e` → `consult-compile-error`
+- `M-g e` → `consult-compile-error`
   Navigate compilation errors.
 
-* `M-g f` → `consult-flymake`
+- `M-g f` → `consult-flymake`
   Jump to Flymake diagnostics.
 
-* `M-g g` / `M-g M-g` → `consult-goto-line`
+- `M-g g` / `M-g M-g` → `consult-goto-line`
   Jump to a specific line number.
 
-* `M-g o` → `consult-outline`
+- `M-g o` → `consult-outline`
   Navigate headings in the current buffer.
 
-* `M-g m` → `consult-mark`
+- `M-g m` → `consult-mark`
   Jump to local marks.
 
-* `M-g k` → `consult-global-mark`
+- `M-g k` → `consult-global-mark`
   Jump to global marks across buffers.
 
-* `M-g i` → `consult-imenu`
+- `M-g i` → `consult-imenu`
   Jump to an Imenu entry in the current buffer.
 
-* `M-g I` → `consult-imenu-multi`
+- `M-g I` → `consult-imenu-multi`
   Jump to Imenu entries across multiple buffers.
 
-* `M-s d` → `consult-find`
+- `M-s d` → `consult-find`
   Locate files in the current project or directory.
 
-* `M-s c` → `consult-locate`
+- `M-s c` → `consult-locate`
   Search files using `locate` database.
 
-* `M-s g` → `consult-grep`
+- `M-s g` → `consult-grep`
   Search for a string using `grep`.
 
-* `M-s G` → `consult-git-grep`
+- `M-s G` → `consult-git-grep`
   Perform `git grep` in the repository.
 
-* `M-s r` → `consult-ripgrep`
+- `M-s r` → `consult-ripgrep`
   Perform `ripgrep` searches.
 
-* `M-s l` → `consult-line`
+- `M-s l` → `consult-line`
   Jump to a line matching a query in the buffer.
 
-* `M-s L` → `consult-line-multi`
+- `M-s L` → `consult-line-multi`
   Search for multiple lines simultaneously.
 
-* `M-s k` → `consult-keep-lines`
+- `M-s k` → `consult-keep-lines`
   Keep only lines matching a pattern.
 
-* `M-s u` → `consult-focus-lines`
+- `M-s u` → `consult-focus-lines`
   Focus on lines matching a pattern.
 
-* `M-s e` → `consult-isearch-history`
+- `M-s e` → `consult-isearch-history`
   Browse previous search strings from `isearch`.
 
 **Isearch Mode Specific Bindings:**
 
-* `M-e`, `M-s e` → `consult-isearch-history`
+- `M-e`, `M-s e` → `consult-isearch-history`
   Access previous search history during incremental search.
 
-* `M-s l` → `consult-line`
+- `M-s l` → `consult-line`
   Jump to matching lines while in `isearch`.
 
-* `M-s L` → `consult-line-multi`
+- `M-s L` → `consult-line-multi`
   Search multiple lines during `isearch`.
 
 **Minibuffer Specific Bindings:**
 
-* `M-s`, `M-r` → `consult-history`
+- `M-s`, `M-r` → `consult-history`
   Access minibuffer history while inside the minibuffer.
 
 ### Better completion (le-corfu and le-cape)
 
 - [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab. To make Corfu complete only when the user presses Tab, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; By default, Corfu shows completions automatically without requiring the user
   ;; to press Tab. To make Corfu complete only when the user presses Tab:
   ;;
@@ -374,19 +375,19 @@ The main benefit of *prescient.el* is that it adaptively orders candidates based
 
 ### Enhanced File Management (le-dired and le-dired-filter)
 
-* **le-dired**: Configures Dired to list directories first and to omit specific files and directories (e.g., `.git`, `*.pyc`, `*.o`). Optionally, the parent directory (`..`) can be hidden by setting the `lightemacs-dired-omit-parent-directory` variable to `t`; the `..` directory is unnecessary because pressing the `-` key navigates to the parent directory.
-* **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
+- **le-dired**: Configures Dired to list directories first and to omit specific files and directories (e.g., `.git`, `*.pyc`, `*.o`). Optionally, the parent directory (`..`) can be hidden by setting the `lightemacs-dired-omit-parent-directory` variable to `t`; the `..` directory is unnecessary because pressing the `-` key navigates to the parent directory.
+- **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
 
 The **le-dired-filter** module only enables `dired-filter-by-omit`:
 
-```elisp
+```emacs-lisp
 ;; By default, `dired-filter-by-omit' excludes "."
 (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit))
 ```
 
 To add additional filters, include them in your `~/.emacs.d/config.el`. For example:
 
-```elisp
+```emacs-lisp
 (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit
                                            ;; Hide files ignored by Git
                                            dired-filter-by-git-ignored
@@ -397,7 +398,7 @@ To add additional filters, include them in your `~/.emacs.d/config.el`. For exam
 This setup keeps your Dired buffer clean by showing only relevant and tracked files.
 
 The `dired-filter-by-omit` filter can be extended to conceal additional entries. For instance, it can be configured to hide `.`, `..`, and `.git` directories:
-```elisp
+```emacs-lisp
 (setq dired-omit-files "^\.$\\|^\\.\\.$\\|^\\.git$")
 ```
 
@@ -435,7 +436,7 @@ In addition to code folding, *outline-indent* allows:
 The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
 
 The following example can be added to the `~/.emacs.d/config.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
-```elisp
+```emacs-lisp
 (with-eval-after-load 'le-outline-indent
   (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
   (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
@@ -453,7 +454,7 @@ The **le-stripspace** module configures the [stripspace](https://github.com/jame
 It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
 
 By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`. To enable `stripspace-local-mode` in additional modes, add their hooks to your `~/.emacs.d/config.el` file:
-```elisp
+```emacs-lisp
 ;; Automatically remove trailing whitespace before saving
 (setq lightemacs-stripspace-local-mode-hook-list '(;; Programming
                                                    prog-mode-hook
@@ -464,7 +465,7 @@ By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and 
 ```
 
 Here are some customizations for `stripspace-local-mode`:
-```elisp
+```emacs-lisp
 ;; The `stripspace-only-if-initially-clean' option:
 ;; - nil to always delete trailing whitespace.
 ;; - Non-nil to only delete whitespace when the buffer is clean initially. (The
@@ -504,7 +505,7 @@ Auto-revert is a feature that automatically updates the contents of a buffer to 
 
 To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/config.el`:
 
-```elisp
+```emacs-lisp
 ;; To suppress minibuffer messages when Auto Revert reverts a buffer
 (setq auto-revert-verbose nil)
 ```
@@ -522,18 +523,18 @@ This package also facilitates grouping buffers into categories, allowing buffers
 
 This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
 
-### A better way to rename or delete files (le-buffer-file)
+### A better way to rename or delete files (le-bufferfile)
 
-The **le-buffer-file** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
+The **le-bufferfile** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
 - `M-x bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name.
 - `M-x bufferfile-delete`: Delete the file associated with a buffer and kill all buffers visiting the file, including clones/indirect buffers.
 - `M-x bufferfile-copy`: Ensures that the destination directory exists and copies the file visited by the current buffer to a new file.
 
-The functions above also ensures that any modified buffers are saved prior to executing operations like renaming, deleting, or copying.
+The functions above also ensure that any modified buffers are saved prior to executing operations like renaming, deleting, or copying.
 
 To replace the default *dired* rename command with `bufferfile-rename`, add the following to your `~/.emacs.d/config.el` file:
 
-```elisp
+```emacs-lisp
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "R") #'bufferfile-dired-do-rename)
 
@@ -545,7 +546,7 @@ To replace the default *dired* rename command with `bufferfile-rename`, add the 
 
 To make *bufferfile* use version control when renaming or deleting files, add the following to your `~/.emacs.d/config.el` file:
 
-```elisp
+```emacs-lisp
 ;; Use version control when renaming or deleting files with `bufferfile-rename'
 (setq bufferfile-use-vc t)
 ```
@@ -562,7 +563,7 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 
 ### Detect indentation offset (le-dtrt-indent)
 
-The **le-dtrt-indent** package configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
+The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
 
 To make `dtrt-indent` display a message whenever it adjusts the indentation offset, add the following line to your `~/.emacs.d/config.el`:
 
@@ -571,9 +572,9 @@ To make `dtrt-indent` display a message whenever it adjusts the indentation offs
 ```
 
 The `le-dtrt-indent` module allows controlling automatic indentation detection via:
-* `lightemacs-dtrt-indent-inhibit`: When non-nil, disables automatic indentation detection in the current buffer.
-* `lightemacs-dtrt-indent-excluded-modes`: List of major modes where `dtrt-indent` should not run. For example:
-  ```elisp
+- `lightemacs-dtrt-indent-inhibit`: When non-nil, disables automatic indentation detection in the current buffer.
+- `lightemacs-dtrt-indent-excluded-modes`: List of major modes where `dtrt-indent` should not run. For example:
+  ```emacs-lisp
   ;; Exclude Python and Yaml/Ansible
   (setq lightemacs-dtrt-indent-excluded-modes '(python-mode
                                                 python-ts-mode
@@ -588,12 +589,12 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 - **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
 - **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
-  ```elisp
+  ```emacs-lisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
   ```
 
   You can also, as an alternative to prog-mode-hook, add hook to specific modes:
-  ```elisp
+  ```emacs-lisp
   (add-hook 'grep-mode-hook #'outline-minor-mode)
   (add-hook 'conf-mode-hook #'outline-minor-mode)
   (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
@@ -607,7 +608,7 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 - **le-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
 - **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
-* **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
+- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
 - **le-winner**: Track changes in the window configuration, allowing undoing actions such as closing windows using `winner-undo`.
 - **le-elec-pair**: Automatically insert matching delimiters (), {}...
 - **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
@@ -622,7 +623,7 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 
 To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
+```emacs-lisp
 ;; Enable Vim key bindings
 (add-to-list 'lightemacs-modules 'le-group-evil)
 ```
@@ -635,7 +636,7 @@ The `le-group-evil` group of modules includes:
 - **le-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **le-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
-* **le-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+- **le-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
 
 ### Disabled by default: le-treesit-auto (better syntax highlighting)
 
@@ -644,7 +645,7 @@ Module: **le-treesit-auto**
 The **le-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
 To enable it, add the following to the `~/.emacs.d/config.el` file:
-```elisp
+```emacs-lisp
 ;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
 ;; provides precise, high-performance syntax highlighting. It supports a broad
 ;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
@@ -664,7 +665,7 @@ To maintain cursor stability, Apheleia generates an RCS patch, applies it select
 The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
 
 Here is an example you could place in `~/.emacs.d/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
-```elisp
+```emacs-lisp
 (add-to-list 'lightemacs-modules 'le-apheleia)
 
 ;; Bash/sh
@@ -686,7 +687,7 @@ The **le-easysession** module configures [easysession](https://github.com/jamesc
 With **easysession**, your Emacs setup is restored automatically when you restart. All files, Dired buffers, and window layouts come back as they were, so you can continue working right where you left off. While editing, you can also switch to another session, switch back, rename sessions, or delete them, giving you full control over multiple work environments.
 
 To enable the module, add the following to `~/.emacs.d/config.el`:
-```elisp
+```emacs-lisp
 ;; Enable the `le-easysession' module
 (add-to-list 'lightemacs-modules 'le-easysession)
 ```
@@ -697,11 +698,11 @@ Usage:
 
 The following key bindings are defined for working with **EasySession**. All commands are grouped under the prefix `C-c s` for consistency and ease of recall:
 
-* **`C-c ss`** → Save the current session under a new name (`easysession-save-as`).
-* **`C-c sl`** → Switch to an existing session (`easysession-switch-to`).
-* **`C-c sr`** → Rename the current session (`easysession-rename`).
-* **`C-c sL`** → Load a previously saved session (`easysession-load`).
-* **`C-c sw`** → Save the current session (`easysession-save`).
+- **`C-c ss`** → Save the current session under a new name (`easysession-save-as`).
+- **`C-c sl`** → Switch to an existing session (`easysession-switch-to`).
+- **`C-c sr`** → Rename the current session (`easysession-rename`).
+- **`C-c sL`** → Load a previously saved session (`easysession-load`).
+- **`C-c sw`** → Save the current session (`easysession-save`).
 
 The **le-easysession** module automatically persists and restores the *scratch* buffer. This behavior is enabled by default, but it can be disabled by setting the variable `lightemacs-easysession-save-scratch` to nil.
 
@@ -728,7 +729,7 @@ Before installing emacs-libvterm, you need to make sure you have installed
  4. OPTIONAL: [libvterm](https://github.com/Sbozzolo/libvterm-mirror.git) (>= 0.2). This library can be found in the official repositories of most distributions (e.g., Arch, Debian, Fedora, Gentoo, openSUSE, Ubuntu). Typical names are `libvterm` (Arch, Fedora, Gentoo, openSUSE), or `libvterm-dev` (Debian, Ubuntu). If not available, `libvterm` will be downloaded during the compilation process. Some distributions (e.g. Ubuntu < 20.04, Debian < 11) have versions of `libvterm` that are too old. If you find compilation errors related to `VTERM_COLOR`, you should not use your system libvterm. See [FAQ](#frequently-asked-questions-and-problems) for more details.
 
 To enable **le-vterm**, add the following to `~/.emacs.d/config.el`:
-```elisp
+```emacs-lisp
 ;; Enable the `le-vterm' module
 (add-to-list 'lightemacs-modules 'le-vterm)
 ```
@@ -737,33 +738,33 @@ To enable **le-vterm**, add the following to `~/.emacs.d/config.el`:
 
 The **le-group-emacs-lisp** group enables the following modules:
 - **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'highlight-defined)
   ```
 - **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-page-break-lines' module
   (add-to-list 'lightemacs-modules 'le-page-break-lines)
   ```
   (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-page-break-lines-mode-hook-list`.)
 
 - **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-aggressive-indent' module
   (add-to-list 'lightemacs-modules 'le-aggressive-indent)
   ```
   (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-aggressive-indent-mode-hook-list`.)
 
 - **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'le-easy-escape)
   ```
   (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-easyescape-minor-mode-hook-list`.)
 
 - **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-elisp-refs' module
   (add-to-list 'lightemacs-modules 'le-elisp-refs)
   ```
@@ -778,7 +779,7 @@ It supports both space and tab-based indentation and offers optional tree-sitter
 
 It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
 
-```elisp
+```emacs-lisp
 ;; Enable the `le-indent-bars' module
 (add-to-list 'lightemacs-modules 'le-indent-bars)
 
@@ -796,20 +797,20 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 Here are a few other modules disabled by default:
 
 - **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-hook-list`. For example:
-  ```elisp
+  ```emacs-lisp
   (setq lightemacs-diff-hl-mode-hook-list '(prog-mode-hook))
   ```
 
 - **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don’t change the actual text.
 
 - **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-helpful' module
   (add-to-list 'lightemacs-modules 'le-helpful)
   ```
 
 - **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-compile-angel' module by pushing it above other modules
   (add-to-list 'lightemacs-modules 'le-compile-angel)
   ```
@@ -817,19 +818,19 @@ Here are a few other modules disabled by default:
 Elisp file-type modules are disabled by default:
 
 - **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to nil forces `yaml-mode` to load even if Tree-sitter is available.)
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-group-yaml)
   ```
 
 - **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. To enable the module, add the following to `~/.emacs.d/config.el`:
-  ```elisp
+  ```emacs-lisp
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-paredit)
   ```
   (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`. The list of hooks that activate this mode can be customized by modifying `lightemacs-paredit-mode-hook-list`.)
 
-- *le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated. (This behavior can be customized using the `lightemacs-enhanced-evil-paredit-mode-hook-list` variable.)
+- **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated. (This behavior can be customized using the `lightemacs-enhanced-evil-paredit-mode-hook-list` variable.)
 
 ## Other Features
 
@@ -843,7 +844,7 @@ In addition to modules, Lightemacs provides the following features:
 
 ### Ellipsis
 Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
-```elisp
+```emacs-lisp
 (setq lightemacs-ellipsis " ▼")
 ```
 
@@ -851,12 +852,12 @@ Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defa
 
 The `lightemacs-cycle` variable controls whether cycling through completion candidates is enabled.
 
-* If non-nil (default), navigating past the last candidate wraps around to the first, and vice versa. This applies to Vertico minibuffer completions, Corfu code completions, and Evil search candidates.
-* If nil, selection stops at the first or last candidate without wrapping.
+- If non-nil (default), navigating past the last candidate wraps around to the first, and vice versa. This applies to Vertico minibuffer completions, Corfu code completions, and Evil search candidates.
+- If nil, selection stops at the first or last candidate without wrapping.
 
 To disable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
 
-```elisp
+```emacs-lisp
 ;; Disable cycling
 ;;
 ;; Navigating past the last candidate stops at the first or last candidate
@@ -867,7 +868,7 @@ To disable cycling (default: enabled), add the following to your `~/.emacs.d/con
 
 To enable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
 
-```elisp
+```emacs-lisp
 ;; Enable cycling
 ;;
 ;; Navigating past the last candidate wraps around to the first, and vice versa.

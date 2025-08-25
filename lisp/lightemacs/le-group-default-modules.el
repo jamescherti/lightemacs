@@ -148,6 +148,12 @@
 ;; various tasks.
 (require 'le-consult)
 
+;; Configures the consult-dir package, which quickly insert directory paths into
+;; the minibuffer. It supports switching to recent directories, project roots,
+;; bookmarks, or TRAMP hosts. Similar to tools like autojump or fasd, it
+;; enables fast directory-jumping in Emacs.
+(require 'le-consult-dir)
+
 ;; (Vertico, Consult, and Embark collectively
 ;; enhance Emacs' completion and navigation
 ;; capabilities.)
