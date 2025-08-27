@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; straight.el package manager
+;; Boostrap the `straight' package manager.
 
 ;;; Code:
 
@@ -28,6 +28,9 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+(unless (package-installed-p 'use-package)
+  (straight-use-package 'use-package))
 
 (provide 'le-core-straight)
 

@@ -43,12 +43,15 @@
 (lightemacs-use-package
   easysession
   :diminish easysession-save-mode
-  :commands (easysession-mode
-             easysession-load
-             easysession-switch-to
+  :commands (easysession-load
+             easysession-load-including-geometry
+             easysession-rename
+             easysession-reset
+             easysession-save
              easysession-save-as
              easysession-save-mode
-             easysession-load-including-geometry
+             easysession-switch-to
+             easysession-delete
              easysession-get-current-session-name)
 
   :init
@@ -77,15 +80,14 @@
     (global-set-key (kbd "C-c sL") 'easysession-load)
     (global-set-key (kbd "C-c sw") 'easysession-save)))
 
-;;; Persist and restore the scratch buffer
-
-(lightemacs-use-package
-  easysession-scratch
-  :if lightemacs-easysession-save-scratch
-  :ensure nil
-  :after easysession
-  :config
-  (easysession-scratch-mode))
+(when lightemacs-easysession-save-scratch
+  (lightemacs-use-package
+    easysession-scratch
+    :if lightemacs-easysession-save-scratch
+    :ensure nil
+    :after easysession
+    :config
+    (easysession-scratch-mode)))
 
 (provide 'le-easysession)
 

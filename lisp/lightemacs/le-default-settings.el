@@ -18,14 +18,37 @@
 ;; TODO: move to m.e.?
 (setq eldoc-documentation-strategy #'eldoc-documentation-compose)
 
-;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
-;; (setq byte-compile-warnings '(not lexical))
-;; (setq warning-suppress-types '((lexical-binding)))
-(setq warning-minimum-level :error)
-;; (setq warning-minimum-level (if minimal-emacs-debug :warning :emergency))
+(setq byte-compile-warnings
+      (if init-file-debug
+          t
+        ;; free-vars: warns about the use of free (unbound) variables. This is
+        ;; almost always a sign of a typo or a bug.
+        ;;
+        ;; unresolved: warns when a function or variable cannot be found at
+        ;; compile time. This can indicate a missing require or an undefined
+        ;; symbol.
+        ;;
+        ;; noruntime – warns when runtime evaluation of code is disabled, e.g.,
+        ;; using defvar or defun incorrectly in a macro context.
+        ;;
+        ;; obsolete – optional, but useful if you want to catch usage of
+        ;; deprecated functions or variables.
+        ;; '(not free-vars unresolved noruntime)
+        t
 
+        ;; (byte-compile-warnings . (not free-vars unresolved mapcar constants))
+        ;; (setq byte-compile-warnings '(not nresolved free-vars callargs redefine obsolete noruntime cl-functions interactive-only))
+        ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local obsolete))
+        ;; (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+        ;; (setq byte-compile-warnings '(not lexical))
+        ;; (setq warning-suppress-types '((lexical-binding)))
+        ;; (setq warning-minimum-level :error)
+
+        ))
+(setq warning-minimum-level (if init-file-debug :warning :error))
+
+;; Alternative: (setq-default display-fill-column-indicator-character ?┊)
 (setq-default display-fill-column-indicator-character ?\N{U+2502})
-;; (setq-default display-fill-column-indicator-character ?┊)
 
 (setq treesit-font-lock-level 4) ; Max: 4
 

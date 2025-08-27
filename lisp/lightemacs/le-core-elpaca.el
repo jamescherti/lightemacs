@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Lightemacs Modules Library
+;; Boostrap the `elpaca' package manager.
 
 ;;; Code:
 
@@ -59,6 +59,11 @@
 ;; https://github.com/jamescherti/minimal-emacs.d/issues/54
 (elpaca elpaca-use-package
         (elpaca-use-package-mode))
+
+;; Install use-package
+
+(unless (package-installed-p 'use-package)
+  (elpaca use-package))
 
 (provide 'le-core-elpaca)
 

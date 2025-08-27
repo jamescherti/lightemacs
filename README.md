@@ -62,6 +62,9 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Files you may edit:](#files-you-may-edit)
   - [Customizations](#customizations)
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
+    - [Package Manager Selection](#package-manager-selection)
+      - [Supported package managers](#supported-package-managers)
+      - [Configuration Example for the package manager](#configuration-example-for-the-package-manager)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Modules Enabled by Default](#modules-enabled-by-default)
     - [Enabled by Default: Default theme (le-theme)](#enabled-by-default-default-theme-le-theme)
@@ -97,6 +100,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Useful variables](#useful-variables)
     - [Ellipsis](#ellipsis)
     - [Cycling](#cycling)
+    - [Other variables](#other-variables)
     - [Useful functions and macros](#useful-functions-and-macros)
   - [Author and license](#author-and-license)
   - [Links](#links)
@@ -178,6 +182,30 @@ Always begin your `config.el` file with the following header to prevent them fro
 **Important:** The examples in this README.md file pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as Lightemacs `init.el` and `early-init.el`, regardless of their location.
 
 (The Lightemacs project builds upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, allowing it to be configured identically to *minimal-emacs.d* and providing support for the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`.)
+
+### Package Manager Selection
+
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
+
+By default, `lightemacs-package-manager` is set to `'use-package`, which uses the built-in `package.el` together with `use-package`.
+
+#### Supported package managers
+
+- **`'use-package`** (default): Uses Emacs’ native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
+
+* **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
+
+- **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
+
+#### Configuration Example for the package manager
+
+Add the following to `~/.emacs/config.el`:
+
+```elisp
+(setq lightemacs-package-manager 'use-package)
+```
+
+This guarantees that the built-in `use-package` will manage package installation, loading, and configuration according to the semantics of the selected package manager.
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
@@ -882,6 +910,10 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/conf
 ;; Evil search candidates.
 (setq lightemacs-cycle t)
 ```
+
+### Other variables
+
+- `lightemacs-native-comp-excluded-cpus` (default: `2`): By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely. (It must be configured at a very early stage, in `pre-early-init.el`.)
 
 ### Useful functions and macros
 

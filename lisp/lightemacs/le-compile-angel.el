@@ -32,13 +32,15 @@
 (lightemacs-use-package
   compile-angel
   :demand t
-  ;; :commands (compile-angel-on-load-mode
-  ;;            compile-angel-on-save-local-mode
-  ;;            compile-angel-on-save-mode)
+  :commands (compile-angel-on-load-mode
+             compile-angel-on-save-local-mode
+             compile-angel-on-save-mode)
   :diminish compile-angel-on-load-mode
-  ;;:functions compile-angel-on-load-mode
 
   :init
+  (lightemacs-define-mode-hook-list compile-angel-on-load-mode
+                                    '(emacs-startup-hook))
+
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
   (setq compile-angel-debug init-file-debug)
@@ -50,8 +52,8 @@
   ;; Since this uses `after-init-hook', it is necessary to ensure that
   ;; `compile-angel-on-load-compile-features' and
   ;; `compile-angel-on-load-compile-load-history' are both set to t.
-  ;; (setq compile-angel-on-load-compile-load-history t)
-  ;; (setq compile-angel-on-load-compile-features t)
+  (setq compile-angel-on-load-compile-load-history t)
+  (setq compile-angel-on-load-compile-features t)
 
   :preface
   (defun le-compile-angel-exclude (path)
@@ -70,17 +72,18 @@ specified file or directory is ignored during the compilation process managed by
   :config
   (with-eval-after-load 'org
     (push "/org-version.el" compile-angel-excluded-files))
+
   (with-eval-after-load 'savehist
     (le-compile-angel-exclude savehist-file))
+
   (with-eval-after-load 'recentf
     (le-compile-angel-exclude recentf-save-file))
+
   (with-eval-after-load 'cus-edit
     (le-compile-angel-exclude custom-file))
-  (with-eval-after-load 'prescient
-    (le-compile-angel-exclude prescient-save-file))
 
-  ;; Load mode
-  (compile-angel-on-load-mode 1))
+  (with-eval-after-load 'prescient
+    (le-compile-angel-exclude prescient-save-file)))
 
 (provide 'le-compile-angel)
 
