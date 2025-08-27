@@ -35,8 +35,10 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish))
 
 (lightemacs-use-package
   persist-text-scale
@@ -45,11 +47,9 @@
              persist-text-scale-restore)
   :init
   (setq text-scale-mode-step 1.07)
-  :config
-  (diminish 'text-scale-mode))
 
-(lightemacs-define-mode-hook-list persist-text-scale-mode
-                                  '(after-init-hook))
+  (lightemacs-define-mode-hook-list persist-text-scale-mode
+                                    '(after-init-hook)))
 
 (provide 'le-persist-text-scale)
 

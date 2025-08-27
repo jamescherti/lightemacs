@@ -17,8 +17,10 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-yasnippet)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-yasnippet))
 
 (lightemacs-use-package
   yasnippet-snippets

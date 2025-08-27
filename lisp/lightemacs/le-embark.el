@@ -21,7 +21,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   embark
@@ -44,18 +48,17 @@
         '(display-buffer-at-bottom (window-height . fit-window-to-buffer)))
 
   ;; Hide the mode line of the Embark live/completions buffers
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-  ;;                nil
-  ;;                (window-parameters (mode-line-format . none))))
-  )
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
 
-(lightemacs-define-keybindings embark
-  (global-set-key (kbd "C-.") #'embark-act)
-  (global-set-key (kbd "C-;") #'embark-dwim)
-  (global-set-key (kbd "C-h B") #'embark-bindings)
-  (global-set-key (kbd "C-c C-;") #'embark-export)
-  (global-set-key (kbd "C-c C-l") #'embark-collect))
+  (lightemacs-define-keybindings embark
+    (global-set-key (kbd "C-.") #'embark-act)
+    (global-set-key (kbd "C-;") #'embark-dwim)
+    (global-set-key (kbd "C-h B") #'embark-bindings)
+    (global-set-key (kbd "C-c C-;") #'embark-export)
+    (global-set-key (kbd "C-c C-l") #'embark-collect)))
 
 ;;; Provide
 (provide 'le-embark)

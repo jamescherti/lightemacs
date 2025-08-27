@@ -1,4 +1,4 @@
-;;; le-evil.el --- le-evil -*- no-byte-compile: t; no-byte-compile: t; lexical-binding: t -*-
+;;; le-evil.el --- le-evil -*- no-byte-compile: t; lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -12,24 +12,32 @@
 ;; Evil is an extensible vi layer for Emacs. It emulates the main features of
 ;; Vim, and provides facilities for writing custom extensions.
 ;;
-;; This configures the packages evil and evil-collection.
+;; This configures the evil package.
 ;;
 ;; URL: https://github.com/emacs-evil/evil
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
-(lightemacs-use-package
-  evil
-  :commands evil-mode
-  :functions define-key
-  :init
+;;; Variables
+
+(eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-  (setq evil-collection-setup-minibuffer t)
+  (setq evil-collection-setup-minibuffer t))
 
+;;; Use-package evil
+
+(lightemacs-use-package
+  evil
+  :commands (evil-mode
+             evil-select-search-module)
+
+  :init
   (setq evil-search-wrap lightemacs-cycle)
 
   ;; Use evil-search instead of isearch
@@ -71,15 +79,19 @@
   (setq evil-want-C-u-delete t)
   (setq evil-want-C-w-delete t)
 
-  ;; Synchronize `evil-shift-width' with `tab-width'.
-  (defun lightemacs-evil--update-shift-width ()
-    "Synchronize `evil-shift-width' with `tab-width'.
-  Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
-    (unless (derived-mode-p 'org-mode)
-      (setq-local evil-shift-width tab-width)))
-  (add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
+  (lightemacs-define-mode-hook-list evil-mode '(after-init-hook))
+
+  (lightemacs-define-keybindings evil
+    (with-eval-after-load 'evil
+      ;; Pressing '-' opens a `dired' buffer for the directory containing the
+      ;; current file, automatically selecting that file. This provides a fast way
+      ;; to navigate and manage files without manually switching to the directory.
+      (define-key evil-normal-state-map (kbd "-") #'lightemacs-find-parent-directory)))
 
   :config
+  (with-eval-after-load 'evil
+    (evil-select-search-module 'evil-search-module evil-search-module))
+
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing
   ;; certain Evil commands in Emacs.
   ;; Fixes: https://github.com/emacs-evil/evil/pull/1980
@@ -100,15 +112,19 @@
        (eldoc-add-command-completions "evil-insert-")
        (eldoc-add-command-completions "evil-append-"))))
 
-(lightemacs-define-keybindings evil
-  (with-eval-after-load 'evil
-    ;; Pressing '-' opens a `dired' buffer for the directory containing the
-    ;; current file, automatically selecting that file. This provides a fast way
-    ;; to navigate and manage files without manually switching to the directory.
-    (evil-define-key 'normal 'global (kbd "-") #'lightemacs-find-parent-directory)))
+;;; Keybindings
 
-(lightemacs-define-mode-hook-list evil-mode
-                                  '(after-init-hook))
+;;; Synchronize `evil-shift-width' with `tab-width'.
+
+(defun lightemacs-evil--update-shift-width ()
+  "Synchronize `evil-shift-width' with `tab-width'.
+Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
+  (unless (derived-mode-p 'org-mode)
+    (setq-local evil-shift-width tab-width)))
+
+(add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
+
+;;; Provide
 
 (provide 'le-evil)
 

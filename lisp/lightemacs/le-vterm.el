@@ -20,7 +20,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   vterm
@@ -28,9 +32,9 @@
   :commands (vterm
              vterm-send-string
              vterm-send-return
+             vterm-send-key
              vterm-module-compile)
-  :functions (vterm--self-insert
-              vterm-send-key)
+  :functions vterm--self-insert
 
   :preface
   (when noninteractive

@@ -1,0 +1,67 @@
+---
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: check-elisp-parens
+        name: check-elisp-parens
+        entry: >
+          emacs --batch --eval '(dolist (file command-line-args-left)
+                                  (message "[CHECK ELISP PARENS] %s" file)
+                                  (with-temp-buffer
+                                    (emacs-lisp-mode)
+                                    (insert-file-contents file)
+                                    (check-parens)))'
+        language: system
+        files: \.el$
+
+  # - repo: local
+  #   hooks:
+  #     - id: reformat-elisp
+  #       name: reformat-elisp
+  #       entry: >
+  #         emacs --batch --eval '
+  #           (require \\'lightemacs)
+  #           (dolist (file command-line-args-left)
+  #             (message "[REFORMAT] %s" file)
+  #             (with-temp-buffer
+  #               (insert-file-contents file)
+  #               (emacs-lisp-mode)
+  #               (setq-local lisp-body-indent 2)
+  #               (setq-local lisp-indent-offset nil)
+  #               (setq-local indent-tabs-mode nil)
+  #               (indent-region (point-min) (point-max))
+  #               (write-region (point-min) (point-max) file)))'
+  #       language: system
+  #       files: \.el$
+
+  - repo: local
+    hooks:
+      - id: check-byte-compile-elisp
+        name: check-byte-compile-elisp
+        entry: >
+          emacs --batch --eval '
+                                (let (file
+                                      dir)
+                                  (dolist (file command-line-args-left)
+                                    (setq file (file-truename file))
+                                    (setq dir (file-name-directory file))
+                                    ;; (push dir trusted-dir)
+                                    (push (file-truename ".") load-path)
+                                    (push dir load-path)
+                                    (message "[BYTE-COMPILE] %s" file)
+                                    (defvar byte-compile-warnings t)
+                                    (let ((default-directory (file-name-directory file)))
+                                      (let ((byte-compile-warnings t))
+                                        (unless (byte-compile-file file)
+                                          (message "Compilation failed: %s" file)
+                                          (kill-emacs 1))))))'
+        language: system
+        files: \.el$

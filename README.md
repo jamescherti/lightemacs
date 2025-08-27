@@ -11,7 +11,7 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 - Fast startup with optimized default settings.
 - Minimalistic, distraction-free user interface.
 - Modular design: Lightemacs provides a set of modules that can be enabled or disabled individually. Each module loads its packages only when needed, ensuring fast, deferred startup. By default, only essential modules are enabled.
-- Lightemacs modules load packages lazily, keeping them inactive until explicitly enabled or triggered by hooks or file associations. This optimizes startup performance and minimizes resource consumption.
+- Lightemacs modules are loaded lazily: packages remain inactive until triggered by hooks, key mapping or file associations. This dramatically accelerates startup and minimizes loaded functions.
 
 Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimizing Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
 
@@ -64,23 +64,23 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Modules Enabled by Default](#modules-enabled-by-default)
-    - [Default theme (le-theme)](#default-theme-le-theme)
-    - [Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)](#better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless-le-consult-dir)
-    - [Better completion (le-corfu and le-cape)](#better-completion-le-corfu-and-le-cape)
-    - [Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
-    - [Enhanced File Management (le-dired and le-dired-filter)](#enhanced-file-management-le-dired-and-le-dired-filter)
-    - [Better undo/redo (le-undo-fu and undo-fu-session)](#better-undoredo-le-undo-fu-and-undo-fu-session)
-    - [Keybindings (le-keybindings)](#keybindings-le-keybindings)
-    - [Code folding based on indentation (le-outline-indent)](#code-folding-based-on-indentation-le-outline-indent)
-    - [Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
-    - [Save History (le-savehist)](#save-history-le-savehist)
-    - [Save and Restore Cursor (le-saveplace)](#save-and-restore-cursor-le-saveplace)
-    - [Expand Region (le-expand-region)](#expand-region-le-expand-region)
-    - [Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
-    - [Persist and Restore Text Scale (le-persist-text-scale)](#persist-and-restore-text-scale-le-persist-text-scale)
-    - [A better way to rename or delete files (le-bufferfile)](#a-better-way-to-rename-or-delete-files-le-bufferfile)
-    - [Recent files (le-recentf)](#recent-files-le-recentf)
-    - [Detect indentation offset (le-dtrt-indent)](#detect-indentation-offset-le-dtrt-indent)
+    - [Enabled by Default: Default theme (le-theme)](#enabled-by-default-default-theme-le-theme)
+    - [Enabled by Default: Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)](#enabled-by-default-better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless-le-consult-dir)
+    - [Enabled by Default: Better completion (le-corfu and le-cape)](#enabled-by-default-better-completion-le-corfu-and-le-cape)
+    - [Enabled by Default: Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#enabled-by-default-better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
+    - [Enabled by Default: Enhanced File Management (le-dired and le-dired-filter)](#enabled-by-default-enhanced-file-management-le-dired-and-le-dired-filter)
+    - [Enabled by Default: Better undo/redo (le-undo-fu and undo-fu-session)](#enabled-by-default-better-undoredo-le-undo-fu-and-undo-fu-session)
+    - [Enabled by Default: Keybindings (le-keybindings)](#enabled-by-default-keybindings-le-keybindings)
+    - [Enabled by Default: Code folding based on indentation (le-outline-indent)](#enabled-by-default-code-folding-based-on-indentation-le-outline-indent)
+    - [Enabled by Default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#enabled-by-default-automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
+    - [Enabled by Default: Save History (le-savehist)](#enabled-by-default-save-history-le-savehist)
+    - [Enabled by Default: Save and Restore Cursor (le-saveplace)](#enabled-by-default-save-and-restore-cursor-le-saveplace)
+    - [Enabled by Default: Expand Region (le-expand-region)](#enabled-by-default-expand-region-le-expand-region)
+    - [Enabled by Default: Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#enabled-by-default-auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
+    - [Enabled by Default: Persist and Restore Text Scale (le-persist-text-scale)](#enabled-by-default-persist-and-restore-text-scale-le-persist-text-scale)
+    - [Enabled by Default: A better way to rename or delete files (le-bufferfile)](#enabled-by-default-a-better-way-to-rename-or-delete-files-le-bufferfile)
+    - [Enabled by Default: Recent files (le-recentf)](#enabled-by-default-recent-files-le-recentf)
+    - [Enabled by Default: Detect indentation offset (le-dtrt-indent)](#enabled-by-default-detect-indentation-offset-le-dtrt-indent)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
@@ -195,7 +195,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ## Modules Enabled by Default
 
-### Default theme (le-theme)
+### Enabled by Default: Default theme (le-theme)
 
 The `le-theme` loads the default theme. It can be configured via the `lightemacs-theme-name` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
 
@@ -217,7 +217,7 @@ Here are examples of alternative built-in themes:
 (setq lightemacs-theme-name 'tango-dark)
 ```
 
-### Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)
+### Enabled by Default: Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)
 
 Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion and navigation capabilities:
 - **le-vertico** configures [Vertico](https://github.com/minad/vertico), a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
@@ -349,7 +349,7 @@ Keybindings for Consult:
 - `M-s`, `M-r` → `consult-history`
   Access minibuffer history while inside the minibuffer.
 
-### Better completion (le-corfu and le-cape)
+### Enabled by Default: Better completion (le-corfu and le-cape)
 
 - [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab. To make Corfu complete only when the user presses Tab, add the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
@@ -364,7 +364,7 @@ Keybindings for Consult:
 
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
 
-### Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)
+### Enabled by Default: Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)
 
 The **le-prescient** configures [prescient.el](https://github.com/radian-software/prescient.el) is a library for sorting and filtering lists of candidates, such as those presented by packages like Vertico or Corfu.
 
@@ -373,7 +373,7 @@ The main benefit of *prescient.el* is that it adaptively orders candidates based
 - Vertico and Prescient (le-vertico-prescient): When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
 - Corfu and Prescient (le-corfu-prescient): When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
 
-### Enhanced File Management (le-dired and le-dired-filter)
+### Enabled by Default: Enhanced File Management (le-dired and le-dired-filter)
 
 - **le-dired**: Configures Dired to list directories first and to omit specific files and directories (e.g., `.git`, `*.pyc`, `*.o`). Optionally, the parent directory (`..`) can be hidden by setting the `lightemacs-dired-omit-parent-directory` variable to `t`; the `..` directory is unnecessary because pressing the `-` key navigates to the parent directory.
 - **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
@@ -404,7 +404,7 @@ The `dired-filter-by-omit` filter can be extended to conceal additional entries.
 
 (Hiding `..` is acceptable since the `-` key provides a way to navigate to the parent directory.)
 
-### Better undo/redo (le-undo-fu and undo-fu-session)
+### Enabled by Default: Better undo/redo (le-undo-fu and undo-fu-session)
 
 The le-undo-fu and undo-fu-session configure:
 - [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu), a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history.
@@ -417,12 +417,12 @@ The default undo system in Emacs has two main issues that undo-fu fixes:
 
 If you use Evil mode, the `le-undo-fu` module will replace Evil’s undo system with `undo-fu`.
 
-### Keybindings (le-keybindings)
+### Enabled by Default: Keybindings (le-keybindings)
 
 Defines the following key bindings:
 - Increase or decrease the text scale using Ctrl combined with `+` or `-`.
 
-### Code folding based on indentation (le-outline-indent)
+### Enabled by Default: Code folding based on indentation (le-outline-indent)
 
 The `le-outline-indent` module configures the [outline-indent](https://github.com/jamescherti/outline-indent.el) package, which provides `outline-indent-minor-mode`, a minor mode that enables code folding according to indentation levels.
 
@@ -445,7 +445,7 @@ The following example can be added to the `~/.emacs.d/config.el` file to automat
   (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
-### Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
+### Enabled by Default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
 
 The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
 
@@ -481,17 +481,17 @@ Here are some customizations for `stripspace-local-mode`:
 (setq stripspace-restore-column t)
 ```
 
-### Save History (le-savehist)
+### Enabled by Default: Save History (le-savehist)
 
 The **le-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
 
-### Save and Restore Cursor (le-saveplace)
+### Enabled by Default: Save and Restore Cursor (le-saveplace)
 
 The **le-saveplace** module enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off.
 
 (When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
 
-### Expand Region (le-expand-region)
+### Enabled by Default: Expand Region (le-expand-region)
 
 The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
 
@@ -499,7 +499,7 @@ Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word.
 
 Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
-### Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)
+### Enabled by Default: Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
@@ -510,7 +510,7 @@ To suppress minibuffer messages when Auto Revert reverts a buffer, add the follo
 (setq auto-revert-verbose nil)
 ```
 
-### Persist and Restore Text Scale (le-persist-text-scale)
+### Enabled by Default: Persist and Restore Text Scale (le-persist-text-scale)
 
 The text scale can be adjusted by pressing **Ctrl** together with `+` to increase it (`text-scale-increase`) or `-` to decrease it (`text-scale-decrease`).
 
@@ -523,7 +523,7 @@ This package also facilitates grouping buffers into categories, allowing buffers
 
 This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
 
-### A better way to rename or delete files (le-bufferfile)
+### Enabled by Default: A better way to rename or delete files (le-bufferfile)
 
 The **le-bufferfile** configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files:
 - `M-x bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name.
@@ -551,7 +551,7 @@ To make *bufferfile* use version control when renaming or deleting files, add th
 (setq bufferfile-use-vc t)
 ```
 
-### Recent files (le-recentf)
+### Enabled by Default: Recent files (le-recentf)
 
 Recentf maintains a list of recently accessed files, making it easier to reopen files you have worked on recently.
 
@@ -561,7 +561,7 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 - Cleans up and saves the recentf list every `lightemacs-recentf--auto-save-timer-interval` seconds (default: 550).
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
 
-### Detect indentation offset (le-dtrt-indent)
+### Enabled by Default: Detect indentation offset (le-dtrt-indent)
 
 The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
 
@@ -587,7 +587,6 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
 - **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
-- **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
   ```emacs-lisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
@@ -613,7 +612,6 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
 - **le-elec-pair**: Automatically insert matching delimiters (), {}...
 - **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-- **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 - **le-which-key**: The built-in which-key package dynamically displays available keybindings in a popup or dedicated buffer as a key sequence is entered. It facilitates discovery and retention of key combinations by presenting context-sensitive completions, thereby enhancing navigation through complex or highly customized keymaps.
 
 ## Modules Disabled by Default
@@ -632,7 +630,7 @@ Here are a few interesting features that Lightemacs provides:
 - Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
 
 The `le-group-evil` group of modules includes:
-- **le-evil**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file’s directory with the file preselected by pressing the `-` key, and includes additional enhancements.
+- **le-evil** and *le-evil-collection**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file’s directory with the file preselected by pressing the `-` key, and includes additional enhancements.
 - **le-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 - **le-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
@@ -796,12 +794,20 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 
 Here are a few other modules disabled by default:
 
+- **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
+
+- **le-magit**: Configures [Magit](https://github.com/magit/magit/) provides a comprehensive interface to the Git version control system. It aims to serve as a full-featured Git porcelain. Although it does not yet cover every Git command, it is sufficiently complete to enable even experienced Git users to perform nearly all their routine version control tasks entirely within Emacs. **Usage:** Press `C-x g`.
+
+- **git-modes**: Emacs major modes for managing Git configuration files, such as `.gitattributes`, `.gitconfig`, and `.gitignore`.
+
 - **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-hook-list`. For example:
   ```emacs-lisp
   (setq lightemacs-diff-hl-mode-hook-list '(prog-mode-hook))
   ```
 
 - **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don’t change the actual text.
+
+- **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 
 - **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```emacs-lisp

@@ -22,16 +22,18 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   page-break-lines
   :commands (page-break-lines-mode
-             global-page-break-lines-mode))
-
-;; Define the global variable `lightemacs-page-break-lines-mode-hook-list'
-(lightemacs-define-mode-hook-list page-break-lines-mode
-                                  '(emacs-lisp-mode-hook))
+             global-page-break-lines-mode)
+  :init
+  ;; Define the global variable `lightemacs-page-break-lines-mode-hook-list'
+  (lightemacs-define-mode-hook-list page-break-lines-mode
+                                    '(emacs-lisp-mode-hook)))
 
 (provide 'le-page-break-lines)
 

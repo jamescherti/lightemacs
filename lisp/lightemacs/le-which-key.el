@@ -16,8 +16,10 @@
 
 ;;; Code:
 
-(require 'le-diminish)
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish))
 
 (lightemacs-use-package
   which-key
@@ -95,15 +97,16 @@
    ;; which-key-prefix-prefix (if (display-graphic-p) "… " "... ")
    )
 
-  :config
-  ;; Set up side-window that opens on bottom.
-  (which-key-setup-side-window-bottom))
+  ;; TODO Fix first key press
+  ;; :hook (lightemacs-on-first-input-hook . which-key-mode)
+  (lightemacs-define-mode-hook-list
+    which-key-mode
+    '(after-init-hook))
 
-;; TODO Fix first key press
-;; :hook (lightemacs-on-first-input-hook . which-key-mode)
-(lightemacs-define-mode-hook-list
-  which-key-mode
-  '(after-init-hook))
+  :config
+  (with-eval-after-load 'which-key  ; Reason: no-require: t
+    ;; Set up side-window that opens on bottom.
+    (which-key-setup-side-window-bottom)))
 
 (provide 'le-which-key)
 

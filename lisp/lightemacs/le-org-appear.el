@@ -13,14 +13,16 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   org-appear
-  :commands org-appear-mode)
-
-(lightemacs-define-mode-hook-list org-appear-mode
-                                  '(org-mode-hook))
+  :commands org-appear-mode
+  :init
+  (lightemacs-define-mode-hook-list org-appear-mode
+                                    '(org-mode-hook)))
 
 (provide 'le-org-appear)
 

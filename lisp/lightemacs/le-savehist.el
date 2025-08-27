@@ -16,15 +16,17 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   savehist
   :ensure nil
-  :commands savehist-mode)
-
-(lightemacs-define-mode-hook-list savehist-mode
-                                  '(after-init-hook))
+  :commands savehist-mode
+  :init
+  (lightemacs-define-mode-hook-list savehist-mode
+                                    '(after-init-hook)))
 
 (provide 'le-savehist)
 

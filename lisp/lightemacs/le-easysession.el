@@ -27,7 +27,11 @@
 
 ;;; Require
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (defvar lightemacs-easysession-save-scratch t
   "Make EasySession also save and restore the scratch buffer.")
@@ -63,24 +67,23 @@
                 #'easysession-load-including-geometry 102)))
 
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103)
-  :config
-  (setq easysession-mode-line-misc-info t))
 
-;;; Keybindings
+  (setq easysession-mode-line-misc-info t)
 
-(lightemacs-define-keybindings easysession
-  (global-set-key (kbd "C-c ss") 'easysession-save-as)
-  (global-set-key (kbd "C-c sl") 'easysession-switch-to)
-  (global-set-key (kbd "C-c sr") 'easysession-rename)
-  (global-set-key (kbd "C-c sL") 'easysession-load)
-  (global-set-key (kbd "C-c sw") 'easysession-save))
+  (lightemacs-define-keybindings easysession
+    (global-set-key (kbd "C-c ss") 'easysession-save-as)
+    (global-set-key (kbd "C-c sl") 'easysession-switch-to)
+    (global-set-key (kbd "C-c sr") 'easysession-rename)
+    (global-set-key (kbd "C-c sL") 'easysession-load)
+    (global-set-key (kbd "C-c sw") 'easysession-save)))
 
 ;;; Persist and restore the scratch buffer
 
-(use-package easysession-scratch
+(lightemacs-use-package
+  easysession-scratch
   :if lightemacs-easysession-save-scratch
   :ensure nil
-  :commands easysession-scratch-mode
+  :after easysession
   :config
   (easysession-scratch-mode))
 

@@ -18,7 +18,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   prescient
@@ -30,7 +34,7 @@
   (setq prescient-save-file (expand-file-name "prescient-save.el"
                                               user-emacs-directory))
 
-  ;; Other parameters:
+  ;; Other parameters: TODO
   ;; (setq prescient-aggressive-file-save t)
   ;; (setq prescient-frequency-decay 0.997)
   ;; (setq prescient-frequency-threshold 0.05)

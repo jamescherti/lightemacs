@@ -20,7 +20,9 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   yasnippet
@@ -37,10 +39,10 @@
   (setq yas-also-auto-indent-first-line t)
   (setq yas-also-indent-empty-lines t)
   (setq yas-snippet-revival nil)  ; Sometimes, undo loops when this is activated
-  (setq yas-wrap-around-region nil))
+  (setq yas-wrap-around-region nil)
 
-(lightemacs-define-mode-hook-list yas-global-mode
-                                  '(after-init-hook))
+  (lightemacs-define-mode-hook-list yas-global-mode
+                                    '(after-init-hook)))
 
 (provide 'le-yasnippet)
 

@@ -22,8 +22,10 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish))
 
 (lightemacs-use-package
   gcmh

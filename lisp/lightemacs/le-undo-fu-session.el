@@ -18,10 +18,13 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   undo-fu-session
+  :demand t
   :commands undo-fu-session-global-mode
   :init
   (add-hook 'after-init-hook #'undo-fu-session-global-mode))

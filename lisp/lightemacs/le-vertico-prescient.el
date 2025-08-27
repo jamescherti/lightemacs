@@ -9,12 +9,15 @@
 
 ;;; Commentary:
 
-;; Evil is an extensible vi layer for Emacs. It emulates the main features of
-;; Vim, and provides facilities for writing custom extensions.
-;;
-;; This configures the packages evil and evil-collection.
-;;
-;; URL: https://github.com/emacs-evil/evil
+;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
+;; completion by dynamically reordering candidates based on frequency and
+;; recency, making it faster to select commonly used options while preserving
+;; consistent, predictable filtering. **Example:** When running `M-x` and
+;; repeatedly selecting the command `compile`, prescient.el will place `compile`
+;; near the top of the Vertico minibuffer list in future sessions, reducing the
+;; need to type its full name.
+
+;; URL: https://github.com/radian-software/prescient.el
 
 ;;; Code:
 
@@ -35,9 +38,11 @@
 ;;
 ;; URL: https://github.com/radian-software/prescient.el
 
-(require 'lightemacs)
-(require 'le-vertico)
-(require 'le-prescient)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-vertico)
+  (require 'le-prescient))
 
 (lightemacs-use-package
   vertico-prescient
@@ -50,10 +55,10 @@
   (setq vertico-prescient-override-sorting nil)
 
   ;; Use Orderless instead
-  (setq vertico-prescient-enable-filtering nil))
+  (setq vertico-prescient-enable-filtering nil)
 
-(lightemacs-define-mode-hook-list vertico-prescient-mode
-                                  '(vertico-mode-hook))
+  (lightemacs-define-mode-hook-list vertico-prescient-mode
+                                    '(vertico-mode-hook)))
 
 (provide 'le-vertico-prescient)
 

@@ -18,33 +18,35 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
 
-;; Evil keybindings
-(require 'le-evil)
-(require 'le-evil-collection)
+(eval-and-compile
+  (require 'use-package))
 
-;; Comment or uncomment text in Normal or Visual mode
-;; by pressing 'gc'.
-(require 'le-evil-commentary)
+(lightemacs-load-modules
+ '(;; evil and evil-collection
+   le-evil
+   le-evil-collection
 
-;; two-character motions for rapid navigation within
-;; text. Pressing s in normal mode prompts you to
-;; type two characters, then jumps the cursor to the
-;; nearest matching occurrence while highlighting all
-;; matches incrementally.
-(require 'le-evil-snipe)
+   ;; Comment or uncomment text in Normal or Visual mode
+   ;; by pressing 'gc'.
+   le-evil-commentary
 
-;; Evil-surround enables text surrounding in visual
-;; state using S<textobject> or gS<textobject>. For
-;; example, selecting text and pressing S" will wrap
-;; it in double quotes.
-(require 'le-evil-surround)
+   ;; two-character motions for rapid navigation within text. Pressing s in
+   ;; normal mode prompts you to type two characters, then jumps the cursor to
+   ;; the nearest matching occurrence while highlighting all matches
+   ;; incrementally.
+   le-evil-snipe
 
-;; Goto-chg is Used by `evil-mode' for the motions
-;; 'g;' and 'g,' as well as for the last-change
-;; register '.'.
-(require 'le-goto-chg)
+   ;; Evil-surround enables text surrounding in visual state using S<textobject>
+   ;; or gS<textobject>. For example, selecting text and pressing S" will wrap
+   ;; it in double quotes.
+   le-evil-surround
+
+   ;; Goto-chg is Used by `evil-mode' for the motions 'g;' and 'g,' as well as
+   ;; for the last-change register '.'.
+   le-goto-chg))
 
 (provide 'le-group-evil)
 

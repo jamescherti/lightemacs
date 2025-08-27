@@ -22,8 +22,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish)
+  (require 'le-evil))
 
 (lightemacs-use-package
   evil-snipe
@@ -39,11 +42,11 @@
 
   ;; Allow character folding so equivalent characters match (e.g.,
   ;; accents/diacritics)
-  (setq evil-snipe-char-fold t))
+  (setq evil-snipe-char-fold t)
 
-;; TODO: on first input
-(lightemacs-define-mode-hook-list evil-snipe-mode
-                                  '(evil-mode-hook))
+  ;; TODO: on first input
+  (lightemacs-define-mode-hook-list evil-snipe-mode
+                                    '(evil-mode-hook)))
 
 (provide 'le-evil-snipe)
 

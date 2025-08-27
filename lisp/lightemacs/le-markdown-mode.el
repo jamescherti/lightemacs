@@ -18,7 +18,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   markdown-mode
@@ -37,12 +41,11 @@
         markdown-gfm-additional-languages '("sh")
         markdown-italic-underscore t
         markdown-make-gfm-checkboxes-buttons t
-        markdown-fontify-whole-heading-line t))
+        markdown-fontify-whole-heading-line t)
 
-(lightemacs-define-keybindings markdown-mode
-  (with-eval-after-load 'markdown-mode
-    (define-key markdown-mode-map (kbd "C-c C-e") #'markdown-do)))
-
+  (lightemacs-define-keybindings markdown-mode
+    (with-eval-after-load 'markdown-mode
+      (define-key markdown-mode-map (kbd "C-c C-e") #'markdown-do))))
 
 (provide 'le-markdown-mode)
 

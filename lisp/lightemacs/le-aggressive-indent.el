@@ -22,14 +22,23 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   aggressive-indent
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
+  :init
+  ;; This defines the global variable
+  ;; `lightemacs-aggressive-indent-mode-hook-list'
+  (lightemacs-define-mode-hook-list aggressive-indent-mode
+                                    '(emacs-lisp-mode-hook
+                                      scheme-mode-hook))
 
   :config
+  ;; Protected commands
   (add-to-list 'aggressive-indent-protected-commands 'evil-redo)
   (add-to-list 'aggressive-indent-protected-commands 'evil-undo)
   (add-to-list 'aggressive-indent-protected-commands 'evil-commentary)
@@ -37,13 +46,8 @@
   (add-to-list 'aggressive-indent-protected-commands 'comment-dwim)
   (add-to-list 'aggressive-indent-protected-commands 'comment-box)
 
+  ;; Exclude modes
   (setq aggressive-indent-excluded-modes 'html-mode))
-
-;; This defines the global variable
-;; `lightemacs-aggressive-indent-mode-hook-list'
-(lightemacs-define-mode-hook-list aggressive-indent-mode
-                                  '(emacs-lisp-mode-hook
-                                    scheme-mode-hook))
 
 (provide 'le-aggressive-indent)
 

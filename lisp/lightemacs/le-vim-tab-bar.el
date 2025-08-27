@@ -24,16 +24,18 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish))
 
 (lightemacs-use-package
   vim-tab-bar
   :diminish vim-tab-bar-mode
-  :commands vim-tab-bar-mode)
-
-(lightemacs-define-mode-hook-list vim-tab-bar-mode
-                                  '(after-init-hook))
+  :commands vim-tab-bar-mode
+  :init
+  (lightemacs-define-mode-hook-list vim-tab-bar-mode
+                                    '(after-init-hook)))
 
 (provide 'le-vim-tab-bar)
 

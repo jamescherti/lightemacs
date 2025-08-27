@@ -18,7 +18,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 
@@ -32,11 +36,11 @@ will be used.
 Setting this variable to nil forces `yaml-mode' to load even if
 Tree-sitter is available.")
 
-(if (or (not lightemacs-group-yaml-prefer-treesitter)
-        (not (if (fboundp 'treesit-language-available-p)
-                 (treesit-language-available-p 'yaml)
-               nil)))
-    (require 'le-yaml-mode))
+(when (or (not lightemacs-group-yaml-prefer-treesitter)
+          (not (if (fboundp 'treesit-language-available-p)
+                   (treesit-language-available-p 'yaml)
+                 nil)))
+  (lightemacs-load-modules '(le-yaml-mode)))
 
 ;; Fix `yaml-ts-mode' comment-start-skip
 

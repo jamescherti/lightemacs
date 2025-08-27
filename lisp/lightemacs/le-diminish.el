@@ -12,17 +12,16 @@
 ;; Hides or abbreviates mode indicators in the Emacs
 ;; mode line for a cleaner display
 ;;
-;; URL: https://github.com/emacsmirror/diminish
+;; URL: https://github.com/myrjola/diminish.el/
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
-  diminish
-  :commands (diminish
-             diminish-undo
-             diminished-modes))
+  diminish)
 
 ;; (with-eval-after-load 'eldoc
 ;;   (diminish 'eldoc-mode))

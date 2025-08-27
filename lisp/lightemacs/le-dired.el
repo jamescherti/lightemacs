@@ -14,7 +14,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (defvar lightemacs-dired-omit-parent-directory nil
   "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.
@@ -64,8 +68,14 @@ The user can navigate to the parent directory by pressing the - key instead.")
 
   :config
   (when lightemacs-dired-omit-parent-directory
-    (setq dired-omit-files (concat dired-omit-files "\\|^\\.\\.$")))
+    (setq dired-omit-files (concat dired-omit-files "\\|^\\.\\.$"))))
 
+(lightemacs-use-package
+  dired-x
+  :after dired
+  :ensure nil
+  :commands dired-omit-mode
+  :init
   (add-hook 'dired-mode-hook #'dired-omit-mode))
 
 (provide 'le-dired)

@@ -23,30 +23,35 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
-(require 'le-paredit)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish)
+  (require 'le-paredit)
+  (require 'le-evil))
 
 (lightemacs-use-package
   enhanced-evil-paredit
   :commands enhanced-evil-paredit-mode
 
-  :init
+  :preface
   (defun lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding ()
     "Resolve keybinding conflicts between `enhanced-evil-paredit'/`evil-snipe'.
 Disables the S key in `enhanced-evil-paredit-mode-map' when `evil-snipe-mode'
 is active to prevent interference with `evil-snipe' commands."
     (with-eval-after-load 'enhanced-evil-paredit
-      (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil)))
+      (with-eval-after-load 'evil
+        (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil))))
 
+  :init
   (if (bound-and-true-p evil-snipe-mode)
       (lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding)
     (add-hook 'evil-snipe-mode-hook
-              #'lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding)))
+              #'lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding))
 
-;; Define the global variable `lightemacs-enhanced-evil-paredit-mode-hook-list'
-(lightemacs-define-mode-hook-list enhanced-evil-paredit-mode
-                                  '(paredit-mode-hook))
+  ;; Define the global variable `lightemacs-enhanced-evil-paredit-mode-hook-list'
+  (lightemacs-define-mode-hook-list enhanced-evil-paredit-mode
+                                    '(paredit-mode-hook)))
 
 (provide 'le-enhanced-evil-paredit)
 

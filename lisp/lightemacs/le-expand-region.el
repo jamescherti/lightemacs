@@ -23,7 +23,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   expand-region
@@ -41,10 +45,10 @@
              er/mark-url
              er/mark-email
              er/mark-defun)
-  :commands er/expand-region)
-
-(lightemacs-define-keybindings expand-region
-  (global-set-key (kbd "C-=") #'er/expand-region))
+  :commands er/expand-region
+  :init
+  (lightemacs-define-keybindings expand-region
+    (global-set-key (kbd "C-=") #'er/expand-region)))
 
 (provide 'le-expand-region)
 

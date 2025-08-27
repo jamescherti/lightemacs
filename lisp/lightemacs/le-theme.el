@@ -52,7 +52,8 @@ Set to nil to disable installing this package at startup.")
 (defun lightemacs-theme-install ()
   "Install and configure `lightemacs-theme-package' using `use-package'."
   (when lightemacs-theme-package
-    (eval `(lightemacs-use-package ,lightemacs-theme-package
+    (eval `(lightemacs-use-package
+             ,lightemacs-theme-package
              :demand t))))
 
 ;;; Main

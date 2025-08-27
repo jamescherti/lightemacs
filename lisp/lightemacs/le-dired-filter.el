@@ -18,9 +18,13 @@
 
 ;;; Require
 
-(require 'lightemacs)
-(require 'le-diminish)
-(require 'le-dired)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package)
+  (require 'le-diminish)
+  (require 'le-dired))
 
 ;;; Variables
 

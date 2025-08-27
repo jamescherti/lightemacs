@@ -13,16 +13,20 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish)
+  (require 'le-evil))
 
 (lightemacs-use-package
   evil-commentary
   :diminish evil-commentary-mode
-  :commands evil-commentary-mode)
+  :commands evil-commentary-mode
+  :init
 
-(lightemacs-define-mode-hook-list evil-commentary-mode
-                                  '(evil-mode-hook))
+  (lightemacs-define-mode-hook-list evil-commentary-mode
+                                    '(evil-mode-hook)))
 
 (provide 'le-evil-commentary)
 

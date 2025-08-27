@@ -14,7 +14,9 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   winner
@@ -40,10 +42,10 @@
                                 "*cvs*"
                                 "*Buffer List*"
                                 "*Ibuffer*"
-                                "*esh command on file*")))
+                                "*esh command on file*"))
 
-(lightemacs-define-mode-hook-list winner-mode
-                                  '(lightemacs-on-first-buffer-hook))
+  (lightemacs-define-mode-hook-list winner-mode
+                                    '(lightemacs-on-first-buffer-hook)))
 
 (provide 'le-winner)
 

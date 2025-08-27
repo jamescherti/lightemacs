@@ -15,9 +15,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
-(defvar lightemacs-saveplace-recenter-after-find-file nil
+(defvar lightemacs-saveplace-recenter-after-find-file t
   "If non-nil, recenter the buffer after restoring the cursor position.")
 
 (lightemacs-use-package
@@ -27,6 +29,11 @@
 
   :init
   (setq save-place-limit 500)
+
+  ;; TODO use on first file?
+  ;; (lightemacs-define-mode-hook-list save-place-mode
+  ;;                                   '(lightemacs-on-first-file-hook))
+  (lightemacs-define-mode-hook-list save-place-mode '(after-init-hook))
 
   :config
   (defun lightemacs-saveplace--recenter ()
@@ -48,12 +55,6 @@ It avoids recentering while an EasySession session is in progress."
 
   (add-hook 'save-place-after-find-file-hook
             'lightemacs-saveplace--after-find-file))
-
-(lightemacs-define-mode-hook-list save-place-mode '(after-init-hook))
-
-;; TODO use on first file?
-;; (lightemacs-define-mode-hook-list save-place-mode
-;;                                   '(lightemacs-on-first-file-hook))
 
 (provide 'le-saveplace)
 

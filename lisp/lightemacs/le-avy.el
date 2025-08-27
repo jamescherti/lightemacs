@@ -19,7 +19,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   avy
@@ -42,20 +46,20 @@
    ;; When non-nil, a gray background will be added during the selection.
    avy-background nil  ; t is not compatible with all themes
    ;; This is unpredictible
-   avy-single-candidate-jump nil))
+   avy-single-candidate-jump nil)
 
-(lightemacs-define-keybindings avy
-  (global-set-key (kbd "C-:") 'avy-goto-char)
-  (global-set-key (kbd "C-'") 'avy-goto-char-2)
-  (global-set-key (kbd "M-g j") 'avy-goto-char-timer)  ;; TODO Change?
-  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+  (lightemacs-define-keybindings avy
+    (global-set-key (kbd "C-:") 'avy-goto-char)
+    (global-set-key (kbd "C-'") 'avy-goto-char-2)
+    (global-set-key (kbd "M-g j") 'avy-goto-char-timer)  ;; TODO Change?
+    (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 
-  ;; The following ones have been changes because they conflict with Consult
-  ;; TODO Should consult be changed instead?
-  ;; (global-set-key (kbd "M-g f") 'avy-goto-line)  ;; Conflict with Consult
-  ;; (global-set-key (kbd "M-g e") 'avy-goto-word-0)  ;; Conflict with Consult
-  (global-set-key (kbd "M-g W") 'avy-goto-word-0)
-  (global-set-key (kbd "M-g l") 'avy-goto-line))
+    ;; The following ones have been changes because they conflict with Consult
+    ;; TODO Should consult be changed instead?
+    ;; (global-set-key (kbd "M-g f") 'avy-goto-line)  ;; Conflict with Consult
+    ;; (global-set-key (kbd "M-g e") 'avy-goto-word-0)  ;; Conflict with Consult
+    (global-set-key (kbd "M-g W") 'avy-goto-word-0)
+    (global-set-key (kbd "M-g l") 'avy-goto-line)))
 
 (provide 'le-avy)
 

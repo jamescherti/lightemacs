@@ -24,8 +24,10 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package)
+  (require 'le-diminish))
 
 (lightemacs-use-package
   compile-angel
@@ -34,6 +36,7 @@
   ;;            compile-angel-on-save-local-mode
   ;;            compile-angel-on-save-mode)
   :diminish compile-angel-on-load-mode
+  ;;:functions compile-angel-on-load-mode
 
   :init
   ;; Verbose
@@ -65,7 +68,6 @@ specified file or directory is ignored during the compilation process managed by
             compile-angel-excluded-files)))
 
   :config
-  ;; Exclude files
   (with-eval-after-load 'org
     (push "/org-version.el" compile-angel-excluded-files))
   (with-eval-after-load 'savehist
@@ -77,8 +79,8 @@ specified file or directory is ignored during the compilation process managed by
   (with-eval-after-load 'prescient
     (le-compile-angel-exclude prescient-save-file))
 
-  ;; On load mode
-  (compile-angel-on-load-mode))
+  ;; Load mode
+  (compile-angel-on-load-mode 1))
 
 (provide 'le-compile-angel)
 

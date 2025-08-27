@@ -19,7 +19,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   helpful
@@ -37,14 +41,14 @@
 
   :init
   (setq helpful-max-buffers 7)
-  (add-hook 'emacs-lisp-mode-hook #'le-helpful--emacs-lisp-setup))
+  (add-hook 'emacs-lisp-mode-hook #'le-helpful--emacs-lisp-setup)
 
-(lightemacs-define-keybindings helpful
-  (global-set-key [remap describe-command] #'helpful-command)
-  (global-set-key [remap describe-function] #'helpful-callable)
-  (global-set-key [remap describe-key] #'helpful-key)
-  (global-set-key [remap describe-symbol] #'helpful-symbol)
-  (global-set-key [remap describe-variable] #'helpful-variable))
+  (lightemacs-define-keybindings helpful
+    (global-set-key [remap describe-command] #'helpful-command)
+    (global-set-key [remap describe-function] #'helpful-callable)
+    (global-set-key [remap describe-key] #'helpful-key)
+    (global-set-key [remap describe-symbol] #'helpful-symbol)
+    (global-set-key [remap describe-variable] #'helpful-variable)))
 
 (provide 'le-helpful)
 

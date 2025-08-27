@@ -12,15 +12,16 @@
 ;; Evil is an extensible vi layer for Emacs. It emulates the main features of
 ;; Vim, and provides facilities for writing custom extensions.
 ;;
-;; This configures the packages evil and evil-collection.
+;; This configures the evil-collection package.
 ;;
-;; URL: https://github.com/emacs-evil/evil
+;; URL: https://github.com/emacs-evil/evil-collection
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'le-evil)
-(require 'le-diminish)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'le-evil)
+  (require 'le-diminish))
 
 (lightemacs-use-package
   evil-collection

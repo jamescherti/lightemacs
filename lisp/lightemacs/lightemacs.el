@@ -13,6 +13,11 @@
 
 ;;; Code:
 
+;;; Require
+
+(eval-and-compile
+  (require 'use-package))
+
 ;;; Variables
 
 (defvar lightemacs-modules '(;; Default modules
@@ -33,7 +38,7 @@ disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
 (defcustom lightemacs-verbose nil
-  "Enable displaying messages.
+  "Enable displaying verbose messages.
 When set to non-nil, this option will cause messages to be shown during the
 compilation process, providing feedback on the compilation status."
   :type 'boolean
@@ -64,6 +69,26 @@ their declaration and configuration.")
 Refresh package contents when `lightemacs-use-package-refresh-contents' is
 non-nil and the package is not installed.")
 
+(defvar lightemacs-package-manager 'use-package
+  "Specifies which package manager to use in Lightemacs.
+
+Choices are:
+- \='use-package: Use Emacs' built-in package.el and `use-package'.
+- \='straight: Use `straight.el' for package management.
+- \='elpaca: Use `elpaca'.
+
+This variable controls how `lightemacs-use-package' handles installation and
+configuration of packages.")
+
+;; TODO change the paredit recipe
+(defvar lightemacs-straight-recipes
+  ;; The paredit repository on MELPA is invalid.
+  '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
+    ;; Add more custom recipes here
+    )
+  "Alist of packages and their custom straight.el recipes.
+This is applied when `lightemacs-package-manager' is \='straight.")
+
 ;;; Functions
 
 (defmacro lightemacs-verbose-message (&rest args)
@@ -78,12 +103,53 @@ non-nil and the package is not installed.")
 ;; (require/load-any couldn't find some files when those files are already
 ;; compiled.)
 
+;; (defun lightemacs-load-modules (modules)
+;;   "Load all modules listed in MODULES."
+;;   (dolist (feature-symbol modules)
+;;     (let* ((feature-str (format "%s" feature-symbol)))
+;;       (lightemacs-verbose-message "Load: %s" feature-str)
+;;       (require feature-symbol))))
+
+(defvar lightemacs--load-module-method 'require)
+(defvar lightemacs--loaded-modules nil)
+
 (defun lightemacs-load-modules (modules)
   "Load all modules listed in MODULES."
-  (dolist (feature-symbol modules)
-    (let* ((feature-str (format "%s" feature-symbol)))
-      (lightemacs-verbose-message "Load: %s" feature-str)
-      (require feature-symbol))))
+  (when (boundp 'lightemacs--modules-dir)
+    (let ((modules-dir lightemacs--modules-dir))
+      (dolist (feature-symbol modules)
+        (unless (memq feature-symbol lightemacs--loaded-modules)
+          (let* ((feature-str (format "%s" feature-symbol))
+                 (module-file
+                  (when (or (eq lightemacs--load-module-method 'require-file)
+                            (eq lightemacs--load-module-method 'load-file))
+                    (expand-file-name (format "%s.el" feature-str)
+                                      modules-dir))))
+            (lightemacs-verbose-message "Load: %s" feature-str)
+
+            (cond
+             ((eq lightemacs--load-module-method 'require)
+              (require feature-symbol))
+
+             ((eq lightemacs--load-module-method 'require-file)
+              (require feature-symbol module-file))
+
+             ((eq lightemacs--load-module-method 'load-any)
+              (load (expand-file-name feature-str modules-dir)
+                    nil
+                    (not (bound-and-true-p init-file-debug))))
+
+             ((eq lightemacs--load-module-method 'load-file)
+              (load module-file
+                    nil
+                    (not (bound-and-true-p init-file-debug))
+                    'nosuffix))
+
+             (t
+              (error "Invalid method for lightemacs--load-module-method %s"
+                     lightemacs--load-module-method)))
+
+            (push feature-symbol lightemacs--loaded-modules)))))))
 
 ;;; Useful macros
 
@@ -268,20 +334,21 @@ cursor."
 
 (defmacro lightemacs-define-keybindings (module &rest body)
   "Define key bindings for MODULE with BODY, unless inhibited.
-
-This macro introduces an inhibition variable named
-`lightemacs-MODULE-inhibit-keybindings'. When non-nil, BODY will
-not be evaluated, thereby preventing the installation of the
-specified key bindings."
+This macro introduces an inhibition variable named:
+`lightemacs-MODULE-inhibit-keybindings'.
+When non-nil, BODY will not be evaluated, thereby preventing the installation of
+the specified key bindings."
   (declare (indent 1) (debug t))
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings" module))))
     `(progn
        (defvar ,inhibit-var nil
          ,(format
-           "Non-nil prevents Lightemacs from configuring key bindings for `%s'.
+           "Prevent configuring `%s' keybindings.
 
 When this variable is set to a non-nil value, any key bindings that would
-normally be defined for `%s' through `lightemacs-define-*' macros are skipped.
+normally be defined through `lightemacs-define-*' macros are skipped
+for `%s'.
+
 This allows users to disable or override the default Lightemacs key
 configuration for that mode without modifying the macro definition itself."
            module
@@ -300,7 +367,7 @@ Each hook in HOOK-LIST will have MODE added via `add-hook'."
        (defvar ,var ,hook-list
          ,(format "Hooks where `%s' is enabled." mode))
        (dolist (hook ,var)
-         (add-hook hook #',mode)))))
+         (add-hook hook ',mode)))))
 
 ;;; lightemacs-use-package
 
@@ -330,23 +397,34 @@ passed to `lightemacs-use-package'."
 (defmacro lightemacs-use-package (name &rest plist)
   "Configure an Emacs package, skipping it if disabled or unavailable.
 NAME is the package symbol.
-PLIST contains keyword arguments for `use-package`.
+PLIST contains keyword arguments for `use-package'.
 
-This macro checks:
-1. If NAME is present in `lightemacs-use-package-disabled-packages', the package
-is skipped.
-2. Refresh package contents when `lightemacs-use-package-refresh-contents' is
-non-nil and the package is not installed."
+If `lightemacs-emacs-straight' is non-nil and :straight is not already in PLIST,
+the package is installed via straight.el. If a custom recipe exists in
+`lightemacs-straight-recipes', it is used instead of t.
+
+`use-package' expansion is deferred until runtime."
   (declare (indent 0) (debug t))
   (unless (or (memq name lightemacs-use-package-disabled-packages)
-              ;; During byte-compilation, `use-package' loads packages to avoid
-              ;; errors. If a user disables packages, this causes missing-file
-              ;; errors, so we check availability at compile time.
               (and (bound-and-true-p byte-compile-current-file)
                    (not (locate-library (symbol-name name)))))
-    `(progn
-       (lightemacs--before-use-package ',name ',plist)
-       (use-package ,name ,@plist))))
+    (let* ((straight-spec (and (eq lightemacs-package-manager 'straight)
+                               (not (plist-member plist :straight))
+                               (or (cdr (assoc name lightemacs-straight-recipes))
+                                   t)))
+           (ensure (cond
+                    ((memq :ensure plist)
+                     (plist-get plist :ensure))
+
+                    (t
+                     use-package-always-ensure)))
+           (final-plist (if (and straight-spec
+                                 ensure)
+                            (append `(:straight ,straight-spec) plist)
+                          plist)))
+      ;; TODO: when package manager = use-package
+      ;; (lightemacs--before-use-package name plist)
+      `(eval '(use-package ,name ,@final-plist)))))
 
 ;;; Provide lightemacs
 
@@ -355,5 +433,4 @@ non-nil and the package is not installed."
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
-
 ;;; lightemacs.el ends here

@@ -17,7 +17,9 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs)
+  (require 'use-package))
 
 (lightemacs-use-package
   corfu
@@ -55,10 +57,11 @@
   (setq corfu-quit-no-match nil)
 
   ;; Configure handling of exact matches
-  (setq corfu-on-exact-match nil))
+  (setq corfu-on-exact-match nil)
 
-(lightemacs-define-mode-hook-list global-corfu-mode
-                                  '(lightemacs-on-first-input-hook))
+  ;; Hook List
+  (lightemacs-define-mode-hook-list global-corfu-mode
+                                    '(lightemacs-on-first-input-hook)))
 
 (provide 'le-corfu)
 

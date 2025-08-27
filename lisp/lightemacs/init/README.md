@@ -1,3 +1,5 @@
+-------------------------------------------------------------------------------
+
 # *minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup
 ![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 ![Build Status](https://github.com/jamescherti/minimal-emacs.d/actions/workflows/ci.yml/badge.svg)
@@ -1967,7 +1969,7 @@ To install and load packages during the early-init phase, add the following to `
     (package-refresh-contents))
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
-  (eval-when-compile
+  (eval-and-compile
     (require 'use-package)))
 
 ;; TODO: Add your use-package code here

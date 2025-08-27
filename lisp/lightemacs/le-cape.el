@@ -17,7 +17,11 @@
 
 ;;; Code:
 
-(require 'lightemacs)
+(eval-and-compile
+  (require 'lightemacs))
+
+(eval-and-compile
+  (require 'use-package))
 
 (lightemacs-use-package
   cape
@@ -38,10 +42,10 @@
 
   (when (fboundp 'le-cape--setup-cape-sh-mode)
     (add-hook 'bash-ts-mode-hook #'le-cape--setup-cape-sh-mode)
-    (add-hook 'sh-mode-hook #'le-cape--setup-cape-sh-mode)))
+    (add-hook 'sh-mode-hook #'le-cape--setup-cape-sh-mode))
 
-(lightemacs-define-keybindings cape
-  (global-set-key (kbd "C-c p") #'cape-prefix-map))
+  (lightemacs-define-keybindings cape
+    (global-set-key (kbd "C-c p") #'cape-prefix-map)))
 
 (provide 'le-cape)
 
