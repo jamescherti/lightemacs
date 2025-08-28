@@ -471,8 +471,8 @@ the package is installed via straight.el. If a custom recipe exists in
 (require 'cl-lib)
 (defun lightemacs-load-user-init (file &optional no-error)
   "Load a file of Lisp init file named FILENAME.
-If optional second arg NO-ERROR is non-nil,
-report no error if FILE doesn’t exist."
+If optional second arg NO-ERROR is non-nil, report no error if FILE doesn’t
+exist."
   (cl-letf (((symbol-function 'minimal-emacs-load-user-init)
              (lambda (&rest _)
                nil)))

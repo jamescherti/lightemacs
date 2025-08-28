@@ -42,7 +42,6 @@
   ;; keyboard or mouse input is received for the specified period.
   (setq gcmh-idle-delay 'auto)
 
-  (setq gcmh-high-cons-threshold most-positive-fixnum)
   (setq gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
 
 (provide 'le-gcmh)

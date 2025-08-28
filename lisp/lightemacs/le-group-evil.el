@@ -33,12 +33,6 @@
    ;; by pressing 'gc'.
    le-evil-commentary
 
-   ;; two-character motions for rapid navigation within text. Pressing s in
-   ;; normal mode prompts you to type two characters, then jumps the cursor to
-   ;; the nearest matching occurrence while highlighting all matches
-   ;; incrementally.
-   le-evil-snipe
-
    ;; Evil-surround enables text surrounding in visual state using S<textobject>
    ;; or gS<textobject>. For example, selecting text and pressing S" will wrap
    ;; it in double quotes.
