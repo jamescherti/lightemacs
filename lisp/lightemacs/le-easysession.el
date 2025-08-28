@@ -1,4 +1,4 @@
-;;; le-easysession.el --- le-easysession -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-easysession.el --- le-easysession -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -28,13 +28,11 @@
 ;;; Require
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
-(defvar lightemacs-easysession-save-scratch t
-  "Make EasySession also save and restore the scratch buffer.")
+;; (defvar lightemacs-easysession-save-scratch t
+;;   "Make EasySession also save and restore the scratch buffer.")
 
 (defvar lightemacs-easysession-load-including-geometry t)
 
@@ -80,14 +78,14 @@
     (global-set-key (kbd "C-c sL") 'easysession-load)
     (global-set-key (kbd "C-c sw") 'easysession-save)))
 
-(when lightemacs-easysession-save-scratch
-  (lightemacs-use-package
-    easysession-scratch
-    :if lightemacs-easysession-save-scratch
-    :ensure nil
-    :after easysession
-    :config
-    (easysession-scratch-mode)))
+;; (when lightemacs-easysession-save-scratch
+;;   (lightemacs-use-package
+;;     easysession-scratch
+;;     :if lightemacs-easysession-save-scratch
+;;     :ensure nil
+;;     :after easysession
+;;     :config
+;;     (easysession-scratch-mode)))
 
 (provide 'le-easysession)
 

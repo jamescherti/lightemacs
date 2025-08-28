@@ -1,4 +1,4 @@
-;;; le-evil.el --- le-evil -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-evil.el --- le-evil -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -72,14 +72,14 @@
   (setq evil-want-Y-yank-to-eol t)
   (setq evil-want-abbrev-expand-on-insert-exit nil)
   (setq evil-respect-visual-line-mode nil)
-  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-u-scroll nil)  ; Conflicts with evil-want-C-u-delete
   (setq evil-want-C-i-jump t)
   (setq evil-want-C-g-bindings t)
   (setq evil-want-C-h-delete t)
   (setq evil-want-C-u-delete t)
   (setq evil-want-C-w-delete t)
 
-  (lightemacs-define-mode-hook-list evil-mode '(after-init-hook))
+  (lightemacs-define-mode-add-hook-to evil-mode '(after-init-hook))
 
   (lightemacs-define-keybindings evil
     (with-eval-after-load 'evil

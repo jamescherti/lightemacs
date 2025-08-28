@@ -1,4 +1,4 @@
-;;; le-core-straight.el --- le-core-straight -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-core-straight.el --- le-core-straight -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -30,7 +30,8 @@
   (load bootstrap-file nil 'nomessage))
 
 (unless (package-installed-p 'use-package)
-  (straight-use-package 'use-package))
+  (when (fboundp 'straight-use-package)
+    (funcall 'straight-use-package 'use-package)))
 
 (provide 'le-core-straight)
 

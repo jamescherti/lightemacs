@@ -1,4 +1,4 @@
-;;; le-outline-indent.el --- le-outline-indent -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-outline-indent.el --- le-outline-indent -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -31,8 +31,7 @@
 (lightemacs-use-package
   outline-indent
   :diminish outline-indent-minor-mode
-  :commands (outline-indent-minor-mode
-             outline-indent-insert-heading)
+  :commands outline-indent-minor-mode
   :init
   (setq outline-indent-ellipsis lightemacs-ellipsis))
 

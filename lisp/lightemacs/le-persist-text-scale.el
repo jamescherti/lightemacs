@@ -1,4 +1,4 @@
-;;; le-persist-text-scale.el --- le-persist-text-scale -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-persist-text-scale.el --- le-persist-text-scale -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -48,8 +48,8 @@
   :init
   (setq text-scale-mode-step 1.07)
 
-  (lightemacs-define-mode-hook-list persist-text-scale-mode
-                                    '(after-init-hook)))
+  (lightemacs-define-mode-add-hook-to persist-text-scale-mode
+                                      '(after-init-hook)))
 
 (provide 'le-persist-text-scale)
 

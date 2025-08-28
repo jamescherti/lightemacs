@@ -18,10 +18,12 @@
 (eval-and-compile
   (require 'use-package))
 
+(require 'le-core-compile)
+
 ;;; Variables
 
 (defvar lightemacs-modules '(;; Default modules
-                             le-group-default-modules
+                             le-flavor-essential
 
                              ;; Vim keybindings (DISABLED)
                              ;; --------------------------
@@ -37,10 +39,15 @@ Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
+(defvar lightemacs-excluded-packages nil
+  "List of package symbols that should be excluded from initialization.
+Each element must be a symbol naming a package that would otherwise be
+initialized by Lightemacs. Packages listed here are skipped during the
+initialization process. Only packages declared via the `lightemacs-use-package'
+macro are affected by this variable.")
+
 (defcustom lightemacs-verbose nil
-  "Enable displaying verbose messages.
-When set to non-nil, this option will cause messages to be shown during the
-compilation process, providing feedback on the compilation status."
+  "Enable displaying verbose messages."
   :type 'boolean
   :group 'lightemacs)
 
@@ -59,11 +66,6 @@ This enabled or disable cycling in plugins such as Vertico and Consult.
 When nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
-(defvar lightemacs-use-package-disabled-packages nil
-  "A list of package symbols that are disabled.
-Packages listed here will be ignored by `lightemacs-use-package', preventing
-their declaration and configuration.")
-
 (defvar lightemacs-use-package-refresh-contents t
   "If non-nil, `lightemacs-use-package' may refresh package contents once.
 Refresh package contents when `lightemacs-use-package-refresh-contents' is
@@ -77,8 +79,8 @@ Choices are:
 - \='straight: Use `straight.el' for package management.
 - \='elpaca: Use `elpaca'.
 
-This variable controls how `lightemacs-use-package' handles installation and
-configuration of packages.")
+This variable controls how the `lightemacs-use-package' macro handles
+installation and configuration of packages.")
 
 (defvar lightemacs-straight-recipes
   ;; Correct the Paredit repository in the MELPA recipe because the default URL
@@ -97,30 +99,23 @@ This will enable Lightemacs to load byte-compiled or possibly native-compiled
 init files for the following initialization files: init.el, pre-init.el,
 post-init.el, pre-early-init.el, and post-early-init.el.")
 
-(defvar lightemacs-native-comp-excluded-cpus 2
+(defvar lightemacs-native-comp-excluded-cpus 3
   "Number of CPUs to reserve and not use for `native-compile'.
 Set this to nil to disable this feature.")
 
+(defvar lightemacs-byte-compile-core t
+  "Indicates whether Lightemacs source files should be byte-compiled.
+
+When uncertain, keep this set to t. Stale .elc files may occasionally lead to
+unexpected issues.
+
+When this variable is non-nil, the Lightemacs configuration or supporting files
+are automatically compiled into bytecode (.elc files). This improves loading
+speed by reducing parsing overhead. If nil, files will be loaded directly from
+their source form without compilation, which is useful during development or
+when debugging.")
+
 ;;; Functions
-
-(defmacro lightemacs-verbose-message (&rest args)
-  "Display a verbose message with the same ARGS arguments as `message'."
-  (declare (indent 0) (debug t))
-  `(progn
-     (when lightemacs-verbose
-       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
-
-;; require-file/load-file are better.
-;;
-;; (require/load-any couldn't find some files when those files are already
-;; compiled.)
-
-;; (defun lightemacs-load-modules (modules)
-;;   "Load all modules listed in MODULES."
-;;   (dolist (feature-symbol modules)
-;;     (let* ((feature-str (format "%s" feature-symbol)))
-;;       (lightemacs-verbose-message "Load: %s" feature-str)
-;;       (require feature-symbol))))
 
 (defvar lightemacs--load-module-method 'require)
 (defvar lightemacs--loaded-modules nil)
@@ -132,12 +127,13 @@ Set this to nil to disable this feature.")
       (dolist (feature-symbol modules)
         (unless (memq feature-symbol lightemacs--loaded-modules)
           (let* ((feature-str (format "%s" feature-symbol))
-                 (module-file
-                  (when (or (eq lightemacs--load-module-method 'require-file)
-                            (eq lightemacs--load-module-method 'load-file))
-                    (expand-file-name (format "%s.el" feature-str)
-                                      modules-dir))))
-            (lightemacs-verbose-message "Load: %s" feature-str)
+                 (module-file (expand-file-name (format "%s.el" feature-str)
+                                                modules-dir)))
+            (lightemacs-verbose-message "Load module: %s" feature-str)
+
+            ;; TODO move this to le-core-byte-compile.el
+            (when lightemacs-byte-compile-core
+              (lightemacs--byte-compile-if-outdated module-file))
 
             (cond
              ((eq lightemacs--load-module-method 'require)
@@ -368,13 +364,13 @@ configuration for that mode without modifying the macro definition itself."
        (unless ,inhibit-var
          ,@body))))
 
-(defmacro lightemacs-define-mode-hook-list (mode hook-list)
+(defmacro lightemacs-define-mode-add-hook-to (mode hook-list)
   "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
 
-Defines `lightemacs-MODE-hook-list' initialized with HOOK-LIST.
+Defines `lightemacs-MODE-add-hook-to' initialized with HOOK-LIST.
 Each hook in HOOK-LIST will have MODE added via `add-hook'."
-  (declare (indent 0) (debug (symbolp sexp)))
-  (let ((var (intern (format "lightemacs-%s-hook-list" mode))))
+  (declare (indent 0) (debug t))
+  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode))))
     `(progn
        (defvar ,var ,hook-list
          ,(format "Hooks where `%s' is enabled." mode))
@@ -418,25 +414,26 @@ the package is installed via straight.el. If a custom recipe exists in
 
 `use-package' expansion is deferred until runtime."
   (declare (indent 0) (debug t))
-  (unless (or (memq name lightemacs-use-package-disabled-packages)
-              (and (bound-and-true-p byte-compile-current-file)
-                   (not (locate-library (symbol-name name)))))
-    (let* ((straight-spec (and (eq lightemacs-package-manager 'straight)
-                               (not (plist-member plist :straight))
-                               (or (cdr (assoc name lightemacs-straight-recipes))
-                                   t)))
-           (ensure (cond
-                    ((memq :ensure plist)
-                     (plist-get plist :ensure))
+  (if (memq name lightemacs-excluded-packages)
+      (lightemacs-verbose-message "PACKAGE IGNORED: %S" name)
+    (unless (and (bound-and-true-p byte-compile-current-file)
+                 (not (locate-library (symbol-name name))))
+      (let* ((straight-spec (and (eq lightemacs-package-manager 'straight)
+                                 (not (plist-member plist :straight))
+                                 (or (cdr (assoc name lightemacs-straight-recipes))
+                                     t)))
+             (ensure (cond
+                      ((memq :ensure plist)
+                       (plist-get plist :ensure))
 
-                    (t
-                     use-package-always-ensure)))
-           (final-plist (if (and straight-spec
-                                 ensure)
-                            (append `(:straight ,straight-spec) plist)
-                          plist)))
-      (lightemacs--before-use-package name plist)
-      `(eval '(use-package ,name ,@final-plist)))))
+                      (t
+                       use-package-always-ensure)))
+             (final-plist (if (and straight-spec
+                                   ensure)
+                              (append `(:straight ,straight-spec) plist)
+                            plist)))
+        (lightemacs--before-use-package name plist)
+        `(eval '(use-package ,name ,@final-plist))))))
 
 ;;; Internal functions
 

@@ -1,4 +1,4 @@
-;;; le-savehist.el --- le-savehist -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-savehist.el --- le-savehist -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -25,8 +25,8 @@
   :ensure nil
   :commands savehist-mode
   :init
-  (lightemacs-define-mode-hook-list savehist-mode
-                                    '(after-init-hook)))
+  (lightemacs-define-mode-add-hook-to savehist-mode
+                                      '(after-init-hook)))
 
 (provide 'le-savehist)
 

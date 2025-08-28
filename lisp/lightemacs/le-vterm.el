@@ -1,4 +1,4 @@
-;;; le-vterm.el --- le-vterm -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-vterm.el --- le-vterm -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -21,9 +21,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
 (lightemacs-use-package

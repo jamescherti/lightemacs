@@ -1,4 +1,4 @@
-;;; le-corfu-prescient.el --- le-corfu-prescient -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-corfu-prescient.el --- le-corfu-prescient -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -55,8 +55,8 @@
   (setq corfu-prescient-enable-filtering nil)
 
   ;; Hook list
-  (lightemacs-define-mode-hook-list corfu-prescient-mode
-                                    '(corfu-mode-hook)))
+  (lightemacs-define-mode-add-hook-to corfu-prescient-mode
+                                      '(corfu-mode-hook)))
 
 (provide 'le-corfu-prescient)
 

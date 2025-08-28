@@ -1,4 +1,4 @@
-;;; le-enhanced-evil-paredit.el --- le-enhanced-evil-paredit -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-enhanced-evil-paredit.el --- le-enhanced-evil-paredit -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -17,7 +17,7 @@
 ;;
 ;; This module automatically enables `enhanced-evil-paredit-mode' whenever
 ;; paredit-mode is activated. (This behavior can be customized using the
-;; `lightemacs-enhanced-evil-paredit-mode-hook-list' variable.)
+;; `lightemacs-enhanced-evil-paredit-mode-add-hook-to' variable.)
 ;;
 ;; URL: https://github.com/jamescherti/enhanced-evil-paredit.el
 
@@ -49,9 +49,9 @@ is active to prevent interference with `evil-snipe' commands."
     (add-hook 'evil-snipe-mode-hook
               #'lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding))
 
-  ;; Define the global variable `lightemacs-enhanced-evil-paredit-mode-hook-list'
-  (lightemacs-define-mode-hook-list enhanced-evil-paredit-mode
-                                    '(paredit-mode-hook)))
+  ;; Define the global variable `lightemacs-enhanced-evil-paredit-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to enhanced-evil-paredit-mode
+                                      '(paredit-mode-hook)))
 
 (provide 'le-enhanced-evil-paredit)
 

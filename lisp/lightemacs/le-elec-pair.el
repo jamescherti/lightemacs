@@ -1,4 +1,4 @@
-;;; le-elec-pair.el --- le-elec-pair -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-elec-pair.el --- le-elec-pair -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -24,8 +24,8 @@
              electric-pair-local-mode
              electric-pair-delete-pair)
   :init
-  (lightemacs-define-mode-hook-list electric-pair-mode
-                                    '(lightemacs-on-first-buffer-hook)))
+  (lightemacs-define-mode-add-hook-to electric-pair-mode
+                                      '(lightemacs-on-first-buffer-hook)))
 
 ;;; Provide
 (provide 'le-elec-pair)

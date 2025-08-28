@@ -1,4 +1,4 @@
-;;; le-dumb-jump.el --- le-dumb-jump -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-dumb-jump.el --- le-dumb-jump -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

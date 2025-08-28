@@ -1,4 +1,4 @@
-;;; le-consult-dir.el --- le-consult-dir -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-consult-dir.el --- le-consult-dir -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -27,9 +27,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
 ;; Variables
@@ -49,6 +47,36 @@ PATH, this option has no effect.")
              consult-dir--pick
              consult-dir-default-command)
   :functions consult-dir--fasd-dirs
+  :preface
+  ;; Fixes: https://github.com/karthink/consult-dir/issues/43
+  ;; Issues fixed: Typing Alt + Shift + :edit and then pressing C-x C-d to
+  ;; invoke consult-dir causes the selected directory to be inserted before
+  ;; :edit, rather than at the cursor position after :edit.
+  (defun lightemacs-consult-dir ()
+    "Choose a directory and act on it.
+
+The action taken on the directory is the value of `consult-dir-default-command'.
+The default is to call `find-file' starting at this directory.
+
+When called from the minibuffer, insert the directory into the minibuffer prompt
+instead. Existing minibuffer contents will be shadowed or deleted depending on
+the value of `consult-dir-shadow-filenames'.
+
+The list of sources for directory paths is `consult-dir-sources', which can be
+customized."
+    (interactive)
+    (if (not (minibufferp))
+        (consult-dir)
+      ;; Minibuffer
+      ;; Fix this bug: https://github.com/karthink/consult-dir/issues/43
+      (let* ((enable-recursive-minibuffers t)
+             (new-dir (consult-dir--pick))
+             (new-full-name (file-name-as-directory new-dir)))
+        (when new-dir
+          (if consult-dir-shadow-filenames
+              (insert "/" new-full-name)
+            (insert new-full-name))))))
+
   :init
   ;; Disable prepending of `/` to paths by consult-dir
   ;;
@@ -87,37 +115,6 @@ PATH, this option has no effect.")
 
     ;; Adding to the list of consult-dir sources
     (add-to-list 'consult-dir-sources 'consult-dir--source-fasd t)))
-
-;;; Fix consult-dir issues
-
-;; Fixes: https://github.com/karthink/consult-dir/issues/43
-;; Issues fixed: Typing Alt + Shift + :edit and then pressing C-x C-d to
-;; invoke consult-dir causes the selected directory to be inserted before
-;; :edit, rather than at the cursor position after :edit.
-(defun lightemacs-consult-dir ()
-  "Choose a directory and act on it.
-
-The action taken on the directory is the value of `consult-dir-default-command'.
-The default is to call `find-file' starting at this directory.
-
-When called from the minibuffer, insert the directory into the minibuffer prompt
-instead. Existing minibuffer contents will be shadowed or deleted depending on
-the value of `consult-dir-shadow-filenames'.
-
-The list of sources for directory paths is `consult-dir-sources', which can be
-customized."
-  (interactive)
-  (if (not (minibufferp))
-      (consult-dir)
-    ;; Minibuffer
-    ;; Fix this bug: https://github.com/karthink/consult-dir/issues/43
-    (let* ((enable-recursive-minibuffers t)
-           (new-dir (consult-dir--pick))
-           (new-full-name (file-name-as-directory new-dir)))
-      (when new-dir
-        (if consult-dir-shadow-filenames
-            (insert "/" new-full-name)
-          (insert new-full-name))))))
 
 (provide 'le-consult-dir)
 

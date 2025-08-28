@@ -1,4 +1,4 @@
-;;; le-ace-window.el --- le-ace-window -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-ace-window.el --- le-ace-window -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

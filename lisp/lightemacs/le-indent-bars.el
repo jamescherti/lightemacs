@@ -1,4 +1,4 @@
-;;; le-indent-bars.el --- le-indent-bars -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-indent-bars.el --- le-indent-bars -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -46,9 +46,9 @@
   ;; in abrupt shifts of the window start or cursor position.
   (setq indent-bars-display-on-blank-lines nil)
 
-  ;; Define the global variable `lightemacs-indent-bars-mode-hook-list'
-  (lightemacs-define-mode-hook-list indent-bars-mode
-                                    nil))
+  ;; Define the global variable `lightemacs-indent-bars-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to indent-bars-mode
+                                      nil))
 
 (provide 'le-indent-bars)
 

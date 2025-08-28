@@ -1,4 +1,4 @@
-;;; le-dired-filter.el --- le-dired-filter -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-dired-filter.el --- le-dired-filter -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -19,9 +19,7 @@
 ;;; Require
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package)
   (require 'le-diminish)
   (require 'le-dired))
@@ -55,6 +53,29 @@ For instance:
              dired-filter-by-git-ignored
              dired-filter-by-dot-files
              dired-filter-by-omit)
+  :preface
+  ;; Toggle filters
+
+  (defun lightemacs-dired-filter-toggle ()
+    "Toggle `dired' filters on or off in the current buffer.
+
+This function enables or disables all filters listed in
+`lightemacs-dired-filter-setup-hook'. When toggled on, the filters are applied
+to the current Dired buffer; when toggled off, all filters are removed,
+restoring the full file listing."
+    (interactive)
+    (when (and (boundp 'dired-filter-stack)
+               (fboundp 'dired-goto-file)
+               (fboundp 'dired-get-file-for-visit))
+      (let ((dired-file (dired-get-file-for-visit)))
+        (dired-filter-pop-all)
+        (if lightemacs--dired-filter-filters-enabled
+            (setq lightemacs--dired-filter-filters-enabled nil)
+          (setq lightemacs--dired-filter-filters-enabled t)
+          (lightemacs-dired-filter--enable-filters))
+
+        (when dired-file
+          (dired-goto-file dired-file)))))
   :init
   ;; Enable filters
   (defun lightemacs-dired-filter--enable-filters ()
@@ -63,34 +84,11 @@ For instance:
       (run-hooks 'lightemacs-dired-filter-setup-hook)))
 
   (remove-hook 'dired-mode-hook #'dired-omit-mode)  ; Managed by dired-filter
-  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--enable-filters))
+  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--enable-filters)
 
-;; Toggle filters
-
-(defun lightemacs-dired-filter-toggle ()
-  "Toggle `dired' filters on or off in the current buffer.
-
-This function enables or disables all filters listed in
-`lightemacs-dired-filter-setup-hook'. When toggled on, the filters are applied
-to the current Dired buffer; when toggled off, all filters are removed,
-restoring the full file listing."
-  (interactive)
-  (when (and (boundp 'dired-filter-stack)
-             (fboundp 'dired-goto-file)
-             (fboundp 'dired-get-file-for-visit))
-    (let ((dired-file (dired-get-file-for-visit)))
-      (dired-filter-pop-all)
-      (if lightemacs--dired-filter-filters-enabled
-          (setq lightemacs--dired-filter-filters-enabled nil)
-        (setq lightemacs--dired-filter-filters-enabled t)
-        (lightemacs-dired-filter--enable-filters))
-
-      (when dired-file
-        (dired-goto-file dired-file)))))
-
-(lightemacs-define-keybindings dired-filter
-  (with-eval-after-load 'dired
-    (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-toggle)))
+  (lightemacs-define-keybindings dired-filter
+    (with-eval-after-load 'dired
+      (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-toggle))))
 
 (provide 'le-dired-filter)
 

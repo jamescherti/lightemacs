@@ -98,9 +98,9 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
   - [Other Features](#other-features)
   - [Useful variables, functions, and macros](#useful-variables-functions-and-macros)
     - [Useful variables](#useful-variables)
-    - [Ellipsis](#ellipsis)
-    - [Cycling](#cycling)
-    - [Other variables](#other-variables)
+      - [Ellipsis](#ellipsis)
+      - [Cycling](#cycling)
+      - [Other variables](#other-variables)
     - [Useful functions and macros](#useful-functions-and-macros)
   - [Author and license](#author-and-license)
   - [Links](#links)
@@ -484,12 +484,12 @@ It also includes an optional feature (`stripspace-only-if-initially-clean`, disa
 By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`. To enable `stripspace-local-mode` in additional modes, add their hooks to your `~/.emacs.d/config.el` file:
 ```emacs-lisp
 ;; Automatically remove trailing whitespace before saving
-(setq lightemacs-stripspace-local-mode-hook-list '(;; Programming
-                                                   prog-mode-hook
-                                                   ;; Text files
-                                                   text-mode-hook
-                                                   ;; Configuration files
-                                                   conf-mode-hook))
+(setq lightemacs-stripspace-local-mode-add-hook-to '(;; Programming
+                                                     prog-mode-hook
+                                                     ;; Text files
+                                                     text-mode-hook
+                                                     ;; Configuration files
+                                                     conf-mode-hook))
 ```
 
 Here are some customizations for `stripspace-local-mode`:
@@ -772,21 +772,21 @@ The **le-group-emacs-lisp** group enables the following modules:
   ;; Enable the `le-page-break-lines' module
   (add-to-list 'lightemacs-modules 'le-page-break-lines)
   ```
-  (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-page-break-lines-mode-hook-list`.)
+  (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-page-break-lines-mode-add-hook-to`.)
 
 - **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
   ;; Enable the `le-aggressive-indent' module
   (add-to-list 'lightemacs-modules 'le-aggressive-indent)
   ```
-  (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-aggressive-indent-mode-hook-list`.)
+  (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-aggressive-indent-mode-add-hook-to`.)
 
 - **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'le-easy-escape)
   ```
-  (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-easyescape-minor-mode-hook-list`.)
+  (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-easyescape-minor-mode-add-hook-to`.)
 
 - **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
@@ -809,7 +809,7 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 (add-to-list 'lightemacs-modules 'le-indent-bars)
 
 ;; Enable indent-bars-mode automatically for Python files and Yaml files
-(setq lightemacs-indent-bars-mode-hook-list '(yaml-ts-mode-hook
+(setq lightemacs-indent-bars-mode-add-hook-to '(yaml-ts-mode-hook
                                               yaml-mode-hook
                                               python-ts-mode-hook
                                               python-mode-hook))
@@ -827,9 +827,9 @@ Here are a few other modules disabled by default:
 
 - **git-modes**: Emacs major modes for managing Git configuration files, such as `.gitattributes`, `.gitconfig`, and `.gitignore`.
 
-- **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-hook-list`. For example:
+- **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-add-hook-to`. For example:
   ```emacs-lisp
-  (setq lightemacs-diff-hl-mode-hook-list '(prog-mode-hook))
+  (setq lightemacs-diff-hl-mode-add-hook-to '(prog-mode-hook))
   ```
 
 - **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don’t change the actual text.
@@ -850,7 +850,7 @@ Here are a few other modules disabled by default:
 
 Elisp file-type modules are disabled by default:
 
-- **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to nil forces `yaml-mode` to load even if Tree-sitter is available.)
+- **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to nil forces `yaml-mode` to load even if Tree-sitter is available.) It also ensures that the indentation adheres to the YAML standard: two spaces and no tabs.
   ```emacs-lisp
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-group-yaml)
@@ -861,9 +861,9 @@ Elisp file-type modules are disabled by default:
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-paredit)
   ```
-  (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`. The list of hooks that activate this mode can be customized by modifying `lightemacs-paredit-mode-hook-list`.)
+  (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`. The list of hooks that activate this mode can be customized by modifying `lightemacs-paredit-mode-add-hook-to`.)
 
-- **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated. (This behavior can be customized using the `lightemacs-enhanced-evil-paredit-mode-hook-list` variable.)
+- **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated. (This behavior can be customized using the `lightemacs-enhanced-evil-paredit-mode-add-hook-to` variable.)
 
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 
@@ -877,13 +877,13 @@ In addition to modules, Lightemacs provides the following features:
 
 ### Useful variables
 
-### Ellipsis
+#### Ellipsis
 Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
 ```emacs-lisp
 (setq lightemacs-ellipsis " ▼")
 ```
 
-### Cycling
+#### Cycling
 
 The `lightemacs-cycle` variable controls whether cycling through completion candidates is enabled.
 
@@ -912,9 +912,23 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/conf
 (setq lightemacs-cycle t)
 ```
 
-### Other variables
+#### Other variables
 
-- `lightemacs-native-comp-excluded-cpus` (default: `2`): By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely. (It must be configured at a very early stage, in `pre-early-init.el`.)
+- `lightemacs-native-comp-excluded-cpus` (default: `3`): By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely.
+
+- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-use-package` are affected by this variable.
+
+- `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
+
+- `lightemacs-use-package-refresh-contents`: If non-nil, `lightemacs-use-package` may refresh package contents once. Refresh package contents when `lightemacs-use-package-refresh-contents` is non-nil and the package is not installed.
+
+- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-use-package` handles installation and configuration of packages.
+
+- `lightemacs-straight-recipes`: Alist of packages and their custom straight.el recipes. This is applied when `lightemacs-package-manager` is `'straight`.
+
+- `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files: init.el, pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el.
+
+- `lightemacs-byte-compile-core`: Indicates whether Lightemacs source files should be byte-compiled. When uncertain, keep this set to t. Stale .elc files may occasionally lead to unexpected issues. When this variable is non-nil, the Lightemacs configuration or supporting files are automatically compiled into bytecode (.elc files). This improves loading speed by reducing parsing overhead. If nil, files will be loaded directly from their source form without compilation, which is useful during development or when debugging.
 
 ### Useful functions and macros
 

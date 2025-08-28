@@ -1,4 +1,4 @@
-;;; le-group-evil.el --- group-evil -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-group-evil.el --- group-evil -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -19,9 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
 (lightemacs-load-modules

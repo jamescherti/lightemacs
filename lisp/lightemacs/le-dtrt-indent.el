@@ -1,4 +1,4 @@
-;;; le-dtrt-indent.el --- le-dtrt-indent -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-dtrt-indent.el --- le-dtrt-indent -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

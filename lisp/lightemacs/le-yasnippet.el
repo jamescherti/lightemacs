@@ -1,4 +1,4 @@
-;;; le-yasnippet.el --- le-yasnippet -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-yasnippet.el --- le-yasnippet -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -41,8 +41,8 @@
   (setq yas-snippet-revival nil)  ; Sometimes, undo loops when this is activated
   (setq yas-wrap-around-region nil)
 
-  (lightemacs-define-mode-hook-list yas-global-mode
-                                    '(after-init-hook)))
+  (lightemacs-define-mode-add-hook-to yas-global-mode
+                                      '(after-init-hook)))
 
 (provide 'le-yasnippet)
 

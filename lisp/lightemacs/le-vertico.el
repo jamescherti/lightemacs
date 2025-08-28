@@ -1,4 +1,4 @@
-;;; le-vertico.el --- le-vertico -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-vertico.el --- le-vertico -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -38,8 +38,8 @@
   (setq vertico-cycle lightemacs-cycle)
   (setq vertico-count-format nil) ; No prefix with number of entries
 
-  (lightemacs-define-mode-hook-list vertico-mode
-                                    '(lightemacs-on-first-input-hook))
+  (lightemacs-define-mode-add-hook-to vertico-mode
+                                      '(lightemacs-on-first-input-hook))
 
   (lightemacs-define-keybindings vertico
     (with-eval-after-load 'vertico

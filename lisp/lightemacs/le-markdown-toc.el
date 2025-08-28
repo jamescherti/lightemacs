@@ -1,4 +1,4 @@
-;;; le-markdown-toc.el --- le-markdown-toc -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-markdown-toc.el --- le-markdown-toc -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

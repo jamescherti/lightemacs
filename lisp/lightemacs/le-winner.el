@@ -1,4 +1,4 @@
-;;; le-winner.el --- le-winner -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-winner.el --- le-winner -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -44,8 +44,8 @@
                                 "*Ibuffer*"
                                 "*esh command on file*"))
 
-  (lightemacs-define-mode-hook-list winner-mode
-                                    '(lightemacs-on-first-buffer-hook)))
+  (lightemacs-define-mode-add-hook-to winner-mode
+                                      '(lightemacs-on-first-buffer-hook)))
 
 (provide 'le-winner)
 

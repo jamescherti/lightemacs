@@ -1,4 +1,4 @@
-;;; le-org-appear.el --- le-org-appear -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-org-appear.el --- le-org-appear -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -21,8 +21,8 @@
   org-appear
   :commands org-appear-mode
   :init
-  (lightemacs-define-mode-hook-list org-appear-mode
-                                    '(org-mode-hook)))
+  (lightemacs-define-mode-add-hook-to org-appear-mode
+                                      '(org-mode-hook)))
 
 (provide 'le-org-appear)
 

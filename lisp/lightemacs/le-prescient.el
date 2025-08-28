@@ -1,4 +1,4 @@
-;;; le-prescient.el --- le-prescient -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-prescient.el --- le-prescient -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

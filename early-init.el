@@ -29,6 +29,7 @@
 (setq minimal-emacs-gc-cons-percentage 0.1)
 (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
 (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
+(setq minimal-emacs-ui-features '(context-menu tooltips))
 
 ;;; Global variables
 
@@ -38,6 +39,9 @@ Note that this should end with a directory separator.")
 
 (defvar lightemacs-modules-directory
   (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
+
+(defvar lightemacs-var-directory
+  (expand-file-name "var/" lightemacs-user-directory))
 
 ;;; Reduce cluttering
 
@@ -51,21 +55,24 @@ Note that this should end with a directory separator.")
 ;; An alternative lightweight approach is to simply change the default
 ;; ~/.emacs.d directory to ~/.emacs.d/var/, which will contain all the files
 ;; that Emacs typically stores in the base directory.
+
 (defvar lightemacs--declutter-done nil)
 (unless lightemacs--declutter-done
   (setq lightemacs--declutter-done t)
-  (setq user-emacs-directory (expand-file-name "var/"
-                                               lightemacs-user-directory))
+  (setq user-emacs-directory lightemacs-var-directory)
   (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
   (setq minimal-emacs-user-directory (expand-file-name
                                       "init/" lightemacs-modules-directory)))
+
+(setq custom-theme-directory
+      (expand-file-name "themes/" minimal-emacs-user-directory))
+
+(setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
 
 ;;; Update `load-path'
 
 (eval-and-compile
   (add-to-list 'load-path lightemacs-modules-directory))
-
-;;; Update `load-path' and byte compile init files
 
 ;;; Load config.el
 
@@ -75,94 +82,38 @@ Note that this should end with a directory separator.")
 
 ;;; Stale .elc files may lead to errors; ensure they are recompiled and current.
 
-(require 'bytecomp)
+(require 'le-core-compile)
 
-(defmacro lightemacs--early-verbose-message (&rest args)
-  "Display a verbose message with the same ARGS arguments as `message'."
-  (declare (indent 0) (debug t))
-  `(when lightemacs-verbose
-     (message (concat "[lightemacs] " ,(car args)) ,@(cdr args))))
+(when (bound-and-true-p lightemacs-byte-compile-core)
+  (dolist (file '("lightemacs.el"
+                  "le-core-cli-tools.el"
+                  ;; le-core-elpaca.el
+                  ;; le-core-straight.el
+                  "le-core-compile.el"
+                  "le-core-use-package.el"))
+    (lightemacs--byte-compile-if-outdated (expand-file-name
+                                           file lightemacs-modules-directory)))
 
-(defun lightemacs--byte-compile-if-outdated (el-file &optional no-error)
-  "Byte-compile EL-FILE into .elc if the .elc is missing or outdated.
-If optional second arg NO-ERROR is non-nil, report no error if FILE doesn’t
-exist."
-  (let* ((elc-file (funcall
-                    (if (bound-and-true-p byte-compile-dest-file-function)
-                        byte-compile-dest-file-function
-                      #'byte-compile-dest-file)
-                    el-file)))
-    (cond
-     ((not elc-file)
-      (message "WARNING: Byte-compile: Cannot detect the .elc path for: %S"
-               el-file))
+  ;; Configuration
+  (dolist (file '("pre-early-init.el"
+                  "config.el"
+                  "post-early-init.el"
+                  "pre-init.el"
+                  "post-init.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file lightemacs-user-directory)
+     :no-error))
 
-     ((and (file-exists-p elc-file)
-           (not (file-newer-than-file-p el-file elc-file)))
-      (lightemacs--early-verbose-message
-       "IGNORED (Up to date): Byte-compile: %S" el-file))
+  ;; Lightemacs init files
+  (dolist (file '("init.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file lightemacs-user-directory)))
 
-     ((and lightemacs-verbose
-           (not (file-writable-p elc-file)))
-      (lightemacs--early-verbose-message
-       (concat "IGNORED: Byte-compile: Destination .elc is read-only: %S. "
-               "Ensure you have write permissions to allow recompilation.")
-       elc-file))
-
-     (t
-      (let* ((delete-elc nil)
-             (noninteractive t)
-             (byte-compile-warnings nil)
-             (result (condition-case err
-                         (byte-compile-file el-file)
-                       (error
-                        ;; Return error
-                        nil))))
-        (unless result
-          (setq delete-elc t))
-
-        (lightemacs--early-verbose-message
-         "Byte-compile: %S (Result: %s)" el-file (cond
-                                                  ((eq result t)
-                                                   "success")
-                                                  ((not result)
-                                                   "error")
-                                                  (t
-                                                   result)))
-
-        (when delete-elc
-          (let ((delete-by-moving-to-trash nil))
-            (lightemacs--early-verbose-message "Delete .elc file: %S" elc-file)
-            (ignore-errors
-              (delete-file elc-file)))))))))
-
-;; Modules and libraries
-(dolist (file '("lightemacs.el"
-                "le-core-cli-tools.el"
-                "le-core-use-package.el"))
-  (lightemacs--byte-compile-if-outdated (expand-file-name
-                                         file lightemacs-modules-directory)))
-
-;; Configuration
-(dolist (file '("pre-early-init.el"
-                "config.el"
-                "post-early-init.el"
-                "pre-init.el"
-                "post-init.el"))
-  (lightemacs--byte-compile-if-outdated
-   (expand-file-name file lightemacs-user-directory)
-   :no-error))
-
-;; Lightemacs init files
-(dolist (file '("init.el"))
-  (lightemacs--byte-compile-if-outdated
-   (expand-file-name file lightemacs-user-directory)))
-
-;; Minimal-emacs.d init files
-(dolist (file '("init.el"
-                "early-init.el"))
-  (lightemacs--byte-compile-if-outdated
-   (expand-file-name file minimal-emacs-user-directory)))
+  ;; Minimal-emacs.d init files
+  (dolist (file '("init.el"
+                  "early-init.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file minimal-emacs-user-directory))))
 
 ;;; Load lightemacs.el
 

@@ -1,4 +1,4 @@
-;;; le-paredit.el --- le-paredit -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-paredit.el --- le-paredit -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -37,20 +37,20 @@
       (unbind-key "M-s" paredit-mode-map)  ; Conflict with Consult
       (unbind-key "RET" paredit-mode-map)))
 
-  ;; This defines the global variable `lightemacs-paredit-mode-hook-list'
-  (lightemacs-define-mode-hook-list paredit-mode
-                                    '(emacs-lisp-mode-hook
-                                      lisp-interaction-mode-hook
-                                      lisp-mode-hook
-                                      eval-expression-minibuffer-setup-hook
-                                      scheme-mode-hook
-                                      ielm-mode-hook
-                                      cider-repl-mode-hook
-                                      clojure-mode-hook
-                                      geiser-repl-mode-hook
-                                      racket-mode-hook
-                                      racket-repl-mode-hook
-                                      slime-repl-mode-hook))
+  ;; This defines the global variable `lightemacs-paredit-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to paredit-mode
+                                      '(emacs-lisp-mode-hook
+                                        lisp-interaction-mode-hook
+                                        lisp-mode-hook
+                                        eval-expression-minibuffer-setup-hook
+                                        scheme-mode-hook
+                                        ielm-mode-hook
+                                        cider-repl-mode-hook
+                                        clojure-mode-hook
+                                        geiser-repl-mode-hook
+                                        racket-mode-hook
+                                        racket-repl-mode-hook
+                                        slime-repl-mode-hook))
 
   :config
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing

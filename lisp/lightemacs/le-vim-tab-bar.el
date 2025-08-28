@@ -1,4 +1,4 @@
-;;; le-vim-tab-bar.el --- Module: vim-tab-bar -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-vim-tab-bar.el --- Module: vim-tab-bar -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -34,8 +34,8 @@
   :diminish vim-tab-bar-mode
   :commands vim-tab-bar-mode
   :init
-  (lightemacs-define-mode-hook-list vim-tab-bar-mode
-                                    '(after-init-hook)))
+  (lightemacs-define-mode-add-hook-to vim-tab-bar-mode
+                                      '(after-init-hook)))
 
 (provide 'le-vim-tab-bar)
 

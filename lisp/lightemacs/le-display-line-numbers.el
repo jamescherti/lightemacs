@@ -1,4 +1,4 @@
-;;; le-display-line-numbers.el --- le-display-line-numbers -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-display-line-numbers.el --- le-display-line-numbers -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -25,7 +25,7 @@
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)
   :init
-  (lightemacs-define-mode-hook-list
+  (lightemacs-define-mode-add-hook-to
     display-line-numbers-mode
     '(prog-mode-hook text-mode-hook conf-mode-hook)))
 

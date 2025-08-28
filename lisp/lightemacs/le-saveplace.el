@@ -1,4 +1,4 @@
-;;; le-saveplace.el --- le-saveplace -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-saveplace.el --- le-saveplace -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -31,9 +31,9 @@
   (setq save-place-limit 500)
 
   ;; TODO use on first file?
-  ;; (lightemacs-define-mode-hook-list save-place-mode
+  ;; (lightemacs-define-mode-add-hook-to save-place-mode
   ;;                                   '(lightemacs-on-first-file-hook))
-  (lightemacs-define-mode-hook-list save-place-mode '(after-init-hook))
+  (lightemacs-define-mode-add-hook-to save-place-mode '(after-init-hook))
 
   :config
   (defun lightemacs-saveplace--recenter ()

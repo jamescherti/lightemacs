@@ -1,4 +1,4 @@
-;;; le-core-elpaca.el --- le-core-elpaca -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-core-elpaca.el --- le-core-elpaca -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

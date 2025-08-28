@@ -1,4 +1,4 @@
-;;; le-aggressive-indent.el --- le-aggressive-indent -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-aggressive-indent.el --- le-aggressive-indent -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -32,10 +32,10 @@
              global-aggressive-indent-mode)
   :init
   ;; This defines the global variable
-  ;; `lightemacs-aggressive-indent-mode-hook-list'
-  (lightemacs-define-mode-hook-list aggressive-indent-mode
-                                    '(emacs-lisp-mode-hook
-                                      scheme-mode-hook))
+  ;; `lightemacs-aggressive-indent-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to aggressive-indent-mode
+                                      '(emacs-lisp-mode-hook
+                                        scheme-mode-hook))
 
   :config
   ;; Protected commands

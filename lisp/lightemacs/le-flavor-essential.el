@@ -1,4 +1,4 @@
-;;; le-group-default-modules.el --- Group: Default modules -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-flavor-essential.el --- Group: Default modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -14,9 +14,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
 (lightemacs-load-modules
@@ -267,10 +265,10 @@
 
 ;;; Provide
 
-(provide 'le-group-default-modules)
+(provide 'le-flavor-essential)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; le-group-default-modules.el ends here
+;;; le-flavor-essential.el ends here

@@ -1,4 +1,4 @@
-;;; le-evil-snipe.el --- le-evil-snipe -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-evil-snipe.el --- le-evil-snipe -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -45,8 +45,8 @@
   (setq evil-snipe-char-fold t)
 
   ;; TODO: on first input
-  (lightemacs-define-mode-hook-list evil-snipe-mode
-                                    '(evil-mode-hook)))
+  (lightemacs-define-mode-add-hook-to evil-snipe-mode
+                                      '(evil-mode-hook)))
 
 (provide 'le-evil-snipe)
 

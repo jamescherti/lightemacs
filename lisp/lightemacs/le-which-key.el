@@ -1,4 +1,4 @@
-;;; le-which-key.el --- le-which-key -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-which-key.el --- le-which-key -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -99,7 +99,7 @@
 
   ;; TODO Fix first key press
   ;; :hook (lightemacs-on-first-input-hook . which-key-mode)
-  (lightemacs-define-mode-hook-list
+  (lightemacs-define-mode-add-hook-to
     which-key-mode
     '(after-init-hook))
 

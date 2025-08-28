@@ -1,4 +1,4 @@
-;;; le-evil-surround.el --- le-evil-surround -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-evil-surround.el --- le-evil-surround -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -32,8 +32,8 @@
              evil-surround-mode
              global-evil-surround-mode)
   :init
-  (lightemacs-define-mode-hook-list global-evil-surround-mode
-                                    '(evil-mode-hook))
+  (lightemacs-define-mode-add-hook-to global-evil-surround-mode
+                                      '(evil-mode-hook))
   :config
   (global-evil-surround-mode))
 

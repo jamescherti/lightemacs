@@ -54,12 +54,6 @@
 
 ;;; Autosave
 
-;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
-;; `recover-session' to restore unsaved changes.
-(setq auto-save-default t)
-(setq auto-save-interval 300)  ; Number of input events between auto-saves
-(setq auto-save-timeout 30)  ; Number of seconds idle time before auto-save
-
 ;;; Tools (ripgrep and fd)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'

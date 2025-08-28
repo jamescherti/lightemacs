@@ -1,4 +1,4 @@
-;;; le-paren.el --- le-paren -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-paren.el --- le-paren -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -27,8 +27,8 @@
   :init
   (setq show-paren-delay 0.08)
 
-  (lightemacs-define-mode-hook-list show-paren-mode
-                                    '(lightemacs-on-first-buffer-hook)))
+  (lightemacs-define-mode-add-hook-to show-paren-mode
+                                      '(lightemacs-on-first-buffer-hook)))
 
 ;;; Provide
 (provide 'le-paren)

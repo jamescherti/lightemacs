@@ -1,4 +1,4 @@
-;;; le-marginalia.el --- le-marginalia -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-marginalia.el --- le-marginalia -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -31,8 +31,8 @@
   (lightemacs-define-keybindings marginalia
     (define-key minibuffer-local-map (kbd "M-A") #'marginalia-cycle))
 
-  (lightemacs-define-mode-hook-list marginalia-mode
-                                    '(lightemacs-on-first-input-hook)))
+  (lightemacs-define-mode-add-hook-to marginalia-mode
+                                      '(lightemacs-on-first-input-hook)))
 
 (provide 'le-marginalia)
 

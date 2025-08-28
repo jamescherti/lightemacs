@@ -1,4 +1,4 @@
-;;; le-page-break-lines.el --- le-page-break-lines -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-page-break-lines.el --- le-page-break-lines -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -31,9 +31,9 @@
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
   :init
-  ;; Define the global variable `lightemacs-page-break-lines-mode-hook-list'
-  (lightemacs-define-mode-hook-list page-break-lines-mode
-                                    '(emacs-lisp-mode-hook)))
+  ;; Define the global variable `lightemacs-page-break-lines-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to page-break-lines-mode
+                                      '(emacs-lisp-mode-hook)))
 
 (provide 'le-page-break-lines)
 

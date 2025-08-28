@@ -1,4 +1,4 @@
-;;; le-stripspace.el --- le-stripspace -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-stripspace.el --- le-stripspace -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -38,14 +38,14 @@
   ;; editing experience without affecting cursor placement.
   (setq stripspace-restore-column t)
 
-  ;; Define the global variable `lightemacs-stripspace-local-mode-hook-list'
-  (lightemacs-define-mode-hook-list stripspace-local-mode
-                                    '(;; Programming
-                                      prog-mode-hook
-                                      ;; Text files
-                                      text-mode-hook
-                                      ;; Configuration files
-                                      conf-mode-hook)))
+  ;; Define the global variable `lightemacs-stripspace-local-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to stripspace-local-mode
+                                      '(;; Programming
+                                        prog-mode-hook
+                                        ;; Text files
+                                        text-mode-hook
+                                        ;; Configuration files
+                                        conf-mode-hook)))
 
 (provide 'le-stripspace)
 

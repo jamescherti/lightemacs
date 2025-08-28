@@ -1,4 +1,4 @@
-;;; le-highlight-defined.el --- le-highlight-defined -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-highlight-defined.el --- le-highlight-defined -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -24,8 +24,8 @@
   highlight-defined
   :commands highlight-defined-mode
   :init
-  (lightemacs-define-mode-hook-list highlight-defined-mode
-                                    '(emacs-lisp-mode-hook)))
+  (lightemacs-define-mode-add-hook-to highlight-defined-mode
+                                      '(emacs-lisp-mode-hook)))
 
 (provide 'le-highlight-defined)
 

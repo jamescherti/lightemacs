@@ -1,4 +1,4 @@
-;;; le-treesit-auto.el --- le-treesit-auto -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-treesit-auto.el --- le-treesit-auto -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -33,8 +33,8 @@
   :functions treesit-auto-add-to-auto-mode-alist
   :init
   (setq treesit-auto-install 'prompt)
-  (lightemacs-define-mode-hook-list global-treesit-auto-mode
-                                    '(after-init-hook))
+  (lightemacs-define-mode-add-hook-to global-treesit-auto-mode
+                                      '(after-init-hook))
   :config
   (treesit-auto-add-to-auto-mode-alist 'all))
 

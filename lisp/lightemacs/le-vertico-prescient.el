@@ -1,4 +1,4 @@
-;;; le-vertico-prescient.el --- le-vertico-prescient -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-vertico-prescient.el --- le-vertico-prescient -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -57,8 +57,8 @@
   ;; Use Orderless instead
   (setq vertico-prescient-enable-filtering nil)
 
-  (lightemacs-define-mode-hook-list vertico-prescient-mode
-                                    '(vertico-mode-hook)))
+  (lightemacs-define-mode-add-hook-to vertico-prescient-mode
+                                      '(vertico-mode-hook)))
 
 (provide 'le-vertico-prescient)
 

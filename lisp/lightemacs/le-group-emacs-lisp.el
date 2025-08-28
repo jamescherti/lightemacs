@@ -1,4 +1,4 @@
-;;; le-group-emacs-lisp.el --- group-emacs-lisp -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-group-emacs-lisp.el --- group-emacs-lisp -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -14,9 +14,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
 (lightemacs-load-modules

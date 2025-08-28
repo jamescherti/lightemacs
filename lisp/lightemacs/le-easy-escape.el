@@ -1,4 +1,4 @@
-;;; le-easy-escape.el --- le-easy-escape -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-easy-escape.el --- le-easy-escape -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -34,9 +34,9 @@
   easy-escape
   :commands easy-escape-minor-mode
   :init
-  ;; Define the global variable `lightemacs-easy-escape-minor-mode-hook-list'
-  (lightemacs-define-mode-hook-list easy-escape-minor-mode
-                                    '(emacs-lisp-mode-hook)))
+  ;; Define the global variable `lightemacs-easy-escape-minor-mode-add-hook-to'
+  (lightemacs-define-mode-add-hook-to easy-escape-minor-mode
+                                      '(emacs-lisp-mode-hook)))
 
 (provide 'le-easy-escape)
 

@@ -1,4 +1,4 @@
-;;; le-outline.el --- le-outline -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-outline.el --- le-outline -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

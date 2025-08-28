@@ -1,4 +1,4 @@
-;;; le-evil-commentary.el --- le-evil-commentary -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-evil-commentary.el --- le-evil-commentary -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -25,8 +25,8 @@
   :commands evil-commentary-mode
   :init
 
-  (lightemacs-define-mode-hook-list evil-commentary-mode
-                                    '(evil-mode-hook)))
+  (lightemacs-define-mode-add-hook-to evil-commentary-mode
+                                      '(evil-mode-hook)))
 
 (provide 'le-evil-commentary)
 

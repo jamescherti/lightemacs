@@ -1,4 +1,4 @@
-;;; le-diff-hl.el --- le-diff-hl -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-diff-hl.el --- le-diff-hl -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -16,7 +16,7 @@
 ;; providing a clear view of version-control changes without running 'git diff'.
 ;; By default, the module does not start `diff-hl-mode' automatically. To enable
 ;; it in specific modes, add the desired hooks to
-;; `lightemacs-diff-hl-mode-hook-list'.
+;; `lightemacs-diff-hl-mode-add-hook-to'.
 ;;
 ;; URL: https://github.com/dgutov/diff-hl
 
@@ -36,7 +36,7 @@
   (setq diff-hl-update-async t)  ; Do not block Emacs
   (setq diff-hl-global-modes '(not pdf-view-mode image-mode))
 
-  (lightemacs-define-mode-hook-list diff-hl-mode nil))
+  (lightemacs-define-mode-add-hook-to diff-hl-mode nil))
 
 (provide 'le-diff-hl)
 

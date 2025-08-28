@@ -1,4 +1,4 @@
-;;; le-corfu.el --- le-corfu -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-corfu.el --- le-corfu -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -60,8 +60,8 @@
   (setq corfu-on-exact-match nil)
 
   ;; Hook List
-  (lightemacs-define-mode-hook-list global-corfu-mode
-                                    '(lightemacs-on-first-input-hook)))
+  (lightemacs-define-mode-add-hook-to global-corfu-mode
+                                      '(lightemacs-on-first-input-hook)))
 
 (provide 'le-corfu)
 

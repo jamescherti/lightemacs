@@ -1,4 +1,4 @@
-;;; le-undo-fu-session.el --- le-undo-fu-session -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-undo-fu-session.el --- le-undo-fu-session -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs

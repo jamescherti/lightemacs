@@ -1,4 +1,4 @@
-;;; le-group-yaml.el --- group-yaml -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-group-yaml.el --- group-yaml -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -19,14 +19,12 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
-
-(eval-and-compile
+  (require 'lightemacs)
   (require 'use-package))
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 
-(defvar lightemacs-group-yaml-prefer-treesitter t
+(defvar lightemacs-group-yaml-prefer-yaml-ts-mode t
   "Non-nil indicates a preference for using Tree-sitter for YAML editing.
 
 When non-nil and Tree-sitter support for YAML is available, the third-party
@@ -36,27 +34,17 @@ will be used.
 Setting this variable to nil forces `yaml-mode' to load even if
 Tree-sitter is available.")
 
-(when (or (not lightemacs-group-yaml-prefer-treesitter)
-          (not (if (fboundp 'treesit-language-available-p)
-                   (treesit-language-available-p 'yaml)
+;;; Maybe load `yaml-mode'
+
+(when (or (not lightemacs-group-yaml-prefer-yaml-ts-mode)
+          (not (if (fboundp 'treesit-ready-p)
+                   (treesit-ready-p 'yaml)
                  nil)))
   (lightemacs-load-modules '(le-yaml-mode)))
 
-;; Fix `yaml-ts-mode' comment-start-skip
+;;; Configure `yaml-ts-mode'
 
-(defun lightemacs-group-yaml--fix-comment-start-skip ()
-  "Fix `comment-start-skip' in `yaml-ts-mode'.
-
-Adjust `yaml-ts-mode' `comment-start-skip' to resolve an issue in certain Emacs
-versions where `comment-or-uncomment-region' fails to correctly handle YAML
-blocks. The previous `comment-start-skip' pattern left some - characters
-uncommented after repeatedly commenting and uncommenting indented YAML
-sections (bug#78892).
-
-Versions affected by this bug: Emacs 30.1, 30.2, and <= 29.*."
-  (setq-local comment-start-skip "#+ *"))
-
-(add-hook 'yaml-ts-mode-hook #'lightemacs-group-yaml--fix-comment-start-skip)
+(lightemacs-load-modules '(le-yaml-ts-mode))
 
 (provide 'le-group-yaml)
 

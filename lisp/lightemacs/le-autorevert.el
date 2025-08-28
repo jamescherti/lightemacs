@@ -1,4 +1,4 @@
-;;; le-autorevert.el --- le-autorevert -*- no-byte-compile: t; lexical-binding: t -*-
+;;; le-autorevert.el --- le-autorevert -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -31,8 +31,8 @@
   (setq auto-revert-interval 4)
   (setq auto-revert-use-notify t)
 
-  (lightemacs-define-mode-hook-list global-auto-revert-mode
-                                    '(lightemacs-on-first-file-hook)))
+  (lightemacs-define-mode-add-hook-to global-auto-revert-mode
+                                      '(lightemacs-on-first-file-hook)))
 
 (provide 'le-autorevert)
 
