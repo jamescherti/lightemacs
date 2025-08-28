@@ -3,6 +3,7 @@
 /pre-init.el
 /post-init.el
 /config.el
+/lisp/lightemacs/init/README.md
 /lisp/local
 /eln-cache
 /var

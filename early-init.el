@@ -102,7 +102,8 @@ exist."
       (lightemacs--early-verbose-message
        "IGNORED (Up to date): Byte-compile: %S" el-file))
 
-     ((not (file-writable-p elc-file))
+     ((and lightemacs-verbose
+           (not (file-writable-p elc-file)))
       (lightemacs--early-verbose-message
        (concat "IGNORED: Byte-compile: Destination .elc is read-only: %S. "
                "Ensure you have write permissions to allow recompilation.")
@@ -113,15 +114,15 @@ exist."
              (noninteractive t)
              (byte-compile-warnings nil)
              (result (condition-case err
-                         (progn
-                           (unless (byte-compile-file el-file)
-                             (setq delete-elc t)))
+                         (byte-compile-file el-file)
                        (error
-                        (setq delete-elc t)
                         ;; Return error
-                        err))))
+                        nil))))
+        (unless result
+          (setq delete-elc t))
+
         (lightemacs--early-verbose-message
-         "Byte-compile: %S (Result: %S)" el-file (cond
+         "Byte-compile: %S (Result: %s)" el-file (cond
                                                   ((eq result t)
                                                    "success")
                                                   ((not result)
@@ -131,8 +132,7 @@ exist."
 
         (when delete-elc
           (let ((delete-by-moving-to-trash nil))
-            (lightemacs--early-verbose-message
-             "Delete .elc file: %S" elc-file)
+            (lightemacs--early-verbose-message "Delete .elc file: %S" elc-file)
             (ignore-errors
               (delete-file elc-file)))))))))
 
