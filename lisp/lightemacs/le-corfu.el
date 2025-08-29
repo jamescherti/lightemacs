@@ -18,13 +18,14 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   corfu
   :commands (global-corfu-mode
              corfu-mode)
+
+  :hook (lightemacs-on-first-input . global-corfu-mode)
 
   :init
   ;; Select first candidate, except for directories
@@ -57,11 +58,7 @@
   (setq corfu-quit-no-match nil)
 
   ;; Configure handling of exact matches
-  (setq corfu-on-exact-match nil)
-
-  ;; Hook List
-  (lightemacs-define-mode-add-hook-to global-corfu-mode
-                                      '(lightemacs-on-first-input-hook)))
+  (setq corfu-on-exact-match nil))
 
 (provide 'le-corfu)
 

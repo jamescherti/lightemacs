@@ -20,8 +20,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   helpful
@@ -32,6 +31,12 @@
              helpful-at-point
              helpful-function)
 
+  :bind (([remap describe-command]  . helpful-command)
+         ([remap describe-function] . helpful-callable)
+         ([remap describe-key]      . helpful-key)
+         ([remap describe-symbol]   . helpful-symbol)
+         ([remap describe-variable] . helpful-variable))
+
   :preface
   (defun le-helpful--emacs-lisp-setup ()
     "Setup `helpful' for ELisp files."
@@ -39,14 +44,7 @@
 
   :init
   (setq helpful-max-buffers 7)
-  (add-hook 'emacs-lisp-mode-hook #'le-helpful--emacs-lisp-setup)
-
-  (lightemacs-define-keybindings helpful
-    (global-set-key [remap describe-command] #'helpful-command)
-    (global-set-key [remap describe-function] #'helpful-callable)
-    (global-set-key [remap describe-key] #'helpful-key)
-    (global-set-key [remap describe-symbol] #'helpful-symbol)
-    (global-set-key [remap describe-variable] #'helpful-variable)))
+  (add-hook 'emacs-lisp-mode-hook #'le-helpful--emacs-lisp-setup))
 
 (provide 'le-helpful)
 

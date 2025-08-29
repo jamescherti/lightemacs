@@ -20,20 +20,16 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'use-package)
   (require 'lightemacs))
 
 (lightemacs-use-package
   ace-window
   :commands ace-window
-  :init
-  (setq aw-background nil  ; t is not compatible with all themes
-        aw-scope 'frame)
-
-  (lightemacs-define-keybindings
-      ace-window
-    ;; Remap 'C-x o'
-    (global-set-key [remap other-window] 'ace-window)))
+  :bind
+  ([remap other-window] . ace-window)
+  :custom
+  (aw-background nil)  ; t is not compatible with all themes
+  (aw-scope 'frame))
 
 (provide 'le-ace-window)
 

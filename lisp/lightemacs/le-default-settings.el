@@ -13,6 +13,11 @@
 
 ;;; Code:
 
+;;; Require
+
+(eval-and-compile
+  (require 'le-diminish))
+
 ;;; Misc
 
 ;; TODO: move to m.e.?
@@ -81,6 +86,17 @@
 
 ;; TODO use macro?
 (add-hook 'after-init-hook #'window-divider-mode)
+
+;;; Diminish Eldoc, Abbref...
+
+(with-eval-after-load 'diminish
+  (with-eval-after-load 'eldoc
+    (when (fboundp 'diminish)
+      (diminish 'eldoc-mode)))
+
+  (with-eval-after-load 'abbrev
+    (when (fboundp 'diminish)
+      (diminish 'abbrev-mode))))
 
 (provide 'le-default-settings)
 

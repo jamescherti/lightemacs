@@ -14,17 +14,14 @@
 ;; gutter indicators, it displays added, modified, and deleted lines in real
 ;; time. In Git-controlled buffers, changes can be staged and unstaged directly,
 ;; providing a clear view of version-control changes without running 'git diff'.
-;; By default, the module does not start `diff-hl-mode' automatically. To enable
-;; it in specific modes, add the desired hooks to
-;; `lightemacs-diff-hl-mode-add-hook-to'.
+;; By default, the module does not start `diff-hl-mode' automatically.
 ;;
 ;; URL: https://github.com/dgutov/diff-hl
 
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   diff-hl
@@ -34,9 +31,7 @@
   (setq diff-hl-flydiff-delay 0.4)  ; Faster
   (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
   (setq diff-hl-update-async t)  ; Do not block Emacs
-  (setq diff-hl-global-modes '(not pdf-view-mode image-mode))
-
-  (lightemacs-define-mode-add-hook-to diff-hl-mode nil))
+  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
 
 (provide 'le-diff-hl)
 

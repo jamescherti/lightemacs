@@ -20,8 +20,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   avy
@@ -32,6 +31,17 @@
              avy-goto-char-timer
              avy-goto-line
              avy-next)
+
+  :bind (("C-:"   . avy-goto-char)
+         ("C-'"   . avy-goto-char-2)
+         ("M-g j" . avy-goto-char-timer)  ;; TODO: Change?
+         ("M-g w" . avy-goto-word-1)
+         ;; Conflicts with Consult: (TODO)
+         ;; ("M-g f" . avy-goto-line)
+         ;; ("M-g e" . avy-goto-word-0)
+         ("M-g W" . avy-goto-word-0)
+         ("M-g l" . avy-goto-line))
+
   :init
   (setq
    ;; List of modes to ignore when searching for candidates.
@@ -44,20 +54,7 @@
    ;; When non-nil, a gray background will be added during the selection.
    avy-background nil  ; t is not compatible with all themes
    ;; This is unpredictible
-   avy-single-candidate-jump nil)
-
-  (lightemacs-define-keybindings avy
-    (global-set-key (kbd "C-:") 'avy-goto-char)
-    (global-set-key (kbd "C-'") 'avy-goto-char-2)
-    (global-set-key (kbd "M-g j") 'avy-goto-char-timer)  ;; TODO Change?
-    (global-set-key (kbd "M-g w") 'avy-goto-word-1)
-
-    ;; The following ones have been changes because they conflict with Consult
-    ;; TODO Should consult be changed instead?
-    ;; (global-set-key (kbd "M-g f") 'avy-goto-line)  ;; Conflict with Consult
-    ;; (global-set-key (kbd "M-g e") 'avy-goto-word-0)  ;; Conflict with Consult
-    (global-set-key (kbd "M-g W") 'avy-goto-word-0)
-    (global-set-key (kbd "M-g l") 'avy-goto-line)))
+   avy-single-candidate-jump nil))
 
 (provide 'le-avy)
 

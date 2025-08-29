@@ -84,6 +84,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Enabled by Default: A better way to rename or delete files (le-bufferfile)](#enabled-by-default-a-better-way-to-rename-or-delete-files-le-bufferfile)
     - [Enabled by Default: Recent files (le-recentf)](#enabled-by-default-recent-files-le-recentf)
     - [Enabled by Default: Detect indentation offset (le-dtrt-indent)](#enabled-by-default-detect-indentation-offset-le-dtrt-indent)
+    - [The built-in on-the-fly syntax checker (le-flymake)](#the-built-in-on-the-fly-syntax-checker-le-flymake)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
@@ -271,6 +272,10 @@ Keybindings for Consult:
 - `C-c i` → `consult-info`
   Search and navigate Info documentation.
 
+- `C-c r` → `consult-recent-file`
+  `consult-recent-file` is a Consult command that uses the `recentf` list to let
+  you quickly open recently visited files via minibuffer completion.
+
 - `Info-search` remapped → `consult-info`
   Redirects standard Info search to use Consult.
 
@@ -342,6 +347,9 @@ Keybindings for Consult:
 
 - `M-s G` → `consult-git-grep`
   Perform `git grep` in the repository.
+
+- `M-s p` → `consult-fd`
+  Perform `fd` searches.
 
 - `M-s r` → `consult-ripgrep`
   Perform `ripgrep` searches.
@@ -481,16 +489,7 @@ The **le-stripspace** module configures the [stripspace](https://github.com/jame
 
 It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
 
-By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`. To enable `stripspace-local-mode` in additional modes, add their hooks to your `~/.emacs.d/config.el` file:
-```emacs-lisp
-;; Automatically remove trailing whitespace before saving
-(setq lightemacs-stripspace-local-mode-add-hook-to '(;; Programming
-                                                     prog-mode-hook
-                                                     ;; Text files
-                                                     text-mode-hook
-                                                     ;; Configuration files
-                                                     conf-mode-hook))
-```
+By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`.
 
 Here are some customizations for `stripspace-local-mode`:
 ```emacs-lisp
@@ -589,6 +588,10 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 - Cleans up and saves the recentf list every `lightemacs-recentf--auto-save-timer-interval` seconds (default: 550).
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
 
+Key mapping:
+
+- Use `C-f` to invoke `recentf`.
+
 ### Enabled by Default: Detect indentation offset (le-dtrt-indent)
 
 The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
@@ -610,6 +613,21 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
                                                 yaml-ts-mode
                                                 ansible-mode))
   ```
+
+### The built-in on-the-fly syntax checker (le-flymake)
+
+The **le-flymake** module configures Flymake, a built-in on-the-fly syntax checking tool that analyzes source code buffers in the background and highlights errors or warnings as you type. It invokes external syntax checkers or compilers asynchronously and annotates the buffer with diagnostic messages, which can be navigated using dedicated commands. Unlike language servers, Flymake itself does not perform analysis but provides a flexible framework that integrates with various backends, making it lightweight, extensible, and adaptable across different programming languages.
+
+By default, the **le-flymake** module enables Flymake automatically in `prog-mode` and `text-mode`.
+
+The **le-flymake** defines the following keybindings for navigating Flymake diagnostics:
+
+- `M-g n`: Move to the **next** error or warning in the current buffer.
+- `M-g p`: Move to the **previous** error or warning in the current buffer.
+
+These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs’ convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively.
+
+(Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
 
 ### Other Modules Enabled by Default
 
@@ -727,7 +745,7 @@ The following key bindings are defined for working with **EasySession**. All com
 - **`C-c sl`** → Switch to an existing session (`easysession-switch-to`).
 - **`C-c sr`** → Rename the current session (`easysession-rename`).
 - **`C-c sL`** → Load a previously saved session (`easysession-load`).
-- **`C-c sw`** → Save the current session (`easysession-save`).
+- **`C-c sS`** → Save the current session (`easysession-save`).
 
 The **le-easysession** module automatically persists and restores the *scratch* buffer. This behavior is enabled by default, but it can be disabled by setting the variable `lightemacs-easysession-save-scratch` to nil.
 
@@ -772,21 +790,21 @@ The **le-group-emacs-lisp** group enables the following modules:
   ;; Enable the `le-page-break-lines' module
   (add-to-list 'lightemacs-modules 'le-page-break-lines)
   ```
-  (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-page-break-lines-mode-add-hook-to`.)
+  (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
 - **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
   ;; Enable the `le-aggressive-indent' module
   (add-to-list 'lightemacs-modules 'le-aggressive-indent)
   ```
-  (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-aggressive-indent-mode-add-hook-to`.)
+  (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered.)
 
 - **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'le-easy-escape)
   ```
-  (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered. The list of hooks that activate this mode can be customized by modifying `lightemacs-easyescape-minor-mode-add-hook-to`.)
+  (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
 - **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
   ```emacs-lisp
@@ -809,10 +827,10 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 (add-to-list 'lightemacs-modules 'le-indent-bars)
 
 ;; Enable indent-bars-mode automatically for Python files and Yaml files
-(setq lightemacs-indent-bars-mode-add-hook-to '(yaml-ts-mode-hook
-                                              yaml-mode-hook
-                                              python-ts-mode-hook
-                                              python-mode-hook))
+(add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
+(add-hook 'yaml-mode-hook #'indent-bars-mode)
+(add-hook 'python-mode-hook #'indent-bars-mode)
+(add-hook 'python-ts-mode-hook #'indent-bars-mode)
 ```
 
 (By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
@@ -827,9 +845,9 @@ Here are a few other modules disabled by default:
 
 - **git-modes**: Emacs major modes for managing Git configuration files, such as `.gitattributes`, `.gitconfig`, and `.gitignore`.
 
-- **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes, add the desired hooks to `lightemacs-diff-hl-mode-add-hook-to`. For example:
+- **le-diff-hl**: Configures the *diff-hl* package, which highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically. To enable it in specific modes:
   ```emacs-lisp
-  (setq lightemacs-diff-hl-mode-add-hook-to '(prog-mode-hook))
+  (add-hook 'prog-mode-hook #'diff-hl-mode)
   ```
 
 - **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don’t change the actual text.
@@ -861,9 +879,9 @@ Elisp file-type modules are disabled by default:
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-paredit)
   ```
-  (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`. The list of hooks that activate this mode can be customized by modifying `lightemacs-paredit-mode-add-hook-to`.)
+  (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`.)
 
-- **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated. (This behavior can be customized using the `lightemacs-enhanced-evil-paredit-mode-add-hook-to` variable.)
+- **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated.
 
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 

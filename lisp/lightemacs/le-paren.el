@@ -16,19 +16,16 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   paren
   :ensure nil
   :commands (show-paren-mode
              show-paren-local-mode)
+  :hook (lightemacs-on-first-buffer . show-paren-mode)
   :init
-  (setq show-paren-delay 0.08)
-
-  (lightemacs-define-mode-add-hook-to show-paren-mode
-                                      '(lightemacs-on-first-buffer-hook)))
+  (setq show-paren-delay 0.08))
 
 ;;; Provide
 (provide 'le-paren)

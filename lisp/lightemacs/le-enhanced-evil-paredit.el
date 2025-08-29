@@ -16,8 +16,7 @@
 ;; syntactically correct while retaining the editing capabilities of evil-mode.
 ;;
 ;; This module automatically enables `enhanced-evil-paredit-mode' whenever
-;; paredit-mode is activated. (This behavior can be customized using the
-;; `lightemacs-enhanced-evil-paredit-mode-add-hook-to' variable.)
+;; paredit-mode is activated.
 ;;
 ;; URL: https://github.com/jamescherti/enhanced-evil-paredit.el
 
@@ -25,14 +24,16 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
   (require 'le-diminish)
   (require 'le-paredit)
   (require 'le-evil))
 
 (lightemacs-use-package
   enhanced-evil-paredit
+  :diminish enhanced-evil-paredit-mode
   :commands enhanced-evil-paredit-mode
+
+  :hook (paredit-mode . enhanced-evil-paredit-mode)
 
   :preface
   (defun lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding ()
@@ -47,11 +48,7 @@ is active to prevent interference with `evil-snipe' commands."
   (if (bound-and-true-p evil-snipe-mode)
       (lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding)
     (add-hook 'evil-snipe-mode-hook
-              #'lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding))
-
-  ;; Define the global variable `lightemacs-enhanced-evil-paredit-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to enhanced-evil-paredit-mode
-                                      '(paredit-mode-hook)))
+              #'lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding)))
 
 (provide 'le-enhanced-evil-paredit)
 

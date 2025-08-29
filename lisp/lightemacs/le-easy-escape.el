@@ -28,15 +28,13 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package))
+  (require 'le-diminish))
 
 (lightemacs-use-package
   easy-escape
+  :diminish easy-escape-minor-mode
   :commands easy-escape-minor-mode
-  :init
-  ;; Define the global variable `lightemacs-easy-escape-minor-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to easy-escape-minor-mode
-                                      '(emacs-lisp-mode-hook)))
+  :hook (emacs-lisp-mode . easy-escape-minor-mode))
 
 (provide 'le-easy-escape)
 

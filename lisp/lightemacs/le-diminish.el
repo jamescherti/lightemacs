@@ -17,17 +17,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   diminish)
-
-;; (with-eval-after-load 'eldoc
-;;   (diminish 'eldoc-mode))
-;;
-;; (with-eval-after-load 'abbrev
-;;   (diminish 'abbrev-mode))
 
 (provide 'le-diminish)
 

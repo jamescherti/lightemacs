@@ -15,7 +15,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-diminish)
   (require 'le-evil))
 
@@ -23,10 +23,7 @@
   evil-commentary
   :diminish evil-commentary-mode
   :commands evil-commentary-mode
-  :init
-
-  (lightemacs-define-mode-add-hook-to evil-commentary-mode
-                                      '(evil-mode-hook)))
+  :hook (evil-mode . evil-commentary-mode))
 
 (provide 'le-evil-commentary)
 

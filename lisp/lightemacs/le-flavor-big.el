@@ -1,4 +1,4 @@
-;;; le-flavor-all.el --- Group: Default modules -*- lexical-binding: t -*-
+;;; le-flavor-big.el --- Group: Default modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -9,19 +9,22 @@
 
 ;;; Commentary:
 
-;; All modules.
+;; The "big" flavor enables all modules except:
+;;   - le-treesit-auto (optional, as not all users require Treesit)
+;;   - le-easysession (optional, for users who want session management)
 ;;
-;; Command:
-;; ls le-*.el -1 | grep -Ev "^le-core" | sed 's/\.el$//' | grep -v le-flavor-all
+;; Command to generate this flavor:
+;; ls le-*.el -1 | grep -v "^le-core" | sed 's/\.el$//' | \
+;;   grep -v ^le-flavor- | grep -v ^le-treesit-auto | grep -v ^le-easysession
 
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-load-modules
  '(;; All modules:
+   le-flymake
    le-ace-window
    le-aggressive-indent
    le-apheleia
@@ -43,7 +46,6 @@
    le-dtrt-indent
    le-dumb-jump
    le-easy-escape
-   le-easysession
    le-elec-pair
    le-elisp-refs
    le-embark-consult
@@ -55,7 +57,6 @@
    le-evil-snipe
    le-evil-surround
    le-expand-region
-   le-flavor-essential
    le-gcmh
    le-git-modes
    le-goto-chg
@@ -85,7 +86,6 @@
    le-saveplace
    le-stripspace
    le-theme
-   le-treesit-auto
    le-undo-fu
    le-undo-fu-session
    le-vertico
@@ -103,10 +103,10 @@
 
 ;;; Provide
 
-(provide 'le-flavor-all)
+(provide 'le-flavor-big)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; le-flavor-all.el ends here
+;;; le-flavor-big.el ends here

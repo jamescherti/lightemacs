@@ -18,7 +18,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-diminish))
 
 (lightemacs-use-package
@@ -26,6 +26,11 @@
   :ensure nil
   :diminish which-key-mode
   :commands which-key-mode
+
+  ;; TODO Fix first key press
+  ;; :hook (lightemacs-on-first-input-hook . which-key-mode)
+  :hook (after-init . which-key-mode)
+
   :init
   (setq
    ;; Maximum number of columns displayed. nil lets which-key choose
@@ -96,12 +101,6 @@
    ;; which-key-prefix-prefix "+"
    ;; which-key-prefix-prefix (if (display-graphic-p) "… " "... ")
    )
-
-  ;; TODO Fix first key press
-  ;; :hook (lightemacs-on-first-input-hook . which-key-mode)
-  (lightemacs-define-mode-add-hook-to
-    which-key-mode
-    '(after-init-hook))
 
   :config
   (with-eval-after-load 'which-key  ; Reason: no-require: t

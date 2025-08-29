@@ -23,19 +23,15 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   aggressive-indent
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
-  :init
-  ;; This defines the global variable
-  ;; `lightemacs-aggressive-indent-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to aggressive-indent-mode
-                                      '(emacs-lisp-mode-hook
-                                        scheme-mode-hook))
+
+  :hook ((emacs-lisp-mode . aggressive-indent-mode)
+         (scheme-mode . aggressive-indent-mode))
 
   :config
   ;; Protected commands

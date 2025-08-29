@@ -20,7 +20,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-diminish)
   (require 'le-dired))
 
@@ -53,8 +53,15 @@ For instance:
              dired-filter-by-git-ignored
              dired-filter-by-dot-files
              dired-filter-by-omit)
+
+  :bind (:map dired-mode-map
+              ("C-c f" . lightemacs-dired-filter-toggle))
+
   :preface
-  ;; Toggle filters
+  (defun lightemacs-dired-filter--enable-filters ()
+    "Enable `dired' filters."
+    (when (derived-mode-p 'dired-mode)
+      (run-hooks 'lightemacs-dired-filter-setup-hook)))
 
   (defun lightemacs-dired-filter-toggle ()
     "Toggle `dired' filters on or off in the current buffer.
@@ -76,19 +83,10 @@ restoring the full file listing."
 
         (when dired-file
           (dired-goto-file dired-file)))))
+
   :init
-  ;; Enable filters
-  (defun lightemacs-dired-filter--enable-filters ()
-    "Enable `dired' filters."
-    (when (derived-mode-p 'dired-mode)
-      (run-hooks 'lightemacs-dired-filter-setup-hook)))
-
   (remove-hook 'dired-mode-hook #'dired-omit-mode)  ; Managed by dired-filter
-  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--enable-filters)
-
-  (lightemacs-define-keybindings dired-filter
-    (with-eval-after-load 'dired
-      (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-toggle))))
+  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--enable-filters))
 
 (provide 'le-dired-filter)
 

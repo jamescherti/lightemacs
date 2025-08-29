@@ -27,8 +27,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 ;; Variables
 
@@ -47,6 +46,12 @@ PATH, this option has no effect.")
              consult-dir--pick
              consult-dir-default-command)
   :functions consult-dir--fasd-dirs
+
+  :bind (("C-x C-d" . lightemacs-consult-dir)
+         :map minibuffer-local-completion-map
+         ("C-x C-d" . lightemacs-consult-dir)
+         ("C-x C-j" . consult-dir-jump-file))
+
   :preface
   ;; Fixes: https://github.com/karthink/consult-dir/issues/43
   ;; Issues fixed: Typing Alt + Shift + :edit and then pressing C-x C-d to
@@ -84,15 +89,6 @@ customized."
   ;; set to t is unclear.
   ;; Issue: https://github.com/karthink/consult-dir/issues/44
   (setq consult-dir-shadow-filenames nil)
-
-  (lightemacs-define-keybindings consult-dir
-    (define-key global-map (kbd "C-x C-d") #'lightemacs-consult-dir)
-    (define-key minibuffer-local-completion-map (kbd "C-x C-d")
-                #'lightemacs-consult-dir)
-
-    ;; File-jump functionality
-    (define-key minibuffer-local-completion-map (kbd "C-x C-j")
-                #'consult-dir-jump-file))
 
   :config
   ;; FASD

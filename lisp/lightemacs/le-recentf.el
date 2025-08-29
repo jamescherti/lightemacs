@@ -26,9 +26,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-  (require 'use-package))
-
 ;; Global variables
 
 (defvar lightemacs-recentf-cleanup-and-auto-save-interval 550
@@ -49,8 +46,9 @@ adds that file to the recentf list.")
   recentf
   :ensure nil
   :commands (recentf-mode
+             recentf
              recentf-cleanup)
-
+  :bind ("C-c f" . recentf)
   :init
   (defun lightemacs-recentf--cleanup ()
     "Run `recentf-cleanup' if `recentf-mode' is enabled."

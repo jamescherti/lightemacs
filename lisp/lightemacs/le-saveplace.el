@@ -16,8 +16,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (defvar lightemacs-saveplace-recenter-after-find-file t
   "If non-nil, recenter the buffer after restoring the cursor position.")
@@ -27,13 +26,11 @@
   :ensure nil
   :commands save-place-mode
 
+  ;; TODO use on first file?
+  :hook (after-init . save-place-mode)
+
   :init
   (setq save-place-limit 500)
-
-  ;; TODO use on first file?
-  ;; (lightemacs-define-mode-add-hook-to save-place-mode
-  ;;                                   '(lightemacs-on-first-file-hook))
-  (lightemacs-define-mode-add-hook-to save-place-mode '(after-init-hook))
 
   :config
   (defun lightemacs-saveplace--recenter ()

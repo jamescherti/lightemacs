@@ -20,8 +20,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   vertico
@@ -31,21 +30,20 @@
              vertico-exit-input)
   :functions vertico--index
 
+  ;; TODO
+  ;; :bind (:map vertico-map
+  ;;             ("C-d" . vertico-exit-input)
+  ;;             ("C-j" . vertico-next)
+  ;;             ("C-k" . vertico-previous))
+
+  :hook (lightemacs-on-first-input . vertico-mode)
+
   :init
   (setq vertico-scroll-margin 0)
   (setq vertico-count 16)
   (setq vertico-resize 'grow-only)
   (setq vertico-cycle lightemacs-cycle)
   (setq vertico-count-format nil) ; No prefix with number of entries
-
-  (lightemacs-define-mode-add-hook-to vertico-mode
-                                      '(lightemacs-on-first-input-hook))
-
-  (lightemacs-define-keybindings vertico
-    (with-eval-after-load 'vertico
-      (define-key vertico-map (kbd "C-d") #'vertico-exit-input)
-      (define-key vertico-map (kbd "C-j") #'vertico-next)
-      (define-key vertico-map (kbd "C-k") #'vertico-previous)))
 
   :config
   ;; Prefix current candidate with arrow

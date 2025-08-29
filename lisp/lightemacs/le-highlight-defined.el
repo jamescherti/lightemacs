@@ -17,15 +17,12 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   highlight-defined
   :commands highlight-defined-mode
-  :init
-  (lightemacs-define-mode-add-hook-to highlight-defined-mode
-                                      '(emacs-lisp-mode-hook)))
+  :hook (emacs-lisp-mode . highlight-defined-mode))
 
 (provide 'le-highlight-defined)
 

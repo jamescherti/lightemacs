@@ -24,9 +24,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-  (require 'use-package))
-
 (lightemacs-use-package
   embark
   :commands (embark-act
@@ -36,6 +33,13 @@
              embark-bindings
              embark-prefix-help-command
              embark-eldoc-first-target)
+
+  :bind
+  (("C-."     . embark-act)
+   ("C-;"     . embark-dwim)
+   ("C-h B"   . embark-bindings)
+   ("C-c C-;" . embark-export)
+   ("C-c C-l" . embark-collect))
 
   :init
   ;; Replace the key help with a completing-read interface
@@ -51,14 +55,7 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
-                 (window-parameters (mode-line-format . none))))
-
-  (lightemacs-define-keybindings embark
-    (global-set-key (kbd "C-.") #'embark-act)
-    (global-set-key (kbd "C-;") #'embark-dwim)
-    (global-set-key (kbd "C-h B") #'embark-bindings)
-    (global-set-key (kbd "C-c C-;") #'embark-export)
-    (global-set-key (kbd "C-c C-l") #'embark-collect)))
+                 (window-parameters (mode-line-format . none)))))
 
 ;;; Provide
 (provide 'le-embark)

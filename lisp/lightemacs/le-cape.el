@@ -18,13 +18,19 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   cape
   :commands (cape-dabbrev
              cape-file)
+
+  ;; :bind
+  ;; ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+  ;; Alternatively bind Cape commands individually.
+  :bind (("C-c p d" . cape-dabbrev)
+         ;; ("C-c p h" . cape-history)
+         ("C-c p f" . cape-file))
 
   :init
   (setq cape-dabbrev-min-length 1)
@@ -40,10 +46,7 @@
 
   (when (fboundp 'le-cape--setup-cape-sh-mode)
     (add-hook 'bash-ts-mode-hook #'le-cape--setup-cape-sh-mode)
-    (add-hook 'sh-mode-hook #'le-cape--setup-cape-sh-mode))
-
-  (lightemacs-define-keybindings cape
-    (global-set-key (kbd "C-c p") #'cape-prefix-map)))
+    (add-hook 'sh-mode-hook #'le-cape--setup-cape-sh-mode)))
 
 (provide 'le-cape)
 

@@ -16,12 +16,15 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   stripspace
   :commands stripspace-local-mode
+
+  :hook ((prog-mode . stripspace-local-mode)
+         (text-mode . stripspace-local-mode)
+         (conf-mode . stripspace-local-mode))
 
   :init
   ;; The `stripspace-only-if-initially-clean' option:
@@ -36,16 +39,7 @@
   ;; extra spaces and then save the file. Although the spaces are removed in the
   ;; saved file, the cursor remains in the same position, ensuring a consistent
   ;; editing experience without affecting cursor placement.
-  (setq stripspace-restore-column t)
-
-  ;; Define the global variable `lightemacs-stripspace-local-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to stripspace-local-mode
-                                      '(;; Programming
-                                        prog-mode-hook
-                                        ;; Text files
-                                        text-mode-hook
-                                        ;; Configuration files
-                                        conf-mode-hook)))
+  (setq stripspace-restore-column t))
 
 (provide 'le-stripspace)
 

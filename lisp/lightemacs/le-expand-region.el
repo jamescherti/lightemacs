@@ -24,8 +24,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   expand-region
@@ -44,9 +43,7 @@
              er/mark-email
              er/mark-defun)
   :commands er/expand-region
-  :init
-  (lightemacs-define-keybindings expand-region
-    (global-set-key (kbd "C-=") #'er/expand-region)))
+  :bind ("C-=" . er/expand-region))
 
 (provide 'le-expand-region)
 

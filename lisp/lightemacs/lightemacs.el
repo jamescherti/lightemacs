@@ -18,6 +18,10 @@
 (eval-and-compile
   (require 'use-package))
 
+(eval-when-compile
+  ;; TODO test with local files containing a different value
+  (setq use-package-hook-name-suffix "-hook"))
+
 (require 'le-core-compile)
 
 ;;; Variables
@@ -338,45 +342,6 @@ cursor."
                                (beginning-of-visual-line)
                                (point))))))))
 
-;;; Modules Macros
-
-(defmacro lightemacs-define-keybindings (module &rest body)
-  "Define key bindings for MODULE with BODY, unless inhibited.
-This macro introduces an inhibition variable named:
-`lightemacs-MODULE-inhibit-keybindings'.
-When non-nil, BODY will not be evaluated, thereby preventing the installation of
-the specified key bindings."
-  (declare (indent 1) (debug t))
-  (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings" module))))
-    `(progn
-       (defvar ,inhibit-var nil
-         ,(format
-           "Prevent configuring `%s' keybindings.
-
-When this variable is set to a non-nil value, any key bindings that would
-normally be defined through `lightemacs-define-*' macros are skipped
-for `%s'.
-
-This allows users to disable or override the default Lightemacs key
-configuration for that mode without modifying the macro definition itself."
-           module
-           module))
-       (unless ,inhibit-var
-         ,@body))))
-
-(defmacro lightemacs-define-mode-add-hook-to (mode hook-list)
-  "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
-
-Defines `lightemacs-MODE-add-hook-to' initialized with HOOK-LIST.
-Each hook in HOOK-LIST will have MODE added via `add-hook'."
-  (declare (indent 0) (debug t))
-  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode))))
-    `(progn
-       (defvar ,var ,hook-list
-         ,(format "Hooks where `%s' is enabled." mode))
-       (dolist (hook ,var)
-         (add-hook hook ',mode)))))
-
 ;;; lightemacs-use-package
 
 (defvar lightemacs--use-package-refreshed nil
@@ -413,7 +378,7 @@ the package is installed via straight.el. If a custom recipe exists in
 `lightemacs-straight-recipes', it is used instead of t.
 
 `use-package' expansion is deferred until runtime."
-  (declare (indent 0) (debug t))
+  (declare (indent defun) (debug t))
   (if (memq name lightemacs-excluded-packages)
       (lightemacs-verbose-message "PACKAGE IGNORED: %S" name)
     (unless (and (bound-and-true-p byte-compile-current-file)

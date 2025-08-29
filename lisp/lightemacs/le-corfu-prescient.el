@@ -38,13 +38,14 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-corfu)
   (require 'le-prescient))
 
 (lightemacs-use-package
   corfu-prescient
   :commands corfu-prescient-mode
+  :hook (corfu-mode . corfu-prescient-mode)
   :init
   (setq corfu-prescient-enable-sorting t)
 
@@ -52,11 +53,7 @@
   (setq corfu-prescient-override-sorting nil)
 
   ;; Use Orderless instead
-  (setq corfu-prescient-enable-filtering nil)
-
-  ;; Hook list
-  (lightemacs-define-mode-add-hook-to corfu-prescient-mode
-                                      '(corfu-mode-hook)))
+  (setq corfu-prescient-enable-filtering nil))
 
 (provide 'le-corfu-prescient)
 

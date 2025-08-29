@@ -23,38 +23,35 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package))
+  (require 'le-diminish))
 
 (lightemacs-use-package
   paredit
+  :diminish paredit-mode
   :commands paredit-mode
 
-  :init
-  (lightemacs-define-keybindings paredit
-    (with-eval-after-load 'paredit
-      (unbind-key "M-?" paredit-mode-map)  ; Conflict with xref-find-references
-      (unbind-key "M-;" paredit-mode-map)  ; Conflict with comment-dwim
-      (unbind-key "M-s" paredit-mode-map)  ; Conflict with Consult
-      (unbind-key "RET" paredit-mode-map)))
+  :hook ((emacs-lisp-mode . paredit-mode)
+         (lisp-interaction-mode . paredit-mode)
+         (lisp-mode . paredit-mode)
+         (eval-expression-minibuffer-setup . paredit-mode)
+         (scheme-mode . paredit-mode)
+         (ielm-mode . paredit-mode)
+         (cider-repl-mode . paredit-mode)
+         (clojure-mode . paredit-mode)
+         (geiser-repl-mode . paredit-mode)
+         (racket-mode . paredit-mode)
+         (racket-repl-mode . paredit-mode)
+         (slime-repl-mode . paredit-mode))
 
-  ;; This defines the global variable `lightemacs-paredit-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to paredit-mode
-                                      '(emacs-lisp-mode-hook
-                                        lisp-interaction-mode-hook
-                                        lisp-mode-hook
-                                        eval-expression-minibuffer-setup-hook
-                                        scheme-mode-hook
-                                        ielm-mode-hook
-                                        cider-repl-mode-hook
-                                        clojure-mode-hook
-                                        geiser-repl-mode-hook
-                                        racket-mode-hook
-                                        racket-repl-mode-hook
-                                        slime-repl-mode-hook))
+  :bind (:map paredit-mode-map
+              ("M-?" . nil)   ;; conflict with xref-find-references
+              ("M-;" . nil)   ;; conflict with comment-dwim
+              ("M-s" . nil)   ;; conflict with Consult
+              ("RET" . nil))
 
   :config
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing
-  ;; certain Evil commands in Emacs.
+  ;; certain Paredit commands (e.g., `paredit-backward-delete').
   (with-eval-after-load 'eldoc
     (eldoc-add-command-completions "paredit-")))
 

@@ -19,8 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 ;;; Variables
 
@@ -36,6 +35,14 @@
   evil
   :commands (evil-mode
              evil-select-search-module)
+
+  ;; Pressing '-' opens a `dired' buffer for the directory containing the
+  ;; current file, automatically selecting that file. This provides a fast way
+  ;; to navigate and manage files without manually switching to the directory.
+  :bind (:map evil-normal-state-map
+              ("-" . lightemacs-find-parent-directory))
+
+  :hook (after-init . evil-mode)
 
   :init
   (setq evil-search-wrap lightemacs-cycle)
@@ -69,24 +76,17 @@
 
   ;; Better Vim emulation
   ;; (setq evil-symbol-word-search t)
-  (setq evil-want-Y-yank-to-eol t)
   (setq evil-want-abbrev-expand-on-insert-exit nil)
   (setq evil-respect-visual-line-mode nil)
-  (setq evil-want-C-u-scroll nil)  ; Conflicts with evil-want-C-u-delete
-  (setq evil-want-C-i-jump t)
   (setq evil-want-C-g-bindings t)
-  (setq evil-want-C-h-delete t)
-  (setq evil-want-C-u-delete t)
-  (setq evil-want-C-w-delete t)
 
-  (lightemacs-define-mode-add-hook-to evil-mode '(after-init-hook))
-
-  (lightemacs-define-keybindings evil
-    (with-eval-after-load 'evil
-      ;; Pressing '-' opens a `dired' buffer for the directory containing the
-      ;; current file, automatically selecting that file. This provides a fast way
-      ;; to navigate and manage files without manually switching to the directory.
-      (define-key evil-normal-state-map (kbd "-") #'lightemacs-find-parent-directory)))
+  :custom
+  ;; (evil-want-C-u-scroll t)
+  (evil-want-Y-yank-to-eol t)
+  (evil-want-C-i-jump t)
+  (evil-want-C-h-delete t)
+  (evil-want-C-w-delete t)
+  (evil-want-C-u-delete t)
 
   :config
   (with-eval-after-load 'evil

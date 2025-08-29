@@ -30,8 +30,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   indent-bars
@@ -44,11 +43,7 @@
   ;; When `indent-bars-prefer-character' is set to t, displaying indent bars on
   ;; blank lines causes cursor movement issues when moving downward, resulting
   ;; in abrupt shifts of the window start or cursor position.
-  (setq indent-bars-display-on-blank-lines nil)
-
-  ;; Define the global variable `lightemacs-indent-bars-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to indent-bars-mode
-                                      nil))
+  (setq indent-bars-display-on-blank-lines nil))
 
 (provide 'le-indent-bars)
 

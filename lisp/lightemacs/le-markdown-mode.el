@@ -19,8 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   markdown-mode
@@ -33,17 +32,16 @@
          ("\\.md\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
 
+  :bind (:map markdown-mode-map
+              ("C-c C-e" . markdown-do))
+
   :init
   (setq markdown-fontify-code-blocks-natively t
         markdown-asymmetric-header t
         markdown-gfm-additional-languages '("sh")
         markdown-italic-underscore t
         markdown-make-gfm-checkboxes-buttons t
-        markdown-fontify-whole-heading-line t)
-
-  (lightemacs-define-keybindings markdown-mode
-    (with-eval-after-load 'markdown-mode
-      (define-key markdown-mode-map (kbd "C-c C-e") #'markdown-do))))
+        markdown-fontify-whole-heading-line t))
 
 (provide 'le-markdown-mode)
 

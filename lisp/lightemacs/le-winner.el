@@ -15,8 +15,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   winner
@@ -24,6 +23,9 @@
   :commands (winner-mode
              winner-undo
              winner-redo)
+
+  :hook
+  (lightemacs-on-first-buffer . winner-mode)
 
   :init
   ;; (setq winner-ring-size 40)
@@ -42,10 +44,7 @@
                                 "*cvs*"
                                 "*Buffer List*"
                                 "*Ibuffer*"
-                                "*esh command on file*"))
-
-  (lightemacs-define-mode-add-hook-to winner-mode
-                                      '(lightemacs-on-first-buffer-hook)))
+                                "*esh command on file*")))
 
 (provide 'le-winner)
 

@@ -24,7 +24,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-diminish)
   (require 'le-evil))
 
@@ -32,6 +32,11 @@
   evil-snipe
   :diminish evil-snipe-local-mode
   :commands evil-snipe-mode
+
+  :hook
+  ;; TODO: on first input
+  (evil-mode . evil-snipe-mode)
+
   :init
   ;; Enable smart case sensitivity: uppercase searches are case-sensitive,
   ;; lowercase are case-insensitive
@@ -42,11 +47,7 @@
 
   ;; Allow character folding so equivalent characters match (e.g.,
   ;; accents/diacritics)
-  (setq evil-snipe-char-fold t)
-
-  ;; TODO: on first input
-  (lightemacs-define-mode-add-hook-to evil-snipe-mode
-                                      '(evil-mode-hook)))
+  (setq evil-snipe-char-fold t))
 
 (provide 'le-evil-snipe)
 

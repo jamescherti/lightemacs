@@ -40,7 +40,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-vertico)
   (require 'le-prescient))
 
@@ -48,6 +48,7 @@
   vertico-prescient
   :after vertico
   :commands vertico-prescient-mode
+  :hook (vertico-mode . vertico-prescient-mode)
   :init
   (setq vertico-prescient-enable-sorting t)
 
@@ -55,10 +56,7 @@
   (setq vertico-prescient-override-sorting nil)
 
   ;; Use Orderless instead
-  (setq vertico-prescient-enable-filtering nil)
-
-  (lightemacs-define-mode-add-hook-to vertico-prescient-mode
-                                      '(vertico-mode-hook)))
+  (setq vertico-prescient-enable-filtering nil))
 
 (provide 'le-vertico-prescient)
 

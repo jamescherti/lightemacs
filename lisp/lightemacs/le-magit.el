@@ -20,8 +20,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   magit
@@ -36,11 +35,10 @@
   :functions (magit-restore-window-configuration
               magit-mode-get-buffers)
 
-  :init
-  (setq magit-diff-refine-hunk t)
+  :bind ("C-x g" . magit-status)
 
-  (lightemacs-define-keybindings magit
-    (global-set-key (kbd "C-x g") 'magit-status)))
+  :init
+  (setq magit-diff-refine-hunk t))
 
 (provide 'le-magit)
 

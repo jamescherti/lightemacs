@@ -16,18 +16,16 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   display-line-numbers
   :ensure nil
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)
-  :init
-  (lightemacs-define-mode-add-hook-to
-    display-line-numbers-mode
-    '(prog-mode-hook text-mode-hook conf-mode-hook)))
+  :hook ((prog-mode . display-line-numbers-mode)
+         (text-mode . display-line-numbers-mode)
+         (conf-mode . display-line-numbers-mode)))
 
 (provide 'le-display-line-numbers)
 

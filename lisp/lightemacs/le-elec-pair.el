@@ -14,8 +14,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 (lightemacs-use-package
   elec-pair
@@ -23,9 +22,7 @@
   :commands (electric-pair-mode
              electric-pair-local-mode
              electric-pair-delete-pair)
-  :init
-  (lightemacs-define-mode-add-hook-to electric-pair-mode
-                                      '(lightemacs-on-first-buffer-hook)))
+  :hook (lightemacs-on-first-buffer . electric-pair-mode))
 
 ;;; Provide
 (provide 'le-elec-pair)

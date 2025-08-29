@@ -24,16 +24,15 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package))
+  (require 'le-diminish))
 
 (lightemacs-use-package
   page-break-lines
+  :diminish page-break-lines-mode
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
-  :init
-  ;; Define the global variable `lightemacs-page-break-lines-mode-add-hook-to'
-  (lightemacs-define-mode-add-hook-to page-break-lines-mode
-                                      '(emacs-lisp-mode-hook)))
+  :hook
+  (emacs-lisp-mode . page-break-lines-mode))
 
 (provide 'le-page-break-lines)
 
