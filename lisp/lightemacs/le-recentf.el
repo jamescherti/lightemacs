@@ -115,6 +115,9 @@ adds that file to the recentf list.")
   ;; `recentf-save-list'
   (add-hook 'kill-emacs-hook #'lightemacs-recentf--cleanup -90))
 
+(lightemacs-define-keybindings recentf
+  (global-set-key (kbd "C-c f") #'recentf))
+
 (provide 'le-recentf)
 
 ;; Local variables:

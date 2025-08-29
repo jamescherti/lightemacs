@@ -271,6 +271,10 @@ Keybindings for Consult:
 - `C-c i` → `consult-info`
   Search and navigate Info documentation.
 
+- `C-c r` → `consult-recent-file`
+  `consult-recent-file` is a Consult command that uses the `recentf` list to let
+  you quickly open recently visited files via minibuffer completion.
+
 - `Info-search` remapped → `consult-info`
   Redirects standard Info search to use Consult.
 
@@ -342,6 +346,9 @@ Keybindings for Consult:
 
 - `M-s G` → `consult-git-grep`
   Perform `git grep` in the repository.
+
+- `M-s f` → `consult-fd`
+  Perform `fd` searches.
 
 - `M-s r` → `consult-ripgrep`
   Perform `ripgrep` searches.
@@ -588,6 +595,10 @@ In addition to its built-in capabilities, the **le-recentf** module provides the
 - Cleans up the recent files list when quitting Emacs, prior to its automatic saving.
 - Cleans up and saves the recentf list every `lightemacs-recentf--auto-save-timer-interval` seconds (default: 550).
 - Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer
+
+Key mapping:
+
+- Use `C-f` to invoke `recentf`.
 
 ### Enabled by Default: Detect indentation offset (le-dtrt-indent)
 

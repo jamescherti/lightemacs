@@ -162,6 +162,10 @@
     (global-set-key (kbd "C-c i") #'consult-info)
     (global-set-key [remap Info-search] #'consult-info)
 
+    ;; Lightemacs
+    (global-set-key (kbd "C-c r") #'consult-recent-file)
+    (global-set-key (kbd "M-s f") #'consult-fd)
+
     (global-set-key (kbd "C-x M-:") #'consult-complex-command)
     (global-set-key (kbd "C-x b") #'consult-buffer)
     (global-set-key (kbd "C-x 4 b") #'consult-buffer-other-window)
