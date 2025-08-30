@@ -84,6 +84,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Enabled by Default: A better way to rename or delete files (le-bufferfile)](#enabled-by-default-a-better-way-to-rename-or-delete-files-le-bufferfile)
     - [Enabled by Default: Recent files (le-recentf)](#enabled-by-default-recent-files-le-recentf)
     - [Enabled by Default: Detect indentation offset (le-dtrt-indent)](#enabled-by-default-detect-indentation-offset-le-dtrt-indent)
+    - [The built-in on-the-fly syntax checker (le-flymake)](#the-built-in-on-the-fly-syntax-checker-le-flymake)
     - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
   - [Modules Disabled by Default](#modules-disabled-by-default)
     - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
@@ -621,6 +622,14 @@ The `le-dtrt-indent` module allows controlling automatic indentation detection v
                                                 yaml-ts-mode
                                                 ansible-mode))
   ```
+
+### The built-in on-the-fly syntax checker (le-flymake)
+
+The **le-flymake** module configures Flymake, a built-in on-the-fly syntax checking tool that analyzes source code buffers in the background and highlights errors or warnings as you type. It invokes external syntax checkers or compilers asynchronously and annotates the buffer with diagnostic messages, which can be navigated using dedicated commands. Unlike language servers, Flymake itself does not perform analysis but provides a flexible framework that integrates with various backends, making it lightweight, extensible, and adaptable across different programming languages.
+
+By default, the **le-flymake** module enables Flymake automatically in `prog-mode` and `text-mode`, but this behavior can be customized by modifying the `lightemacs-flymake-mode-add-hook-to` variable, which defaults to `'(prog-mode-hook text-mode-hook)`.
+
+(Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
 
 ### Other Modules Enabled by Default
 

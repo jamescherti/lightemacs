@@ -22,6 +22,7 @@
 
 (lightemacs-load-modules
  '(;; All modules:
+   le-flymake
    le-ace-window
    le-aggressive-indent
    le-apheleia
