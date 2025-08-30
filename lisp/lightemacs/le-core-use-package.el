@@ -23,7 +23,7 @@
   (package-install 'use-package))
 
 (eval-when-compile
-)
+  (require 'use-package))
 
 (provide 'le-core-use-package)
 
