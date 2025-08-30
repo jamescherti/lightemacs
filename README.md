@@ -629,6 +629,13 @@ The **le-flymake** module configures Flymake, a built-in on-the-fly syntax check
 
 By default, the **le-flymake** module enables Flymake automatically in `prog-mode` and `text-mode`, but this behavior can be customized by modifying the `lightemacs-flymake-mode-add-hook-to` variable, which defaults to `'(prog-mode-hook text-mode-hook)`.
 
+The **le-flymake** defines the following keybindings for navigating Flymake diagnostics:
+
+- `M-g n`: Move to the **next** error or warning in the current buffer.
+- `M-g p`: Move to the **previous** error or warning in the current buffer.
+
+These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs’ convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively.
+
 (Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
 
 ### Other Modules Enabled by Default
