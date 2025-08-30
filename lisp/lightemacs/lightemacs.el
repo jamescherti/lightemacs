@@ -413,7 +413,7 @@ the package is installed via straight.el. If a custom recipe exists in
 `lightemacs-straight-recipes', it is used instead of t.
 
 `use-package' expansion is deferred until runtime."
-  (declare (indent 0) (debug t))
+  (declare (indent defun) (debug t))
   (if (memq name lightemacs-excluded-packages)
       (lightemacs-verbose-message "PACKAGE IGNORED: %S" name)
     (unless (and (bound-and-true-p byte-compile-current-file)
