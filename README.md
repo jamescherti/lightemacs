@@ -347,7 +347,7 @@ Keybindings for Consult:
 - `M-s G` → `consult-git-grep`
   Perform `git grep` in the repository.
 
-- `M-s f` → `consult-fd`
+- `M-s p` → `consult-fd`
   Perform `fd` searches.
 
 - `M-s r` → `consult-ripgrep`

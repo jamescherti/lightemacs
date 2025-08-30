@@ -102,7 +102,7 @@
 
     ;; Lightemacs
     (global-set-key (kbd "C-c r") #'consult-recent-file)
-    (global-set-key (kbd "M-s f") #'consult-fd)
+    (global-set-key (kbd "M-s p") #'consult-fd)
 
     (global-set-key (kbd "C-x M-:") #'consult-complex-command)
     (global-set-key (kbd "C-x b") #'consult-buffer)
