@@ -1,4 +1,4 @@
-;;; le-flavor-all.el --- Group: Default modules -*- lexical-binding: t -*-
+;;; le-flavor-big.el --- Group: Default modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -12,7 +12,7 @@
 ;; All modules.
 ;;
 ;; Command:
-;; ls le-*.el -1 | grep -Ev "^le-core" | sed 's/\.el$//' | grep -v le-flavor-all
+;; ls le-*.el -1 | grep -Ev "^le-core" | sed 's/\.el$//' | grep -v le-flavor-big
 
 ;;; Code:
 
@@ -103,10 +103,10 @@
 
 ;;; Provide
 
-(provide 'le-flavor-all)
+(provide 'le-flavor-big)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; le-flavor-all.el ends here
+;;; le-flavor-big.el ends here
