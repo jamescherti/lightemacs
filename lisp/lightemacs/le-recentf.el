@@ -98,6 +98,9 @@ adds that file to the recentf list.")
   ;; Enable
   (add-hook 'lightemacs-on-first-buffer-hook #'lightemacs-recentf--enable)
 
+  (lightemacs-define-keybindings recentf
+    (global-set-key (kbd "C-c f") #'recentf))
+
   :config
   ;; Add file at the beginning of the recent list after switching buffer.
   (defun lightemacs-recentf--add-file-on-buffer-change (&rest _args)
@@ -114,9 +117,6 @@ adds that file to the recentf list.")
   ;; Depth -90 ensures it is cleaned up before it is saved with
   ;; `recentf-save-list'
   (add-hook 'kill-emacs-hook #'lightemacs-recentf--cleanup -90))
-
-(lightemacs-define-keybindings recentf
-  (global-set-key (kbd "C-c f") #'recentf))
 
 (provide 'le-recentf)
 
