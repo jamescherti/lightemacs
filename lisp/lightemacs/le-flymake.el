@@ -37,9 +37,12 @@
   (setq flymake-wrap-around nil)
 
   (lightemacs-define-keybindings flymake-mode
-    (with-eval-after-load 'flymake-mode
-      (define-key flymake-mode-map (kbd "M-g p") #'flymake-goto-prev-error)
-      (define-key flymake-mode-map (kbd "M-g n") #'flymake-goto-next-error)))
+    (global-set-key (kbd "M-g p") 'flymake-goto-prev-error)
+    (global-set-key (kbd "M-g n") 'flymake-goto-next-error)
+
+    (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error)
+    (global-set-key (kbd "C-c e n") 'flymake-goto-next-error)
+    (global-set-key (kbd "C-c e d") 'flymake-show-buffer-diagnostics))
 
   (lightemacs-define-mode-add-hook-to
     flymake-mode
