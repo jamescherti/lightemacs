@@ -71,6 +71,7 @@
              consult-theme
              consult-yank-pop
              consult-imenu
+             consult-info
              consult-xref)
   :functions (consult--customize-put
               consult-narrow-help)
@@ -126,12 +127,12 @@
     (global-set-key (kbd "M-g m") #'consult-mark)
     (global-set-key (kbd "M-g k") #'consult-global-mark)
     (global-set-key (kbd "M-g i") #'consult-imenu)
-    (global-set-key (kbd "M-g I") #'consult-imenu-multi)
+    ;; (global-set-key (kbd "M-g I") #'consult-imenu-multi)
 
     (global-set-key (kbd "M-s d") #'consult-find)
     (global-set-key (kbd "M-s c") #'consult-locate)
     (global-set-key (kbd "M-s g") #'consult-grep)
-    (global-set-key (kbd "M-s G") #'consult-git-grep)
+    ;; (global-set-key (kbd "M-s G") #'consult-git-grep)
     (global-set-key (kbd "M-s r") #'consult-ripgrep)
     (global-set-key (kbd "M-s l") #'consult-line)
     (global-set-key (kbd "M-s L") #'consult-line-multi)
