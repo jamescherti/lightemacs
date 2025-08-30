@@ -16,7 +16,7 @@
 ;;; Require
 
 (eval-and-compile
-  (require 'use-package))
+)
 
 (require 'le-core-compile)
 

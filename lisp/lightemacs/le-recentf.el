@@ -27,7 +27,7 @@
   (require 'lightemacs))
 
 (eval-and-compile
-  (require 'use-package))
+)
 
 ;; Global variables
 

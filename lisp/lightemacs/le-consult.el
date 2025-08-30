@@ -27,8 +27,7 @@
 (require 'le-core-cli-tools)
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'use-package))
+  (require 'lightemacs))
 
 ;;; Use-package consult
 

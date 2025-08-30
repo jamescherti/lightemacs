@@ -20,7 +20,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'use-package)
+
   (require 'lightemacs))
 
 (lightemacs-use-package

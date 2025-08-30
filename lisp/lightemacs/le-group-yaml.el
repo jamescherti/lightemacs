@@ -20,7 +20,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package))
+)
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 

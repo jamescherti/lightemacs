@@ -18,7 +18,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package))
+)
 
 (lightemacs-load-modules
  '(;; All modules:

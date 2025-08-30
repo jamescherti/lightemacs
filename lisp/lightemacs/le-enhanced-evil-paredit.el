@@ -25,7 +25,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package)
+
   (require 'le-diminish)
   (require 'le-paredit)
   (require 'le-evil))

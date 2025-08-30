@@ -15,7 +15,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'use-package))
+)
 
 (lightemacs-load-modules
  '(;; Hides or abbreviates mode indicators in the Emacs mode line for a cleaner
