@@ -19,8 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-)
+  (require 'lightemacs))
 
 (lightemacs-load-modules
  '(;; evil and evil-collection

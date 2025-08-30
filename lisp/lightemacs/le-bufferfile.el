@@ -37,9 +37,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-)
-
 (lightemacs-use-package
   bufferfile
   :commands (bufferfile-rename

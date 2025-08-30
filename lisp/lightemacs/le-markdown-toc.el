@@ -17,9 +17,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-)
-
 (lightemacs-use-package
   markdown-toc
   :commands (markdown-toc-generate-toc

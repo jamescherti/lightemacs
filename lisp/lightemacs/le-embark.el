@@ -24,9 +24,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-)
-
 (lightemacs-use-package
   embark
   :commands (embark-act

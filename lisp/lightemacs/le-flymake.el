@@ -23,8 +23,7 @@
 ;;; Use-package `flymake'
 
 (eval-and-compile
-  (require 'lightemacs)
-)
+  (require 'lightemacs))
 
 (lightemacs-use-package
   flymake

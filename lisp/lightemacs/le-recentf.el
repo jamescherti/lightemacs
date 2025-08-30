@@ -26,9 +26,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-)
-
 ;; Global variables
 
 (defvar lightemacs-recentf-cleanup-and-auto-save-interval 550

@@ -28,8 +28,7 @@
 ;;; Require
 
 (eval-and-compile
-  (require 'lightemacs)
-)
+  (require 'lightemacs))
 
 ;; (defvar lightemacs-easysession-save-scratch t
 ;;   "Make EasySession also save and restore the scratch buffer.")

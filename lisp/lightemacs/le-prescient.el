@@ -21,9 +21,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(eval-and-compile
-)
-
 (lightemacs-use-package
   prescient
   :commands (prescient-completion-sort
