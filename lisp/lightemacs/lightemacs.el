@@ -43,13 +43,6 @@ Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
-(defvar lightemacs-excluded-packages nil
-  "List of package symbols that should be excluded from initialization.
-Each element must be a symbol naming a package that would otherwise be
-initialized by Lightemacs. Packages listed here are skipped during the
-initialization process. Only packages declared via the `lightemacs-use-package'
-macro are affected by this variable.")
-
 (defcustom lightemacs-verbose nil
   "Enable displaying verbose messages."
   :type 'boolean
@@ -86,16 +79,16 @@ Choices are:
 This variable controls how the `lightemacs-use-package' macro handles
 installation and configuration of packages.")
 
-(defvar lightemacs-straight-recipes
-  ;; Correct the Paredit repository in the MELPA recipe because the default URL
-  ;; is invalid.
-  '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
-    ;; Add the `easysession' extensions/ directory
-    (easysession . (:fetcher github :repo "jamescherti/easysession.el"
-                             :files (:defaults
-                                     "extensions/*.el"))))
-  "Alist of packages and their custom straight.el recipes.
-This is applied when `lightemacs-package-manager' is \='straight.")
+;; (defvar lightemacs-straight-recipes
+;;   ;; Correct the Paredit repository in the MELPA recipe because the default URL
+;;   ;; is invalid.
+;;   '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
+;;     ;; Add the `easysession' extensions/ directory
+;;     (easysession . (:fetcher github :repo "jamescherti/easysession.el"
+;;                              :files (:defaults
+;;                                      "extensions/*.el"))))
+;;   "Alist of packages and their custom straight.el recipes.
+;; This is applied when `lightemacs-package-manager' is \='straight.")
 
 (defvar lightemacs-load-compiled-init-files t
   "If non-nil, attempt to load byte-compiled .elc for init files.
@@ -379,26 +372,27 @@ the package is installed via straight.el. If a custom recipe exists in
 
 `use-package' expansion is deferred until runtime."
   (declare (indent defun) (debug t))
-  (if (memq name lightemacs-excluded-packages)
-      (lightemacs-verbose-message "PACKAGE IGNORED: %S" name)
-    (unless (and (bound-and-true-p byte-compile-current-file)
-                 (not (locate-library (symbol-name name))))
-      (let* ((straight-spec (and (eq lightemacs-package-manager 'straight)
-                                 (not (plist-member plist :straight))
-                                 (or (cdr (assoc name lightemacs-straight-recipes))
-                                     t)))
-             (ensure (cond
-                      ((memq :ensure plist)
-                       (plist-get plist :ensure))
-
-                      (t
-                       use-package-always-ensure)))
-             (final-plist (if (and straight-spec
-                                   ensure)
-                              (append `(:straight ,straight-spec) plist)
-                            plist)))
-        (lightemacs--before-use-package name plist)
-        `(eval '(use-package ,name ,@final-plist))))))
+  (unless (and (bound-and-true-p byte-compile-current-file)
+               (not (locate-library (symbol-name name))))
+    (lightemacs--before-use-package name plist)
+    `(use-package ,name ,@plist)
+    ;; (let* ((straight-spec (and (eq lightemacs-package-manager 'straight)
+    ;;                            (not (plist-member plist :straight))
+    ;;                            (or (cdr (assoc name lightemacs-straight-recipes))
+    ;;                                t)))
+    ;;        (ensure (cond
+    ;;                 ((memq :ensure plist)
+    ;;                  (plist-get plist :ensure))
+    ;;
+    ;;                 (t
+    ;;                  use-package-always-ensure)))
+    ;;        (final-plist (if (and straight-spec
+    ;;                              ensure)
+    ;;                         (append `(:straight ,straight-spec) plist)
+    ;;                       plist)))
+    ;;   (lightemacs--before-use-package name plist)
+    ;;   `(use-package ,name ,@final-plist))
+    ))
 
 ;;; Internal functions
 
