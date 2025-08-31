@@ -24,7 +24,6 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-diminish)
   (require 'le-evil))
 

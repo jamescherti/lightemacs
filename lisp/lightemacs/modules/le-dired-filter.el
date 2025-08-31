@@ -20,9 +20,10 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-diminish)
   (require 'le-dired))
+
+(lightemacs-load-modules '(le-dired))
 
 ;;; Variables
 

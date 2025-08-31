@@ -15,15 +15,15 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-diminish)
   (require 'le-evil))
 
 (lightemacs-use-package
   evil-commentary
+  :after evil
   :diminish evil-commentary-mode
-  :commands evil-commentary-mode
-  :hook (evil-mode . evil-commentary-mode))
+  :config
+  (evil-commentary-mode))
 
 (provide 'le-evil-commentary)
 

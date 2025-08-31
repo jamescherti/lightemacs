@@ -12,10 +12,15 @@
 ;; The "big" flavor enables all modules except:
 ;;   - le-treesit-auto (optional, as not all users require Treesit)
 ;;   - le-easysession (optional, for users who want session management)
+;;   - le-vterm (optional and requires external dependencies)
+;;   - le-gcmh (optional, for users who want gcmh)
+;;   - le-compile-angel (optional, for users who want to compile all .el files)
 ;;
 ;; Command to generate this flavor:
 ;; ls le-*.el -1 | grep -v "^le-core" | sed 's/\.el$//' | \
-;;   grep -v ^le-flavor- | grep -v ^le-treesit-auto | grep -v ^le-easysession
+;;   grep -v '^le-flavor-' | grep -v '^le-treesit-auto' \
+;;   | grep -v '^le-easysession' | grep -v '-evil' | grep -v '^le-vterm' \
+;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel'
 
 ;;; Code:
 
@@ -32,7 +37,6 @@
    le-avy
    le-bufferfile
    le-cape
-   le-compile-angel
    le-consult-dir
    le-consult
    le-corfu
@@ -50,18 +54,10 @@
    le-elisp-refs
    le-embark-consult
    le-embark
-   le-enhanced-evil-paredit
-   le-evil-collection
-   le-evil-commentary
-   le-evil
-   le-evil-snipe
-   le-evil-surround
    le-expand-region
-   le-gcmh
    le-git-modes
    le-goto-chg
    le-group-emacs-lisp
-   le-group-evil
    le-group-yaml
    le-helpful
    le-highlight-defined
@@ -91,7 +87,6 @@
    le-vertico
    le-vertico-prescient
    le-vim-tab-bar
-   le-vterm
    le-wgrep
    le-which-key
    le-winner

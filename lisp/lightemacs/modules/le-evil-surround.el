@@ -20,7 +20,6 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-evil))
 
 (lightemacs-use-package

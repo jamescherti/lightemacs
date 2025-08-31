@@ -20,7 +20,6 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-diminish))
 
 (defvar lightemacs-dtrt-indent-inhibit nil

@@ -30,11 +30,10 @@
 
 (lightemacs-use-package
   enhanced-evil-paredit
+  :after evil
   :diminish enhanced-evil-paredit-mode
   :commands enhanced-evil-paredit-mode
-
   :hook (paredit-mode . enhanced-evil-paredit-mode)
-
   :preface
   (defun lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding ()
     "Resolve keybinding conflicts between `enhanced-evil-paredit'/`evil-snipe'.

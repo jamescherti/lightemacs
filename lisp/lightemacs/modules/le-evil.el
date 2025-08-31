@@ -45,10 +45,9 @@
   :hook (after-init . evil-mode)
 
   :init
-  (setq evil-search-wrap lightemacs-cycle)
+  (setq evil-symbol-word-search t)  ; t = Search for symbols
 
-  ;; Use evil-search instead of isearch
-  (setq evil-search-module 'evil-search)
+  (setq evil-search-wrap lightemacs-cycle)
 
   ;; Time in seconds of idle before updating search highlighting.
   (setq evil-ex-hl-update-delay 0.05)
@@ -80,6 +79,8 @@
   (setq evil-respect-visual-line-mode nil)
   (setq evil-want-C-g-bindings t)
 
+  (setq evil-search-module 'evil-search)
+
   :custom
   ;; (evil-want-C-u-scroll t)
   (evil-want-Y-yank-to-eol t)
@@ -89,28 +90,36 @@
   (evil-want-C-u-delete t)
 
   :config
-  (with-eval-after-load 'evil
-    (evil-select-search-module 'evil-search-module evil-search-module))
+  ;; Occasionally, `evil' fails to respect the `evil-search-module'
+  ;; customization, causing search behavior to diverge from the configured
+  ;; value.
+  (evil-select-search-module 'evil-search-module 'evil-search)
 
-  ;; Prevent ElDoc help from disappearing in the minibuffer when executing
-  ;; certain Evil commands in Emacs.
-  ;; Fixes: https://github.com/emacs-evil/evil/pull/1980
-  (eval-after-load 'eldoc
-    '(when (fboundp 'eldoc-add-command-completions)
-       ;; `evil-delete-back-to-indentation', `evil-delete-backward-word',
-       ;; `evil-insert', `evil-insert-line', `evil-append', `evil-append-line'...
+  (with-eval-after-load 'eldoc
+    (eldoc-add-command 'evil-normal-state
+                       ;; 'evil-delete
+                       ;; 'evil-insert
+                       'evil-change
+                       'evil-replace)
 
-       ;; Add evil-delete commands to ElDoc to display help while deleting using:
-       ;; - evil-delete-backward-word (C-w)
-       ;; - evil-delete-back-to-indentation (C-u)
-       ;; - evil-delete-backward-char-and-join (C-h)
-       ;; - And other evil-delete-* commands.
-       (eldoc-add-command-completions "evil-delete-")
+    ;; Prevent ElDoc help from disappearing in the minibuffer when executing
+    ;; certain Evil commands in Emacs.
+    ;; Fixes: https://github.com/emacs-evil/evil/pull/1980
+    (when (fboundp 'eldoc-add-command-completions)
+      ;; `evil-delete-back-to-indentation', `evil-delete-backward-word',
+      ;; `evil-insert', `evil-insert-line', `evil-append', `evil-append-line'...
 
-       ;; Add insert and append commands to ElDoc to display help after switching
-       ;; to insert mode.
-       (eldoc-add-command-completions "evil-insert-")
-       (eldoc-add-command-completions "evil-append-"))))
+      ;; Add evil-delete commands to ElDoc to display help while deleting using:
+      ;; - evil-delete-backward-word (C-w)
+      ;; - evil-delete-back-to-indentation (C-u)
+      ;; - evil-delete-backward-char-and-join (C-h)
+      ;; - And other evil-delete-* commands.
+      (eldoc-add-command-completions "evil-delete-")
+
+      ;; Add insert and append commands to ElDoc to display help after switching
+      ;; to insert mode.
+      (eldoc-add-command-completions "evil-insert-")
+      (eldoc-add-command-completions "evil-append-"))))
 
 ;;; Keybindings
 

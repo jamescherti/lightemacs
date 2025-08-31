@@ -40,9 +40,10 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-vertico)
   (require 'le-prescient))
+
+(lightemacs-load-modules '(le-prescient))
 
 (lightemacs-use-package
   vertico-prescient

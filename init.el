@@ -18,12 +18,17 @@
 (eval-when-compile
   ;; These variables are already defined in the early-init.el file
   (defvar lightemacs-user-directory (file-truename "."))
+  (defvar lightemacs-local-directory
+    (expand-file-name "lisp/local/" lightemacs-user-directory))
   (defvar minimal-emacs-user-directory (expand-file-name
                                         "lisp/lightemacs/init"
                                         lightemacs-user-directory))
+  (defvar lightemacs-core-directory (expand-file-name
+                                     "lisp/lightemacs"
+                                     lightemacs-user-directory))
   (defvar lightemacs-modules-directory (expand-file-name
-                                        "lisp/lightemacs"
-                                        lightemacs-user-directory))
+                                        "modules"
+                                        lightemacs-core-directory))
   (add-to-list 'load-path lightemacs-modules-directory))
 
 ;;; Ensure required variables are declared
@@ -36,18 +41,54 @@
 (eval-and-compile
   (require 'lightemacs))
 
-;;; Use more CPUs for native compilation
+;;; Compile modules
 
-(eval-when-compile
-  (require 'comp-run))
+;; Stale .elc files can cause issues; recompiling them ensures they are up to
+;; date. Compilation occurs in init.el rather than early-init.el so that
+;; messages appear in the *Messages* buffer for user visibility.
+(require 'le-core-compile-mod)
 
-(setq native-comp-async-jobs-number
-      (lightemacs--calculate-native-comp-async-jobs-number))
+(when (bound-and-true-p lightemacs-byte-compile-core)
+  (dolist (file '("lightemacs.el"
+                  "le-core-cli-tools.el"
+                  ;; le-core-elpaca.el  ; note byte compile
+                  ;; le-core-straight.el  ; note byte compile
+                  "le-core-package-manager.el"
+                  "le-core-compile-mod.el"
+                  "le-core-use-package.el"))
+    (lightemacs--byte-compile-if-outdated (expand-file-name
+                                           file lightemacs-core-directory)))
+
+  ;; Configuration
+  (dolist (file '("config.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file lightemacs-local-directory)
+     :no-error))
+
+  (dolist (file '("pre-early-init.el"
+                  "post-early-init.el"
+                  "pre-init.el"
+                  "post-init.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file lightemacs-local-directory)
+     :no-error))
+
+  ;; Lightemacs init files
+  (dolist (file '("init.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file lightemacs-user-directory)))
+
+  ;; Minimal-emacs.d init files
+  (dolist (file '("init.el"
+                  "early-init.el"))
+    (lightemacs--byte-compile-if-outdated
+     (expand-file-name file minimal-emacs-user-directory))))
+
 
 ;;; Load pre-init.el
 
 (let ((el-file (expand-file-name "pre-init.el"
-                                 lightemacs-user-directory)))
+                                 lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))
 
 ;;; Load init.el
@@ -56,36 +97,20 @@
     (funcall 'lightemacs-load-user-init
              (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Package manager
-
-(cond
- ;; Straight
- ((eq lightemacs-package-manager 'straight)
-  (require 'le-core-straight))
-
- ;; Elpaca
- ((eq lightemacs-package-manager 'elpaca)
-  (require 'le-core-elpaca))
-
- ;; use-package (built-in)
- ((eq lightemacs-package-manager 'use-package)
-  (require 'le-core-use-package))
-
- (t
-  (error (concat "Invalid value for `lightemacs-package-manager': '%S'. Valid "
-                 "choices are: 'straight, 'elpaca, or 'use-package.")
-         lightemacs-package-manager)))
+(require 'le-core-package-manager)
 
 ;;; Load modules, and post-init.el
 
 ;; Load all modules
 (if (fboundp 'lightemacs-load-modules)
-    (funcall 'lightemacs-load-modules lightemacs-modules)
+    (progn
+      (funcall 'lightemacs-load-modules lightemacs-core-modules)
+      (funcall 'lightemacs-load-modules lightemacs-modules))
   (error "Undefined function: lightemacs-load-modules"))
 
 ;; Load post-init.el
 (let ((el-file (expand-file-name "post-init.el"
-                                 lightemacs-user-directory)))
+                                 lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))
 
 ;;; init.el ends here

@@ -15,8 +15,8 @@
 
 ;;; Require
 
-(eval-and-compile
-  (require 'le-diminish))
+;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
+(require 'le-core-cli-tools)
 
 ;;; Misc
 
@@ -61,8 +61,6 @@
 
 ;;; Tools (ripgrep and fd)
 
-;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-core-cli-tools)
 (when lightemacs--ripgrep-executable
   (setq xref-search-program 'ripgrep))
 

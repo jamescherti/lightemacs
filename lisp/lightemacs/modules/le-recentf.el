@@ -49,7 +49,8 @@ adds that file to the recentf list.")
              recentf
              recentf-cleanup)
   :bind ("C-c f" . recentf)
-  :init
+
+  :preface
   (defun lightemacs-recentf--cleanup ()
     "Run `recentf-cleanup' if `recentf-mode' is enabled."
     (when (and (bound-and-true-p recentf-mode)
@@ -88,6 +89,15 @@ adds that file to the recentf list.")
       (setq lightemacs-recentf--auto-save-timer nil))
     (recentf-mode -1))
 
+  ;; Add file at the beginning of the recent list after switching buffer.
+  (defun lightemacs-recentf--add-file-on-buffer-change (&rest _args)
+    "Add file at the beginning of the recent list after switching buffer."
+    (when (and (bound-and-true-p recentf-mode)
+               (fboundp 'recentf-add-file))
+      (when-let* ((file-name (buffer-file-name (buffer-base-buffer))))
+        (recentf-add-file file-name))))
+
+  :init
   ;; Settings
   (setq recentf-max-menu-items 10)
   (setq recentf-max-saved-items 750)
@@ -97,14 +107,6 @@ adds that file to the recentf list.")
   (add-hook 'lightemacs-on-first-buffer-hook #'lightemacs-recentf--enable)
 
   :config
-  ;; Add file at the beginning of the recent list after switching buffer.
-  (defun lightemacs-recentf--add-file-on-buffer-change (&rest _args)
-    "Add file at the beginning of the recent list after switching buffer."
-    (when (and (bound-and-true-p recentf-mode)
-               (fboundp 'recentf-add-file))
-      (when-let* ((file-name (buffer-file-name (buffer-base-buffer))))
-        (recentf-add-file file-name))))
-
   (when lightemacs-recentf-track-switch-to-buffer
     (add-hook 'window-buffer-change-functions
               #'lightemacs-recentf--add-file-on-buffer-change))

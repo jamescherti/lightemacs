@@ -30,7 +30,7 @@
              vertico-exit-input)
   :functions vertico--index
 
-  ;; TODO
+  ;; TODO keymap
   ;; :bind (:map vertico-map
   ;;             ("C-d" . vertico-exit-input)
   ;;             ("C-j" . vertico-next)

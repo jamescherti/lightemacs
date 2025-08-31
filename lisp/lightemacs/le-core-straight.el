@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(package-initialize)
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name

@@ -23,12 +23,18 @@
   (require 'le-evil)
   (require 'le-diminish))
 
+(eval-and-compile
+  ;; This has to be defined before evil
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-collection-setup-minibuffer t))
+
 (lightemacs-use-package
   evil-collection
   :if (not noninteractive)
   :diminish (evil-collection-unimpaired-mode)
-  :after evil
   :functions evil-collection-init
+  :after evil
   :config
   (evil-collection-init))
 

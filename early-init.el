@@ -31,14 +31,28 @@
 (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
 (setq minimal-emacs-ui-features '(context-menu tooltips))
 
+(setq straight-recipe-overrides
+      '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
+        (easysession . (:host github :repo "jamescherti/easysession.el"
+                              :files (:defaults "extensions/*.el")))))
+
 ;;; Global variables
 
 (defvar lightemacs-user-directory user-emacs-directory
   "Directory beneath Lightemacs files are placed.
 Note that this should end with a directory separator.")
 
-(defvar lightemacs-modules-directory
+(defvar lightemacs-local-directory
+  (expand-file-name "lisp/local/" lightemacs-user-directory))
+
+(defvar lightemacs-local-modules-directory
+  (expand-file-name "modules/" lightemacs-local-directory))
+
+(defvar lightemacs-core-directory
   (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
+
+(defvar lightemacs-modules-directory
+  (expand-file-name "modules/" lightemacs-core-directory))
 
 (defvar lightemacs-var-directory
   (expand-file-name "var/" lightemacs-user-directory))
@@ -62,7 +76,7 @@ Note that this should end with a directory separator.")
   (setq user-emacs-directory lightemacs-var-directory)
   (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
   (setq minimal-emacs-user-directory (expand-file-name
-                                      "init/" lightemacs-modules-directory)))
+                                      "init/" lightemacs-core-directory)))
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
@@ -72,48 +86,15 @@ Note that this should end with a directory separator.")
 ;;; Update `load-path'
 
 (eval-and-compile
+  (add-to-list 'load-path lightemacs-local-modules-directory)
+  (add-to-list 'load-path lightemacs-core-directory)
   (add-to-list 'load-path lightemacs-modules-directory))
 
 ;;; Load config.el
 
-(load (expand-file-name "config" lightemacs-user-directory)
+(load (expand-file-name "config" lightemacs-local-directory)
       :no-error
       (not (bound-and-true-p init-file-debug)))
-
-;;; Stale .elc files may lead to errors; ensure they are recompiled and current.
-
-(require 'le-core-compile)
-
-(when (bound-and-true-p lightemacs-byte-compile-core)
-  (dolist (file '("lightemacs.el"
-                  "le-core-cli-tools.el"
-                  ;; le-core-elpaca.el
-                  ;; le-core-straight.el
-                  "le-core-compile.el"
-                  "le-core-use-package.el"))
-    (lightemacs--byte-compile-if-outdated (expand-file-name
-                                           file lightemacs-modules-directory)))
-
-  ;; Configuration
-  (dolist (file '("pre-early-init.el"
-                  "config.el"
-                  "post-early-init.el"
-                  "pre-init.el"
-                  "post-init.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file lightemacs-user-directory)
-     :no-error))
-
-  ;; Lightemacs init files
-  (dolist (file '("init.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file lightemacs-user-directory)))
-
-  ;; Minimal-emacs.d init files
-  (dolist (file '("init.el"
-                  "early-init.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file minimal-emacs-user-directory))))
 
 ;;; Load lightemacs.el
 
@@ -125,7 +106,7 @@ Note that this should end with a directory separator.")
 ;;; Load pre-early-init.el
 
 (lightemacs-load-user-init
- (expand-file-name "pre-early-init.el" lightemacs-user-directory)
+ (expand-file-name "pre-early-init.el" lightemacs-local-directory)
  :no-error)
 
 ;;; Load minimal-emacs.d early-init.el
@@ -136,7 +117,7 @@ Note that this should end with a directory separator.")
 ;;; Load post-early-init.el
 
 (lightemacs-load-user-init
- (expand-file-name "post-early-init.el" lightemacs-user-directory)
+ (expand-file-name "post-early-init.el" lightemacs-local-directory)
  :no-error)
 
 ;;; early-init.el ends here

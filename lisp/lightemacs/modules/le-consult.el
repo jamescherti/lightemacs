@@ -23,11 +23,11 @@
 
 ;; Require
 
-;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-core-cli-tools)
-
 (eval-and-compile
   (require 'lightemacs))
+
+;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
+(require 'le-core-cli-tools)
 
 ;;; Use-package consult
 

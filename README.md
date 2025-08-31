@@ -59,9 +59,12 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
   - [Update Lightemacs](#update-lightemacs)
   - [The hierarchy of Lightemacs files](#the-hierarchy-of-lightemacs-files)
     - [Files that must not be modified:](#files-that-must-not-be-modified)
-    - [Files you may edit:](#files-you-may-edit)
+    - [Files and directories you may edit:](#files-and-directories-you-may-edit)
+  - [Example configurations](#example-configurations)
   - [Customizations](#customizations)
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
+    - [Package Manager Selection](#package-manager-selection)
+      - [Supported package managers](#supported-package-managers)
       - [Configuration Example for the package manager](#configuration-example-for-the-package-manager)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Modules Enabled by Default](#modules-enabled-by-default)
@@ -156,12 +159,32 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 - `~/.emacs.d/lisp/lightemacs/`: Contains the modules and libraries used by Lightemacs (do not modify these files).
 - `~/.emacs.d/early-init.el` and `~/.emacs.d/init.el`: Initialization files (do not modify these files).
 
-### Files you may edit:
+### Files and directories you may edit:
 
-- `~/.emacs.d/config.el`: The main configuration file, where you may adjust settings or install packages.
-- `~/.emacs.d/lisp/local/`: A directory for your personal Elisp files.
+- `~/.emacs.d/lisp/local/config.el`: The main configuration file, where you may adjust settings or install packages.
+- `~/.emacs.d/lisp/local/modules/`: A directory for your personal modules.
 
-*(Files and directories intended for user modification, such as `~/.emacs.d/config.el` or any files within `~/.emacs.d/lisp/local/`, are not tracked by Git.)*
+*(Files and directories intended for user modification, such as `~/.emacs.d/lisp/local/config.el` or any files within `~/.emacs.d/lisp/local/`, are not tracked by Git.)*
+
+## Example configurations
+
+The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration for Lightemacs, allowing settings to be adjusted and additional packages to be installed. (If the configuration directory is changed, for example to `~/.lightemacs.d/`, the main configuration file will then be located at `~/.lightemacs.d/config.el`.)
+
+Example 1: The default `config.el` configuration is:
+
+```elisp
+;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
+(setq lightemacs-modules '(le-flavor-essential))
+```
+
+Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), update `config.el` to include the Evil module:
+
+```elisp
+;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
+(setq lightemacs-modules '(le-flavor-essential
+                           ;; Vim keybindings
+                           le-group-evil))
+```
 
 ## Customizations
 
@@ -169,7 +192,7 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 
 **The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
 
-Modify `~/.emacs.d/config.el` instead. This file is loaded after `init.el` but before the Lightemacs modules are initialized. It is intended for supplementary configurations or package setups.
+Modify `~/.emacs.d/lisp/local/config.el` instead. This file is loaded after `init.el` but before the Lightemacs modules are initialized. It is intended for supplementary configurations or package setups.
 
 Always begin your `config.el` file with the following header to prevent them from being byte-compiled and to activate lexical binding:
 ```emacs-lisp
@@ -180,11 +203,25 @@ Always begin your `config.el` file with the following header to prevent them fro
 
 **Important:** The examples in this README.md file pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as Lightemacs `init.el` and `early-init.el`, regardless of their location.
 
-(The Lightemacs project builds upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, allowing it to be configured identically to *minimal-emacs.d* and providing support for the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`.)
+(The Lightemacs project extends the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, enabling configuration in the same manner as *minimal-emacs.d* and supporting the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`. The only distinction is that, in Lightemacs, these files must be placed in the `~/.emacs.d/lisp/local/` directory, alongside `config.el`.)
+
+### Package Manager Selection
+
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
+
+By default, `lightemacs-package-manager` is set to `'use-package`, which uses the built-in `package.el` together with `use-package`.
+
+#### Supported package managers
+
+- **`'use-package`** (default): Uses Emacs’ native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
+
+* **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
+
+- **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
 
 #### Configuration Example for the package manager
 
-Add the following to `~/.emacs/config.el`:
+Add the following to `~/.emacs.d/lisp/local/config.el`:
 
 ```elisp
 (setq lightemacs-package-manager 'use-package)
@@ -210,7 +247,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ### Enabled by Default: Default theme (le-theme)
 
-The `le-theme` loads the default theme. It can be configured via the `lightemacs-theme-name` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs/config.el` as follows:
+The `le-theme` loads the default theme. It can be configured via the `lightemacs-theme-name` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
 
 ```emacs-lisp
 ;; Default theme to load during initialization, if available. Set to nil to
@@ -371,7 +408,7 @@ Keybindings for Consult:
 
 ### Enabled by Default: Better completion (le-corfu and le-cape)
 
-- [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab. To make Corfu complete only when the user presses Tab, add the following to `~/.emacs.d/config.el`:
+- [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab. To make Corfu complete only when the user presses Tab, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; By default, Corfu shows completions automatically without requiring the user
   ;; to press Tab. To make Corfu complete only when the user presses Tab:
@@ -405,7 +442,7 @@ The **le-dired-filter** module only enables `dired-filter-by-omit`:
 (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit))
 ```
 
-To add additional filters, include them in your `~/.emacs.d/config.el`. For example:
+To add additional filters, include them in your `~/.emacs.d/lisp/local/config.el`. For example:
 
 ```emacs-lisp
 (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit
@@ -455,7 +492,7 @@ In addition to code folding, *outline-indent* allows:
 
 The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
 
-The following example can be added to the `~/.emacs.d/config.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
+The following example can be added to the `~/.emacs.d/lisp/local/config.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
 ```emacs-lisp
 (with-eval-after-load 'le-outline-indent
   (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
@@ -514,7 +551,7 @@ Continue pressing `C-=` until the selection encompasses exactly the text you wan
 
 Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
-To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/config.el`:
+To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/lisp/local/config.el`:
 
 ```emacs-lisp
 ;; To suppress minibuffer messages when Auto Revert reverts a buffer
@@ -543,7 +580,7 @@ The **le-bufferfile** configures [bufferfile](https://github.com/jamescherti/buf
 
 The functions above also ensure that any modified buffers are saved prior to executing operations like renaming, deleting, or copying.
 
-To replace the default *dired* rename command with `bufferfile-rename`, add the following to your `~/.emacs.d/config.el` file:
+To replace the default *dired* rename command with `bufferfile-rename`, add the following to your `~/.emacs.d/lisp/local/config.el` file:
 
 ```emacs-lisp
 (with-eval-after-load 'dired
@@ -555,7 +592,7 @@ To replace the default *dired* rename command with `bufferfile-rename`, add the 
   )
 ```
 
-To make *bufferfile* use version control when renaming or deleting files, add the following to your `~/.emacs.d/config.el` file:
+To make *bufferfile* use version control when renaming or deleting files, add the following to your `~/.emacs.d/lisp/local/config.el` file:
 
 ```emacs-lisp
 ;; Use version control when renaming or deleting files with `bufferfile-rename'
@@ -580,7 +617,7 @@ Key mapping:
 
 The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
 
-To make `dtrt-indent` display a message whenever it adjusts the indentation offset, add the following line to your `~/.emacs.d/config.el`:
+To make `dtrt-indent` display a message whenever it adjusts the indentation offset, add the following line to your `~/.emacs.d/lisp/local/config.el`:
 
 ```emacs-lisp
 (setq dtrt-indent-verbosity 1)
@@ -617,7 +654,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
 - **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
-- **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/config.el` file:
+- **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/lisp/local/config.el` file:
   ```emacs-lisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
   ```
@@ -650,7 +687,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 
 By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 
-To enable it, add the following to the `~/.emacs.d/config.el` file:
+To enable it, add the following to the `~/.emacs.d/lisp/local/config.el` file:
 ```emacs-lisp
 ;; Enable Vim key bindings
 (add-to-list 'lightemacs-modules 'le-group-evil)
@@ -671,7 +708,7 @@ Module: **le-treesit-auto**
 
 The **le-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
-To enable it, add the following to the `~/.emacs.d/config.el` file:
+To enable it, add the following to the `~/.emacs.d/lisp/local/config.el` file:
 ```emacs-lisp
 ;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
 ;; provides precise, high-performance syntax highlighting. It supports a broad
@@ -691,7 +728,7 @@ To maintain cursor stability, Apheleia generates an RCS patch, applies it select
 
 The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive until explicitly enabled, which helps minimize startup time and resource usage.
 
-Here is an example you could place in `~/.emacs.d/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
+Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
 ```emacs-lisp
 (add-to-list 'lightemacs-modules 'le-apheleia)
 
@@ -713,7 +750,7 @@ The **le-easysession** module configures [easysession](https://github.com/jamesc
 
 With **easysession**, your Emacs setup is restored automatically when you restart. All files, Dired buffers, and window layouts come back as they were, so you can continue working right where you left off. While editing, you can also switch to another session, switch back, rename sessions, or delete them, giving you full control over multiple work environments.
 
-To enable the module, add the following to `~/.emacs.d/config.el`:
+To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
 ```emacs-lisp
 ;; Enable the `le-easysession' module
 (add-to-list 'lightemacs-modules 'le-easysession)
@@ -755,7 +792,7 @@ Before installing emacs-libvterm, you need to make sure you have installed
  3. libtool-bin (related issues: [#66](https://github.com/akermu/emacs-libvterm/issues/66) [#85](https://github.com/akermu/emacs-libvterm/issues/85#issuecomment-491845136))
  4. OPTIONAL: [libvterm](https://github.com/Sbozzolo/libvterm-mirror.git) (>= 0.2). This library can be found in the official repositories of most distributions (e.g., Arch, Debian, Fedora, Gentoo, openSUSE, Ubuntu). Typical names are `libvterm` (Arch, Fedora, Gentoo, openSUSE), or `libvterm-dev` (Debian, Ubuntu). If not available, `libvterm` will be downloaded during the compilation process. Some distributions (e.g. Ubuntu < 20.04, Debian < 11) have versions of `libvterm` that are too old. If you find compilation errors related to `VTERM_COLOR`, you should not use your system libvterm. See [FAQ](#frequently-asked-questions-and-problems) for more details.
 
-To enable **le-vterm**, add the following to `~/.emacs.d/config.el`:
+To enable **le-vterm**, add the following to `~/.emacs.d/lisp/local/config.el`:
 ```emacs-lisp
 ;; Enable the `le-vterm' module
 (add-to-list 'lightemacs-modules 'le-vterm)
@@ -764,33 +801,33 @@ To enable **le-vterm**, add the following to `~/.emacs.d/config.el`:
 ### Disabled by default: Better Elisp editing (le-group-emacs-lisp)
 
 The **le-group-emacs-lisp** group enables the following modules:
-- **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'highlight-defined)
   ```
-- **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-page-break-lines' module
   (add-to-list 'lightemacs-modules 'le-page-break-lines)
   ```
   (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
-- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/config.el`:
+- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-aggressive-indent' module
   (add-to-list 'lightemacs-modules 'le-aggressive-indent)
   ```
   (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered.)
 
-- **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'le-easy-escape)
   ```
   (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
-- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-elisp-refs' module
   (add-to-list 'lightemacs-modules 'le-elisp-refs)
@@ -804,7 +841,7 @@ The **le-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/
 
 It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern.
 
-It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/config.el` to enable it for Python and YAML files:
+It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/lisp/local/config.el` to enable it for Python and YAML files:
 
 ```emacs-lisp
 ;; Enable the `le-indent-bars' module
@@ -838,13 +875,13 @@ Here are a few other modules disabled by default:
 
 - **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 
-- **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-helpful' module
   (add-to-list 'lightemacs-modules 'le-helpful)
   ```
 
-- **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-compile-angel' module by pushing it above other modules
   (add-to-list 'lightemacs-modules 'le-compile-angel)
@@ -858,7 +895,7 @@ Elisp file-type modules are disabled by default:
   (add-to-list 'lightemacs-modules 'le-group-yaml)
   ```
 
-- **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. To enable the module, add the following to `~/.emacs.d/config.el`:
+- **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-paredit)
@@ -880,7 +917,7 @@ In addition to modules, Lightemacs provides the following features:
 ### Useful variables
 
 #### Ellipsis
-Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs/config.el` as follows:
+Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
 ```emacs-lisp
 (setq lightemacs-ellipsis " ▼")
 ```
@@ -892,7 +929,7 @@ The `lightemacs-cycle` variable controls whether cycling through completion cand
 - If non-nil (default), navigating past the last candidate wraps around to the first, and vice versa. This applies to Vertico minibuffer completions, Corfu code completions, and Evil search candidates.
 - If nil, selection stops at the first or last candidate without wrapping.
 
-To disable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
+To disable cycling (default: enabled), add the following to your `~/.emacs.d/lisp/local/config.el`:
 
 ```emacs-lisp
 ;; Disable cycling
@@ -903,7 +940,7 @@ To disable cycling (default: enabled), add the following to your `~/.emacs.d/con
 (setq lightemacs-cycle nil)
 ```
 
-To enable cycling (default: enabled), add the following to your `~/.emacs.d/config.el`:
+To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp/local/config.el`:
 
 ```emacs-lisp
 ;; Enable cycling
@@ -918,9 +955,13 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/conf
 
 - `lightemacs-native-comp-excluded-cpus` (default: `3`): By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely.
 
+- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-use-package` are affected by this variable.
+
 - `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
 
 - `lightemacs-use-package-refresh-contents`: If non-nil, `lightemacs-use-package` may refresh package contents once. Refresh package contents when `lightemacs-use-package-refresh-contents` is non-nil and the package is not installed.
+
+- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-use-package` handles installation and configuration of packages.
 
 - `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files: init.el, pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el.
 

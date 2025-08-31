@@ -22,7 +22,7 @@
   ;; TODO test with local files containing a different value
   (setq use-package-hook-name-suffix "-hook"))
 
-(require 'le-core-compile)
+(require 'le-core-compile-mod)
 
 ;;; Variables
 
@@ -42,6 +42,16 @@
 Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
+
+(defconst lightemacs-core-modules '(le-diminish)
+  "Core modules that are enabled by default. (Do not modify this.)")
+
+(defvar lightemacs-excluded-packages nil
+  "List of package symbols that should be excluded from initialization.
+Each element must be a symbol naming a package that would otherwise be
+initialized by Lightemacs. Packages listed here are skipped during the
+initialization process. Only packages declared via the `lightemacs-use-package'
+macro are affected by this variable.")
 
 (defcustom lightemacs-verbose nil
   "Enable displaying verbose messages."
@@ -79,17 +89,6 @@ Choices are:
 This variable controls how the `lightemacs-use-package' macro handles
 installation and configuration of packages.")
 
-;; (defvar lightemacs-straight-recipes
-;;   ;; Correct the Paredit repository in the MELPA recipe because the default URL
-;;   ;; is invalid.
-;;   '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
-;;     ;; Add the `easysession' extensions/ directory
-;;     (easysession . (:fetcher github :repo "jamescherti/easysession.el"
-;;                              :files (:defaults
-;;                                      "extensions/*.el"))))
-;;   "Alist of packages and their custom straight.el recipes.
-;; This is applied when `lightemacs-package-manager' is \='straight.")
-
 (defvar lightemacs-load-compiled-init-files t
   "If non-nil, attempt to load byte-compiled .elc for init files.
 This will enable Lightemacs to load byte-compiled or possibly native-compiled
@@ -114,7 +113,7 @@ when debugging.")
 
 ;;; Functions
 
-(defvar lightemacs--load-module-method 'require)
+(defvar lightemacs--load-module-method 'load-any)
 (defvar lightemacs--loaded-modules nil)
 
 (defun lightemacs-load-modules (modules)
@@ -128,7 +127,6 @@ when debugging.")
                                                 modules-dir)))
             (lightemacs-verbose-message "Load module: %s" feature-str)
 
-            ;; TODO move this to le-core-byte-compile.el
             (when lightemacs-byte-compile-core
               (lightemacs--byte-compile-if-outdated module-file))
 
@@ -141,18 +139,19 @@ when debugging.")
 
              ((eq lightemacs--load-module-method 'load-any)
               (load (expand-file-name feature-str modules-dir)
-                    nil
+                    nil  ; no-error
                     (not (bound-and-true-p init-file-debug))))
 
              ((eq lightemacs--load-module-method 'load-file)
               (load module-file
-                    nil
+                    nil  ; no-error
                     (not (bound-and-true-p init-file-debug))
                     'nosuffix))
 
              (t
-              (error "Invalid method for lightemacs--load-module-method %s"
-                     lightemacs--load-module-method)))
+              (error
+               "[lightemacs] Invalid method for lightemacs--load-module-method %s"
+               lightemacs--load-module-method)))
 
             (push feature-symbol lightemacs--loaded-modules)))))))
 
@@ -340,26 +339,20 @@ cursor."
 (defvar lightemacs--use-package-refreshed nil
   "Whether package contents have been refreshed for `lightemacs-use-package'.")
 
-(defun lightemacs--before-use-package (name args)
+(defun lightemacs--before-use-package (name ensure)
   "Run this function before `lightemacs-use-package' if :ensure is non-nil.
-NAME is the symbol identifying the package, and ARGS is the plist of keywords
-passed to `lightemacs-use-package'."
-  (when (eq lightemacs-package-manager 'use-package)
-    (when-let* ((ensure (cond
-                         ((memq :ensure args)
-                          (plist-get args :ensure))
-
-                         (t
-                          use-package-always-ensure))))
-      ;; Refresh package NAME contents once before installing a missing package.
-      (when lightemacs-use-package-refresh-contents
-        (when (and (not lightemacs--use-package-refreshed)
-                   (not (package-installed-p name)))
-          (lightemacs-verbose-message
-            "Refresh package contents before installing %s"
-            name)
-          (package-refresh-contents)
-          (setq lightemacs--use-package-refreshed t))))))
+NAME is the symbol identifying the package, and ENSURE is the `use-package'
+:ensure keyword passed to `lightemacs-use-package'."
+  (when (and ensure
+             (not lightemacs--use-package-refreshed)
+             lightemacs-use-package-refresh-contents
+             (eq lightemacs-package-manager 'use-package)
+             (not (package-installed-p name)))
+    ;; Refresh package NAME contents once before installing a missing package.
+    (lightemacs-verbose-message
+      "Refresh package contents before installing %s" name)
+    (package-refresh-contents)
+    (setq lightemacs--use-package-refreshed t)))
 
 (defmacro lightemacs-use-package (name &rest plist)
   "Configure an Emacs package, skipping it if disabled or unavailable.
@@ -367,32 +360,21 @@ NAME is the package symbol.
 PLIST contains keyword arguments for `use-package'.
 
 If `lightemacs-emacs-straight' is non-nil and :straight is not already in PLIST,
-the package is installed via straight.el. If a custom recipe exists in
-`lightemacs-straight-recipes', it is used instead of t.
+the package is installed via straight.el.
 
 `use-package' expansion is deferred until runtime."
   (declare (indent defun) (debug t))
-  (unless (and (bound-and-true-p byte-compile-current-file)
-               (not (locate-library (symbol-name name))))
-    (lightemacs--before-use-package name plist)
-    `(use-package ,name ,@plist)
-    ;; (let* ((straight-spec (and (eq lightemacs-package-manager 'straight)
-    ;;                            (not (plist-member plist :straight))
-    ;;                            (or (cdr (assoc name lightemacs-straight-recipes))
-    ;;                                t)))
-    ;;        (ensure (cond
-    ;;                 ((memq :ensure plist)
-    ;;                  (plist-get plist :ensure))
-    ;;
-    ;;                 (t
-    ;;                  use-package-always-ensure)))
-    ;;        (final-plist (if (and straight-spec
-    ;;                              ensure)
-    ;;                         (append `(:straight ,straight-spec) plist)
-    ;;                       plist)))
-    ;;   (lightemacs--before-use-package name plist)
-    ;;   `(use-package ,name ,@final-plist))
-    ))
+  (let ((ensure (if (plist-member plist :ensure)
+                    (plist-get plist :ensure)
+                  use-package-always-ensure)))
+    `(progn
+       (lightemacs--before-use-package ',name ',ensure)
+       (use-package ,name
+         :if (not (memq ',name lightemacs-excluded-packages))
+         ,@(if (and (eq lightemacs-package-manager 'straight)
+                    (not (plist-member plist :straight)))
+               `(:straight t ,@plist)
+             plist)))))
 
 ;;; Internal functions
 
@@ -441,6 +423,11 @@ exist."
       ;; select between .el and .elc files.
       (setq file (lightemacs--remove-el-file-suffix file))
       (load file no-error (not (bound-and-true-p init-file-debug))))))
+
+;;; Init
+
+(setq native-comp-async-jobs-number
+      (lightemacs--calculate-native-comp-async-jobs-number))
 
 ;;; Provide lightemacs
 

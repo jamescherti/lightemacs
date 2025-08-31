@@ -37,7 +37,6 @@
 
 (eval-and-compile
   (require 'lightemacs)
-
   (require 'le-diminish))
 
 (lightemacs-use-package

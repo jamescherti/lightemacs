@@ -13,7 +13,7 @@
 
 ;;; Code:
 
-;; Initialize and refresh package contents again if needed
+;; Initialize
 (package-initialize)
 
 ;; Install use-package if necessary
