@@ -16,25 +16,11 @@
 ;;; Define variables for the byte compiler
 
 (eval-when-compile
-  ;; These variables are already defined in the early-init.el file
   (defvar lightemacs-user-directory (file-truename "."))
-  (defvar lightemacs-local-directory
-    (expand-file-name "lisp/local/" lightemacs-user-directory))
-  (defvar minimal-emacs-user-directory (expand-file-name
-                                        "lisp/lightemacs/init"
-                                        lightemacs-user-directory))
-  (defvar lightemacs-core-directory (expand-file-name
-                                     "lisp/lightemacs"
-                                     lightemacs-user-directory))
-  (defvar lightemacs-modules-directory (expand-file-name
-                                        "modules"
-                                        lightemacs-core-directory))
-  (add-to-list 'load-path lightemacs-modules-directory))
+  (add-to-list 'load-path
+               (expand-file-name "lisp/lightemacs" lightemacs-user-directory)))
 
-;;; Ensure required variables are declared
-
-(unless (boundp 'minimal-emacs-user-directory)
-  (error "Undefined variable: minimal-emacs-user-directory"))
+(require 'le-core-paths)
 
 ;;; Load lightemacs.el
 
@@ -51,6 +37,7 @@
 (when (bound-and-true-p lightemacs-byte-compile-core)
   (dolist (file '("lightemacs.el"
                   "le-core-cli-tools.el"
+                  "le-core-paths.el"
                   ;; le-core-elpaca.el  ; note byte compile
                   ;; le-core-straight.el  ; note byte compile
                   "le-core-package-manager.el"
@@ -83,7 +70,6 @@
                   "early-init.el"))
     (lightemacs--byte-compile-if-outdated
      (expand-file-name file minimal-emacs-user-directory))))
-
 
 ;;; Load pre-init.el
 

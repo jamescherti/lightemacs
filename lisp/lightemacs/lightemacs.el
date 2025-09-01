@@ -22,6 +22,7 @@
   ;; TODO test with local files containing a different value
   (setq use-package-hook-name-suffix "-hook"))
 
+(require 'cl-lib)
 (require 'le-core-compile-mod)
 
 ;;; Variables
@@ -43,8 +44,20 @@ Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
-(defconst lightemacs-core-modules '(le-diminish)
-  "Core modules that are enabled by default. (Do not modify this.)")
+(defvar lightemacs-core-modules '(;; This loaded the default theme specified
+                                  ;; in the `lightemacs-theme-name' variable.
+                                  ;; The default theme tomorrow-night-deepblue
+                                  ;; is a beautiful deep blue variant of the
+                                  ;; Tomorrow Night theme, which is renowned
+                                  ;; for its elegant color palette that is
+                                  ;; pleasing to the eyes.
+                                  le-theme
+
+                                  ;; Hides or abbreviates mode indicators in
+                                  ;; the Emacs mode line for a cleaner display
+                                  le-diminish)
+  "Core modules that are enabled by default.
+Do not modify this variable.")
 
 (defvar lightemacs-excluded-packages nil
   "List of package symbols that should be excluded from initialization.
@@ -89,15 +102,15 @@ Choices are:
 This variable controls how the `lightemacs-use-package' macro handles
 installation and configuration of packages.")
 
+(defvar lightemacs-native-comp-excluded-cpus nil
+  "Number of CPUs to reserve and not use for `native-compile'.
+Set this to nil to disable this feature.")
+
 (defvar lightemacs-load-compiled-init-files t
   "If non-nil, attempt to load byte-compiled .elc for init files.
 This will enable Lightemacs to load byte-compiled or possibly native-compiled
 init files for the following initialization files: init.el, pre-init.el,
 post-init.el, pre-early-init.el, and post-early-init.el.")
-
-(defvar lightemacs-native-comp-excluded-cpus 3
-  "Number of CPUs to reserve and not use for `native-compile'.
-Set this to nil to disable this feature.")
 
 (defvar lightemacs-byte-compile-core t
   "Indicates whether Lightemacs source files should be byte-compiled.
@@ -113,47 +126,45 @@ when debugging.")
 
 ;;; Functions
 
-(defvar lightemacs--load-module-method 'load-any)
+(defvar lightemacs--load-module-method 'require)
 (defvar lightemacs--loaded-modules nil)
 
 (defun lightemacs-load-modules (modules)
   "Load all modules listed in MODULES."
-  (when (boundp 'lightemacs-modules-directory)
-    (let ((modules-dir lightemacs-modules-directory))
-      (dolist (feature-symbol modules)
-        (unless (memq feature-symbol lightemacs--loaded-modules)
-          (let* ((feature-str (format "%s" feature-symbol))
-                 (module-file (expand-file-name (format "%s.el" feature-str)
-                                                modules-dir)))
-            (lightemacs-verbose-message "Load module: %s" feature-str)
+  (dolist (feature-symbol modules)
+    (unless (memq feature-symbol lightemacs--loaded-modules)
+      (let* ((feature-str (format "%s" feature-symbol))
+             ;; NOTE it returns the .elc when available
+             (module-file (locate-library feature-str)))
+        (lightemacs-verbose-message "Load module: %s" feature-str)
 
-            (when lightemacs-byte-compile-core
-              (lightemacs--byte-compile-if-outdated module-file))
+        (when lightemacs-byte-compile-core
+          (lightemacs--byte-compile-if-outdated feature-symbol))
 
-            (cond
-             ((eq lightemacs--load-module-method 'require)
-              (require feature-symbol))
+        (cond
+         ((eq lightemacs--load-module-method 'require)
+          (require feature-symbol))
 
-             ((eq lightemacs--load-module-method 'require-file)
-              (require feature-symbol module-file))
+         ((eq lightemacs--load-module-method 'require-file)
+          (require feature-symbol module-file))
 
-             ((eq lightemacs--load-module-method 'load-any)
-              (load (expand-file-name feature-str modules-dir)
-                    nil  ; no-error
-                    (not (bound-and-true-p init-file-debug))))
+         ((eq lightemacs--load-module-method 'load-any)
+          (load module-file
+                nil  ; no-error
+                (not (bound-and-true-p init-file-debug))))
 
-             ((eq lightemacs--load-module-method 'load-file)
-              (load module-file
-                    nil  ; no-error
-                    (not (bound-and-true-p init-file-debug))
-                    'nosuffix))
+         ((eq lightemacs--load-module-method 'load-file)
+          (load module-file
+                nil  ; no-error
+                (not (bound-and-true-p init-file-debug))
+                'nosuffix))
 
-             (t
-              (error
-               "[lightemacs] Invalid method for lightemacs--load-module-method %s"
-               lightemacs--load-module-method)))
+         (t
+          (error
+           "[lightemacs] Invalid method for lightemacs--load-module-method %s"
+           lightemacs--load-module-method)))
 
-            (push feature-symbol lightemacs--loaded-modules)))))))
+        (push feature-symbol lightemacs--loaded-modules)))))
 
 ;;; Useful macros
 
@@ -355,26 +366,18 @@ NAME is the symbol identifying the package, and ENSURE is the `use-package'
     (setq lightemacs--use-package-refreshed t)))
 
 (defmacro lightemacs-use-package (name &rest plist)
-  "Configure an Emacs package, skipping it if disabled or unavailable.
+  "Configure an Emacs package with deferred `use-package` expansion.
 NAME is the package symbol.
-PLIST contains keyword arguments for `use-package'.
+PLIST contains keyword arguments for `use-package`.
 
-If `lightemacs-emacs-straight' is non-nil and :straight is not already in PLIST,
-the package is installed via straight.el.
-
-`use-package' expansion is deferred until runtime."
+If `lightemacs-emacs-straight' is non-nil and :straight is not
+already in PLIST, the package is installed via straight.el."
   (declare (indent defun) (debug t))
   (let ((ensure (if (plist-member plist :ensure)
                     (plist-get plist :ensure)
                   use-package-always-ensure)))
-    `(progn
-       (lightemacs--before-use-package ',name ',ensure)
-       (use-package ,name
-         :if (not (memq ',name lightemacs-excluded-packages))
-         ,@(if (and (eq lightemacs-package-manager 'straight)
-                    (not (plist-member plist :straight)))
-               `(:straight t ,@plist)
-             plist)))))
+    `(lightemacs--before-use-package ',name ',ensure)
+    `(use-package ,name ,@plist)))
 
 ;;; Internal functions
 
@@ -406,7 +409,6 @@ the package is installed via straight.el.
           (throw 'done t))))
     filename))
 
-(require 'cl-lib)
 (defun lightemacs-load-user-init (file &optional no-error)
   "Load a file of Lisp init file named FILENAME.
 If optional second arg NO-ERROR is non-nil, report no error if FILE doesn’t
@@ -426,8 +428,9 @@ exist."
 
 ;;; Init
 
-(setq native-comp-async-jobs-number
-      (lightemacs--calculate-native-comp-async-jobs-number))
+(when lightemacs-native-comp-excluded-cpus
+  (setq native-comp-async-jobs-number
+        (lightemacs--calculate-native-comp-async-jobs-number)))
 
 ;;; Provide lightemacs
 

@@ -20,7 +20,9 @@
 ;; ls le-*.el -1 | grep -v "^le-core" | sed 's/\.el$//' | \
 ;;   grep -v '^le-flavor-' | grep -v '^le-treesit-auto' \
 ;;   | grep -v '^le-easysession' | grep -v '-evil' | grep -v '^le-vterm' \
-;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel'
+;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel' \
+;;   | grep -v '^le-yaml' | grep -v '^le-group-emacs-lisp' | grep -v '^le-theme'
+;;   | grep -v '^le-diminish' | sort
 
 ;;; Code:
 
@@ -29,7 +31,6 @@
 
 (lightemacs-load-modules
  '(;; All modules:
-   le-flymake
    le-ace-window
    le-aggressive-indent
    le-apheleia
@@ -37,13 +38,12 @@
    le-avy
    le-bufferfile
    le-cape
-   le-consult-dir
    le-consult
+   le-consult-dir
    le-corfu
    le-corfu-prescient
    le-default-settings
    le-diff-hl
-   le-diminish
    le-dired
    le-dired-filter
    le-display-line-numbers
@@ -52,12 +52,12 @@
    le-easy-escape
    le-elec-pair
    le-elisp-refs
-   le-embark-consult
    le-embark
+   le-embark-consult
    le-expand-region
+   le-flymake
    le-git-modes
    le-goto-chg
-   le-group-emacs-lisp
    le-group-yaml
    le-helpful
    le-highlight-defined
@@ -68,8 +68,8 @@
    le-markdown-mode
    le-markdown-toc
    le-orderless
-   le-org-appear
    le-org
+   le-org-appear
    le-outline
    le-outline-indent
    le-page-break-lines
@@ -81,7 +81,6 @@
    le-savehist
    le-saveplace
    le-stripspace
-   le-theme
    le-undo-fu
    le-undo-fu-session
    le-vertico
@@ -90,8 +89,6 @@
    le-wgrep
    le-which-key
    le-winner
-   le-yaml-mode
-   le-yaml-ts-mode
    le-yasnippet
    le-yasnippet-snippets
    ))

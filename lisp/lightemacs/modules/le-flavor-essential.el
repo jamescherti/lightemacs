@@ -21,12 +21,6 @@
    ;; display
    le-diminish
 
-   ;; This loaded the default theme specified in the `lightemacs-theme-name'
-   ;; variable. The default theme tomorrow-night-deepblue is a beautiful deep
-   ;; blue variant of the Tomorrow Night theme, which is renowned for its
-   ;; elegant color palette that is pleasing to the eyes.
-   le-theme
-
    ;; Custom keybindings
    le-keybindings
 
