@@ -45,7 +45,7 @@
 
    ;; Sorting strategy for key display. Alphabetical order makes keybindings
    ;; predictable.
-   which-key-sort-order #'which-key-key-order-alpha
+   which-key-sort-order 'which-key-key-order-alpha
 
    ;; which-key-sort-order 'which-key-prefix-then-key-order
 

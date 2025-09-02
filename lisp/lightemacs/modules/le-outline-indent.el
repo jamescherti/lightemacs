@@ -30,7 +30,21 @@
 (lightemacs-use-package
   outline-indent
   :diminish outline-indent-minor-mode
-  :commands outline-indent-minor-mode
+  :commands (outline-indent-minor-mode
+             outline-indent-shift-left
+             outline-indent-shift-right
+             outline-indent-move-subtree-up
+             outline-indent-move-subtree-down
+             outline-indent-forward-same-level
+             outline-indent-backward-same-level
+             outline-indent-select
+             outline-indent-insert-heading
+             outline-indent-toggle-fold
+             outline-indent-open-fold-rec
+             outline-indent-close-fold
+             outline-indent-open-fold
+             outline-indent-open-folds
+             outline-indent-close-folds)
   :init
   (setq outline-indent-ellipsis lightemacs-ellipsis))
 

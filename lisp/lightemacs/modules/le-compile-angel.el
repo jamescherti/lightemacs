@@ -30,9 +30,9 @@
 
 (lightemacs-use-package
   compile-angel
-  :demand t
+  :commands compile-angel-on-load-mode
   :diminish compile-angel-on-load-mode
-
+  :hook (after-init . compile-angel-on-load-mode)
   :init
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
@@ -76,9 +76,7 @@ specified file or directory is ignored during the compilation process managed by
     (le-compile-angel-exclude custom-file))
 
   (with-eval-after-load 'prescient
-    (le-compile-angel-exclude prescient-save-file))
-
-  (compile-angel-on-load-mode))
+    (le-compile-angel-exclude prescient-save-file)))
 
 (provide 'le-compile-angel)
 

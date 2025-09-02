@@ -27,50 +27,6 @@
 (eval-and-compile
   (require 'lightemacs))
 
-;;; Compile modules
-
-;; Stale .elc files can cause issues; recompiling them ensures they are up to
-;; date. Compilation occurs in init.el rather than early-init.el so that
-;; messages appear in the *Messages* buffer for user visibility.
-(require 'le-core-compile-mod)
-
-(when (bound-and-true-p lightemacs-byte-compile-core)
-  (dolist (file '("lightemacs.el"
-                  "le-core-cli-tools.el"
-                  "le-core-paths.el"
-                  ;; le-core-elpaca.el  ; note byte compile
-                  ;; le-core-straight.el  ; note byte compile
-                  "le-core-package-manager.el"
-                  "le-core-compile-mod.el"
-                  "le-core-use-package.el"))
-    (lightemacs--byte-compile-if-outdated (expand-file-name
-                                           file lightemacs-core-directory)))
-
-  ;; Configuration
-  (dolist (file '("config.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file lightemacs-local-directory)
-     :no-error))
-
-  (dolist (file '("pre-early-init.el"
-                  "post-early-init.el"
-                  "pre-init.el"
-                  "post-init.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file lightemacs-local-directory)
-     :no-error))
-
-  ;; Lightemacs init files
-  (dolist (file '("init.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file lightemacs-user-directory)))
-
-  ;; Minimal-emacs.d init files
-  (dolist (file '("init.el"
-                  "early-init.el"))
-    (lightemacs--byte-compile-if-outdated
-     (expand-file-name file minimal-emacs-user-directory))))
-
 ;;; Load pre-init.el
 
 (let ((el-file (expand-file-name "pre-init.el"

@@ -965,8 +965,6 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files: init.el, pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el.
 
-- `lightemacs-byte-compile-core`: Indicates whether Lightemacs source files should be byte-compiled. When uncertain, keep this set to t. Stale .elc files may occasionally lead to unexpected issues. When this variable is non-nil, the Lightemacs configuration or supporting files are automatically compiled into bytecode (.elc files). This improves loading speed by reducing parsing overhead. If nil, files will be loaded directly from their source form without compilation, which is useful during development or when debugging.
-
 ### Useful functions and macros
 
 - `lightemacs-recenter-if-out-of-view` (macro): Execute BODY and recenter if point is outside the original window bounds.

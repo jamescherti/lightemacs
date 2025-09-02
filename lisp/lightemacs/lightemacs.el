@@ -23,7 +23,6 @@
   (setq use-package-hook-name-suffix "-hook"))
 
 (require 'cl-lib)
-(require 'le-core-compile-mod)
 
 ;;; Variables
 
@@ -112,19 +111,14 @@ This will enable Lightemacs to load byte-compiled or possibly native-compiled
 init files for the following initialization files: init.el, pre-init.el,
 post-init.el, pre-early-init.el, and post-early-init.el.")
 
-(defvar lightemacs-byte-compile-core t
-  "Indicates whether Lightemacs source files should be byte-compiled.
-
-When uncertain, keep this set to t. Stale .elc files may occasionally lead to
-unexpected issues.
-
-When this variable is non-nil, the Lightemacs configuration or supporting files
-are automatically compiled into bytecode (.elc files). This improves loading
-speed by reducing parsing overhead. If nil, files will be loaded directly from
-their source form without compilation, which is useful during development or
-when debugging.")
-
 ;;; Functions
+
+(defmacro lightemacs-verbose-message (&rest args)
+  "Display a verbose message with the same ARGS arguments as `message'."
+  (declare (indent 0) (debug t))
+  `(progn
+     (when lightemacs-verbose
+       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
 
 (defvar lightemacs--load-module-method 'require)
 (defvar lightemacs--loaded-modules nil)
@@ -137,9 +131,6 @@ when debugging.")
              ;; NOTE it returns the .elc when available
              (module-file (locate-library feature-str)))
         (lightemacs-verbose-message "Load module: %s" feature-str)
-
-        (when lightemacs-byte-compile-core
-          (lightemacs--byte-compile-if-outdated feature-symbol))
 
         (cond
          ((eq lightemacs--load-module-method 'require)
@@ -248,7 +239,6 @@ If the buffer is not visiting a file, opens the current `default-directory'."
               (when (fboundp 'dired-goto-file)
                 (dired-goto-file file))
               (lightemacs-recenter-maybe))))))))
-
 
 ;;; Useful macros
 

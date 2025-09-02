@@ -29,10 +29,7 @@
   ;; TODO use on first file?
   :hook (after-init . save-place-mode)
 
-  :init
-  (setq save-place-limit 500)
-
-  :config
+  :preface
   (defun lightemacs-saveplace--recenter ()
     "Recenter the current window."
     (when (and (get-buffer-window)
@@ -50,6 +47,10 @@ It avoids recentering while an EasySession session is in progress."
       ;; Use a timer to ensure a window exists when recenter is called
       (run-with-timer 0 nil #'lightemacs-saveplace--recenter)))
 
+  :init
+  (setq save-place-limit 500)
+
+  :config
   (add-hook 'save-place-after-find-file-hook
             'lightemacs-saveplace--after-find-file))
 

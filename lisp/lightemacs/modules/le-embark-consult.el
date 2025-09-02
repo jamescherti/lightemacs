@@ -27,8 +27,7 @@
 (lightemacs-use-package
   embark-consult
   :after (embark consult)
-  :init
-  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;;; Provide
 (provide 'le-embark-consult)
