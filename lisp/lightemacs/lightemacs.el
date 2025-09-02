@@ -340,14 +340,17 @@ cursor."
 (defvar lightemacs--use-package-refreshed nil
   "Whether package contents have been refreshed for `lightemacs-use-package'.")
 
-(defun lightemacs--before-use-package (name ensure)
+(defun lightemacs--before-use-package (name plist)
   "Run this function before `lightemacs-use-package' if :ensure is non-nil.
-NAME is the symbol identifying the package, and ENSURE is the `use-package'
-:ensure keyword passed to `lightemacs-use-package'."
-  (when (and ensure
-             (not lightemacs--use-package-refreshed)
+NAME is the symbol identifying the package.
+PLIST contains keyword arguments for `use-package`."
+  (when (and (not lightemacs--use-package-refreshed)
              lightemacs-use-package-refresh-contents
              (eq lightemacs-package-manager 'use-package)
+             (cond ((memq :ensure plist)
+                    (plist-get plist :ensure))
+                   (t
+                    use-package-always-ensure))
              (not (package-installed-p name)))
     ;; Refresh package NAME contents once before installing a missing package.
     (lightemacs-verbose-message
@@ -362,12 +365,8 @@ PLIST contains keyword arguments for `use-package`.
 
 If `lightemacs-emacs-straight' is non-nil and :straight is not
 already in PLIST, the package is installed via straight.el."
-  (declare (indent defun) (debug t))
-  (let ((ensure (if (plist-member plist :ensure)
-                    (plist-get plist :ensure)
-                  use-package-always-ensure)))
-    `(lightemacs--before-use-package ',name ',ensure)
-    `(use-package ,name ,@plist)))
+  (declare (indent 1))
+  `(eval '(use-package ,name ,@plist)))
 
 ;;; Internal functions
 

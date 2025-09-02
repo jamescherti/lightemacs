@@ -28,7 +28,7 @@
   :bind
   ([remap other-window] . ace-window)
   :custom
-  (aw-background nil)  ; t is not compatible with all themes
+  (aw-background t)
   (aw-scope 'frame))
 
 (provide 'le-ace-window)

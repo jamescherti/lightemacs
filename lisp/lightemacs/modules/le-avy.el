@@ -52,7 +52,7 @@
    ;; universal-argument.
    avy-all-windows-alt t
    ;; When non-nil, a gray background will be added during the selection.
-   avy-background nil  ; t is not compatible with all themes
+   avy-background t
    ;; This is unpredictible
    avy-single-candidate-jump nil))
 
