@@ -45,8 +45,7 @@
 
 (lightemacs-load-modules '(le-prescient))
 
-(lightemacs-use-package
-  vertico-prescient
+(lightemacs-use-package vertico-prescient
   :after vertico
   :commands vertico-prescient-mode
   :hook (vertico-mode . vertico-prescient-mode)
@@ -62,7 +61,7 @@
 (provide 'le-vertico-prescient)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-vertico-prescient.el ends here

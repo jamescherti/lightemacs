@@ -48,7 +48,7 @@ Tree-sitter is available.")
 (provide 'le-group-yaml)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-group-yaml.el ends here

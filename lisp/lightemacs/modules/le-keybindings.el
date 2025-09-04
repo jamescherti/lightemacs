@@ -19,7 +19,7 @@
 (provide 'le-keybindings)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-keybindings.el ends here

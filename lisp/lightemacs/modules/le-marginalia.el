@@ -18,8 +18,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  marginalia
+(lightemacs-use-package marginalia
   :commands (marginalia-mode
              marginalia-cycle)
 
@@ -35,7 +34,7 @@
 (provide 'le-marginalia)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-marginalia.el ends here

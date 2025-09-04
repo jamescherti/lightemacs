@@ -42,8 +42,7 @@ adds that file to the recentf list.")
 ;; Local variables
 (defvar lightemacs-recentf--auto-save-timer nil)
 
-(lightemacs-use-package
-  recentf
+(lightemacs-use-package recentf
   :ensure nil
   :commands (recentf-mode
              recentf
@@ -118,7 +117,7 @@ adds that file to the recentf list.")
 (provide 'le-recentf)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-recentf.el ends here

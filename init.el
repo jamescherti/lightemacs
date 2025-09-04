@@ -24,8 +24,7 @@
 
 ;;; Load lightemacs.el
 
-(eval-and-compile
-  (require 'lightemacs))
+(require 'lightemacs)
 
 ;;; Load pre-init.el
 

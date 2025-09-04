@@ -22,8 +22,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  avy
+(lightemacs-use-package avy
   :commands (avy-goto-char
              avy-goto-word-0
              avy-goto-word-1
@@ -59,7 +58,7 @@
 (provide 'le-avy)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-avy.el ends here

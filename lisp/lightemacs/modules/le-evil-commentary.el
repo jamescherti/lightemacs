@@ -15,20 +15,18 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'le-diminish)
   (require 'le-evil))
 
-(lightemacs-use-package
-  evil-commentary
+(lightemacs-use-package evil-commentary
   :after evil
-  :diminish evil-commentary-mode
+  :commands evil-commentary-mode
   :config
   (evil-commentary-mode))
 
 (provide 'le-evil-commentary)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-evil-commentary.el ends here

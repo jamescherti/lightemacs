@@ -22,8 +22,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  ace-window
+(lightemacs-use-package ace-window
   :commands ace-window
   :bind
   ([remap other-window] . ace-window)
@@ -34,7 +33,7 @@
 (provide 'le-ace-window)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-ace-window.el ends here

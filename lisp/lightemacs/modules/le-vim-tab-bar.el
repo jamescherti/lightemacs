@@ -25,19 +25,16 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  vim-tab-bar
-  :diminish vim-tab-bar-mode
+(lightemacs-use-package vim-tab-bar
   :commands vim-tab-bar-mode
   :hook (after-init . vim-tab-bar-mode))
 
 (provide 'le-vim-tab-bar)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-vim-tab-bar.el ends here

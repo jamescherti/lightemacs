@@ -36,12 +36,9 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  persist-text-scale
-  :diminish persist-text-scale-mode
+(lightemacs-use-package persist-text-scale
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
 
@@ -53,7 +50,7 @@
 (provide 'le-persist-text-scale)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-persist-text-scale.el ends here

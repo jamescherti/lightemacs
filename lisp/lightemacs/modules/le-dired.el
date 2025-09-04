@@ -21,8 +21,7 @@
   "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.
 The user can navigate to the parent directory by pressing the - key instead.")
 
-(lightemacs-use-package
-  dired
+(lightemacs-use-package dired
   :ensure nil
   :commands (dired
              dired-goto-file
@@ -52,33 +51,39 @@ The user can navigate to the parent directory by pressing the - key instead.")
     (when args
       (setq dired-listing-switches args)))
 
-  (setq dired-omit-files (concat "\\`[.]\\'"
-                                 "\\|\\(?:\\.js\\)?\\.meta\\'"
-                                 "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
-                                 "\\|^\\.DS_Store\\'"
-                                 "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
-                                 "\\|^\\.ccls-cache\\'"
-                                 "\\|^__pycache__\\'"
-                                 "\\|^\\.project\\(?:ile\\)?\\'"
-                                 "\\|^flycheck_.*"
-                                 "\\|^flymake_.*"))
+  (setq dired-omit-files
+        "\\`\\.[^.]")  ;; matches any file starting with . but not ..
 
-  :config
-  (when lightemacs-dired-omit-parent-directory
-    (setq dired-omit-files (concat dired-omit-files "\\|^\\.\\.$"))))
+  (setq dired-omit-files (concat
+                          "\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
+                          "\\|\\(?:\\.js\\)?\\.meta\\'"
+                          "\\|^\\.DS_Store\\'"
+                          "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
+                          "\\|^\\.ccls-cache\\'"
+                          "\\|^__pycache__\\'"
+                          "\\|^\\.project\\(?:ile\\)?\\'"
+                          "\\|^flycheck_.*"
+                          "\\|^flymake_.*"))
 
-(lightemacs-use-package
-  dired-x
-  :after dired
-  :ensure nil
-  :commands dired-omit-mode
-  :init
-  (add-hook 'dired-mode-hook #'dired-omit-mode))
+  ;; TODO: Disable on Windows
+  (if lightemacs-dired-omit-parent-directory
+      ;; All dotfiles
+      (setq dired-omit-files (concat dired-omit-files "\\|^\\."))
+    ;; All dotfiles files except '..'
+    (setq dired-omit-files (concat dired-omit-files "\\|\\`\\.[^.]\\|\\`\\.$"))))
+
+;; TODO move to a separate module
+;; (lightemacs-use-package dired-x
+;;   :after dired
+;;   :ensure nil
+;;   :commands dired-omit-mode
+;;   :init
+;;   (add-hook 'dired-mode-hook #'dired-omit-mode))
 
 (provide 'le-dired)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-dired.el ends here

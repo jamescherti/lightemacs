@@ -16,8 +16,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  elec-pair
+(lightemacs-use-package elec-pair
   :ensure nil
   :commands (electric-pair-mode
              electric-pair-local-mode
@@ -28,7 +27,7 @@
 (provide 'le-elec-pair)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-elec-pair.el ends here

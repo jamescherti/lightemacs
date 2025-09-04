@@ -25,8 +25,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  undo-fu
+(lightemacs-use-package undo-fu
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all
@@ -37,7 +36,7 @@
 (provide 'le-undo-fu)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-undo-fu.el ends here

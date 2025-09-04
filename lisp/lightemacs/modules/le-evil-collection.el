@@ -20,8 +20,7 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'le-evil)
-  (require 'le-diminish))
+  (require 'le-evil))
 
 (eval-and-compile
   ;; This has to be defined before evil
@@ -29,10 +28,8 @@
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t))
 
-(lightemacs-use-package
-  evil-collection
+(lightemacs-use-package evil-collection
   :if (not noninteractive)
-  :diminish (evil-collection-unimpaired-mode)
   :functions evil-collection-init
   :after evil
   :config
@@ -41,7 +38,7 @@
 (provide 'le-evil-collection)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-evil-collection.el ends here

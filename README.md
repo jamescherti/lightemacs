@@ -52,60 +52,60 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
 ## Table of Contents
 
 - [Lightemacs - Fast and Lightweight Emacs Framework](#lightemacs---fast-and-lightweight-emacs-framework)
-  - [Requirements](#requirements)
-  - [Install Lightemacs](#install-lightemacs)
-    - [Install Lightemacs into ~/.emacs.d](#install-lightemacs-into-emacsd)
-    - [Alternative: Install Lightemacs into ~/.lightemacs.d](#alternative-install-lightemacs-into-lightemacsd)
-  - [Update Lightemacs](#update-lightemacs)
-  - [The hierarchy of Lightemacs files](#the-hierarchy-of-lightemacs-files)
-    - [Files that must not be modified:](#files-that-must-not-be-modified)
-    - [Files and directories you may edit:](#files-and-directories-you-may-edit)
-  - [Example configurations](#example-configurations)
-  - [Customizations](#customizations)
-    - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
-    - [Package Manager Selection](#package-manager-selection)
-      - [Supported package managers](#supported-package-managers)
-      - [Configuration Example for the package manager](#configuration-example-for-the-package-manager)
-    - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
-  - [Modules Enabled by Default](#modules-enabled-by-default)
-    - [Enabled by Default: Default theme (le-theme)](#enabled-by-default-default-theme-le-theme)
-    - [Enabled by Default: Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)](#enabled-by-default-better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless-le-consult-dir)
-    - [Enabled by Default: Better completion (le-corfu and le-cape)](#enabled-by-default-better-completion-le-corfu-and-le-cape)
-    - [Enabled by Default: Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#enabled-by-default-better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
-    - [Enabled by Default: Enhanced File Management (le-dired and le-dired-filter)](#enabled-by-default-enhanced-file-management-le-dired-and-le-dired-filter)
-    - [Enabled by Default: Better undo/redo (le-undo-fu and undo-fu-session)](#enabled-by-default-better-undoredo-le-undo-fu-and-undo-fu-session)
-    - [Enabled by Default: Keybindings (le-keybindings)](#enabled-by-default-keybindings-le-keybindings)
-    - [Enabled by Default: Code folding based on indentation (le-outline-indent)](#enabled-by-default-code-folding-based-on-indentation-le-outline-indent)
-    - [Enabled by Default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#enabled-by-default-automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
-    - [Enabled by Default: Save History (le-savehist)](#enabled-by-default-save-history-le-savehist)
-    - [Enabled by Default: Save and Restore Cursor (le-saveplace)](#enabled-by-default-save-and-restore-cursor-le-saveplace)
-    - [Enabled by Default: Expand Region (le-expand-region)](#enabled-by-default-expand-region-le-expand-region)
-    - [Enabled by Default: Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#enabled-by-default-auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
-    - [Enabled by Default: Persist and Restore Text Scale (le-persist-text-scale)](#enabled-by-default-persist-and-restore-text-scale-le-persist-text-scale)
-    - [Enabled by Default: A better way to rename or delete files (le-bufferfile)](#enabled-by-default-a-better-way-to-rename-or-delete-files-le-bufferfile)
-    - [Enabled by Default: Recent files (le-recentf)](#enabled-by-default-recent-files-le-recentf)
-    - [Enabled by Default: Detect indentation offset (le-dtrt-indent)](#enabled-by-default-detect-indentation-offset-le-dtrt-indent)
-    - [The built-in on-the-fly syntax checker (le-flymake)](#the-built-in-on-the-fly-syntax-checker-le-flymake)
-    - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
-  - [Modules Disabled by Default](#modules-disabled-by-default)
-    - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
-    - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
-    - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
-    - [Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)](#disabled-by-default-persisting-and-restoring-all-buffers-windowssplit-tab-bar-frames-le-easysession)
-    - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
-    - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
-    - [Disabled by default: Better Elisp editing (le-group-emacs-lisp)](#disabled-by-default-better-elisp-editing-le-group-emacs-lisp)
-    - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
-    - [Other modules disabled by default](#other-modules-disabled-by-default)
-  - [Other Features](#other-features)
-  - [Useful variables, functions, and macros](#useful-variables-functions-and-macros)
-    - [Useful variables](#useful-variables)
-      - [Ellipsis](#ellipsis)
-      - [Cycling](#cycling)
-      - [Other variables](#other-variables)
-    - [Useful functions and macros](#useful-functions-and-macros)
-  - [Author and license](#author-and-license)
-  - [Links](#links)
+    - [Requirements](#requirements)
+    - [Install Lightemacs](#install-lightemacs)
+        - [Install Lightemacs into ~/.emacs.d](#install-lightemacs-into-emacsd)
+        - [Alternative: Install Lightemacs into ~/.lightemacs.d](#alternative-install-lightemacs-into-lightemacsd)
+    - [Update Lightemacs](#update-lightemacs)
+    - [The hierarchy of Lightemacs files](#the-hierarchy-of-lightemacs-files)
+        - [Files that must not be modified:](#files-that-must-not-be-modified)
+        - [Files and directories you may edit:](#files-and-directories-you-may-edit)
+    - [Example configurations](#example-configurations)
+    - [Customizations](#customizations)
+        - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
+        - [Package Manager Selection](#package-manager-selection)
+            - [Supported package managers](#supported-package-managers)
+            - [Configuration Example for the package manager](#configuration-example-for-the-package-manager)
+        - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
+    - [Modules Enabled by Default](#modules-enabled-by-default)
+        - [Enabled by Default: Default theme (le-theme)](#enabled-by-default-default-theme-le-theme)
+        - [Enabled by Default: Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)](#enabled-by-default-better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless-le-consult-dir)
+        - [Enabled by Default: Better completion (le-corfu and le-cape)](#enabled-by-default-better-completion-le-corfu-and-le-cape)
+        - [Enabled by Default: Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#enabled-by-default-better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
+        - [Enabled by Default: Enhanced File Management (le-dired and le-dired-filter)](#enabled-by-default-enhanced-file-management-le-dired-and-le-dired-filter)
+        - [Enabled by Default: Better undo/redo (le-undo-fu and undo-fu-session)](#enabled-by-default-better-undoredo-le-undo-fu-and-undo-fu-session)
+        - [Enabled by Default: Keybindings (le-keybindings)](#enabled-by-default-keybindings-le-keybindings)
+        - [Enabled by Default: Code folding based on indentation (le-outline-indent)](#enabled-by-default-code-folding-based-on-indentation-le-outline-indent)
+        - [Enabled by Default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#enabled-by-default-automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
+        - [Enabled by Default: Save History (le-savehist)](#enabled-by-default-save-history-le-savehist)
+        - [Enabled by Default: Save and Restore Cursor (le-saveplace)](#enabled-by-default-save-and-restore-cursor-le-saveplace)
+        - [Enabled by Default: Expand Region (le-expand-region)](#enabled-by-default-expand-region-le-expand-region)
+        - [Enabled by Default: Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#enabled-by-default-auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
+        - [Enabled by Default: Persist and Restore Text Scale (le-persist-text-scale)](#enabled-by-default-persist-and-restore-text-scale-le-persist-text-scale)
+        - [Enabled by Default: A better way to rename or delete files (le-bufferfile)](#enabled-by-default-a-better-way-to-rename-or-delete-files-le-bufferfile)
+        - [Enabled by Default: Recent files (le-recentf)](#enabled-by-default-recent-files-le-recentf)
+        - [Enabled by Default: Detect indentation offset (le-dtrt-indent)](#enabled-by-default-detect-indentation-offset-le-dtrt-indent)
+        - [The built-in on-the-fly syntax checker (le-flymake)](#the-built-in-on-the-fly-syntax-checker-le-flymake)
+        - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
+    - [Modules Disabled by Default](#modules-disabled-by-default)
+        - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
+        - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
+        - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
+        - [Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)](#disabled-by-default-persisting-and-restoring-all-buffers-windowssplit-tab-bar-frames-le-easysession)
+        - [Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)](#disabled-by-default-efficient-template-expansion-with-snippets-le-yasnippet-and-le-yasnippet-snippets)
+        - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
+        - [Disabled by default: Better Elisp editing (le-group-emacs-lisp)](#disabled-by-default-better-elisp-editing-le-group-emacs-lisp)
+        - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
+        - [Other modules disabled by default](#other-modules-disabled-by-default)
+    - [Other Features](#other-features)
+    - [Useful variables, functions, and macros](#useful-variables-functions-and-macros)
+        - [Useful variables](#useful-variables)
+            - [Ellipsis](#ellipsis)
+            - [Cycling](#cycling)
+            - [Other variables](#other-variables)
+        - [Useful functions and macros](#useful-functions-and-macros)
+    - [Author and license](#author-and-license)
+    - [Links](#links)
 
 <!-- markdown-toc end -->
 
@@ -247,7 +247,7 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ### Enabled by Default: Default theme (le-theme)
 
-The `le-theme` loads the default theme. It can be configured via the `lightemacs-theme-name` variable, which defaults to `"tomorrow-night-deepblue"`. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
+The `le-theme` module loads the default theme. It can be configured via the `lightemacs-theme-name` variable. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
 
 ```emacs-lisp
 ;; Default theme to load during initialization, if available. Set to nil to
@@ -674,12 +674,14 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 - **le-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
 - **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
-- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior...
 - **le-winner**: Track changes in the window configuration, allowing undoing actions such as closing windows using `winner-undo`.
 - **le-elec-pair**: Automatically insert matching delimiters (), {}...
 - **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
-- **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 - **le-which-key**: The built-in which-key package dynamically displays available keybindings in a popup or dedicated buffer as a key sequence is entered. It facilitates discovery and retention of key combinations by presenting context-sensitive completions, thereby enhancing navigation through complex or highly customized keymaps.
+
+These are core modules that are always enabled:
+- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior... *This is one of the most important modules. Keep it enabled.**
+- **le-theme**: The `le-theme` module loads the default theme. It can be configured via the `lightemacs-theme-name` variable. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
 
 ## Modules Disabled by Default
 
@@ -905,6 +907,8 @@ Elisp file-type modules are disabled by default:
 - **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated.
 
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
+
+- **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
 ## Other Features
 

@@ -21,45 +21,19 @@
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 1.0)
 
-(setq load-prefer-newer t)
-
-(setq package-enable-at-startup nil)
-(setq minimal-emacs-frame-title-format "%b – Lightemacs")
-(setq minimal-emacs-package-initialize-and-refresh nil)  ; Managed by Lightemacs
-(setq minimal-emacs-gc-cons-percentage 0.1)
-(setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
-(setq minimal-emacs-gc-cons-threshold-restore-delay 3)
-(setq minimal-emacs-ui-features '(context-menu tooltips))
-
-(setq straight-recipe-overrides
-      '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
-        (easysession . (:host github :repo "jamescherti/easysession.el"
-                              :files (:defaults "extensions/*.el")))))
-
-;;; Global variables
+;;; Update `load-path'
 
 (add-to-list 'load-path (expand-file-name "lisp/lightemacs" user-emacs-directory))
 (require 'le-core-paths)
 
-;;; Update `load-path'
-
-(eval-and-compile
-  (add-to-list 'load-path lightemacs-local-modules-directory)
-  (add-to-list 'load-path lightemacs-core-directory)
-  (add-to-list 'load-path lightemacs-modules-directory))
-
-;;; Load config.el
-
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
+(add-to-list 'load-path lightemacs-local-modules-directory)
+(add-to-list 'load-path lightemacs-core-directory)
+(add-to-list 'load-path lightemacs-modules-directory)
 
 ;;; Load lightemacs.el
 
-(eval-and-compile
-  (require 'lightemacs))
-
-(setq minimal-emacs-load-compiled-init-files lightemacs-load-compiled-init-files)
+(require 'le-core-defaults)
+(require 'lightemacs)
 
 ;;; Load pre-early-init.el
 
@@ -77,5 +51,17 @@
 (lightemacs-load-user-init
  (expand-file-name "post-early-init.el" lightemacs-local-directory)
  :no-error)
+
+;;; Load config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
+
+(when lightemacs-native-comp-excluded-cpus
+  (setq native-comp-async-jobs-number
+        (lightemacs--calculate-native-comp-async-jobs-number)))
+
+(setq minimal-emacs-load-compiled-init-files lightemacs-load-compiled-init-files)
 
 ;;; early-init.el ends here

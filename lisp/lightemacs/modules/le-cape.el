@@ -20,8 +20,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  cape
+(lightemacs-use-package cape
   :commands (cape-abbrev
              cape-dabbrev
              cape-dict
@@ -41,7 +40,7 @@
 (provide 'le-cape)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-cape.el ends here

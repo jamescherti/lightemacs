@@ -24,12 +24,9 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'le-diminish)
   (require 'le-evil))
 
-(lightemacs-use-package
-  evil-snipe
-  :diminish evil-snipe-local-mode
+(lightemacs-use-package evil-snipe
   :commands evil-snipe-mode
 
   :hook
@@ -51,7 +48,7 @@
 (provide 'le-evil-snipe)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-evil-snipe.el ends here

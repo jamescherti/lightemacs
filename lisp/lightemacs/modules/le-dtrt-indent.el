@@ -19,8 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
 (defvar lightemacs-dtrt-indent-inhibit nil
   "Non-nil inhibits automatic indentation detection via `dtrt-indent'.
@@ -37,9 +36,7 @@ the indentation settings automatically in the current buffer.")
 Modes in this list will not trigger `dtrt-indent' when buffers of those types
 are opened or their major mode changes.")
 
-(lightemacs-use-package
-  dtrt-indent
-  :diminish dtrt-indent-mode
+(lightemacs-use-package dtrt-indent
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode
              dtrt-indent-adapt
@@ -82,7 +79,7 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
 (provide 'le-dtrt-indent)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-dtrt-indent.el ends here

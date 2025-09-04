@@ -25,13 +25,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  compile-angel
+(lightemacs-use-package compile-angel
   :commands compile-angel-on-load-mode
-  :diminish compile-angel-on-load-mode
   :hook (after-init . compile-angel-on-load-mode)
   :init
   ;; Verbose
@@ -63,8 +60,8 @@ specified file or directory is ignored during the compilation process managed by
             compile-angel-excluded-files)))
 
   :config
-  (with-eval-after-load 'org
-    (push "/org-version.el" compile-angel-excluded-files))
+  (push "/org-version.el" compile-angel-excluded-files)
+  (push "/prescient-save.el" compile-angel-excluded-files)
 
   (with-eval-after-load 'savehist
     (le-compile-angel-exclude savehist-file))
@@ -73,15 +70,12 @@ specified file or directory is ignored during the compilation process managed by
     (le-compile-angel-exclude recentf-save-file))
 
   (with-eval-after-load 'cus-edit
-    (le-compile-angel-exclude custom-file))
-
-  (with-eval-after-load 'prescient
-    (le-compile-angel-exclude prescient-save-file)))
+    (le-compile-angel-exclude custom-file)))
 
 (provide 'le-compile-angel)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-compile-angel.el ends here

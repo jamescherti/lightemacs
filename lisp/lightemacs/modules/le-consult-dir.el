@@ -39,8 +39,7 @@ PATH, this option has no effect.")
 
 ;;; Use-package
 
-(lightemacs-use-package
-  consult-dir
+(lightemacs-use-package consult-dir
   :commands (consult-dir
              consult-dir-jump-file
              consult-dir--pick
@@ -115,7 +114,7 @@ customized."
 (provide 'le-consult-dir)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-consult-dir.el ends here

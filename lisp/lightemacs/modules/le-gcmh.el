@@ -23,12 +23,9 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  gcmh
-  :diminish gcmh-mode
+(lightemacs-use-package gcmh
   :commands gcmh-mode
   :init
   (add-hook 'lightemacs-on-first-buffer-hook #'gcmh-mode)
@@ -46,7 +43,7 @@
 (provide 'le-gcmh)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-gcmh.el ends here

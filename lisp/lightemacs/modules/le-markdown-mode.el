@@ -21,8 +21,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  markdown-mode
+(lightemacs-use-package markdown-mode
   :commands (gfm-mode
              gfm-view-mode
              markdown-mode
@@ -46,7 +45,7 @@
 (provide 'le-markdown-mode)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-markdown-mode.el ends here

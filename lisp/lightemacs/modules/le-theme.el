@@ -68,7 +68,7 @@ Set to nil to disable installing this package at startup.")
 (provide 'le-theme)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-theme.el ends here

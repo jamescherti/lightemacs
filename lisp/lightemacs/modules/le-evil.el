@@ -31,8 +31,7 @@
 
 ;;; Use-package evil
 
-(lightemacs-use-package
-  evil
+(lightemacs-use-package evil
   :commands (evil-mode
              evil-select-search-module)
 
@@ -138,7 +137,7 @@ Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
 (provide 'le-evil)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-evil.el ends here

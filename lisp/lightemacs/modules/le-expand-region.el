@@ -26,8 +26,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  expand-region
+(lightemacs-use-package expand-region
   :commands (er/expand-region
              er/mark-word
              er/mark-symbol
@@ -48,7 +47,7 @@
 (provide 'le-expand-region)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-expand-region.el ends here

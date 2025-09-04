@@ -24,15 +24,11 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'le-diminish)
   (require 'le-paredit)
   (require 'le-evil))
 
-(lightemacs-use-package
-  enhanced-evil-paredit
+(lightemacs-use-package enhanced-evil-paredit
   :after evil
-  :diminish enhanced-evil-paredit-mode
-  :commands enhanced-evil-paredit-mode
   :hook (paredit-mode . enhanced-evil-paredit-mode)
   :preface
   (defun lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding ()
@@ -52,7 +48,7 @@ is active to prevent interference with `evil-snipe' commands."
 (provide 'le-enhanced-evil-paredit)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-enhanced-evil-paredit.el ends here

@@ -23,8 +23,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  diff-hl
+(lightemacs-use-package diff-hl
   :commands (diff-hl-mode
              global-diff-hl-mode)
   :init
@@ -36,7 +35,7 @@
 (provide 'le-diff-hl)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-diff-hl.el ends here

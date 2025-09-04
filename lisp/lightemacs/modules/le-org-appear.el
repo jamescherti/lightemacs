@@ -16,15 +16,14 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  org-appear
+(lightemacs-use-package org-appear
   :commands org-appear-mode
   :hook (org-mode . org-appear-mode))
 
 (provide 'le-org-appear)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-org-appear.el ends here

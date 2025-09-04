@@ -28,8 +28,7 @@
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-core-cli-tools)
 
-(lightemacs-use-package
-  dumb-jump
+(lightemacs-use-package dumb-jump
   :commands dumb-jump-xref-activate
 
   :init
@@ -64,7 +63,7 @@
 (provide 'le-dumb-jump)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-dumb-jump.el ends here

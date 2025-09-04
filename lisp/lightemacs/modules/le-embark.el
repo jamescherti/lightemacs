@@ -24,8 +24,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  embark
+(lightemacs-use-package embark
   :commands (embark-act
              embark-export
              embark-collect
@@ -61,7 +60,7 @@
 (provide 'le-embark)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-embark.el ends here

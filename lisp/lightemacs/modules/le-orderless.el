@@ -29,8 +29,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  orderless
+(lightemacs-use-package orderless
   :demand t
   :init
   (setq completion-styles '(orderless basic))
@@ -42,7 +41,7 @@
 (provide 'le-orderless)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-orderless.el ends here

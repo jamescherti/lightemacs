@@ -21,13 +21,15 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  prescient
+(lightemacs-use-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)
 
   :init
   (add-hook 'after-init-hook #'prescient-persist-mode)
+
+  ;; The .el extension is required; without it, Emacs may prompt for a file
+  ;; encoding (e.g., UTF-8).
   (setq prescient-save-file (expand-file-name "prescient-save.el"
                                               user-emacs-directory))
 
@@ -48,7 +50,7 @@
 (provide 'le-prescient)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-prescient.el ends here

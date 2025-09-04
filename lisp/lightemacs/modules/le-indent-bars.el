@@ -32,8 +32,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  indent-bars
+(lightemacs-use-package indent-bars
   :commands indent-bars-mode
   :init
   ;; Setting this to nil is not reliable
@@ -48,7 +47,7 @@
 (provide 'le-indent-bars)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-indent-bars.el ends here

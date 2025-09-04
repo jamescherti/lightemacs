@@ -22,8 +22,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  elisp-refs
+(lightemacs-use-package elisp-refs
   :commands (elisp-refs-function
              elisp-refs-macro
              elisp-refs-variable
@@ -33,7 +32,7 @@
 (provide 'le-elisp-refs)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-elisp-refs.el ends here

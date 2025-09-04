@@ -18,8 +18,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  paren
+(lightemacs-use-package paren
   :ensure nil
   :commands (show-paren-mode
              show-paren-local-mode)
@@ -31,7 +30,7 @@
 (provide 'le-paren)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-paren.el ends here

@@ -31,8 +31,7 @@
 
 ;;; Use-package consult
 
-(lightemacs-use-package
-  consult
+(lightemacs-use-package consult
   :commands (consult-fd
              consult-register-window
              consult-ripgrep
@@ -40,7 +39,7 @@
              consult-buffer
              consult-buffer-other-frame
              consult-buffer-other-window
-             consult-compile-error
+             ;; consult-compile-error
              consult-complex-command
              consult-find
              consult-flymake
@@ -81,7 +80,7 @@
 
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
-         ("C-c k" . consult-kmacro)
+         ;; ("C-c k" . consult-kmacro)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
          ([remap Info-search] . consult-info)
@@ -100,7 +99,7 @@
          ;; Other custom bindings
          ("M-y" . consult-yank-pop)                ;; orig. yank-pop
          ;; M-g bindings in `goto-map'
-         ("M-g e" . consult-compile-error)
+         ;; ("M-g e" . consult-compile-error)
          ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
          ("M-g g" . consult-goto-line)             ;; orig. goto-line
          ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
@@ -139,11 +138,11 @@
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
-  (setq register-preview-function #'consult-register-format)
+  ;; (setq register-preview-function #'consult-register-format)
 
   ;; Optionally tweak the register preview window. This adds thin lines, sorting
   ;; and hides the mode line of the window.
-  (advice-add #'register-preview :override #'consult-register-window)
+  ;; (advice-add #'register-preview :override #'consult-register-window)
 
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref)
@@ -154,9 +153,9 @@
   (require 'consult-info)
 
   ;; TODO defer
-  (require 'consult-register)
-  (require 'consult-compile)
-  (require 'consult-kmacro)
+  ;; (require 'consult-register)
+  ;; (require 'consult-compile)
+  ;; (require 'consult-kmacro)
 
   (consult-customize
    consult-theme :preview-key '(:debounce 0.1 any)
@@ -239,7 +238,7 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
 (provide 'le-consult)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-consult.el ends here

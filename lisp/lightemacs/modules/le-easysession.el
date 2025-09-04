@@ -37,27 +37,28 @@
 
 ;;; use-package easysession
 
-(lightemacs-use-package
-  easysession
-  :diminish easysession-save-mode
-  :commands (easysession-load
-             easysession-load-including-geometry
-             easysession-rename
+(lightemacs-use-package easysession
+  :commands (easysession-rename
              easysession-reset
              easysession-save
              easysession-save-as
              easysession-save-mode
              easysession-switch-to
              easysession-delete
-             easysession-get-current-session-name)
+             easysession-get-session-name
+             easysession-load
+             easysession-switch-to-and-restore-geometry
+             easysession-load-including-geometry)
 
   :bind (("C-c ss" . easysession-save-as)
          ("C-c sl" . easysession-switch-to)
          ("C-c sr" . easysession-rename)
          ("C-c sL" . easysession-load)
+         ("C-c sd" . easysession-delete)
          ("C-c sS" . easysession-save))
 
   :init
+  ;; Load session
   (if lightemacs-easysession-load-including-geometry
       ;; Including geometry
       (if (daemonp)
@@ -72,6 +73,7 @@
       (add-hook 'emacs-startup-hook
                 #'easysession-load-including-geometry 102)))
 
+  ;; Auto save mode
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103)
 
   (setq easysession-mode-line-misc-info t))
@@ -88,7 +90,7 @@
 (provide 'le-easysession)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-easysession.el ends here

@@ -19,15 +19,14 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  highlight-defined
+(lightemacs-use-package highlight-defined
   :commands highlight-defined-mode
   :hook (emacs-lisp-mode . highlight-defined-mode))
 
 (provide 'le-highlight-defined)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-highlight-defined.el ends here

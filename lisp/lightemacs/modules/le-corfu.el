@@ -20,8 +20,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  corfu
+(lightemacs-use-package corfu
   :commands (global-corfu-mode
              corfu-mode)
 
@@ -63,7 +62,7 @@
 (provide 'le-corfu)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-corfu.el ends here

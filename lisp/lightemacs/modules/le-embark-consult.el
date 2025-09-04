@@ -24,8 +24,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  embark-consult
+(lightemacs-use-package embark-consult
   :after (embark consult)
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -33,7 +32,7 @@
 (provide 'le-embark-consult)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-embark-consult.el ends here

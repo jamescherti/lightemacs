@@ -20,15 +20,14 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  goto-chg
+(lightemacs-use-package goto-chg
   :commands (goto-last-change
              goto-last-change-reverse))
 
 (provide 'le-goto-chg)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-goto-chg.el ends here

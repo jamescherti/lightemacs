@@ -51,7 +51,7 @@
 (provide 'le-group-emacs-lisp)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-group-emacs-lisp.el ends here

@@ -26,8 +26,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  treesit-auto
+(lightemacs-use-package treesit-auto
   :commands global-treesit-auto-mode
   :functions treesit-auto-add-to-auto-mode-alist
   :hook (after-init . global-treesit-auto-mode)
@@ -39,7 +38,7 @@
 (provide 'le-treesit-auto)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-treesit-auto.el ends here

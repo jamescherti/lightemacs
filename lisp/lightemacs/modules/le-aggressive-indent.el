@@ -25,8 +25,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  aggressive-indent
+(lightemacs-use-package aggressive-indent
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
 
@@ -48,7 +47,7 @@
 (provide 'le-aggressive-indent)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-aggressive-indent.el ends here

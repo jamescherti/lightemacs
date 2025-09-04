@@ -17,13 +17,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  which-key
+(lightemacs-use-package which-key
   :ensure nil
-  :diminish which-key-mode
   :commands which-key-mode
 
   ;; TODO Fix first key press
@@ -109,7 +106,7 @@
 (provide 'le-which-key)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-which-key.el ends here

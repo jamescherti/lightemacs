@@ -22,8 +22,7 @@
   (require 'lightemacs)
   (require 'le-evil))
 
-(lightemacs-use-package
-  evil-surround
+(lightemacs-use-package evil-surround
   :after evil
   :commands (evil-Surround-edit
              evil-surround-edit
@@ -37,7 +36,7 @@
 (provide 'le-evil-surround)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-evil-surround.el ends here

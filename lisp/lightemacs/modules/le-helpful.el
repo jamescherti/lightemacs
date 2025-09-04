@@ -22,8 +22,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  helpful
+(lightemacs-use-package helpful
   :commands (helpful-callable
              helpful-variable
              helpful-key
@@ -49,7 +48,7 @@
 (provide 'le-helpful)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-helpful.el ends here

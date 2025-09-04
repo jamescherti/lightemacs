@@ -37,8 +37,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  bufferfile
+(lightemacs-use-package bufferfile
   :commands (bufferfile-rename
              bufferfile-delete
              bufferfile-copy
@@ -47,7 +46,7 @@
 (provide 'le-bufferfile)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-bufferfile.el ends here

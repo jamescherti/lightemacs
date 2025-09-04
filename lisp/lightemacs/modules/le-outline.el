@@ -45,7 +45,7 @@
 (provide 'le-outline)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-outline.el ends here

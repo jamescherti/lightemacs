@@ -25,15 +25,14 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  wgrep
+(lightemacs-use-package wgrep
   :commands (wgrep-change-to-wgrep-mode
              wgrep-finish-edit))
 
 (provide 'le-wgrep)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-wgrep.el ends here

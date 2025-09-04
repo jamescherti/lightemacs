@@ -22,12 +22,9 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  paredit
-  :diminish paredit-mode
+(lightemacs-use-package paredit
   :commands paredit-mode
 
   :hook ((emacs-lisp-mode . paredit-mode)
@@ -58,7 +55,7 @@
 (provide 'le-paredit)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-paredit.el ends here

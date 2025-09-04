@@ -23,8 +23,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  vterm
+(lightemacs-use-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
              vterm-send-string
@@ -62,7 +61,7 @@
 (provide 'le-vterm)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-vterm.el ends here

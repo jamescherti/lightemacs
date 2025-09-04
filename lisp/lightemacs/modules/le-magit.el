@@ -22,8 +22,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  magit
+(lightemacs-use-package magit
   :commands (magit-status
              magit-commit
              magit-commit-create
@@ -43,7 +42,7 @@
 (provide 'le-magit)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-magit.el ends here

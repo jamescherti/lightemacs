@@ -193,9 +193,7 @@ pre-early-init.el, and post-early-init.el.")
          (native-comp-available-p))
     (when minimal-emacs-setup-native-compilation
       ;; Activate `native-compile'
-      (setq native-comp-deferred-compilation t
-            native-comp-jit-compilation t
-            package-native-compile t))
+      (setq package-native-compile t))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
@@ -478,12 +476,14 @@ this stage of initialization."
 (setq package-enable-at-startup nil)  ; Let the init.el file handle this
 (setq use-package-always-ensure t)
 (setq use-package-enable-imenu-support t)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("gnu" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(setq package-archives '(("melpa"        . "https://melpa.org/packages/")
+                         ("gnu"          . "https://elpa.gnu.org/packages/")
+                         ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")))
 (setq package-archive-priorities '(("gnu"    . 99)
                                    ("nongnu" . 80)
-                                   ("melpa"  . 70)))
+                                   ("melpa"  . 70)
+                                   ("melpa-stable" . 50)))
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")

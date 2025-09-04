@@ -25,8 +25,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  flymake
+(lightemacs-use-package flymake
   :ensure nil
   :commands (flymake-mode
              flymake-show-buffer-diagnostics
@@ -63,7 +62,7 @@
 (provide 'le-flymake)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-flymake.el ends here

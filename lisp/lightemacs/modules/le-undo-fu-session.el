@@ -21,8 +21,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  undo-fu-session
+(lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
   (add-hook 'after-init-hook #'undo-fu-session-global-mode))
@@ -30,7 +29,7 @@
 (provide 'le-undo-fu-session)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-undo-fu-session.el ends here

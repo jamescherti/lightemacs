@@ -16,8 +16,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  org
+(lightemacs-use-package org
   :ensure nil
   :commands (org-mode
              org-indent-mode
@@ -241,7 +240,7 @@
 (provide 'le-org)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-org.el ends here

@@ -17,8 +17,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  winner
+(lightemacs-use-package winner
   :ensure nil
   :commands (winner-mode
              winner-undo
@@ -49,7 +48,7 @@
 (provide 'le-winner)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-winner.el ends here

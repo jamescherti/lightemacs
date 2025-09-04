@@ -24,12 +24,9 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  outline-indent
-  :diminish outline-indent-minor-mode
+(lightemacs-use-package outline-indent
   :commands (outline-indent-minor-mode
              outline-indent-shift-left
              outline-indent-shift-right
@@ -51,7 +48,7 @@
 (provide 'le-outline-indent)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-outline-indent.el ends here

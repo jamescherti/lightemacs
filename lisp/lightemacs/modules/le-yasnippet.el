@@ -23,8 +23,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  yasnippet
+(lightemacs-use-package yasnippet
   :commands (yas-global-mode
              yas-minor-mode
              yas-load-directory
@@ -44,7 +43,7 @@
 (provide 'le-yasnippet)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-yasnippet.el ends here

@@ -36,15 +36,14 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  apheleia
+(lightemacs-use-package apheleia
   :commands (apheleia-mode
              apheleia-global-mode))
 
 (provide 'le-apheleia)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-apheleia.el ends here

@@ -85,21 +85,90 @@
 ;; TODO use macro?
 (add-hook 'after-init-hook #'window-divider-mode)
 
-;;; Diminish Eldoc, Abbref...
+;;; auto-mode-alist
 
-(with-eval-after-load 'diminish
-  (with-eval-after-load 'eldoc
-    (when (fboundp 'diminish)
-      (diminish 'eldoc-mode)))
+(nconc auto-mode-alist
+       '(;; Gentoo ebuilds
+         ("\\.ebuild\\'" . sh-mode)
 
-  (with-eval-after-load 'abbrev
-    (when (fboundp 'diminish)
-      (diminish 'abbrev-mode))))
+         ;; Git
+         ("/COMMIT_EDITMSG\\'" . diff-mode)
+
+         ;; Arch Linux
+         ("\\.install\\'" . sh-mode)  ; PKGBUILD
+         ("\\.hook\\'" . conf-unix-mode)  ; /usr/share/libalpm/hooks/
+
+         ;; Linux
+         ("/etc/hosts\\'" . conf-unix-mode)
+         ("/\\.ssh/known_hosts\\'" . conf-space-mode)
+
+         ("/Eask\\'" . emacs-lisp-mode)
+         ("/Cask\\'" . emacs-lisp-mode)))
+
+;;; Patches
+
+;; TODO: Accepted in Emacs 31. Not released yet.
+;; commit 4e37a99c20ad35a4e46ee9291c94940ec00fb77a
+;; Author: James Cherti
+;; Date:   2025-03-19 11:56:11 -0400
+;;
+;; ElDoc: Add more commands using 'eldoc-add-command-completions'
+;;
+;; Add more commands to 'eldoc-add-command-completions' to fix disappearing
+;; ElDoc help in the minibuffer for the following cases:
+;; - All modes: Added "comment-indent-new-line".
+;; - All modes: Added "delete-char" for handling when the user presses delete.
+;; - Python mode: Added "python-indent-dedent-line-backspace" for handling when
+;; the user presses backspace.
+;;
+;; * lisp/emacs-lisp/eldoc.el (eldoc-remove-command-completions):
+;; * lisp/progmodes/python.el (python-base-mode): Add more commands to
+;; 'eldoc-add-command-completions'.
+(with-eval-after-load 'eldoc
+  (when (fboundp 'eldoc-add-command-completions)
+    (funcall 'eldoc-add-command-completions
+             "python-indent-dedent-line-backspace"
+             "comment-indent-new-line"
+             "delete-char")))
+
+;; TODO: Accepted in Emacs 31. Not released yet.
+;; commit cf6c365d5cf8ee5f460e59393e76b934a1a432b2
+;; Author: James Cherti
+;; Date:   2025-04-11 10:18:19 -0400
+;;
+;; Mark !%:.^~, as punctuation rather than symbol constituents
+;;
+;; In Bash, the characters !%:.^~, are not valid in variable names. In sh, they
+;; are not permitted in either function or variable names. Treating them as
+;; punctuation is convenient, as they are rarely used in function names and
+;; never in variable names. Even among commands, their usage is uncommon. The
+;; only character among these that is commonly seen in command names is '.',
+;; although it is rarely used in function names.
+;;
+;; Marking these characters as punctuation, rather than symbol constituents,
+;; enhances the accuracy of symbol detection.
+;;
+;; * lisp/progmodes/sh-script.el: Mark !%:.^~, as punctuation in the
+;; sh-mode-syntax-table syntax table.
+(defun lightemacs-default-settings--sh-syntax-table ()
+  "Enhance `sh-mode' and `bash-ts-mode' syntax table."
+  (modify-syntax-entry ?! ".")
+  (modify-syntax-entry ?% ".")
+  (modify-syntax-entry ?: ".")
+  (modify-syntax-entry ?. ".")
+  (modify-syntax-entry ?^ ".")
+  (modify-syntax-entry ?~ ".")
+  (modify-syntax-entry ?, "."))
+
+(add-hook 'sh-mode-hook #'lightemacs-default-settings--sh-syntax-table)
+(add-hook 'bash-ts-mode-hook #'lightemacs-default-settings--sh-syntax-table)
+
+;;; Provide
 
 (provide 'le-default-settings)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-default-settings.el ends here

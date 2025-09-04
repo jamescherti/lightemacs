@@ -21,8 +21,7 @@
 (defvar lightemacs-saveplace-recenter-after-find-file t
   "If non-nil, recenter the buffer after restoring the cursor position.")
 
-(lightemacs-use-package
-  saveplace
+(lightemacs-use-package saveplace
   :ensure nil
   :commands save-place-mode
 
@@ -57,7 +56,7 @@ It avoids recentering while an EasySession session is in progress."
 (provide 'le-saveplace)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-saveplace.el ends here

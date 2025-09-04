@@ -43,8 +43,7 @@
 
 (lightemacs-load-modules '(le-prescient))
 
-(lightemacs-use-package
-  corfu-prescient
+(lightemacs-use-package corfu-prescient
   :after corfu
   :commands corfu-prescient-mode
   :hook (corfu-mode . corfu-prescient-mode)
@@ -60,7 +59,7 @@
 (provide 'le-corfu-prescient)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-corfu-prescient.el ends here

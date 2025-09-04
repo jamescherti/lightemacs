@@ -42,7 +42,7 @@
 (provide 'le-group-evil)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-group-evil.el ends here

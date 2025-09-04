@@ -18,8 +18,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  display-line-numbers
+(lightemacs-use-package display-line-numbers
   :ensure nil
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)
@@ -30,7 +29,7 @@
 (provide 'le-display-line-numbers)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-display-line-numbers.el ends here

@@ -21,14 +21,13 @@
   (require 'lightemacs)
   (require 'le-yasnippet))
 
-(lightemacs-use-package
-  yasnippet-snippets
+(lightemacs-use-package yasnippet-snippets
   :after yasnippet)
 
 (provide 'le-yasnippet-snippets)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-yasnippet-snippets.el ends here

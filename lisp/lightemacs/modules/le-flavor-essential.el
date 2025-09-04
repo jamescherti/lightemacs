@@ -17,11 +17,7 @@
   (require 'lightemacs))
 
 (lightemacs-load-modules
- '(;; Hides or abbreviates mode indicators in the Emacs mode line for a cleaner
-   ;; display
-   le-diminish
-
-   ;; Custom keybindings
+ '(;; Custom keybindings
    le-keybindings
 
    ;; Default settings (minibuffer, Emacs...) Configure enhanced default
@@ -261,7 +257,7 @@
 (provide 'le-flavor-essential)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-flavor-essential.el ends here

@@ -19,12 +19,12 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  git-modes
+(lightemacs-use-package git-modes
   :commands (gitattributes-mode
              gitconfig-mode
              gitignore-mode)
   :mode
+  ("/.gitignore_global\\'" . gitignore-mode)
   ("/.gitignore\\'" . gitignore-mode)
   ("/.gitconfig\\'" . gitconfig-mode)
   ("/.gitattributes_global\\'" . gitattributes-mode)
@@ -33,7 +33,7 @@
 (provide 'le-git-modes)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-git-modes.el ends here

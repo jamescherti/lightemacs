@@ -19,8 +19,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  autorevert
+(lightemacs-use-package autorevert
   :ensure nil
   :commands (auto-revert-mode
              global-auto-revert-mode
@@ -33,7 +32,7 @@
 (provide 'le-autorevert)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-autorevert.el ends here

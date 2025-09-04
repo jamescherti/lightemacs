@@ -19,97 +19,12 @@
   (require 'use-package))
 
 (eval-when-compile
+  ;; TODO remove?
   ;; TODO test with local files containing a different value
   (setq use-package-hook-name-suffix "-hook"))
 
 (require 'cl-lib)
-
-;;; Variables
-
-(defvar lightemacs-modules '(;; Default modules
-                             le-flavor-essential
-
-                             ;; Vim keybindings (DISABLED)
-                             ;; --------------------------
-                             ;; le-group-evil
-
-                             ;; Treesitter, Better syntax highlighting (DISABLED)
-                             ;; -------------------------------------------------
-                             ;; le-treesit-auto
-                             )
-  "Modules that are enabled by default.
-
-Lightemacs provides a range of modules that can be selectively enabled or
-disabled according to your preferences, with all modules ensuring packages are
-loaded only when needed, enabling exceptionally fast, deferred startup.")
-
-(defvar lightemacs-core-modules '(;; This loaded the default theme specified
-                                  ;; in the `lightemacs-theme-name' variable.
-                                  ;; The default theme tomorrow-night-deepblue
-                                  ;; is a beautiful deep blue variant of the
-                                  ;; Tomorrow Night theme, which is renowned
-                                  ;; for its elegant color palette that is
-                                  ;; pleasing to the eyes.
-                                  le-theme
-
-                                  ;; Hides or abbreviates mode indicators in
-                                  ;; the Emacs mode line for a cleaner display
-                                  le-diminish)
-  "Core modules that are enabled by default.
-Do not modify this variable.")
-
-(defvar lightemacs-excluded-packages nil
-  "List of package symbols that should be excluded from initialization.
-Each element must be a symbol naming a package that would otherwise be
-initialized by Lightemacs. Packages listed here are skipped during the
-initialization process. Only packages declared via the `lightemacs-use-package'
-macro are affected by this variable.")
-
-(defcustom lightemacs-verbose nil
-  "Enable displaying verbose messages."
-  :type 'boolean
-  :group 'lightemacs)
-
-(defvar lightemacs-ellipsis " ▼"
-  "String used to indicate folded sections in Org-mode and Outline-mode.
-This ellipsis appears at the end of a heading or section that has been
-collapsed. It provides a visual cue that more content is hidden. You can
-customize this variable to use a different character or string (such as '…',
-'▶', or other Unicode symbols) to match your visual preference or theme. This
-variable is buffer-local in Org-mode and Outline-mode, affecting only the
-display of folded text.")
-
-(defvar lightemacs-cycle t
-  "If non-nil, enables cycling through candidates in supported plugins.
-This enabled or disable cycling in plugins such as Vertico and Consult.
-When nil, cycling is disabled, so selection stops at the first or last candidate
-instead of wrapping around.")
-
-(defvar lightemacs-use-package-refresh-contents t
-  "If non-nil, `lightemacs-use-package' may refresh package contents once.
-Refresh package contents when `lightemacs-use-package-refresh-contents' is
-non-nil and the package is not installed.")
-
-(defvar lightemacs-package-manager 'use-package
-  "Specifies which package manager to use in Lightemacs.
-
-Choices are:
-- \='use-package: Use Emacs' built-in package.el and `use-package'.
-- \='straight: Use `straight.el' for package management.
-- \='elpaca: Use `elpaca'.
-
-This variable controls how the `lightemacs-use-package' macro handles
-installation and configuration of packages.")
-
-(defvar lightemacs-native-comp-excluded-cpus nil
-  "Number of CPUs to reserve and not use for `native-compile'.
-Set this to nil to disable this feature.")
-
-(defvar lightemacs-load-compiled-init-files t
-  "If non-nil, attempt to load byte-compiled .elc for init files.
-This will enable Lightemacs to load byte-compiled or possibly native-compiled
-init files for the following initialization files: init.el, pre-init.el,
-post-init.el, pre-early-init.el, and post-early-init.el.")
+(require 'le-core-defaults)
 
 ;;; Functions
 
@@ -335,6 +250,30 @@ cursor."
                                (beginning-of-visual-line)
                                (point))))))))
 
+(defmacro lightemacs-shield-macros (&rest body)
+  "Eval BODY while preventing premature macro expansion.
+
+Use this when a form contains code to be evaluated later, and that code depends
+on a macro not yet defined. If the macro treats its arguments specially, an
+argument resembling a macro call might be expanded too early, breaking
+evaluation. Wrapping the outer (or higher) macro in this form avoids that
+problem."
+  (declare (indent 0))
+  `(eval '(progn ,@body) lexical-binding))
+
+(defmacro lightemacs-shield-macros-when-compiling (feature &rest body)
+  "Evaluate BODY, shielding macros only if FEATURE is not yet available.
+If FEATURE is already present, expand BODY normally.
+During byte-compilation, attempt to load FEATURE eagerly."
+  (declare (indent 1))
+  (let ((available (featurep feature)))
+    (when byte-compile-current-file
+      (setq available (require feature nil 'noerror)))
+    (if available
+        `(progn ,@body)
+      `(lightemacs-shield-macros
+         (progn ,@body)))))
+
 ;;; lightemacs-use-package
 
 (defvar lightemacs--use-package-refreshed nil
@@ -352,21 +291,22 @@ PLIST contains keyword arguments for `use-package`."
                    (t
                     use-package-always-ensure))
              (not (package-installed-p name)))
-    ;; Refresh package NAME contents once before installing a missing package.
     (lightemacs-verbose-message
-      "Refresh package contents before installing %s" name)
+      "Refreshing package contents before installing %s" name)
     (package-refresh-contents)
     (setq lightemacs--use-package-refreshed t)))
 
 (defmacro lightemacs-use-package (name &rest plist)
-  "Configure an Emacs package with deferred `use-package` expansion.
-NAME is the package symbol.
-PLIST contains keyword arguments for `use-package`.
+  "Configure an Emacs package using `use-package` safely.
 
-If `lightemacs-emacs-straight' is non-nil and :straight is not
-already in PLIST, the package is installed via straight.el."
+NAME is the package symbol.
+PLIST contains keyword arguments for `use-package`."
   (declare (indent 1))
-  `(eval '(use-package ,name ,@plist)))
+  `(progn
+     (lightemacs--before-use-package ',name ',plist)
+     ,(if (and (boundp 'byte-compile-current-file) byte-compile-current-file)
+          `(eval '(use-package ,name ,@plist))
+        `(use-package ,name ,@plist))))
 
 ;;; Internal functions
 
@@ -414,12 +354,6 @@ exist."
       ;; select between .el and .elc files.
       (setq file (lightemacs--remove-el-file-suffix file))
       (load file no-error (not (bound-and-true-p init-file-debug))))))
-
-;;; Init
-
-(when lightemacs-native-comp-excluded-cpus
-  (setq native-comp-async-jobs-number
-        (lightemacs--calculate-native-comp-async-jobs-number)))
 
 ;;; Provide lightemacs
 

@@ -98,7 +98,7 @@
 (provide 'le-flavor-big)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-flavor-big.el ends here

@@ -23,12 +23,9 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  page-break-lines
-  :diminish page-break-lines-mode
+(lightemacs-use-package page-break-lines
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
   :hook
@@ -37,7 +34,7 @@
 (provide 'le-page-break-lines)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-page-break-lines.el ends here

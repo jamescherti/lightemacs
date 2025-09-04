@@ -19,8 +19,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  savehist
+(lightemacs-use-package savehist
   :ensure nil
   :commands savehist-mode
   :hook (after-init . savehist-mode))
@@ -28,7 +27,7 @@
 (provide 'le-savehist)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-savehist.el ends here

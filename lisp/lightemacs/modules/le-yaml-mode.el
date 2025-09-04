@@ -24,8 +24,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  yaml-mode
+(lightemacs-use-package yaml-mode
   :commands yaml-mode
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode)))
@@ -33,7 +32,7 @@
 (provide 'le-yaml-mode)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-yaml-mode.el ends here

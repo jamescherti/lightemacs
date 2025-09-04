@@ -17,8 +17,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  markdown-toc
+(lightemacs-use-package markdown-toc
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc
@@ -40,7 +39,7 @@ FN is the advised function. ARGS are the function arguments."
 (provide 'le-markdown-toc)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-markdown-toc.el ends here

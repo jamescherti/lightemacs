@@ -27,19 +27,16 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
-  (require 'le-diminish))
+  (require 'lightemacs))
 
-(lightemacs-use-package
-  easy-escape
-  :diminish easy-escape-minor-mode
+(lightemacs-use-package easy-escape
   :commands easy-escape-minor-mode
   :hook (emacs-lisp-mode . easy-escape-minor-mode))
 
 (provide 'le-easy-escape)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-easy-escape.el ends here

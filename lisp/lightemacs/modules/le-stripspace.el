@@ -18,8 +18,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  stripspace
+(lightemacs-use-package stripspace
   :commands stripspace-local-mode
 
   :hook ((prog-mode . stripspace-local-mode)
@@ -44,7 +43,7 @@
 (provide 'le-stripspace)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-stripspace.el ends here

@@ -22,8 +22,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package
-  vertico
+(lightemacs-use-package vertico
   :commands (vertico-mode
              vertico-next
              vertico-previous
@@ -63,7 +62,7 @@
 (provide 'le-vertico)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-vertico.el ends here

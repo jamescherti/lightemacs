@@ -1,4 +1,4 @@
-;;; le-diminish.el --- le-diminish -*- lexical-binding: t -*-
+;;; le-flavor-micro.el --- Group: Default modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -9,22 +9,26 @@
 
 ;;; Commentary:
 
-;; Hides or abbreviates mode indicators in the Emacs
-;; mode line for a cleaner display
-;;
-;; URL: https://github.com/myrjola/diminish.el/
+;; The "micro" flavor.
 
 ;;; Code:
 
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package diminish)
+(lightemacs-load-modules
+ '(le-theme
+   le-keybindings
+   le-default-settings
+   le-dired
+   le-dired-filter))
 
-(provide 'le-diminish)
+;;; Provide
+
+(provide 'le-flavor-micro)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 
-;;; le-diminish.el ends here
+;;; le-flavor-micro.el ends here
