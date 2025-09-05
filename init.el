@@ -40,6 +40,17 @@
 
 (require 'le-core-package-manager)
 
+(defun lightemacs--run-after-init-hook ()
+  "Run `lightemacs--run-after-init-hook` at the appropriate time."
+  (run-hooks 'lightemacs-after-init-hook))
+
+(cond
+ ((eq lightemacs-package-manager 'elpaca)
+  (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
+
+ (t
+  (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
+
 ;;; Load modules, and post-init.el
 
 ;; Load all modules

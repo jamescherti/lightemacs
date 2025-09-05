@@ -910,6 +910,8 @@ Elisp file-type modules are disabled by default:
 
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
+- **le-shut-up**: The *shut-up* package suppresses output from functions that normally print to the *Messages* buffer or to the echo area. It provides a macro called `shut-up` that temporarily silences messages while evaluating its body. This is useful when running code that would otherwise clutter the user's *Messages* buffer with unnecessary output.
+
 ## Other Features
 
 In addition to modules, Lightemacs provides the following features:

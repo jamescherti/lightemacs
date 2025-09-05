@@ -88,51 +88,6 @@
         (overlay-recenter (point))
         (recenter arg))))))
 
-;;; On first input/file/buffer
-
-(defvar lightemacs-on-first-input-hook nil
-  "Transient hooks run before the first user input.")
-(defvar lightemacs-on-first-file-hook nil
-  "Transient hooks run before the first interactively opened file.")
-(defvar lightemacs-on-first-buffer-hook nil
-  "Transient hooks run before the first interactively opened buffer.")
-
-;; `permanent-local' ensures their values persist across major mode changes.
-(put 'lightemacs-on-first-input-hook 'permanent-local t)
-(put 'lightemacs-on-first-file-hook 'permanent-local t)
-(put 'lightemacs-on-first-buffer-hook 'permanent-local t)
-
-(defun lightemacs--on-run-first-input-hook (&rest _)
-  "Run `lightemacs-on-first-input-hook' once upon the first user input."
-  (when after-init-time
-    (remove-hook 'pre-command-hook #'lightemacs--on-run-first-input-hook)
-    (run-hooks 'lightemacs-on-first-input-hook)))
-
-(defun lightemacs--on-run-first-file-hook (&rest _)
-  "Run `lightemacs-on-first-file-hook' once upon the first opened file."
-  (when after-init-time
-    (remove-hook 'find-file-hook #'lightemacs--on-run-first-file-hook)
-    (remove-hook 'dired-initial-position-hook #'lightemacs--on-run-first-file-hook)
-    (run-hooks 'lightemacs-on-first-file-hook)))
-
-(defun lightemacs--on-run-first-buffer-hook (&rest _)
-  "Run `lightemacs-on-first-buffer-hook' once upon the first visible buffer."
-  (when after-init-time
-    (remove-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
-    (remove-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
-    (remove-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook)
-    (run-hooks 'lightemacs-on-first-buffer-hook)))
-
-(unless noninteractive
-  (add-hook 'pre-command-hook #'lightemacs--on-run-first-input-hook)
-
-  (add-hook 'find-file-hook #'lightemacs--on-run-first-file-hook)
-  (add-hook 'dired-initial-position-hook #'lightemacs--on-run-first-file-hook)
-
-  (add-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
-  (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
-  (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
-
 ;;; Find parent directory
 
 (defun lightemacs-find-parent-directory ()
@@ -155,7 +110,7 @@ If the buffer is not visiting a file, opens the current `default-directory'."
                 (dired-goto-file file))
               (lightemacs-recenter-maybe))))))))
 
-;;; Useful macros
+;;; Misc macros
 
 (defmacro lightemacs-recenter-if-out-of-view (&rest body)
   "Execute BODY and recenter if point is outside the original window bounds."
@@ -274,7 +229,7 @@ During byte-compilation, attempt to load FEATURE eagerly."
       `(lightemacs-shield-macros
          (progn ,@body)))))
 
-;;; lightemacs-use-package
+;;; lightemacs-use-package macro
 
 (defvar lightemacs--use-package-refreshed nil
   "Whether package contents have been refreshed for `lightemacs-use-package'.")
@@ -304,11 +259,11 @@ PLIST contains keyword arguments for `use-package`."
   (declare (indent 1))
   `(progn
      (lightemacs--before-use-package ',name ',plist)
-     ,(if (and (boundp 'byte-compile-current-file) byte-compile-current-file)
+     ,(if (bound-and-true-p byte-compile-current-file)
           `(eval '(use-package ,name ,@plist))
         `(use-package ,name ,@plist))))
 
-;;; Internal functions
+;;; Native comp functions
 
 (defun lightemacs--calculate-native-comp-async-jobs-number ()
   "Set `native-comp-async-jobs-number' based on the available CPUs."
@@ -324,6 +279,59 @@ PLIST contains keyword arguments for `use-package`."
    (t
     ;; Half (See `native-comp-async-jobs-number' default value)
     0)))
+
+;;; Hook: `lightemacs-after-init-hook'
+
+(defvar lightemacs-after-init-hook nil
+  "Hook run after LightEmacs initialization is complete.
+If `lightemacs-package-manager' is elpaca, this hook runs after
+`elpaca-after-init-hook'. Otherwise, it runs after `after-init-hook', similar to
+Emacs standard behavior.")
+
+;;; Hooks: On first input/file/buffer
+
+(defvar lightemacs-on-first-input-hook nil
+  "Transient hooks run before the first user input.")
+(defvar lightemacs-on-first-file-hook nil
+  "Transient hooks run before the first interactively opened file.")
+(defvar lightemacs-on-first-buffer-hook nil
+  "Transient hooks run before the first interactively opened buffer.")
+
+;; `permanent-local' ensures their values persist across major mode changes.
+(put 'lightemacs-on-first-input-hook 'permanent-local t)
+(put 'lightemacs-on-first-file-hook 'permanent-local t)
+(put 'lightemacs-on-first-buffer-hook 'permanent-local t)
+
+(defun lightemacs--on-run-first-input-hook (&rest _)
+  "Run `lightemacs-on-first-input-hook' once upon the first user input."
+  (when after-init-time
+    (remove-hook 'pre-command-hook #'lightemacs--on-run-first-input-hook)
+    (run-hooks 'lightemacs-on-first-input-hook)))
+
+(defun lightemacs--on-run-first-file-hook (&rest _)
+  "Run `lightemacs-on-first-file-hook' once upon the first opened file."
+  (when after-init-time
+    (remove-hook 'find-file-hook #'lightemacs--on-run-first-file-hook)
+    (remove-hook 'dired-initial-position-hook #'lightemacs--on-run-first-file-hook)
+    (run-hooks 'lightemacs-on-first-file-hook)))
+
+(defun lightemacs--on-run-first-buffer-hook (&rest _)
+  "Run `lightemacs-on-first-buffer-hook' once upon the first visible buffer."
+  (when after-init-time
+    (remove-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
+    (remove-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
+    (remove-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook)
+    (run-hooks 'lightemacs-on-first-buffer-hook)))
+
+(unless noninteractive
+  (add-hook 'pre-command-hook #'lightemacs--on-run-first-input-hook)
+
+  (add-hook 'find-file-hook #'lightemacs--on-run-first-file-hook)
+  (add-hook 'dired-initial-position-hook #'lightemacs--on-run-first-file-hook)
+
+  (add-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
+  (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
+  (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
 
 ;;; early-init.el and init.el functions
 

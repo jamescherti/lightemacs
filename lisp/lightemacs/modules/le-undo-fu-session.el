@@ -24,7 +24,7 @@
 (lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
-  (add-hook 'after-init-hook #'undo-fu-session-global-mode))
+  (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode))
 
 (provide 'le-undo-fu-session)
 

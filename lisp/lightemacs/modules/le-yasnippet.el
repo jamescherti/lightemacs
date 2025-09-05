@@ -30,7 +30,7 @@
              yas-reload-all
              yas-expand-snippet)
   :functions yas-filtered-definition
-  :hook (after-init . yas-global-mode)
+  :hook (lightemacs-after-init . yas-global-mode)
   :init
   (setq yas-verbosity 0)
   (setq yas-indent-line 'fixed)

@@ -31,6 +31,22 @@
 
 ;;; Use-package evil
 
+(defun lightemacs-evil-delete-backward-C-h ()
+  "In Evil insert state, make `C-h' behave like the `DEL' key.
+
+Correct `C-h' behavior to ensure `electric-pair' deletes adjacent pairs When
+using `electric-pair-mode', the expected behavior when pressing `C-h' near a
+pair of adjacent delimiters (e.g., () [] {}) is that both the opening and
+closing delimiters should be deleted together if they were inserted as a pair.
+This function corrects `C-h' behavior to ensure `electric-pair' deletes adjacent
+pairs.
+
+This function also prevents ElDoc help from disappearing in the minibuffer when
+pressing `C-h', since it is prefixed with `evil-delete'."
+  (interactive)
+  (when-let* ((del-binding (key-binding (kbd "DEL"))))
+    (call-interactively del-binding)))
+
 (lightemacs-use-package evil
   :commands (evil-mode
              evil-select-search-module)
@@ -41,11 +57,9 @@
   :bind (:map evil-normal-state-map
               ("-" . lightemacs-find-parent-directory))
 
-  :hook (after-init . evil-mode)
+  :hook (lightemacs-after-init . evil-mode)
 
   :init
-  (setq evil-symbol-word-search t)  ; t = Search for symbols
-
   (setq evil-search-wrap lightemacs-cycle)
 
   ;; Time in seconds of idle before updating search highlighting.
@@ -94,16 +108,48 @@
   ;; value.
   (evil-select-search-module 'evil-search-module 'evil-search)
 
+  ;; TODO: Patch: Pull request submitted.
+  ;; URL: https://github.com/emacs-evil/evil/pull/1975
+  ;; commit 3b80eb5c4496c21d72e233159b9698a73321afc5
+  ;; Author: James Cherti
+  ;; Date:   2025-08-07 09:11:23 -0400
+  ;;
+  ;; Fixes #1974: Correct C-h behavior to ensure electric-pair deletes adjacent
+  ;; pairs When using electric-pair-mode, the expected behavior when pressing
+  ;; C-h near a pair of adjacent delimiters (e.g., () [] {} "") is that both the
+  ;; opening and closing delimiters should be deleted together if they were
+  ;; inserted as a pair. This pull request fixes #1974. This pull request
+  ;; corrects C-h behavior to ensure electric-pair deletes adjacent pairs. It
+  ;; calls the same function as DEL (code 127) in electric-pair-mode-map:
+  (when (bound-and-true-p evil-want-C-h-delete)
+    (define-key evil-insert-state-map (kbd "C-h")
+                #'lightemacs-evil-delete-backward-C-h)
+
+    ;; Remove C-h from `evil-insert-state-bindings' and replace it
+    (setq evil-insert-state-bindings
+          (seq-filter
+           (lambda (binding)
+             (not (and (stringp (car binding))
+                       (string= (car binding) "\C-h"))))
+           evil-insert-state-bindings))
+
+    (add-to-list
+     'evil-insert-state-bindings
+     '("\C-h" . lightemacs-evil-delete-backward-C-h)))
+
+  ;; Eldoc
   (with-eval-after-load 'eldoc
     (eldoc-add-command 'evil-normal-state
-                       ;; 'evil-delete
-                       ;; 'evil-insert
+                       'lightemacs-evil-delete-backward-C-h
+                       'evil-delete-backward-C-h  ;; Patch pending TODO
                        'evil-change
                        'evil-replace)
 
+    ;; TODO pull request submitted.
+    ;; Author: James Cherti
+    ;; URL: https://github.com/emacs-evil/evil/pull/1980
     ;; Prevent ElDoc help from disappearing in the minibuffer when executing
     ;; certain Evil commands in Emacs.
-    ;; Fixes: https://github.com/emacs-evil/evil/pull/1980
     (when (fboundp 'eldoc-add-command-completions)
       ;; `evil-delete-back-to-indentation', `evil-delete-backward-word',
       ;; `evil-insert', `evil-insert-line', `evil-append', `evil-append-line'...

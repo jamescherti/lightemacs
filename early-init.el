@@ -21,6 +21,8 @@
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 1.0)
 
+(setq load-prefer-newer t)
+
 ;;; Update `load-path'
 
 (add-to-list 'load-path (expand-file-name "lisp/lightemacs" user-emacs-directory))
@@ -29,6 +31,12 @@
 (add-to-list 'load-path lightemacs-local-modules-directory)
 (add-to-list 'load-path lightemacs-core-directory)
 (add-to-list 'load-path lightemacs-modules-directory)
+
+;;; Load config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
 
 ;;; Load lightemacs.el
 
@@ -53,10 +61,6 @@
  :no-error)
 
 ;;; Load config.el
-
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
 
 (when lightemacs-native-comp-excluded-cpus
   (setq native-comp-async-jobs-number

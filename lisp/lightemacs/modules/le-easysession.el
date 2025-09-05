@@ -50,12 +50,12 @@
              easysession-switch-to-and-restore-geometry
              easysession-load-including-geometry)
 
-  :bind (("C-c ss" . easysession-save-as)
-         ("C-c sl" . easysession-switch-to)
+  :bind (("C-c ss" . easysession-save-as)  ; Save
+         ("C-c sl" . easysession-switch-to)  ; Load
+         ("C-c sL" . easysession-switch-to-and-restore-geometry)
          ("C-c sr" . easysession-rename)
-         ("C-c sL" . easysession-load)
-         ("C-c sd" . easysession-delete)
-         ("C-c sS" . easysession-save))
+         ("C-c sR" . easysession-reset)
+         ("C-c sd" . easysession-delete))
 
   :init
   ;; Load session

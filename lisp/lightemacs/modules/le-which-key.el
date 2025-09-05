@@ -25,7 +25,7 @@
 
   ;; TODO Fix first key press
   ;; :hook (lightemacs-on-first-input-hook . which-key-mode)
-  :hook (after-init . which-key-mode)
+  :hook (lightemacs-after-init . which-key-mode)
 
   :init
   (setq

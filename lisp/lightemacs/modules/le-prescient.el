@@ -26,7 +26,7 @@
              prescient-persist-mode)
 
   :init
-  (add-hook 'after-init-hook #'prescient-persist-mode)
+  (add-hook 'lightemacs-after-init-hook #'prescient-persist-mode)
 
   ;; The .el extension is required; without it, Emacs may prompt for a file
   ;; encoding (e.g., UTF-8).

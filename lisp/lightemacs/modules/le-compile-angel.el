@@ -29,26 +29,15 @@
 
 (lightemacs-use-package compile-angel
   :commands compile-angel-on-load-mode
-  :hook (after-init . compile-angel-on-load-mode)
+  :hook (lightemacs-after-init . compile-angel-on-load-mode)
   :init
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
   (setq compile-angel-debug init-file-debug)
 
-  ;; Enable `compile-angel-on-load-mode', a global mode that compiles .el files,
-  ;; including those already loaded via `load' or `require' and those loaded
-  ;; subsequently after the mode is activated.
-  ;;
-  ;; Since this uses `after-init-hook', it is necessary to ensure that
-  ;; `compile-angel-on-load-compile-features' and
-  ;; `compile-angel-on-load-compile-load-history' are both set to t.
-  (setq compile-angel-on-load-compile-load-history t)
-  (setq compile-angel-on-load-compile-features t)
-
   :preface
   (defun le-compile-angel-exclude (path)
     "Add a file or directory to the list of exclusions for compilation.
-
 PATH should be a string representing a file or directory path. If PATH is not
 already present in `compile-angel-excluded-files', the basename of PATH,
 prefixed with a forward slash, is appended to that list. This ensures that the

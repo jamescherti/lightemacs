@@ -42,7 +42,7 @@
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
 
-  :hook (after-init . persist-text-scale-mode)
+  :hook (lightemacs-after-init . persist-text-scale-mode)
 
   :init
   (setq text-scale-mode-step 1.07))

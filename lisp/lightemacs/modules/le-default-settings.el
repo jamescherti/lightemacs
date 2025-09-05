@@ -83,7 +83,7 @@
 ;;; Frame
 
 ;; TODO use macro?
-(add-hook 'after-init-hook #'window-divider-mode)
+(add-hook 'lightemacs-after-init-hook #'window-divider-mode)
 
 ;;; auto-mode-alist
 
@@ -93,6 +93,7 @@
 
          ;; Git
          ("/COMMIT_EDITMSG\\'" . diff-mode)
+         ("/git-rebase-todo\\'" . diff-mode)
 
          ;; Arch Linux
          ("\\.install\\'" . sh-mode)  ; PKGBUILD
@@ -125,11 +126,15 @@
 ;; * lisp/progmodes/python.el (python-base-mode): Add more commands to
 ;; 'eldoc-add-command-completions'.
 (with-eval-after-load 'eldoc
-  (when (fboundp 'eldoc-add-command-completions)
-    (funcall 'eldoc-add-command-completions
-             "python-indent-dedent-line-backspace"
-             "comment-indent-new-line"
-             "delete-char")))
+  (eldoc-add-command-completions
+   "python-indent-dedent-line-backspace"
+   "comment-indent-new-line"
+   "delete-char"))
+
+;; TODO: Send patch to Emacs
+(with-eval-after-load 'eldoc
+  (eldoc-add-command-completions
+   "electric-pair-delete-pair"))
 
 ;; TODO: Accepted in Emacs 31. Not released yet.
 ;; commit cf6c365d5cf8ee5f460e59393e76b934a1a432b2

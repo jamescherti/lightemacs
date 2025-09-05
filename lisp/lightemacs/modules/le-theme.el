@@ -49,21 +49,13 @@ Set to nil to disable installing this package at startup.")
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme lightemacs-theme-name t)))
 
-(defun lightemacs-theme-install ()
-  "Install and configure `lightemacs-theme-package' using `use-package'."
-  (when lightemacs-theme-package
-    (eval `(lightemacs-use-package
-             ,lightemacs-theme-package
-             :demand t))))
-
 ;;; Main
 
-;; Install theme
-(lightemacs-theme-install)
-
-;; Load theme
-(when lightemacs-theme-name
-  (lightemacs-load-default-theme))
+(when lightemacs-theme-package
+  (eval `(lightemacs-use-package ,lightemacs-theme-package
+           :demand t
+           :config
+           (lightemacs-load-default-theme))))
 
 (provide 'le-theme)
 

@@ -29,7 +29,7 @@
 (lightemacs-use-package treesit-auto
   :commands global-treesit-auto-mode
   :functions treesit-auto-add-to-auto-mode-alist
-  :hook (after-init . global-treesit-auto-mode)
+  :hook (lightemacs-after-init . global-treesit-auto-mode)
   :init
   (setq treesit-auto-install 'prompt)
   :config

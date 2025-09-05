@@ -26,7 +26,7 @@
   :commands save-place-mode
 
   ;; TODO use on first file?
-  :hook (after-init . save-place-mode)
+  :hook (lightemacs-after-init . save-place-mode)
 
   :preface
   (defun lightemacs-saveplace--recenter ()

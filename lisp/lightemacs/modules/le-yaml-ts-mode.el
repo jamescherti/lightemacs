@@ -43,7 +43,7 @@ Versions affected by this bug: Emacs 30.1, 30.2, and <= 29.*."
              (funcall 'treesit-ready-p 'yaml))
     (add-to-list 'auto-mode-alist '("\.[Yy][Aa][Mm]?[Ll]\\'" . yaml-ts-mode))))
 
-(add-hook 'after-init-hook #'lightemacs-yaml-ts-mode--setup)
+(add-hook 'lightemacs-after-init-hook #'lightemacs-yaml-ts-mode--setup)
 
 ;;; Enhance `yaml-ts-mode' indentation
 

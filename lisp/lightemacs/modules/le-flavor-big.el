@@ -21,7 +21,7 @@
 ;;   grep -v '^le-flavor-' | grep -v '^le-treesit-auto' \
 ;;   | grep -v '^le-easysession' | grep -v '-evil' | grep -v '^le-vterm' \
 ;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel' \
-;;   | grep -v '^le-yaml' | grep -v '^le-group-emacs-lisp' | grep -v '^le-theme'
+;;   | grep -v '^le-yaml' | grep -v '^le-group-emacs-lisp' | \
 ;;   | grep -v '^le-diminish' | sort
 
 ;;; Code:
@@ -31,6 +31,7 @@
 
 (lightemacs-load-modules
  '(;; All modules:
+   le-theme
    le-ace-window
    le-aggressive-indent
    le-apheleia

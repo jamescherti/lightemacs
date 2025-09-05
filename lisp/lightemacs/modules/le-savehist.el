@@ -22,7 +22,7 @@
 (lightemacs-use-package savehist
   :ensure nil
   :commands savehist-mode
-  :hook (after-init . savehist-mode))
+  :hook (lightemacs-after-init . savehist-mode))
 
 (provide 'le-savehist)
 
