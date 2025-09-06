@@ -19,8 +19,6 @@
 ;; restart. All files, Dired buffers, and window layouts come back as they were,
 ;; so you can continue working right where you left off.
 ;;
-;; You can
-;;
 ;; URL: https://github.com/jamescherti/easysession.el
 
 ;;; Code:
@@ -30,10 +28,15 @@
 (eval-and-compile
   (require 'lightemacs))
 
-;; (defvar lightemacs-easysession-save-scratch t
-;;   "Make EasySession also save and restore the scratch buffer.")
+(defvar lightemacs-easysession-load-session-on-startup t
+  "If non-nil, automatically load the main session when Emacs starts.
+This variable controls whether `easysession' restores the main session on
+startup. Set to nil to disable automatic session loading.")
 
-(defvar lightemacs-easysession-load-including-geometry t)
+(defvar lightemacs-easysession-restore-geometry-on-startup t
+  "If non-nil, restore window geometry (size/position) when loading a session.
+This works in conjunction with `lightemacs-easysession-load-session-on-startup'.
+Set to nil to ignore window size and position during session restoration.")
 
 ;;; use-package easysession
 
@@ -59,33 +62,26 @@
 
   :init
   ;; Load session
-  (if lightemacs-easysession-load-including-geometry
-      ;; Including geometry
+  (when lightemacs-easysession-load-session-on-startup
+    (if lightemacs-easysession-restore-geometry-on-startup
+        ;; Including geometry
+        (if (daemonp)
+            (add-hook 'server-after-make-frame-hook
+                      #'easysession-load-including-geometry 102)
+          (add-hook 'emacs-startup-hook
+                    #'easysession-load-including-geometry 102))
+      ;; Excluding geometry
       (if (daemonp)
           (add-hook 'server-after-make-frame-hook
                     #'easysession-load-including-geometry 102)
         (add-hook 'emacs-startup-hook
-                  #'easysession-load-including-geometry 102))
-    ;; Excluding geometry
-    (if (daemonp)
-        (add-hook 'server-after-make-frame-hook
-                  #'easysession-load-including-geometry 102)
-      (add-hook 'emacs-startup-hook
-                #'easysession-load-including-geometry 102)))
+                  #'easysession-load-including-geometry 102))))
 
   ;; Auto save mode
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103)
 
-  (setq easysession-mode-line-misc-info t))
-
-;; (when lightemacs-easysession-save-scratch
-;;   (lightemacs-use-package
-;;     easysession-scratch
-;;     :if lightemacs-easysession-save-scratch
-;;     :ensure nil
-;;     :after easysession
-;;     :config
-;;     (easysession-scratch-mode)))
+  ;; Alternative to: (setq easysession-mode-line-misc-info t)
+  (setq easysession-save-mode-lighter-show-session-name t))
 
 (provide 'le-easysession)
 

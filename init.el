@@ -40,6 +40,8 @@
 
 (require 'le-core-package-manager)
 
+;;; Run `lightemacs-after-init-hook'
+
 (defun lightemacs--run-after-init-hook ()
   "Run `lightemacs--run-after-init-hook` at the appropriate time."
   (run-hooks 'lightemacs-after-init-hook))
@@ -51,7 +53,18 @@
  (t
   (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
 
-;;; Load modules, and post-init.el
+;;; Load config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
+
+(when (and lightemacs-native-comp-excluded-cpus
+           (boundp 'native-comp-async-jobs-number))
+  (setq native-comp-async-jobs-number
+        (lightemacs--calculate-native-comp-async-jobs-number)))
+
+;;; Load modules
 
 ;; Load all modules
 (if (fboundp 'lightemacs-load-modules)
@@ -60,7 +73,8 @@
       (funcall 'lightemacs-load-modules lightemacs-modules))
   (error "Undefined function: lightemacs-load-modules"))
 
-;; Load post-init.el
+;;; Load post-init.el
+
 (let ((el-file (expand-file-name "post-init.el"
                                  lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))

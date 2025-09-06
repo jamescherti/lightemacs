@@ -31,15 +31,14 @@
   (add-hook 'lightemacs-on-first-buffer-hook #'gcmh-mode)
   (setq gcmh-verbose init-file-debug
         gcmh-auto-idle-delay-factor 10
-        gcmh-high-cons-threshold (* 128 1024 1024))
 
-  ;; This variable determines how long Emacs should wait (in seconds) while
-  ;; being idle before triggering garbage collection. "Idle" here means no
-  ;; keyboard or mouse input is received for the specified period.
-  (setq gcmh-idle-delay 'auto)
+        gcmh-high-cons-threshold (* 256 1024 1024)
+        gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold
 
-  (setq gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
-
+        ;; This variable determines how long Emacs should wait (in seconds) while
+        ;; being idle before triggering garbage collection. "Idle" here means no
+        ;; keyboard or mouse input is received for the specified period.
+        gcmh-idle-delay 'auto))
 (provide 'le-gcmh)
 
 ;; Local variables:

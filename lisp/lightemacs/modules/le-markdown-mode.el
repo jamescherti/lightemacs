@@ -36,11 +36,20 @@
 
   :init
   (setq markdown-fontify-code-blocks-natively t
-        markdown-asymmetric-header t
+
+        ;; Extra languages made available when inserting GFM code blocks.
+        ;; Language strings must have be trimmed of whitespace and not
+        ;; contain any curly braces. They may be of arbitrary
+        ;; capitalization, though.
         markdown-gfm-additional-languages '("sh")
-        markdown-italic-underscore t
-        markdown-make-gfm-checkboxes-buttons t
-        markdown-fontify-whole-heading-line t))
+
+        ;; Other options
+        ;; markdown-asymmetric-header t
+        ;; markdown-italic-underscore t
+        ;; markdown-make-gfm-checkboxes-buttons t
+        ;; markdown-fontify-whole-heading-line t
+        )
+  )
 
 (provide 'le-markdown-mode)
 

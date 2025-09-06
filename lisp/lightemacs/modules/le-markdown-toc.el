@@ -10,7 +10,8 @@
 ;;; Commentary:
 
 ;; Automatically generate or refresh the table of contents in Markdown files
-;; using 'M-x markdown-toc-generate-or-refresh-toc'.
+;; using the 'markdown-toc-generate-or-refresh-toc' function.
+;; URL: https://github.com/ardumont/markdown-toc
 
 ;;; Code:
 

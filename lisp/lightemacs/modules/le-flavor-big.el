@@ -22,7 +22,7 @@
 ;;   | grep -v '^le-easysession' | grep -v '-evil' | grep -v '^le-vterm' \
 ;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel' \
 ;;   | grep -v '^le-yaml' | grep -v '^le-group-emacs-lisp' | \
-;;   | grep -v '^le-diminish' | sort
+;;   grep -v '^le-group-markdown' | grep -v '^le-diminish' | sort
 
 ;;; Code:
 
@@ -68,6 +68,7 @@
    le-marginalia
    le-markdown-mode
    le-markdown-toc
+   le-edit-indirect
    le-orderless
    le-org
    le-org-appear

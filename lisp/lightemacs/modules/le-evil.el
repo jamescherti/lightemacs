@@ -105,7 +105,8 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   ;; value.
   (evil-select-search-module 'evil-search-module 'evil-search)
 
-  ;; TODO: Patch: Pull request submitted.
+  ;; NOTE: This patch has been merged into the Emacs master branch but has not
+  ;; been officially released yet.
   ;; URL: https://github.com/emacs-evil/evil/pull/1975
   ;; commit 3b80eb5c4496c21d72e233159b9698a73321afc5
   ;; Author: James Cherti

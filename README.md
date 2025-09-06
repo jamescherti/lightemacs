@@ -671,7 +671,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
   ```
 - **le-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **le-wgrep**: The [wgrep](https://github.com/mhayashi1120/Emacs-wgrep) (Writable Grep) package enables you to convert a grep, consult-ripgrep, or Embark Export buffers into an editable interface. It allows in-place modification of matched lines within the results buffer, which can then be propagated back to the corresponding files upon confirmation. This facilitates precise, bulk edits across multiple files efficiently, eliminating the need to open each file individually, and effectively transforms the grep results buffer into a controlled, multi-file editing environment.
-- **le-markdown-mode**: The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
+- **le-group-markdown**: Configures the [markdown-mode](https://github.com/jrblevin/markdown-mode) package, which provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM). This group also configures [markdown-toc](https://github.com/ardumont/markdown-toc).
 - **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 - **le-winner**: Track changes in the window configuration, allowing undoing actions such as closing windows using `winner-undo`.
@@ -759,6 +759,7 @@ To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
 ```
 
 Usage:
+
 - `M-x easysession-switch-to` to switch to another session or `easysession-load` to reload the current one,
 - `M-x easysession-save-as` to save the current session as the current name or another name.
 
@@ -771,6 +772,12 @@ The following key bindings are defined for working with **EasySession**. All com
 - **`C-c sS`** → Save the current session (`easysession-save`).
 
 The **le-easysession** module automatically persists and restores the *scratch* buffer. This behavior is enabled by default, but it can be disabled by setting the variable `lightemacs-easysession-save-scratch` to nil.
+
+Customizations:
+
+* **`lightemacs-easysession-load-session-on-startup`** (Default: `t`): If non-nil, Emacs will automatically restore the main session on startup. Set this to `nil` to disable automatic session loading.
+
+* **`lightemacs-easysession-restore-geometry-on-startup`** (Default: `t`): If non-nil, window geometry (size and position of frames) is restored along with the session. This setting works together with `lightemacs-easysession-load-session-on-startup`. Set to `nil` to ignore window size and position during session restoration.
 
 ### Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)
 
@@ -891,7 +898,7 @@ Here are a few other modules disabled by default:
 
 Elisp file-type modules are disabled by default:
 
-- **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to nil forces `yaml-mode` to load even if Tree-sitter is available.) It also ensures that the indentation adheres to the YAML standard: two spaces and no tabs.
+- **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available.) It also ensures that the indentation adheres to the YAML standard: two spaces and no tabs.
   ```emacs-lisp
   ;; Enable the `le-paredit' module
   (add-to-list 'lightemacs-modules 'le-group-yaml)
@@ -911,6 +918,8 @@ Elisp file-type modules are disabled by default:
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
 - **le-shut-up**: The *shut-up* package suppresses output from functions that normally print to the *Messages* buffer or to the echo area. It provides a macro called `shut-up` that temporarily silences messages while evaluating its body. This is useful when running code that would otherwise clutter the user's *Messages* buffer with unnecessary output.
+
+- **le-evil-visualstar**: Enables [evil-visualstar](https://github.com/bling/evil-visualstar), which allows searching for the current visual selection using `*` or `#`. **Usage:** Create a visual selection with `v` or `V`, then press `*` to search forward or `#` to search backward. When `evil-visualstar/persistent` is non-nil, visual state remains active, enabling repeated searches without reselecting the text.
 
 ## Other Features
 

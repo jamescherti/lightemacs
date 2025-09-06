@@ -108,7 +108,9 @@
 
 ;;; Patches
 
-;; TODO: Accepted in Emacs 31. Not released yet.
+;; NOTE: This patch has been merged into the Emacs master branch but has not
+;; been officially released yet.
+;;
 ;; commit 4e37a99c20ad35a4e46ee9291c94940ec00fb77a
 ;; Author: James Cherti
 ;; Date:   2025-03-19 11:56:11 -0400
@@ -136,7 +138,8 @@
   (eldoc-add-command-completions
    "electric-pair-delete-pair"))
 
-;; TODO: Accepted in Emacs 31. Not released yet.
+;; NOTE: This patch has been merged into the Emacs master branch but has not
+;; been officially released yet.
 ;; commit cf6c365d5cf8ee5f460e59393e76b934a1a432b2
 ;; Author: James Cherti
 ;; Date:   2025-04-11 10:18:19 -0400
@@ -167,6 +170,55 @@
 
 (add-hook 'sh-mode-hook #'lightemacs-default-settings--sh-syntax-table)
 (add-hook 'bash-ts-mode-hook #'lightemacs-default-settings--sh-syntax-table)
+
+(with-eval-after-load 'sh-script
+  ;; NOTE: This patch has been merged into the Emacs master branch but has not
+  ;; been officially released yet.
+  ;; commit 2ea0919550366babfea1de6468ef9e8b1857b478
+  ;; Author: James Cherti
+  ;; Date:   2024-11-24 12:09:33 -0500
+  ;;
+  ;; Support hyphen in Bash function names
+  ;;
+  ;; * lisp/progmodes/sh-script.el (sh-imenu-generic-expression): Add
+  ;; hyphen to function-name regexp.
+  (setq sh-imenu-generic-expression
+        `((sh
+           . ((nil
+               ;; function FOO
+               ;; function FOO()
+               "^\\s-*function\\s-+\\([[:alpha:]_][[:alnum:]_]*\\)\\s-*\\(?:()\\)?"
+               1)
+              ;; FOO()
+              (nil
+               "^\\s-*\\([[:alpha:]_][[:alnum:]_]*\\)\\s-*()"
+               1)))
+          ;; The difference between the Bash regular expression and the sh regular
+          ;; expression is that Bash also allows hyphens (-) in function names.
+          (bash
+           . ((nil
+               ;; function FOO
+               ;; function FOO()
+               "^\\s-*function\\s-+\\([[:alpha:]_][[:alnum:]_-]*\\)\\s-*\\(?:()\\)?"
+               1)
+              ;; FOO()
+              (nil
+               "^\\s-*\\([[:alpha:]_][[:alnum:]_-]*\\)\\s-*()"
+               1)))
+          (mksh
+           . ((nil
+               ;; function FOO
+               ;; function FOO()
+               ,(rx bol (* (syntax whitespace)) "function" (+ (syntax whitespace))
+                    (group (1+ (not (any "\0\t\n \"$&'();<=>\\`|#*?[]/"))))
+                    (* (syntax whitespace)) (? "()"))
+               1)
+              (nil
+               ;; FOO()
+               ,(rx bol (* (syntax whitespace))
+                    (group (1+ (not (any "\0\t\n \"$&'();<=>\\`|#*?[]/"))))
+                    (* (syntax whitespace)) "()")
+               1))))))
 
 ;;; Provide
 
