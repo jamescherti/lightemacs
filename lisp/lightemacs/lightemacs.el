@@ -234,22 +234,24 @@ During byte-compilation, attempt to load FEATURE eagerly."
 (defvar lightemacs--use-package-refreshed nil
   "Whether package contents have been refreshed for `lightemacs-use-package'.")
 
-(defun lightemacs--before-use-package (name plist)
+(defun lightemacs--before-use-package (_name _plist)
   "Run this function before `lightemacs-use-package' if :ensure is non-nil.
 NAME is the symbol identifying the package.
 PLIST contains keyword arguments for `use-package`."
-  (when (and (not lightemacs--use-package-refreshed)
-             lightemacs-use-package-refresh-contents
-             (eq lightemacs-package-manager 'use-package)
-             (cond ((memq :ensure plist)
-                    (plist-get plist :ensure))
-                   (t
-                    use-package-always-ensure))
-             (not (package-installed-p name)))
-    (lightemacs-verbose-message
-      "Refreshing package contents before installing %s" name)
-    (package-refresh-contents)
-    (setq lightemacs--use-package-refreshed t)))
+  ;; TODO Only refresh packages when the feature is not available
+  ;; (when (and (not lightemacs--use-package-refreshed)
+  ;;            lightemacs-use-package-refresh-contents
+  ;;            (eq lightemacs-package-manager 'use-package)
+  ;;            (cond ((memq :ensure plist)
+  ;;                   (plist-get plist :ensure))
+  ;;                  (t
+  ;;                   use-package-always-ensure))
+  ;;            (not (package-installed-p name)))
+  ;;   (lightemacs-verbose-message
+  ;;     "Refreshing package contents before installing %s" name)
+  ;;   (package-refresh-contents)
+  ;;   (setq lightemacs--use-package-refreshed t))
+  t)
 
 (defmacro lightemacs-use-package (name &rest plist)
   "Configure an Emacs package using `use-package` safely.

@@ -80,9 +80,6 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   ;; Do not modify the mode line to show Evil state
   (setq evil-mode-line-format nil)
 
-  ;; Highlight only in the selected window to reduce Emacs' workload
-  (setq evil-ex-interactive-search-highlight 'selected-window)
-
   ;; Suppress motion errors during keyboard macro execution in Evil
   (setq evil-kbd-macro-suppress-motion-error t)
 
