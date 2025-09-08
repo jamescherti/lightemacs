@@ -680,7 +680,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 - **le-which-key**: The built-in which-key package dynamically displays available keybindings in a popup or dedicated buffer as a key sequence is entered. It facilitates discovery and retention of key combinations by presenting context-sensitive completions, thereby enhancing navigation through complex or highly customized keymaps.
 
 These are core modules that are always enabled:
-- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, window behavior... *This is one of the most important modules. Keep it enabled.**
+- **le-default-settings**: Configure enhanced default settings, including improved defaults, Tree-sitter language source URLs for 54 programming languages (`treesit-language-source-alist`), backup files, warnings to ignore, a minibuffer depth indicator, scrolling, window behavior... *This is one of the most important modules. Keep it enabled.*
 - **le-theme**: The `le-theme` module loads the default theme. It can be configured via the `lightemacs-theme-name` variable. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
 
 ## Modules Disabled by Default

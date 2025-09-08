@@ -172,7 +172,10 @@ loaded only when needed, enabling exceptionally fast, deferred startup.")
                                   ;; Tomorrow Night theme, which is renowned
                                   ;; for its elegant color palette that is
                                   ;; pleasing to the eyes.
-                                  le-theme)
+                                  le-theme
+
+                                  ;; Miscellaneous Lightemacs default settings.
+                                  le-default-settings)
   "Core modules that are enabled by default.
 Do not modify this variable.")
 

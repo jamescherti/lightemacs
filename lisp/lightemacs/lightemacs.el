@@ -74,19 +74,44 @@
 
 ;;; Useful macros
 
-(defun lightemacs-recenter-maybe (&optional arg)
-  "Recenter maybe. ARG is the same argument as `recenter'."
+(defun lightemacs-recenter-maybe (&optional arg adjust-arg)
+  "Conditionally recenter the window around point.
+
+If the point has moved outside the visible portion of the window, recenter it.
+ARG is the same as the argument to `recenter': a number specifies the line
+position to recenter the point, nil recenters in the middle of the window, and a
+negative number counts from the bottom.
+
+If ADJUST-ARG is non-nil, the function may adjust ARG to improve visibility
+depending on whether the point is above or below the window.
+
+If ADJUST-ARG is nil (the default), ARG is passed to recenter unchanged.
+
+This function only affects the current window and does nothing if the current
+buffer is not displayed in the selected window."
   (when (eq (current-buffer) (window-buffer))
     (let ((point (point))
           (wend (window-end nil t))
-          (wstart (window-start nil)))
+          (wstart (window-start nil))
+          (do-recenter nil))
+      (when (numberp arg)
+        (setq arg (abs arg)))
+
+      ;; If the end of the buffer is not already on the screen, scroll to
+      ;; position it near the bottom.
+      (overlay-recenter (point))
+
       (cond
-       ((or (> point wend)
-            (< point wstart))
-        ;; If the end of the buffer is not already on the screen, scroll to
-        ;; position it near the bottom.
-        (overlay-recenter (point))
-        (recenter arg))))))
+       ((> point wend)
+        (setq do-recenter t)
+        (when (and adjust-arg arg)
+          (setq arg (* -1 arg))))
+
+       ((< point wstart)
+        (setq do-recenter t)))
+
+      (when do-recenter
+        (recenter arg t)))))
 
 ;;; Find parent directory
 
