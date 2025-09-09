@@ -62,94 +62,6 @@
 
 (setq treesit-font-lock-level 4) ; Max: 4
 
-;; 54 languages
-(setq treesit-language-source-alist
-      '((bash . "https://github.com/tree-sitter/tree-sitter-bash")
-        (python . "https://github.com/tree-sitter/tree-sitter-python")
-        (yaml . "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
-        (json . "https://github.com/tree-sitter/tree-sitter-json")
-        (html . "https://github.com/tree-sitter/tree-sitter-html")
-        (lua . "https://github.com/tree-sitter-grammars/tree-sitter-lua")
-        (dockerfile . "https://github.com/camdencheek/tree-sitter-dockerfile")
-        (java . "https://github.com/tree-sitter/tree-sitter-java")
-        (javascript . "https://github.com/tree-sitter/tree-sitter-javascript")
-        ;; TODO: add markdown to treesit auto
-        (markdown
-         ;; For split parsers like Markdown, the extra two fields are required:
-         ;; 1. "split_parser" indicates that this language uses a parser split
-         ;;    into multiple components.
-         ;; 2. The directory path (e.g., "tree-sitter-markdown/src") points to
-         ;;    the location of the parser source within the repository. Without
-         ;;    these, treesit would not be able to find and compile the parser
-         ;;    correctly.
-         ;;
-         ;; A split parser is a Tree-sitter parser that is divided into multiple
-         ;; smaller parsers instead of being a single file or module. Each
-         ;; smaller parser handles a part of the language, such as different
-         ;; syntaxes or embedded languages, and together they form the complete
-         ;; parser. This approach makes it easier to manage complex languages,
-         ;; like Markdown, which can contain code blocks, inline formatting, and
-         ;; other embedded languages. In Emacs, specifying "split_parser" and
-         ;; the source directory tells treesit how to find and build all the
-         ;; pieces correctly.
-         "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-         "split_parser"
-         "tree-sitter-markdown/src")
-        ;; TODO: add markdown-inline to treesit auto
-        (markdown-inline
-         "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-         "split_parser"
-         "tree-sitter-markdown-inline/src")
-        ;; TODO: add php to treesit auto
-        (php
-         "https://github.com/tree-sitter/tree-sitter-php"
-         "master"
-         "php/src")
-        (c . "https://github.com/tree-sitter/tree-sitter-c")
-        (cpp . "https://github.com/tree-sitter/tree-sitter-cpp")
-        (c-sharp . "https://github.com/tree-sitter/tree-sitter-c-sharp")
-        (commonlisp . "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp")
-        (css . "https://github.com/tree-sitter/tree-sitter-css")
-        (glsl . "https://github.com/tree-sitter-grammars/tree-sitter-glsl")
-        (go . "https://github.com/tree-sitter/tree-sitter-go")
-        (julia . "https://github.com/tree-sitter/tree-sitter-julia")
-        (make . "https://github.com/tree-sitter-grammars/tree-sitter-make")
-        (ruby . "https://github.com/tree-sitter/tree-sitter-ruby")
-        (rust . "https://github.com/tree-sitter/tree-sitter-rust")
-        (scala . "https://github.com/tree-sitter/tree-sitter-scala")
-        (toml . "https://github.com/tree-sitter/tree-sitter-toml")
-        (tsx . "https://github.com/tree-sitter/tree-sitter-typescript")
-        (typescript . "https://github.com/tree-sitter/tree-sitter-typescript")
-        (vue . "https://github.com/tree-sitter-grammars/tree-sitter-vue")
-
-        (heex . "https://github.com/phoenixframework/tree-sitter-heex")
-        (janet . "https://github.com/sogaiu/tree-sitter-janet-simple")
-        (kotlin . "https://github.com/fwcd/tree-sitter-kotlin")
-        (latex . "https://github.com/latex-lsp/tree-sitter-latex")
-        (magik . "https://github.com/krn-robin/tree-sitter-magik")
-        (nix . "https://github.com/nix-community/tree-sitter-nix")
-        (nu . "https://github.com/nushell/tree-sitter-nu")
-        (org . "https://github.com/milisims/tree-sitter-org")
-        (perl . "https://github.com/ganezdragon/tree-sitter-perl")
-        (proto . "https://github.com/mitchellh/tree-sitter-proto")
-        (r . "https://github.com/r-lib/tree-sitter-r")
-        (sql . "https://github.com/DerekStride/tree-sitter-sql")
-        (surface . "https://github.com/connorlay/tree-sitter-surface")
-        (typst . "https://github.com/uben0/tree-sitter-typst")
-        (verilog . "https://github.com/gmlarumbe/tree-sitter-verilog")
-        (vhdl . "https://github.com/alemuller/tree-sitter-vhdl")
-        (wast . "https://github.com/wasm-lsp/tree-sitter-wasm")
-        (wat . "https://github.com/wasm-lsp/tree-sitter-wasm")
-        (wgsl . "https://github.com/mehmetoguzderin/tree-sitter-wgsl")
-        (awk . "https://github.com/Beaglefoot/tree-sitter-awk")
-        (bibtex . "https://github.com/latex-lsp/tree-sitter-bibtex")
-        (blueprint . "https://github.com/huanie/tree-sitter-blueprint")
-        (clojure . "https://github.com/sogaiu/tree-sitter-clojure")
-        (cmake . "https://github.com/uyha/tree-sitter-cmake")
-        (dart . "https://github.com/ast-grep/tree-sitter-dart")
-        (elixir . "https://github.com/elixir-lang/tree-sitter-elixir")
-        (gomod . "https://github.com/camdencheek/tree-sitter-go-mod")))
-
 ;;; Autosave
 
 ;;; Tools (ripgrep and fd)
@@ -201,35 +113,35 @@
 
 ;;; Patches
 
-;; NOTE: This patch has been merged into the Emacs master branch but has not
-;; been officially released yet.
-;;
-;; commit 4e37a99c20ad35a4e46ee9291c94940ec00fb77a
-;; Author: James Cherti
-;; Date:   2025-03-19 11:56:11 -0400
-;;
-;; ElDoc: Add more commands using 'eldoc-add-command-completions'
-;;
-;; Add more commands to 'eldoc-add-command-completions' to fix disappearing
-;; ElDoc help in the minibuffer for the following cases:
-;; - All modes: Added "comment-indent-new-line".
-;; - All modes: Added "delete-char" for handling when the user presses delete.
-;; - Python mode: Added "python-indent-dedent-line-backspace" for handling when
-;; the user presses backspace.
-;;
-;; * lisp/emacs-lisp/eldoc.el (eldoc-remove-command-completions):
-;; * lisp/progmodes/python.el (python-base-mode): Add more commands to
-;; 'eldoc-add-command-completions'.
 (with-eval-after-load 'eldoc
+  ;; NOTE: This patch has been merged into the Emacs master branch but has not
+  ;; been officially released yet.
+  ;;
+  ;; commit 4e37a99c20ad35a4e46ee9291c94940ec00fb77a
+  ;; Author: James Cherti
+  ;; Date:   2025-03-19 11:56:11 -0400
+  ;;
+  ;; ElDoc: Add more commands using 'eldoc-add-command-completions'
+  ;;
+  ;; Add more commands to 'eldoc-add-command-completions' to fix disappearing
+  ;; ElDoc help in the minibuffer for the following cases:
+  ;; - All modes: Added "comment-indent-new-line".
+  ;; - All modes: Added "delete-char" for handling when the user presses delete.
+  ;; - Python mode: Added "python-indent-dedent-line-backspace" for handling when
+  ;; the user presses backspace.
+  ;;
+  ;; * lisp/emacs-lisp/eldoc.el (eldoc-remove-command-completions):
+  ;; * lisp/progmodes/python.el (python-base-mode): Add more commands to
+  ;; 'eldoc-add-command-completions'.
   (eldoc-add-command-completions
    "python-indent-dedent-line-backspace"
    "comment-indent-new-line"
-   "delete-char"))
+   "delete-char")
 
-;; TODO: Send patch to Emacs
-(with-eval-after-load 'eldoc
+  ;; TODO: Send patch to Emacs
   (eldoc-add-command-completions
    "electric-pair-delete-pair"))
+
 
 ;; NOTE: This patch has been merged into the Emacs master branch but has not
 ;; been officially released yet.
@@ -317,6 +229,7 @@
 
 ;; We're using `dtrt-indent'
 (setq python-indent-guess-indent-offset nil)
+(defvar python-indent-offset 4)
 
 ;;; Provide
 

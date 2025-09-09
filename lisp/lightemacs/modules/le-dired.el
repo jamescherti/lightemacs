@@ -21,6 +21,16 @@
   "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.
 The user can navigate to the parent directory by pressing the - key instead.")
 
+(defvar lightemacs-dired-hide-details-mode t
+  "Non-nil value enables `dired-hide-details-mode'.
+When enabled, `dired' automatically hides file details such as permissions,
+size, and modification dates.")
+
+(defvar lightemacs-dired-group-directories-first t
+  "If non-nil, Dired groups directories before files in listings.
+When enabled, all directories are displayed at the beginning of the Dired
+buffer, followed by regular files.")
+
 (lightemacs-use-package dired
   :ensure nil
   :commands (dired
@@ -32,24 +42,23 @@ The user can navigate to the parent directory by pressing the - key instead.")
              dired-hide-details-mode)
 
   :init
-  ;; Dired buffers: Automatically hide file details (permissions, size,
-  ;; modification date, etc.) and all the files in the `dired-omit-files'
-  ;; regular expression for a cleaner display.
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-
-  ;; Other options
-  (setq dired-movement-style 'bounded-files)
+  (when lightemacs-dired-hide-details-mode
+    ;; Dired buffers: Automatically hide file details (permissions, size,
+    ;; modification date, etc.)
+    (add-hook 'dired-mode-hook #'dired-hide-details-mode))
 
   ;; Group directories first
-  (when (string= system-type "darwin")
-    (setq dired-use-ls-dired nil))
-  (let ((args "--group-directories-first -ahlv"))
-    (when (or (eq system-type 'darwin) (eq system-type 'berkeley-unix))
-      (if-let* ((gls (executable-find "gls")))
-          (setq insert-directory-program gls)
-        (setq args nil)))
-    (when args
-      (setq dired-listing-switches args)))
+  (when lightemacs-dired-group-directories-first
+    (when (string= system-type "darwin")
+      (setq dired-use-ls-dired nil))
+    (let ((args "--group-directories-first -ahlv"))
+      (when (or (eq system-type 'darwin) (eq system-type 'berkeley-unix))
+        (if-let* ((gls (executable-find "gls")))
+            (setq insert-directory-program gls)
+          (setq args nil)))
+      (when args
+        (setq dired-listing-switches args))))
+
 
   (setq dired-omit-files
         "\\`\\.[^.]")  ;; matches any file starting with . but not ..
@@ -71,14 +80,6 @@ The user can navigate to the parent directory by pressing the - key instead.")
       (setq dired-omit-files (concat dired-omit-files "\\|^\\."))
     ;; All dotfiles files except '..'
     (setq dired-omit-files (concat dired-omit-files "\\|\\`\\.[^.]\\|\\`\\.$"))))
-
-;; TODO move to a separate module
-;; (lightemacs-use-package dired-x
-;;   :after dired
-;;   :ensure nil
-;;   :commands dired-omit-mode
-;;   :init
-;;   (add-hook 'dired-mode-hook #'dired-omit-mode))
 
 (provide 'le-dired)
 

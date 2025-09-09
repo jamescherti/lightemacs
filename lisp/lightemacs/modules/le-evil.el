@@ -149,20 +149,24 @@ pressing `C-h', since it is prefixed with `evil-delete'."
     ;; Prevent ElDoc help from disappearing in the minibuffer when executing
     ;; certain Evil commands in Emacs.
     (when (fboundp 'eldoc-add-command-completions)
-      ;; `evil-delete-back-to-indentation', `evil-delete-backward-word',
-      ;; `evil-insert', `evil-insert-line', `evil-append', `evil-append-line'...
+      ;; Add evil delete, substitute, and change commands
+      ;; - `evil-delete'
+      ;; - `evil-delete-backward-word' (C-w)
+      ;; - `evil-delete-back-to-indentation' (C-u)
+      ;; - `evil-delete-backward-char-and-join' (C-h)
+      ;; - And others.
+      (eldoc-add-command-completions "evil-delete")
+      (eldoc-add-command-completions "evil-substitute")
+      (eldoc-add-command-completions "evil-change")
 
-      ;; Add evil-delete commands to ElDoc to display help while deleting using:
-      ;; - evil-delete-backward-word (C-w)
-      ;; - evil-delete-back-to-indentation (C-u)
-      ;; - evil-delete-backward-char-and-join (C-h)
-      ;; - And other evil-delete-* commands.
-      (eldoc-add-command-completions "evil-delete-")
+      ;; Add insert and append commands (`evil-insert', `evil-insert-resume',
+      ;; `evil-append'...) to ElDoc to display help after switching to insert
+      ;; mode.
+      (eldoc-add-command-completions "evil-insert")
+      (eldoc-add-command-completions "evil-append")
 
-      ;; Add insert and append commands to ElDoc to display help after switching
-      ;; to insert mode.
-      (eldoc-add-command-completions "evil-insert-")
-      (eldoc-add-command-completions "evil-append-"))))
+      ;; Add yank commands (`evil-yank' and `evil-yank-line')
+      (eldoc-add-command-completions "evil-yank"))))
 
 ;;; Keybindings
 

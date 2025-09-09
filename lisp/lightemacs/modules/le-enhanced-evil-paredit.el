@@ -24,7 +24,6 @@
 
 (eval-and-compile
   (require 'lightemacs)
-  (require 'le-paredit)
   (require 'le-evil))
 
 (lightemacs-use-package enhanced-evil-paredit
