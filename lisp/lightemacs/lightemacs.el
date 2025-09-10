@@ -278,17 +278,30 @@ PLIST contains keyword arguments for `use-package`."
   ;;   (setq lightemacs--use-package-refreshed t))
   t)
 
-(defmacro lightemacs-use-package (name &rest plist)
-  "Configure an Emacs package using `use-package` safely.
+;; (defmacro lightemacs-use-package (name &rest plist)
+;;   "Configure an Emacs package using `use-package` safely.
+;;
+;; NAME is the package symbol.
+;; PLIST contains keyword arguments for `use-package`."
+;;   (declare (indent 1))
+;;   `(progn
+;;      (lightemacs--before-use-package ',name ',plist)
+;;      ,(if (bound-and-true-p byte-compile-current-file)
+;;           `(eval '(use-package ,name ,@plist))
+;;         `(use-package ,name ,@plist))))
 
-NAME is the package symbol.
-PLIST contains keyword arguments for `use-package`."
+(defmacro lightemacs-use-package (name &rest plist)
+  "Safely configure an Emacs package using `use-package`.
+
+NAME is the symbol of the package to configure.
+PLIST contains keyword arguments accepted by `use-package`.
+
+This macro calls `lightemacs--before-use-package` with the package name
+and its configuration before invoking `use-package`."
   (declare (indent 1))
   `(progn
      (lightemacs--before-use-package ',name ',plist)
-     ,(if (bound-and-true-p byte-compile-current-file)
-          `(eval '(use-package ,name ,@plist))
-        `(use-package ,name ,@plist))))
+     (use-package ,name ,@plist)))
 
 ;;; Native comp functions
 

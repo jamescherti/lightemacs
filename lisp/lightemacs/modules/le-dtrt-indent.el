@@ -46,7 +46,6 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
               (member (substring (buffer-name) 0 1) '("*" " "))
               (apply #'derived-mode-p lightemacs-dtrt-indent-excluded-modes))
     (let ((inhibit-message (not init-file-debug)))
-      (message "hi")
       (when (fboundp 'dtrt-indent-mode)
         (funcall 'dtrt-indent-mode +1)))))
 

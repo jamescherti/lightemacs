@@ -38,9 +38,22 @@
     (funcall 'lightemacs-load-user-init
              (expand-file-name "init.el" minimal-emacs-user-directory)))
 
+;;; Load config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
+
+(when (and lightemacs-native-comp-excluded-cpus
+           (boundp 'native-comp-async-jobs-number))
+  (setq native-comp-async-jobs-number
+        (lightemacs--calculate-native-comp-async-jobs-number)))
+
+;;; Load the package manager and refresh
+
 (require 'le-core-package-manager)
 
-;;; Run `lightemacs-after-init-hook'
+;;; Configure `lightemacs-after-init-hook'
 
 (defun lightemacs--run-after-init-hook ()
   "Run `lightemacs--run-after-init-hook` at the appropriate time."
@@ -52,17 +65,6 @@
 
  (t
   (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
-
-;;; Load config.el
-
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
-
-(when (and lightemacs-native-comp-excluded-cpus
-           (boundp 'native-comp-async-jobs-number))
-  (setq native-comp-async-jobs-number
-        (lightemacs--calculate-native-comp-async-jobs-number)))
 
 ;;; Load modules
 
