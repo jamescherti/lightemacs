@@ -49,7 +49,6 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
       (when (fboundp 'dtrt-indent-mode)
         (funcall 'dtrt-indent-mode +1)))))
 
-
 (lightemacs-use-package dtrt-indent
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode

@@ -82,10 +82,16 @@ ARG is the same as the argument to `recenter': a number specifies the line
 position to recenter the point, nil recenters in the middle of the window, and a
 negative number counts from the bottom.
 
-If ADJUST-ARG is non-nil, the function may adjust ARG to improve visibility
-depending on whether the point is above or below the window.
-
-If ADJUST-ARG is nil (the default), ARG is passed to recenter unchanged.
+The optional argument ADJUST-ARG controls whether the function modifies the
+ARG value before calling `recenter'. If ADJUST-ARG is nil, the function
+passes ARG directly to `recenter' with no changes. If ADJUST-ARG is non-nil,
+the function checks whether the point is above or below the visible window. When
+the point is below the window, ARG is converted to a negative value so that
+`recenter' places the point relative to the bottom instead of the top, which
+improves visibility. When the point is above the window, the function recenters
+normally. In short, ADJUST-ARG enables adaptive behavior that chooses whether
+to recenter relative to the top or bottom of the window depending on the point's
+location.
 
 This function only affects the current window and does nothing if the current
 buffer is not displayed in the selected window."
