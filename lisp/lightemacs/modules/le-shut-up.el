@@ -23,10 +23,7 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package shut-up
-  :commands (shut-up
-              shut-up-write-region
-              shut-up-load))
+(lightemacs-use-package shut-up)
 
 (provide 'le-shut-up)
 
