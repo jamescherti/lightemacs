@@ -33,11 +33,6 @@
    ;; Python and Yaml.
    le-outline-indent
 
-   ;; The stripspace Emacs package provides minor mode that automatically
-   ;; removes trailing whitespace and blank lines at the end of the buffer when
-   ;; saving.
-   le-stripspace
-
    ;; The persist-text-scale Emacs package provides `persist-text-scale-mode',
    ;; which ensures that all adjustments made with `text-scale-increase' and
    ;; `text-scale-decrease' are persisted and restored across sessions. As a
@@ -125,22 +120,6 @@
 
    ;; Integration between Embark and Consult
    le-embark-consult
-
-   ;; Dumb-jump/Dumber-jump provide context-aware 'go to definition'
-   ;; functionality for 50+ programming languages without requiring a language
-   ;; server. It works by using simple heuristics and regular expression
-   ;; searches to locate the definitions of functions, variables, and symbols
-   ;; across project files. Unlike more sophisticated language-aware tools,
-   ;; `dumb-jump' does not parse code semantically, which makes it lightweight
-   ;; and fast, but sometimes less precise. It integrates with popular
-   ;; navigation packages like `xref', allowing implementations with minimal
-   ;; configuration. users to jump to definitions, references, or
-   le-dumb-jump
-
-   ;; The expand-region package grows your selection step by step with 'C-=',
-   ;; starting from a word and expanding to larger units like a sentence,
-   ;; paragraph, or entire function.
-   le-expand-region
 
    ;; prescient.el is a library for sorting and filtering lists of candidates,
    ;; such as those presented by packages like Vertico or Corfu.
@@ -231,26 +210,7 @@
    ;; and retention of key combinations by presenting context-sensitive
    ;; completions, thereby enhancing navigation through complex or highly
    ;; customized keymaps.
-   le-which-key
-
-   ;; Show line numbers on the left side of the buffer. The numbers update
-   ;; automatically as you add, remove, or scroll lines, but they don’t change
-   ;; the actual text.
-   le-display-line-numbers
-
-   ;; Avy is an Emacs package that provides a fast and efficient method for
-   ;; navigating to visible text in a buffer by jumping directly to characters,
-   ;; words, or lines. It allows the user to type a sequence of characters or
-   ;; select from highlighted targets to move the cursor instantly, reducing the
-   ;; need for repetitive cursor motions or scrolling.
-   le-avy
-
-   ;; Ace Window provides a fast and efficient method for switching between
-   ;; windows in a frame. Instead of cycling through windows sequentially or
-   ;; using more cumbersome key sequences, Ace Window displays a single-letter
-   ;; label on each visible window, allowing the user to jump directly to a
-   ;; target window by pressing the corresponding key.
-   le-ace-window))
+   le-which-key))
 
 ;;; Provide
 

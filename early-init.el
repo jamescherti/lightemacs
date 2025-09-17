@@ -27,9 +27,12 @@
 
 ;;; Update `load-path'
 
-(add-to-list 'load-path (expand-file-name "lisp/lightemacs" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/lightemacs"
+                                          user-emacs-directory))
 (require 'le-core-paths)
 
+(add-to-list 'load-path (expand-file-name "modules/"
+                                          lightemacs-local-directory))
 (add-to-list 'load-path lightemacs-local-modules-directory)
 (add-to-list 'load-path lightemacs-core-directory)
 (add-to-list 'load-path lightemacs-modules-directory)
@@ -38,6 +41,17 @@
 
 (require 'le-core-defaults)
 (require 'lightemacs)
+
+;;; Load config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
+
+(when (and lightemacs-native-comp-excluded-cpus
+           (boundp 'native-comp-async-jobs-number))
+  (setq native-comp-async-jobs-number
+        (lightemacs--calculate-native-comp-async-jobs-number)))
 
 ;;; Load pre-early-init.el
 
@@ -49,6 +63,11 @@
 
 (lightemacs-load-user-init
  (expand-file-name "early-init.el" minimal-emacs-user-directory))
+
+;;; Load function: `lightemacs-user-early-init'
+
+(when (fboundp 'lightemacs-user-early-init)
+  (funcall 'lightemacs-user-early-init))
 
 ;;; Load post-early-init.el
 

@@ -157,10 +157,6 @@
                              ;; Vim keybindings (DISABLED)
                              ;; --------------------------
                              ;; le-group-evil
-
-                             ;; Treesitter, Better syntax highlighting (DISABLED)
-                             ;; -------------------------------------------------
-                             ;; le-treesit-auto
                              )
   "Modules that are enabled by default.
 
@@ -234,6 +230,7 @@ Set this to nil to disable this feature.")
 This will enable Lightemacs to load byte-compiled or possibly native-compiled
 init files for the following initialization files: init.el, pre-init.el,
 post-init.el, pre-early-init.el, and post-early-init.el.")
+
 (provide 'le-core-defaults)
 
 ;; Local variables:

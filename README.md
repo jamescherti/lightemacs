@@ -30,9 +30,9 @@ Here are some of the modules that are enabled by default:
 - Save and restore the default theme using the `lightemacs-theme-name` variable.
 - Functions for automatically detecting indentation offsets.
 - Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 
 Optionally, the following features can be enabled by loading additional Lightemacs modules:
+- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
 - **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
 - **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
@@ -76,10 +76,8 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
         - [Enabled by Default: Better undo/redo (le-undo-fu and undo-fu-session)](#enabled-by-default-better-undoredo-le-undo-fu-and-undo-fu-session)
         - [Enabled by Default: Keybindings (le-keybindings)](#enabled-by-default-keybindings-le-keybindings)
         - [Enabled by Default: Code folding based on indentation (le-outline-indent)](#enabled-by-default-code-folding-based-on-indentation-le-outline-indent)
-        - [Enabled by Default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#enabled-by-default-automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
         - [Enabled by Default: Save History (le-savehist)](#enabled-by-default-save-history-le-savehist)
         - [Enabled by Default: Save and Restore Cursor (le-saveplace)](#enabled-by-default-save-and-restore-cursor-le-saveplace)
-        - [Enabled by Default: Expand Region (le-expand-region)](#enabled-by-default-expand-region-le-expand-region)
         - [Enabled by Default: Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)](#enabled-by-default-auto-revert-buffer-to-reflect-changes-made-to-the-underlying-file-on-disk-le-autorevert)
         - [Enabled by Default: Persist and Restore Text Scale (le-persist-text-scale)](#enabled-by-default-persist-and-restore-text-scale-le-persist-text-scale)
         - [Enabled by Default: A better way to rename or delete files (le-bufferfile)](#enabled-by-default-a-better-way-to-rename-or-delete-files-le-bufferfile)
@@ -89,6 +87,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
         - [Other Modules Enabled by Default](#other-modules-enabled-by-default)
     - [Modules Disabled by Default](#modules-disabled-by-default)
         - [Disabled by default: le-group-evil (Vim Keybindings)](#disabled-by-default-le-group-evil-vim-keybindings)
+        - [Disabled by default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer](#disabled-by-default-automatically-remove-trailing-whitespace-before-saving-a-prog-mode-buffer)
         - [Disabled by default: le-treesit-auto (better syntax highlighting)](#disabled-by-default-le-treesit-auto-better-syntax-highlighting)
         - [Disabled by default: Runs code formatters asynchronously (le-apheleia)](#disabled-by-default-runs-code-formatters-asynchronously-le-apheleia)
         - [Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)](#disabled-by-default-persisting-and-restoring-all-buffers-windowssplit-tab-bar-frames-le-easysession)
@@ -96,6 +95,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
         - [Disabled by default: An alternative terminal (le-vterm)](#disabled-by-default-an-alternative-terminal-le-vterm)
         - [Disabled by default: Better Elisp editing (le-group-emacs-lisp)](#disabled-by-default-better-elisp-editing-le-group-emacs-lisp)
         - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
+        - [Enabled by Default: Expand Region (le-expand-region)](#enabled-by-default-expand-region-le-expand-region)
         - [Other modules disabled by default](#other-modules-disabled-by-default)
     - [Other Features](#other-features)
     - [Useful variables, functions, and macros](#useful-variables-functions-and-macros)
@@ -170,20 +170,38 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 
 The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration for Lightemacs, allowing settings to be adjusted and additional packages to be installed. (If the configuration directory is changed, for example to `~/.lightemacs.d/`, the main configuration file will then be located at `~/.lightemacs.d/config.el`.)
 
-Example 1: The default `config.el` configuration is:
+Example 1: The default `config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
 
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
-(setq lightemacs-modules '(le-flavor-essential))
+
+(defun lightemacs-user-init ()
+  "This function is executed right before modules are loaded."
+  (setq lightemacs-modules '(le-flavor-essential)))
+
 ```
 
-Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), update `config.el` to include the Evil module:
+Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
 
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
-(setq lightemacs-modules '(le-flavor-essential
-                           ;; Vim keybindings
-                           le-group-evil))
+
+(defun lightemacs-user-init ()
+  "This function is executed right before modules are loaded."
+  (setq lightemacs-modules '(le-flavor-essential
+
+                             ;; Vim keybindings
+                             le-group-evil)))
+```
+
+Example 3: This configuration includes most of the built-in packages ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)):
+
+```elisp
+;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
+
+(defun lightemacs-user-init ()
+  "This function is executed right before modules are loaded."
+  (setq lightemacs-modules '(le-flavor-big)))
 ```
 
 ## Customizations
@@ -199,11 +217,18 @@ Always begin your `config.el` file with the following header to prevent them fro
 ;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
 ```
 
-*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of initialization files to ensure all necessary `use-package` variables and functions are loaded.)*
+*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init and `config.el` files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of initialization files to ensure all necessary `use-package` variables and functions are loaded.)*
 
-**Important:** The examples in this README.md file pre/post init files in the `~/.emacs.d/` directory, but the `config.el` should be placed in the same directory as Lightemacs `init.el` and `early-init.el`, regardless of their location.
+Here is an example of `config.el` file:
+```elisp
+;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
 
-(The Lightemacs project extends the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, enabling configuration in the same manner as *minimal-emacs.d* and supporting the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`. The only distinction is that, in Lightemacs, these files must be placed in the `~/.emacs.d/lisp/local/` directory, alongside `config.el`.)
+(defun lightemacs-user-init ()
+  "This function is executed right before modules are loaded."
+  (setq lightemacs-modules '(le-flavor-essential)))
+```
+
+(The Lightemacs project extends the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, enabling configuration in the same manner as *minimal-emacs.d* and supporting the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`. The only distinction is that, in Lightemacs, these files must be placed in the `~/.emacs.d/lisp/local/` directory, alongside `config.el`. Configuration in Lightemacs is typically done through `config.el`.)
 
 ### Package Manager Selection
 
@@ -504,33 +529,6 @@ The following example can be added to the `~/.emacs.d/lisp/local/config.el` file
   (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
-### Enabled by Default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
-
-The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
-
-(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
-
-It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
-
-By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`.
-
-Here are some customizations for `stripspace-local-mode`:
-```emacs-lisp
-;; The `stripspace-only-if-initially-clean' option:
-;; - nil to always delete trailing whitespace.
-;; - Non-nil to only delete whitespace when the buffer is clean initially. (The
-;; initial cleanliness check is performed when `stripspace-local-mode' is
-;; enabled.)
-(setq stripspace-only-if-initially-clean nil)
-
-;; Enabling `stripspace-restore-column' preserves the cursor's column position
-;; even after stripping spaces. This is useful in scenarios where you add extra
-;; spaces and then save the file. Although the spaces are removed in the saved
-;; file, the cursor remains in the same position, ensuring a consistent editing
-;; experience without affecting cursor placement.
-(setq stripspace-restore-column t)
-```
-
 ### Enabled by Default: Save History (le-savehist)
 
 The **le-savehist** module configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
@@ -540,14 +538,6 @@ The **le-savehist** module configures **savehist**, a built-in Emacs feature tha
 The **le-saveplace** module enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off.
 
 (When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
-
-### Enabled by Default: Expand Region (le-expand-region)
-
-The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
-
-Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
-
-Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
 ### Enabled by Default: Auto Revert Buffer to Reflect Changes Made to the Underlying File on Disk (le-autorevert)
 
@@ -654,8 +644,6 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 
 ### Other Modules Enabled by Default
 
-- **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
-- **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/lisp/local/config.el` file:
   ```emacs-lisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
@@ -705,6 +693,33 @@ The `le-group-evil` group of modules includes:
 - **le-evil-commentary**: Comment or uncomment text in Normal or Visual mode by pressing `gc`.
 - **le-evil-surround**: Enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 - **le-goto-chg**: Navigate to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+
+### Disabled by default: Automatically Remove Trailing Whitespace before Saving a Prog-mode Buffer
+
+The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+(Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
+
+It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
+
+By default, `stripspace-local-mode` is enabled in `prog-mode`, `conf-mode`, and `text-mode`.
+
+Here are some customizations for `stripspace-local-mode`:
+```emacs-lisp
+;; The `stripspace-only-if-initially-clean' option:
+;; - nil to always delete trailing whitespace.
+;; - Non-nil to only delete whitespace when the buffer is clean initially. (The
+;; initial cleanliness check is performed when `stripspace-local-mode' is
+;; enabled.)
+(setq stripspace-only-if-initially-clean nil)
+
+;; Enabling `stripspace-restore-column' preserves the cursor's column position
+;; even after stripping spaces. This is useful in scenarios where you add extra
+;; spaces and then save the file. Although the spaces are removed in the saved
+;; file, the cursor remains in the same position, ensuring a consistent editing
+;; experience without affecting cursor placement.
+(setq stripspace-restore-column t)
+```
 
 ### Disabled by default: le-treesit-auto (better syntax highlighting)
 
@@ -867,9 +882,21 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 
 (By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
 
+### Enabled by Default: Expand Region (le-expand-region)
+
+The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
+
+Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
+
+Continue pressing `C-=` until the selection encompasses exactly the text you want.
+
 ### Other modules disabled by default
 
 Here are a few other modules disabled by default:
+
+- **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
+
+- **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
 
 - **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
 

@@ -26,6 +26,9 @@
 (eval-and-compile
   (require 'lightemacs))
 
+(require 'cl-lib)
+(require 'le-shut-up)
+
 ;; Global variables
 
 (defvar lightemacs-recentf-cleanup-and-auto-save-interval 550
@@ -46,31 +49,41 @@ adds that file to the recentf list.")
   :ensure nil
   :commands (recentf-mode
              recentf
-             recentf-cleanup)
+             recentf-cleanup
+             recentf-save-list)
   :bind ("C-c f" . recentf)
 
   :preface
   (defun lightemacs-recentf--cleanup ()
     "Run `recentf-cleanup' if `recentf-mode' is enabled."
-    (when (and (bound-and-true-p recentf-mode)
-               (fboundp 'recentf-cleanup))
-      (let ((inhibit-message lightemacs-recentf-quiet))
+    (when (fboundp 'recentf-cleanup)
+      (if lightemacs-recentf-quiet
+          (shut-up
+            (recentf-cleanup))
         (recentf-cleanup))))
+
+  (defun lightemacs-recentf--save ()
+    "Run `recentf-save-list' if `recentf-mode' is enabled."
+    (when (fboundp 'recentf-save-list)
+      (if lightemacs-recentf-quiet
+          (shut-up
+            (recentf-save-list))
+        (recentf-save-list))))
 
   (defun lightemacs-recentf--cleanup-and-save ()
     "Run `recentf-cleanup' and `recentf-save-list' if `recentf-mode' is enabled."
     ;; Cleanup
     (lightemacs-recentf--cleanup)
+
     ;; Save
-    (when (and (bound-and-true-p recentf-mode)
-               (fboundp 'recentf-save-list))
-      (let ((inhibit-message lightemacs-recentf-quiet))
-        (recentf-save-list))))
+    (lightemacs-recentf--save))
 
   (defun lightemacs-recentf--enable ()
     "Enable `recentf'."
     ;; Mode
-    (let ((inhibit-message lightemacs-recentf-quiet))
+    (if lightemacs-recentf-quiet
+        (shut-up
+          (recentf-mode 1))
       (recentf-mode 1))
 
     ;; Timer

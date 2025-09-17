@@ -38,16 +38,10 @@
     (funcall 'lightemacs-load-user-init
              (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Load config.el
+;;; Load user function: `lightemacs-user-init'
 
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
-
-(when (and lightemacs-native-comp-excluded-cpus
-           (boundp 'native-comp-async-jobs-number))
-  (setq native-comp-async-jobs-number
-        (lightemacs--calculate-native-comp-async-jobs-number)))
+(when (fboundp 'lightemacs-user-init)
+  (funcall 'lightemacs-user-init))
 
 ;;; Load the package manager and refresh
 
