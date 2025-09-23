@@ -34,9 +34,10 @@
 
 ;;; Load init.el
 
-(if (fboundp 'lightemacs-load-user-init)
-    (funcall 'lightemacs-load-user-init
-             (expand-file-name "init.el" minimal-emacs-user-directory)))
+(when (and (fboundp 'lightemacs-load-user-init)
+           (boundp 'minimal-emacs-user-directory))
+  (funcall 'lightemacs-load-user-init
+           (expand-file-name "init.el" minimal-emacs-user-directory)))
 
 ;;; Load user function: `lightemacs-user-init'
 
