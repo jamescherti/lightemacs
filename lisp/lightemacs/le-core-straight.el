@@ -31,9 +31,10 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(unless (package-installed-p 'use-package)
-  (when (fboundp 'straight-use-package)
-    (funcall 'straight-use-package 'use-package)))
+;; (unless (package-installed-p 'use-package)
+;;   (when (fboundp 'straight-use-package)
+;;     (funcall 'straight-use-package 'use-package)))
+(straight-use-package 'use-package)
 
 (provide 'le-core-straight)
 
