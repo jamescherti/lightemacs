@@ -37,7 +37,7 @@ Optionally, the following features can be enabled by loading additional Lightema
 - **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
 - Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
 - **le-yasnippet** and **le-yasnippet-snippets**: A template system that enhances text editing by enabling users to define and use snippets.
-- **le-vterm** A faster, more efficient terminal.
+- **le-vterm**: A faster, more efficient terminal.
 - **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
 - **le-paredit**: A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions.
 - And many others.
@@ -924,6 +924,8 @@ Here are a few other modules disabled by default:
   ;; Enable the `le-compile-angel' module by pushing it above other modules
   (add-to-list 'lightemacs-modules 'le-compile-angel)
   ```
+
+- **le-eat**: Eat (Emulate A Terminal) is a terminal emulator implemented entirely in Emacs Lisp. It supports full-screen terminal applications such as Emacs itself and offers high performance, operating over three times faster than Term. Eat provides advanced features like Sixel graphics, complete mouse support, shell integration, and reduced screen flicker for smoother performance.
 
 Elisp file-type modules are disabled by default:
 

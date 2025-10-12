@@ -40,7 +40,7 @@
     (advice-add #'vterm-module-compile :override #'ignore)
     (provide 'vterm-module))
 
-  (defun le-vterm--setup ()
+  (defun lightemacs-vterm--setup ()
     ;; Hide the mode-line
     (setq mode-line-format nil)
 
@@ -51,7 +51,7 @@
     (setq-local confirm-kill-processes nil))
 
   :init
-  (add-hook 'vterm-mode-hook #'le-vterm--setup)
+  (add-hook 'vterm-mode-hook #'lightemacs-vterm--setup)
 
   (setq vterm-timer-delay 0.05)
   (setq vterm-kill-buffer-on-exit t)

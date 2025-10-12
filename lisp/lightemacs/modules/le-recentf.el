@@ -86,6 +86,11 @@ adds that file to the recentf list.")
           (recentf-mode 1))
       (recentf-mode 1))
 
+    ;; Replace `recentf-save-list' with a quiet version that cleans up and saves
+    ;; the recentf list
+    (remove-hook 'kill-emacs-hook 'recentf-save-list)
+    (add-hook 'kill-emacs-hook #'lightemacs-recentf--cleanup-and-save)
+
     ;; Timer
     (when (timerp lightemacs-recentf--auto-save-timer)
       (cancel-timer lightemacs-recentf--auto-save-timer))
@@ -121,11 +126,7 @@ adds that file to the recentf list.")
   :config
   (when lightemacs-recentf-track-switch-to-buffer
     (add-hook 'window-buffer-change-functions
-              #'lightemacs-recentf--add-file-on-buffer-change))
-
-  ;; Depth -90 ensures it is cleaned up before it is saved with
-  ;; `recentf-save-list'
-  (add-hook 'kill-emacs-hook #'lightemacs-recentf--cleanup -90))
+              #'lightemacs-recentf--add-file-on-buffer-change)))
 
 (provide 'le-recentf)
 
