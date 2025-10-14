@@ -29,20 +29,9 @@
 (lightemacs-use-package enhanced-evil-paredit
   :after evil
   :hook (paredit-mode . enhanced-evil-paredit-mode)
-  :preface
-  (defun lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding ()
-    "Resolve keybinding conflicts between `enhanced-evil-paredit'/`evil-snipe'.
-Disables the S key in `enhanced-evil-paredit-mode-map' when `evil-snipe-mode'
-is active to prevent interference with `evil-snipe' commands."
-    (with-eval-after-load 'enhanced-evil-paredit
-      (with-eval-after-load 'evil
-        (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil))))
-
   :init
-  (if (bound-and-true-p evil-snipe-mode)
-      (lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding)
-    (add-hook 'evil-snipe-mode-hook
-              #'lightemacs--fix-enhanced-evil-paredit-evil-snipe-keybinding)))
+  (with-eval-after-load 'evil-snipe
+    (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil)))
 
 (provide 'le-enhanced-evil-paredit)
 
