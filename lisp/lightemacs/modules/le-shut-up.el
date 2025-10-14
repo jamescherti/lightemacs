@@ -23,7 +23,8 @@
 (eval-and-compile
   (require 'lightemacs))
 
-(lightemacs-use-package shut-up)
+(lightemacs-use-package shut-up
+  :demand t)
 
 (provide 'le-shut-up)
 
