@@ -136,11 +136,6 @@
         (ws-butler                     . "nongnu")
         (yaml-mode                     . "nongnu")))
 
-(setq straight-recipe-overrides
-      '((paredit . (:type git :host nil :repo "https://paredit.org/cgit/paredit"))
-        (easysession . (:host github :repo "jamescherti/easysession.el"
-                              :files (:defaults "extensions/*.el")))))
-
 ;; Minimal-emacs.d defaults
 (setq minimal-emacs-frame-title-format "%b – Lightemacs")
 (setq minimal-emacs-package-initialize-and-refresh nil)  ; Managed by Lightemacs
