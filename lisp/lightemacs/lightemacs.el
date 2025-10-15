@@ -24,6 +24,7 @@
   (setq use-package-hook-name-suffix "-hook"))
 
 (require 'cl-lib)
+(require 'le-core-paths)
 (require 'le-core-defaults)
 
 ;;; Functions
