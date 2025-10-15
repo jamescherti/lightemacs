@@ -29,6 +29,9 @@
 
 (lightemacs-use-package compile-angel
   :demand t
+  :functions (compile-angel-on-load-mode
+              compile-angel-on-save-local-mode
+              compile-angel-on-save-mode)
   :init
   ;; Verbose
   (setq compile-angel-verbose init-file-debug)
