@@ -948,6 +948,8 @@ Elisp file-type modules are disabled by default:
 
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
+* **le-xclip**: This module integrates the [xclip](https://elpa.gnu.org/packages/xclip.html) package, enabling copy and paste between Emacs running in a terminal and the system GUI clipboard. (IMPORTANT: The le-xclip package only activates the xclip package when Emacs is executed in a terminal.) The xclip package relies on external command-line tools depending on the platform: `xclip` or `xsel` for X11, `pbpaste`/`pbcopy` for macOS, `getclip`/`putclip` for Cygwin, `wl-clipboard` for Wayland, and `termux-clipboard-get`/`termux-clipboard-set` for Termux.
+
 - **le-shut-up**: The *shut-up* package suppresses output from functions that normally print to the *Messages* buffer or to the echo area. It provides a macro called `shut-up` that temporarily silences messages while evaluating its body. This is useful when running code that would otherwise clutter the user's *Messages* buffer with unnecessary output.
 
 - **le-evil-visualstar**: Enables [evil-visualstar](https://github.com/bling/evil-visualstar), which allows searching for the current visual selection using `*` or `#`. **Usage:** Create a visual selection with `v` or `V`, then press `*` to search forward or `#` to search backward. When `evil-visualstar/persistent` is non-nil, visual state remains active, enabling repeated searches without reselecting the text.
