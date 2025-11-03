@@ -26,6 +26,11 @@
 
 (require 'lightemacs)
 
+;;; Load function: `lightemacs-user-pre-init'
+
+(when (fboundp 'lightemacs-user-pre-init)
+  (funcall 'lightemacs-user-pre-init))
+
 ;;; Load pre-init.el
 
 (let ((el-file (expand-file-name "pre-init.el"
@@ -75,5 +80,10 @@
 (let ((el-file (expand-file-name "post-init.el"
                                  lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))
+
+;;; Load function: `lightemacs-user-post-init'
+
+(when (fboundp 'lightemacs-user-post-init)
+  (funcall 'lightemacs-user-post-init))
 
 ;;; init.el ends here

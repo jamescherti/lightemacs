@@ -17,7 +17,7 @@ Lightemacs tweaks packages to improve performance. For example, adjusting the de
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
-Here are some of the modules that are enabled by default:
+Here are some of the modules that are enabled by default by the `le-flavor-essential` module:
 
 - Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless).
 - Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
@@ -223,9 +223,11 @@ Here is an example of `config.el` file:
 ```elisp
 ;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before modules are loaded."
-  (setq lightemacs-modules '(le-flavor-essential)))
+(setq lightemacs-modules '(le-flavor-essential))
+
+;; (defun lightemacs-user-init ()
+;;   "This function is executed right before modules are loaded."
+;;   (message "Before modules"))
 ```
 
 (The Lightemacs project extends the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, enabling configuration in the same manner as *minimal-emacs.d* and supporting the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`. The only distinction is that, in Lightemacs, these files must be placed in the `~/.emacs.d/lisp/local/` directory, alongside `config.el`. Configuration in Lightemacs is typically done through `config.el`.)
@@ -240,7 +242,7 @@ By default, `lightemacs-package-manager` is set to `'use-package`, which uses th
 
 - **`'use-package`** (default): Uses Emacs’ native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
 
-* **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
+- **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
 
 - **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
 
@@ -269,6 +271,8 @@ To customize your Emacs setup to include various user interface elements, you ca
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
 ## Modules Enabled by Default
+
+Here are the modules that are enabled by default by the flavor that is enabled by default (`le-flavor-essential`):
 
 ### Enabled by Default: Default theme (le-theme)
 
@@ -1037,3 +1041,19 @@ You should have received a copy of the GNU General Public License along with thi
 
 Other Emacs projects by the same author:
 - [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d): The Lightemacs project is based on the minimal-emacs.d, an optimized Emacs base (init.el and early-init.el) that gives you full control over your configuration. It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup. Building the minimal-emacs.d init.el and early-init.el was the result of extensive research and testing to fine-tune the best parameters and optimizations for an Emacs configuration.
+- [compile-angel.el](https://github.com/jamescherti/compile-angel.el): **Speed up Emacs!** This package guarantees that all .el files are both byte-compiled and native-compiled, which significantly speeds up Emacs.
+- [outline-indent.el](https://github.com/jamescherti/outline-indent.el): An Emacs package that provides a minor mode that enables code folding and outlining based on indentation levels for various indentation-based text files, such as YAML, Python, and other indented text files.
+- [easysession.el](https://github.com/jamescherti/easysession.el): Easysession is lightweight Emacs session manager that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, the tab-bar, and the Emacs frames (with or without the Emacs frames size, width, and height).
+- [vim-tab-bar.el](https://github.com/jamescherti/vim-tab-bar.el): Make the Emacs tab-bar Look Like Vim's Tab Bar.
+- [elispcomp](https://github.com/jamescherti/elispcomp): A command line tool that allows compiling Elisp code directly from the terminal or from a shell script. It facilitates the generation of optimized .elc (byte-compiled) and .eln (native-compiled) files.
+- [tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el): The Tomorrow Night Deepblue Emacs theme is a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes. It features a deep blue background color that creates a calming atmosphere. The theme is also a great choice for those who miss the blue themes that were trendy a few years ago.
+- [Ultyas](https://github.com/jamescherti/ultyas/): A command-line tool designed to simplify the process of converting code snippets from UltiSnips to YASnippet format.
+- [dir-config.el](https://github.com/jamescherti/dir-config.el): Automatically find and evaluate .dir-config.el Elisp files to configure directory-specific settings.
+- [flymake-bashate.el](https://github.com/jamescherti/flymake-bashate.el): A package that provides a Flymake backend for the bashate Bash script style checker.
+- [flymake-ansible-lint.el](https://github.com/jamescherti/flymake-ansible-lint.el): An Emacs package that offers a Flymake backend for ansible-lint.
+- [inhibit-mouse.el](https://github.com/jamescherti/inhibit-mouse.el): A package that disables mouse input in Emacs, offering a simpler and faster alternative to the disable-mouse package.
+- [quick-sdcv.el](https://github.com/jamescherti/quick-sdcv.el): This package enables Emacs to function as an offline dictionary by using the sdcv command-line tool directly within Emacs.
+- [enhanced-evil-paredit.el](https://github.com/jamescherti/enhanced-evil-paredit.el): An Emacs package that prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking their execution if they would break the parenthetical structure.
+- [stripspace.el](https://github.com/jamescherti/stripspace.el): Ensure Emacs Automatically removes trailing whitespace before saving a buffer, with an option to preserve the cursor column.
+- [persist-text-scale.el](https://github.com/jamescherti/persist-text-scale.el): Ensure that all adjustments made with text-scale-increase and text-scale-decrease are persisted and restored across sessions.
+- [pathaction.el](https://github.com/jamescherti/pathaction.el): Execute the pathaction command-line tool from Emacs. The pathaction command-line tool enables the execution of specific commands on targeted files or directories. Its key advantage lies in its flexibility, allowing users to handle various types of files simply by passing the file or directory as an argument to the pathaction tool. The tool uses a .pathaction.yaml rule-set file to determine which command to execute. Additionally, Jinja2 templating can be employed in the rule-set file to further customize the commands.
