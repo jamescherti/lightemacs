@@ -194,7 +194,7 @@ Example 2: The configuration above does not include Vim Keybindings, providing s
                              le-group-evil)))
 ```
 
-Example 3: This configuration includes most of the built-in packages ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)):
+Example 3: This configuration includes most of modules ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)):
 
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-

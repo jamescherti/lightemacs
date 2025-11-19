@@ -33,8 +33,15 @@
   "Display a verbose message with the same ARGS arguments as `message'."
   (declare (indent 0) (debug t))
   `(progn
-     (when lightemacs-verbose
+     (when (or lightemacs-verbose lightemacs-debug)
        (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
+
+(defmacro lightemacs-debug-message (&rest args)
+  "Display a debug message with the same ARGS arguments as `message'."
+  (declare (indent 0) (debug t))
+  `(progn
+     (when lightemacs-debug
+       (message (concat "[lightemacs DEBUG] " ,(car args)) ,@(cdr args)))))
 
 (defvar lightemacs--load-module-method 'require)
 (defvar lightemacs--loaded-modules nil)
@@ -285,30 +292,28 @@ PLIST contains keyword arguments for `use-package`."
   ;;   (setq lightemacs--use-package-refreshed t))
   t)
 
-;; (defmacro lightemacs-use-package (name &rest plist)
-;;   "Configure an Emacs package using `use-package` safely.
-;;
-;; NAME is the package symbol.
-;; PLIST contains keyword arguments for `use-package`."
-;;   (declare (indent 1))
-;;   `(progn
-;;      (lightemacs--before-use-package ',name ',plist)
-;;      ,(if (bound-and-true-p byte-compile-current-file)
-;;           `(eval '(use-package ,name ,@plist))
-;;         `(use-package ,name ,@plist))))
+(defmacro lightemacs-use-package (name &rest args)
+  "Provide a formal interface for package configuration via `use-package'.
 
-(defmacro lightemacs-use-package (name &rest plist)
-  "Safely configure an Emacs package using `use-package`.
+NAME designates the package symbol.
+ARGS represents the property list of configuration parameters.
 
-NAME is the symbol of the package to configure.
-PLIST contains keyword arguments accepted by `use-package`.
-
-This macro calls `lightemacs--before-use-package` with the package name
-and its configuration before invoking `use-package`."
+The expansion logic detects instances where :ensure is explicitly nil without
+a corresponding :straight declaration, in which case it appends (:straight nil)
+to the argument sequence. The procedure `lightemacs--before-use-package` is
+invoked with the resulting arguments prior to the expansion of `use-package`."
   (declare (indent 1))
-  `(progn
-     (lightemacs--before-use-package ',name ',plist)
-     (use-package ,name ,@plist)))
+  (let ((effective-args args))
+    (when (and (eq lightemacs-package-manager 'straight)
+               (plist-member args :ensure)
+               (null (plist-get args :ensure))
+               (not (plist-member args :straight)))
+      (lightemacs-debug-message
+       "lightemacs-use-package: Added `:straight nil' to the %s package" name)
+      (setq effective-args (append args '(:straight nil))))
+    `(progn
+       (lightemacs--before-use-package ',name ',effective-args)
+       (use-package ,name ,@effective-args))))
 
 ;;; Native comp functions
 

@@ -185,6 +185,11 @@ macro are affected by this variable.")
   :type 'boolean
   :group 'lightemacs)
 
+(defcustom lightemacs-debug nil
+  "Enable displaying debug messages."
+  :type 'boolean
+  :group 'lightemacs)
+
 (defvar lightemacs-ellipsis " ▼"
   "String used to indicate folded sections in Org-mode and Outline-mode.
 This ellipsis appears at the end of a heading or section that has been
