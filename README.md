@@ -950,6 +950,8 @@ Elisp file-type modules are disabled by default:
 
 - **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 
+- **le-inhibit-mouse**: Enables the [inhibit-mouse](https://github.com/jamescherti/inhibit-mouse.el) package that disables of mouse input.
+
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
 * **le-xclip**: This module integrates the [xclip](https://elpa.gnu.org/packages/xclip.html) package, enabling copy and paste between Emacs running in a terminal and the system GUI clipboard. (IMPORTANT: The le-xclip package only activates the xclip package when Emacs is executed in a terminal.) The xclip package relies on external command-line tools depending on the platform: `xclip` or `xsel` for X11, `pbpaste`/`pbcopy` for macOS, `getclip`/`putclip` for Cygwin, `wl-clipboard` for Wayland, and `termux-clipboard-get`/`termux-clipboard-set` for Termux.

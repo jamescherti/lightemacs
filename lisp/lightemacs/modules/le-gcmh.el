@@ -39,6 +39,7 @@
         ;; being idle before triggering garbage collection. "Idle" here means no
         ;; keyboard or mouse input is received for the specified period.
         gcmh-idle-delay 'auto))
+
 (provide 'le-gcmh)
 
 ;; Local variables:
