@@ -305,11 +305,12 @@ invoked with the resulting arguments prior to the expansion of `use-package`."
   (declare (indent 1))
   (let ((effective-args args))
     (when (and (eq lightemacs-package-manager 'straight)
+               ;; ensure: nil && :straight is undefined
                (plist-member args :ensure)
                (null (plist-get args :ensure))
                (not (plist-member args :straight)))
       (lightemacs-debug-message
-       "lightemacs-use-package: Added `:straight nil' to the %s package" name)
+        "lightemacs-use-package: Added `:straight nil' to the %s package" name)
       (setq effective-args (append args '(:straight nil))))
     `(progn
        (lightemacs--before-use-package ',name ',effective-args)
