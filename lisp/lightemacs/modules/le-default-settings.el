@@ -111,6 +111,14 @@
          ("/Eask\\'" . emacs-lisp-mode)
          ("/Cask\\'" . emacs-lisp-mode)))
 
+(add-to-list 'auto-mode-alist '("/\\.gitconfig\\.local\\'" . gitconfig-mode))
+(add-to-list 'auto-mode-alist '("/\\.gitignore\\.local\\'" . gitignore-mode))
+(add-to-list 'auto-mode-alist '("/\\.gitattributes\\.local\\'" . gitattributes-mode))
+
+;; TODO remove these
+;; (add-to-list 'auto-mode-alist '("/\\.gitignore_global\\'" . gitignore-mode))
+;; (add-to-list 'auto-mode-alist '("/\\.gitattributes_global\\'" . gitattributes-mode))
+
 ;;; Patches
 
 (with-eval-after-load 'eldoc
