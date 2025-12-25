@@ -24,10 +24,8 @@
              gitconfig-mode
              gitignore-mode)
   :mode
-  ("/.gitignore_global\\'" . gitignore-mode)
   ("/.gitignore\\'" . gitignore-mode)
   ("/.gitconfig\\'" . gitconfig-mode)
-  ("/.gitattributes_global\\'" . gitattributes-mode)
   ("/.gitattributes\\'" . gitattributes-mode))
 
 (provide 'le-git-modes)
