@@ -3,3 +3,4 @@
 /eln-cache
 /var
 /etc
+*.elc
