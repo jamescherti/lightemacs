@@ -4,3 +4,4 @@
 /var
 /etc
 *.elc
+*.eln
