@@ -423,4 +423,5 @@ exist."
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
+
 ;;; lightemacs.el ends here
