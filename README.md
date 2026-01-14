@@ -1029,7 +1029,7 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 The *Lightemacs* project has been written by James Cherti and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
 
-Copyright (C) 2025 [James Cherti](https://www.jamescherti.com)
+Copyright (C) 2025-2026 [James Cherti](https://www.jamescherti.com)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
