@@ -18,8 +18,15 @@
 (eval-and-compile
   (require 'lightemacs))
 
+(require 'le-shut-up)
+
 (defvar lightemacs-saveplace-recenter-after-find-file t
   "If non-nil, recenter the buffer after restoring the cursor position.")
+
+(defvar lightemacs-saveplace-quiet t
+  "If non-nil, suppress saveplace messages when Emacs is exiting.
+This affects the messages shown during the `save-place-kill-emacs-hook',
+preventing output in the echo area while saving buffer positions.")
 
 (lightemacs-use-package saveplace
   :ensure nil
@@ -51,7 +58,17 @@ It avoids recentering while an EasySession session is in progress."
 
   :config
   (add-hook 'save-place-after-find-file-hook
-            'lightemacs-saveplace--after-find-file))
+            'lightemacs-saveplace--after-find-file)
+
+  (defun lightemacs--around-save-place-kill-emacs-hook (fn &rest args)
+    "FN is the advised function. ARGS are the function arguments."
+    (if lightemacs-saveplace-quiet
+        (apply fn args)
+      (shut-up
+        (apply fn args))))
+
+  (advice-add 'save-place-kill-emacs-hook :around
+              #'lightemacs--around-save-place-kill-emacs-hook))
 
 (provide 'le-saveplace)
 
