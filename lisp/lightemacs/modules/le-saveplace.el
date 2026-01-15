@@ -61,11 +61,17 @@ It avoids recentering while an EasySession session is in progress."
             'lightemacs-saveplace--after-find-file)
 
   (defun lightemacs--around-save-place-kill-emacs-hook (fn &rest args)
-    "FN is the advised function. ARGS are the function arguments."
+    "Advice around `save-place-kill-emacs-hook' to optionally suppress messages.
+
+FN is the original function being advised.
+ARGS are the arguments passed to FN.
+
+If `lightemacs-saveplace-quiet' is non-nil, output generated during execution is
+silenced using `shut-up'Otherwise,the function executes normally."
     (if lightemacs-saveplace-quiet
-        (apply fn args)
-      (shut-up
-        (apply fn args))))
+        (shut-up
+          (apply fn args))
+      (apply fn args)))
 
   (advice-add 'save-place-kill-emacs-hook :around
               #'lightemacs--around-save-place-kill-emacs-hook))
