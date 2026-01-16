@@ -74,7 +74,7 @@ silenced using `shut-up'Otherwise,the function executes normally."
       (apply fn args)))
 
   (advice-add 'save-place-kill-emacs-hook :around
-              #'lightemacs--around-save-place-kill-emacs-hook))
+              'lightemacs--around-save-place-kill-emacs-hook))
 
 (provide 'le-saveplace)
 

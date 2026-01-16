@@ -28,7 +28,8 @@
              cape-elisp-symbol
              cape-file
              cape-history
-             cape-line)
+             cape-line
+             cape-capf-buster)
 
   :bind
   ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+

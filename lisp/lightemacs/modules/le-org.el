@@ -37,6 +37,7 @@
   :init
   ;; Disable saving a bookmark when capturing; avoids cluttering the bookmark
   ;; list but loses the ability to quickly return to the capture location.
+  ;; TODO: Obsolete
   (setq org-capture-bookmark nil)
 
   ;; Define refile targets up to maxlevel in the current file and agenda files;

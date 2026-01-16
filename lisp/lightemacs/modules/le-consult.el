@@ -59,7 +59,6 @@
              consult-mode-command
              consult-org-agenda
              consult-outline
-             consult-preview-at-point-mode
              consult-project-buffer
              consult-recent-file
              consult-register
@@ -132,8 +131,9 @@
 
   :init
   ;; Enable automatic preview at point in the *Completions* buffer.
-  (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
-  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
+  ;; Obsolete (TODO)
+  ;; (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
+  ;; (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
 
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
@@ -230,9 +230,8 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
                   (car args))
           (cdr args))))
 
-(when (fboundp 'lightemacs-consult--crm-indicator)
-  (advice-add
-   #'completing-read-multiple :filter-args #'lightemacs-consult--crm-indicator))
+(advice-add
+ #'completing-read-multiple :filter-args 'lightemacs-consult--crm-indicator)
 
 ;;; Provide
 (provide 'le-consult)
