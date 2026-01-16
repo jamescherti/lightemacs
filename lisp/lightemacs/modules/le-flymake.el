@@ -46,19 +46,6 @@
   :init
   (setq flymake-wrap-around nil))
 
-;;; `elisp-mode': Append `load-path' to `elisp-flymake-byte-compile-load-path'
-
-(defvar lightemacs-flymake--setup-elisp-done nil
-  "Non-nil once `elisp-flymake-byte-compile-load-path' has been extended.")
-
-;; Ensure `elisp-flymake-byte-compile-load-path' includes `load-path' once
-(with-eval-after-load 'elisp-mode
-  (unless lightemacs-flymake--setup-elisp-done
-    (setq elisp-flymake-byte-compile-load-path
-          (append elisp-flymake-byte-compile-load-path load-path))
-    ;; Idempotence
-    (setq lightemacs-flymake--setup-elisp-done t)))
-
 (provide 'le-flymake)
 
 ;; Local variables:
