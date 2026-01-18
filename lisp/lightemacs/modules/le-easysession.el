@@ -44,7 +44,6 @@ Set to nil to ignore window size and position during session restoration.")
   :commands (easysession-rename
              easysession-reset
              easysession-save
-             easysession-save-as
              easysession-save-mode
              easysession-switch-to
              easysession-delete
@@ -53,7 +52,7 @@ Set to nil to ignore window size and position during session restoration.")
              easysession-switch-to-and-restore-geometry
              easysession-load-including-geometry)
 
-  :bind (("C-c ss" . easysession-save-as)  ; Save
+  :bind (("C-c ss" . easysession-save)
          ("C-c sl" . easysession-switch-to)  ; Load
          ("C-c sL" . easysession-switch-to-and-restore-geometry)
          ("C-c sr" . easysession-rename)
@@ -80,8 +79,9 @@ Set to nil to ignore window size and position during session restoration.")
   ;; Auto save mode
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103)
 
-  ;; Alternative to: (setq easysession-mode-line-misc-info t)
-  (setq easysession-save-mode-lighter-show-session-name t))
+  ;; Customizations
+  ;; (setq easysession-save-mode-lighter-show-session-name t)
+  (setq easysession-mode-line-misc-info t))
 
 (provide 'le-easysession)
 
