@@ -142,7 +142,8 @@
 
   ;; Optionally tweak the register preview window. This adds thin lines, sorting
   ;; and hides the mode line of the window.
-  ;; (advice-add #'register-preview :override #'consult-register-window)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq register-preview-delay 0.5)
 
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref)
@@ -161,13 +162,13 @@
    consult-theme :preview-key '(:debounce 0.1 any)
    consult-ripgrep consult-git-grep consult-grep consult-man
    consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-file-register
-   consult--source-recent-file consult--source-project-recent-file
+   consult-source-bookmark consult-source-file-register
+   consult-source-recent-file consult-source-project-recent-file
    ;; :preview-key "M-."
    :preview-key '(:debounce 0.1 any))
 
   ;; Configure the narrowing key. Both < and C-+ work reasonably well. "C-+"
-  (setq consult-narrow-key "<")
+  (setq consult-narrow-key "<") ; "C-+"
 
   (setq consult-async-min-input 3
         consult-async-refresh-delay 0.1
