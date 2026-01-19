@@ -168,7 +168,7 @@
    :preview-key '(:debounce 0.1 any))
 
   ;; Configure the narrowing key. Both < and C-+ work reasonably well. "C-+"
-  (setq consult-narrow-key "<") ; "C-+"
+  (setq consult-narrow-key "<")
 
   (setq consult-async-min-input 3
         consult-async-refresh-delay 0.1
