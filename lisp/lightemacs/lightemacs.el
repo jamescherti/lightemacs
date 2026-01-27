@@ -277,19 +277,27 @@ During byte-compilation, attempt to load FEATURE eagerly."
   "Run this function before `lightemacs-use-package' if :ensure is non-nil.
 NAME is the symbol identifying the package.
 PLIST contains keyword arguments for `use-package`."
-  ;; TODO Only refresh packages when the feature is not available
-  ;; (when (and (not lightemacs--use-package-refreshed)
-  ;;            lightemacs-use-package-refresh-contents
-  ;;            (eq lightemacs-package-manager 'use-package)
-  ;;            (cond ((memq :ensure plist)
-  ;;                   (plist-get plist :ensure))
-  ;;                  (t
-  ;;                   use-package-always-ensure))
-  ;;            (not (package-installed-p name)))
-  ;;   (lightemacs-verbose-message
-  ;;     "Refreshing package contents before installing %s" name)
-  ;;   (package-refresh-contents)
-  ;;   (setq lightemacs--use-package-refreshed t))
+  ;; Ensure the package is installed
+  ;; (cond
+  ;;  ((eq lightemacs-package-manager 'straight)
+  ;;   (unless (featurep ',name)
+  ;;     ;; TODO Only refresh packages when the feature is not available
+  ;;     ;; (when (and (not lightemacs--use-package-refreshed)
+  ;;     ;;            lightemacs-use-package-refresh-contents
+  ;;     ;;            (eq lightemacs-package-manager 'use-package)
+  ;;     ;;            (cond ((memq :ensure plist)
+  ;;     ;;                   (plist-get plist :ensure))
+  ;;     ;;                  (t
+  ;;     ;;                   use-package-always-ensure))
+  ;;     ;;            (not (package-installed-p name)))
+  ;;     ;;   (lightemacs-verbose-message
+  ;;     ;;     "Refreshing package contents before installing %s" name)
+  ;;     ;;   (package-refresh-contents)
+  ;;     ;;   (setq lightemacs--use-package-refreshed t))
+  ;;
+  ;;     (let ((ensure (and (plist-member plist :ensure)
+  ;;                        (plist-get plist :ensure))))
+  ;;       (use-package-ensure-elpa ',name (list ensure) nil)))))
   t)
 
 (defmacro lightemacs-use-package (name &rest args)
@@ -303,17 +311,37 @@ a corresponding :straight declaration, in which case it appends (:straight nil)
 to the argument sequence. The procedure `lightemacs--before-use-package` is
 invoked with the resulting arguments prior to the expansion of `use-package`."
   (declare (indent 1))
-  (let ((effective-args args))
+  (let* ((effective-args (copy-sequence args))
+         (ensure-member (plist-member effective-args :ensure))
+         (ensure-value (if ensure-member
+                           (plist-get effective-args :ensure)
+                         use-package-always-ensure)))
     (when (and (eq lightemacs-package-manager 'straight)
-               ;; ensure: nil && :straight is undefined
-               (plist-member args :ensure)
-               (null (plist-get args :ensure))
-               (not (plist-member args :straight)))
+               ensure-member
+               (null ensure-value)
+               (not (plist-member effective-args :straight)))
       (lightemacs-debug-message
         "lightemacs-use-package: Added `:straight nil' to the %s package" name)
-      (setq effective-args (append args '(:straight nil))))
+      (setq effective-args (append effective-args '(:straight nil))))
     `(progn
        (lightemacs--before-use-package ',name ',effective-args)
+
+       (let ((refresh nil))
+         (when (and (eq lightemacs-package-manager 'use-package)
+                    ensure-value
+                    (not (featurep ',name)))
+           (when (and (not lightemacs--use-package-refreshed)
+                      lightemacs-use-package-refresh-contents
+                      ensure-value
+                      ;; (not (package-installed-p name))
+                      )
+             (lightemacs-verbose-message
+               "Refreshing package contents before installing %s" name)
+             (setq refresh t)
+             (setq lightemacs--use-package-refreshed t))
+
+           (use-package-ensure-elpa ',name ,(list ensure-value) refresh)))
+
        (use-package ,name ,@effective-args))))
 
 ;;; Native comp functions
