@@ -276,13 +276,13 @@ Used by `lightemacs--before-use-package' to ensure that
 `package-refresh-contents' is invoked at most once per Emacs session, avoiding
 redundant network calls when installing multiple packages.")
 
-;; (defvar lightemacs--installed-packages nil
-;;   "List of package symbols that have been installed during this session.
-;; Used as a cache by `lightemacs--before-use-package' to skip re-checking
-;; `package-installed-p' for packages that were already installed, improving
-;; startup performance when configuring multiple packages.")
+(defvar lightemacs--installed-packages nil
+  "List of package symbols that have been installed during this session.
+Used as a cache by `lightemacs--before-use-package' to skip re-checking
+`package-installed-p' for packages that were already installed, improving
+startup performance when configuring multiple packages.")
 
-(defun lightemacs--before-use-package (_name _plist)
+(defun lightemacs--before-use-package (name plist)
   "Ensure a package is installed before `lightemacs-use-package' expands.
 
 NAME is the symbol identifying the package to install or configure.
@@ -291,47 +291,42 @@ PLIST is the property list of keyword arguments supplied to `use-package'.
 This function performs the following steps when the package manager
 is `use-package' and the :ensure property is non-nil."
   ;; TODO Support load-path and make it install packages
-  ;; (when (and (eq lightemacs-package-manager 'use-package))
-  ;;   (let* ((ensure-member (plist-member plist :ensure))
-  ;;          (ensure-value (if ensure-member
-  ;;                            (plist-get plist :ensure)
-  ;;                          use-package-always-ensure)))
-  ;;     (lightemacs-verbose-message
-  ;;       "[USE-PACKAGE] Installing %s" name)
-  ;;     (when (and ensure-value
-  ;;                (not (memq name lightemacs--installed-packages))
-  ;;                (not (package-installed-p name)))
-  ;;       (push name lightemacs--installed-packages)
-  ;;       (eval (cons 'use-package (cons name plist))))
-  ;;
-  ;;     ;; (when (and ensure-value
-  ;;     ;;            ;; (not (memq name lightemacs--installed-packages))
-  ;;     ;;            (not (package-installed-p name)))
-  ;;     ;;   (when (and (not lightemacs--use-package-refreshed)
-  ;;     ;;              lightemacs-use-package-refresh-contents)
-  ;;     ;;     (lightemacs-verbose-message
-  ;;     ;;       "Refreshing package contents before installing %s" name)
-  ;;     ;;     (setq lightemacs--use-package-refreshed t)
-  ;;     ;;     (package-refresh-contents))
-  ;;     ;;
-  ;;     ;;
-  ;;     ;;   ;; (push name lightemacs--installed-packages)
-  ;;     ;;   )
-  ;;     ))
-  t)
+  (when (and (eq lightemacs-package-manager 'use-package))
+    (let* ((ensure-member (plist-member plist :ensure))
+           (ensure-value (if ensure-member
+                             (plist-get plist :ensure)
+                           use-package-always-ensure))
+           ;; (load-dir (plist-get plist :load-path))
+           )
+      (when (and ensure-value
+                 (not (memq name lightemacs--installed-packages))
+                 ;; TODO handle load-path? Remove load-dir?
+                 ;; (or (not load-dir)
+                 ;;     (not (locate-library (symbol-name name) nil load-dir)))
+                 (not (package-installed-p name)))
+        ;; Refresh packages
+        (when (and (not lightemacs--use-package-refreshed)
+                   lightemacs-use-package-refresh-contents)
+          (lightemacs-verbose-message
+            "[USE-PACKAGE] Refreshing package contents before installing %s"
+            name)
+          (setq lightemacs--use-package-refreshed t)
+          (condition-case err
+              (package-refresh-contents)
+            (error
+             (display-warning 'lightemacs
+                              (format "Failed to install package %s: %s"
+                                      name (error-message-string err))
+                              :error)
+             ;; (lightemacs-verbose-message
+             ;;   "Failed to refresh package contents: %s"
+             ;;   (error-message-string err))
+             )))
 
-;; (defmacro lightemacs-use-package (name &rest plist)
-;;   "Safely configure an Emacs package using `use-package`.
-;;
-;; NAME is the symbol of the package to configure.
-;; PLIST contains keyword arguments accepted by `use-package`.
-;;
-;; This macro calls `lightemacs--before-use-package` with the package name
-;; and its configuration before invoking `use-package`."
-;;   (declare (indent 1))
-;;   `(progn
-;;      (lightemacs--before-use-package ',name ',plist)
-;;      (use-package ,name ,@plist)))
+        ;; Install the package
+        (lightemacs-verbose-message "[USE-PACKAGE] Installing %s" name)
+        (funcall use-package-ensure-function name (list ensure-value) nil)
+        (push name lightemacs--installed-packages)))))
 
 (defmacro lightemacs-use-package (name &rest args)
   "Provide a formal interface for package configuration via `use-package'.
