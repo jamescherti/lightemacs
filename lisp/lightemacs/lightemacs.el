@@ -311,18 +311,41 @@ is `use-package' and the :ensure property is non-nil."
   ;;       )))
   t)
 
-(defmacro lightemacs-use-package (name &rest plist)
-  "Safely configure an Emacs package using `use-package`.
+;; (defmacro lightemacs-use-package (name &rest plist)
+;;   "Safely configure an Emacs package using `use-package`.
+;;
+;; NAME is the symbol of the package to configure.
+;; PLIST contains keyword arguments accepted by `use-package`.
+;;
+;; This macro calls `lightemacs--before-use-package` with the package name
+;; and its configuration before invoking `use-package`."
+;;   (declare (indent 1))
+;;   `(progn
+;;      (lightemacs--before-use-package ',name ',plist)
+;;      (use-package ,name ,@plist)))
 
-NAME is the symbol of the package to configure.
-PLIST contains keyword arguments accepted by `use-package`.
+(defmacro lightemacs-use-package (name &rest args)
+  "Provide a formal interface for package configuration via `use-package'.
 
-This macro calls `lightemacs--before-use-package` with the package name
-and its configuration before invoking `use-package`."
+NAME designates the package symbol.
+ARGS represents the property list of configuration parameters.
+
+The expansion logic detects instances where :ensure is explicitly nil without
+a corresponding :straight declaration, in which case it appends (:straight nil)
+to the argument sequence. The procedure `lightemacs--before-use-package` is
+invoked with the resulting arguments prior to the expansion of `use-package`."
   (declare (indent 1))
-  `(progn
-     (lightemacs--before-use-package ',name ',plist)
-     (use-package ,name ,@plist)))
+  (let ((effective-args args))
+    (when (and (eq lightemacs-package-manager 'straight)
+               (plist-member args :ensure)
+               (null (plist-get args :ensure))
+               (not (plist-member args :straight)))
+      (lightemacs-debug-message
+        "lightemacs-use-package: Added `:straight nil' to the %s package" name)
+      (setq effective-args (append args '(:straight nil))))
+    `(progn
+       (lightemacs--before-use-package ',name ',effective-args)
+       (use-package ,name ,@effective-args))))
 
 ;;; Native comp functions
 
