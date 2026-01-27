@@ -290,25 +290,34 @@ PLIST is the property list of keyword arguments supplied to `use-package'.
 
 This function performs the following steps when the package manager
 is `use-package' and the :ensure property is non-nil."
-  ;; TODO Support load-path
+  ;; TODO Support load-path and make it install packages
   ;; (when (and (eq lightemacs-package-manager 'use-package))
   ;;   (let* ((ensure-member (plist-member plist :ensure))
   ;;          (ensure-value (if ensure-member
   ;;                            (plist-get plist :ensure)
   ;;                          use-package-always-ensure)))
+  ;;     (lightemacs-verbose-message
+  ;;       "[USE-PACKAGE] Installing %s" name)
   ;;     (when (and ensure-value
-  ;;                ;; (not (memq name lightemacs--installed-packages))
+  ;;                (not (memq name lightemacs--installed-packages))
   ;;                (not (package-installed-p name)))
-  ;;       (when (and (not lightemacs--use-package-refreshed)
-  ;;                  lightemacs-use-package-refresh-contents)
-  ;;         (lightemacs-verbose-message
-  ;;           "Refreshing package contents before installing %s" name)
-  ;;         (setq lightemacs--use-package-refreshed t)
-  ;;         (package-refresh-contents))
+  ;;       (push name lightemacs--installed-packages)
+  ;;       (eval (cons 'use-package (cons name plist))))
   ;;
-  ;;
-  ;;       ;; (push name lightemacs--installed-packages)
-  ;;       )))
+  ;;     ;; (when (and ensure-value
+  ;;     ;;            ;; (not (memq name lightemacs--installed-packages))
+  ;;     ;;            (not (package-installed-p name)))
+  ;;     ;;   (when (and (not lightemacs--use-package-refreshed)
+  ;;     ;;              lightemacs-use-package-refresh-contents)
+  ;;     ;;     (lightemacs-verbose-message
+  ;;     ;;       "Refreshing package contents before installing %s" name)
+  ;;     ;;     (setq lightemacs--use-package-refreshed t)
+  ;;     ;;     (package-refresh-contents))
+  ;;     ;;
+  ;;     ;;
+  ;;     ;;   ;; (push name lightemacs--installed-packages)
+  ;;     ;;   )
+  ;;     ))
   t)
 
 ;; (defmacro lightemacs-use-package (name &rest plist)
