@@ -242,9 +242,9 @@ By default, `lightemacs-package-manager` is set to `'use-package`, which uses th
 
 - **`'use-package`** (default): Uses Emacs’ native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
 
-- **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
+- WORK IN PROGRESS: **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
 
-- **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
+- WORK IN PROGRESS: **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
 
 #### Configuration Example for the package manager
 

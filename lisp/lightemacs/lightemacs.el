@@ -259,7 +259,7 @@ problem."
   "Evaluate BODY, shielding macros only if FEATURE is not yet available.
 If FEATURE is already present, expand BODY normally.
 During byte-compilation, attempt to load FEATURE eagerly."
-  (declare (indent 1))
+  (declare (indent 0))
   (let ((available (featurep feature)))
     (when byte-compile-current-file
       (setq available (require feature nil 'noerror)))
@@ -271,78 +271,76 @@ During byte-compilation, attempt to load FEATURE eagerly."
 ;;; lightemacs-use-package macro
 
 (defvar lightemacs--use-package-refreshed nil
-  "Whether package contents have been refreshed for `lightemacs-use-package'.")
+  "Non-nil if package contents have been refreshed during the current session.
+Used by `lightemacs--before-use-package' to ensure that
+`package-refresh-contents' is invoked at most once per Emacs session, avoiding
+redundant network calls when installing multiple packages.")
 
-(defun lightemacs--before-use-package (_name _plist)
-  "Run this function before `lightemacs-use-package' if :ensure is non-nil.
-NAME is the symbol identifying the package.
-PLIST contains keyword arguments for `use-package`."
-  ;; Ensure the package is installed
-  ;; (cond
-  ;;  ((eq lightemacs-package-manager 'straight)
-  ;;   (unless (featurep ',name)
-  ;;     ;; TODO Only refresh packages when the feature is not available
-  ;;     ;; (when (and (not lightemacs--use-package-refreshed)
-  ;;     ;;            lightemacs-use-package-refresh-contents
-  ;;     ;;            (eq lightemacs-package-manager 'use-package)
-  ;;     ;;            (cond ((memq :ensure plist)
-  ;;     ;;                   (plist-get plist :ensure))
-  ;;     ;;                  (t
-  ;;     ;;                   use-package-always-ensure))
-  ;;     ;;            (not (package-installed-p name)))
-  ;;     ;;   (lightemacs-verbose-message
-  ;;     ;;     "Refreshing package contents before installing %s" name)
-  ;;     ;;   (package-refresh-contents)
-  ;;     ;;   (setq lightemacs--use-package-refreshed t))
-  ;;
-  ;;     (let ((ensure (and (plist-member plist :ensure)
-  ;;                        (plist-get plist :ensure))))
-  ;;       (use-package-ensure-elpa ',name (list ensure) nil)))))
-  t)
+(defvar lightemacs--installed-packages nil
+  "List of package symbols that have been installed during this session.
+Used as a cache by `lightemacs--before-use-package' to skip re-checking
+`package-installed-p' for packages that were already installed, improving
+startup performance when configuring multiple packages.")
+
+(defun lightemacs--before-use-package (name plist)
+  "Ensure a package is installed before `lightemacs-use-package' expands.
+
+NAME is the symbol identifying the package to install or configure.
+PLIST is the property list of keyword arguments supplied to `use-package'.
+
+This function performs the following steps when the package manager
+is `use-package' and the :ensure property is non-nil:
+
+1. Checks if the package is already present in `lightemacs--installed-packages'
+   or installed via ELPA.
+2. Refreshes package contents once per session if necessary, controlled by
+   `lightemacs-use-package-refresh-contents' and
+   `lightemacs--use-package-refreshed'.
+3. Installs the package using `use-package-ensure-elpa' if it is not already
+   installed.
+4. Records the package in `lightemacs--installed-packages' to avoid redundant
+   installation checks for the remainder of the session.
+
+This mechanism ensures that packages are available before configuration and
+avoids repeated checks or refreshes, improving startup performance for
+configurations with multiple packages."
+  (when (and (eq lightemacs-package-manager 'use-package))
+    (let* ((ensure-member (plist-member plist :ensure))
+           (ensure-value (if ensure-member
+                             (plist-get plist :ensure)
+                           use-package-always-ensure)))
+      (when (and ensure-value
+                 (or (memq name lightemacs--installed-packages)
+                     (not (package-installed-p name))))
+        (when (and (not lightemacs--use-package-refreshed)
+                   lightemacs-use-package-refresh-contents)
+          (lightemacs-verbose-message
+            "Refreshing package contents before installing %s" name)
+          (setq lightemacs--use-package-refreshed t)
+          (package-refresh-contents))
+
+        ;; `use-package' skips installing a package if its feature is already
+        ;; present (loaded or built-in). In other words, :ensure only triggers
+        ;; installation when the package is missing. The following ensures that
+        ;; the package is installed regardless of whether its feature is already
+        ;; available
+        (eval
+         `(use-package ,name
+            :ensure ,ensure-value))
+        (push name lightemacs--installed-packages)))))
 
 (defmacro lightemacs-use-package (name &rest args)
   "Provide a formal interface for package configuration via `use-package'.
 
 NAME designates the package symbol.
-ARGS represents the property list of configuration parameters.
-
-The expansion logic detects instances where :ensure is explicitly nil without
-a corresponding :straight declaration, in which case it appends (:straight nil)
-to the argument sequence. The procedure `lightemacs--before-use-package` is
-invoked with the resulting arguments prior to the expansion of `use-package`."
+ARGS represents the property list of configuration parameters."
   (declare (indent 1))
-  (let* ((effective-args (copy-sequence args))
-         (ensure-member (plist-member effective-args :ensure))
-         (ensure-value (if ensure-member
-                           (plist-get effective-args :ensure)
-                         use-package-always-ensure)))
-    (when (and (eq lightemacs-package-manager 'straight)
-               ensure-member
-               (null ensure-value)
-               (not (plist-member effective-args :straight)))
-      (lightemacs-debug-message
-        "lightemacs-use-package: Added `:straight nil' to the %s package" name)
-      (setq effective-args (append effective-args '(:straight nil))))
+  (let* ((effective-args (copy-sequence args)))
     `(progn
        (lightemacs--before-use-package ',name ',effective-args)
-
-       (let ((refresh nil))
-         (when (and (eq lightemacs-package-manager 'use-package)
-                    ensure-value
-                    (not (featurep ',name)))
-           (when (and (not lightemacs--use-package-refreshed)
-                      lightemacs-use-package-refresh-contents
-                      ensure-value
-                      ;; (not (package-installed-p name))
-                      )
-             (lightemacs-verbose-message
-               "Refreshing package contents before installing %s" name)
-             (setq refresh t)
-             (setq lightemacs--use-package-refreshed t))
-
-           (use-package-ensure-elpa ',name ,(list ensure-value) refresh)))
-
-       (use-package ,name ,@effective-args))))
+       (use-package ,name
+         :ensure nil
+         ,@effective-args))))
 
 ;;; Native comp functions
 
