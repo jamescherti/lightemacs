@@ -276,71 +276,53 @@ Used by `lightemacs--before-use-package' to ensure that
 `package-refresh-contents' is invoked at most once per Emacs session, avoiding
 redundant network calls when installing multiple packages.")
 
-(defvar lightemacs--installed-packages nil
-  "List of package symbols that have been installed during this session.
-Used as a cache by `lightemacs--before-use-package' to skip re-checking
-`package-installed-p' for packages that were already installed, improving
-startup performance when configuring multiple packages.")
+;; (defvar lightemacs--installed-packages nil
+;;   "List of package symbols that have been installed during this session.
+;; Used as a cache by `lightemacs--before-use-package' to skip re-checking
+;; `package-installed-p' for packages that were already installed, improving
+;; startup performance when configuring multiple packages.")
 
-(defun lightemacs--before-use-package (name plist)
+(defun lightemacs--before-use-package (_name _plist)
   "Ensure a package is installed before `lightemacs-use-package' expands.
 
 NAME is the symbol identifying the package to install or configure.
 PLIST is the property list of keyword arguments supplied to `use-package'.
 
 This function performs the following steps when the package manager
-is `use-package' and the :ensure property is non-nil:
+is `use-package' and the :ensure property is non-nil."
+  ;; TODO Support load-path
+  ;; (when (and (eq lightemacs-package-manager 'use-package))
+  ;;   (let* ((ensure-member (plist-member plist :ensure))
+  ;;          (ensure-value (if ensure-member
+  ;;                            (plist-get plist :ensure)
+  ;;                          use-package-always-ensure)))
+  ;;     (when (and ensure-value
+  ;;                ;; (not (memq name lightemacs--installed-packages))
+  ;;                (not (package-installed-p name)))
+  ;;       (when (and (not lightemacs--use-package-refreshed)
+  ;;                  lightemacs-use-package-refresh-contents)
+  ;;         (lightemacs-verbose-message
+  ;;           "Refreshing package contents before installing %s" name)
+  ;;         (setq lightemacs--use-package-refreshed t)
+  ;;         (package-refresh-contents))
+  ;;
+  ;;
+  ;;       ;; (push name lightemacs--installed-packages)
+  ;;       )))
+  t)
 
-1. Checks if the package is already present in `lightemacs--installed-packages'
-   or installed via ELPA.
-2. Refreshes package contents once per session if necessary, controlled by
-   `lightemacs-use-package-refresh-contents' and
-   `lightemacs--use-package-refreshed'.
-3. Installs the package using `use-package-ensure-elpa' if it is not already
-   installed.
-4. Records the package in `lightemacs--installed-packages' to avoid redundant
-   installation checks for the remainder of the session.
+(defmacro lightemacs-use-package (name &rest plist)
+  "Safely configure an Emacs package using `use-package`.
 
-This mechanism ensures that packages are available before configuration and
-avoids repeated checks or refreshes, improving startup performance for
-configurations with multiple packages."
-  (when (and (eq lightemacs-package-manager 'use-package))
-    (let* ((ensure-member (plist-member plist :ensure))
-           (ensure-value (if ensure-member
-                             (plist-get plist :ensure)
-                           use-package-always-ensure)))
-      (when (and ensure-value
-                 (or (memq name lightemacs--installed-packages)
-                     (not (package-installed-p name))))
-        (when (and (not lightemacs--use-package-refreshed)
-                   lightemacs-use-package-refresh-contents)
-          (lightemacs-verbose-message
-            "Refreshing package contents before installing %s" name)
-          (setq lightemacs--use-package-refreshed t)
-          (package-refresh-contents))
+NAME is the symbol of the package to configure.
+PLIST contains keyword arguments accepted by `use-package`.
 
-        ;; `use-package' skips installing a package if its feature is already
-        ;; present (loaded or built-in). In other words, :ensure only triggers
-        ;; installation when the package is missing. The following ensures that
-        ;; the package is installed regardless of whether its feature is already
-        ;; available
-        (eval
-         `(use-package ,name
-            :ensure ,ensure-value))
-        (push name lightemacs--installed-packages)))))
-
-(defmacro lightemacs-use-package (name &rest args)
-  "Provide a formal interface for package configuration via `use-package'.
-
-NAME designates the package symbol.
-ARGS represents the property list of configuration parameters."
+This macro calls `lightemacs--before-use-package` with the package name
+and its configuration before invoking `use-package`."
   (declare (indent 1))
-  (let* ((effective-args (copy-sequence args)))
-    `(progn
-       (lightemacs--before-use-package ',name ',effective-args)
-       (use-package ,name
-         :ensure nil
-         ,@effective-args))))
+  `(progn
+     (lightemacs--before-use-package ',name ',plist)
+     (use-package ,name ,@plist)))
 
 ;;; Native comp functions
 
