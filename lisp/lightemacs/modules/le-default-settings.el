@@ -101,6 +101,7 @@
          ("/git-rebase-todo\\'" . diff-mode)
 
          ;; Arch Linux
+         ("\\.service\\'" . sh-mode)  ; PKGBUILD / systemd service
          ("\\.install\\'" . sh-mode)  ; PKGBUILD
          ("\\.hook\\'" . conf-unix-mode)  ; /usr/share/libalpm/hooks/
 
