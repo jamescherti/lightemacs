@@ -44,11 +44,6 @@
   (funcall 'lightemacs-load-user-init
            (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Load user function: `lightemacs-user-init'
-
-(when (fboundp 'lightemacs-user-init)
-  (funcall 'lightemacs-user-init))
-
 ;;; Load the package manager and refresh
 
 (require 'le-core-package-manager)
@@ -65,6 +60,11 @@
 
  (t
   (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
+
+;;; Load user function: `lightemacs-user-init'
+
+(when (fboundp 'lightemacs-user-init)
+  (funcall 'lightemacs-user-init))
 
 ;;; Load modules
 
