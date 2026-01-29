@@ -151,29 +151,45 @@
   (eldoc-add-command-completions
    "electric-pair-delete-pair"))
 
-
-;; NOTE: This patch has been merged into the Emacs master branch but has not
-;; been officially released yet.
-;; commit cf6c365d5cf8ee5f460e59393e76b934a1a432b2
-;; Author: James Cherti
-;; Date:   2025-04-11 10:18:19 -0400
-;;
-;; Mark !%:.^~, as punctuation rather than symbol constituents
-;;
-;; In Bash, the characters !%:.^~, are not valid in variable names. In sh, they
-;; are not permitted in either function or variable names. Treating them as
-;; punctuation is convenient, as they are rarely used in function names and
-;; never in variable names. Even among commands, their usage is uncommon. The
-;; only character among these that is commonly seen in command names is '.',
-;; although it is rarely used in function names.
-;;
-;; Marking these characters as punctuation, rather than symbol constituents,
-;; enhances the accuracy of symbol detection.
-;;
-;; * lisp/progmodes/sh-script.el: Mark !%:.^~, as punctuation in the
-;; sh-mode-syntax-table syntax table.
 (defun lightemacs-default-settings--sh-syntax-table ()
   "Enhance `sh-mode' and `bash-ts-mode' syntax table."
+  ;; NOTE: This patch has been submitted to the Emacs developers.
+  ;; sh-script: Mark + and * as punctuation rather than a symbol constituent
+  ;;
+  ;; In Bash, the characters + and * are not valid in variable names. In sh,
+  ;; they are also disallowed in both function and variable names. Treating
+  ;; them as punctuation is appropriate, as they most commonly appear as
+  ;; operators.
+  ;;
+  ;; Examples:
+  ;; * Arithmetic: $((var1*var2))
+  ;; * Compound assignment: list_name+=("item")
+  ;;
+  ;; * lisp/progmodes/sh-script.el: Mark + and * as punctuation in the
+  ;; sh-mode-syntax-table syntax table.
+  (modify-syntax-entry ?+ ".")
+  (modify-syntax-entry ?* ".")
+
+  ;; NOTE: This patch has been merged into the Emacs master branch but has not
+  ;; been officially released yet.
+  ;; commit cf6c365d5cf8ee5f460e59393e76b934a1a432b2
+  ;; Author: James Cherti
+  ;; Date:   2025-04-11 10:18:19 -0400
+  ;;
+  ;; Mark !%:.^~, as punctuation rather than symbol constituents
+  ;;
+  ;; In Bash, the characters !%:.^~, are not valid in variable names. In sh, they
+  ;; are not permitted in either function or variable names. Treating them as
+  ;; punctuation is convenient, as they are rarely used in function names and
+  ;; never in variable names. Even among commands, their usage is uncommon. The
+  ;; only character among these that is commonly seen in command names is '.',
+  ;; although it is rarely used in function names.
+  ;;
+  ;; Marking these characters as punctuation, rather than symbol constituents,
+  ;; enhances the accuracy of symbol detection.
+  ;;
+  ;; * lisp/progmodes/sh-script.el: Mark !%:.^~, as punctuation in the
+  ;; sh-mode-syntax-table syntax table.
   (modify-syntax-entry ?! ".")
   (modify-syntax-entry ?% ".")
   (modify-syntax-entry ?: ".")
