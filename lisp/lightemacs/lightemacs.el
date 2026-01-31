@@ -348,8 +348,11 @@ with the resulting arguments prior to expanding `use-package`."
       (setq effective-args (append args '(:straight nil))))
     `(progn
        (lightemacs--before-use-package ',name ',(copy-sequence effective-args))
-       (lightemacs-shield-macros
-         (use-package ,name ,@effective-args)))))
+       (use-package ,name ,@effective-args)
+       ;; Issue
+       ;; (lightemacs-shield-macros
+       ;;   (use-package ,name ,@effective-args))
+       )))
 
 ;;; Native comp functions
 
