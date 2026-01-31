@@ -49,26 +49,22 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
     (unless (seq-empty-p package-archive-contents)
       (package-refresh-contents))
     (package-install 'use-package))
-
-  ;; Ensure use-package is available
   (require 'use-package))
 
 ;;; Minibuffer
 
-;; Allow nested minibuffers
-(setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers t) ; Allow nested minibuffers
 
 ;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
       '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-;;; User interface
+;;; Display and user interface
 
 ;; By default, Emacs "updates" its ui more often than it needs to
 (setq which-func-update-delay 1.0)
@@ -80,6 +76,13 @@
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
+;; Position underlines at the descent line instead of the baseline.
+(setq x-underline-at-descent-line t)
+
+(setq truncate-string-ellipsis "…")
+
+(setq display-time-default-load-average nil) ; Omit load average
+
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
@@ -87,33 +90,9 @@
       show-paren-when-point-inside-paren t
       show-paren-when-point-in-periphery t)
 
-;;; Misc
+;;; Buffer management
 
 (setq custom-buffer-done-kill t)
-
-(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
-
-;; Can be activated with `display-line-numbers-mode'
-(setq-default display-line-numbers-width 3)
-(setq-default display-line-numbers-widen t)
-
-(setq truncate-string-ellipsis "…")
-
-;; Disable truncation of printed s-expressions in the message buffer
-(setq eval-expression-print-length nil
-      eval-expression-print-level nil)
-
-;; Position underlines at the descent line instead of the baseline.
-(setq x-underline-at-descent-line t)
-
-(setq remote-file-name-inhibit-cache 50)
-
-;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
-;; This ensures the index reflects recent edits.
-(setq imenu-auto-rescan t)
-
-;; Prevent truncation of long function names in `imenu' listings
-(setq imenu-max-item-length 160)
 
 ;; Disable auto-adding a new line at the bottom when scrolling.
 (setq next-line-add-newlines nil)
@@ -122,7 +101,37 @@
 ;; Benefit: you never lose bookmarks if Emacs crashes.
 (setq bookmark-save-flag 1)
 
-;;; tramp
+(setq uniquify-buffer-name-style 'forward)
+
+(setq remote-file-name-inhibit-cache 50)
+
+;; Disable fontification during user input to reduce lag in large buffers.
+;; Also helps marginally with scrolling performance.
+(setq redisplay-skip-fontification-on-input t)
+
+;;; Misc
+
+(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
+
+;; Disable truncation of printed s-expressions in the message buffer
+(setq eval-expression-print-length nil
+      eval-expression-print-level nil)
+
+;;; `display-line-numbers-mode'
+
+(setq-default display-line-numbers-width 3)
+(setq-default display-line-numbers-widen t)
+
+;;; imenu
+
+;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
+;; This ensures the index reflects recent edits.
+(setq imenu-auto-rescan t)
+
+;; Prevent truncation of long function names in `imenu' listings
+(setq imenu-max-item-length 160)
+
+;;; Tramp
 
 (setq tramp-verbose 1)
 (setq tramp-completion-reread-directory-timeout 50)
@@ -143,10 +152,6 @@
 ;; Prefer vertical splits over horizontal ones
 (setq split-width-threshold 170
       split-height-threshold nil)
-
-;;; Buffers
-
-(setq uniquify-buffer-name-style 'forward)
 
 ;;; comint (general command interpreter in a window)
 
@@ -259,12 +264,6 @@
       window-divider-default-places t
       window-divider-default-right-width 1)
 
-;;; Fontification
-
-;; Disable fontification during user input to reduce lag in large buffers.
-;; Also helps marginally with scrolling performance.
-(setq redisplay-skip-fontification-on-input t)
-
 ;;; Scrolling
 
 ;; Enables faster scrolling. This may result in brief periods of inaccurate
@@ -332,9 +331,6 @@
 ;; deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
 
-(setq-default left-fringe-width  8)
-(setq-default right-fringe-width 8)
-
 ;; Disable visual indicators in the fringe for buffer boundaries and empty lines
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
@@ -387,11 +383,6 @@
 
 ;; Eliminate delay before highlighting search matches
 (setq lazy-highlight-initial-delay 0)
-
-;;; Modeline
-
-;; Makes Emacs omit the load average information from the mode line.
-(setq display-time-default-load-average nil)
 
 ;;; Filetype
 
@@ -448,12 +439,13 @@
 
 ;;; Eglot
 
+(setq eglot-report-progress minimal-emacs-debug)  ; Prevent minibuffer spam
+(setq eglot-autoshutdown t)  ; Shut down after killing last managed buffer
+
 ;; A setting of nil or 0 means Eglot will not block the UI at all, allowing
 ;; Emacs to remain fully responsive, although LSP features will only become
 ;; available once the connection is established in the background.
 (setq eglot-sync-connect 0)
-
-(setq eglot-autoshutdown t)  ; Shut down server after killing last managed buffer
 
 ;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
@@ -467,19 +459,14 @@
   (setq eglot-events-buffer-size 0)  ; Deprecated
   (setq eglot-events-buffer-config '(:size 0 :format short)))
 
-(setq eglot-report-progress minimal-emacs-debug)  ; Prevent minibuffer spam
-
 ;;; Flymake
 
 (setq flymake-show-diagnostics-at-end-of-line nil)
-
-;; Disable wrapping around when navigating Flymake errors.
 (setq flymake-wrap-around nil)
 
 ;;; hl-line-mode
 
-;; Restrict `hl-line-mode' highlighting to the current window, reducing visual
-;; clutter and slightly improving `hl-line-mode' performance.
+;; Highlighting the current window, reducing clutter and improving performance
 (setq hl-line-sticky-flag nil)
 (setq global-hl-line-sticky-flag nil)
 
@@ -491,11 +478,10 @@
 
 ;;; flyspell
 
-(setq flyspell-issue-welcome-flag nil)
-
 ;; Improves flyspell performance by preventing messages from being displayed for
 ;; each word when checking the entire buffer.
 (setq flyspell-issue-message-flag nil)
+(setq flyspell-issue-welcome-flag nil)
 
 ;;; ispell
 
@@ -522,8 +508,8 @@
 
 ;;; abbrev
 
-;; Ensure `abbrev_defs` is stored in the correct location when
-;; `user-emacs-directory` is modified, as it defaults to ~/.emacs.d/abbrev_defs
+;; Ensure the abbrev_defs file is stored in the correct location when
+;; `user-emacs-directory' is modified, as it defaults to ~/.emacs.d/abbrev_defs
 ;; regardless of the change.
 (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
 

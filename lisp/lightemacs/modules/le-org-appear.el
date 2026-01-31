@@ -9,7 +9,9 @@
 
 ;;; Commentary:
 
-;; Configure `org-mode' and `org-agenda'.
+;; `org-appear' temporarily reveals normally hidden `org-mode' elements (such as
+;; emphasis markers, links, or entities) when the cursor enters them, and hides
+;; them again when the cursor leaves.
 
 ;;; Code:
 
