@@ -33,12 +33,12 @@
   :functions vterm--self-insert
 
   :preface
-  ;;(when noninteractive
-  ;;  ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
-  ;;  ;; This prevents that during byte-compilation (`use-package' eagerly loads
-  ;;  ;; packages when compiling).
-  ;;  (advice-add #'vterm-module-compile :override #'ignore)
-  ;;  (provide 'vterm-module))
+  (when noninteractive
+    ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
+    ;; This prevents that during byte-compilation (`use-package' eagerly loads
+    ;; packages when compiling).
+    (advice-add #'vterm-module-compile :override #'ignore)
+    (provide 'vterm-module))
 
   (defun lightemacs-vterm--setup ()
     ;; Hide the mode-line

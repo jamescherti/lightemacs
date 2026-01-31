@@ -33,7 +33,7 @@
 
 (straight-use-package 'use-package)
 
-(setq straight-use-package-by-default t)
+;; (setq straight-use-package-by-default t)
 
 (provide 'le-core-straight)
 

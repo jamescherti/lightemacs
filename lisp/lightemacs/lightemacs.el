@@ -317,16 +317,13 @@ is `use-package' and the :ensure property is non-nil."
              (display-warning 'lightemacs
                               (format "Failed to install package %s: %s"
                                       name (error-message-string err))
-                              :error)
-             ;; (lightemacs-verbose-message
-             ;;   "Failed to refresh package contents: %s"
-             ;;   (error-message-string err))
-             )))
+                              :error))))
 
         ;; Install the package
-        (lightemacs-verbose-message "[USE-PACKAGE] Installing %s" name)
-        (funcall use-package-ensure-function name (list ensure-value) nil)
-        (push name lightemacs--installed-packages)))))
+        ;; (lightemacs-verbose-message "[USE-PACKAGE] Installing %s" name)
+        ;; (funcall use-package-ensure-function name (list ensure-value) nil)
+        ;; (push name lightemacs--installed-packages)
+        ))))
 
 (defmacro lightemacs-use-package (name &rest args)
   "Provide a formal interface for package configuration via `use-package'.
@@ -338,21 +335,25 @@ If :ensure is explicitly nil and no :straight declaration exists,
 append (:straight nil) to ARGS. Invokes `lightemacs--before-use-package`
 with the resulting arguments prior to expanding `use-package`."
   (declare (indent 1))
-  (let ((effective-args args))
+  (let ((effective-args (copy-sequence args)))
     (when (and (eq lightemacs-package-manager 'straight)
-               (plist-member args :ensure)
-               (null (plist-get args :ensure))
-               (not (plist-member args :straight)))
-      (lightemacs-debug-message
-        "lightemacs-use-package: Added `:straight nil' to the %s package" name)
-      (setq effective-args (append args '(:straight nil))))
+               (not (plist-member effective-args :straight)))
+      (when (and (plist-member effective-args :ensure)
+                 (null (plist-get effective-args :ensure)))
+        (lightemacs-debug-message
+          "lightemacs-use-package: Added `:straight nil' to the %s package" name)
+        (setq effective-args (append '(:straight nil) effective-args))))
     `(progn
-       (lightemacs--before-use-package ',name ',(copy-sequence effective-args))
-       (use-package ,name ,@effective-args)
-       ;; Issue
-       ;; (lightemacs-shield-macros
-       ;;   (use-package ,name ,@effective-args))
-       )))
+       (lightemacs--before-use-package ',name ',effective-args)
+       (use-package ,name ,@effective-args))
+    ;; `(progn
+    ;;    ;; (eval (cons 'use-package (cons name effective-args)))
+    ;;    (lightemacs--before-use-package ',name ',effective-args)
+    ;;    (use-package ,name ,@effective-args)
+    ;;    ;; (lightemacs-shield-macros
+    ;;    ;;   (use-package ,name ,@effective-args))
+    ;;    )
+    ))
 
 ;;; Native comp functions
 

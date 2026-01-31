@@ -30,13 +30,14 @@
 
 (lightemacs-use-package dumb-jump
   :commands dumb-jump-xref-activate
-
   :init
   ;; Register `dumb-jump' as an xref backend so it integrates with
-  ;; `xref-find-definitions'
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  ;; `xref-find-definitions'. A priority of 90 ensures it is used only when no
+  ;; more specific backend is available.
+  (with-eval-after-load 'xref
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90))
 
-  ;; (setq dumb-jump-quiet t)
+  (setq dumb-jump-quiet t)
   (setq dumb-jump-aggressive nil)
 
   ;; Number of seconds a rg/grep/find command can take before being warned to
@@ -57,6 +58,8 @@
     (setq dumb-jump-prefer-searcher 'rg))
 
   :config
+  ;; Make `dumb-jump' use the same project root markers as `project.el' for
+  ;; consistent project detection.
   (with-eval-after-load 'project
     (cl-callf cl-union dumb-jump-project-denoters project-vc-extra-root-markers)))
 

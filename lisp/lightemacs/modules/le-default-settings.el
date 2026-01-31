@@ -93,8 +93,7 @@
 ;;; auto-mode-alist
 
 (nconc auto-mode-alist
-       '(;; Gentoo ebuilds
-         ("\\.ebuild\\'" . sh-mode)
+       '(("\\.ebuild\\'" . sh-mode) ; Gentoo ebuilds
 
          ;; Git
          ("/COMMIT_EDITMSG\\'" . diff-mode)

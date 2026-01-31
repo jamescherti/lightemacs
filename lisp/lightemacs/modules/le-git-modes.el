@@ -24,9 +24,21 @@
              gitconfig-mode
              gitignore-mode)
   :mode
-  ("/.gitignore\\'" . gitignore-mode)
-  ("/.gitconfig\\'" . gitconfig-mode)
-  ("/.gitattributes\\'" . gitattributes-mode))
+  (("/\\.gitignore\\'" . gitignore-mode)
+   ("/info/exclude\\'" . gitignore-mode)
+   ("/git/ignore\\'" . gitignore-mode)
+   ("/.gitignore_global\\'" . gitignore-mode)  ; jc-dotfiles
+
+   ("/\\.gitconfig\\'" . gitconfig-mode)
+   ("/\\.git/config\\'" . gitconfig-mode)
+   ("/modules/.*/config\\'" . gitconfig-mode)
+   ("/git/config\\'" . gitconfig-mode)
+   ("/\\.gitmodules\\'" . gitconfig-mode)
+   ("/etc/gitconfig\\'" . gitconfig-mode)
+
+   ("/\\.gitattributes\\'" . gitattributes-mode)
+   ("/info/attributes\\'" . gitattributes-mode)
+   ("/git/attributes\\'" . gitattributes-mode)))
 
 (provide 'le-git-modes)
 
