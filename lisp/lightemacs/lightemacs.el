@@ -334,10 +334,9 @@ is `use-package' and the :ensure property is non-nil."
 NAME designates the package symbol.
 ARGS represents the property list of configuration parameters.
 
-The expansion logic detects instances where :ensure is explicitly nil without
-a corresponding :straight declaration, in which case it appends (:straight nil)
-to the argument sequence. The procedure `lightemacs--before-use-package` is
-invoked with the resulting arguments prior to the expansion of `use-package`."
+If :ensure is explicitly nil and no :straight declaration exists,
+append (:straight nil) to ARGS. Invokes `lightemacs--before-use-package`
+with the resulting arguments prior to expanding `use-package`."
   (declare (indent 1))
   (let ((effective-args args))
     (when (and (eq lightemacs-package-manager 'straight)
@@ -348,8 +347,9 @@ invoked with the resulting arguments prior to the expansion of `use-package`."
         "lightemacs-use-package: Added `:straight nil' to the %s package" name)
       (setq effective-args (append args '(:straight nil))))
     `(progn
-       (lightemacs--before-use-package ',name ',effective-args)
-       (use-package ,name ,@effective-args))))
+       (lightemacs--before-use-package ',name ',(copy-sequence effective-args))
+       (lightemacs-shield-macros
+         (use-package ,name ,@effective-args)))))
 
 ;;; Native comp functions
 
