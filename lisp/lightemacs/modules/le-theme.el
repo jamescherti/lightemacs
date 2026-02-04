@@ -27,6 +27,9 @@
 
 ;;; Code:
 
+(eval-and-compile
+  (require 'lightemacs))
+
 ;; Variables
 
 ;; Alternative:
@@ -43,19 +46,40 @@ Set to nil to disable installing this package at startup.")
 ;;; Functions
 
 (defun lightemacs-load-default-theme ()
-  "Load the theme defined in `lightemacs-theme-name' if it is installed."
+  "Load the theme defined in `lightemacs-theme-name' if it is available.
+If the theme is not found in `custom-available-themes', a warning is issued."
   (when (and lightemacs-theme-name
-             (member lightemacs-theme-name (custom-available-themes)))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme lightemacs-theme-name t)))
+             (not (eq (car custom-enabled-themes) lightemacs-theme-name)))
+    (if (memq lightemacs-theme-name (custom-available-themes))
+        (progn
+          (mapc #'disable-theme custom-enabled-themes)
+          (load-theme lightemacs-theme-name t))
+      (warn
+       "[lightemacs] The theme '%s' is not available in the current environment"
+       lightemacs-theme-name))))
 
 ;;; Main
 
+(defvar le-theme--loaded nil)
+
+(defun le-theme--load-theme ()
+  "Load the default theme."
+  (unless le-theme--loaded
+    (unwind-protect
+        (when-let* ((lightemacs-theme-name (if le-theme--loaded
+                                               (car custom-enabled-themes)
+                                             ;; Load the default one
+                                             lightemacs-theme-name)))
+          (lightemacs-load-default-theme))
+      (setq le-theme--loaded t))))
+
 (when lightemacs-theme-package
   (eval `(lightemacs-use-package ,lightemacs-theme-package
-           :demand t
-           :config
-           (lightemacs-load-default-theme))))
+           :demand t))
+
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook #'le-theme--load-theme)
+    (le-theme--load-theme)))
 
 (provide 'le-theme)
 
