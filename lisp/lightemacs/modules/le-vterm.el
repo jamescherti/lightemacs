@@ -23,6 +23,13 @@
 (eval-and-compile
   (require 'lightemacs))
 
+;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
+;; Compilation of ‘emacs-libvterm’ module succeeded
+;; Debugger entered--Lisp error: (error "Loading file
+;; /home/work/.emacs.d/lisp/lightemacs/modules/le-vterm.elc failed to provide
+;; feature ‘le-vterm’")
+(provide 'le-vterm)
+
 (lightemacs-use-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
@@ -37,8 +44,7 @@
     ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
     ;; This prevents that during byte-compilation (`use-package' eagerly loads
     ;; packages when compiling).
-    (advice-add #'vterm-module-compile :override #'ignore)
-    (provide 'vterm-module))
+    (advice-add #'vterm-module-compile :override #'ignore))
 
   (defun lightemacs-vterm--setup ()
     ;; Hide the mode-line
@@ -56,9 +62,6 @@
   (setq vterm-timer-delay 0.05)
   (setq vterm-kill-buffer-on-exit t)
   (setq vterm-max-scrollback 5000))
-
-;;; Provide
-(provide 'le-vterm)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)

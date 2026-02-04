@@ -320,10 +320,9 @@ is `use-package' and the :ensure property is non-nil."
                               :error))))
 
         ;; Install the package
-        ;; (lightemacs-verbose-message "[USE-PACKAGE] Installing %s" name)
-        ;; (funcall use-package-ensure-function name (list ensure-value) nil)
-        ;; (push name lightemacs--installed-packages)
-        ))))
+        (lightemacs-verbose-message "[USE-PACKAGE] Installing %s" name)
+        (funcall use-package-ensure-function name (list ensure-value) nil)
+        (push name lightemacs--installed-packages)))))
 
 (defmacro lightemacs-use-package (name &rest args)
   "Provide a formal interface for package configuration via `use-package'.
