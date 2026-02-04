@@ -41,16 +41,17 @@ Set to nil to ignore window size and position during session restoration.")
 ;;; use-package easysession
 
 (lightemacs-use-package easysession
-  :commands (easysession-rename
-             easysession-reset
-             easysession-save
-             easysession-save-mode
-             easysession-switch-to
-             easysession-delete
-             easysession-get-session-name
-             easysession-load
-             easysession-switch-to-and-restore-geometry
-             easysession-load-including-geometry)
+  :demand t
+  ;; :commands (easysession-rename
+  ;;            easysession-reset
+  ;;            easysession-save
+  ;;            easysession-save-mode
+  ;;            easysession-switch-to
+  ;;            easysession-delete
+  ;;            easysession-get-session-name
+  ;;            easysession-load
+  ;;            easysession-switch-to-and-restore-geometry
+  ;;            easysession-load-including-geometry)
 
   :bind (("C-c ss" . easysession-save)
          ("C-c sl" . easysession-switch-to)  ; Load
@@ -60,28 +61,43 @@ Set to nil to ignore window size and position during session restoration.")
          ("C-c sd" . easysession-delete))
 
   :init
-  ;; Load session
-  (when lightemacs-easysession-load-session-on-startup
-    (if lightemacs-easysession-restore-geometry-on-startup
-        ;; Including geometry
+  ;; Customizations
+  ;; (setq easysession-save-mode-lighter-show-session-name t)
+  (setq easysession-mode-line-misc-info t)
+
+  ;; Non-nil: `easysession-setup' loads the session automatically.
+  ;; Nil: session is not loaded automatically; the user can load it manually.
+  (setq easysession-setup-load-session t)
+
+  ;; Priority depth used when `easysession-setup' adds `easysession' hooks.
+  ;; 102 ensures that the session is loaded after all other packages.
+  (setq easysession-setup-add-hook-depth 102)
+
+  :config
+  (if (fboundp 'easysession-setup)
+      ;; The `easysession-setup' function adds hooks:
+      ;; - To enable automatic session loading during `emacs-startup-hook', or
+      ;;   `server-after-make-frame-hook' when running in daemon mode.
+      ;; - To automatically save the session at regular intervals, and when Emacs
+      ;;   exits.
+      (easysession-setup)
+    ;; Legacy
+    (when lightemacs-easysession-load-session-on-startup
+      (if lightemacs-easysession-restore-geometry-on-startup
+          ;; Including geometry
+          (if (daemonp)
+              (add-hook 'server-after-make-frame-hook
+                        #'easysession-load-including-geometry 102)
+            (add-hook 'emacs-startup-hook
+                      #'easysession-load-including-geometry 102))
+        ;; Excluding geometry
         (if (daemonp)
             (add-hook 'server-after-make-frame-hook
                       #'easysession-load-including-geometry 102)
           (add-hook 'emacs-startup-hook
-                    #'easysession-load-including-geometry 102))
-      ;; Excluding geometry
-      (if (daemonp)
-          (add-hook 'server-after-make-frame-hook
-                    #'easysession-load-including-geometry 102)
-        (add-hook 'emacs-startup-hook
-                  #'easysession-load-including-geometry 102))))
-
-  ;; Auto save mode
-  (add-hook 'emacs-startup-hook #'easysession-save-mode 103)
-
-  ;; Customizations
-  ;; (setq easysession-save-mode-lighter-show-session-name t)
-  (setq easysession-mode-line-misc-info t))
+                    #'easysession-load-including-geometry 102))))
+    ;; Auto save mode
+    (add-hook 'emacs-startup-hook #'easysession-save-mode 103)))
 
 (provide 'le-easysession)
 
