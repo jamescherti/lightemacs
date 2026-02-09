@@ -45,11 +45,13 @@ Set to nil to disable installing this package at startup.")
 
 ;;; Functions
 
-(defun lightemacs-load-default-theme ()
+(defun lightemacs-load-default-theme (&optional force)
   "Load the theme defined in `lightemacs-theme-name' if it is available.
-If the theme is not found in `custom-available-themes', a warning is issued."
+If the theme is not found in `custom-available-themes', a warning is issued.
+If FORCE is non-nil, reload the current theme even if it is already active."
   (when (and lightemacs-theme-name
-             (not (eq (car custom-enabled-themes) lightemacs-theme-name)))
+             (or force
+                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
     (if (memq lightemacs-theme-name (custom-available-themes))
         (progn
           (mapc #'disable-theme custom-enabled-themes)
@@ -70,8 +72,11 @@ If the theme is not found in `custom-available-themes', a warning is issued."
                                                (car custom-enabled-themes)
                                              ;; Load the default one
                                              lightemacs-theme-name)))
-          (lightemacs-load-default-theme))
-      (setq le-theme--loaded t))))
+          (lightemacs-load-default-theme t))
+      (unless (daemonp)
+        ;; Resolves issues with leading asterisks in Org files that are
+        ;; misconfigured.
+        (setq le-theme--loaded t)))))
 
 (when lightemacs-theme-package
   (eval `(lightemacs-use-package ,lightemacs-theme-package
