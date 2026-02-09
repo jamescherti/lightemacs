@@ -60,7 +60,7 @@ Set to nil to ignore window size and position during session restoration.")
          ("C-c sR" . easysession-reset)
          ("C-c sd" . easysession-delete))
 
-  :predicate
+  :preface
   (defun le-easysession-setup ()
     "Lightemacs: Setup EasySession."
     (if (fboundp 'easysession-setup)
