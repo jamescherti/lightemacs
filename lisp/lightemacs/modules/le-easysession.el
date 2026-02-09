@@ -56,10 +56,11 @@ Set to nil to ignore window size and position during session restoration.")
          ("C-c sl" . easysession-switch-to)  ; Load
          ("C-c sL" . easysession-switch-to-and-restore-geometry)
          ("C-c sr" . easysession-rename)
+         ("C-c se" . easysession-edit)
          ("C-c sR" . easysession-reset)
          ("C-c sd" . easysession-delete))
 
-  :init
+  :config
   ;; Customizations
   ;; (setq easysession-save-mode-lighter-show-session-name t)
   (setq easysession-mode-line-misc-info t)

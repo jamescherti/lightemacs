@@ -34,8 +34,9 @@
               compile-angel-on-save-mode)
   :init
   ;; Verbose
-  (setq compile-angel-verbose init-file-debug)
-  (setq compile-angel-debug init-file-debug)
+  (when init-file-debug
+    (setq compile-angel-verbose init-file-debug)
+    (setq compile-angel-debug init-file-debug))
 
   :preface
   (defun le-compile-angel-exclude (path)
