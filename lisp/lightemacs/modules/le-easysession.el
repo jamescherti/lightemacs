@@ -88,7 +88,7 @@ Set to nil to ignore window size and position during session restoration.")
       ;; Auto save mode
       (add-hook 'emacs-startup-hook #'easysession-save-mode 103)))
 
-  :config
+  :init
   ;; Customizations
   ;; (setq easysession-save-mode-lighter-show-session-name t)
   (setq easysession-mode-line-misc-info t)
