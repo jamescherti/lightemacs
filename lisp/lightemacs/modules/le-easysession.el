@@ -60,19 +60,7 @@ Set to nil to ignore window size and position during session restoration.")
          ("C-c sR" . easysession-reset)
          ("C-c sd" . easysession-delete))
 
-  :config
-  ;; Customizations
-  ;; (setq easysession-save-mode-lighter-show-session-name t)
-  (setq easysession-mode-line-misc-info t)
-
-  ;; Non-nil: `easysession-setup' loads the session automatically.
-  ;; Nil: session is not loaded automatically; the user can load it manually.
-  (setq easysession-setup-load-session t)
-
-  ;; Priority depth used when `easysession-setup' adds `easysession' hooks.
-  ;; 102 ensures that the session is loaded after all other packages.
-  (setq easysession-setup-add-hook-depth 102)
-
+  :predicate
   (defun le-easysession-setup ()
     "Lightemacs: Setup EasySession."
     (if (fboundp 'easysession-setup)
@@ -99,6 +87,19 @@ Set to nil to ignore window size and position during session restoration.")
                       #'easysession-load-including-geometry 102))))
       ;; Auto save mode
       (add-hook 'emacs-startup-hook #'easysession-save-mode 103)))
+
+  :config
+  ;; Customizations
+  ;; (setq easysession-save-mode-lighter-show-session-name t)
+  (setq easysession-mode-line-misc-info t)
+
+  ;; Non-nil: `easysession-setup' loads the session automatically.
+  ;; Nil: session is not loaded automatically; the user can load it manually.
+  (setq easysession-setup-load-session t)
+
+  ;; Priority depth used when `easysession-setup' adds `easysession' hooks.
+  ;; 102 ensures that the session is loaded after all other packages.
+  (setq easysession-setup-add-hook-depth 102)
 
   (add-hook 'after-init-hook #'le-easysession-setup))
 
