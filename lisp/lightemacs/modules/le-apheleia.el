@@ -37,7 +37,7 @@
   (require 'lightemacs))
 
 (defvar lightemacs-apheleia-fix-screen-lines-bug t
-  "If non-nil, apply a fix for Apheleia scrolling issues in folded buffers.")
+  "If non-nil, apply a fix for Apheleia window start issues in folded buffers.")
 
 (lightemacs-use-package apheleia
   :commands (apheleia-mode
