@@ -33,7 +33,13 @@
              flymake-goto-prev-error)
 
   :hook ((prog-mode . flymake-mode)
-         (text-mode . flymake-mode))
+         ;; text-mode: Exceptions (Configuration and Markup)
+         (ansible-mode . flymake-mode)
+         (yaml-ts-mode . flymake-mode)
+         (yaml-mode . flymake-mode)
+         (toml-ts-mode . flymake-mode)
+         (conf-toml-mode . flymake-mode)
+         (markdown-mode . flymake-mode))
 
   :bind
   (:map flymake-mode-map
