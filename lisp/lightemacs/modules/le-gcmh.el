@@ -27,6 +27,8 @@
 
 (lightemacs-use-package gcmh
   :commands gcmh-mode
+  :hook
+  (focus-out-hook . gcmh-idle-garbage-collect)
   :init
   (add-hook 'lightemacs-on-first-buffer-hook #'gcmh-mode)
   (setq gcmh-verbose init-file-debug

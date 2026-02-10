@@ -252,7 +252,9 @@ cursor."
                                    (error nil)))
 
                                (beginning-of-visual-line)
-                               (point))))))))
+                               (point))
+                             ;; noforce
+                             t))))))
 
 (defmacro lightemacs-shield-macros (&rest body)
   "Eval BODY while preventing premature macro expansion.
