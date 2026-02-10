@@ -72,7 +72,7 @@ ORIG-FUN and ARGS are the original function and its arguments."
   :config
   (when lightemacs-apheleia-fix-screen-lines-bug
     (advice-add 'apheleia--apply-rcs-patch :around
-                #'my-apheleia-use-screen-lines)))
+                #'lightemacs--apheleia-use-screen-lines)))
 
 (provide 'le-apheleia)
 
