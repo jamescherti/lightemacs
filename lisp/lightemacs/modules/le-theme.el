@@ -45,6 +45,21 @@ Set to nil to disable installing this package at startup.")
 
 ;;; Functions
 
+(defun lightemacs-theme--disable-all-themes (&optional exception)
+  "Disable all themes currently listed in `custom-enabled-themes`.
+
+EXCEPTION is the theme to exclude. If EXCEPTION is non-nil, it is excluded from
+being disabled. Return non-nil if EXCEPTION remains enabled after the
+operation."
+  (interactive)
+  (let ((exception-already-loaded nil))
+    (mapc (lambda (theme)
+            (when (or (not exception)
+                      (eq theme exception))
+              (disable-theme theme)))
+          custom-enabled-themes)
+    exception-already-loaded))
+
 (defun lightemacs-load-default-theme (&optional force)
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
