@@ -66,17 +66,15 @@ If FORCE is non-nil, reload the current theme even if it is already active."
 
 (defun le-theme--load-theme ()
   "Load the default theme."
-  (unless le-theme--loaded
+  (when (or (daemonp)
+            (not le-theme--loaded))
     (unwind-protect
         (when-let* ((lightemacs-theme-name (if le-theme--loaded
                                                (car custom-enabled-themes)
                                              ;; Load the default one
                                              lightemacs-theme-name)))
           (lightemacs-load-default-theme t))
-      (unless (daemonp)
-        ;; Resolves issues with leading asterisks in Org files that are
-        ;; misconfigured.
-        (setq le-theme--loaded t)))))
+      (setq le-theme--loaded t))))
 
 (when lightemacs-theme-package
   (eval `(lightemacs-use-package ,lightemacs-theme-package
