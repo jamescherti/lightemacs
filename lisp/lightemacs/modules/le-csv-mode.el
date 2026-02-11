@@ -45,7 +45,7 @@
 
   :custom
   (csv-align-max-width 100)
-  (csv-separators '("," ";" " " "|" "\t")))
+  (csv-separators '("," "\t" ";" "|")))
 
 (provide 'le-csv-mode)
 
