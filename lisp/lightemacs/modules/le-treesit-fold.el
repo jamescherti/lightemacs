@@ -30,7 +30,6 @@
   :commands (treesit-fold-close
              treesit-fold-close-all
              treesit-fold-open
-             treesit-fold-close
              treesit-fold-toggle
              treesit-fold-open-all
              treesit-fold-mode
