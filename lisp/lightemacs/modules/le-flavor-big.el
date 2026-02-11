@@ -93,6 +93,7 @@
    le-winner
    le-yasnippet
    le-yasnippet-snippets
+   le-csv-mode
    ))
 
 ;;; Provide
