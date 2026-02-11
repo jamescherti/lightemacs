@@ -32,10 +32,10 @@
 (lightemacs-use-package csv-mode
   :commands (csv-mode
              csv-align-mode)
-  :hook (csv-mode . lightemacs-csv-mode--setup-csv-mode)
-  :preface
+  :hook (csv-mode . lightemacs-csv-mode--setup)
 
-  (defun lightemacs--setup-csv-mode ()
+  :preface
+  (defun lightemacs-csv-mode--setup ()
     "Setup `csv-mode'."
     (csv-guess-set-separator)
     (csv-align-mode))
