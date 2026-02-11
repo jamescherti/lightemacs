@@ -898,6 +898,11 @@ Continue pressing `C-=` until the selection encompasses exactly the text you wan
 
 Here are a few other modules disabled by default:
 
+-- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. By default, the module does not start `treesit-fold-mode` automatically. To enable it in specific modes such as `python-ts-mode`:
+  ```emacs-lisp
+  (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
+  ```
+
 - **le-rainbow-delimiters**: Configures [rainbow-delimiters](https://github.com/Fanael/rainbow-delimiters) is a minor mode that highlights parentheses, brackets, and braces according to their nesting depth, with each level displayed in a distinct color. This makes it easier to identify matching delimiters, navigate code structure, and understand which statements are at a given depth. By default, the module does not start `rainbow-delimiters-mode` automatically. To enable it in specific modes:
   ```emacs-lisp
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
