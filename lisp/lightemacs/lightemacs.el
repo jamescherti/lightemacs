@@ -152,26 +152,22 @@ If the buffer is not visiting a file, opens the current `default-directory'."
 ;;; Misc macros
 
 (defmacro lightemacs-recenter-if-out-of-view (&rest body)
-  "Execute BODY and recenter if point is outside the original window bounds."
+  "Execute BODY and recenter if point moves off-screen.
+
+This checks if the point is visible in the selected window after
+execution. If the buffer changes or the window is deleted,
+recentering is skipped."
   (declare (indent 0) (debug t))
-  (let ((window (make-symbol "window"))
-        (window-start (make-symbol "window-start"))
-        (window-end (make-symbol "window-end")))
-    `(let* ((,window (selected-window))
-            (,window-start (when ,window
-                             (window-start)))
-            (,window-end (when ,window
-                           (window-end))))
-       (unwind-protect
-           (progn ,@body)
-         (when (and (numberp ,window-start)
-                    (numberp ,window-end)
-                    (window-live-p ,window)
-                    (eq (current-buffer) (window-buffer ,window)))
-           (let ((point (point)))
-             (when (not (and (>= point ,window-start)
-                             (<= point ,window-end)))
-               (recenter))))))))
+  (let ((win-sym (make-symbol "start-window")))
+    `(let ((,win-sym (selected-window)))
+       ;; use prog1 to return the result of body
+       (prog1 (progn ,@body)
+         (when (and (window-live-p ,win-sym)
+                    (eq (current-buffer) (window-buffer ,win-sym))
+                    ;; pos-visible-in-window-p handles partial lines and
+                    ;; redisplay logic more robustly than manual arithmetic.
+                    (not (pos-visible-in-window-p (point) ,win-sym)))
+           (recenter))))))
 
 (defmacro lightemacs-save-window-hscroll (&rest body)
   "Execute BODY while preserving the horizontal scroll of the selected window.
