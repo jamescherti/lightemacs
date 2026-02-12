@@ -66,8 +66,11 @@ calculation matches the unit used for scrolling, preserving the user's view.
 
 ORIG-FUN and ARGS are the original function and its arguments."
     ;; TODO: Send patch to Apheleia
-    (cl-letf (((symbol-function 'count-lines) #'count-screen-lines))
-      (apply orig-fun args)))
+    (lightemacs-save-window-start
+      (apply orig-fun args))
+    ;; (cl-letf (((symbol-function 'count-lines) #'count-screen-lines))
+    ;;   (apply orig-fun args))
+    )
 
   :config
   (when lightemacs-apheleia-fix-screen-lines-bug

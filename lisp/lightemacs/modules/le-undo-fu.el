@@ -29,8 +29,9 @@
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all
-             undo-fu-disable-checkpoint)
-  :init
+             undo-fu-disable-checkpoint))
+
+(with-eval-after-load 'evil
   (setq evil-undo-system 'undo-fu))
 
 (provide 'le-undo-fu)

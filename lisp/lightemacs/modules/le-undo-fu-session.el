@@ -24,6 +24,15 @@
 (lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"
+                                             "/git-rebase-todo\\'"
+                                             "\\.gpg$"))
+
+  (when (executable-find "zstd")
+    ;; zstd is used due to its superior performance, as execution speed is the
+    ;; primary objective within the Emacs environment.
+    (setq undo-fu-session-compression 'zst))
+
   (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode))
 
 (provide 'le-undo-fu-session)
