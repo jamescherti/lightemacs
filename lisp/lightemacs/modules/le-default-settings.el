@@ -68,29 +68,26 @@
 (nconc auto-mode-alist
        '(("\\.ebuild\\'" . sh-mode) ; Gentoo ebuilds
 
-         ;; Git
-         ("/COMMIT_EDITMSG\\'" . diff-mode)
-         ("/git-rebase-todo\\'" . diff-mode)
+         ;; Linux
+         ("\\.service\\'" . conf-mode) ; PKGBUILD / systemd service
+         ("\\.socket\\'" . conf-mode)
+         ("\\.timer\\'" . conf-mode)
+         ("\\.target\\'" . conf-mode)
+         ("\\.mount\\'" . conf-mode)
+         ("\\.path\\'" . conf-mode)
+         ("\\.info\\(\\.gz\\)?\\'" . Info-on-current-buffer)
+         ("/hosts\\'" . conf-space-mode)
+         ("/\\.ssh/known_hosts\\'" . conf-space-mode)
 
          ;; Arch Linux
-         ("\\.service\\'" . sh-mode)  ; PKGBUILD / systemd service
-         ("\\.install\\'" . sh-mode)  ; PKGBUILD
-         ("\\.hook\\'" . conf-unix-mode)  ; /usr/share/libalpm/hooks/
+         ("\\.install\\'" . sh-mode)     ; PKGBUILD
+         ("\\.hook\\'" . conf-mode) ; /usr/share/libalpm/hooks/
 
-         ;; Linux
-         ("/etc/hosts\\'" . conf-unix-mode)
-         ("/\\.ssh/known_hosts\\'" . conf-space-mode)
+         ;; Python
+         ("/\\.pylintrc\\'" . conf-mode)
 
          ("/Eask\\'" . emacs-lisp-mode)
          ("/Cask\\'" . emacs-lisp-mode)))
-
-(add-to-list 'auto-mode-alist '("/\\.gitconfig\\.local\\'" . gitconfig-mode))
-(add-to-list 'auto-mode-alist '("/\\.gitignore\\.local\\'" . gitignore-mode))
-(add-to-list 'auto-mode-alist '("/\\.gitattributes\\.local\\'" . gitattributes-mode))
-
-;; TODO remove these
-;; (add-to-list 'auto-mode-alist '("/\\.gitignore_global\\'" . gitignore-mode))
-;; (add-to-list 'auto-mode-alist '("/\\.gitattributes_global\\'" . gitattributes-mode))
 
 ;;; Patches
 

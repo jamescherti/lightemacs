@@ -35,8 +35,9 @@
   ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
 
   :init
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file))
+  (add-hook 'completion-at-point-functions 'cape-dabbrev)
+  (add-hook 'completion-at-point-functions 'cape-file)
+  (add-hook 'completion-at-point-functions 'cape-elisp-block))
 
 (provide 'le-cape)
 

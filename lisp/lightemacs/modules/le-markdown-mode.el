@@ -27,7 +27,7 @@
              markdown-mode
              markdown-view-mode)
 
-  :mode (("\\.markdown\\'" . markdown-mode)
+  :mode (("\\.m(ark)?down$" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
 
@@ -37,19 +37,18 @@
   :init
   (setq markdown-fontify-code-blocks-natively t
 
-        ;; Extra languages made available when inserting GFM code blocks.
-        ;; Language strings must have be trimmed of whitespace and not
-        ;; contain any curly braces. They may be of arbitrary
-        ;; capitalization, though.
-        markdown-gfm-additional-languages '("sh")
-
         ;; Other options
         ;; markdown-asymmetric-header t
         ;; markdown-italic-underscore t
         ;; markdown-make-gfm-checkboxes-buttons t
         ;; markdown-fontify-whole-heading-line t
-        )
-  )
+
+        ;; Extra languages made available when inserting GFM code blocks.
+        ;; Language strings must have be trimmed of whitespace and not
+        ;; contain any curly braces. They may be of arbitrary
+        ;; capitalization, though.
+        markdown-gfm-additional-languages '("sh")
+        ))
 
 (provide 'le-markdown-mode)
 
