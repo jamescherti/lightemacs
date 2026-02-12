@@ -154,16 +154,24 @@ If the buffer is not visiting a file, opens the current `default-directory'."
 (defmacro lightemacs-recenter-if-out-of-view (&rest body)
   "Execute BODY and recenter if point is outside the original window bounds."
   (declare (indent 0) (debug t))
-  (let ((window-start (make-symbol "window-start"))
+  (let ((window (make-symbol "window"))
+        (window-start (make-symbol "window-start"))
         (window-end (make-symbol "window-end")))
-    `(let ((,window-start (window-start))
-           (,window-end (window-end)))
+    `(let* ((,window (selected-window))
+            (,window-start (when ,window
+                             (window-start)))
+            (,window-end (when ,window
+                           (window-end))))
        (unwind-protect
            (progn ,@body)
-         (let ((point (point)))
-           (when (not (and (>= point ,window-start)
-                           (<= point ,window-end)))
-             (recenter)))))))
+         (when (and (numberp ,window-start)
+                    (numberp ,window-end)
+                    (window-live-p ,window)
+                    (eq (current-buffer) (window-buffer ,window)))
+           (let ((point (point)))
+             (when (not (and (>= point ,window-start)
+                             (<= point ,window-end)))
+               (recenter))))))))
 
 (defmacro lightemacs-save-window-hscroll (&rest body)
   "Execute BODY while preserving the horizontal scroll of the selected window.
