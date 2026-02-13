@@ -77,6 +77,11 @@ ORIG-FUN and ARGS are the original function and its arguments."
     (advice-add 'apheleia--apply-rcs-patch :around
                 #'lightemacs--apheleia-use-screen-lines)))
 
+(lightemacs-define-mode-add-hook-to apheleia-mode
+  '(prog-mode-hook))
+
+
+
 (provide 'le-apheleia)
 
 ;; Local variables:

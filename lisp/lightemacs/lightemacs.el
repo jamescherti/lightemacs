@@ -151,17 +151,24 @@ If the buffer is not visiting a file, opens the current `default-directory'."
 
 ;;; Misc macros
 
-(defmacro lightemacs-define-mode-add-hook-to (mode hook-list)
-  "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
-Defines `lightemacs-MODE-add-hook-to' initialized with HOOK-LIST.
-Each hook in HOOK-LIST will have MODE added via `add-hook'."
-  (declare (indent 0) (debug t))
-  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode))))
+(defmacro lightemacs-define-mode-add-hook-to (mode hooks)
+  "Define a variable listing hooks where MODE should be enabled.
+
+This defines a variable named `lightemacs-MODE-add-hook-to' (if it does not
+already exist) initialized with HOOKS. It then iterates over that variable,
+adding MODE to each hook found.
+
+MODE should be a quoted symbol (e.g., \='flycheck-mode).
+HOOKS should be a list of hook symbols (e.g., \='(prog-mode-hook))."
+  (declare (indent 1))
+  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode)))
+        (docstring (format "List of hooks where `%s' is enabled." mode)))
     `(progn
-       (defvar ,var ,hook-list
-         ,(format "Hooks where `%s' is enabled." mode))
-       (dolist (hook ,var)
-         (add-hook hook ',mode)))))
+       (defvar ,var ,hooks ,docstring)
+       ;; Ensure we treat the variable as a list, even if the user set it to a
+       ;; single symbol
+       (dolist (hook (if (listp ,var) ,var (list ,var)))
+         (add-hook hook #',mode)))))
 
 (defmacro lightemacs-recenter-if-out-of-view (&rest body)
   "Execute BODY and recenter if point moves off-screen.
