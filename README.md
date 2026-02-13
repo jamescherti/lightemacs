@@ -763,6 +763,8 @@ Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to confi
                                              emacs-lisp-mode-hook))
 ```
 
+(By default, `lightemacs-apheleia-mode-add-hook-to` is set to `prog-mode-hook`, so it starts automatically when `prog-mode` is enabled.)
+
 ### Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)
 
 The **le-easysession** module configures [easysession](https://github.com/jamescherti/easysession.el), a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
