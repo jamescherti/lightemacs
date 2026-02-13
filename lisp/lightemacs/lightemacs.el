@@ -151,6 +151,18 @@ If the buffer is not visiting a file, opens the current `default-directory'."
 
 ;;; Misc macros
 
+(defmacro lightemacs-define-mode-add-hook-to (mode hook-list)
+  "Define a minor mode hook variable and add MODE to each hook in HOOK-LIST.
+Defines `lightemacs-MODE-add-hook-to' initialized with HOOK-LIST.
+Each hook in HOOK-LIST will have MODE added via `add-hook'."
+  (declare (indent 0) (debug t))
+  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode))))
+    `(progn
+       (defvar ,var ,hook-list
+         ,(format "Hooks where `%s' is enabled." mode))
+       (dolist (hook ,var)
+         (add-hook hook ',mode)))))
+
 (defmacro lightemacs-recenter-if-out-of-view (&rest body)
   "Execute BODY and recenter if point moves off-screen.
 
