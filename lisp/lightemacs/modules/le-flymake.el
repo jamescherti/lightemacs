@@ -32,25 +32,20 @@
              flymake-goto-next-error
              flymake-goto-prev-error)
 
-  :hook ((prog-mode . flymake-mode)
-         ;; text-mode: Exceptions (Configuration and Markup)
-         (ansible-mode . flymake-mode)
-         (yaml-ts-mode . flymake-mode)
-         (yaml-mode . flymake-mode)
-         (toml-ts-mode . flymake-mode)
-         (conf-toml-mode . flymake-mode)
-         (markdown-mode . flymake-mode))
-
-  :bind
-  (:map flymake-mode-map
-        ("C-c e d" . flymake-show-buffer-diagnostics)
-        ("C-c e p" . flymake-goto-prev-error)
-        ("C-c e n" . flymake-goto-next-error)
-        ("M-g p"   . flymake-goto-prev-error)
-        ("M-g n"   . flymake-goto-next-error))
-
   :init
   (setq flymake-wrap-around nil))
+
+(lightemacs-define-mode-add-hook-to flymake-mode
+  '(prog-mode
+    text-mode))
+
+(lightemacs-define-keybindings flymake
+  (with-eval-after-load 'flymake
+    (define-key flymake-mode-map (kbd "C-c e d") #'flymake-show-buffer-diagnostics)
+    (define-key flymake-mode-map (kbd "C-c e p") #'flymake-goto-prev-error)
+    (define-key flymake-mode-map (kbd "C-c e n") #'flymake-goto-next-error)
+    (define-key flymake-mode-map (kbd "M-g p")   #'flymake-goto-prev-error)
+    (define-key flymake-mode-map (kbd "M-g n")   #'flymake-goto-next-error)))
 
 (provide 'le-flymake)
 

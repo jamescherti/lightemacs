@@ -97,6 +97,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Disabled by default: Indentation bars (le-indent-bars)](#disabled-by-default-indentation-bars-le-indent-bars)
     - [Enabled by Default: Expand Region (le-expand-region)](#enabled-by-default-expand-region-le-expand-region)
     - [Other modules disabled by default](#other-modules-disabled-by-default)
+    - [Interesting builtin modules that Lightemacs configures](#interesting-builtin-modules-that-lightemacs-configures)
   - [Other Features](#other-features)
   - [Useful variables, functions, and macros](#useful-variables-functions-and-macros)
     - [Useful variables](#useful-variables)
@@ -753,19 +754,17 @@ The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive 
 
 Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
 ```emacs-lisp
-(add-to-list 'lightemacs-modules 'le-apheleia)
-
-;; Bash/sh
-(add-hook 'sh-mode-hook #'apheleia-mode)
-(add-hook 'bash-ts-mode-hook #'apheleia-mode)
-
-;; Python
-(add-hook 'python-ts-mode-hook #'apheleia-mode)
-(add-hook 'python-mode-hook #'apheleia-mode)
-
-;; Emacs Lisp
-(add-hook 'emacs-lisp-mode-hook #'apheleia-mode)
+(setq lightemacs-apheleia-mode-add-hook-to '(;; Python
+                                             python-mode-hook
+                                             python-ts-mode-hook
+                                             ;; Bash/sh
+                                             sh-mode-hook
+                                             bash-ts-mode-hook
+                                             ;; Elisp
+                                             emacs-lisp-mode-hook))
 ```
+
+(By default, `lightemacs-apheleia-mode-add-hook-to` is set to `prog-mode-hook`, so it starts automatically when `prog-mode` is enabled.)
 
 ### Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)
 
@@ -971,6 +970,12 @@ Elisp file-type modules are disabled by default:
 - **le-shut-up**: The *shut-up* package suppresses output from functions that normally print to the *Messages* buffer or to the echo area. It provides a macro called `shut-up` that temporarily silences messages while evaluating its body. This is useful when running code that would otherwise clutter the user's *Messages* buffer with unnecessary output.
 
 - **le-evil-visualstar**: Enables [evil-visualstar](https://github.com/bling/evil-visualstar), which allows searching for the current visual selection using `*` or `#`. **Usage:** Create a visual selection with `v` or `V`, then press `*` to search forward or `#` to search backward. When `evil-visualstar/persistent` is non-nil, visual state remains active, enabling repeated searches without reselecting the text.
+
+### Interesting builtin modules that Lightemacs configures
+
+Here are the built-in packages that Lightemacs enhances the defaults:
+
+- `M-x proced`: A built-in Emacs utility that provides a specialized interface for monitoring and managing system processes, effectively acting as an interactive version of the Unix `ps` or `top` commands.
 
 ## Other Features
 

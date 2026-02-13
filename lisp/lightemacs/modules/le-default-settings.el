@@ -31,6 +31,28 @@
 ;; Alternative: (setq-default display-fill-column-indicator-character ?┊)
 (setq-default display-fill-column-indicator-character ?\N{U+2502})
 
+;; By default, Emacs stores authinfo credentials as plain text in the home
+;; directory, which exposes authentication data to any process or user with file
+;; access. The configuration below enables GPG encryption for the authinfo file
+;; so that credentials remain encrypted at rest and are only decrypted on
+;; demand.
+;;
+;; The auth-sources file follows a standard netrc-like format where each entry
+;; defines authentication parameters for a specific host:
+;;
+;; machine github.com login username password your-personal-access-token
+;;
+;; When a package requests credentials, Emacs invokes gpg-agent to decrypt the
+;; encrypted authinfo file. If the associated private key is locked, the
+;; configured pinentry program prompts for the passphrase. The decrypted content
+;; is parsed in memory and is never persisted to disk in plain text form.
+;;
+;; The configuration below prioritizes an encrypted authinfo file stored in
+;; `lightemacs-var-directory', with a fallback to ~/.authinfo.gpg if present.
+(setq auth-sources (list
+                    (file-name-concat lightemacs-var-directory "authinfo.gpg")
+                    "~/.authinfo.gpg"))
+
 ;;; treesit
 
 (setq treesit-font-lock-level 4) ; Max: 4
@@ -88,6 +110,16 @@
 
          ("/Eask\\'" . emacs-lisp-mode)
          ("/Cask\\'" . emacs-lisp-mode)))
+
+;;; proced
+
+;; You can launch proced
+(add-hook 'proced-mode-hook #'proced-toggle-auto-update)
+(setq proced-tree-flag t)
+(setq proced-auto-update-flag 'visible)
+(setq proced-enable-color-flag t)
+(setq proced-auto-update-interval 1)
+(setq proced-filter 'user) ; Change interactively with `s'
 
 ;;; Patches
 

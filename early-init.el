@@ -76,8 +76,6 @@
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
 
-(setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
-
 ;;; Load lightemacs.el
 
 (require 'lightemacs)
@@ -104,6 +102,8 @@
 
 (lightemacs-load-user-init
  (expand-file-name "early-init.el" minimal-emacs-user-directory))
+
+(setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
 
 ;;; Load function: `lightemacs-user-early-init'
 

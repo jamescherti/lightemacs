@@ -33,19 +33,26 @@
 
 ;;; Code:
 
+;;; use-package
+
 (eval-and-compile
   (require 'lightemacs))
+
+(lightemacs-use-package apheleia
+  :commands (apheleia-mode
+             apheleia-global-mode))
+
+(lightemacs-define-mode-add-hook-to apheleia-mode
+  '(prog-mode-hook))
+
+;;; Bug fix
 
 (defvar lightemacs-apheleia-fix-screen-lines-bug t
   "If non-nil, apply a fix for Apheleia window start issues in folded buffers.")
 
-(lightemacs-use-package apheleia
-  :commands (apheleia-mode
-             apheleia-global-mode)
-  :preface
-  ;; TODO: Send patch to Apheleia
-  (defun lightemacs--apheleia-use-screen-lines (orig-fun &rest args)
-    "Use visual lines instead of logical lines for scroll calculation.
+;; TODO: Send patch to Apheleia
+(defun lightemacs--apheleia-use-screen-lines (orig-fun &rest args)
+  "Use visual lines instead of logical lines for scroll calculation.
 
 In `apheleia--apply-rcs-patch', the vertical position of the point relative to
 the window start is calculated using `count-lines'. This function counts logical
@@ -65,17 +72,16 @@ correct visual distance. This ensures the unit of measurement used for
 calculation matches the unit used for scrolling, preserving the user's view.
 
 ORIG-FUN and ARGS are the original function and its arguments."
-    ;; TODO: Send patch to Apheleia
-    (lightemacs-save-window-start
-      (apply orig-fun args))
-    ;; (cl-letf (((symbol-function 'count-lines) #'count-screen-lines))
-    ;;   (apply orig-fun args))
-    )
+  ;; TODO: Send patch to Apheleia?
+  (lightemacs-save-window-start
+    (apply orig-fun args))
+  ;; (cl-letf (((symbol-function 'count-lines) #'count-screen-lines))
+  ;;   (apply orig-fun args))
+  )
 
-  :config
-  (when lightemacs-apheleia-fix-screen-lines-bug
-    (advice-add 'apheleia--apply-rcs-patch :around
-                #'lightemacs--apheleia-use-screen-lines)))
+(when lightemacs-apheleia-fix-screen-lines-bug
+  (advice-add 'apheleia--apply-rcs-patch :around
+              #'lightemacs--apheleia-use-screen-lines))
 
 (provide 'le-apheleia)
 
