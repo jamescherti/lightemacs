@@ -33,17 +33,24 @@
 
 ;;; Code:
 
+;;; use-package
+
 (eval-and-compile
   (require 'lightemacs))
+
+(lightemacs-use-package apheleia
+  :commands (apheleia-mode
+             apheleia-global-mode))
+
+(lightemacs-define-mode-add-hook-to apheleia-mode
+  '(prog-mode-hook))
+
+;;; Bug fix
 
 (defvar lightemacs-apheleia-fix-screen-lines-bug t
   "If non-nil, apply a fix for Apheleia window start issues in folded buffers.")
 
-(lightemacs-use-package apheleia
-  :commands (apheleia-mode
-             apheleia-global-mode)
-  :preface
-  ;; TODO: Send patch to Apheleia
+;; TODO: Send patch to Apheleia
   (defun lightemacs--apheleia-use-screen-lines (orig-fun &rest args)
     "Use visual lines instead of logical lines for scroll calculation.
 
@@ -72,15 +79,9 @@ ORIG-FUN and ARGS are the original function and its arguments."
     ;;   (apply orig-fun args))
     )
 
-  :config
-  (when lightemacs-apheleia-fix-screen-lines-bug
-    (advice-add 'apheleia--apply-rcs-patch :around
-                #'lightemacs--apheleia-use-screen-lines)))
-
-(lightemacs-define-mode-add-hook-to apheleia-mode
-  '(prog-mode-hook))
-
-
+(when lightemacs-apheleia-fix-screen-lines-bug
+  (advice-add 'apheleia--apply-rcs-patch :around
+              #'lightemacs--apheleia-use-screen-lines))
 
 (provide 'le-apheleia)
 
