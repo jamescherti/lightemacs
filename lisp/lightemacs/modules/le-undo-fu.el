@@ -32,7 +32,7 @@
              undo-fu-disable-checkpoint))
 
 (with-eval-after-load 'evil
-  (setq evil-undo-system 'undo-fu))
+  (setopt evil-undo-system 'undo-fu))
 
 (provide 'le-undo-fu)
 
