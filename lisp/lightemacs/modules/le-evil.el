@@ -1,6 +1,6 @@
 ;;; le-evil.el --- le-evil -*- lexical-binding: t -*-
 
-;; Author: James Cherti
+;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
@@ -109,7 +109,7 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   ;; been officially released yet.
   ;; URL: https://github.com/emacs-evil/evil/pull/1975
   ;; commit 3b80eb5c4496c21d72e233159b9698a73321afc5
-  ;; Author: James Cherti
+  ;; Author: James Cherti <https://www.jamescherti.com/contact/>
   ;; Date:   2025-08-07 09:11:23 -0400
   ;;
   ;; Fixes #1974: Correct C-h behavior to ensure electric-pair deletes adjacent
@@ -144,7 +144,7 @@ pressing `C-h', since it is prefixed with `evil-delete'."
                        'evil-replace)
 
     ;; TODO pull request submitted.
-    ;; Author: James Cherti
+    ;; Author: James Cherti <https://www.jamescherti.com/contact/>
     ;; URL: https://github.com/emacs-evil/evil/pull/1980
     ;; Prevent ElDoc help from disappearing in the minibuffer when executing
     ;; certain Evil commands in Emacs.

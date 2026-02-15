@@ -1,6 +1,6 @@
 ;;; le-default-settings.el --- le-default-settings -*- lexical-binding: t -*-
 
-;; Author: James Cherti
+;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
@@ -96,7 +96,7 @@
   ;; been officially released yet.
   ;;
   ;; commit 4e37a99c20ad35a4e46ee9291c94940ec00fb77a
-  ;; Author: James Cherti
+  ;; Author: James Cherti <https://www.jamescherti.com/contact/>
   ;; Date:   2025-03-19 11:56:11 -0400
   ;;
   ;; ElDoc: Add more commands using 'eldoc-add-command-completions'
@@ -142,7 +142,7 @@
   ;; NOTE: This patch has been merged into the Emacs master branch but has not
   ;; been officially released yet.
   ;; commit cf6c365d5cf8ee5f460e59393e76b934a1a432b2
-  ;; Author: James Cherti
+  ;; Author: James Cherti <https://www.jamescherti.com/contact/>
   ;; Date:   2025-04-11 10:18:19 -0400
   ;;
   ;; Mark !%:.^~, as punctuation rather than symbol constituents
@@ -174,7 +174,7 @@
   ;; NOTE: This patch has been merged into the Emacs master branch but has not
   ;; been officially released yet.
   ;; commit 2ea0919550366babfea1de6468ef9e8b1857b478
-  ;; Author: James Cherti
+  ;; Author: James Cherti <https://www.jamescherti.com/contact/>
   ;; Date:   2024-11-24 12:09:33 -0500
   ;;
   ;; Support hyphen in Bash function names

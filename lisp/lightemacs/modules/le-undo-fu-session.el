@@ -1,6 +1,6 @@
 ;;; le-undo-fu-session.el --- le-undo-fu-session -*- lexical-binding: t -*-
 
-;; Author: James Cherti
+;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
