@@ -35,7 +35,7 @@
   (setq gcmh-verbose init-file-debug
         gcmh-auto-idle-delay-factor 10
 
-        gcmh-high-cons-threshold (* 128 1024 1024)
+        gcmh-high-cons-threshold (* 100 1024 1024)
         gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold
 
         ;; This variable determines how long Emacs should wait (in seconds) while
