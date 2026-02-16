@@ -26,15 +26,16 @@
   (require 'lightemacs))
 
 (lightemacs-use-package gcmh
-  :commands gcmh-mode
+  :commands (gcmh-mode
+             gcmh-idle-garbage-collect)
   :hook
-  (focus-out-hook . gcmh-idle-garbage-collect)
+  (lightemacs-on-first-buffer . gcmh-mode)
+
   :init
-  (add-hook 'lightemacs-on-first-buffer-hook #'gcmh-mode)
   (setq gcmh-verbose init-file-debug
         gcmh-auto-idle-delay-factor 10
 
-        gcmh-high-cons-threshold (* 96 1024 1024)
+        gcmh-high-cons-threshold (* 128 1024 1024)
         gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold
 
         ;; This variable determines how long Emacs should wait (in seconds) while
