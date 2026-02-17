@@ -22,9 +22,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package wgrep
+(lightemacs-package wgrep
   :commands (wgrep-change-to-wgrep-mode
              wgrep-finish-edit))
 

@@ -17,9 +17,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package cape
+(lightemacs-package cape
   :commands (cape-abbrev
              cape-dabbrev
              cape-dict

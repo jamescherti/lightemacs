@@ -19,7 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs-use-package)
+  (require 'lightemacs-package)
   (require 'le-evil))
 
 (eval-and-compile
@@ -28,7 +28,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t))
 
-(lightemacs-use-package evil-collection
+(lightemacs-package evil-collection
   :if (not noninteractive)
   :functions evil-collection-init
   :after evil

@@ -20,9 +20,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package eat
+(lightemacs-package eat
   :commands (eat
              eat-eshell-mode
              eat-eshell-visual-command-mode

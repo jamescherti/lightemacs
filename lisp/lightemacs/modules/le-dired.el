@@ -14,7 +14,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 (defvar lightemacs-dired-omit-parent-directory nil
   "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.
@@ -30,7 +30,7 @@ size, and modification dates.")
 When enabled, all directories are displayed at the beginning of the Dired
 buffer, followed by regular files.")
 
-(lightemacs-use-package dired
+(lightemacs-package dired
   :ensure nil
   :commands (dired
              dired-goto-file

@@ -34,9 +34,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package bufferfile
+(lightemacs-package bufferfile
   :commands (bufferfile-rename
              bufferfile-delete
              bufferfile-copy

@@ -14,10 +14,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs-use-package)
+  (require 'lightemacs-package)
   (require 'le-evil))
 
-(lightemacs-use-package evil-commentary
+(lightemacs-package evil-commentary
   :after evil
   :commands evil-commentary-mode
   :config

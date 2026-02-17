@@ -35,13 +35,14 @@
 
 ;;; use-package
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
+(require 'lightemacs)
 
-(lightemacs-use-package apheleia
+(lightemacs-package apheleia
   :commands (apheleia-mode
              apheleia-global-mode))
 
-(lightemacs-use-package-hooks apheleia-mode
+(lightemacs-package-add-hook apheleia-mode
   '(prog-mode-hook))
 
 ;;; Bug fix

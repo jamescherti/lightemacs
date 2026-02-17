@@ -46,7 +46,7 @@
 
 ;;; Load the package manager and refresh
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 ;;; Configure `lightemacs-after-init-hook'
 

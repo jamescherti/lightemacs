@@ -235,7 +235,7 @@ Here is an example of `config.el` file:
 
 ### Package Manager Selection
 
-Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-package`.
 
 By default, `lightemacs-package-manager` is set to `'use-package`, which uses the built-in `package.el` together with `use-package`.
 
@@ -1026,13 +1026,13 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-native-comp-excluded-cpus` (default: `3`): By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely.
 
-- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-use-package` are affected by this variable.
+- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-package` are affected by this variable.
 
 - `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
 
-- `lightemacs-use-package-refresh-contents`: If non-nil, `lightemacs-use-package` may refresh package contents once. Refresh package contents when `lightemacs-use-package-refresh-contents` is non-nil and the package is not installed.
+- `lightemacs-package-refresh-contents`: If non-nil, `lightemacs-package` may refresh package contents once. Refresh package contents when `lightemacs-package-refresh-contents` is non-nil and the package is not installed.
 
-- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-use-package` handles installation and configuration of packages.
+- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-package` handles installation and configuration of packages.
 
 - `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files: init.el, pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el.
 

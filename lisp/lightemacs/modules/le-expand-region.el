@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package expand-region
+(lightemacs-package expand-region
   :commands (er/expand-region
              er/mark-word
              er/mark-symbol

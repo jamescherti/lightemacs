@@ -21,9 +21,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package embark-consult
+(lightemacs-package embark-consult
   :after (embark consult)
   ;; TODO: Obsolete
   ;; :hook (embark-collect-mode . consult-preview-at-point-mode)

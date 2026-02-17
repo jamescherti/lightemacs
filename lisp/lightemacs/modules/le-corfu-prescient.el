@@ -37,13 +37,13 @@
 ;; URL: https://github.com/radian-software/prescient.el
 
 (eval-and-compile
-  (require 'lightemacs-use-package)
+  (require 'lightemacs-package)
   (require 'le-corfu)
   (require 'le-prescient))
 
 (lightemacs-load-modules '(le-prescient))
 
-(lightemacs-use-package corfu-prescient
+(lightemacs-package corfu-prescient
   :after corfu
   :commands corfu-prescient-mode
   :hook (corfu-mode . corfu-prescient-mode)

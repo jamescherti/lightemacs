@@ -19,9 +19,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package helpful
+(lightemacs-package helpful
   :commands (helpful-callable
              helpful-variable
              helpful-key

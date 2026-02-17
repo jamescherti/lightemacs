@@ -19,9 +19,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package magit
+(lightemacs-package magit
   :commands (magit-status
              magit-commit
              magit-commit-create

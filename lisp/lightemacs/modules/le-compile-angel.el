@@ -24,9 +24,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package compile-angel
+(lightemacs-package compile-angel
   :demand t
   :functions (compile-angel-on-load-mode
               compile-angel-on-save-local-mode

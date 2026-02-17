@@ -26,7 +26,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 (lightemacs-load-modules
  '(;; All modules:

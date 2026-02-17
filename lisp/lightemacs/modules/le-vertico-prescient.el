@@ -39,13 +39,13 @@
 ;; URL: https://github.com/radian-software/prescient.el
 
 (eval-and-compile
-  (require 'lightemacs-use-package)
+  (require 'lightemacs-package)
   (require 'le-vertico)
   (require 'le-prescient))
 
 (lightemacs-load-modules '(le-prescient))
 
-(lightemacs-use-package vertico-prescient
+(lightemacs-package vertico-prescient
   :after vertico
   :commands vertico-prescient-mode
   :hook (vertico-mode . vertico-prescient-mode)

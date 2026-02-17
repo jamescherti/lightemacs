@@ -16,9 +16,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package diminish)
+(lightemacs-package diminish)
 
 (provide 'le-diminish)
 

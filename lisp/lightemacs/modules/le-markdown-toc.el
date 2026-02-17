@@ -15,9 +15,10 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
+(require 'lightemacs)
 
-(lightemacs-use-package markdown-toc
+(lightemacs-package markdown-toc
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc
@@ -29,7 +30,7 @@
 FN is the advised function. ARGS are the function arguments."
     (lightemacs-save-window-start
       (lightemacs-save-window-hscroll
-        (save-mark-and-excursion
+        (save-excursion
           (apply fn args)))))
 
   :config

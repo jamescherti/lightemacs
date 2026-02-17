@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package treesit-auto
+(lightemacs-package treesit-auto
   :commands (global-treesit-auto-mode
              treesit-auto-add-to-auto-mode-alist)
   :hook (lightemacs-after-init . lightemacs-treesit-auto--setup)

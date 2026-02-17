@@ -25,7 +25,7 @@
 
 ;;; Require
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 (defvar lightemacs-easysession-load-session-on-startup t
   "If non-nil, automatically load the main session when Emacs starts.
@@ -39,7 +39,7 @@ Set to nil to ignore window size and position during session restoration.")
 
 ;;; use-package easysession
 
-(lightemacs-use-package easysession
+(lightemacs-package easysession
   :commands (easysession-rename
              easysession-reset
              easysession-save

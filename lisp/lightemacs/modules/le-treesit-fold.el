@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package treesit-fold
+(lightemacs-package treesit-fold
   :commands (treesit-fold-close
              treesit-fold-close-all
              treesit-fold-open

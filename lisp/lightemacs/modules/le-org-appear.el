@@ -15,9 +15,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package org-appear
+(lightemacs-package org-appear
   :commands org-appear-mode
   :hook (org-mode . org-appear-mode))
 

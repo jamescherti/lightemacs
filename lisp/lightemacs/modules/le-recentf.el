@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 (require 'cl-lib)
 (require 'le-shut-up)
@@ -44,7 +44,7 @@ adds that file to the recentf list.")
 ;; Local variables
 (defvar lightemacs-recentf--auto-save-timer nil)
 
-(lightemacs-use-package recentf
+(lightemacs-package recentf
   :ensure nil
   :commands (recentf-mode
              recentf

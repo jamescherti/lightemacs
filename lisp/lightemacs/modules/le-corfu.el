@@ -17,9 +17,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package corfu
+(lightemacs-package corfu
   :commands (global-corfu-mode
              corfu-mode)
 

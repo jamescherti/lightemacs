@@ -26,9 +26,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package csv-mode
+(lightemacs-package csv-mode
   :commands (csv-mode
              csv-align-mode)
   :hook (csv-mode . lightemacs-csv-mode--setup)

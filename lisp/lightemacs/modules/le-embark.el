@@ -21,9 +21,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package embark
+(lightemacs-package embark
   :commands (embark-act
              embark-export
              embark-collect

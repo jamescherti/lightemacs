@@ -16,9 +16,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package autorevert
+(lightemacs-package autorevert
   :ensure nil
   :commands (auto-revert-mode
              global-auto-revert-mode

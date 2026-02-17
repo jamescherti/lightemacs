@@ -14,9 +14,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package winner
+(lightemacs-package winner
   :ensure nil
   :commands (winner-mode
              winner-undo

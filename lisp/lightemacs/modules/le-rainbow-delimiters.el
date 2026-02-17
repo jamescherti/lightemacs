@@ -28,9 +28,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package rainbow-delimiters
+(lightemacs-package rainbow-delimiters
   :commands rainbow-delimiters-mode)
 
 (provide 'le-rainbow-delimiters)

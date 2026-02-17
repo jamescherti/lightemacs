@@ -25,9 +25,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(use-package xclip
+(lightemacs-package xclip
   :if (not (display-graphic-p))
   :commands xclip-mode
   :hook (after-init . xclip-mode))

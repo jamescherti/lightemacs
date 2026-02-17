@@ -16,9 +16,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package which-key
+(lightemacs-package which-key
   :ensure nil
   :commands which-key-mode
 

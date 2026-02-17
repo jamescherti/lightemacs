@@ -13,7 +13,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 (lightemacs-load-modules
  '(;; Custom keybindings

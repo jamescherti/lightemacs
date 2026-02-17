@@ -16,9 +16,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
-(lightemacs-use-package savehist
+(lightemacs-package savehist
   :ensure nil
   :commands savehist-mode
   :hook (lightemacs-after-init . savehist-mode))

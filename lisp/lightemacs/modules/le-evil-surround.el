@@ -19,10 +19,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs-use-package)
+  (require 'lightemacs-package)
   (require 'le-evil))
 
-(lightemacs-use-package evil-surround
+(lightemacs-package evil-surround
   :after evil
   :commands (evil-Surround-edit
              evil-surround-edit

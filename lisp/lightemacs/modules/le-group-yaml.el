@@ -18,7 +18,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(require 'lightemacs-package)
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 
