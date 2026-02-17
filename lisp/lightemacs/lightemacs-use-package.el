@@ -40,14 +40,14 @@
 (defmacro lightemacs-use-package-hooks (mode hooks)
   "Define a variable listing hooks where MODE should be enabled.
 
-This defines a variable named `lightemacs-MODE-add-hook-to' (if it does not
+This defines a variable named `lightemacs-MODE-target-hooks' (if it does not
 already exist) initialized with HOOKS. It then iterates over that variable,
 adding MODE to each hook found.
 
 MODE should be a quoted symbol (e.g., \='flycheck-mode).
 HOOKS should be a list of hook symbols (e.g., \='(prog-mode-hook))."
   (declare (indent 1) (debug t))
-  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode)))
+  (let ((var (intern (format "lightemacs-%s-target-hooks" mode)))
         (docstring (format "List of hooks where `%s' is enabled." mode)))
     `(progn
        (defvar ,var ,hooks ,docstring)

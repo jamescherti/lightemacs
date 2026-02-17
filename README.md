@@ -754,17 +754,17 @@ The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive 
 
 Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
 ```emacs-lisp
-(setq lightemacs-apheleia-mode-add-hook-to '(;; Python
-                                             python-mode-hook
-                                             python-ts-mode-hook
-                                             ;; Bash/sh
-                                             sh-mode-hook
-                                             bash-ts-mode-hook
-                                             ;; Elisp
-                                             emacs-lisp-mode-hook))
+(setq lightemacs-apheleia-mode-target-hooks '(;; Python
+                                              python-mode-hook
+                                              python-ts-mode-hook
+                                              ;; Bash/sh
+                                              sh-mode-hook
+                                              bash-ts-mode-hook
+                                              ;; Elisp
+                                              emacs-lisp-mode-hook))
 ```
 
-(By default, `lightemacs-apheleia-mode-add-hook-to` is set to `prog-mode-hook`, so it starts automatically when `prog-mode` is enabled.)
+(By default, `lightemacs-apheleia-mode-target-hooks` is set to `prog-mode-hook`, so it starts automatically when `prog-mode` is enabled.)
 
 ### Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)
 
