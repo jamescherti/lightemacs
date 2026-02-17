@@ -23,8 +23,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package edit-indirect
   :commands edit-indirect-mode

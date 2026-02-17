@@ -25,8 +25,7 @@
 
 ;;; Require
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (defvar lightemacs-easysession-load-session-on-startup t
   "If non-nil, automatically load the main session when Emacs starts.

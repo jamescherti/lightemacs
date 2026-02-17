@@ -19,8 +19,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package ace-window
   :commands ace-window

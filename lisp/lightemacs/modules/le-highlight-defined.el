@@ -16,8 +16,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package highlight-defined
   :commands highlight-defined-mode

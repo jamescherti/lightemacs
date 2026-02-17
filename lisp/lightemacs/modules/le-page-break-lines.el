@@ -22,8 +22,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package page-break-lines
   :commands (page-break-lines-mode

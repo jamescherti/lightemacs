@@ -18,7 +18,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'le-core-package-manager)
+  (require 'lightemacs-use-package)
   (require 'le-yasnippet))
 
 (lightemacs-use-package yasnippet-snippets

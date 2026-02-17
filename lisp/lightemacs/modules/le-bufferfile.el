@@ -34,8 +34,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package bufferfile
   :commands (bufferfile-rename

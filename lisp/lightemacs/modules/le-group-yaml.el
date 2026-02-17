@@ -18,8 +18,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 

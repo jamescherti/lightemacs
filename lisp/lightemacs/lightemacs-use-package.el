@@ -1,4 +1,4 @@
-;;; le-core-package-manager.el --- le-core-package-manager -*- lexical-binding: t -*-
+;;; lightemacs-use-package.el --- lightemacs-use-package -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -13,30 +13,27 @@
 
 ;;; Code:
 
-;;; Require
-
-(require 'lightemacs)
-
 ;;; Choose the package manager
 
-(cond
- ;; Straight
- ((eq lightemacs-package-manager 'straight)
-  (require 'le-core-straight))
+(when (bound-and-true-p lightemacs-package-manager)
+  (cond
+   ;; Straight
+   ((eq lightemacs-package-manager 'straight)
+    (require 'le-core-straight))
 
- ;; Elpaca
- ((eq lightemacs-package-manager 'elpaca)
-  (require 'le-core-elpaca))
+   ;; Elpaca
+   ((eq lightemacs-package-manager 'elpaca)
+    (require 'le-core-elpaca))
 
- ;; use-package (built-in)
- ((eq lightemacs-package-manager 'use-package)
-  (require 'le-core-use-package))
+   ;; use-package (built-in)
+   ((eq lightemacs-package-manager 'use-package)
+    (require 'le-core-use-package))
 
- (t
-  (error (concat "[lightemacs]"
-                 "Invalid value for `lightemacs-package-manager': '%S'. Valid "
-                 "choices are: 'straight, 'elpaca, or 'use-package.")
-         lightemacs-package-manager)))
+   (t
+    (error (concat "[lightemacs]"
+                   "Invalid value for `lightemacs-package-manager': '%S'. Valid "
+                   "choices are: 'straight, 'elpaca, or 'use-package.")
+           lightemacs-package-manager))))
 
 ;;; lightemacs-use-package macro
 
@@ -52,6 +49,13 @@ Used as a cache by `lightemacs--before-use-package' to skip re-checking
 `package-installed-p' for packages that were already installed, improving
 startup performance when configuring multiple packages.")
 
+(defmacro lightemacs-use-package--verbose-message (&rest args)
+  "Display a verbose message with the same ARGS arguments as `message'."
+  (declare (indent 0) (debug t))
+  `(progn
+     (when (or lightemacs-verbose lightemacs-debug)
+       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
+
 (defun lightemacs--before-use-package (name plist)
   "Ensure a package is installed before `lightemacs-use-package' expands.
 
@@ -61,7 +65,8 @@ PLIST is the property list of keyword arguments supplied to `use-package'.
 This function performs the following steps when the package manager
 is `use-package' and the :ensure property is non-nil."
   ;; TODO Support load-path and make it install packages
-  (when (and (eq lightemacs-package-manager 'use-package))
+  (when (and (bound-and-true-p lightemacs-package-manager)
+             (eq lightemacs-package-manager 'use-package))
     (let* ((ensure-member (plist-member plist :ensure))
            (ensure-value (if ensure-member
                              (plist-get plist :ensure)
@@ -77,7 +82,7 @@ is `use-package' and the :ensure property is non-nil."
         ;; Refresh packages
         (when (and (not lightemacs--use-package-refreshed)
                    lightemacs-use-package-refresh-contents)
-          (lightemacs-verbose-message
+          (lightemacs-use-package--verbose-message
             "[USE-PACKAGE] Refreshing package contents before installing %s"
             name)
           (setq lightemacs--use-package-refreshed t)
@@ -90,7 +95,7 @@ is `use-package' and the :ensure property is non-nil."
                               :error))))
 
         ;; Install the package
-        (lightemacs-verbose-message "[USE-PACKAGE] Installing %s" name)
+        (lightemacs-use-package--verbose-message "[USE-PACKAGE] Installing %s" name)
         (funcall use-package-ensure-function name (list ensure-value) nil)
         (push name lightemacs--installed-packages)))))
 
@@ -105,7 +110,8 @@ append (:straight nil) to ARGS. Invokes `lightemacs--before-use-package`
 with the resulting arguments prior to expanding `use-package`."
   (declare (indent 1) (debug t))
   (let ((effective-args (copy-sequence args)))
-    (when (and (eq lightemacs-package-manager 'straight)
+    (when (and (bound-and-true-p lightemacs-package-manager)
+               (eq lightemacs-package-manager 'straight)
                (not (plist-member effective-args :straight)))
       (when (and (plist-member effective-args :ensure)
                  (null (plist-get effective-args :ensure)))
@@ -125,10 +131,10 @@ with the resulting arguments prior to expanding `use-package`."
     ))
 
 
-(provide 'le-core-package-manager)
+(provide 'lightemacs-use-package)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; le-core-package-manager.el ends here
+;;; lightemacs-use-package.el ends here

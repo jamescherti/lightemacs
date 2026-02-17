@@ -19,7 +19,7 @@
 ;;; Require
 
 (eval-and-compile
-  (require 'le-core-package-manager)
+  (require 'lightemacs-use-package)
   (require 'le-dired))
 
 (lightemacs-load-modules '(le-dired))

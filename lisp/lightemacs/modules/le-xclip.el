@@ -25,8 +25,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (use-package xclip
   :if (not (display-graphic-p))

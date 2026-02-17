@@ -22,8 +22,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package undo-fu
   :commands (undo-fu-only-undo

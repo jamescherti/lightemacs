@@ -26,8 +26,7 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'le-core-package-manager))
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package easy-escape
   :commands easy-escape-minor-mode
