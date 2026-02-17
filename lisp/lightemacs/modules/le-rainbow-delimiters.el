@@ -29,7 +29,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package rainbow-delimiters
   :commands rainbow-delimiters-mode)

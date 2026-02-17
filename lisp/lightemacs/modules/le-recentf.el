@@ -24,7 +24,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (require 'cl-lib)
 (require 'le-shut-up)

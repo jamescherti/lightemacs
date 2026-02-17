@@ -16,7 +16,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (require 'le-shut-up)
 

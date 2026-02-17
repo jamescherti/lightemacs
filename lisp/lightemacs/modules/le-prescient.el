@@ -19,7 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package prescient
   :commands (prescient-completion-sort

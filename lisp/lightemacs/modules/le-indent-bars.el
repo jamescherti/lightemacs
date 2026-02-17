@@ -30,7 +30,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package indent-bars
   :commands indent-bars-mode

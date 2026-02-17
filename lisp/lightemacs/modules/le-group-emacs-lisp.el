@@ -14,7 +14,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-load-modules
  '(;; Enable `highlight-defined-mode', a minor mode that highlights defined

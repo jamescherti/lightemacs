@@ -20,7 +20,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package elisp-refs
   :commands (elisp-refs-function

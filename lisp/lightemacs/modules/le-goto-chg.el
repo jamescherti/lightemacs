@@ -18,7 +18,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package goto-chg
   :commands (goto-last-change

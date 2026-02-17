@@ -19,7 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
+  (require 'le-core-package-manager)
   (require 'le-evil))
 
 (eval-and-compile

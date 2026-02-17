@@ -23,7 +23,7 @@
 ;;; Use-package `flymake'
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package flymake
   :ensure nil

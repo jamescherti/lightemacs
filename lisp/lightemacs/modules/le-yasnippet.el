@@ -21,7 +21,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package yasnippet
   :commands (yas-global-mode

@@ -19,7 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode

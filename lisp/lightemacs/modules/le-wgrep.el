@@ -23,7 +23,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package wgrep
   :commands (wgrep-change-to-wgrep-mode

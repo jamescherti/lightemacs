@@ -14,7 +14,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-load-modules
  '(;; The markdown-mode package provides a major mode for Emacs for syntax

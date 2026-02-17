@@ -36,7 +36,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package persist-text-scale
   :commands (persist-text-scale-mode

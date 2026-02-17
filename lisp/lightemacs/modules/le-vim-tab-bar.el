@@ -25,7 +25,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package vim-tab-bar
   :commands vim-tab-bar-mode

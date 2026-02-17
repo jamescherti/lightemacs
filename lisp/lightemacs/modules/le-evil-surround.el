@@ -19,7 +19,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs)
+  (require 'le-core-package-manager)
   (require 'le-evil))
 
 (lightemacs-use-package evil-surround

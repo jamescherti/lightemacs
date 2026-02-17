@@ -24,7 +24,7 @@
 ;; Require
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-core-cli-tools)

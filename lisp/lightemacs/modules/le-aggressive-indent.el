@@ -23,7 +23,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package aggressive-indent
   :commands (aggressive-indent-mode

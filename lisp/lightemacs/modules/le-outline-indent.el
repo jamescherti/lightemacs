@@ -24,7 +24,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package outline-indent
   :commands (outline-indent-minor-mode

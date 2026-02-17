@@ -37,7 +37,7 @@
 ;; URL: https://github.com/radian-software/prescient.el
 
 (eval-and-compile
-  (require 'lightemacs)
+  (require 'le-core-package-manager)
   (require 'le-corfu)
   (require 'le-prescient))
 

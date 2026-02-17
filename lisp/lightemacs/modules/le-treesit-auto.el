@@ -24,7 +24,7 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs))
+  (require 'le-core-package-manager))
 
 (lightemacs-use-package treesit-auto
   :commands (global-treesit-auto-mode
