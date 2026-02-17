@@ -143,50 +143,6 @@ If the buffer is not visiting a file, opens the current `default-directory'."
 
 ;;; Misc macros
 
-(defmacro lightemacs-define-mode-add-hook-to (mode hooks)
-  "Define a variable listing hooks where MODE should be enabled.
-
-This defines a variable named `lightemacs-MODE-add-hook-to' (if it does not
-already exist) initialized with HOOKS. It then iterates over that variable,
-adding MODE to each hook found.
-
-MODE should be a quoted symbol (e.g., \='flycheck-mode).
-HOOKS should be a list of hook symbols (e.g., \='(prog-mode-hook))."
-  (declare (indent 1) (debug t))
-  (let ((var (intern (format "lightemacs-%s-add-hook-to" mode)))
-        (docstring (format "List of hooks where `%s' is enabled." mode)))
-    `(progn
-       (defvar ,var ,hooks ,docstring)
-       ;; Ensure we treat the variable as a list, even if the user set it to a
-       ;; single symbol
-       (dolist (hook (if (listp ,var) ,var (list ,var)))
-         (add-hook hook #',mode)))))
-
-(defmacro lightemacs-define-keybindings (module &rest body)
-  "Define key bindings for MODULE with BODY, unless inhibited.
-
-This macro introduces an inhibition variable named:
-`lightemacs-MODULE-inhibit-keybindings'.
-
-When non-nil, BODY will not be evaluated, thereby preventing the installation of
-the specified key bindings."
-  (declare (indent 1) (debug t))
-  (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings"
-                                     module))))
-    `(progn
-       (defvar ,inhibit-var nil
-         ,(format "Prevent configuring `%s' keybindings.
-
-When this variable is set to a non-nil value, any key bindings that would
-normally be defined through `lightemacs-define-*' macros are skipped
-for `%s'.
-
-This allows users to disable or override the default Lightemacs key
-configuration for that mode without modifying the macro definition itself."
-                  module module))
-       (unless ,inhibit-var
-         ,@body))))
-
 (defmacro lightemacs-recenter-if-out-of-view (&rest body)
   "Execute BODY and recenter if point is off-screen.
 

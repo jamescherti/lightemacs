@@ -41,7 +41,7 @@
   :commands (apheleia-mode
              apheleia-global-mode))
 
-(lightemacs-define-mode-add-hook-to apheleia-mode
+(lightemacs-use-package-hooks apheleia-mode
   '(prog-mode-hook))
 
 ;;; Bug fix

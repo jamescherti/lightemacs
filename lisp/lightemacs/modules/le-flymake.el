@@ -34,11 +34,11 @@
   :init
   (setq flymake-wrap-around nil))
 
-(lightemacs-define-mode-add-hook-to flymake-mode
+(lightemacs-use-package-hooks flymake-mode
   '(prog-mode
     text-mode))
 
-(lightemacs-define-keybindings flymake
+(lightemacs-use-package-bind flymake
   (with-eval-after-load 'flymake
     (define-key flymake-mode-map (kbd "C-c e d") #'flymake-show-buffer-diagnostics)
     (define-key flymake-mode-map (kbd "C-c e p") #'flymake-goto-prev-error)
