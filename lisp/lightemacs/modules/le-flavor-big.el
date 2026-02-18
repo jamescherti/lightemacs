@@ -62,7 +62,7 @@
    le-helpful
    le-highlight-defined
    le-indent-bars
-   le-keybindings
+   le-default-keybindings
    le-magit
    le-marginalia
    le-markdown-mode

@@ -36,8 +36,14 @@
   :init
   ;; Disable saving a bookmark when capturing; avoids cluttering the bookmark
   ;; list but loses the ability to quickly return to the capture location.
-  ;; TODO: Obsolete
-  (setq org-capture-bookmark nil)
+  (if (boundp 'org-bookmark-names-plist)
+      (setf (plist-get org-bookmark-names-plist :last-capture) nil)
+    (setq org-bookmark-names-plist
+          '(:last-capture nil
+                          :last-refile "org-refile-last-stored"
+                          :last-capture-marker "org-capture-last-stored-marker")))
+  (with-suppressed-warnings ((obsolete org-capture-bookmark))
+    (setq org-capture-bookmark nil))
 
   ;; Define refile targets up to maxlevel in the current file and agenda files;
   ;; allows flexible refiling but may slow completion in very large files and
@@ -74,7 +80,7 @@
   ;; Color DONE headlines; quickly identifies completed tasks
   (setq org-fontify-done-headline t)
 
-  ;; Color TODO headlines; improves task visibility
+  ;; Color to do headlines; improves task visibility
   (setq org-fontify-todo-headline t)
 
   ;; Fontify the whole heading line; improves readability but may affect
@@ -134,12 +140,12 @@
   ;; denser but reduces visual separation between headings.
   (setq org-cycle-separator-lines 0)
 
-  ;; Prevent marking a parent TODO as DONE if its child tasks are incomplete;
+  ;; Prevent marking a parent to do as done if its child tasks are incomplete;
   ;; ensures task consistency but may slow task completion when some subtasks
   ;; are still pending.
   (setq org-enforce-todo-dependencies t)
 
-  ;; Prevent marking a TODO with checkboxes as DONE if any checkboxes are
+  ;; Prevent marking a to do with checkboxes as DONE if any checkboxes are
   ;; incomplete; preserves logical consistency but may frustrate users if
   ;; subtasks are partially complete.
   (setq org-enforce-todo-checkbox-dependencies t)

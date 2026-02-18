@@ -22,8 +22,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package shut-up
-  :demand t)
+(lightemacs-module-package shut-up)
 
 (provide 'le-shut-up)
 

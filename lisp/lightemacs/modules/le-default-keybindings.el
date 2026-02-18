@@ -1,4 +1,4 @@
-;;; le-keybindings.el --- le-keybindings -*- lexical-binding: t -*-
+;;; le-default-keybindings.el --- le-default-keybindings -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -16,10 +16,10 @@
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-+") 'text-scale-increase)
 
-(provide 'le-keybindings)
+(provide 'le-default-keybindings)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 
-;;; le-keybindings.el ends here
+;;; le-default-keybindings.el ends here

@@ -17,7 +17,7 @@
 
 (lightemacs-load-modules
  '(le-theme
-   le-keybindings
+   le-default-keybindings
    le-default-settings
    le-dired
    le-dired-filter))

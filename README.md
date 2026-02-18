@@ -62,7 +62,6 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Files and directories you may edit:](#files-and-directories-you-may-edit)
   - [Example configurations](#example-configurations)
   - [Customizations](#customizations)
-    - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [Package Manager Selection](#package-manager-selection)
       - [Supported package managers](#supported-package-managers)
       - [Configuration Example for the package manager](#configuration-example-for-the-package-manager)
@@ -74,7 +73,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
     - [Enabled by Default: Better sorting and ordering (le-prescient, le-corfu-prescient, and le-vertico-prescient)](#enabled-by-default-better-sorting-and-ordering-le-prescient-le-corfu-prescient-and-le-vertico-prescient)
     - [Enabled by Default: Enhanced File Management (le-dired and le-dired-filter)](#enabled-by-default-enhanced-file-management-le-dired-and-le-dired-filter)
     - [Enabled by Default: Better undo/redo (le-undo-fu and undo-fu-session)](#enabled-by-default-better-undoredo-le-undo-fu-and-undo-fu-session)
-    - [Enabled by Default: Keybindings (le-keybindings)](#enabled-by-default-keybindings-le-keybindings)
+    - [Enabled by Default: Keybindings (le-default-keybindings)](#enabled-by-default-keybindings-le-default-keybindings)
     - [Enabled by Default: Code folding based on indentation (le-outline-indent)](#enabled-by-default-code-folding-based-on-indentation-le-outline-indent)
     - [Enabled by Default: Save History (le-savehist)](#enabled-by-default-save-history-le-savehist)
     - [Enabled by Default: Save and Restore Cursor (le-saveplace)](#enabled-by-default-save-and-restore-cursor-le-saveplace)
@@ -176,10 +175,7 @@ Example 1: The default `config.el` configuration only contains [le-flavor-essent
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before modules are loaded."
-  (setq lightemacs-modules '(le-flavor-essential)))
-
+(setq lightemacs-modules '(le-flavor-essential))
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
@@ -187,12 +183,11 @@ Example 2: The configuration above does not include Vim Keybindings, providing s
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before modules are loaded."
-  (setq lightemacs-modules '(le-flavor-essential
+(setq lightemacs-modules '(le-flavor-essential
 
-                             ;; Vim keybindings
-                             le-group-evil)))
+                           ;; Vim keybindings
+                           le-group-evil))
+
 ```
 
 Example 3: This configuration includes most of modules ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)):
@@ -200,38 +195,10 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before modules are loaded."
-  (setq lightemacs-modules '(le-flavor-big)))
+(setq lightemacs-modules '(le-flavor-big))
 ```
 
 ## Customizations
-
-### Never modify init.el and early-init.el. Modify these instead...
-
-**The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
-
-Modify `~/.emacs.d/lisp/local/config.el` instead. This file is loaded after `init.el` but before the Lightemacs modules are initialized. It is intended for supplementary configurations or package setups.
-
-Always begin your `config.el` file with the following header to prevent them from being byte-compiled and to activate lexical binding:
-```emacs-lisp
-;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
-```
-
-*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init and `config.el` files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of initialization files to ensure all necessary `use-package` variables and functions are loaded.)*
-
-Here is an example of `config.el` file:
-```elisp
-;;; config.el --- Configuration -*- no-byte-compile: t; lexical-binding: t; -*-
-
-(setq lightemacs-modules '(le-flavor-essential))
-
-;; (defun lightemacs-user-init ()
-;;   "This function is executed right before modules are loaded."
-;;   (message "Before modules"))
-```
-
-(The Lightemacs project extends the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, enabling configuration in the same manner as *minimal-emacs.d* and supporting the same `pre-` and `post-` initialization files: `pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`. The only distinction is that, in Lightemacs, these files must be placed in the `~/.emacs.d/lisp/local/` directory, alongside `config.el`. Configuration in Lightemacs is typically done through `config.el`.)
 
 ### Package Manager Selection
 
@@ -243,9 +210,9 @@ By default, `lightemacs-package-manager` is set to `'use-package`, which uses th
 
 - **`'use-package`** (default): Uses Emacs’ native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
 
-- WORK IN PROGRESS: **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
+- **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
 
-- WORK IN PROGRESS: **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
+- **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
 
 #### Configuration Example for the package manager
 
@@ -506,7 +473,7 @@ The default undo system in Emacs has two main issues that undo-fu fixes:
 
 If you use Evil mode, the `le-undo-fu` module will replace Evil’s undo system with `undo-fu`.
 
-### Enabled by Default: Keybindings (le-keybindings)
+### Enabled by Default: Keybindings (le-default-keybindings)
 
 Defines the following key bindings:
 - Increase or decrease the text scale using Ctrl combined with `+` or `-`.

@@ -17,7 +17,7 @@
 
 (lightemacs-load-modules
  '(;; Custom keybindings
-   le-keybindings
+   le-default-keybindings
 
    ;; Default settings (minibuffer, Emacs...) Configure enhanced default
    ;; settings, including improved defaults, backup files, warnings to ignore, a
@@ -27,10 +27,6 @@
    ;; Update the ellipsis in `outline-mode' and `outline-minor-mode' using
    ;; `lightemacs-ellipsis'
    le-outline
-
-   ;; Modern code folding based on indentation levels. Automatically enabled for
-   ;; Python and Yaml.
-   le-outline-indent
 
    ;; The persist-text-scale Emacs package provides `persist-text-scale-mode',
    ;; which ensures that all adjustments made with `text-scale-increase' and

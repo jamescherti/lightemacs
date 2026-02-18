@@ -86,6 +86,32 @@ configuration for that func without modifying the macro definition itself."
        (unless ,inhibit-var
          ,@body))))
 
+(defmacro lightemacs-module-setq (name &rest args)
+  "Set default values for variables in module NAME.
+
+ARGS is a list of alternating variable-value pairs.
+
+If a variable is already bound, its value is preserved (ignored).
+If it is unbound, it is set to the provided value.
+
+This macro checks `lightemacs-NAME-inhibit-defaults'. If non-nil,
+all settings in this block are skipped."
+  (declare (indent 1) (debug t))
+  (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-defaults" name)))
+        (forms nil)
+        var val)
+
+    ;; Compile-time: Unroll the loop into individual checks
+    (while args
+      (setq var (pop args))
+      (setq val (pop args))
+      ;; Use `set-default` to ensure we set the global value (like defvar)
+      (push `(unless (boundp ',var) (set-default ',var ,val)) forms))
+
+    ;; Runtime: Single optimized check
+    `(unless (bound-and-true-p ,inhibit-var)
+       ,@(nreverse forms))))
+
 ;;; lightemacs-module macro
 
 (defvar lightemacs-module--packages-refreshed nil

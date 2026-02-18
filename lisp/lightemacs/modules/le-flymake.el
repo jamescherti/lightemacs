@@ -29,10 +29,12 @@
   :commands (flymake-mode
              flymake-show-buffer-diagnostics
              flymake-goto-next-error
-             flymake-goto-prev-error)
+             flymake-goto-prev-error))
 
-  :init
-  (setq flymake-wrap-around nil))
+;; TODO fix
+;; (lightemacs-module-setq flymake
+;;   flymake-wrap-around nil)
+(setq flymake-wrap-around nil)
 
 (lightemacs-module-hooks flymake
   flymake-mode
