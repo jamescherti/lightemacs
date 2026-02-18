@@ -22,7 +22,7 @@
 ;; (defvar lightemacs-saveplace-recenter-after-find-file t
 ;;   "If non-nil, recenter the buffer after restoring the cursor position.")
 
-(defvar lightemacs-saveplace-quiet t
+(defvar lightemacs-saveplace-quiet lightemacs-reduce-messages
   "If non-nil, suppress saveplace messages when Emacs is exiting.
 This affects the messages shown during the `save-place-kill-emacs-hook',
 preventing output in the echo area while saving buffer positions.")

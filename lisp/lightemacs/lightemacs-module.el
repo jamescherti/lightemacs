@@ -86,7 +86,7 @@ configuration for that func without modifying the macro definition itself."
        (unless ,inhibit-var
          ,@body))))
 
-(defmacro lightemacs-module-setq (name &rest args)
+(defmacro lightemacs-module-setq-maybe (name &rest args)
   "Set default values for variables in module NAME.
 
 ARGS is a list of alternating variable-value pairs.
@@ -138,6 +138,7 @@ startup performance when configuring multiple packages.")
   'lightemacs-module--before-package
   "2026-02-17")
 
+;; move this to a defvar function
 (defun lightemacs-module--before-package (name plist)
   "Ensure a package is installed before `lightemacs-module' expands.
 
@@ -152,7 +153,7 @@ is `use-package' and the :ensure property is non-nil."
     (let* ((ensure-member (plist-member plist :ensure))
            (ensure-value (if ensure-member
                              (plist-get plist :ensure)
-                           use-package-always-ensure)))
+                           (bound-and-true-p use-package-always-ensure))))
       (when (and ensure-value
                  (not (memq name lightemacs-module--installed))
                  (not (package-installed-p name)))
@@ -173,7 +174,8 @@ is `use-package' and the :ensure property is non-nil."
 
         ;; Install the package
         (lightemacs-module--verbose-message "Installing %s" name)
-        (funcall use-package-ensure-function name (list ensure-value) nil)
+        (when (fboundp 'use-package-ensure-function)
+          (funcall use-package-ensure-function name (list ensure-value) nil))
         (push name lightemacs-module--installed)))))
 
 (defmacro lightemacs-module-package (name &rest args)

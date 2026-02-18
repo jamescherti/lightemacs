@@ -175,7 +175,9 @@ Example 1: The default `config.el` configuration only contains [le-flavor-essent
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(setq lightemacs-modules '(le-flavor-essential))
+(defun lightemacs-user-init ()
+  "This function is executed right before loading modules."
+  (setq lightemacs-modules '(le-flavor-essential)))
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
@@ -183,10 +185,12 @@ Example 2: The configuration above does not include Vim Keybindings, providing s
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(setq lightemacs-modules '(le-flavor-essential
+(defun lightemacs-user-init ()
+  "This function is executed right before loading modules."
+  (setq lightemacs-modules '(le-flavor-essential
 
-                           ;; Vim keybindings
-                           le-group-evil))
+                             ;; Vim keybindings
+                             le-group-evil)))
 
 ```
 
@@ -195,7 +199,9 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(setq lightemacs-modules '(le-flavor-big))
+(defun lightemacs-user-init ()
+  "This function is executed right before loading modules."
+  (setq lightemacs-modules '(le-flavor-big)))
 ```
 
 ## Customizations
@@ -670,6 +676,13 @@ The `le-group-evil` group of modules includes:
 
 The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
 
+Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Stripspace for `prog-mode`, `text-mode` and `conf-mode`:
+```emacs-lisp
+(setq lightemacs-stripspace-target-hooks '(prog-mode-hook
+                                           text-mode-hook
+                                           conf-mode-hook))
+```
+
 (Trailing whitespace refers to any spaces or tabs that appear at the end of a line, beyond the last non-whitespace character. These characters serve no purpose in the content of the file and can cause issues with version control, formatting, or code consistency. Removing trailing whitespace helps maintain clean, readable files.)
 
 It also includes an optional feature (`stripspace-only-if-initially-clean`, disabled by default), which, when enabled, ensures that trailing whitespace is removed only if the buffer was initially clean. This prevents unintended modifications to buffers that already contain changes, making it useful for preserving intentional whitespace or avoiding unnecessary edits in files managed by version control.
@@ -863,7 +876,9 @@ Continue pressing `C-=` until the selection encompasses exactly the text you wan
 
 Here are a few other modules disabled by default:
 
--- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. By default, the module does not start `treesit-fold-mode` automatically. To enable it in specific modes such as `python-ts-mode`:
+- **le-buffer-terminator**: Configures the [buffer-terminator](https://github.com/jamescherti/buffer-terminator.el) package, which automatically kills inactive buffers to maintain a clean workspace and optimize performance. The `buffer-terminator-mode` kills buffers inactive for `buffer-terminator-inactivity-timeout` (default: 30 mins) every `buffer-terminator-interval` (default: 10 minutes). It safely preserves special buffers, unsaved modified files, visible buffers, buffers with running processes.
+
+- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. By default, the module does not start `treesit-fold-mode` automatically. To enable it in specific modes such as `python-ts-mode`:
   ```emacs-lisp
   (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
   ```

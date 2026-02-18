@@ -36,7 +36,7 @@
   (with-eval-after-load 'xref
     (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90))
 
-  (setq dumb-jump-quiet t)
+  (setq dumb-jump-quiet lightemacs-reduce-messages)
   (setq dumb-jump-aggressive nil)
 
   ;; Number of seconds a rg/grep/find command can take before being warned to

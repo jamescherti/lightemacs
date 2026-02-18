@@ -31,10 +31,8 @@
              flymake-goto-next-error
              flymake-goto-prev-error))
 
-;; TODO fix
-;; (lightemacs-module-setq flymake
-;;   flymake-wrap-around nil)
-(setq flymake-wrap-around nil)
+(lightemacs-module-setq-maybe flymake
+  flymake-wrap-around nil)
 
 (lightemacs-module-hooks flymake
   flymake-mode

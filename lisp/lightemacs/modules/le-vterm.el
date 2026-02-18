@@ -13,10 +13,11 @@
 ;; experience within Emacs, supporting features such as color, cursor movement,
 ;; and advanced terminal capabilities.
 ;;
-;; Unlike simpler Emacs terminal modes, `vterm' leverages the underlying
-;; libvterm C library for high-performance, accurate terminal emulation,
-;; allowing users to run shell programs, text-based applications, and REPLs
-;; seamlessly.
+;; Unlike standard Emacs terminal modes, `vterm' utilizes the libvterm C library
+;; for high-performance emulation. This ensures accurate terminal behavior when
+;; running shell programs, text-based applications, and REPLs.
+;;
+;; URL: https://github.com/akermu/emacs-libvterm
 
 ;;; Code:
 

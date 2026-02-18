@@ -180,15 +180,14 @@ initialized by Lightemacs. Packages listed here are skipped during the
 initialization process. Only packages declared via the `lightemacs-module'
 macro are affected by this variable.")
 
-(defcustom lightemacs-verbose nil
-  "Enable displaying verbose messages."
-  :type 'boolean
-  :group 'lightemacs)
+(defvar lightemacs-verbose nil
+  "Enable displaying verbose messages.")
 
-(defcustom lightemacs-debug nil
-  "Enable displaying debug messages."
-  :type 'boolean
-  :group 'lightemacs)
+(defvar lightemacs-debug nil
+  "Enable displaying debug messages.")
+
+(defvar lightemacs-reduce-messages nil
+  "When non-nil, reduce the verbosity of various Emacs packages.")
 
 (defvar lightemacs-ellipsis " ▼"
   "String used to indicate folded sections in Org-mode and Outline-mode.

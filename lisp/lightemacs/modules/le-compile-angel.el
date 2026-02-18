@@ -51,15 +51,17 @@ specified file or directory is ignored during the compilation process managed by
             compile-angel-excluded-files)))
 
   :config
-  (push "/org-version.el" compile-angel-excluded-files)
   (push "/prescient-save.el" compile-angel-excluded-files)
 
+  ;; TODO add support to compile-angel
   (with-eval-after-load 'savehist
     (le-compile-angel-exclude savehist-file))
 
+  ;; TODO add support to compile-angel
   (with-eval-after-load 'recentf
     (le-compile-angel-exclude recentf-save-file))
 
+  ;; TODO add support to compile-angel?
   (with-eval-after-load 'cus-edit
     (le-compile-angel-exclude custom-file))
 

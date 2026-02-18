@@ -81,16 +81,6 @@ tradeoff is that the mode line is hidden during the startup phase.")
 When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
 
-(defvar minimal-emacs-setup-native-compilation t
-  "Controls whether native compilation settings are enabled during setup.
-When non-nil, the following variables are set to non-nil to enable
-native compilation features:
-- `native-comp-deferred-compilation'
-- `native-comp-jit-compilation'
-- `package-native-compile'
-If nil, these variables are left at their default values and are not
-modified during setup.")
-
 (defvar minimal-emacs-inhibit-redisplay-during-startup nil
   "Suppress redisplay during startup to improve performance.
 This prevents visual updates while Emacs initializes. The tradeoff is that you
@@ -187,12 +177,9 @@ pre-early-init.el, and post-early-init.el.")
 
 ;;; Native compilation and Byte compilation
 
-(if (and (featurep 'native-compile)
-         (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (when minimal-emacs-setup-native-compilation
-      ;; Activate `native-compile'
-      (setq package-native-compile t))
+(unless (and (featurep 'native-compile)
+             (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
@@ -466,7 +453,6 @@ this stage of initialization."
 ;; This results in a more compact output that emphasizes performance
 (setq use-package-expand-minimally (not noninteractive))
 
-(setq use-package-compute-statistics nil)
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
 (setq use-package-always-ensure t)

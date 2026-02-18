@@ -38,7 +38,7 @@
 When enabled, switching to a buffer visiting a file automatically
 adds that file to the recentf list.")
 
-(defvar lightemacs-recentf-quiet t
+(defvar lightemacs-recentf-quiet lightemacs-reduce-messages
   "Non-nil means suppress messages during recentf cleanup and save operations.")
 
 ;; Local variables
