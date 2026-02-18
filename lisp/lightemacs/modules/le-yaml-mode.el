@@ -21,9 +21,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package yaml-mode
+(lightemacs-module-package yaml-mode
   :commands yaml-mode
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode)))

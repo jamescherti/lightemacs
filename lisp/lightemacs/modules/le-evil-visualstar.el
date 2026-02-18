@@ -21,9 +21,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package evil-visualstar
+(lightemacs-module-package evil-visualstar
   :commands global-evil-visualstar-mode
   :after evil
   :config

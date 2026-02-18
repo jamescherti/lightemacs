@@ -18,9 +18,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package markdown-mode
+(lightemacs-module-package markdown-mode
   :commands (gfm-mode
              gfm-view-mode
              markdown-mode

@@ -15,9 +15,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package inhibit-mouse
+(lightemacs-module-package inhibit-mouse
   :commands inhibit-mouse-mode
   :init
   (setq inhibit-mouse-adjust-show-help-function t)

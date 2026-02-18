@@ -1,4 +1,4 @@
-;;; lightemacs-package.el --- lightemacs-package -*- lexical-binding: t -*-
+;;; lightemacs-module.el --- lightemacs-module -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -41,26 +41,27 @@
 
 ;;; Misc macros
 
-(defmacro lightemacs-package-add-hook (mode hooks)
-  "Define a variable listing hooks where MODE should be enabled.
+(defmacro lightemacs-module-hooks (name func hooks)
+  "Register hooks where FUNC should be enabled for the package NAME.
 
-This defines a variable named `lightemacs-MODE-target-hooks' (if it does not
+This defines a variable named `lightemacs-NAME-target-hooks' (if it does not
 already exist) initialized with HOOKS. It then iterates over that variable,
-adding MODE to each hook found.
+adding FUNC to each hook found.
 
-MODE should be a quoted symbol (e.g., \='flycheck-mode).
+NAME should be the package symbol (e.g., \='flycheck).
+FUNC should be the function symbol (e.g., \='flycheck-mode).
 HOOKS should be a list of hook symbols (e.g., \='(prog-mode-hook))."
   (declare (indent 1) (debug t))
-  (let ((var (intern (format "lightemacs-%s-target-hooks" mode)))
-        (docstring (format "List of hooks where `%s' is enabled." mode)))
+  (let ((var (intern (format "lightemacs-%s-target-hooks" name)))
+        (docstring (format "List of hooks where `%s' is enabled." func)))
     `(progn
        (defvar ,var ,hooks ,docstring)
        ;; Ensure we treat the variable as a list, even if the user set it to a
        ;; single symbol
        (dolist (hook (if (listp ,var) ,var (list ,var)))
-         (add-hook hook ',mode)))))
+         (add-hook hook ',func)))))
 
-(defmacro lightemacs-package-bind (module &rest body)
+(defmacro lightemacs-module-bind (module &rest body)
   "Define key bindings for MODULE with BODY, unless inhibited.
 
 This macro introduces an inhibition variable named:
@@ -80,26 +81,26 @@ normally be defined through `lightemacs-define-*' macros are skipped
 for `%s'.
 
 This allows users to disable or override the default Lightemacs key
-configuration for that mode without modifying the macro definition itself."
+configuration for that func without modifying the macro definition itself."
                   module module))
        (unless ,inhibit-var
          ,@body))))
 
-;;; lightemacs-package macro
+;;; lightemacs-module macro
 
-(defvar lightemacs-package--refreshed nil
+(defvar lightemacs-module--packages-refreshed nil
   "Non-nil if package contents have been refreshed during the current session.
-Used by `lightemacs-package--before-package' to ensure that
+Used by `lightemacs-module--before-package' to ensure that
 `package-refresh-contents' is invoked at most once per Emacs session, avoiding
 redundant network calls when installing multiple packages.")
 
-(defvar lightemacs-package--installed-p nil
+(defvar lightemacs-module--installed nil
   "List of package symbols that have been installed during this session.
-Used as a cache by `lightemacs-package--before-package' to skip re-checking
+Used as a cache by `lightemacs-module--before-package' to skip re-checking
 `package-installed-p' for packages that were already installed, improving
 startup performance when configuring multiple packages.")
 
-(defmacro lightemacs-package--verbose-message (&rest args)
+(defmacro lightemacs-module--verbose-message (&rest args)
   "Display a verbose message with the same ARGS arguments as `message'."
   (declare (indent 0) (debug t))
   `(progn
@@ -108,11 +109,11 @@ startup performance when configuring multiple packages.")
 
 (define-obsolete-function-alias
   'lightemacs--before-use-package
-  'lightemacs-package--before-package
+  'lightemacs-module--before-package
   "2026-02-17")
 
-(defun lightemacs-package--before-package (name plist)
-  "Ensure a package is installed before `lightemacs-package' expands.
+(defun lightemacs-module--before-package (name plist)
+  "Ensure a package is installed before `lightemacs-module' expands.
 
 NAME is the symbol identifying the package to install or configure.
 PLIST is the property list of keyword arguments supplied to `use-package'.
@@ -127,15 +128,15 @@ is `use-package' and the :ensure property is non-nil."
                              (plist-get plist :ensure)
                            use-package-always-ensure)))
       (when (and ensure-value
-                 (not (memq name lightemacs-package--installed-p))
+                 (not (memq name lightemacs-module--installed))
                  (not (package-installed-p name)))
         ;; Refresh packages
-        (when (and (not lightemacs-package--refreshed)
-                   lightemacs-package-refresh-contents)
-          (lightemacs-package--verbose-message
+        (when (and (not lightemacs-module--packages-refreshed)
+                   lightemacs-module-refresh-contents)
+          (lightemacs-module--verbose-message
             "Refreshing package contents before installing %s"
             name)
-          (setq lightemacs-package--refreshed t)
+          (setq lightemacs-module--packages-refreshed t)
           (condition-case err
               (package-refresh-contents)
             (error
@@ -145,18 +146,18 @@ is `use-package' and the :ensure property is non-nil."
                               :error))))
 
         ;; Install the package
-        (lightemacs-package--verbose-message "Installing %s" name)
+        (lightemacs-module--verbose-message "Installing %s" name)
         (funcall use-package-ensure-function name (list ensure-value) nil)
-        (push name lightemacs-package--installed-p)))))
+        (push name lightemacs-module--installed)))))
 
-(defmacro lightemacs-package (name &rest args)
+(defmacro lightemacs-module-package (name &rest args)
   "Provide a formal interface for package configuration via `use-package'.
 
 NAME designates the package symbol.
 ARGS represents the property list of configuration parameters.
 
 If :ensure is explicitly nil and no :straight declaration exists,
-append (:straight nil) to ARGS. Invokes `lightemacs-package--before-package`
+append (:straight nil) to ARGS. Invokes `lightemacs-module--before-package`
 with the resulting arguments prior to expanding `use-package`."
   (declare (indent 1) (debug t))
   (let ((effective-args (copy-sequence args)))
@@ -169,13 +170,13 @@ with the resulting arguments prior to expanding `use-package`."
           (message "[lightemacs] Added `:straight nil' to the %s package" name))
         (setq effective-args (append '(:straight nil) effective-args))))
     `(progn
-       (lightemacs-package--before-package ',name ',effective-args)
+       (lightemacs-module--before-package ',name ',effective-args)
        (use-package ,name ,@effective-args))))
 
-(provide 'lightemacs-package)
+(provide 'lightemacs-module)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
-;;; lightemacs-package.el ends here
+;;; lightemacs-module.el ends here

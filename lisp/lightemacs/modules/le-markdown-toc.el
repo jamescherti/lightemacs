@@ -15,10 +15,10 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 (require 'lightemacs)
 
-(lightemacs-package markdown-toc
+(lightemacs-module-package markdown-toc
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc

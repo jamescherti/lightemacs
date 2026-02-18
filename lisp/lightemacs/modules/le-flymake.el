@@ -22,9 +22,9 @@
 
 ;;; Use-package `flymake'
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package flymake
+(lightemacs-module-package flymake
   :ensure nil
   :commands (flymake-mode
              flymake-show-buffer-diagnostics
@@ -34,11 +34,12 @@
   :init
   (setq flymake-wrap-around nil))
 
-(lightemacs-package-add-hook flymake-mode
+(lightemacs-module-hooks flymake
+  flymake-mode
   '(prog-mode-hook
     text-mode-hook))
 
-(lightemacs-package-bind flymake
+(lightemacs-module-bind flymake
   (with-eval-after-load 'flymake
     (define-key flymake-mode-map (kbd "C-c e d") #'flymake-show-buffer-diagnostics)
     (define-key flymake-mode-map (kbd "C-c e p") #'flymake-goto-prev-error)

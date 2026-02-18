@@ -15,9 +15,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package paren
+(lightemacs-module-package paren
   :ensure nil
   :commands (show-paren-mode
              show-paren-local-mode)

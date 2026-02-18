@@ -26,9 +26,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package orderless
+(lightemacs-module-package orderless
   :demand t
   :init
   (setq completion-styles '(orderless basic))

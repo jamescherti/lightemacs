@@ -20,9 +20,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package yasnippet
+(lightemacs-module-package yasnippet
   :commands (yas-global-mode
              yas-minor-mode
              yas-load-directory

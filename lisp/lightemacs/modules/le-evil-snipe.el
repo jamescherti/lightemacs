@@ -23,10 +23,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs-package)
+  (require 'lightemacs-module)
   (require 'le-evil))
 
-(lightemacs-package evil-snipe
+(lightemacs-module-package evil-snipe
   :commands evil-snipe-mode
 
   :hook

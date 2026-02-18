@@ -29,9 +29,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package indent-bars
+(lightemacs-module-package indent-bars
   :commands indent-bars-mode
   :init
   ;; Setting this to nil is not reliable

@@ -22,9 +22,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package page-break-lines
+(lightemacs-module-package page-break-lines
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
   :hook

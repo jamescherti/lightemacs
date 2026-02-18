@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package edit-indirect
+(lightemacs-module-package edit-indirect
   :commands edit-indirect-mode
   :commands edit-indirect-region)
 

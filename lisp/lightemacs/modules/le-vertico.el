@@ -19,9 +19,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package vertico
+(lightemacs-module-package vertico
   :commands (vertico-mode
              vertico-next
              vertico-previous

@@ -20,7 +20,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
 ;; Compilation of ‘emacs-libvterm’ module succeeded
@@ -29,7 +29,7 @@
 ;; feature ‘le-vterm’")
 (provide 'le-vterm)
 
-(lightemacs-package vterm
+(lightemacs-module-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
              vterm-send-string

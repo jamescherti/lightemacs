@@ -13,9 +13,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package org
+(lightemacs-module-package org
   :ensure nil
   :commands (org-mode
              org-indent-mode

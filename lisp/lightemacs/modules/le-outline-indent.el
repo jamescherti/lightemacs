@@ -23,9 +23,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package outline-indent
+(lightemacs-module-package outline-indent
   :commands (outline-indent-minor-mode
              outline-indent-shift-left
              outline-indent-shift-right

@@ -18,7 +18,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 (defvar lightemacs-dtrt-indent-inhibit nil
   "Non-nil inhibits automatic indentation detection via `dtrt-indent'.
@@ -48,7 +48,7 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
       (when (fboundp 'dtrt-indent-mode)
         (funcall 'dtrt-indent-mode +1)))))
 
-(lightemacs-package dtrt-indent
+(lightemacs-module-package dtrt-indent
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode
              dtrt-indent-adapt

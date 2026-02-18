@@ -28,10 +28,14 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package rainbow-delimiters
+(lightemacs-module-package rainbow-delimiters
   :commands rainbow-delimiters-mode)
+
+(lightemacs-module-hooks rainbow-delimiters
+  rainbow-delimiters-mode
+  '(emacs-lisp-mode-hook))
 
 (provide 'le-rainbow-delimiters)
 

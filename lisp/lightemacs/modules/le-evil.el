@@ -18,7 +18,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 ;;; Variables
 
@@ -46,7 +46,7 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   (when-let* ((del-binding (key-binding (kbd "DEL"))))
     (call-interactively del-binding)))
 
-(lightemacs-package evil
+(lightemacs-module-package evil
   :commands (evil-mode
              evil-select-search-module)
 

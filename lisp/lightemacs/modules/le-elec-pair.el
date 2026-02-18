@@ -13,9 +13,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package elec-pair
+(lightemacs-module-package elec-pair
   :ensure nil
   :commands (electric-pair-mode
              electric-pair-local-mode

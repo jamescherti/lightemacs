@@ -13,7 +13,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 (lightemacs-load-modules
  '(;; The markdown-mode package provides a major mode for Emacs for syntax

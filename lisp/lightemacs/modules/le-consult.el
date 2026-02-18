@@ -23,14 +23,14 @@
 
 ;; Require
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-core-cli-tools)
 
 ;;; Use-package consult
 
-(lightemacs-package consult
+(lightemacs-module-package consult
   :commands (consult-fd
              consult-register-window
              consult-ripgrep

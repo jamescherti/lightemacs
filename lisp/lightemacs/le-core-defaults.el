@@ -177,7 +177,7 @@ Do not modify this variable.")
   "List of package symbols that should be excluded from initialization.
 Each element must be a symbol naming a package that would otherwise be
 initialized by Lightemacs. Packages listed here are skipped during the
-initialization process. Only packages declared via the `lightemacs-package'
+initialization process. Only packages declared via the `lightemacs-module'
 macro are affected by this variable.")
 
 (defcustom lightemacs-verbose nil
@@ -205,9 +205,9 @@ This enabled or disable cycling in plugins such as Vertico and Consult.
 When nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
-(defvar lightemacs-package-refresh-contents t
-  "If non-nil, `lightemacs-package' may refresh package contents once.
-Refresh package contents when `lightemacs-package-refresh-contents' is
+(defvar lightemacs-module-refresh-contents t
+  "If non-nil, `lightemacs-module' may refresh package contents once.
+Refresh package contents when `lightemacs-module-refresh-contents' is
 non-nil and the package is not installed.")
 
 (defvar lightemacs-package-manager 'use-package
@@ -218,7 +218,7 @@ Choices are:
 - \='straight: Use `straight.el' for package management.
 - \='elpaca: Use `elpaca'.
 
-This variable controls how the `lightemacs-package' macro handles
+This variable controls how the `lightemacs-module' macro handles
 installation and configuration of packages.")
 
 (defvar lightemacs-native-comp-excluded-cpus nil

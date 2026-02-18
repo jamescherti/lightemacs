@@ -27,7 +27,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 ;; Variables
 
@@ -51,7 +51,7 @@ Set to nil to disable installing this package at startup.")
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
   (unless (memq lightemacs-theme-name lightemacs-theme--package-installed)
-    (eval `(lightemacs-package ,lightemacs-theme-package
+    (eval `(lightemacs-module-package ,lightemacs-theme-package
              :demand t))
     (push lightemacs-theme-name lightemacs-theme--package-installed))
 

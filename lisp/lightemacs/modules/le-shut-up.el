@@ -20,9 +20,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package shut-up
+(lightemacs-module-package shut-up
   :demand t)
 
 (provide 'le-shut-up)

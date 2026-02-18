@@ -18,9 +18,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package undo-fu-session
+(lightemacs-module-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"

@@ -18,10 +18,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs-package)
+  (require 'lightemacs-module)
   (require 'le-yasnippet))
 
-(lightemacs-package yasnippet-snippets
+(lightemacs-module-package yasnippet-snippets
   :after yasnippet)
 
 (provide 'le-yasnippet-snippets)

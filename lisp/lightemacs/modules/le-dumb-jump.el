@@ -22,12 +22,12 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-core-cli-tools)
 
-(lightemacs-package dumb-jump
+(lightemacs-module-package dumb-jump
   :commands dumb-jump-xref-activate
   :init
   ;; Register `dumb-jump' as an xref backend so it integrates with

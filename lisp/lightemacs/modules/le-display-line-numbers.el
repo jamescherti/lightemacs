@@ -15,9 +15,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package display-line-numbers
+(lightemacs-module-package display-line-numbers
   :ensure nil
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)

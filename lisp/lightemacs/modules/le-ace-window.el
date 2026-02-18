@@ -19,9 +19,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package ace-window
+(lightemacs-module-package ace-window
   :commands ace-window
   :bind
   ([remap other-window] . ace-window)

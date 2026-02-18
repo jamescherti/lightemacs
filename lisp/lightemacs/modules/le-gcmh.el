@@ -22,9 +22,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package gcmh
+(lightemacs-module-package gcmh
   :commands (gcmh-mode
              gcmh-idle-garbage-collect)
   :hook

@@ -20,9 +20,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package diff-hl
+(lightemacs-module-package diff-hl
   :commands (diff-hl-mode
              global-diff-hl-mode)
   :init

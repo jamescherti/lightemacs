@@ -18,9 +18,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package prescient
+(lightemacs-module-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)
 

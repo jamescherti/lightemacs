@@ -16,9 +16,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package highlight-defined
+(lightemacs-module-package highlight-defined
   :commands highlight-defined-mode
   :hook (emacs-lisp-mode . highlight-defined-mode))
 

@@ -15,7 +15,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 (require 'le-shut-up)
 
@@ -27,7 +27,7 @@
 This affects the messages shown during the `save-place-kill-emacs-hook',
 preventing output in the echo area while saving buffer positions.")
 
-(lightemacs-package saveplace
+(lightemacs-module-package saveplace
   :ensure nil
   :commands save-place-mode
 

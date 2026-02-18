@@ -19,9 +19,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package elisp-refs
+(lightemacs-module-package elisp-refs
   :commands (elisp-refs-function
              elisp-refs-macro
              elisp-refs-variable

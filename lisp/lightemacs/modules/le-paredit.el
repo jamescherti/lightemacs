@@ -21,9 +21,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package paredit
+(lightemacs-module-package paredit
   :commands paredit-mode
 
   :hook ((emacs-lisp-mode . paredit-mode)

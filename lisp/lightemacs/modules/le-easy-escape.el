@@ -26,9 +26,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package easy-escape
+(lightemacs-module-package easy-escape
   :commands easy-escape-minor-mode
   :hook (emacs-lisp-mode . easy-escape-minor-mode))
 

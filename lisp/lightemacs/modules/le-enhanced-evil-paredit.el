@@ -23,10 +23,10 @@
 ;;; Code:
 
 (eval-and-compile
-  (require 'lightemacs-package)
+  (require 'lightemacs-module)
   (require 'le-evil))
 
-(lightemacs-package enhanced-evil-paredit
+(lightemacs-module-package enhanced-evil-paredit
   :after evil
   :hook (paredit-mode . enhanced-evil-paredit-mode)
   :init

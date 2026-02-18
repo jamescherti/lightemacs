@@ -13,7 +13,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
 (lightemacs-load-modules
  '(;; Enable `highlight-defined-mode', a minor mode that highlights defined

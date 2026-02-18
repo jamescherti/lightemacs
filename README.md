@@ -235,7 +235,7 @@ Here is an example of `config.el` file:
 
 ### Package Manager Selection
 
-Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-package`.
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-module-package`.
 
 By default, `lightemacs-package-manager` is set to `'use-package`, which uses the built-in `package.el` together with `use-package`.
 
@@ -754,17 +754,16 @@ The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive 
 
 Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
 ```emacs-lisp
-(setq lightemacs-apheleia-mode-target-hooks '(;; Python
-                                              python-mode-hook
-                                              python-ts-mode-hook
-                                              ;; Bash/sh
-                                              sh-mode-hook
-                                              bash-ts-mode-hook
-                                              ;; Elisp
-                                              emacs-lisp-mode-hook))
+;; By default, `lightemacs-apheleia-mode-target-hooks' is set to `prog-mode-hook'.
+(setq lightemacs-apheleia-target-hooks '(;; Python
+                                         python-mode-hook
+                                         python-ts-mode-hook
+                                         ;; Bash/sh
+                                         sh-mode-hook
+                                         bash-ts-mode-hook
+                                         ;; Elisp
+                                         emacs-lisp-mode-hook))
 ```
-
-(By default, `lightemacs-apheleia-mode-target-hooks` is set to `prog-mode-hook`, so it starts automatically when `prog-mode` is enabled.)
 
 ### Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)
 
@@ -902,10 +901,12 @@ Here are a few other modules disabled by default:
   (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
   ```
 
-- **le-rainbow-delimiters**: Configures [rainbow-delimiters](https://github.com/Fanael/rainbow-delimiters) is a minor mode that highlights parentheses, brackets, and braces according to their nesting depth, with each level displayed in a distinct color. This makes it easier to identify matching delimiters, navigate code structure, and understand which statements are at a given depth. By default, the module does not start `rainbow-delimiters-mode` automatically. To enable it in specific modes:
+- **le-rainbow-delimiters**: Configures [rainbow-delimiters](https://github.com/Fanael/rainbow-delimiters) is a minor mode that highlights parentheses, brackets, and braces according to their nesting depth, with each level displayed in a distinct color. This makes it easier to identify matching delimiters, navigate code structure, and understand which statements are at a given depth. Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure rainbow-delimiters for Emacs Lisp:
   ```emacs-lisp
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  ;; By default, `lightemacs-rainbow-delimiters-target-hooks' is set to '(emacs-lisp-mode-hook)
+  (setq lightemacs-rainbow-delimiters-target-hooks '(emacs-lisp-mode-hook))
   ```
+
 
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
 
@@ -1026,13 +1027,13 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-native-comp-excluded-cpus` (default: `3`): By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely.
 
-- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-package` are affected by this variable.
+- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-module` are affected by this variable.
 
 - `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
 
-- `lightemacs-package-refresh-contents`: If non-nil, `lightemacs-package` may refresh package contents once. Refresh package contents when `lightemacs-package-refresh-contents` is non-nil and the package is not installed.
+- `lightemacs-module-refresh-contents`: If non-nil, `lightemacs-module` may refresh package contents once. Refresh package contents when `lightemacs-module-refresh-contents` is non-nil and the package is not installed.
 
-- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-package` handles installation and configuration of packages.
+- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-module` handles installation and configuration of packages.
 
 - `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files: init.el, pre-init.el, post-init.el, pre-early-init.el, and post-early-init.el.
 

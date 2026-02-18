@@ -15,9 +15,9 @@
 
 ;;; Code:
 
-(require 'lightemacs-package)
+(require 'lightemacs-module)
 
-(lightemacs-package stripspace
+(lightemacs-module-package stripspace
   :commands stripspace-local-mode
 
   :hook ((prog-mode . stripspace-local-mode)
