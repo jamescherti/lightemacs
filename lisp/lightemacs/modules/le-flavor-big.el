@@ -93,6 +93,9 @@
    le-yasnippet
    le-yasnippet-snippets
    le-csv-mode
+   le-kirigami
+   le-buffer-terminator
+   le-elisp-autofmt
    ))
 
 ;;; Provide

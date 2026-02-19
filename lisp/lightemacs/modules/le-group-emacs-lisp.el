@@ -39,6 +39,8 @@
    ;; functions.
    le-elisp-refs
 
+   le-elisp-autofmt
+
    ;; `easy-escape-minor-mode' improves the readability of Emacs Lisp regular
    ;; expressions through syntax highlighting and character composition.
    ;; Specifically, it hides double backslashes before regexp special characters

@@ -34,6 +34,11 @@
   ("\\.org\\'" . org-mode)
 
   :init
+  (setq org-tags-column 0)
+
+  (with-eval-after-load 'org-src
+    (add-to-list 'org-src-lang-modes '("md" . markdown)))
+
   ;; Disable saving a bookmark when capturing; avoids cluttering the bookmark
   ;; list but loses the ability to quickly return to the capture location.
   (if (boundp 'org-bookmark-names-plist)
@@ -52,11 +57,6 @@
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 3)))
 
-  ;; Allow creating new parent nodes when refiling, but ask for confirmation;
-  ;; provides flexibility in organization but adds an extra prompt that may
-  ;; interrupt workflow.
-  (setq org-refile-allow-creating-parent-nodes 'confirm)
-
   ;; Use the full outline path when refiling; makes it easier to select the
   ;; correct target but requires remembering or seeing the full path.
   (setq org-refile-use-outline-path t)
@@ -68,14 +68,6 @@
   ;; Indent text according to heading level; makes outline visually clearer but
   ;; can misalign code blocks or tables.
   (setq org-startup-indented t)
-
-  ;; Hide markers like * / _ = ~; cleaner view but markers are not visible for
-  ;; editing emphasis.
-  (setq org-hide-emphasis-markers t)
-
-  ;; Do not truncate long lines on startup; easier reading for wide text but may
-  ;; wrap long lines visually.
-  (setq org-startup-truncated t)
 
   ;; Color DONE headlines; quickly identifies completed tasks
   (setq org-fontify-done-headline t)
@@ -95,19 +87,13 @@
   ;; with other syntax highlighting.
   (setq org-fontify-quote-and-verse-blocks t)
 
-  ;; Do not fontify the entire block delimiter line; prevents color bleeding
-  ;; when folding headings or blocks.
-  (setq org-fontify-whole-block-delimiter-line nil)
-
   ;; Disable sub/superscript interpretation (_ and ^)
   (setq org-use-sub-superscripts '{})
 
   ;; Indentation per heading level; controls visual hierarchy but tight spacing
   ;; may feel cramped.
-  (setq org-indent-indentation-per-level 2)
-
-  ;; No extra indentation for source blocks. It keeps code aligned with text.
-  (setq org-edit-src-content-indentation 0)
+  ;; NOTE: Same as default
+  ;; (setq org-indent-indentation-per-level 2)
 
   ;; Set ellipsis for folded sections; improves folding visibility but may not
   ;; suit all fonts.
@@ -117,14 +103,6 @@
   ;; numbering.
   (setq org-list-allow-alphabetical t)
 
-  ;; Log completion time; provides audit trail but adds automatic notes that may
-  ;; clutter logs.
-  (setq org-log-done 'time)
-
-  ;; RET follows links; intuitive navigation but may conflict with normal line
-  ;; breaks.
-  (setq org-return-follows-link t)
-
   ;; More comprehensive imenu
   (setq org-imenu-depth 6)
 
@@ -132,23 +110,10 @@
   ;; to navigate long hierarchies.
   (setq org-outline-path-complete-in-steps nil)
 
-  ;; Do not automatically adjust indentation based on outline structure;
-  ;; preserves original formatting.
-  (setq org-adapt-indentation nil)
-
-  ;; Do not insert empty lines between collapsed sections; makes folded view
-  ;; denser but reduces visual separation between headings.
-  (setq org-cycle-separator-lines 0)
-
   ;; Prevent marking a parent to do as done if its child tasks are incomplete;
   ;; ensures task consistency but may slow task completion when some subtasks
   ;; are still pending.
   (setq org-enforce-todo-dependencies t)
-
-  ;; Prevent marking a to do with checkboxes as DONE if any checkboxes are
-  ;; incomplete; preserves logical consistency but may frustrate users if
-  ;; subtasks are partially complete.
-  (setq org-enforce-todo-checkbox-dependencies t)
 
   ;; Insert new headings after the current subtree instead of at point;
   ;; maintains logical structure
@@ -156,10 +121,6 @@
 
   ;; When nil, it will go to the end of the line before making a new line.
   (setq org-M-RET-may-split-line nil)
-
-  ;; Display descriptive text for links instead of raw URLs; improves
-  ;; readability
-  (setq org-link-descriptive t)
 
   ;; Use native major-mode indentation
   (setq org-src-preserve-indentation t)
@@ -235,13 +196,7 @@
   (setq org-agenda-skip-unavailable-files t
         org-agenda-start-on-weekday nil
         org-agenda-start-day "-3d"
-        org-agenda-span 10)
-
-  ;; Prevents clutter in agenda by skipping already done scheduled tasks.
-  (setq org-agenda-skip-scheduled-if-done t)
-
-  ;; Reduces clutter for completed tasks with deadlines.
-  (setq org-agenda-skip-deadline-if-done t))
+        org-agenda-span 10))
 
 (provide 'le-org)
 

@@ -32,6 +32,9 @@
   (setq prescient-save-file (expand-file-name "prescient-save.el"
                                               user-emacs-directory))
 
+  (with-eval-after-load 'compile-angel
+    (push prescient-save-file compile-angel-excluded-files))
+
   ;; Other parameters: TODO
   ;; (setq prescient-aggressive-file-save t)
   ;; (setq prescient-frequency-decay 0.997)

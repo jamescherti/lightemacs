@@ -47,12 +47,12 @@ specified file or directory is ignored during the compilation process managed by
 `compile-angel-on-load-mode'."
     (when (and (stringp path)
                (not (member path compile-angel-excluded-files)))
-      (push (concat "/" (file-name-nondirectory path))
-            compile-angel-excluded-files)))
+      (if (fboundp 'compile-angel-exclude-file)
+          (compile-angel-exclude-file path)
+        (push (concat "/" (file-name-nondirectory path))
+              compile-angel-excluded-files))))
 
   :config
-  (push "/prescient-save.el" compile-angel-excluded-files)
-
   ;; TODO add support to compile-angel
   (with-eval-after-load 'savehist
     (le-compile-angel-exclude savehist-file))

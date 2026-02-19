@@ -814,6 +814,7 @@ The **le-group-emacs-lisp** group enables the following modules:
   ;; Enable the `le-easy-escape' module
   (add-to-list 'lightemacs-modules 'highlight-defined)
   ```
+
 - **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
   ;; Enable the `le-page-break-lines' module
@@ -827,6 +828,8 @@ The **le-group-emacs-lisp** group enables the following modules:
   (add-to-list 'lightemacs-modules 'le-aggressive-indent)
   ```
   (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered.)
+
+- **le-elisp-autofmt**: Configures [elisp-autofmt](https://codeberg.org/ideasman42/emacs-elisp-autofmt), which provides an automatic code formatter for Emacs Lisp. It includes the `elisp-autofmt-mode` minor mode, along with `elisp-autofmt-buffer` and `elisp-autofmt-region` commands to format the entire buffer or selection.
 
 - **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
   ```emacs-lisp
@@ -876,6 +879,8 @@ Continue pressing `C-=` until the selection encompasses exactly the text you wan
 
 Here are a few other modules disabled by default:
 
+- **le-kirigami**: Configure the [kirigami](https://github.com/jamescherti/kirigami.el) package, which unifies text folding across diverse Emacs modes (outline, outline-indent, org, markdown, hideshow, treesit, etc.), enabling a single configuration for fold operations. It also improves folding logic in `outline`, `markdown-mode`, and `org-mode` (handling deep folds, content-based closing, and sibling visibility) while fixing upstream issues.
+
 - **le-buffer-terminator**: Configures the [buffer-terminator](https://github.com/jamescherti/buffer-terminator.el) package, which automatically kills inactive buffers to maintain a clean workspace and optimize performance. The `buffer-terminator-mode` kills buffers inactive for `buffer-terminator-inactivity-timeout` (default: 30 mins) every `buffer-terminator-interval` (default: 10 minutes). It safely preserves special buffers, unsaved modified files, visible buffers, buffers with running processes.
 
 - **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. By default, the module does not start `treesit-fold-mode` automatically. To enable it in specific modes such as `python-ts-mode`:
@@ -889,12 +894,13 @@ Here are a few other modules disabled by default:
   (setq lightemacs-rainbow-delimiters-target-hooks '(emacs-lisp-mode-hook))
   ```
 
-
 - **le-dumb-jump**: Configures [Dumb-jump](https://github.com/jacktasia/dumb-jump), a context-aware go to definition functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files. Unlike more sophisticated language-aware tools, `dumb-jump` does not parse code semantically, which makes it lightweight and fast, but sometimes less precise (For greater precision, install a language server and enable Eglot; it will replace dumb-jump in the buffers where it is active.). It integrates with popular navigation packages like `xref`, allowing implementations with minimal configuration. users to jump to definitions or references.
 
 - **le-avy**: Configures [Avy](https://github.com/abo-abo/avy), an Emacs package that provides a fast and efficient method for navigating to visible text in a buffer by jumping directly to characters, words, or lines. It allows the user to type a sequence of characters or select from highlighted targets to move the cursor instantly, reducing the need for repetitive cursor motions or scrolling. `C-:` is set to `avy-goto-char`, allowing the cursor to jump directly to any single character visible in the buffer. `C-'` is bound to `avy-goto-char-2`, enabling jumps to a specific sequence of two characters for more precise targeting. `M-g j` is assigned to `avy-goto-char-timer`, which interactively highlights characters and lets the user type keys over time to select a target, useful for dynamic or ongoing navigation. Finally, `M-g w` is bound to `avy-goto-word-1`, allowing rapid jumps to the first character of any visible word. Together, these bindings provide a flexible, keyboard-driven system for efficiently moving around text.
 
 - **le-gcmh**: Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection behavior by adjusting the garbage collection threshold dynamically. Instead of collecting memory frequently during normal editing, gcmh increases the threshold while Emacs is idle, reducing interruptions and improving perceived performance. It also restores the threshold during active usage to prevent excessive memory use. In essence, it makes Emacs feel more responsive by tuning garbage collection automatically.
+
+- **le-package-lint-flymake**: Configures [package-lint](https://github.com/purcell/package-lint) to integrate with Flymake, providing real-time evaluation of Emacs Lisp package metadata and formatting. It assists in identifying packaging errors, verifying required headers, and ensuring adherence to standard archive guidelines directly within the buffer. The **le-package-lint-flymake** module activates automatically for `emacs-lisp-mode`. You must also add the **le-flymake** module to your `config.el` to ensure Flymake starts when editing source code.
 
 - **le-magit**: Configures [Magit](https://github.com/magit/magit/) provides a comprehensive interface to the Git version control system. It aims to serve as a full-featured Git porcelain. Although it does not yet cover every Git command, it is sufficiently complete to enable even experienced Git users to perform nearly all their routine version control tasks entirely within Emacs. **Usage:** Press `C-x g`.
 
