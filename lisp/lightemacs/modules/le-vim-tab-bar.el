@@ -26,7 +26,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package vim-tab-bar
+(lightemacs-use-package vim-tab-bar
   :commands vim-tab-bar-mode
   :init
   (add-hook 'after-init-hook #'vim-tab-bar-mode))

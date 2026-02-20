@@ -38,7 +38,7 @@ PATH, this option has no effect.")
 
 ;;; Use-package
 
-(lightemacs-module-package consult-dir
+(lightemacs-use-package consult-dir
   :commands (consult-dir
              consult-dir-jump-file
              consult-dir--pick

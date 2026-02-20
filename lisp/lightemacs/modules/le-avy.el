@@ -21,7 +21,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package avy
+(lightemacs-use-package avy
   :commands (avy-goto-char
              avy-goto-word-0
              avy-goto-word-1

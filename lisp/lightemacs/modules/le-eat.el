@@ -22,7 +22,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package eat
+(lightemacs-use-package eat
   :commands (eat
              eat-eshell-mode
              eat-eshell-visual-command-mode

@@ -17,7 +17,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package marginalia
+(lightemacs-use-package marginalia
   :commands (marginalia-mode
              marginalia-cycle)
 

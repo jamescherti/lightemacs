@@ -18,11 +18,10 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-module)
-  (require 'le-evil))
+(require 'lightemacs-module)
+(require 'le-evil)
 
-(lightemacs-module-package evil-surround
+(lightemacs-use-package evil-surround
   :after evil
   :commands (evil-Surround-edit
              evil-surround-edit

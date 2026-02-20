@@ -20,7 +20,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package prescient
+(lightemacs-use-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)
 

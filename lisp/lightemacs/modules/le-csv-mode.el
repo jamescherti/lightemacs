@@ -28,8 +28,9 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package csv-mode
+(lightemacs-use-package csv-mode
   :commands (csv-mode
+             csv-guess-set-separator
              csv-align-mode)
   :hook (csv-mode . lightemacs-csv-mode--setup)
 

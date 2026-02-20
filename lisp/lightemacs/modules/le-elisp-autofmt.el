@@ -23,7 +23,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package elisp-autofmt
+(lightemacs-use-package elisp-autofmt
   :commands (elisp-autofmt-mode
              elisp-autofmt-buffer
              elisp-autofmt-region))

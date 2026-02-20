@@ -20,7 +20,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package undo-fu-session
+(lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"

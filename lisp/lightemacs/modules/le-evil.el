@@ -46,7 +46,7 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   (when-let* ((del-binding (key-binding (kbd "DEL"))))
     (call-interactively del-binding)))
 
-(lightemacs-module-package evil
+(lightemacs-use-package evil
   :commands (evil-mode
              evil-select-search-module)
 

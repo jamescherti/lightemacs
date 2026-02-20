@@ -44,7 +44,7 @@ adds that file to the recentf list.")
 ;; Local variables
 (defvar lightemacs-recentf--auto-save-timer nil)
 
-(lightemacs-module-package recentf
+(lightemacs-use-package recentf
   :ensure nil
   :commands (recentf-mode
              recentf

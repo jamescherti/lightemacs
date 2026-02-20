@@ -24,7 +24,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package flymake
+(lightemacs-use-package flymake
   :ensure nil
   :commands (flymake-mode
              flymake-show-buffer-diagnostics

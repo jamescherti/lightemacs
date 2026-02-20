@@ -36,7 +36,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package bufferfile
+(lightemacs-use-package bufferfile
   :commands (bufferfile-rename
              bufferfile-delete
              bufferfile-copy

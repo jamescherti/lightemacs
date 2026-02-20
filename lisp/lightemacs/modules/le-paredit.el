@@ -23,7 +23,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package paredit
+(lightemacs-use-package paredit
   :commands paredit-mode
 
   :hook ((emacs-lisp-mode . paredit-mode)

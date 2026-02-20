@@ -22,7 +22,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package yasnippet
+(lightemacs-use-package yasnippet
   :commands (yas-global-mode
              yas-minor-mode
              yas-load-directory

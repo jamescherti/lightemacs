@@ -24,7 +24,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package gcmh
+(lightemacs-use-package gcmh
   :commands (gcmh-mode
              gcmh-idle-garbage-collect)
   :hook

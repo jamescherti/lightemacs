@@ -31,7 +31,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package package-lint
+(lightemacs-use-package package-lint
   :commands (package-lint-batch-and-exit
              package-lint-current-buffer
              package-lint-buffer))

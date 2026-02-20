@@ -21,7 +21,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package elisp-refs
+(lightemacs-use-package elisp-refs
   :commands (elisp-refs-function
              elisp-refs-macro
              elisp-refs-variable

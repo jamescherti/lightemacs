@@ -28,7 +28,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package orderless
+(lightemacs-use-package orderless
   :init
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)

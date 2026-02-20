@@ -23,7 +23,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package yaml-mode
+(lightemacs-use-package yaml-mode
   :commands yaml-mode
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode)))

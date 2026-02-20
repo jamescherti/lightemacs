@@ -208,7 +208,7 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 
 ### Package Manager Selection
 
-Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-module-package`.
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
 
 By default, `lightemacs-package-manager` is set to `'use-package`, which uses the built-in `package.el` together with `use-package`.
 

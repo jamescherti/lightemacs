@@ -25,7 +25,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package treesit-fold
+(lightemacs-use-package treesit-fold
   :commands (treesit-fold-close
              treesit-fold-close-all
              treesit-fold-open

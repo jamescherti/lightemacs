@@ -30,7 +30,7 @@ size, and modification dates.")
 When enabled, all directories are displayed at the beginning of the Dired
 buffer, followed by regular files.")
 
-(lightemacs-module-package dired
+(lightemacs-use-package dired
   :ensure nil
   :commands (dired
              dired-goto-file

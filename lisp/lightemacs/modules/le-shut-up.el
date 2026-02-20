@@ -22,7 +22,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package shut-up)
+(lightemacs-use-package shut-up)
 
 (provide 'le-shut-up)
 

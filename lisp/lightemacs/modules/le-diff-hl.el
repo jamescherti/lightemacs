@@ -22,7 +22,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package diff-hl
+(lightemacs-use-package diff-hl
   :commands (diff-hl-mode
              global-diff-hl-mode)
   :init

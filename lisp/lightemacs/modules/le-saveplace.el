@@ -27,7 +27,7 @@
 This affects the messages shown during the `save-place-kill-emacs-hook',
 preventing output in the echo area while saving buffer positions.")
 
-(lightemacs-module-package saveplace
+(lightemacs-use-package saveplace
   :ensure nil
   :commands save-place-mode
 

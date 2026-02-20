@@ -39,7 +39,7 @@ Set to nil to ignore window size and position during session restoration.")
 
 ;;; use-package easysession
 
-(lightemacs-module-package easysession
+(lightemacs-use-package easysession
   :commands (easysession-rename
              easysession-reset
              easysession-save

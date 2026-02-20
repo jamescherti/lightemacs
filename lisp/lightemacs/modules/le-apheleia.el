@@ -38,7 +38,7 @@
 (require 'lightemacs-module)
 (require 'lightemacs)
 
-(lightemacs-module-package apheleia
+(lightemacs-use-package apheleia
   :commands (apheleia-mode
              apheleia-global-mode))
 

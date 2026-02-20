@@ -19,7 +19,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package cape
+(lightemacs-use-package cape
   :commands (cape-abbrev
              cape-dabbrev
              cape-dict

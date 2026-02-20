@@ -18,7 +18,7 @@
 (require 'lightemacs-module)
 (require 'lightemacs)
 
-(lightemacs-module-package markdown-toc
+(lightemacs-use-package markdown-toc
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc

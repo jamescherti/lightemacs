@@ -30,7 +30,7 @@
 ;; feature ‘le-vterm’")
 (provide 'le-vterm)
 
-(lightemacs-module-package vterm
+(lightemacs-use-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
              vterm-send-string

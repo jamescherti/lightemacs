@@ -25,7 +25,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package edit-indirect
+(lightemacs-use-package edit-indirect
   :commands edit-indirect-mode
   :commands edit-indirect-region)
 

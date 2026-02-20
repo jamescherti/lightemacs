@@ -17,7 +17,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package stripspace
+(lightemacs-use-package stripspace
   :commands stripspace-local-mode)
 
 (lightemacs-module-hooks stripspace

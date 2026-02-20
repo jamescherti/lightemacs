@@ -24,7 +24,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package page-break-lines
+(lightemacs-use-package page-break-lines
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
   :hook

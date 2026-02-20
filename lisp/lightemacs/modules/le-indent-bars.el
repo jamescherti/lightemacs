@@ -31,7 +31,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package indent-bars
+(lightemacs-use-package indent-bars
   :commands indent-bars-mode
   :init
   ;; Setting this to nil is not reliable

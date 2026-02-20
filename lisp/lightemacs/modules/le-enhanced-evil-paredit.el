@@ -22,16 +22,16 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-module)
-  (require 'le-evil))
+(require 'lightemacs-module)
+(require 'le-evil)
 
-(lightemacs-module-package enhanced-evil-paredit
+(lightemacs-use-package enhanced-evil-paredit
   :after evil
   :hook (paredit-mode . enhanced-evil-paredit-mode)
   :init
   (with-eval-after-load 'evil-snipe
-    (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil)))
+    (when (fboundp 'evil-define-key)
+      (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil))))
 
 (provide 'le-enhanced-evil-paredit)
 

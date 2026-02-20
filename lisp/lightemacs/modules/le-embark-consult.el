@@ -23,7 +23,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package embark-consult
+(lightemacs-use-package embark-consult
   :after (embark consult)
   ;; TODO: Obsolete
   ;; :hook (embark-collect-mode . consult-preview-at-point-mode)

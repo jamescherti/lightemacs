@@ -23,7 +23,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package embark
+(lightemacs-use-package embark
   :commands (embark-act
              embark-export
              embark-collect

@@ -23,7 +23,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package evil-visualstar
+(lightemacs-use-package evil-visualstar
   :commands global-evil-visualstar-mode
   :after evil
   :config

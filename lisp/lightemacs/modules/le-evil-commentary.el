@@ -13,11 +13,10 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-module)
-  (require 'le-evil))
+(require 'lightemacs-module)
+(require 'le-evil)
 
-(lightemacs-module-package evil-commentary
+(lightemacs-use-package evil-commentary
   :after evil
   :commands evil-commentary-mode
   :config

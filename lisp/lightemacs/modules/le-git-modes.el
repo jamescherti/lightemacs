@@ -18,7 +18,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package git-modes
+(lightemacs-use-package git-modes
   :commands (gitattributes-mode
              gitconfig-mode
              gitignore-mode)

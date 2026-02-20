@@ -16,7 +16,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package winner
+(lightemacs-use-package winner
   :ensure nil
   :commands (winner-mode
              winner-undo

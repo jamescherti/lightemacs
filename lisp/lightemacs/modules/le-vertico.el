@@ -21,7 +21,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package vertico
+(lightemacs-use-package vertico
   :commands (vertico-mode
              vertico-next
              vertico-previous

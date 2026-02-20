@@ -25,7 +25,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package treesit-auto
+(lightemacs-use-package treesit-auto
   :commands (global-treesit-auto-mode
              treesit-auto-add-to-auto-mode-alist)
   :hook (lightemacs-after-init . lightemacs-treesit-auto--setup)

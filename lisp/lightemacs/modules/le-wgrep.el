@@ -24,7 +24,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package wgrep
+(lightemacs-use-package wgrep
   :commands (wgrep-change-to-wgrep-mode
              wgrep-finish-edit))
 

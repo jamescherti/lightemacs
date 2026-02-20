@@ -26,7 +26,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package compile-angel
+(lightemacs-use-package compile-angel
   :demand t
   :functions (compile-angel-on-load-mode
               compile-angel-on-save-local-mode

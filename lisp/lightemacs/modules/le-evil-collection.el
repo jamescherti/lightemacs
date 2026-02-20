@@ -18,9 +18,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-module)
-  (require 'le-evil))
+(require 'lightemacs-module)
+(require 'le-evil)
 
 (eval-and-compile
   ;; This has to be defined before evil
@@ -28,7 +27,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t))
 
-(lightemacs-module-package evil-collection
+(lightemacs-use-package evil-collection
   :if (not noninteractive)
   :functions evil-collection-init
   :after evil

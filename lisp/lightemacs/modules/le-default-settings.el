@@ -116,7 +116,7 @@
 ;;; proced
 
 ;; You can launch proced
-(add-hook 'proced-mode-hook #'proced-toggle-auto-update)
+(add-hook 'proced-mode-hook 'proced-toggle-auto-update)
 (setq proced-tree-flag t)
 (setq proced-auto-update-flag 'visible)
 (setq proced-enable-color-flag t)

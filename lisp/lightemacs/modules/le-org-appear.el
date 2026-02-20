@@ -17,7 +17,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package org-appear
+(lightemacs-use-package org-appear
   :commands org-appear-mode
   :hook (org-mode . org-appear-mode))
 

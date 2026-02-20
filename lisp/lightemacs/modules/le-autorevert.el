@@ -18,7 +18,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package autorevert
+(lightemacs-use-package autorevert
   :ensure nil
   :commands (auto-revert-mode
              global-auto-revert-mode

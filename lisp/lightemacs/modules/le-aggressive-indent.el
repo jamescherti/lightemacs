@@ -24,7 +24,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package aggressive-indent
+(lightemacs-use-package aggressive-indent
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
 

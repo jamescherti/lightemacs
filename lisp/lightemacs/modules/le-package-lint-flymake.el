@@ -25,7 +25,7 @@
 (require 'lightemacs-module)
 (require 'le-package-lint)
 
-(lightemacs-module-package package-lint-flymake
+(lightemacs-use-package package-lint-flymake
   :commands (package-lint-flymake-setup
              package-lint-flymake))
 

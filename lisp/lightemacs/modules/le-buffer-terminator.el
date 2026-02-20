@@ -29,15 +29,16 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package buffer-terminator
+(lightemacs-use-package buffer-terminator
   :commands (buffer-terminator-mode
              buffer-terminator-apply-rules)
 
-  :hook
-  (emacs-startup . buffer-terminator-mode)
-
   :init
   (setq buffer-terminator-debug minimal-emacs-debug))
+
+(lightemacs-module-hooks buffer-terminator
+  buffer-terminator-mode
+  '(emacs-startup-hook))
 
 (provide 'le-buffer-terminator)
 

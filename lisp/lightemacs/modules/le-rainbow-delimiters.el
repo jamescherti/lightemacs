@@ -30,7 +30,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package rainbow-delimiters
+(lightemacs-use-package rainbow-delimiters
   :commands rainbow-delimiters-mode)
 
 (lightemacs-module-hooks rainbow-delimiters

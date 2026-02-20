@@ -21,7 +21,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package magit
+(lightemacs-use-package magit
   :commands (magit-status
              magit-commit
              magit-commit-create

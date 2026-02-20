@@ -28,7 +28,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package easy-escape
+(lightemacs-use-package easy-escape
   :commands easy-escape-minor-mode
   :hook (emacs-lisp-mode . easy-escape-minor-mode))
 

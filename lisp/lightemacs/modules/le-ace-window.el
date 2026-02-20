@@ -21,7 +21,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package ace-window
+(lightemacs-use-package ace-window
   :commands ace-window
   :bind
   ([remap other-window] . ace-window)

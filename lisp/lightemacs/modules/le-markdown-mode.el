@@ -20,7 +20,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package markdown-mode
+(lightemacs-use-package markdown-mode
   :commands (gfm-mode
              gfm-view-mode
              markdown-mode

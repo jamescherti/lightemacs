@@ -24,7 +24,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package undo-fu
+(lightemacs-use-package undo-fu
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all
@@ -32,7 +32,9 @@
 
 (with-eval-after-load 'evil
   (setq evil-undo-system 'undo-fu)
-  (evil-set-undo-system 'undo-fu))
+  (if (fboundp 'evil-set-undo-system)
+      (evil-set-undo-system 'undo-fu)
+    (error "Undefined: evil-set-undo-system")))
 
 (provide 'le-undo-fu)
 

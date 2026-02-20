@@ -51,7 +51,7 @@
 ;;; Configure `lightemacs-after-init-hook'
 
 (defun lightemacs--run-after-init-hook ()
-  "Run `lightemacs--run-after-init-hook` at the appropriate time."
+  "Run `lightemacs--run-after-init-hook' at the appropriate time."
   (run-hooks 'lightemacs-after-init-hook))
 
 (cond

@@ -30,7 +30,7 @@
 
 ;;; Use-package consult
 
-(lightemacs-module-package consult
+(lightemacs-use-package consult
   :commands (consult-fd
              consult-register-window
              consult-ripgrep

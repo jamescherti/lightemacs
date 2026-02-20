@@ -19,7 +19,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package corfu
+(lightemacs-use-package corfu
   :commands (global-corfu-mode
              corfu-mode)
 

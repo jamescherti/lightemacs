@@ -15,7 +15,7 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-package org
+(lightemacs-use-package org
   :ensure nil
   :commands (org-mode
              org-indent-mode
