@@ -18,7 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
@@ -39,11 +38,11 @@ Tree-sitter is available.")
           (not (if (fboundp 'treesit-ready-p)
                    (treesit-ready-p 'yaml)
                  nil)))
-  (lightemacs-load-modules '(le-yaml-mode)))
+  (lightemacs-module-load '(le-yaml-mode)))
 
 ;;; Configure `yaml-ts-mode'
 
-(lightemacs-load-modules '(le-yaml-ts-mode))
+(lightemacs-module-load '(le-yaml-ts-mode))
 
 (provide 'le-group-yaml)
 

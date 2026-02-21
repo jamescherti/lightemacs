@@ -29,7 +29,7 @@
 
 (require 'lightemacs-module)
 
-;; Variables
+;;; Variables
 
 ;; Alternative:
 ;; - doom-one (Package: doom-themes)
@@ -42,7 +42,11 @@ Set to nil to disable loading a theme at startup.")
   "Theme package to install and use for `lightemacs-theme-name'.
 Set to nil to disable installing this package at startup.")
 
-;;; Functions
+(defvar lightemacs-theme-default-font nil
+  "Default font to apply after the theme is loaded.
+Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
+
+;;; Theme
 
 (defvar lightemacs-theme--package-installed nil)
 
@@ -67,16 +71,48 @@ If FORCE is non-nil, reload the current theme even if it is already active."
         (warn "[lightemacs] The theme '%s' is not available"
               lightemacs-theme-name)))))
 
+;;; Font
+
+(defun lightemacs-theme--apply-default-font (&rest _args)
+  "Apply the default font defined in `lightemacs-theme-default-font'.
+This function ignores all _ARGS to be compatible with `advice-add'."
+  (when lightemacs-theme-default-font
+    (set-frame-font lightemacs-theme-default-font nil t :inhibit-customize)))
+
+(unless (bound-and-true-p byte-compile-current-file)
+  (advice-add 'load-theme :after #'lightemacs-theme--apply-default-font))
+
+;;; Utility functions
+
+(defun lightemacs-theme-create-loader (name &optional package)
+  "Create an interactive function to load the Emacs theme specified by NAME.
+If PACKAGE is non-nil, require it before loading the theme."
+  (let* ((name-str (if (symbolp name) (symbol-name name) name))
+         (theme-sym (intern name-str))
+         (theme-fn-name (intern (format "color-%s" name-str)))
+         (docstring (format "Load the `%s' Emacs theme." name-str)))
+    (eval
+     `(defun ,theme-fn-name ()
+        ,docstring
+        (interactive)
+        ,(when package
+           `(lightemacs-use-package ,package :demand t))
+        (setq lightemacs-theme-name ',theme-sym)
+        (lightemacs-load-default-theme))
+     t)))
+
 ;;; Main
 
-(defun le-theme--load-theme ()
+(defun lightemacs-theme--load-theme ()
   "Load the default theme."
-  (lightemacs-load-default-theme t))
+  (lightemacs-load-default-theme t)
+  (when (daemonp)
+    (remove-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)))
 
 (when lightemacs-theme-package
   (if (daemonp)
-      (add-hook 'server-after-make-frame-hook #'le-theme--load-theme)
-    (le-theme--load-theme)))
+      (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
+    (lightemacs-theme--load-theme)))
 
 (provide 'le-theme)
 

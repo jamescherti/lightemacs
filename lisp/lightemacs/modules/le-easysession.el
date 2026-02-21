@@ -100,7 +100,7 @@ Set to nil to ignore window size and position during session restoration.")
   ;; 102 ensures that the session is loaded after all other packages.
   (setq easysession-setup-add-hook-depth 102)
 
-  (add-hook 'after-init-hook #'le-easysession-setup))
+  (add-hook 'lightemacs-after-init-hook #'le-easysession-setup))
 
 (provide 'le-easysession)
 

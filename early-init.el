@@ -44,13 +44,12 @@
 (add-to-list 'load-path lightemacs-core-directory)
 (add-to-list 'load-path lightemacs-modules-directory)
 
-;; Load config.el
+;; Execute the function
+(my-trust-lightemacs-directories)
+
+;; Load defaults
 
 (require 'le-core-defaults)
-
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
 
 ;;; Reduce cluttering
 
@@ -75,6 +74,12 @@
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
+
+;;; Load config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
 
 ;;; Load lightemacs.el
 

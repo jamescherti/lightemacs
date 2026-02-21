@@ -29,23 +29,23 @@
   :commands (flymake-mode
              flymake-show-buffer-diagnostics
              flymake-goto-next-error
-             flymake-goto-prev-error))
+             flymake-goto-prev-error)
+  :init
+  (lightemacs-module-setq-maybe flymake
+    flymake-wrap-around nil)
 
-(lightemacs-module-setq-maybe flymake
-  flymake-wrap-around nil)
+  (lightemacs-module-hooks flymake
+    flymake-mode
+    '(prog-mode-hook
+      text-mode-hook))
 
-(lightemacs-module-hooks flymake
-  flymake-mode
-  '(prog-mode-hook
-    text-mode-hook))
-
-(lightemacs-module-bind flymake
-  (with-eval-after-load 'flymake
-    (define-key flymake-mode-map (kbd "C-c e d") #'flymake-show-buffer-diagnostics)
-    (define-key flymake-mode-map (kbd "C-c e p") #'flymake-goto-prev-error)
-    (define-key flymake-mode-map (kbd "C-c e n") #'flymake-goto-next-error)
-    (define-key flymake-mode-map (kbd "M-g p")   #'flymake-goto-prev-error)
-    (define-key flymake-mode-map (kbd "M-g n")   #'flymake-goto-next-error)))
+  (lightemacs-module-bind flymake
+    (with-eval-after-load 'flymake
+      (define-key flymake-mode-map (kbd "C-c e d") #'flymake-show-buffer-diagnostics)
+      (define-key flymake-mode-map (kbd "C-c e p") #'flymake-goto-prev-error)
+      (define-key flymake-mode-map (kbd "C-c e n") #'flymake-goto-next-error)
+      (define-key flymake-mode-map (kbd "M-g p")   #'flymake-goto-prev-error)
+      (define-key flymake-mode-map (kbd "M-g n")   #'flymake-goto-next-error))))
 
 (provide 'le-flymake)
 

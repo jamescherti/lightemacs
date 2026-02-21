@@ -13,10 +13,9 @@
 
 ;;; Code:
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 
-(lightemacs-load-modules
+(lightemacs-module-load
  '(;; The markdown-mode package provides a major mode for Emacs for syntax
    ;; highlighting, editing commands, and preview support for Markdown
    ;; documents. It supports core Markdown syntax as well as extensions like

@@ -15,6 +15,7 @@
 
 ;;; Require
 
+(require 'le-core-defun)
 (require 'lightemacs-use-package)
 
 ;;; Misc macros
@@ -89,6 +90,30 @@ all settings in this block are skipped."
     ;; Runtime: Single optimized check
     `(unless (bound-and-true-p ,inhibit-var)
        ,@(nreverse forms))))
+
+;;; Function: `lightemacs-module-load'
+
+(defvar lightemacs-module--loaded nil)
+
+(defun lightemacs-module-load (modules)
+  "Load all modules listed in MODULES.
+If a module fails to load, an error warning is displayed and the module
+is not added to the loaded list."
+  (dolist (feature-symbol modules)
+    (unless (memq feature-symbol lightemacs-module--loaded)
+      (lightemacs-verbose-message "Load module: %s" feature-symbol)
+      (condition-case err
+          (progn
+            (require feature-symbol)
+            (push feature-symbol lightemacs-module--loaded))
+        (error
+         (display-warning 'lightemacs
+                          (format "Failed to load module '%s': %s"
+                                  feature-symbol
+                                  (error-message-string err))
+                          :error))))))
+
+;;; Provide
 
 (provide 'lightemacs-module)
 

@@ -26,7 +26,7 @@
 (require 'lightemacs-module)
 
 (require 'cl-lib)
-(require 'le-shut-up)
+;; (require 'le-shut-up)
 
 ;; Global variables
 
@@ -57,7 +57,8 @@ adds that file to the recentf list.")
     "Run `recentf-cleanup' if `recentf-mode' is enabled."
     (when (fboundp 'recentf-cleanup)
       (if lightemacs-recentf-quiet
-          (shut-up
+          ;; TODO fix shut-up
+          (let ((inhibit-message t))
             (recentf-cleanup))
         (recentf-cleanup))))
 
@@ -65,8 +66,10 @@ adds that file to the recentf list.")
     "Run `recentf-save-list' if `recentf-mode' is enabled."
     (when (fboundp 'recentf-save-list)
       (if lightemacs-recentf-quiet
-          (shut-up
+          ;; TODO fix shut-up
+          (let ((inhibit-message t))
             (recentf-save-list))
+
         (recentf-save-list))))
 
   (defun lightemacs-recentf--cleanup-and-save ()
@@ -81,7 +84,8 @@ adds that file to the recentf list.")
     "Enable `recentf'."
     ;; Mode
     (if lightemacs-recentf-quiet
-        (shut-up
+        ;; TODO fix shut-up
+        (let ((inhibit-message t))
           (recentf-mode 1))
       (recentf-mode 1))
 

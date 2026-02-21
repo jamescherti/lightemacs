@@ -31,11 +31,11 @@
 (require 'lightemacs-module)
 
 (lightemacs-use-package rainbow-delimiters
-  :commands rainbow-delimiters-mode)
-
-(lightemacs-module-hooks rainbow-delimiters
-  rainbow-delimiters-mode
-  '(emacs-lisp-mode-hook))
+  :commands rainbow-delimiters-mode
+  :init
+  (lightemacs-module-hooks rainbow-delimiters
+    rainbow-delimiters-mode
+    '(emacs-lisp-mode-hook)))
 
 (provide 'le-rainbow-delimiters)
 

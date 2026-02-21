@@ -1019,7 +1019,7 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
 
-- `lightemacs-module-refresh-contents`: If non-nil, `lightemacs-module` may refresh package contents once. Refresh package contents when `lightemacs-module-refresh-contents` is non-nil and the package is not installed.
+- `lightemacs-use-package-refresh-contents`: If non-nil, `lightemacs-module` may refresh package contents once. Refresh package contents when `lightemacs-use-package-refresh-contents` is non-nil and the package is not installed.
 
 - `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-module` handles installation and configuration of packages.
 

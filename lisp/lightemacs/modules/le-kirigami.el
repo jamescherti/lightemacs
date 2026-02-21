@@ -52,15 +52,15 @@
              kirigami-toggle-fold
              kirigami-open-folds
              kirigami-close-folds-except-current
-             kirigami-close-folds))
-
-(lightemacs-module-bind kirigami
-  (global-set-key (kbd "C-c z o") 'kirigami-open-fold)
-  (global-set-key (kbd "C-c z c") 'kirigami-close-fold)
-  (global-set-key (kbd "C-c z m") 'kirigami-close-folds)
-  (global-set-key (kbd "C-c z r") 'kirigami-open-folds)
-  (global-set-key (kbd "C-c z O") 'kirigami-open-fold-rec)
-  (global-set-key (kbd "C-c z TAB") 'kirigami-toggle-fold))
+             kirigami-close-folds)
+  :init
+  (lightemacs-module-bind kirigami
+    (global-set-key (kbd "C-c z o") 'kirigami-open-fold)
+    (global-set-key (kbd "C-c z c") 'kirigami-close-fold)
+    (global-set-key (kbd "C-c z m") 'kirigami-close-folds)
+    (global-set-key (kbd "C-c z r") 'kirigami-open-folds)
+    (global-set-key (kbd "C-c z O") 'kirigami-open-fold-rec)
+    (global-set-key (kbd "C-c z TAB") 'kirigami-toggle-fold)))
 
 (provide 'le-kirigami)
 

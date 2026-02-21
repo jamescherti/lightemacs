@@ -13,15 +13,22 @@
 
 ;;; Code:
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 
-(lightemacs-load-modules
+(lightemacs-module-load
  '(le-theme
+
+   ;; Lightemacs keybindings
    le-default-keybindings
+
+   ;; Default settings (minibuffer, Emacs...) Configure enhanced default
+   ;; settings, including improved defaults, backup files, warnings to ignore, a
+   ;; minibuffer depth indicator, window behavior...
    le-default-settings
-   le-dired
-   le-dired-filter))
+
+   ;; Configure `dired' to hide details such as file ownership and permissions,
+   ;; and to group directories first.
+   le-dired))
 
 ;;; Provide
 

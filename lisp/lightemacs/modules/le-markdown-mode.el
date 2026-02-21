@@ -46,8 +46,7 @@
         ;; Language strings must have be trimmed of whitespace and not
         ;; contain any curly braces. They may be of arbitrary
         ;; capitalization, though.
-        markdown-gfm-additional-languages '("sh")
-        ))
+        markdown-gfm-additional-languages '("sh")))
 
 (provide 'le-markdown-mode)
 

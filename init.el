@@ -13,75 +13,100 @@
 
 ;;; Code:
 
-;;; Define variables for the byte compiler
+;;; Require
 
-(eval-when-compile
-  (defvar lightemacs-user-directory (file-truename "."))
-  (add-to-list 'load-path
-               (expand-file-name "lisp/lightemacs" lightemacs-user-directory)))
+;; (eval-when-compile
+;;   (defvar lightemacs-user-directory (file-truename "."))
+;;   (add-to-list 'load-path
+;;                (expand-file-name "lisp/lightemacs" lightemacs-user-directory)))
 
+(require 'le-core-defaults)
 (require 'le-core-paths)
-
-;;; Load lightemacs.el
-
 (require 'lightemacs)
 
-;;; Load function: `lightemacs-user-pre-init'
+;;; Load the package manager and refresh
 
+;; TODO Check if this is necessary
+(unless lightemacs-package-manager
+  (error "Invalid `lightemacs-package-manager': %S" lightemacs-package-manager))
+
+(defvar lightemacs-use-package--package-manager-loaded nil)
+
+(unless lightemacs-use-package--package-manager-loaded
+  (when (bound-and-true-p lightemacs-package-manager)
+    (cond
+     ;; Straight
+     ((eq lightemacs-package-manager 'straight)
+      (require 'le-core-pm-straight))
+
+     ;; Elpaca
+     ((eq lightemacs-package-manager 'elpaca)
+      (require 'le-core-pm-elpaca))
+
+     ;; use-package (built-in)
+     ((eq lightemacs-package-manager 'use-package)
+      (require 'le-core-pm-use-package))
+
+     (t
+      (error
+       (concat "[lightemacs]"
+               "Invalid value for `lightemacs-package-manager': '%S'. Valid "
+               "choices are: 'straight, 'elpaca, or 'use-package.")
+       lightemacs-package-manager))))
+
+  (setq lightemacs-use-package--package-manager-loaded t))
+
+(require 'lightemacs-use-package)
+
+;;; Init
+
+;; Load function: `lightemacs-user-pre-init'
 (when (fboundp 'lightemacs-user-pre-init)
   (funcall 'lightemacs-user-pre-init))
 
-;;; Load pre-init.el
-
+;; Load pre-init.el
 (let ((el-file (expand-file-name "pre-init.el"
                                  lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))
 
-;;; Load init.el
-
+;; Load init.el
 (when (and (fboundp 'lightemacs-load-user-init)
            (boundp 'minimal-emacs-user-directory))
   (funcall 'lightemacs-load-user-init
            (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Load the package manager and refresh
-
-(require 'lightemacs-module)
-
-;;; Configure `lightemacs-after-init-hook'
-
+;; Configure `lightemacs-after-init-hook'
 (defun lightemacs--run-after-init-hook ()
   "Run `lightemacs--run-after-init-hook' at the appropriate time."
   (run-hooks 'lightemacs-after-init-hook))
-
 (cond
  ((eq lightemacs-package-manager 'elpaca)
   (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
-
  (t
   (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
 
-;;; Load user function: `lightemacs-user-init'
-
+;; Load user function: `lightemacs-user-init'
 (when (fboundp 'lightemacs-user-init)
   (funcall 'lightemacs-user-init))
 
 ;;; Load modules
 
-;; Load all modules
-(if (fboundp 'lightemacs-load-modules)
-    (progn
-      (funcall 'lightemacs-load-modules lightemacs-core-modules)
-      (funcall 'lightemacs-load-modules lightemacs-modules))
-  (error "Undefined function: lightemacs-load-modules"))
+(require 'lightemacs-module)
 
-;;; Load post-init.el
+;; Load all modules
+(if (fboundp 'lightemacs-module-load)
+    (progn
+      (funcall 'lightemacs-module-load lightemacs-core-modules)
+      (funcall 'lightemacs-module-load lightemacs-modules))
+  (error "Undefined function: lightemacs-module-load"))
+
+;; Load post-init.el
 
 (let ((el-file (expand-file-name "post-init.el"
                                  lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))
 
-;;; Load function: `lightemacs-user-post-init'
+;; Load function: `lightemacs-user-post-init'
 
 (when (fboundp 'lightemacs-user-post-init)
   (funcall 'lightemacs-user-post-init))

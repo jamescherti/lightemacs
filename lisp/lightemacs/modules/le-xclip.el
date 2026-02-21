@@ -30,7 +30,7 @@
 (lightemacs-use-package xclip
   :if (not (display-graphic-p))
   :commands xclip-mode
-  :hook (after-init . xclip-mode))
+  :hook (lightemacs-after-init . xclip-mode))
 
 (provide 'le-xclip)
 

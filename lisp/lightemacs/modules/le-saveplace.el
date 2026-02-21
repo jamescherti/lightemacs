@@ -17,10 +17,11 @@
 
 (require 'lightemacs-module)
 
-(require 'le-shut-up)
+;; TODO fix shut-up
+;; (require 'le-shut-up)
 
-;; (defvar lightemacs-saveplace-recenter-after-find-file t
-;;   "If non-nil, recenter the buffer after restoring the cursor position.")
+(defvar lightemacs-saveplace-recenter-after-find-file nil
+  "If non-nil, recenter the buffer after restoring the cursor position.")
 
 (defvar lightemacs-saveplace-quiet lightemacs-reduce-messages
   "If non-nil, suppress saveplace messages when Emacs is exiting.
@@ -35,32 +36,34 @@ preventing output in the echo area while saving buffer positions.")
   :hook (lightemacs-after-init . save-place-mode)
 
   ;; TODO: Fix embark-collect-mode recentering when selecting .el files
-  ;;   :preface
-  ;;   ;; Fix embark collect recentering
-  ;;   (defun lightemacs-saveplace--recenter ()
-  ;;     "Recenter the current window."
-  ;;     (let ((win (get-buffer-window (current-buffer))))
-  ;;       (when (and win
-  ;;                  (not (minibufferp)))
-  ;;         (with-selected-window win
-  ;;           (recenter)))))
-  ;;
-  ;;   (defun lightemacs-saveplace--after-find-file ()
-  ;;     "Recenter the current window when `scroll-conservatively' >= 101.
-  ;; This function is called by `save-place-after-find-file-hook'.
-  ;; It avoids recentering while an EasySession session is in progress."
-  ;;     (when (and (or (>= scroll-conservatively 101)
-  ;;                    lightemacs-saveplace-recenter-after-find-file)
-  ;;                (> (point) (point-min)))
-  ;;       ;; Use a timer to ensure a window exists when recenter is called
-  ;;       (run-with-timer 0 nil #'lightemacs-saveplace--recenter)))
+  :preface
+  ;; Fix embark collect recentering
+  (defun lightemacs-saveplace--recenter (buffer)
+    "Recenter the window displaying BUFFER.
+BUFFER is the target buffer that needs to be recentered."
+    (when (buffer-live-p buffer)
+      (when-let* ((win (get-buffer-window buffer)))
+        (with-selected-window win
+          (recenter)))))
+
+  (defun lightemacs-saveplace--after-find-file ()
+    "Recenter the current window when `scroll-conservatively' >= 101.
+  This function is called by `save-place-after-find-file-hook'.
+  It avoids recentering while an EasySession session is in progress."
+    (when (and (or (>= scroll-conservatively 101)
+                   lightemacs-saveplace-recenter-after-find-file)
+               (not (bound-and-true-p easysession-load-in-progress))
+               (> (point) (point-min)))
+      ;; (lightemacs-saveplace--recenter (current-buffer))
+      ;; Use a timer to ensure a window exists when recenter is called
+      (run-with-timer 0 nil #'lightemacs-saveplace--recenter (current-buffer))))
 
   :init
   (setq save-place-limit 500)
 
   :config
-  ;; (add-hook 'save-place-after-find-file-hook
-  ;;           'lightemacs-saveplace--after-find-file)
+  (add-hook 'save-place-after-find-file-hook
+            #'lightemacs-saveplace--after-find-file)
 
   (defun lightemacs--around-save-place-kill-emacs-hook (fn &rest args)
     "Advice around `save-place-kill-emacs-hook' to optionally suppress messages.
@@ -68,15 +71,16 @@ preventing output in the echo area while saving buffer positions.")
 FN is the original function being advised.
 ARGS are the arguments passed to FN.
 
-If `lightemacs-saveplace-quiet' is non-nil, output generated during execution is
-silenced using `shut-up'Otherwise,the function executes normally."
+If `lightemacs-saveplace-quiet' is non-nil, output generated during execution.
+Otherwise,the function executes normally."
     (if lightemacs-saveplace-quiet
-        (shut-up
+        ;; TODO fix shut-up
+        (let ((inhibit-message t))
           (apply fn args))
       (apply fn args)))
 
   (advice-add 'save-place-kill-emacs-hook :around
-              'lightemacs--around-save-place-kill-emacs-hook))
+              #'lightemacs--around-save-place-kill-emacs-hook))
 
 (provide 'le-saveplace)
 

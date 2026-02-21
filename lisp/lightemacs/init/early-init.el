@@ -194,9 +194,6 @@ pre-early-init.el, and post-early-init.el.")
 
 (set-language-environment "UTF-8")
 
-;; Set-language-environment sets default-input-method, which is unwanted.
-(setq default-input-method nil)
-
 ;; Increase how much is read from processes in a single chunk
 (setq read-process-output-max (* 2 1024 1024))  ; 1024kb
 
@@ -225,7 +222,7 @@ pre-early-init.el, and post-early-init.el.")
 ;; icon fonts on Windows. This will increase memory usage.
 (setq inhibit-compacting-font-caches t)
 
-(when (and (not (daemonp)) (not noninteractive))
+(when (not noninteractive)
   ;; Resizing the Emacs frame can be costly when changing the font. Disable this
   ;; to improve startup times with fonts larger than the system default.
   (setq frame-resize-pixelwise t)
@@ -258,16 +255,6 @@ pre-early-init.el, and post-early-init.el.")
   ;; Suppress the vanilla startup screen completely. We've disabled it with
   ;; `inhibit-startup-screen', but it would still initialize anyway.
   (advice-add 'display-startup-screen :override #'ignore)
-
-  ;; The initial buffer is created during startup even in non-interactive
-  ;; sessions, and its major mode is fully initialized. Modes like `text-mode',
-  ;; `org-mode', or even the default `lisp-interaction-mode' load extra packages
-  ;; and run hooks, which can slow down startup.
-  ;;
-  ;; Using `fundamental-mode' for the initial buffer to avoid unnecessary
-  ;; startup overhead.
-  (setq initial-major-mode 'fundamental-mode
-        initial-scratch-message nil)
 
   (unless minimal-emacs-debug
     ;; Unset command line options irrelevant to the current OS. These options
@@ -302,7 +289,6 @@ this stage of initialization."
                         minimal-emacs--old-file-name-handler-alist))))
 
 (when (and minimal-emacs-optimize-file-name-handler-alist
-           (not (daemonp))
            (not minimal-emacs-debug))
   ;; Determine the state of bundled libraries using calc-loaddefs.el. If
   ;; compressed, retain the gzip handler in `file-name-handler-alist`. If
@@ -334,7 +320,6 @@ this stage of initialization."
   (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-redisplay))
 
 (when (and minimal-emacs-inhibit-redisplay-during-startup
-           (not (daemonp))
            (not noninteractive)
            (not minimal-emacs-debug))
   ;; Suppress redisplay and redraw during startup to avoid delays and
@@ -350,7 +335,6 @@ this stage of initialization."
   (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message))
 
 (when (and minimal-emacs-inhibit-message-during-startup
-           (not (daemonp))
            (not noninteractive)
            (not minimal-emacs-debug))
   (setq-default inhibit-message t)
@@ -359,7 +343,6 @@ this stage of initialization."
 ;;; Performance: Disable mode-line during startup
 
 (when (and minimal-emacs-disable-mode-line-during-startup
-           (not (daemonp))
            (not noninteractive)
            (not minimal-emacs-debug))
   (put 'mode-line-format
@@ -416,8 +399,7 @@ this stage of initialization."
     (when (bound-and-true-p tool-bar-mode)
       (funcall 'tool-bar-setup))))
 
-(when (and (not (daemonp))
-           (not noninteractive))
+(unless noninteractive
   (when (fboundp 'tool-bar-setup)
     ;; Temporarily override the tool-bar-setup function to prevent it from
     ;; running during the initial stages of startup
@@ -451,11 +433,11 @@ this stage of initialization."
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
 ;; This results in a more compact output that emphasizes performance
-(setq use-package-expand-minimally (not noninteractive))
+(setq use-package-expand-minimally t)
 
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure (not noninteractive))
 (setq use-package-enable-imenu-support t)
 
 ;; package.el

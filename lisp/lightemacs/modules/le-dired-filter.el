@@ -18,7 +18,6 @@
 
 ;;; Require
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 (require 'le-dired)
 
@@ -33,8 +32,6 @@ For instance:
   (add-hook \\='lightemacs-dired-filter-setup-hook
             \\='dired-filter-by-git-ignored)")
 
-(defvar lightemacs--dired-filter-filters-enabled t)
-
 ;;; Use-package dired-filter
 
 (lightemacs-use-package dired-filter
@@ -48,6 +45,8 @@ For instance:
               ("C-c f" . lightemacs-dired-filter-toggle))
 
   :preface
+  (defvar lightemacs--dired-filter-filters-enabled t)
+
   (defun lightemacs-dired-filter--enable-filters ()
     "Enable `dired' filters."
     (dired-filter-pop-all)  ; TODO check one by one using a loop

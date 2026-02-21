@@ -48,7 +48,8 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
 (lightemacs-use-package evil
   :commands (evil-mode
-             evil-select-search-module)
+             evil-select-search-module
+             evil-define-key*)
 
   ;; Pressing '-' opens a `dired' buffer for the directory containing the
   ;; current file, automatically selecting that file. This provides a fast way

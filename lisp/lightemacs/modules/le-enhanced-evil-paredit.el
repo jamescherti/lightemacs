@@ -30,7 +30,8 @@
   :hook (paredit-mode . enhanced-evil-paredit-mode)
   :init
   (with-eval-after-load 'evil-snipe
-    (when (fboundp 'evil-define-key)
+    (when (and (fboundp 'evil-define-key)
+               (fboundp 'evil-define-key*))
       (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil))))
 
 (provide 'le-enhanced-evil-paredit)

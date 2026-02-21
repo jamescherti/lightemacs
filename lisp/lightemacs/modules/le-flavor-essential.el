@@ -13,21 +13,43 @@
 
 ;;; Code:
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 
-(lightemacs-load-modules
- '(;; Custom keybindings
-   le-default-keybindings
-
-   ;; Default settings (minibuffer, Emacs...) Configure enhanced default
-   ;; settings, including improved defaults, backup files, warnings to ignore, a
-   ;; minibuffer depth indicator, window behavior...
-   le-default-settings
+(lightemacs-module-load
+ '(le-flavor-micro
 
    ;; Update the ellipsis in `outline-mode' and `outline-minor-mode' using
    ;; `lightemacs-ellipsis'
    le-outline
+
+   ;; Preserve the minibuffer history between sessions. It saves the history of
+   ;; inputs in the minibuffer, such as commands, search strings, and other
+   ;; prompts, to a file.
+   le-savehist
+
+   ;; `dired': Filter dotfiles, omit files, and files listed in .gitignore
+   le-dired-filter
+
+   ;; Automatically insert matching delimiters (), {}...
+   le-elec-pair
+
+   ;; `show-paren-mode' highlights matching pairs of parentheses and other
+   ;; paired characters, improving code readability and helping to quickly
+   ;; identify unbalanced expressions.
+   le-paren
+
+   ;; Track changes in the window configuration, allowing undoing actions such
+   ;; as closing windows using `winner-undo'.
+   le-winner
+
+   ;; Recentf is an maintains a list of recently accessed files, making it
+   ;; easier to reopen files you have worked on recently.
+   le-recentf
+
+   ;; Remember the last location within a file upon reopening. This is
+   ;; beneficial for resuming work at the precise point where you previously
+   ;; left off.
+   le-saveplace
 
    ;; The persist-text-scale Emacs package provides `persist-text-scale-mode',
    ;; which ensures that all adjustments made with `text-scale-increase' and
@@ -48,39 +70,6 @@
    ;; UI, by providing additional backends through
    ;; completion-at-point-functions.
    le-cape
-
-   ;; Configure `dired' to hide details such as file ownership and permissions,
-   ;; and to group directories first.
-   le-dired
-
-   ;; `dired': Filter dotfiles, omit files, and files listed in .gitignore
-   le-dired-filter
-
-   ;; Preserve the minibuffer history between sessions. It saves the history of
-   ;; inputs in the minibuffer, such as commands, search strings, and other
-   ;; prompts, to a file.
-   le-savehist
-
-   ;; Automatically insert matching delimiters (), {}...
-   le-elec-pair
-
-   ;; `show-paren-mode' highlights matching pairs of parentheses and other
-   ;; paired characters, improving code readability and helping to quickly
-   ;; identify unbalanced expressions.
-   le-paren
-
-   ;; Remember the last location within a file upon reopening. This is
-   ;; beneficial for resuming work at the precise point where you previously
-   ;; left off.
-   le-saveplace
-
-   ;; Track changes in the window configuration, allowing undoing actions such
-   ;; as closing windows using `winner-undo'.
-   le-winner
-
-   ;; Recentf is an maintains a list of recently accessed files, making it
-   ;; easier to reopen files you have worked on recently.
-   le-recentf
 
    ;; (Vertico, Consult, and Embark collectively enhance Emacs' completion and
    ;; navigation capabilities.)

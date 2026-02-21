@@ -28,6 +28,19 @@
 
 ;;; Before package
 
+;; The initial buffer is created during startup even in non-interactive
+;; sessions, and its major mode is fully initialized. Modes like `text-mode',
+;; `org-mode', or even the default `lisp-interaction-mode' load extra packages
+;; and run hooks, which can slow down startup.
+;;
+;; Using `fundamental-mode' for the initial buffer to avoid unnecessary
+;; startup overhead.
+(setq initial-major-mode 'fundamental-mode
+      initial-scratch-message nil)
+
+;; Set-language-environment sets default-input-method, which is unwanted.
+(setq default-input-method nil)
+
 ;; Ask the user whether to terminate asynchronous compilations on exit.
 ;; This prevents native compilation from leaving temporary files in /tmp.
 (setq native-comp-async-query-on-exit t)
@@ -46,13 +59,17 @@
 
 ;;; package.el
 
-(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+(when (and (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+           (not (bound-and-true-p byte-compile-current-file))
+           (not (or (fboundp 'straight-use-package)
+                    (fboundp 'elpaca))))
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless (package-installed-p 'use-package)
-    (unless (seq-empty-p package-archive-contents)
-      (package-refresh-contents))
-    (package-install 'use-package))
+  (when (version< emacs-version "29.1")
+    (unless (package-installed-p 'use-package)
+      (unless package-archive-contents
+        (package-refresh-contents))
+      (package-install 'use-package)))
   (require 'use-package))
 
 ;;; Minibuffer

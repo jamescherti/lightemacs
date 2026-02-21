@@ -30,6 +30,14 @@
 ;; feature ‘le-vterm’")
 (provide 'le-vterm)
 
+(with-eval-after-load 'vterm
+  (when noninteractive
+    ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
+    ;; This prevents that during byte-compilation (`use-package' eagerly loads
+    ;; packages when compiling).
+    (when (fboundp 'vterm-module-compile)
+      (advice-add #'vterm-module-compile :override #'ignore))))
+
 (lightemacs-use-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
@@ -40,19 +48,11 @@
   :functions vterm--self-insert
 
   :preface
-  (when noninteractive
-    ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
-    ;; This prevents that during byte-compilation (`use-package' eagerly loads
-    ;; packages when compiling).
-    (advice-add #'vterm-module-compile :override #'ignore))
-
   (defun lightemacs-vterm--setup ()
     ;; Hide the mode-line
     (setq mode-line-format nil)
-
     ;; Inhibit early horizontal scrolling
     (setq-local hscroll-margin 0)
-
     ;; Suppress prompts for terminating active processes when closing vterm
     (setq-local confirm-kill-processes nil))
 

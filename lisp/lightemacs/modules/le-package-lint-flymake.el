@@ -27,11 +27,12 @@
 
 (lightemacs-use-package package-lint-flymake
   :commands (package-lint-flymake-setup
-             package-lint-flymake))
+             package-lint-flymake)
 
-(lightemacs-module-hooks package-lint-flymake
-  package-lint-flymake-setup
-  '(emacs-lisp-mode-hook))
+  :init
+  (lightemacs-module-hooks package-lint-flymake
+    package-lint-flymake-setup
+    '(emacs-lisp-mode-hook)))
 
 (provide 'le-package-lint-flymake)
 

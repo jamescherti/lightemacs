@@ -18,10 +18,9 @@
 
 ;;; Code:
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 
-(lightemacs-load-modules
+(lightemacs-module-load
  '(;; evil and evil-collection
    le-evil
    le-evil-collection

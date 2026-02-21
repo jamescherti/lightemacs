@@ -128,6 +128,24 @@
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
+  :preface
+  (defun lightemacs-consult--crm-indicator (args)
+    "Add a prompt indicator for `completing-read-multiple' when using Consult.
+Displays `[CRM<separator>]` in the minibuffer to clarify multi-selection.
+ARGS are the arguments.
+This helps users recognize that multiple inputs are allowed and how to separate
+them. Ensures this runs only when `crm` is loaded and Consult is in use."
+    (when (boundp 'crm-separator)
+      (cons (format "[CRM%s] %s"
+                    (replace-regexp-in-string
+                     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                     crm-separator)
+                    (car args))
+            (cdr args))))
+
+  (advice-add
+   #'completing-read-multiple :filter-args 'lightemacs-consult--crm-indicator)
+
   :init
   ;; Enable automatic preview at point in the *Completions* buffer.
   ;; Obsolete (TODO)
@@ -209,29 +227,6 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
-
-;;; Key bindings
-
-;;; Completing indicator
-
-(defun lightemacs-consult--crm-indicator (args)
-  "Add a prompt indicator for `completing-read-multiple' when using Consult.
-Displays `[CRM<separator>]` in the minibuffer to clarify multi-selection.
-
-ARGS are the arguments.
-
-This helps users recognize that multiple inputs are allowed and how to separate
-them. Ensures this runs only when `crm` is loaded and Consult is in use."
-  (when (boundp 'crm-separator)
-    (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args))))
-
-(advice-add
- #'completing-read-multiple :filter-args 'lightemacs-consult--crm-indicator)
 
 ;;; Provide
 (provide 'le-consult)

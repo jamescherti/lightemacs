@@ -29,7 +29,6 @@
              magit-load-config-extensions
              magit-log
              magit-process-git)
-
   :functions (magit-restore-window-configuration
               magit-mode-get-buffers)
 

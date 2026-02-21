@@ -26,10 +26,9 @@
 
 ;;; Code:
 
-(require 'lightemacs)
 (require 'lightemacs-module)
 
-(lightemacs-load-modules
+(lightemacs-module-load
  '(;; All modules:
    le-theme
    le-ace-window

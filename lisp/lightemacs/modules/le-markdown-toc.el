@@ -16,7 +16,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(require 'lightemacs)
 
 (lightemacs-use-package markdown-toc
   :commands (markdown-toc-generate-toc

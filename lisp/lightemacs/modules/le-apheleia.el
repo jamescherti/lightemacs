@@ -36,53 +36,53 @@
 ;;; use-package
 
 (require 'lightemacs-module)
-(require 'lightemacs)
 
 (lightemacs-use-package apheleia
   :commands (apheleia-mode
-             apheleia-global-mode))
-
-(lightemacs-module-hooks apheleia
-  apheleia-mode
-  '(prog-mode-hook))
+             apheleia-global-mode)
+  :init
+  (lightemacs-module-hooks apheleia
+    apheleia-mode
+    '(prog-mode-hook)))
 
 ;;; Bug fix
 
-(defvar lightemacs-apheleia-fix-screen-lines-bug t
-  "If non-nil, apply a fix for Apheleia window start issues in folded buffers.")
-
-;; TODO: Send patch to Apheleia
-(defun lightemacs--apheleia-use-screen-lines (orig-fun &rest args)
-  "Use visual lines instead of logical lines for scroll calculation.
-
-In `apheleia--apply-rcs-patch', the vertical position of the point relative to
-the window start is calculated using `count-lines'. This function counts logical
-buffer lines (newlines), including those hidden by folds or invisible overlays.
-
-However, Apheleia attempts to restore this position using `scroll-down', which
-operates on visual screen lines.
-
-When code folding is active (e.g., 50 lines collapsed into 1), `count-lines'
-returns the logical count (50), while the visual distance is only 1. Apheleia
-then instructs the window to scroll down by 50 lines, causing the viewport to
-jump significantly.
-
-This advice temporarily swaps `count-lines' with `count-screen-lines' during the
-patch application. `count-screen-lines' respects text visibility, returning the
-correct visual distance. This ensures the unit of measurement used for
-calculation matches the unit used for scrolling, preserving the user's view.
-
-ORIG-FUN and ARGS are the original function and its arguments."
-  ;; TODO: Send patch to Apheleia?
-  (lightemacs-save-window-start
-    (apply orig-fun args))
-  ;; (cl-letf (((symbol-function 'count-lines) #'count-screen-lines))
-  ;;   (apply orig-fun args))
-  )
-
-(when lightemacs-apheleia-fix-screen-lines-bug
-  (advice-add 'apheleia--apply-rcs-patch :around
-              #'lightemacs--apheleia-use-screen-lines))
+;; TODO add this back after testing
+;; (defvar lightemacs-apheleia-fix-screen-lines-bug t
+;;   "If non-nil, apply a fix for Apheleia window start issues in folded buffers.")
+;;
+;; ;; TODO: Send patch to Apheleia
+;; (defun lightemacs--apheleia-use-screen-lines (orig-fun &rest args)
+;;   "Use visual lines instead of logical lines for scroll calculation.
+;;
+;; In `apheleia--apply-rcs-patch', the vertical position of the point relative to
+;; the window start is calculated using `count-lines'. This function counts logical
+;; buffer lines (newlines), including those hidden by folds or invisible overlays.
+;;
+;; However, Apheleia attempts to restore this position using `scroll-down', which
+;; operates on visual screen lines.
+;;
+;; When code folding is active (e.g., 50 lines collapsed into 1), `count-lines'
+;; returns the logical count (50), while the visual distance is only 1. Apheleia
+;; then instructs the window to scroll down by 50 lines, causing the viewport to
+;; jump significantly.
+;;
+;; This advice temporarily swaps `count-lines' with `count-screen-lines' during the
+;; patch application. `count-screen-lines' respects text visibility, returning the
+;; correct visual distance. This ensures the unit of measurement used for
+;; calculation matches the unit used for scrolling, preserving the user's view.
+;;
+;; ORIG-FUN and ARGS are the original function and its arguments."
+;;   ;; TODO: Send patch to Apheleia?
+;;   (lightemacs-save-window-start
+;;     (apply orig-fun args))
+;;   ;; (cl-letf (((symbol-function 'count-lines) #'count-screen-lines))
+;;   ;;   (apply orig-fun args))
+;;   )
+;;
+;; (when lightemacs-apheleia-fix-screen-lines-bug
+;;   (advice-add 'apheleia--apply-rcs-patch :around
+;;               #'lightemacs--apheleia-use-screen-lines))
 
 (provide 'le-apheleia)
 
