@@ -44,9 +44,6 @@
 (add-to-list 'load-path lightemacs-core-directory)
 (add-to-list 'load-path lightemacs-modules-directory)
 
-;; Execute the function
-(my-trust-lightemacs-directories)
-
 ;; Load defaults
 
 (require 'le-core-defaults)
