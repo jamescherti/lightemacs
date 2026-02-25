@@ -48,6 +48,25 @@
 
 (require 'le-core-defaults)
 
+;; Minimal-emacs.d defaults
+(setq minimal-emacs-frame-title-format "%b – Lightemacs")
+(setq minimal-emacs-package-initialize-and-refresh nil)  ; Managed by Lightemacs
+(setq minimal-emacs-gc-cons-percentage 0.1)
+(setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
+(setq minimal-emacs-gc-cons-threshold-restore-delay 3)
+(setq minimal-emacs-ui-features '(context-menu tooltips))
+
+(setq package-enable-at-startup nil)
+(setq package-archive-priorities '(("gnu"          . 90)
+                                   ("nongnu"       . 80)
+                                   ("melpa"        . 70)
+                                   ("melpa-stable" . 50)))
+(setq package-archives
+      '(("melpa"        . "https://melpa.org/packages/")
+        ("gnu"          . "https://elpa.gnu.org/packages/")
+        ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")))
+
 ;;; Reduce cluttering
 
 ;; Emacs, by default, stores various configuration files, caches, backups, and
@@ -91,9 +110,9 @@
 
 ;;; Load pre-early-init.el
 
-(lightemacs-load-user-init
- (expand-file-name "pre-early-init.el" lightemacs-local-directory)
- :no-error)
+;; (lightemacs-load-user-init
+;;  (expand-file-name "pre-early-init.el" lightemacs-local-directory)
+;;  :no-error)
 
 ;;; Load function: `lightemacs-user-pre-early-init'
 
@@ -114,8 +133,8 @@
 
 ;;; Load post-early-init.el
 
-(lightemacs-load-user-init
- (expand-file-name "post-early-init.el" lightemacs-local-directory)
- :no-error)
+;; (lightemacs-load-user-init
+;;  (expand-file-name "post-early-init.el" lightemacs-local-directory)
+;;  :no-error)
 
 ;;; early-init.el ends here

@@ -259,6 +259,130 @@
 (setq python-indent-guess-indent-offset nil)
 (defvar python-indent-offset 4)
 
+;;; Packages
+
+(setq package-pinned-packages
+      '((dired-filter                  . "melpa")
+        (dired-hacks-utils             . "melpa")
+        (elisp-autofmt                 . "melpa")
+        (evil                          . "melpa")
+        (evil-surround                 . "melpa")  ;; nongnu is outdated
+        (flymake-yamllint              . "melpa")
+        (flyspell-lazy                 . "melpa")  ;; Unmaintained
+        (helpful                       . "melpa")
+        (highlight-numbers             . "melpa")
+        (jenkinsfile-mode              . "melpa")
+        (vimrc-mode                    . "melpa")
+        (vterm                         . "melpa")
+
+        (bufferfile                    . "melpa")
+        (dir-config                    . "melpa")
+        (enhanced-evil-paredit         . "melpa")
+        (flymake-ansible-lint          . "melpa")
+        (flymake-bashate               . "melpa")
+        (inhibit-mouse                 . "melpa")
+        (quick-sdcv                    . "melpa")
+        (stripspace                    . "melpa")
+        (buffer-terminator             . "melpa")
+        (outline-indent                . "melpa-stable")
+        (vim-tab-bar                   . "melpa-stable")
+        (tomorrow-night-deepblue-theme . "melpa-stable")
+        (easysession                   . "melpa-stable")
+        (compile-angel                 . "melpa-stable")
+        (persist-text-scale            . "melpa-stable")
+
+        (annalist                      . "melpa-stable")
+        (ansible-doc                   . "melpa-stable")
+        (apheleia                      . "melpa-stable")
+        (basic-mode                    . "melpa-stable")
+        (consult-dir                   . "melpa-stable")
+        (corfu-prescient               . "melpa-stable")
+        (dtrt-indent                   . "melpa-stable")
+        (dumb-jump                     . "melpa-stable")
+        (elisp-refs                    . "melpa-stable")
+        (evil-collection               . "melpa-stable")
+        (f                             . "melpa-stable")
+        (flymake-quickdef              . "melpa-stable")
+        (groovy-mode                   . "melpa-stable")
+        (highlight-defined             . "melpa-stable")
+        (markdown-toc                  . "melpa-stable")
+        (org-appear                    . "melpa-stable")
+        (package-lint-flymake          . "melpa-stable")
+        (parent-mode                   . "melpa-stable")
+        (php-mode                      . "melpa-stable")  ; nongnu is outdated
+        (prescient                     . "melpa-stable")
+        (s                             . "melpa-stable")
+        (tocus                         . "melpa-stable")
+        (treesit-auto                  . "melpa-stable")
+        (vertico-prescient             . "melpa-stable")
+        (visual-fill-column            . "melpa-stable")  ; nongnu is outdated
+        (yasnippet-snippets            . "melpa-stable")   ; nongnu is outdated
+
+        (ace-window                    . "gnu")
+        (aggressive-indent             . "gnu")
+        (avy                           . "gnu")
+        (cape                          . "gnu")
+        (compat                        . "gnu")
+        (consult                       . "gnu")
+        (corfu                         . "gnu")
+        (csv-mode                      . "gnu")
+        (dash                          . "gnu")
+        (diff-hl                       . "gnu")
+        (diminish                      . "gnu")
+        (easy-escape                   . "gnu")
+        (embark                        . "gnu")
+        (embark-consult                . "gnu")
+        (expand-region                 . "gnu")
+        (gcmh                          . "gnu")
+        (indent-bars                   . "gnu")
+        (marginalia                    . "gnu")
+        (modus-themes                  . "gnu")
+        (orderless                     . "gnu")
+        (org                           . "gnu")
+        (rainbow-mode                  . "gnu")
+        (transient                     . "gnu")
+        (vertico                       . "gnu")
+        (yasnippet                     . "gnu")
+        (ztree                         . "gnu")
+
+        (eat                           . "nongnu")
+        (edit-indirect                 . "nongnu")
+        (evil-visualstar               . "nongnu")
+        (exec-path-from-shell          . "nongnu")
+        (git-modes                     . "nongnu")
+        (golden-ratio                  . "nongnu")
+        (goto-chg                      . "nongnu")
+        (gptel                         . "nongnu")
+        (lua-mode                      . "nongnu")
+        (magit                         . "nongnu")
+        (markdown-mode                 . "nongnu")
+        (package-lint                  . "nongnu")
+        (page-break-lines              . "nongnu")
+        (paredit                       . "nongnu")
+        (popup                         . "nongnu")
+        (rainbow-delimiters            . "nongnu")
+        (undo-fu                       . "nongnu")
+        (undo-fu-session               . "nongnu")
+        (wgrep                         . "nongnu")
+        (with-editor                   . "nongnu")
+        (ws-butler                     . "nongnu")
+        (yaml-mode                     . "nongnu")))
+
+;;; Empty the minibuffer after `y-or-n-p'
+
+(defun lightemacs--empty-minibuffer (orig-fun &rest args)
+  "Empty the minibuffer after the original function has finished executing.
+This advice is intended to be used with `y-or-n-p' to clear the minibuffer after
+the user has responded to a yes-or-no prompt.
+ORIG-FUN is the original function being advised.
+ARGS are the arguments passed to the original function."
+  (unwind-protect
+      (apply orig-fun args)
+    (message nil)))
+
+(when (fboundp 'y-or-n-p)
+  (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer))
+
 ;;; Provide
 
 (provide 'le-default-settings)

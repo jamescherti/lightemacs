@@ -24,6 +24,18 @@
 (require 'le-core-paths)
 (require 'lightemacs)
 
+;;; Call `lightemacs-user-pre-init'
+
+;; Load function: `lightemacs-user-pre-init'
+(when (fboundp 'lightemacs-user-pre-init)
+  (lightemacs-user-pre-init))
+
+;;; Load the pre-init.el file
+
+(let ((el-file (expand-file-name "pre-init.el"
+                                 lightemacs-local-directory)))
+  (lightemacs-load-user-init el-file :no-error))
+
 ;;; Load the package manager and refresh
 
 ;; TODO Check if this is necessary
@@ -58,24 +70,30 @@
 
 (require 'lightemacs-use-package)
 
-;;; Init
+;;; Load modules
 
-;; Load function: `lightemacs-user-pre-init'
-(when (fboundp 'lightemacs-user-pre-init)
-  (funcall 'lightemacs-user-pre-init))
+(require 'lightemacs-module)
 
-;; Load pre-init.el
-(let ((el-file (expand-file-name "pre-init.el"
-                                 lightemacs-local-directory)))
-  (lightemacs-load-user-init el-file :no-error))
+;; Load all modules
+(if (fboundp 'lightemacs-module-load)
+    (progn
+      (lightemacs-module-load lightemacs-core-modules)
+      (lightemacs-module-load lightemacs-modules))
+  (error "Undefined function: lightemacs-module-load"))
 
-;; Load init.el
+;;; Load user function: `lightemacs-user-init'
+(when (fboundp 'lightemacs-user-init)
+  (lightemacs-user-init))
+
+;; Load `lightemacs-user-init'
+
 (when (and (fboundp 'lightemacs-load-user-init)
            (boundp 'minimal-emacs-user-directory))
-  (funcall 'lightemacs-load-user-init
-           (expand-file-name "init.el" minimal-emacs-user-directory)))
+  (lightemacs-load-user-init
+   (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;; Configure `lightemacs-after-init-hook'
+;;; Hook `lightemacs-after-init-hook'
+
 (defun lightemacs--run-after-init-hook ()
   "Run `lightemacs--run-after-init-hook' at the appropriate time."
   (run-hooks 'lightemacs-after-init-hook))
@@ -85,28 +103,13 @@
  (t
   (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
 
-;; Load user function: `lightemacs-user-init'
-(when (fboundp 'lightemacs-user-init)
-  (funcall 'lightemacs-user-init))
-
-;;; Load modules
-
-(require 'lightemacs-module)
-
-;; Load all modules
-(if (fboundp 'lightemacs-module-load)
-    (progn
-      (funcall 'lightemacs-module-load lightemacs-core-modules)
-      (funcall 'lightemacs-module-load lightemacs-modules))
-  (error "Undefined function: lightemacs-module-load"))
-
-;; Load post-init.el
+;;; Load the post-init.el file
 
 (let ((el-file (expand-file-name "post-init.el"
                                  lightemacs-local-directory)))
   (lightemacs-load-user-init el-file :no-error))
 
-;; Load function: `lightemacs-user-post-init'
+;;; Load function: `lightemacs-user-post-init'
 
 (when (fboundp 'lightemacs-user-post-init)
   (funcall 'lightemacs-user-post-init))

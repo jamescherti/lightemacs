@@ -34,7 +34,7 @@
              buffer-terminator-apply-rules)
 
   :init
-  (setq buffer-terminator-debug minimal-emacs-debug)
+  (setq buffer-terminator-debug init-file-debug)
 
   (lightemacs-module-hooks buffer-terminator
     buffer-terminator-mode

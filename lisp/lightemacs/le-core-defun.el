@@ -82,14 +82,14 @@ recentering is skipped."
   (let ((win-sym (make-symbol "start-window")))
     `(let ((,win-sym (selected-window)))
        ;; use prog1 to return the result of body
-       (when (>= scroll-conservatively 101)
-         (prog1 (progn ,@body)
-           (when (and (window-live-p ,win-sym)
-                      (eq (current-buffer) (window-buffer ,win-sym))
-                      ;; pos-visible-in-window-p handles partial lines and
-                      ;; redisplay logic more robustly than manual arithmetic.
-                      (not (pos-visible-in-window-p (point) ,win-sym)))
-             (recenter)))))))
+       (progn ,@body)
+       (when (and (>= scroll-conservatively 101)
+                  (window-live-p ,win-sym)
+                  (eq (current-buffer) (window-buffer ,win-sym))
+                  ;; pos-visible-in-window-p handles partial lines and
+                  ;; redisplay logic more robustly than manual arithmetic.
+                  (not (pos-visible-in-window-p (point) ,win-sym)))
+         (recenter)))))
 
 (defmacro lightemacs-save-window-hscroll (&rest body)
   "Execute BODY while preserving the horizontal scroll of the selected window.

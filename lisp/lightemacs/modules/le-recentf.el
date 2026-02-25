@@ -25,15 +25,12 @@
 
 (require 'lightemacs-module)
 
-(require 'cl-lib)
-;; (require 'le-shut-up)
-
 ;; Global variables
 
 (defvar lightemacs-recentf-cleanup-and-auto-save-interval 550
   "Interval in seconds for running `recentf-cleanup' and `recentf-save-list'.")
 
-(defvar lightemacs-recentf-track-switch-to-buffer t
+(defvar lightemacs-recentf-track-switch-to-buffer nil
   "Non-nil means track buffer switches and add the visited file to `recentf'.
 When enabled, switching to a buffer visiting a file automatically
 adds that file to the recentf list.")
@@ -55,39 +52,45 @@ adds that file to the recentf list.")
   :preface
   (defun lightemacs-recentf--cleanup ()
     "Run `recentf-cleanup' if `recentf-mode' is enabled."
-    (when (fboundp 'recentf-cleanup)
-      (if lightemacs-recentf-quiet
-          ;; TODO fix shut-up
-          (let ((inhibit-message t))
-            (recentf-cleanup))
-        (recentf-cleanup))))
+    (when (and (fboundp 'recentf-cleanup)
+               (bound-and-true-p recentf-mode))
+      (let ((inhibit-message lightemacs-recentf-quiet))
+        ;; TODO fix shut-up
+        (ignore-errors
+          (recentf-cleanup)))))
 
   (defun lightemacs-recentf--save ()
     "Run `recentf-save-list' if `recentf-mode' is enabled."
-    (when (fboundp 'recentf-save-list)
-      (if lightemacs-recentf-quiet
-          ;; TODO fix shut-up
-          (let ((inhibit-message t))
-            (recentf-save-list))
-
+    (when (and (fboundp 'recentf-save-list)
+               (bound-and-true-p recentf-mode))
+      (let ((inhibit-message lightemacs-recentf-quiet))
+        ;; TODO fix shut-up
         (recentf-save-list))))
 
   (defun lightemacs-recentf--cleanup-and-save ()
     "Run `recentf-cleanup' and `recentf-save-list' if `recentf-mode' is enabled."
-    ;; Cleanup
-    (lightemacs-recentf--cleanup)
+    ;; Save first to ensure data is written even if cleanup hangs on unreachable
+    ;; files
+    (lightemacs-recentf--save)
 
-    ;; Save
-    (lightemacs-recentf--save))
+    ;; Cleanup
+    (let ((previous-recentf-list-length (if (boundp 'recentf-list)
+                                            (length recentf-list)
+                                          0)))
+      (lightemacs-recentf--cleanup)
+      (when (> previous-recentf-list-length (if (boundp 'recentf-list)
+                                                (length recentf-list)
+                                              0))
+        ;; Save again to persist the cleaned list
+        (lightemacs-recentf--save))))
 
   (defun lightemacs-recentf--enable ()
     "Enable `recentf'."
     ;; Mode
-    (if lightemacs-recentf-quiet
+    (unless (bound-and-true-p recentf-mode)
+      (let ((inhibit-message lightemacs-recentf-quiet))
         ;; TODO fix shut-up
-        (let ((inhibit-message t))
-          (recentf-mode 1))
-      (recentf-mode 1))
+        (recentf-mode 1)))
 
     ;; Replace `recentf-save-list' with a quiet version that cleans up and saves
     ;; the recentf list
@@ -112,8 +115,8 @@ adds that file to the recentf list.")
   ;; Add file at the beginning of the recent list after switching buffer.
   (defun lightemacs-recentf--add-file-on-buffer-change (&rest _args)
     "Add file at the beginning of the recent list after switching buffer."
-    (when (and (bound-and-true-p recentf-mode)
-               (fboundp 'recentf-add-file))
+    (when (and (fboundp 'recentf-add-file)
+               (bound-and-true-p recentf-mode))
       (when-let* ((file-name (buffer-file-name (buffer-base-buffer))))
         (recentf-add-file file-name))))
 

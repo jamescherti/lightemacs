@@ -64,7 +64,10 @@ restoring the full file listing."
     (when (and (boundp 'dired-filter-stack)
                (fboundp 'dired-goto-file)
                (fboundp 'dired-get-file-for-visit))
-      (let ((dired-file (dired-get-file-for-visit)))
+      (let ((dired-file (condition-case nil
+                            (dired-get-file-for-visit)
+                          (error
+                           nil))))
         (dired-filter-pop-all)
         (if lightemacs--dired-filter-filters-enabled
             (setq lightemacs--dired-filter-filters-enabled nil)
