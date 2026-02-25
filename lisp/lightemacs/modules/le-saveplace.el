@@ -61,16 +61,11 @@ BUFFER is the target buffer that needs to be recentered."
   :init
   (setq save-place-limit 500)
 
-  :config
-  (add-hook 'save-place-after-find-file-hook
-            #'lightemacs-saveplace--after-find-file)
-
+  :preface
   (defun lightemacs--around-save-place-kill-emacs-hook (fn &rest args)
     "Advice around `save-place-kill-emacs-hook' to optionally suppress messages.
-
 FN is the original function being advised.
 ARGS are the arguments passed to FN.
-
 If `lightemacs-saveplace-quiet' is non-nil, output generated during execution.
 Otherwise,the function executes normally."
     (if lightemacs-saveplace-quiet
@@ -78,6 +73,10 @@ Otherwise,the function executes normally."
         (let ((inhibit-message t))
           (apply fn args))
       (apply fn args)))
+
+  :config
+  (add-hook 'save-place-after-find-file-hook
+            #'lightemacs-saveplace--after-find-file)
 
   (advice-add 'save-place-kill-emacs-hook :around
               #'lightemacs--around-save-place-kill-emacs-hook))

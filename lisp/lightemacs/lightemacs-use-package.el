@@ -22,9 +22,6 @@
   ;; `use-package-normalize-keywords'
   (require 'use-package-core))
 
-(eval-when-compile
-  (setq use-package-always-ensure t))
-
 ;;; Variables
 
 (defvar lightemacs-use-package-refresh-contents t
