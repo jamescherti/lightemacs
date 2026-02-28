@@ -4,4 +4,4 @@
                                         ;; TODO: Update the path
                                         ;; "~/.emacs.d/lisp/packages/"
                                         ))
-         (byte-compile-error-on-warn . t))))
+         (pre-commit-elisp-error-on-compile-warn . t))))
