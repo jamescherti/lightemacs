@@ -186,9 +186,9 @@ them to `use-package\='."
         (when (bound-and-true-p lightemacs-debug)
           (message "[lightemacs] Added ':ensure nil' to the %s package"
                    name))
-        (setq effective-args (if ensure-is-member
-                                 (plist-put effective-args :ensure nil)
-                               (append (list :ensure nil) effective-args))))))
+        (when ensure-is-member
+          (lightemacs-use-package--plist-delete effective-args :ensure))
+        (setq effective-args (append (list :ensure nil) effective-args)))))
     ;; Return the 3 elements as a list
     (list effective-args
           normalized-args
