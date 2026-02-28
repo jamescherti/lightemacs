@@ -36,8 +36,4 @@ Note that this should end with a directory separator.")
 
 (provide 'le-core-paths)
 
-;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
-;; End:
-
 ;;; le-core-paths.el ends here

@@ -58,24 +58,6 @@ ENSURE-VALUE is the value of :ensure.
 
 This function performs the following steps when the package manager
 is `use-package' and the :ensure property is non-nil."
-  (when (and lightemacs-use-package-refresh-contents
-             (eq lightemacs-package-manager 'use-package)
-             ensure-value
-             ;; TODO alternative to package-installed-p
-             (not (package-installed-p name)))
-    ;; Refresh packages
-    (unless lightemacs-use-package--packages-refreshed
-      (lightemacs-verbose-message
-        "Refreshing package contents before installing %s" name)
-      (setq lightemacs-use-package--packages-refreshed t)
-      (condition-case err
-          (package-refresh-contents)
-        (error
-         (display-warning 'lightemacs
-                          (format "Failed to install package %s: %s"
-                                  name (error-message-string err))
-                          :error)))))
-
   (cond
    ;; TODO this is not idempotent
    ;; ;; Elpaca: Uses its own asynchronous queuing system.
@@ -100,6 +82,24 @@ is `use-package' and the :ensure property is non-nil."
          ensure-value
          (fboundp 'use-package-ensure-function)
          (not (memq name lightemacs-use-package--installed)))
+    (when (and lightemacs-use-package-refresh-contents
+               (eq lightemacs-package-manager 'use-package)
+               ensure-value
+               ;; TODO alternative to package-installed-p
+               (not (package-installed-p name)))
+      ;; Refresh packages
+      (unless lightemacs-use-package--packages-refreshed
+        (lightemacs-verbose-message
+          "Refreshing package contents before installing: %s" name)
+        (setq lightemacs-use-package--packages-refreshed t)
+        (condition-case err
+            (package-refresh-contents)
+          (error
+           (display-warning 'lightemacs
+                            (format "Failed to install package %s: %s"
+                                    name (error-message-string err))
+                            :error)))))
+
     ;; Install the package
     (lightemacs-verbose-message "use-package: Installing %s" name)
     (when (fboundp 'use-package-ensure-function)
@@ -165,11 +165,13 @@ them to `use-package\='."
               ensure-bool-value name)
             ;; TODO: Should we just copy the value of ensure t or nil into
             ;; :straight?
-            (setq effective-args (append (list :straight (if ensure-is-member
-                                                             ensure-bool-value
-                                                           t)
-                                               :ensure nil)
-                                         effective-args)))))
+            (setq effective-args
+                  (append (list :straight
+                                (if ensure-is-member
+                                    ensure-bool-value
+                                  t)
+                                :ensure nil)
+                          effective-args)))))
 
        ;; Use-package or Elpaca
        ;; TODO how about elpaca? (Answer: Elpaca uses standard :ensure syntax)
@@ -180,12 +182,13 @@ them to `use-package\='."
         ;;                         effective-args
         ;;                         :straight)))
 
-        (when (not ensure-is-member)
-          (when (bound-and-true-p lightemacs-debug)
-            (message "[lightemacs] Added ':ensure t' to the %s package"
-                     name))
-          (setq effective-args (append '(:ensure t) effective-args))))))
-
+        ;; TODO should this be removed when use-package-always-ensure is non-nil
+        (when (bound-and-true-p lightemacs-debug)
+          (message "[lightemacs] Added ':ensure nil' to the %s package"
+                   name))
+        (when ensure-is-member
+          (lightemacs-use-package--plist-delete effective-args :ensure))
+        (setq effective-args (append (list :ensure nil) effective-args)))))
     ;; Return the 3 elements as a list
     (list effective-args
           normalized-args
@@ -210,6 +213,54 @@ Normalization and manager selection occur at macro-expansion time."
                                                  ',ensure-value))
 
        (use-package ,name ,@effective-args))))
+
+;; (defmacro lightemacs-use-package (name &rest args)
+;;   "Provide a formal interface for package configuration via `use-package'.
+;; NAME and ARGS are the same arguments as the `use-package' macro.
+;; Normalization and manager selection occur at macro-expansion time."
+;;   (declare (indent defun))
+;;   (pcase-let ((`(,effective-args ,normalized-args ,ensure-value)
+;;                (lightemacs-use-package--normalize name args)))
+;;     `(progn
+;;        ;; This block is executed at runtime but skipped during compilation.
+;;        (unless (bound-and-true-p byte-compile-current-file)
+;;          (lightemacs-use-package--before-package ',name ',effective-args
+;;                                                  ',normalized-args
+;;                                                  ',ensure-value))
+;;
+;;        ;; The compiler must see use-package, but with :ensure forced to nil
+;;        (use-package ,name ,@effective-args))))
+
+;; (defmacro lightemacs-use-package (name &rest args)
+;;   "Provide a formal interface for package configuration via `use-package`.
+;; NAME and ARGS are the same arguments as the `use-package' macro."
+;;   (declare (indent defun))
+;;   (pcase-let ((`(,effective-args ,normalized-args ,ensure-value)
+;;                (lightemacs-use-package--normalize name args)))
+;;     (let* (;; We wrap in a 'let' to neutralize the downloader during expansion
+;;            ;; (use-package-always-ensure nil)
+;;            ;;
+;;            ;; We generate the expansion of the inner use-package macro
+;;            (expansion (macroexpand-all `(use-package ,name ,@effective-args))))
+;;
+;;       ;; 3. SIDE EFFECT: Print the expansion to the compiler's output
+;;       (when (or (bound-and-true-p pre-commit-elisp-debug)
+;;                 (bound-and-true-p byte-compile-current-file))
+;;         (message "[DEBUG] Final expansion for %s:\n%S"
+;;                  name (pp-to-string expansion)))
+;;
+;;       ;; 4. RETURN the expansion inside your progn
+;;       `(progn
+;;          (unless (bound-and-true-p byte-compile-current-file)
+;;            (lightemacs-use-package--before-package ',name ',effective-args
+;;                                                    ',normalized-args
+;;                                                    ',ensure-value)
+;;
+;;            ;; Inject the already-expanded code directly
+;;            ,expansion
+;;
+;;            ;; (use-package ,name ,@effective-args)
+;;            )))))
 
 ;;; Provide
 

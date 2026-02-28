@@ -31,7 +31,26 @@
   :if (not noninteractive)
   :functions evil-collection-init
   :after evil
+  :init
+  ;; By default, when the completion menu is active, Evil's insert state or the
+  ;; minibuffer's standard behavior intercepts the Enter key to execute the
+  ;; command or create a newline.
+  ;;
+  ;; The added configuration explicitly binds RET to corfu-insert within the
+  ;; corfu-map. This ensures that when the completion popup is visible,
+  ;; pressing Enter selects the highlighted candidate instead of exiting the
+  ;; minibuffer or inserting a literal newline.
+  (setq evil-collection-corfu-key-themes '(default magic-return))
+
   :config
+  ;; Fix magic-return issue in GUI mode
+  ;;
+  ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled
+  ;; URL: https://github.com/emacs-evil/evil-collection/pull/895
+  (with-eval-after-load 'corfu
+    (when (memq 'magic-return evil-collection-corfu-key-themes)
+      (evil-define-key 'insert corfu-map (kbd "<return>") 'corfu-insert)))
+
   (evil-collection-init))
 
 (provide 'le-evil-collection)

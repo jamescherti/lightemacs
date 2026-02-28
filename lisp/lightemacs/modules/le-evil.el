@@ -120,6 +120,9 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   ;; corrects C-h behavior to ensure electric-pair deletes adjacent pairs. It
   ;; calls the same function as DEL (code 127) in electric-pair-mode-map:
   (when (bound-and-true-p evil-want-C-h-delete)
+    ;; Alternative, but it makes eldoc messages disappear
+    ;; (define-key evil-insert-state-map (kbd "C-h") (kbd "DEL"))
+
     (define-key evil-insert-state-map (kbd "C-h")
                 #'lightemacs-evil-delete-backward-C-h)
 
@@ -130,6 +133,9 @@ pressing `C-h', since it is prefixed with `evil-delete'."
              (not (and (stringp (car binding))
                        (string= (car binding) "\C-h"))))
            evil-insert-state-bindings))
+
+    ;; Alternative, but it makes eldoc messages disappear
+    ;; (add-to-list 'evil-insert-state-bindings `("\C-h" . ,(kbd "DEL")))
 
     (add-to-list
      'evil-insert-state-bindings

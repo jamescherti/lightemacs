@@ -170,14 +170,15 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 
 The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration for Lightemacs, allowing settings to be adjusted and additional packages to be installed. (If the configuration directory is changed, for example to `~/.lightemacs.d/`, the main configuration file will then be located at `~/.lightemacs.d/config.el`.)
 
+(The `lightemacs-modules` list specifies which modules Lightemacs loads. If the list is empty, no modules load, resulting in a configuration identical to minimal-emacs.d. The Lightemacs framework is minimalist, allowing you to choose exactly what you need for your configuration.)
+
 Example 1: The default `config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
 
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before loading modules."
-  (setq lightemacs-modules '(le-flavor-essential)))
+(setq lightemacs-modules '(le-flavor-essential))
+
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
@@ -185,12 +186,10 @@ Example 2: The configuration above does not include Vim Keybindings, providing s
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before loading modules."
-  (setq lightemacs-modules '(le-flavor-essential
+(setq lightemacs-modules '(le-flavor-essential
 
-                             ;; Vim keybindings
-                             le-group-evil)))
+                           ;; Vim keybindings
+                           le-group-evil))
 
 ```
 
@@ -199,9 +198,8 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before loading modules."
-  (setq lightemacs-modules '(le-flavor-big)))
+(setq lightemacs-modules '(le-flavor-big))
+
 ```
 
 ## Customizations
@@ -657,12 +655,6 @@ These are core modules that are always enabled:
 
 By default, [evil-mode](https://github.com/emacs-evil/evil) is disabled.
 
-To enable it, add the following to the `~/.emacs.d/lisp/local/config.el` file:
-```emacs-lisp
-;; Enable Vim key bindings
-(add-to-list 'lightemacs-modules 'le-group-evil)
-```
-
 Here are a few interesting features that Lightemacs provides:
 - Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
 
@@ -712,16 +704,6 @@ Module: **le-treesit-auto**
 
 The **le-treesit-auto** module automatically installs and enables Tree-sitter major modes in Emacs 29 and later. If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode. Tree-sitter is an incremental parsing system introduced in Emacs 29 that delivers precise, high-performance syntax highlighting. It supports a wide range of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, and many others.
 
-To enable it, add the following to the `~/.emacs.d/lisp/local/config.el` file:
-```emacs-lisp
-;; Tree-sitter is an incremental parsing system introduced in Emacs 29 that
-;; provides precise, high-performance syntax highlighting. It supports a broad
-;; set of programming languages, including Bash, C, C++, C#, CMake, CSS,
-;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
-;; Elisp, Lua, and many others. treesit-auto
-(add-to-list 'lightemacs-modules 'le-treesit-auto)
-```
-
 ### Disabled by default: Runs code formatters asynchronously (le-apheleia)
 
 The **le-apheleia** module configures, [Apheleia](https://github.com/radian-software/apheleia), a package that runs code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
@@ -750,12 +732,6 @@ Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to confi
 The **le-easysession** module configures [easysession](https://github.com/jamescherti/easysession.el), a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
 
 With **easysession**, your Emacs setup is restored automatically when you restart. All files, Dired buffers, and window layouts come back as they were, so you can continue working right where you left off. While editing, you can also switch to another session, switch back, rename sessions, or delete them, giving you full control over multiple work environments.
-
-To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-```emacs-lisp
-;; Enable the `le-easysession' module
-(add-to-list 'lightemacs-modules 'le-easysession)
-```
 
 Usage:
 
@@ -800,49 +776,27 @@ Before installing emacs-libvterm, you need to make sure you have installed
  3. libtool-bin (related issues: [#66](https://github.com/akermu/emacs-libvterm/issues/66) [#85](https://github.com/akermu/emacs-libvterm/issues/85#issuecomment-491845136))
  4. OPTIONAL: [libvterm](https://github.com/Sbozzolo/libvterm-mirror.git) (>= 0.2). This library can be found in the official repositories of most distributions (e.g., Arch, Debian, Fedora, Gentoo, openSUSE, Ubuntu). Typical names are `libvterm` (Arch, Fedora, Gentoo, openSUSE), or `libvterm-dev` (Debian, Ubuntu). If not available, `libvterm` will be downloaded during the compilation process. Some distributions (e.g. Ubuntu < 20.04, Debian < 11) have versions of `libvterm` that are too old. If you find compilation errors related to `VTERM_COLOR`, you should not use your system libvterm. See [FAQ](#frequently-asked-questions-and-problems) for more details.
 
-To enable **le-vterm**, add the following to `~/.emacs.d/lisp/local/config.el`:
-```emacs-lisp
-;; Enable the `le-vterm' module
-(add-to-list 'lightemacs-modules 'le-vterm)
-```
-
 ### Disabled by default: Better Elisp editing (le-group-emacs-lisp)
 
 The **le-group-emacs-lisp** group enables the following modules:
 - **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-easy-escape' module
-  (add-to-list 'lightemacs-modules 'highlight-defined)
-  ```
 
 - **le-page-break-lines**: Configures [page-break-lines-mode](https://github.com/purcell/page-break-lines), a minor mode that visually replaces ASCII form-feed characters (typically `^L`) with horizontal lines to make page breaks easier to see, without altering the underlying text. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-page-break-lines' module
-  (add-to-list 'lightemacs-modules 'le-page-break-lines)
-  ```
-  (The **le-page-break-lines** module enables `page-break-lines-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
-- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. To enable the module, add the following to `emacs-lisp-mode-hook` by adding the following to `~/.emacs.d/lisp/local/config.el`:
+- **le-aggressive-indent**: Configures [aggressive-indent](https://github.com/Malabarba/aggressive-indent-mode), a minor mode that ensures Elisp code remains consistently indented. It automatically reindents after every modification, providing greater reliability than `electric-indent-mode`. (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered.)
+
+  Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure aggressive-indent for Emacs Lisp:
   ```emacs-lisp
-  ;; Enable the `le-aggressive-indent' module
-  (add-to-list 'lightemacs-modules 'le-aggressive-indent)
+  ;; By default, `lightemacs-aggressive-indent-mode-target-hooks' is set to `prog-mode-hook'.
+  (setq lightemacs-aggressive-indent-target-hooks '(;; Elisp
+                                                    emacs-lisp-mode-hook))
   ```
-  (The **le-aggressive-indent** module enables `aggressive-indent-mode` whenever `emacs-lisp-mode-hook` or `scheme-mode-hook` are triggered.)
 
 - **le-elisp-autofmt**: Configures [elisp-autofmt](https://codeberg.org/ideasman42/emacs-elisp-autofmt), which provides an automatic code formatter for Emacs Lisp. It includes the `elisp-autofmt-mode` minor mode, along with `elisp-autofmt-buffer` and `elisp-autofmt-region` commands to format the entire buffer or selection.
 
-- **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-easy-escape' module
-  (add-to-list 'lightemacs-modules 'le-easy-escape)
-  ```
-  (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered.)
+- **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
-- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-elisp-refs' module
-  (add-to-list 'lightemacs-modules 'le-elisp-refs)
-  ```
+- **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`.
 
 ### Disabled by default: Indentation bars (le-indent-bars)
 
@@ -855,9 +809,6 @@ It supports both space and tab-based indentation and offers optional tree-sitter
 It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/lisp/local/config.el` to enable it for Python and YAML files:
 
 ```emacs-lisp
-;; Enable the `le-indent-bars' module
-(add-to-list 'lightemacs-modules 'le-indent-bars)
-
 ;; Enable indent-bars-mode automatically for Python files and Yaml files
 (add-hook 'yaml-ts-mode-hook #'indent-bars-mode)
 (add-hook 'yaml-mode-hook #'indent-bars-mode)
@@ -917,34 +868,17 @@ Here are a few other modules disabled by default:
 
 - **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 
-- **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-helpful' module
-  (add-to-list 'lightemacs-modules 'le-helpful)
-  ```
+- **le-helpful**: Configures [Helpful](https://github.com/Wilfred/helpful), an enhanced alternative to the built-in help system that provides richer, context-aware information about symbols, functions, variables, and macros. In contrast to the default describe-* commands, Helpful presents a unified, navigable buffer that integrates documentation strings, source code, keybindings, references, and even interactive examples, thereby offering a more comprehensive and efficient environment for exploring Emacs internals.
 
-- **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-compile-angel' module by pushing it above other modules
-  (add-to-list 'lightemacs-modules 'le-compile-angel)
-  ```
+- **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 
 - **le-eat**: Eat (Emulate A Terminal) is a terminal emulator implemented entirely in Emacs Lisp. It supports full-screen terminal applications such as Emacs itself and offers high performance, operating over three times faster than Term. Eat provides advanced features like Sixel graphics, complete mouse support, shell integration, and reduced screen flicker for smoother performance.
 
 Elisp file-type modules are disabled by default:
 
 - **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available.) It also ensures that the indentation adheres to the YAML standard: two spaces and no tabs.
-  ```emacs-lisp
-  ;; Enable the `le-paredit' module
-  (add-to-list 'lightemacs-modules 'le-group-yaml)
-  ```
 
-- **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; Enable the `le-paredit' module
-  (add-to-list 'lightemacs-modules 'le-paredit)
-  ```
-  (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`.)
+- **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`.)
 
 - **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated.
 

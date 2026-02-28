@@ -28,8 +28,11 @@
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
 
-  :hook ((emacs-lisp-mode . aggressive-indent-mode)
-         (scheme-mode . aggressive-indent-mode))
+  :init
+  (lightemacs-module-hooks aggressive-indent
+    aggressive-indent-mode
+    '(emacs-lisp-mode-hook
+      scheme-mode-hook))
 
   :config
   ;; Protected commands
