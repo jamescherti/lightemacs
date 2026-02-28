@@ -11,6 +11,8 @@ repos:
     rev: v1.0.8
     hooks:
       - id: elisp-check-parens
+        exclude: \.dir-locals\.el$
       - id: elisp-check-byte-compile
+        exclude: \.dir-locals\.el$
       # - id: elisp-check-native-compile
       # - id: elisp-indent
