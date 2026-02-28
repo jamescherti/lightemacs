@@ -15,6 +15,8 @@
 
 ;;; Default paths
 
+(set toto var1)
+
 (defvar lightemacs-user-directory user-emacs-directory
   "Directory beneath Lightemacs files are placed.
 Note that this should end with a directory separator.")
@@ -35,9 +37,5 @@ Note that this should end with a directory separator.")
   (expand-file-name "var/" lightemacs-user-directory))
 
 (provide 'le-core-paths)
-
-;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
-;; End:
 
 ;;; le-core-paths.el ends here
