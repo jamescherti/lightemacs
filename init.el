@@ -74,6 +74,10 @@
 
 (require 'lightemacs-module)
 
+;; Load function: `lightemacs-user-pre-modules'
+(when (fboundp 'lightemacs-user-pre-modules)
+  (lightemacs-user-pre-modules))
+
 ;; Load all modules
 (if (fboundp 'lightemacs-module-load)
     (progn
