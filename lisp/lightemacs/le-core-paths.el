@@ -15,8 +15,6 @@
 
 ;;; Default paths
 
-(set toto var1)
-
 (defvar lightemacs-user-directory user-emacs-directory
   "Directory beneath Lightemacs files are placed.
 Note that this should end with a directory separator.")
