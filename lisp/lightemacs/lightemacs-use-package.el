@@ -165,11 +165,15 @@ them to `use-package\='."
               ensure-bool-value name)
             ;; TODO: Should we just copy the value of ensure t or nil into
             ;; :straight?
-            (setq effective-args (append (list :straight (if ensure-is-member
-                                                             ensure-bool-value
-                                                           t)
-                                               :ensure nil)
-                                         effective-args)))))
+            (setq effective-args
+                  (append (list :straight
+                                (if ensure-is-member
+                                    ensure-bool-value
+                                  (not (bound-and-true-p
+                                        byte-compile-current-file))
+                                  t)
+                                :ensure nil)
+                          effective-args)))))
 
        ;; Use-package or Elpaca
        ;; TODO how about elpaca? (Answer: Elpaca uses standard :ensure syntax)
@@ -180,11 +184,15 @@ them to `use-package\='."
         ;;                         effective-args
         ;;                         :straight)))
 
+        ;; TODO should this be removed when use-package-always-ensure is non-nil
         (when (not ensure-is-member)
           (when (bound-and-true-p lightemacs-debug)
             (message "[lightemacs] Added ':ensure t' to the %s package"
                      name))
-          (setq effective-args (append '(:ensure t) effective-args))))))
+          (setq effective-args
+                (append (list :ensure
+                              (not (bound-and-true-p byte-compile-current-file)))
+                        effective-args))))))
 
     ;; Return the 3 elements as a list
     (list effective-args
@@ -201,15 +209,14 @@ Normalization and manager selection occur at macro-expansion time."
   (pcase-let ((`(,effective-args ,normalized-args ,ensure-value)
                (lightemacs-use-package--normalize name args)))
     `(progn
-       ;; This block is compiled into the .elc.
-       ;; During batch compilation, the condition is true (it is compiling),
-       ;; so the `unless` body is skipped and NOT expanded or executed.
+       ;; This block is executed at runtime but skipped during compilation.
        (unless (bound-and-true-p byte-compile-current-file)
          (lightemacs-use-package--before-package ',name ',effective-args
                                                  ',normalized-args
-                                                 ',ensure-value))
+                                                 ',ensure-value)
 
-       (use-package ,name ,@effective-args))))
+         ;; The compiler must see use-package, but with :ensure forced to nil
+         (use-package ,name ,@effective-args)))))
 
 ;;; Provide
 
