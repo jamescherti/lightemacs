@@ -16,7 +16,19 @@
 ;;; Require
 
 (require 'lightemacs)
-(require 'lightemacs-module)
+
+;;; Hook `lightemacs-after-init-hook'
+
+(defun lightemacs--run-after-init-hook ()
+  "Run `lightemacs--run-after-init-hook' at the appropriate time."
+  (run-hooks 'lightemacs-after-init-hook))
+
+(cond
+ ((eq lightemacs-package-manager 'elpaca)
+  (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
+
+ (t
+  (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
 
 ;;; Call `lightemacs-user-pre-init'
 
@@ -70,6 +82,8 @@
 ;;; Load modules
 
 ;; Load all modules
+(require 'lightemacs-module)
+
 (if (fboundp 'lightemacs-module-load)
     (progn
       (lightemacs-module-load lightemacs-core-modules)
@@ -104,16 +118,5 @@
 
 (when (fboundp 'lightemacs-user-post-init)
   (funcall 'lightemacs-user-post-init))
-
-;;; Hook `lightemacs-after-init-hook'
-
-(defun lightemacs--run-after-init-hook ()
-  "Run `lightemacs--run-after-init-hook' at the appropriate time."
-  (run-hooks 'lightemacs-after-init-hook))
-(cond
- ((eq lightemacs-package-manager 'elpaca)
-  (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
- (t
-  (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
 
 ;;; init.el ends here
