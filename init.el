@@ -86,6 +86,7 @@
   (error "Undefined function: lightemacs-module-load"))
 
 ;;; Load user function: `lightemacs-user-init'
+
 (when (fboundp 'lightemacs-user-init)
   (lightemacs-user-init))
 

@@ -175,9 +175,8 @@ Example 1: The default `config.el` configuration only contains [le-flavor-essent
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before loading modules."
-  (setq lightemacs-modules '(le-flavor-essential)))
+(setq lightemacs-modules '(le-flavor-essential))
+
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
@@ -185,12 +184,9 @@ Example 2: The configuration above does not include Vim Keybindings, providing s
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before loading modules."
-  (setq lightemacs-modules '(le-flavor-essential
-
-                             ;; Vim keybindings
-                             le-group-evil)))
+(setq lightemacs-modules '(le-flavor-essential
+                           ;; Vim keybindings
+                           le-group-evil))
 
 ```
 
@@ -199,9 +195,8 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-(defun lightemacs-user-init ()
-  "This function is executed right before loading modules."
-  (setq lightemacs-modules '(le-flavor-big)))
+(setq lightemacs-modules '(le-flavor-big))
+
 ```
 
 ## Customizations
