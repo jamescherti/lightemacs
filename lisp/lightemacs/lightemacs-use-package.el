@@ -214,7 +214,6 @@ Normalization and manager selection occur at macro-expansion time."
 
        (use-package ,name ,@effective-args))))
 
-
 ;; (defmacro lightemacs-use-package (name &rest args)
 ;;   "Provide a formal interface for package configuration via `use-package'.
 ;; NAME and ARGS are the same arguments as the `use-package' macro.
