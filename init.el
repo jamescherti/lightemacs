@@ -15,28 +15,20 @@
 
 ;;; Require
 
-;; (eval-when-compile
-;;   (defvar lightemacs-user-directory (file-truename "."))
-;;   (add-to-list 'load-path
-;;                (expand-file-name "lisp/lightemacs" lightemacs-user-directory)))
-
-(require 'le-core-defaults)
-(require 'le-core-paths)
 (require 'lightemacs)
 
 ;;; Call `lightemacs-user-pre-init'
 
-;; Load function: `lightemacs-user-pre-init'
 (when (fboundp 'lightemacs-user-pre-init)
   (lightemacs-user-pre-init))
 
-;;; Load the pre-init.el file
+;;; Load the pre-init.el file | TODO remove
 
-(let ((el-file (expand-file-name "pre-init.el"
-                                 lightemacs-local-directory)))
-  (lightemacs-load-user-init el-file :no-error))
+;; (let ((el-file (expand-file-name "pre-init.el"
+;;                                  lightemacs-local-directory)))
+;;   (lightemacs-load-user-init el-file :no-error))
 
-;;; Load the package manager and refresh
+;;; Configure the package manager
 
 ;; TODO Check if this is necessary
 (unless lightemacs-package-manager
@@ -68,15 +60,13 @@
 
   (setq lightemacs-use-package--package-manager-loaded t))
 
-(require 'lightemacs-use-package)
-
-;;; Load modules
-
-(require 'lightemacs-module)
+;;; Function: `lightemacs-user-pre-modules'
 
 ;; Load function: `lightemacs-user-pre-modules'
 (when (fboundp 'lightemacs-user-pre-modules)
   (lightemacs-user-pre-modules))
+
+;;; Load modules
 
 ;; Load all modules
 (if (fboundp 'lightemacs-module-load)
@@ -85,7 +75,13 @@
       (lightemacs-module-load lightemacs-modules))
   (error "Undefined function: lightemacs-module-load"))
 
-;;; Load user function: `lightemacs-user-init'
+;;; Function: `lightemacs-user-post-modules'
+
+;; Load function: `lightemacs-user-post-modules'
+(when (fboundp 'lightemacs-user-post-modules)
+  (lightemacs-user-post-modules))
+
+;;; Function: `lightemacs-user-init'
 
 (when (fboundp 'lightemacs-user-init)
   (lightemacs-user-init))
@@ -97,13 +93,13 @@
   (lightemacs-load-user-init
    (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Load the post-init.el file
+;;; Load the post-init.el file | TODO remove
 
-(let ((el-file (expand-file-name "post-init.el"
-                                 lightemacs-local-directory)))
-  (lightemacs-load-user-init el-file :no-error))
+;; (let ((el-file (expand-file-name "post-init.el"
+;;                                  lightemacs-local-directory)))
+;;   (lightemacs-load-user-init el-file :no-error))
 
-;;; Load function: `lightemacs-user-post-init'
+;;; Function: `lightemacs-user-post-init'
 
 (when (fboundp 'lightemacs-user-post-init)
   (funcall 'lightemacs-user-post-init))

@@ -97,6 +97,11 @@
       :no-error
       (not (bound-and-true-p init-file-debug)))
 
+;;; Load function: `lightemacs-user-pre-early-init'
+
+(when (fboundp 'lightemacs-user-pre-early-init)
+  (funcall 'lightemacs-user-pre-early-init))
+
 ;;; Load lightemacs.el
 
 (require 'lightemacs)
@@ -108,16 +113,11 @@
   (setq native-comp-async-jobs-number
         (lightemacs--calculate-native-comp-async-jobs-number)))
 
-;;; Load pre-early-init.el
+;;; Load pre-early-init.el | TODO remove
 
 ;; (lightemacs-load-user-init
 ;;  (expand-file-name "pre-early-init.el" lightemacs-local-directory)
 ;;  :no-error)
-
-;;; Load function: `lightemacs-user-pre-early-init'
-
-(when (fboundp 'lightemacs-user-pre-early-init)
-  (funcall 'lightemacs-user-pre-early-init))
 
 ;;; Load minimal-emacs.d early-init.el
 
@@ -126,12 +126,12 @@
 
 (setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
 
-;;; Load function: `lightemacs-user-early-init'
+;;; Function: `lightemacs-user-post-early-init'
 
-(when (fboundp 'lightemacs-user-early-init)
-  (funcall 'lightemacs-user-early-init))
+(when (fboundp 'lightemacs-user-post-early-init)
+  (funcall 'lightemacs-user-post-early-init))
 
-;;; Load post-early-init.el
+;;; Load post-early-init.el | TODO remove
 
 ;; (lightemacs-load-user-init
 ;;  (expand-file-name "post-early-init.el" lightemacs-local-directory)
