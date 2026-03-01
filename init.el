@@ -16,6 +16,7 @@
 ;;; Require
 
 (require 'lightemacs)
+(require 'lightemacs-module)
 
 ;;; Call `lightemacs-user-pre-init'
 
