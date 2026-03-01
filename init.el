@@ -97,17 +97,6 @@
   (lightemacs-load-user-init
    (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Hook `lightemacs-after-init-hook'
-
-(defun lightemacs--run-after-init-hook ()
-  "Run `lightemacs--run-after-init-hook' at the appropriate time."
-  (run-hooks 'lightemacs-after-init-hook))
-(cond
- ((eq lightemacs-package-manager 'elpaca)
-  (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
- (t
-  (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
-
 ;;; Load the post-init.el file
 
 (let ((el-file (expand-file-name "post-init.el"
@@ -118,5 +107,16 @@
 
 (when (fboundp 'lightemacs-user-post-init)
   (funcall 'lightemacs-user-post-init))
+
+;;; Hook `lightemacs-after-init-hook'
+
+(defun lightemacs--run-after-init-hook ()
+  "Run `lightemacs--run-after-init-hook' at the appropriate time."
+  (run-hooks 'lightemacs-after-init-hook))
+(cond
+ ((eq lightemacs-package-manager 'elpaca)
+  (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
+ (t
+  (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
 
 ;;; init.el ends here
