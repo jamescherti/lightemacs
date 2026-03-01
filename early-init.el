@@ -91,6 +91,11 @@
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
 
+;;; Function: `lightemacs-user-pre-early-init'
+
+(when (fboundp 'lightemacs-user-pre-early-init)
+  (funcall 'lightemacs-user-pre-early-init))
+
 ;;; Load: lightemacs.el
 
 (require 'lightemacs)
@@ -100,11 +105,6 @@
 (load (expand-file-name "config" lightemacs-local-directory)
       :no-error
       (not (bound-and-true-p init-file-debug)))
-
-;;; Function: `lightemacs-user-pre-early-init'
-
-(when (fboundp 'lightemacs-user-pre-early-init)
-  (funcall 'lightemacs-user-pre-early-init))
 
 ;;; Adjust CPUs
 

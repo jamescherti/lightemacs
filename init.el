@@ -35,6 +35,13 @@
 (when (fboundp 'lightemacs-user-pre-init)
   (lightemacs-user-pre-init))
 
+;;; Load: init.el
+
+(when (and (fboundp 'lightemacs-load-user-init)
+           (boundp 'minimal-emacs-user-directory))
+  (lightemacs-load-user-init
+   (expand-file-name "init.el" minimal-emacs-user-directory)))
+
 ;;; Load the pre-init.el file | TODO remove
 
 ;; (let ((el-file (expand-file-name "pre-init.el"
@@ -100,13 +107,6 @@
 
 (when (fboundp 'lightemacs-user-init)
   (lightemacs-user-init))
-
-;; Load `lightemacs-user-init'
-
-(when (and (fboundp 'lightemacs-load-user-init)
-           (boundp 'minimal-emacs-user-directory))
-  (lightemacs-load-user-init
-   (expand-file-name "init.el" minimal-emacs-user-directory)))
 
 ;;; Load the post-init.el file | TODO remove
 
