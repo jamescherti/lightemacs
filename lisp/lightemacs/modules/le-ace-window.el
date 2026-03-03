@@ -25,9 +25,9 @@
   :commands ace-window
   :bind
   ([remap other-window] . ace-window)
-  :custom
-  (aw-background t)
-  (aw-scope 'frame))
+  :init
+  (setq aw-background t)
+  (setq aw-scope 'frame))
 
 (provide 'le-ace-window)
 

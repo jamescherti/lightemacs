@@ -55,8 +55,15 @@ Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
   (unless (memq lightemacs-theme-name lightemacs-theme--package-installed)
-    (eval `(lightemacs-use-package ,lightemacs-theme-package
-             :demand t))
+    (eval `(progn
+             (lightemacs-use-package ,lightemacs-theme-package
+               :demand t)
+
+             ;; Block execution until Elpaca finishes downloading and installing
+             ;; the theme
+             (when (and (eq lightemacs-package-manager 'elpaca)
+                        (fboundp 'elpaca-wait))
+               (elpaca-wait))))
     (push lightemacs-theme-name lightemacs-theme--package-installed))
 
   (let ((lightemacs-theme-name lightemacs-theme-name))
@@ -112,7 +119,10 @@ If PACKAGE is non-nil, require it before loading the theme."
 (when lightemacs-theme-package
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
-    (lightemacs-theme--load-theme)))
+    (defvar le-theme--theme-loaded nil)
+    (unless le-theme--theme-loaded
+      (lightemacs-theme--load-theme)
+      (setq le-theme--theme-loaded t))))
 
 (provide 'le-theme)
 

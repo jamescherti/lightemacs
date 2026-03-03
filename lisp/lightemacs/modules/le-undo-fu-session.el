@@ -20,19 +20,44 @@
 
 (require 'lightemacs-module)
 
+;;; Variables
+
+(defvar lightemacs-undo-fu-session-quiet lightemacs-reduce-messages
+  "If non-nil, inhibit noisy `undo-fu-session' messages.
+When non-nil, warnings such as \"Undo-Fu-Session cannot recover undo data\"
+will only be logged to the *Messages* buffer, keeping the echo area clean.")
+
+;;; `use-package'
+
 (lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"
                                              "/git-rebase-todo\\'"
                                              "\\.gpg$"))
+  (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode)
 
+  :config
   (when (executable-find "zstd")
     ;; zstd is used due to its superior performance, as execution speed is the
     ;; primary objective within the Emacs environment.
-    (setq undo-fu-session-compression 'zst))
+    (setq undo-fu-session-compression 'zst)))
 
-  (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode))
+;;; Quiet
+
+(defun lightemacs--undo-fu-session-silence-a (orig-fn &rest args)
+  "Advice to selectively inhibit `undo-fu-session' messages.
+If `lightemacs-undo-fu-session-quiet' is non-nil, `inhibit-message' is set to t.
+ORIG-FN is the original function and ARGS are its arguments."
+  (let ((inhibit-message (or inhibit-message lightemacs-undo-fu-session-quiet)))
+    (apply orig-fn args)))
+
+(with-eval-after-load 'undo-fu-session
+  ;; Use a loop to easily apply the generic advice to multiple noisy functions
+  (dolist (fn '(undo-fu-session--file-limit-enforce
+                undo-fu-session--recover-safe))
+    (when (fboundp fn)
+      (advice-add fn :around #'lightemacs--undo-fu-session-silence-a))))
 
 (provide 'le-undo-fu-session)
 

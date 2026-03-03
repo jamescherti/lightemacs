@@ -15,7 +15,6 @@
 
 ;;; Require
 
-(require 'cl-lib)
 (require 'le-core-paths)
 (require 'le-core-defaults)
 (require 'le-core-defun)
@@ -105,20 +104,18 @@ Emacs standard behavior.")
 
 (defun lightemacs-load-user-init (file &optional no-error)
   "Load a file of Lisp init file named FILENAME.
-If optional second arg NO-ERROR is non-nil, report no error if FILE doesn’t
+If optional second arg NO-ERROR is non-nil, report no error if FILE doesn't
 exist."
-  (cl-letf (((symbol-function 'minimal-emacs-load-user-init)
-             (lambda (&rest _)
-               nil)))
-    (if (not lightemacs-load-compiled-init-files)
-        (load file
-              no-error
-              (not (bound-and-true-p init-file-debug))
-              :nosuffix)
-      ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
-      ;; select between .el and .elc files.
-      (setq file (lightemacs--remove-el-file-suffix file))
-      (load file no-error (not (bound-and-true-p init-file-debug))))))
+  (if lightemacs-load-compiled-init-files
+      (progn
+        ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
+        ;; select between .el and .elc files.
+        (setq file (lightemacs--remove-el-file-suffix file))
+        (load file no-error (not (bound-and-true-p init-file-debug))))
+    (load file
+          no-error
+          (not (bound-and-true-p init-file-debug))
+          :nosuffix)))
 
 ;;; Provide lightemacs
 

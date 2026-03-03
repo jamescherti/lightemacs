@@ -18,9 +18,7 @@
 (require 'le-core-defun)
 (require 'le-core-defaults)
 (require 'use-package)
-(eval-when-compile
-  ;; `use-package-normalize-keywords'
-  (require 'use-package-core))
+(require 'use-package-core) ; `use-package-normalize-keywords'
 
 ;;; Variables
 
@@ -46,7 +44,7 @@ startup performance when configuring multiple packages.")
 
 (defun lightemacs-use-package--before-package (name
                                                _effective-args
-                                               _normalized-args
+                                               normalized-args
                                                ensure-value
                                                &rest _args)
   "Ensure a package is installed before `lightemacs-use-package' expands.
@@ -81,7 +79,9 @@ is `use-package' and the :ensure property is non-nil."
    ((and (eq lightemacs-package-manager 'use-package)
          ensure-value
          (fboundp 'use-package-ensure-function)
-         (not (memq name lightemacs-use-package--installed)))
+         (not (memq name lightemacs-use-package--installed))
+         ;; Do not refresh when :vc is used
+         (not (plist-member normalized-args :vc)))
     (when (and lightemacs-use-package-refresh-contents
                (eq lightemacs-package-manager 'use-package)
                ensure-value
@@ -149,6 +149,7 @@ them to `use-package\='."
       (cond
        ;; Straight
        ((eq lightemacs-package-manager 'straight)
+        ;; TODO remove :vc in this case?
         (let ((straight-is-member (plist-member effective-args :straight))
               (ensure-bool-value (if ensure-value t nil)))
           (when ensure-is-member
@@ -176,19 +177,29 @@ them to `use-package\='."
        ;; Use-package or Elpaca
        ;; TODO how about elpaca? (Answer: Elpaca uses standard :ensure syntax)
        ((memq lightemacs-package-manager '(use-package elpaca))
-        ;; TODO remove :straight, in this case
-        ;; (when (plist-member effective-args :straight)
-        ;;   (setq effective-args (lightemacs-use-package--plist-delete
-        ;;                         effective-args
-        ;;                         :straight)))
+        (when (plist-member effective-args :straight)
+          (setq effective-args (lightemacs-use-package--plist-delete
+                                effective-args
+                                :straight)))
 
-        ;; TODO should this be removed when use-package-always-ensure is non-nil
-        (when (bound-and-true-p lightemacs-debug)
-          (message "[lightemacs] Added ':ensure nil' to the %s package"
-                   name))
-        (when ensure-is-member
-          (lightemacs-use-package--plist-delete effective-args :ensure))
-        (setq effective-args (append (list :ensure nil) effective-args)))))
+        (let ((vc-is-member (plist-member normalized-args :vc)))
+          (when (and vc-is-member
+                     (or (eq lightemacs-package-manager 'elpaca)
+                         noninteractive
+                         (bound-and-true-p byte-compile-current-file)))
+            (setq effective-args
+                  (lightemacs-use-package--plist-delete effective-args :vc)))
+
+          (when (and (not vc-is-member)
+                     (not (eq lightemacs-package-manager 'elpaca))
+                     use-package-always-ensure)
+            (when (bound-and-true-p lightemacs-debug)
+              (message "[lightemacs] Added ':ensure nil' to the %s package"
+                       name))
+
+            (setq effective-args
+                  (lightemacs-use-package--plist-delete effective-args :ensure))
+            (setq effective-args (append (list :ensure nil) effective-args)))))))
     ;; Return the 3 elements as a list
     (list effective-args
           normalized-args
@@ -201,66 +212,20 @@ them to `use-package\='."
 NAME and ARGS are the same arguments as the `use-package' macro.
 Normalization and manager selection occur at macro-expansion time."
   (declare (indent defun))
-  (pcase-let ((`(,effective-args ,normalized-args ,ensure-value)
-               (lightemacs-use-package--normalize name args)))
+  (let* ((normalized-result (lightemacs-use-package--normalize name args))
+         (effective-args (nth 0 normalized-result))
+         (normalized-args (nth 1 normalized-result))
+         (ensure-value (nth 2 normalized-result)))
     `(progn
        ;; This block is compiled into the .elc.
        ;; During batch compilation, the condition is true (it is compiling),
-       ;; so the `unless` body is skipped and NOT expanded or executed.
-       (unless (bound-and-true-p byte-compile-current-file)
+       ;; so the `unless' body is skipped and NOT expanded or executed.
+       (unless (or noninteractive (bound-and-true-p byte-compile-current-file))
          (lightemacs-use-package--before-package ',name ',effective-args
                                                  ',normalized-args
                                                  ',ensure-value))
 
        (use-package ,name ,@effective-args))))
-
-;; (defmacro lightemacs-use-package (name &rest args)
-;;   "Provide a formal interface for package configuration via `use-package'.
-;; NAME and ARGS are the same arguments as the `use-package' macro.
-;; Normalization and manager selection occur at macro-expansion time."
-;;   (declare (indent defun))
-;;   (pcase-let ((`(,effective-args ,normalized-args ,ensure-value)
-;;                (lightemacs-use-package--normalize name args)))
-;;     `(progn
-;;        ;; This block is executed at runtime but skipped during compilation.
-;;        (unless (bound-and-true-p byte-compile-current-file)
-;;          (lightemacs-use-package--before-package ',name ',effective-args
-;;                                                  ',normalized-args
-;;                                                  ',ensure-value))
-;;
-;;        ;; The compiler must see use-package, but with :ensure forced to nil
-;;        (use-package ,name ,@effective-args))))
-
-;; (defmacro lightemacs-use-package (name &rest args)
-;;   "Provide a formal interface for package configuration via `use-package`.
-;; NAME and ARGS are the same arguments as the `use-package' macro."
-;;   (declare (indent defun))
-;;   (pcase-let ((`(,effective-args ,normalized-args ,ensure-value)
-;;                (lightemacs-use-package--normalize name args)))
-;;     (let* (;; We wrap in a 'let' to neutralize the downloader during expansion
-;;            ;; (use-package-always-ensure nil)
-;;            ;;
-;;            ;; We generate the expansion of the inner use-package macro
-;;            (expansion (macroexpand-all `(use-package ,name ,@effective-args))))
-;;
-;;       ;; 3. SIDE EFFECT: Print the expansion to the compiler's output
-;;       (when (or (bound-and-true-p pre-commit-elisp-debug)
-;;                 (bound-and-true-p byte-compile-current-file))
-;;         (message "[DEBUG] Final expansion for %s:\n%S"
-;;                  name (pp-to-string expansion)))
-;;
-;;       ;; 4. RETURN the expansion inside your progn
-;;       `(progn
-;;          (unless (bound-and-true-p byte-compile-current-file)
-;;            (lightemacs-use-package--before-package ',name ',effective-args
-;;                                                    ',normalized-args
-;;                                                    ',ensure-value)
-;;
-;;            ;; Inject the already-expanded code directly
-;;            ,expansion
-;;
-;;            ;; (use-package ,name ,@effective-args)
-;;            )))))
 
 ;;; Provide
 

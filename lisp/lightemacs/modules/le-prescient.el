@@ -20,18 +20,19 @@
 
 (require 'lightemacs-module)
 
-;; The .el extension is required; without it, Emacs may prompt for a file
-;; encoding (e.g., UTF-8).
-(setq prescient-save-file (expand-file-name "prescient-save.el"
-                                            user-emacs-directory))
-
-(with-eval-after-load 'compile-angel
-  (when (fboundp 'compile-angel-exclude-file)
-    (compile-angel-exclude-file prescient-save-file)))
-
 (lightemacs-use-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)
+
+  :preface
+  ;; The .el extension is required; without it, Emacs may prompt for a file
+  ;; encoding (e.g., UTF-8).
+  (setq prescient-save-file (expand-file-name "prescient-save.el"
+                                              user-emacs-directory))
+
+  (with-eval-after-load 'compile-angel
+    (when (fboundp 'compile-angel-exclude-file)
+      (compile-angel-exclude-file prescient-save-file)))
 
   :init
   (add-hook 'lightemacs-after-init-hook #'prescient-persist-mode)

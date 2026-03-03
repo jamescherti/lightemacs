@@ -21,6 +21,8 @@
 
 (require 'lightemacs-module)
 
+(defvar lightemacs-vertico-current-arrow t)
+
 (lightemacs-use-package vertico
   :commands (vertico-mode
              vertico-next
@@ -43,19 +45,22 @@
   (setq vertico-cycle lightemacs-cycle)
   (setq vertico-count-format nil) ; No prefix with number of entries
 
+  :preface
+  (defun lightemacs-vertico-format-candidate-advice (orig-fun
+                                                     cand prefix
+                                                     suffix index start)
+    (let ((formatted-cand (funcall orig-fun cand prefix suffix index start)))
+      (if (and lightemacs-vertico-current-arrow
+               (not (bound-and-true-p vertico-flat-mode)))
+          (if (= vertico--index index)
+              (concat #("► " 0 2 (face vertico-current)) formatted-cand)
+            (concat #("_ " 0 1 (display " ")) formatted-cand))
+        formatted-cand)))
+
   :config
   ;; Prefix current candidate with arrow
-  ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
-  (defvar +vertico-current-arrow t)
-  (cl-defmethod vertico--format-candidate :around
-    (cand prefix suffix index start &context
-          ((and +vertico-current-arrow
-                (not (bound-and-true-p vertico-flat-mode)))
-           (eql t)))
-    (setq cand (cl-call-next-method cand prefix suffix index start))
-    (if (= vertico--index index)
-        (concat #("► " 0 2 (face vertico-current)) cand)
-      (concat #("_ " 0 1 (display " ")) cand))))
+  (advice-add 'vertico--format-candidate :around
+              #'lightemacs-vertico-format-candidate-advice))
 
 ;;; Provide
 (provide 'le-vertico)

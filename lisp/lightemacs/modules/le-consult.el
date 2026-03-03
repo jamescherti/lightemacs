@@ -135,16 +135,19 @@ Displays `[CRM<separator>]` in the minibuffer to clarify multi-selection.
 ARGS are the arguments.
 This helps users recognize that multiple inputs are allowed and how to separate
 them. Ensures this runs only when `crm` is loaded and Consult is in use."
-    (when (boundp 'crm-separator)
-      (cons (format "[CRM%s] %s"
-                    (replace-regexp-in-string
-                     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                     crm-separator)
-                    (car args))
-            (cdr args))))
+    (if (boundp 'crm-separator)
+        (cons (format "[CRM%s] %s"
+                      (replace-regexp-in-string
+                       "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                       crm-separator)
+                      (car args))
+              (cdr args))
+      ;; Fallback: return the original arguments untouched
+      args))
 
-  (advice-add
-   #'completing-read-multiple :filter-args 'lightemacs-consult--crm-indicator)
+  (advice-add #'completing-read-multiple
+              :filter-args
+              'lightemacs-consult--crm-indicator)
 
   :init
   ;; Enable automatic preview at point in the *Completions* buffer.
@@ -198,30 +201,36 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
   ;; (setq consult--gc-threshold (* 2 64 1024 1024))
   ;; (setq consult--process-chunk (* 2 1024 1024))
 
-  (setq consult-fd-args
-        (concat (if lightemacs--fdfind-executable
-                    lightemacs--fdfind-executable
-                  "fd")
-                ;; Lightemacs
-                " --hidden --exclude .git --absolute-path"
-                (if (memq system-type '(cygwin windows-nt ms-dos))
-                    " --path-separator=/"
-                  "")
+  ;; Fix `elpaca' with `with-eval-after-load'
+  (with-eval-after-load 'le-core-cli-tools
+    (if (fboundp 'lightemacs-core--load-cli-tools)
+        (lightemacs-core--load-cli-tools)
+      (error "Undefined: lightemacs-core--load-cli-tools"))
 
-                ;; Default
-                " --full-path --color=never"))
+    (setq consult-fd-args
+          (concat (if lightemacs--fdfind-executable
+                      lightemacs--fdfind-executable
+                    "fd")
+                  ;; Lightemacs
+                  " --hidden --exclude .git --absolute-path"
+                  (if (memq system-type '(cygwin windows-nt ms-dos))
+                      " --path-separator=/"
+                    "")
 
-  (setq consult-ripgrep-args
-        (concat (if lightemacs--ripgrep-executable
-                    lightemacs--ripgrep-executable
-                  "rg")
-                ;; Lightemacs
-                " --hidden -g !.git -g !.svn -g !.hg"
+                  ;; Default
+                  " --full-path --color=never"))
 
-                ;; Default
-                " --null --line-buffered --color=never --max-columns=1000"
-                " --path-separator / --smart-case --no-heading"
-                " --with-filename --line-number --search-zip"))
+    (setq consult-ripgrep-args
+          (concat (if lightemacs--ripgrep-executable
+                      lightemacs--ripgrep-executable
+                    "rg")
+                  ;; Lightemacs
+                  " --hidden -g !.git -g !.svn -g !.hg"
+
+                  ;; Default
+                  " --null --line-buffered --color=never --max-columns=1000"
+                  " --path-separator / --smart-case --no-heading"
+                  " --with-filename --line-number --search-zip")))
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
@@ -229,6 +238,7 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
   )
 
 ;;; Provide
+
 (provide 'le-consult)
 
 ;; Local variables:

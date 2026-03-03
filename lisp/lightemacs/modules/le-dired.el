@@ -46,19 +46,6 @@ buffer, followed by regular files.")
     ;; modification date, etc.)
     (add-hook 'dired-mode-hook #'dired-hide-details-mode))
 
-  ;; Group directories first
-  (when lightemacs-dired-group-directories-first
-    (when (string= system-type "darwin")
-      (setq dired-use-ls-dired nil))
-    (let ((args "--group-directories-first -ahlv"))
-      (when (or (eq system-type 'darwin) (eq system-type 'berkeley-unix))
-        (if-let* ((gls (executable-find "gls")))
-            (setq insert-directory-program gls)
-          (setq args nil)))
-      (when args
-        (setq dired-listing-switches args))))
-
-
   (setq dired-omit-files
         "\\`\\.[^.]")  ;; matches any file starting with . but not ..
 
@@ -78,7 +65,21 @@ buffer, followed by regular files.")
       ;; All dotfiles
       (setq dired-omit-files (concat dired-omit-files "\\|^\\."))
     ;; All dotfiles files except '..'
-    (setq dired-omit-files (concat dired-omit-files "\\|\\`\\.[^.]\\|\\`\\.$"))))
+    (setq dired-omit-files (concat dired-omit-files "\\|\\`\\.[^.]\\|\\`\\.$")))
+
+  :config
+  ;; Group directories first
+  ;; (:config is better to avoid executable-find during init)
+  (when lightemacs-dired-group-directories-first
+    (when (string= system-type "darwin")
+      (setq dired-use-ls-dired nil))
+    (let ((args "--group-directories-first -ahlv"))
+      (when (or (eq system-type 'darwin) (eq system-type 'berkeley-unix))
+        (if-let* ((gls (executable-find "gls")))
+            (setq insert-directory-program gls)
+          (setq args nil)))
+      (when args
+        (setq dired-listing-switches args)))))
 
 (provide 'le-dired)
 

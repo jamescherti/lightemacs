@@ -17,6 +17,7 @@
 
 (require 'le-core-defaults)
 (require 'le-core-defun)
+
 (require 'lightemacs-use-package)
 
 ;;; Misc macros

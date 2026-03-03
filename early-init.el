@@ -54,7 +54,12 @@
 (setq minimal-emacs-gc-cons-percentage 0.1)
 (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
 (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
-(setq minimal-emacs-ui-features '(context-menu tooltips))
+(setq minimal-emacs-ui-features '())
+
+(setq minimal-emacs-load-pre-early-init nil)
+(setq minimal-emacs-load-post-early-init nil)
+(setq minimal-emacs-load-pre-init nil)
+(setq minimal-emacs-load-post-init nil)
 
 (setq package-enable-at-startup nil)
 (setq package-archive-priorities '(("gnu"          . 90)
@@ -91,6 +96,12 @@
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
 
+;;; Load: config.el
+
+(load (expand-file-name "config" lightemacs-local-directory)
+      :no-error
+      (not (bound-and-true-p init-file-debug)))
+
 ;;; Function: `lightemacs-user-pre-early-init'
 
 (when (fboundp 'lightemacs-user-pre-early-init)
@@ -100,12 +111,6 @@
 
 (require 'lightemacs)
 
-;;; Load: config.el
-
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
-
 ;;; Adjust CPUs
 
 (when (and lightemacs-native-comp-excluded-cpus
@@ -113,7 +118,7 @@
   (setq native-comp-async-jobs-number
         (lightemacs--calculate-native-comp-async-jobs-number)))
 
-;;; Load pre-early-init.el | TODO remove
+;;; Load pre-early-init.el | TODO  put it back
 
 ;; (lightemacs-load-user-init
 ;;  (expand-file-name "pre-early-init.el" lightemacs-local-directory)

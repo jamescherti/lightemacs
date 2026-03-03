@@ -26,11 +26,19 @@
   :preface
   (defun le-markdown-toc--markdown-toc-generate-toc-advice (fn &rest args)
     "Restore `window-start' after generating a table of contents.
-FN is the advised function. ARGS are the function arguments."
+  FN is the advised function. ARGS are the function arguments."
     (lightemacs-save-window-start
       (lightemacs-save-window-hscroll
         (save-excursion
-          (apply fn args)))))
+          ;; Safely remove the automatic undo boundary inserted by the command
+          ;; loop. This merges the upcoming changes with the previous undo step.
+          (when (and (consp buffer-undo-list)
+                     (null (car buffer-undo-list)))
+            (setq buffer-undo-list (cdr buffer-undo-list)))
+          (let ((undo-handle (prepare-change-group)))
+            (unwind-protect
+                (apply fn args)
+              (undo-amalgamate-change-group undo-handle)))))))
 
   :config
   (advice-add 'markdown-toc-generate-toc :around

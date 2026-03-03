@@ -13,12 +13,18 @@
 
 ;;; Code:
 
-(defvar lightemacs--ripgrep-executable (executable-find "rg" 'remote))
-(defvar lightemacs--fdfind-executable
-  (let ((fdfind-executable (executable-find "fdfind" 'remote)))
-    (if fdfind-executable
-        fdfind-executable
-      (executable-find "fd" 'remote))))
+(defvar lightemacs--ripgrep-executable nil)
+(defvar lightemacs--fdfind-executable nil)
+
+(defun lightemacs-core--load-cli-tools ()
+  "Find cli tools."
+  (setq lightemacs--ripgrep-executable (executable-find "rg" 'remote))
+  (setq lightemacs--fdfind-executable
+        (let ((fdfind-executable (executable-find "fd" 'remote)))
+          (if fdfind-executable
+              fdfind-executable
+            ;; Debian
+            (executable-find "fdfind" 'remote)))))
 
 (provide 'le-core-cli-tools)
 

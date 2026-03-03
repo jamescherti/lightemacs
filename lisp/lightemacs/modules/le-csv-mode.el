@@ -43,9 +43,9 @@
   :mode
   ("\\.[cC][sS][vV]\\'" . csv-mode)
 
-  :custom
-  (csv-align-max-width 100)
-  (csv-separators '("," "\t" ";" "|")))
+  :init
+  (setq csv-align-max-width 100)
+  (setq csv-separators '("," "\t" ";" "|")))
 
 (provide 'le-csv-mode)
 

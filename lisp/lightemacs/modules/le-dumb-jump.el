@@ -49,18 +49,26 @@
   ;; definitions are found.
   (setq dumb-jump-selector 'completing-read)
 
+  :config
   ;; If ripgrep is available, force `dumb-jump' to use it because it is
   ;; significantly faster and more accurate than the default searchers (grep,
   ;; ag, etc.).
-  (when lightemacs--ripgrep-executable
-    (setq dumb-jump-force-searcher 'rg)
-    (setq dumb-jump-prefer-searcher 'rg))
+  ;; Fix `elpaca' with `with-eval-after-load'
+  (with-eval-after-load 'le-core-cli-tools
+    (if (fboundp 'lightemacs-core--load-cli-tools)
+        (lightemacs-core--load-cli-tools)
+      (error "Undefined: lightemacs-core--load-cli-tools"))
 
-  :config
+    (when lightemacs--ripgrep-executable
+      (setq dumb-jump-force-searcher 'rg)
+      (setq dumb-jump-prefer-searcher 'rg)))
+
   ;; Make `dumb-jump' use the same project root markers as `project.el' for
   ;; consistent project detection.
+
   (with-eval-after-load 'project
-    (cl-callf cl-union dumb-jump-project-denoters project-vc-extra-root-markers)))
+    (setq dumb-jump-project-denoters
+          (seq-union dumb-jump-project-denoters project-vc-extra-root-markers))))
 
 (provide 'le-dumb-jump)
 
