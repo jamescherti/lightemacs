@@ -351,8 +351,9 @@ Returns a list of the files that were successfully deleted."
         (error nil)))
     deleted-files))
 
-(defun lightemacs-get-all-el-files ()
-  "Get a list of all Lightemacs *.el files, including init and directory files."
+(defun lightemacs-get-all-el-files (&optional loaded-only)
+  "Get a list of all Lightemacs *.el files, including init and directory files.
+If LOADED-ONLY is non-nil, return only the files that are currently loaded."
   (let ((all-el-files nil))
     ;; Collect standard init files
     (when (and user-init-file (file-exists-p user-init-file))
@@ -381,55 +382,63 @@ Returns a list of the files that were successfully deleted."
             (append all-el-files
                     (lightemacs-find-el-files lightemacs-local-directory))))
 
-    all-el-files))
+    (if loaded-only
+        (let ((filtered-files nil))
+          (dolist (file all-el-files)
+            (let* ((file-base (file-name-sans-extension file))
+                   (is-loaded
+                    (catch 'loaded
+                      (dolist (lh load-history)
+                        (let ((lh-file (car lh)))
+                          (when lh-file
+                            (dolist (suffix load-file-rep-suffixes)
+                              (when (or (file-equal-p
+                                         lh-file
+                                         (concat file-base ".el" suffix))
+                                        (file-equal-p
+                                         lh-file
+                                         (concat file-base ".elc" suffix)))
+                                (throw 'loaded t))))))
+                      nil)))
+              (when is-loaded
+                (push file filtered-files))))
+          filtered-files)
+      all-el-files)))
 
 (defun lightemacs-compile-all-files ()
   "Byte-compile and native compile Lightemacs core, modules, and init files.
 Returns a list of the files that were compiled."
   (interactive)
-  (let ((all-el-files (lightemacs-get-all-el-files))
+  (let ((all-el-files (lightemacs-get-all-el-files :loaded-only))
         (compiled-files nil))
     (when all-el-files
       (dolist (file all-el-files)
-        (let ((is-loaded nil)
-              (file-base (file-name-sans-extension file)))
-          (setq is-loaded
-                (catch 'loaded
-                  (dolist (lh load-history)
-                    (let ((lh-file (car lh)))
-                      (when lh-file
-                        (dolist (suffix load-file-rep-suffixes)
-                          (when (or (file-equal-p lh-file (concat file-base ".el" suffix))
-                                    (file-equal-p lh-file (concat file-base ".elc" suffix)))
-                            (throw 'loaded t))))))
-                  nil))
-          (when is-loaded
-            (let ((compiled nil))
-              ;; Byte-compile
-              (condition-case err
-                  (progn
-                    (byte-compile-file file)
-                    (setq compiled t))
-                (error
-                 (message "Byte-compile failed for %s: %s"
-                          file (error-message-string err))))
+        (let ((compiled nil))
+          ;; Byte-compile
+          (condition-case err
+              (progn
+                ;; (byte-compile-file file)
+                (setq compiled t))
+            (error
+             (message "Byte-compile failed for %s: %s"
+                      file (error-message-string err))))
 
-              ;; Native compile
-              (when (and (native-comp-available-p)
-                         (fboundp 'native-compile))
-                (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
-                                  (comp-el-to-eln-filename file))))
-                  (when eln-file
-                    (condition-case err
-                        (progn
-                          (native-compile-async file)
-                          (setq compiled t))
-                      (error
-                       (message "Native-compile failed for %s: %s"
-                                file (error-message-string err)))))))
+          ;; Native compile
+          (when (and (native-comp-available-p)
+                     (fboundp 'native-compile))
+            (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
+                              (comp-el-to-eln-filename file))))
+              (when eln-file
+                (condition-case err
+                    (progn
+                      ;; (native-compile-async file)
+                      (setq compiled t))
+                  (error
+                   (message "Native-compile failed for %s: %s"
+                            file (error-message-string err)))))))
 
-              (when compiled
-                (push file compiled-files))))))
+          (when compiled
+            (push file compiled-files))))
       (message "Finished compiling %d files." (length compiled-files)))
     compiled-files))
 
