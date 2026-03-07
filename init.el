@@ -68,7 +68,8 @@
       (require 'le-core-pm-elpaca))
 
      ;; use-package (built-in)
-     ((eq lightemacs-package-manager 'use-package)
+     ((or (eq lightemacs-package-manager 'builtin-package)
+          (eq lightemacs-package-manager 'use-package))
       (require 'le-core-pm-use-package))
 
      (t

@@ -208,7 +208,7 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 
 Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
 
-By default, `lightemacs-package-manager` is set to `'use-package`, which uses the built-in `package.el` together with `use-package`.
+By default, `lightemacs-package-manager` is set to `'builtin-package`, which uses the built-in `package.el` together with `use-package`.
 
 #### Supported package managers
 
@@ -223,7 +223,7 @@ By default, `lightemacs-package-manager` is set to `'use-package`, which uses th
 Add the following to `~/.emacs.d/lisp/local/config.el`:
 
 ```elisp
-(setq lightemacs-package-manager 'use-package)
+(setq lightemacs-package-manager 'builtin-package)
 ```
 
 This guarantees that the built-in `use-package` will manage package installation, loading, and configuration according to the semantics of the selected package manager.
@@ -955,7 +955,7 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-use-package-refresh-contents`: If non-nil, `lightemacs-module` may refresh package contents once. Refresh package contents when `lightemacs-use-package-refresh-contents` is non-nil and the package is not installed.
 
-- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'use-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-module` handles installation and configuration of packages.
+- `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'builtin-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-module` handles installation and configuration of packages.
 
 - `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files.
 

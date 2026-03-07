@@ -267,7 +267,8 @@
 
 ;;; Packages
 
-(when (eq lightemacs-package-manager 'use-package)
+(when (or (eq lightemacs-package-manager 'builtin-package)
+          (eq lightemacs-package-manager 'use-package))
   (setq package-pinned-packages
         '((dired-filter                  . "melpa")
           (dired-hacks-utils             . "melpa")

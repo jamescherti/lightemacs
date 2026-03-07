@@ -63,11 +63,11 @@ This enabled or disable cycling in plugins such as Vertico and Consult.
 When nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
-(defvar lightemacs-package-manager 'use-package
+(defvar lightemacs-package-manager 'builtin-package
   "Specifies which package manager to use in Lightemacs.
 
 Choices are:
-- \='use-package: Use Emacs' built-in package.el and `use-package'.
+- \='builtin-package: Use Emacs' built-in package.el and `use-package'.
 - \='straight: Use `straight.el' for package management.
 - \='elpaca: Use `elpaca'.
 

@@ -76,14 +76,16 @@ is `use-package' and the :ensure property is non-nil."
    ;;  (straight-use-package name)
    ;;  (push name lightemacs-use-package--installed))
 
-   ((and (eq lightemacs-package-manager 'use-package)
+   ((and (or (eq lightemacs-package-manager 'builtin-package)
+             (eq lightemacs-package-manager 'use-package))
          ensure-value
          (fboundp 'use-package-ensure-function)
          (not (memq name lightemacs-use-package--installed))
          ;; Do not refresh when :vc is used
          (not (plist-member normalized-args :vc)))
     (when (and lightemacs-use-package-refresh-contents
-               (eq lightemacs-package-manager 'use-package)
+               (or (eq lightemacs-package-manager 'builtin-package)
+                   (eq lightemacs-package-manager 'use-package))
                ensure-value
                ;; TODO alternative to package-installed-p
                (not (package-installed-p name)))
@@ -129,7 +131,9 @@ ARGS is the raw property list of keywords supplied to `use-package\='.
 This function processes the raw property list ARGS to ensure the
 appropriate package management keywords are present before passing
 them to `use-package\='."
-  (unless (memq lightemacs-package-manager '(straight elpaca use-package))
+  (unless (memq lightemacs-package-manager '(straight elpaca builtin-package
+                                                      ;; Deprecated:
+                                                      use-package))
     (error "The value '%s' is not a valid `lightemacs-package-manager'"
            lightemacs-package-manager))
 
@@ -166,17 +170,20 @@ them to `use-package\='."
               ensure-bool-value name)
             ;; TODO: Should we just copy the value of ensure t or nil into
             ;; :straight?
-            (setq effective-args
-                  (append (list :straight
-                                (if ensure-is-member
-                                    ensure-bool-value
-                                  t)
-                                :ensure nil)
-                          effective-args)))))
+            (setq effective-args (append (list :straight
+                                               (if ensure-is-member
+                                                   ensure-bool-value
+                                                 t))
+                                         effective-args)))
+
+          ;; Explicitly append :ensure nil so package.el never attempts an install
+          (setq effective-args (append (list :ensure nil) effective-args))))
 
        ;; Use-package or Elpaca
        ;; TODO how about elpaca? (Answer: Elpaca uses standard :ensure syntax)
-       ((memq lightemacs-package-manager '(use-package elpaca))
+       ((memq lightemacs-package-manager '(builtin-package
+                                           use-package
+                                           elpaca))
         (when (plist-member effective-args :straight)
           (setq effective-args (lightemacs-use-package--plist-delete
                                 effective-args
