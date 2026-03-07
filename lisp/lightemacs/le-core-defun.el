@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+;;; Misc
+
 (defmacro lightemacs-verbose-message (&rest args)
   "Display a verbose message with the same ARGS arguments as `message'."
   (declare (indent 0) (debug t))
@@ -288,6 +290,149 @@ If the buffer is not visiting a file, opens the current `default-directory'."
               (when (fboundp 'dired-goto-file)
                 (dired-goto-file file))
               (lightemacs-recenter-maybe))))))))
+
+;;; Compilation
+
+(require 'bytecomp)
+
+(defun lightemacs-find-el-files (directory)
+  "Return a list of all source files in DIRECTORY."
+  (let ((regex (concat "\\.el" (regexp-opt load-file-rep-suffixes) "\\'")))
+    (directory-files-recursively directory regex)))
+
+(defun lightemacs-get-elc-files (list-el-files)
+  "Return a list of existing .elc files for the source files in LIST-EL-FILES."
+  (let ((elc-files nil))
+    (dolist (source-file list-el-files)
+      (let ((elc-file (funcall (if (bound-and-true-p
+                                    byte-compile-dest-file-function)
+                                   byte-compile-dest-file-function
+                                 #'byte-compile-dest-file)
+                               source-file)))
+        (when (and elc-file (file-exists-p elc-file))
+          (push elc-file elc-files))))
+    elc-files))
+
+(defun lightemacs-get-eln-files (list-el-files)
+  "Return a list of existing .eln files for the source files in LIST-EL-FILES."
+  (let ((eln-files nil))
+    (dolist (source-file list-el-files)
+      (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
+                        (comp-el-to-eln-filename source-file))))
+        (when (and eln-file (file-exists-p eln-file))
+          (push eln-file eln-files))))
+    eln-files))
+
+(defun lightemacs-delete-elc-files (list-el-files)
+  "Delete all .elc files associated with the source files in LIST-EL-FILES.
+Returns a list of the files that were successfully deleted."
+  (let ((elc-files (lightemacs-get-elc-files list-el-files))
+        (deleted-files nil))
+    (dolist (file elc-files)
+      (condition-case nil
+          (progn
+            ;; (delete-file file)
+            (message "DEL: %s" file)
+            (push file deleted-files))
+        (error nil)))
+    deleted-files))
+
+(defun lightemacs-delete-eln-files (list-el-files)
+  "Delete all .eln files associated with the source files in LIST-EL-FILES.
+Returns a list of the files that were successfully deleted."
+  (let ((eln-files (lightemacs-get-eln-files list-el-files))
+        (deleted-files nil))
+    (dolist (file eln-files)
+      (condition-case nil
+          (progn
+            ;; (delete-file file)
+            (message "DEL: %s" file)
+            (push file deleted-files))
+        (error nil)))
+    deleted-files))
+
+(defun lightemacs-get-all-el-files ()
+  "Get a list of all Lightemacs *.el files, including init and directory files."
+  (let ((all-el-files nil))
+    ;; Collect standard init files
+    (when (and user-init-file (file-exists-p user-init-file))
+      (push user-init-file all-el-files))
+
+    (let ((early-init (if (boundp 'early-init-file)
+                          early-init-file
+                        (expand-file-name "early-init.el"
+                                          user-emacs-directory))))
+      (when (file-exists-p early-init)
+        (push early-init all-el-files)))
+
+    ;; Collect files from modules directory
+    (when (and (boundp 'lightemacs-modules-directory)
+               (stringp lightemacs-modules-directory)
+               (file-directory-p lightemacs-modules-directory))
+      (setq all-el-files
+            (append all-el-files
+                    (lightemacs-find-el-files lightemacs-modules-directory))))
+
+    ;; Collect files from local directory
+    (when (and (boundp 'lightemacs-local-directory)
+               (stringp lightemacs-local-directory)
+               (file-directory-p lightemacs-local-directory))
+      (setq all-el-files
+            (append all-el-files
+                    (lightemacs-find-el-files lightemacs-local-directory))))
+
+    all-el-files))
+
+(defun lightemacs-compile-all-files ()
+  "Byte-compile and native compile Lightemacs core, modules, and init files.
+Returns a list of the files that were compiled."
+  (interactive)
+  (let ((all-el-files (lightemacs-get-all-el-files))
+        (compiled-files nil))
+    (when all-el-files
+      (dolist (file all-el-files)
+        (let ((compiled nil))
+          ;; Byte-compile
+          (condition-case err
+              (progn
+                (byte-compile-file file)
+                (setq compiled t))
+            (error
+             (message "Byte-compile failed for %s: %s"
+                      file (error-message-string err))))
+
+          ;; Native compile
+          (when (and (native-comp-available-p)
+                     (fboundp 'native-compile))
+            (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
+                              (comp-el-to-eln-filename file))))
+              (when eln-file
+                (condition-case err
+                    (progn
+                      (native-compile-async file)
+                      (setq compiled t))
+                  (error
+                   (message "Native-compile failed for %s: %s"
+                            file (error-message-string err)))))))
+
+          (when compiled
+            (push file compiled-files))))
+      (message "Finished compiling %d files." (length compiled-files)))
+    compiled-files))
+
+;; (defun lightemacs-delete-all-compiled-files ()
+;;   "Delete all Lightemacs core and modules .elc and .eln files."
+;;   (interactive)
+;;   (let* ((all-el-files (lightemacs-get-all-el-files))
+;;          (deleted nil))
+;;     (when all-el-files
+;;       (setq deleted (append (lightemacs-delete-elc-files all-el-files)
+;;                             (lightemacs-delete-eln-files all-el-files)))
+;;       (if deleted
+;;           (message "Successfully cleaned up %d compiled files." (length deleted))
+;;         (message "No compiled files were found to delete.")))
+;;     deleted))
+
 
 (provide 'le-core-defun)
 

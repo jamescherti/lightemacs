@@ -66,7 +66,8 @@ is `use-package' and the :ensure property is non-nil."
    ;;  (lightemacs-verbose-message "elpaca: Installing %s" name)
    ;;  (elpaca name)
    ;;  (push name lightemacs-use-package--installed))
-   ;;
+
+   ;; TODO
    ;; ;; Straight: Uses its own recipe-based cloning system.
    ;; ((and (eq lightemacs-package-manager 'straight)
    ;;       ensure-value
@@ -107,10 +108,6 @@ is `use-package' and the :ensure property is non-nil."
     (when (fboundp 'use-package-ensure-function)
       (funcall use-package-ensure-function name (list ensure-value) nil))
     (push name lightemacs-use-package--installed))))
-
-;; (defun lightemacs--set-keyword (args keyword &rest forms)
-;;   "Safely set KEYWORD to FORMS in ARGS, replacing any existing declarations."
-;;   (append (cons keyword forms) (lightemacs-use-package-delete-keyword args keyword)))
 
 (defun lightemacs-use-package--plist-delete (plist property)
   "Delete PROPERTY from PLIST.
@@ -176,7 +173,8 @@ them to `use-package\='."
                                                  t))
                                          effective-args)))
 
-          ;; Explicitly append :ensure nil so package.el never attempts an install
+          ;; Explicitly append :ensure nil so package.el never attempts an
+          ;; install
           (setq effective-args (append (list :ensure nil) effective-args))))
 
        ;; Use-package or Elpaca
