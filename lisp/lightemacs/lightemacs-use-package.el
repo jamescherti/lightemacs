@@ -193,24 +193,27 @@ them to `use-package\='."
                                 effective-args
                                 :straight)))
 
-        (let ((vc-is-member (plist-member normalized-args :vc)))
-          (when (and vc-is-member
-                     (or (eq lightemacs-package-manager 'elpaca)
-                         noninteractive
-                         (bound-and-true-p byte-compile-current-file)))
-            (setq effective-args
-                  (lightemacs-use-package--plist-delete effective-args :vc)))
+        ;; (let ((vc-is-member (plist-member normalized-args :vc)))
+        ;;   (when (and vc-is-member
+        ;;              (or ;;(eq lightemacs-package-manager 'elpaca)
+        ;;                  noninteractive
+        ;;                  (bound-and-true-p byte-compile-current-file)))
+        ;;     (setq effective-args
+        ;;           (lightemacs-use-package--plist-delete effective-args :vc)))
 
-          (when (and (not vc-is-member)
-                     (not (eq lightemacs-package-manager 'elpaca))
-                     use-package-always-ensure)
-            (when (bound-and-true-p lightemacs-debug)
-              (message "[lightemacs] Added ':ensure nil' to the %s package"
-                       name))
+        ;;   ;; (when (and (not vc-is-member)
+        ;;   ;;            ;; (not (eq lightemacs-package-manager 'elpaca))
+        ;;   ;;            use-package-always-ensure)
+        ;;   ;;   (when (bound-and-true-p lightemacs-debug)
+        ;;   ;;     (message "[lightemacs] Added ':ensure nil' to the %s package"
+        ;;   ;;              name))
 
-            (setq effective-args
-                  (lightemacs-use-package--plist-delete effective-args :ensure))
-            (setq effective-args (append (list :ensure nil) effective-args)))))))
+        ;;   ;;   ;; (setq effective-args
+        ;;   ;;   ;;       (lightemacs-use-package--plist-delete effective-args :ensure))
+        ;;   ;;   ;; (setq effective-args (append (list :ensure nil) effective-args))
+        ;;   ;;   )
+        ;;   )
+        )))
     ;; Return the 3 elements as a list
     (list effective-args
           normalized-args

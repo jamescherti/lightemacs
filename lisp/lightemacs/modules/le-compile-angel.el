@@ -27,10 +27,11 @@
 (require 'lightemacs-module)
 
 (lightemacs-use-package compile-angel
-  :demand t
-  :functions (compile-angel-on-load-mode
-              compile-angel-on-save-local-mode
-              compile-angel-on-save-mode)
+  :commands (compile-angel-on-load-mode
+             compile-angel-on-save-local-mode
+             compile-angel-on-save-mode)
+  :hook
+  (lightemacs-after-init . compile-angel-on-load-mode)
   :init
   ;; Verbose
   (when init-file-debug
@@ -63,10 +64,7 @@ specified file or directory is ignored during the compilation process managed by
 
   ;; TODO add support to compile-angel?
   (with-eval-after-load 'cus-edit
-    (le-compile-angel-exclude custom-file))
-
-  ;; Start `compile-angel'
-  (compile-angel-on-load-mode))
+    (le-compile-angel-exclude custom-file)))
 
 (provide 'le-compile-angel)
 
