@@ -91,7 +91,6 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
   :custom
   ;; (evil-want-C-u-scroll t)
-  (evil-search-module 'evil-search)
   (evil-want-Y-yank-to-eol t)
   (evil-want-C-i-jump t)
   (evil-want-C-h-delete t)
@@ -99,6 +98,12 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   (evil-want-C-u-delete t)
 
   :config
+  ;; Occasionally, `evil' fails to respect the `evil-search-module'
+  ;; when `evil-search-module' is in :custom, causing search behavior to diverge
+  ;; from the configured value.
+  (setq evil-search-module 'evil-search)
+  (evil-select-search-module 'evil-search-module 'evil-search)
+
   ;; NOTE: This patch has been merged into the Emacs master branch but has not
   ;; been officially released yet.
   ;; URL: https://github.com/emacs-evil/evil/pull/1975
