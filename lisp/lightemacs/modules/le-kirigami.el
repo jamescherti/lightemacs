@@ -44,6 +44,7 @@
 ;;; Code:
 
 (require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package kirigami
   :commands (kirigami-open-fold

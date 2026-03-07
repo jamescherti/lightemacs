@@ -15,7 +15,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package org-appear
   :commands org-appear-mode

@@ -21,7 +21,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package elisp-autofmt
   :commands (elisp-autofmt-mode

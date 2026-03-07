@@ -13,16 +13,21 @@
 
 ;;; Code:
 
-;; Elpaca bootstrap
-(defvar elpaca-installer-version 0.11)
+;; Bootstrap
+(defvar elpaca-installer-version 0.12)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+
+;; The following two defvar have been added
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
+
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
                               :ref nil :depth 1 :inherit ignore
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-                              :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+                              :build (:not elpaca-activate)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-sources-directory))
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
        (order (cdr elpaca-order))
        (default-directory repo))
@@ -53,12 +58,15 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
+;; Uncomment for systems which cannot create symlinks:
+;; TODO for windows
+;; (elpaca-no-symlink-mode)
+
 (unless (package-installed-p 'use-package)
   (elpaca use-package))
 
-;; Optional: Install use-package support
-(elpaca elpaca-use-package
-        (elpaca-use-package-mode))
+;; Enable use-package :ensure support for Elpaca.
+(elpaca elpaca-use-package (elpaca-use-package-mode))
 
 (provide 'le-core-pm-elpaca)
 

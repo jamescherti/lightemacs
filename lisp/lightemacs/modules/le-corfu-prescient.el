@@ -36,7 +36,7 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 (require 'le-corfu)
 (require 'le-prescient)
 

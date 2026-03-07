@@ -18,7 +18,7 @@
 
 ;;; Require
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 (require 'le-dired)
 
 ;;; Variables

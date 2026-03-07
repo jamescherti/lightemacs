@@ -16,7 +16,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package which-key
   :ensure nil

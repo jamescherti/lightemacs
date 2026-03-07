@@ -17,7 +17,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 (require 'le-yasnippet)
 
 (lightemacs-use-package yasnippet-snippets

@@ -15,10 +15,7 @@
 
 ;;; Require
 
-(require 'le-core-defaults)
-(require 'le-core-defun)
-
-(require 'lightemacs-use-package)
+(require 'lightemacs) ; `lightemacs-verbose-message'
 
 ;;; Misc macros
 
@@ -104,22 +101,8 @@ is not added to the loaded list."
   (dolist (feature-symbol modules)
     (unless (memq feature-symbol lightemacs-module--loaded)
       (lightemacs-verbose-message "Load module: %s" feature-symbol)
-      (condition-case err
-          (progn
-            (require feature-symbol)
-            (push feature-symbol lightemacs-module--loaded))
-        (error
-         (if (or (eq lightemacs-optional-modules t)
-                 (and (listp lightemacs-optional-modules)
-                      (memq feature-symbol lightemacs-optional-modules)))
-             (display-warning 'lightemacs
-                              (format "Failed to load module '%s': %s"
-                                      feature-symbol
-                                      (error-message-string err))
-                              :error)
-           (error "Failed to load module '%s': %s"
-                  feature-symbol
-                  (error-message-string err))))))))
+      (require feature-symbol)
+      (push feature-symbol lightemacs-module--loaded))))
 
 ;;; Provide
 

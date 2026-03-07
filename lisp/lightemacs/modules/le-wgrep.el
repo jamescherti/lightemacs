@@ -22,7 +22,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package wgrep
   :commands (wgrep-change-to-wgrep-mode

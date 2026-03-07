@@ -21,7 +21,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package yaml-mode
   :commands yaml-mode

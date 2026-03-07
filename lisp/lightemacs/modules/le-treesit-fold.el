@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package treesit-fold
   :commands (treesit-fold-close

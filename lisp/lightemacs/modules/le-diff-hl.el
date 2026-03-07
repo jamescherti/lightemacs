@@ -20,7 +20,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package diff-hl
   :commands (diff-hl-mode

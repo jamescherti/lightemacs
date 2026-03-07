@@ -23,6 +23,7 @@
 ;;; Code:
 
 (require 'lightemacs-module)
+(require 'lightemacs-use-package)
 (require 'le-package-lint)
 
 (lightemacs-use-package package-lint-flymake

@@ -15,7 +15,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 ;; TODO fix shut-up
 ;; (require 'le-shut-up)

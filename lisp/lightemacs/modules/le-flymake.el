@@ -23,6 +23,7 @@
 ;;; Use-package `flymake'
 
 (require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package flymake
   :ensure nil

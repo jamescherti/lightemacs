@@ -15,6 +15,25 @@
 
 ;;; Variables
 
+(defvar lightemacs-user-directory user-emacs-directory
+  "Directory beneath Lightemacs files are placed.
+Note that this should end with a directory separator.")
+
+(defvar lightemacs-local-directory
+  (expand-file-name "lisp/local/" lightemacs-user-directory))
+
+(defvar lightemacs-local-modules-directory
+  (expand-file-name "modules/" lightemacs-local-directory))
+
+(defvar lightemacs-core-directory
+  (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
+
+(defvar lightemacs-modules-directory
+  (expand-file-name "modules/" lightemacs-core-directory))
+
+(defvar lightemacs-var-directory
+  (expand-file-name "var/" lightemacs-user-directory))
+
 (defvar lightemacs-modules '(;; Default modules
                              le-flavor-essential
 
@@ -63,11 +82,11 @@ This enabled or disable cycling in plugins such as Vertico and Consult.
 When nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
-(defvar lightemacs-package-manager 'use-package
+(defvar lightemacs-package-manager 'builtin-package
   "Specifies which package manager to use in Lightemacs.
 
 Choices are:
-- \='use-package: Use Emacs' built-in package.el and `use-package'.
+- \='builtin-package: Use Emacs' built-in package.el and `use-package'.
 - \='straight: Use `straight.el' for package management.
 - \='elpaca: Use `elpaca'.
 
@@ -84,11 +103,80 @@ This will enable Lightemacs to load byte-compiled or possibly native-compiled
 init files for the following initialization files: init.el, pre-init.el,
 post-init.el, pre-early-init.el, and post-early-init.el.")
 
-(defvar lightemacs-optional-modules nil
-  "Control which module load errors are ignored.
-If t, ignore errors on all modules.
-If nil, always fail when a module fails to load.
-If a list of symbols, ignore errors for the modules in the list.")
+;;; Hook: `lightemacs-after-init-hook'
+
+(defvar lightemacs-after-init-hook nil
+  "Hook run after LightEmacs initialization is complete.
+If `lightemacs-package-manager' is elpaca, this hook runs after
+`elpaca-after-init-hook'. Otherwise, it runs after `after-init-hook', similar to
+Emacs standard behavior.")
+
+(defvar lightemacs-emacs-startup-hook nil
+  "Hook run after Emacs startup processes are complete.
+If `lightemacs-package-manager' is elpaca, this hook runs after
+`elpaca-after-init-hook'. Otherwise, it runs after `emacs-startup-hook', similar
+to Emacs standard behavior.")
+
+;;; Overwrite Minimal-emacs.d defaults
+
+(defvar lightemacs--le-core-defaults-done nil)
+(unless lightemacs--le-core-defaults-done
+  (setq lightemacs--le-core-defaults-done t)
+
+  (setq minimal-emacs-frame-title-format "%b – Lightemacs")
+  (setq minimal-emacs-package-initialize-and-refresh nil)  ; Managed by Lightemacs
+  (setq minimal-emacs-gc-cons-percentage 0.1)
+  (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
+  (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
+  (setq minimal-emacs-ui-features '())
+
+  (setq minimal-emacs-load-pre-early-init nil)
+  (setq minimal-emacs-load-post-early-init nil)
+  (setq minimal-emacs-load-pre-init nil)
+  (setq minimal-emacs-load-post-init nil)
+
+  (setq package-enable-at-startup nil)
+  (setq package-archive-priorities '(("gnu"          . 90)
+                                     ("nongnu"       . 80)
+                                     ("melpa"        . 70)
+                                     ("melpa-stable" . 50)))
+  (setq package-archives
+        '(("melpa"        . "https://melpa.org/packages/")
+          ("gnu"          . "https://elpa.gnu.org/packages/")
+          ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
+          ("melpa-stable" . "https://stable.melpa.org/packages/")))
+
+  (setq minimal-emacs-load-compiled-init-files t)
+
+
+  (add-to-list 'load-path
+               (expand-file-name "modules/" lightemacs-local-directory))
+  (add-to-list 'load-path lightemacs-local-modules-directory)
+  (add-to-list 'load-path lightemacs-core-directory)
+  (add-to-list 'load-path lightemacs-modules-directory)
+
+
+  ;; Reduce cluttering
+  ;;
+  ;; Emacs, by default, stores various configuration files, caches, backups, and
+  ;; other data in the ~/.emacs.d directory. Over time, this directory can
+  ;; become cluttered with numerous files, making it difficult to manage and
+  ;; maintain.
+  ;;
+  ;; A common solution to this issue is installing the no-littering package;
+  ;; however, this package is not essential.
+  ;;
+  ;; An alternative lightweight approach is to simply change the default
+  ;; ~/.emacs.d directory to ~/.emacs.d/var/, which will contain all the files
+  ;; that Emacs typically stores in the base directory.
+  (setq lightemacs--declutter-done t)
+  (setq user-emacs-directory lightemacs-var-directory)
+  (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+  (setq minimal-emacs-user-directory (expand-file-name
+                                      "init/" lightemacs-core-directory))
+
+  (setq custom-theme-directory
+        (expand-file-name "themes/" minimal-emacs-user-directory)))
 
 ;;; Provide
 

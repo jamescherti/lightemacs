@@ -22,7 +22,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package page-break-lines
   :commands (page-break-lines-mode

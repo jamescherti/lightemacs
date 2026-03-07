@@ -22,7 +22,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package undo-fu
   :commands (undo-fu-only-undo

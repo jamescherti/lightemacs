@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package edit-indirect
   :commands edit-indirect-mode

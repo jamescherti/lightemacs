@@ -17,19 +17,6 @@
 
 (require 'lightemacs)
 
-;;; Hook `lightemacs-after-init-hook'
-
-(defun lightemacs--run-after-init-hook ()
-  "Run `lightemacs--run-after-init-hook' at the appropriate time."
-  (run-hooks 'lightemacs-after-init-hook))
-
-(cond
- ((eq lightemacs-package-manager 'elpaca)
-  (add-hook 'elpaca-after-init-hook #'lightemacs--run-after-init-hook))
-
- (t
-  (add-hook 'after-init-hook #'lightemacs--run-after-init-hook)))
-
 ;;; Call `lightemacs-user-pre-init'
 
 (when (fboundp 'lightemacs-user-pre-init)
@@ -42,17 +29,12 @@
   (lightemacs-load-user-init
    (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Load the pre-init.el file | TODO remove
-
-;; (let ((el-file (expand-file-name "pre-init.el"
-;;                                  lightemacs-local-directory)))
-;;   (lightemacs-load-user-init el-file :no-error))
-
 ;;; Configure the package manager
 
-;; TODO Check if this is necessary
+;; TODO Is this is necessary?
 (unless lightemacs-package-manager
-  (error "Invalid `lightemacs-package-manager': %S" lightemacs-package-manager))
+  (error "Invalid `lightemacs-package-manager': %S"
+         lightemacs-package-manager))
 
 (defvar lightemacs-use-package--package-manager-loaded nil)
 
@@ -68,7 +50,8 @@
       (require 'le-core-pm-elpaca))
 
      ;; use-package (built-in)
-     ((eq lightemacs-package-manager 'use-package)
+     ((or (eq lightemacs-package-manager 'builtin-package)
+          (eq lightemacs-package-manager 'use-package))
       (require 'le-core-pm-use-package))
 
      (t
@@ -80,6 +63,41 @@
 
   (setq lightemacs-use-package--package-manager-loaded t))
 
+(require 'lightemacs-use-package)
+
+;;; Hook `lightemacs-after-init-hook'
+
+(defun lightemacs--run-after-init-hook ()
+  "Run `lightemacs-after-init-hook' at the appropriate time."
+  (unwind-protect
+      (run-hooks 'lightemacs-after-init-hook)
+    (cond
+     ((eq lightemacs-package-manager 'elpaca)
+      (remove-hook 'elpaca-after-init-hook 'lightemacs--run-after-init-hook))
+
+     (t
+      (remove-hook 'after-init-hook 'lightemacs--run-after-init-hook)))))
+
+(defun lightemacs--run-emacs-startup-hook ()
+  "Run `lightemacs-emacs-startup-hook' at the appropriate time."
+  (unwind-protect
+      (run-hooks 'lightemacs-emacs-startup-hook)
+    (cond
+     ((eq lightemacs-package-manager 'elpaca)
+      (remove-hook 'elpaca-after-init-hook 'lightemacs--run-emacs-startup-hook))
+
+     (t
+      (remove-hook 'emacs-startup-hook 'lightemacs--run-emacs-startup-hook)))))
+
+(cond
+ ((eq lightemacs-package-manager 'elpaca)
+  (add-hook 'elpaca-after-init-hook 'lightemacs--run-after-init-hook 104)
+  (add-hook 'elpaca-after-init-hook 'lightemacs--run-emacs-startup-hook 105))
+
+ (t
+  (add-hook 'after-init-hook 'lightemacs--run-after-init-hook 104)
+  (add-hook 'emacs-startup-hook 'lightemacs--run-emacs-startup-hook 105)))
+
 ;;; Function: `lightemacs-user-pre-modules'
 
 ;; Load function: `lightemacs-user-pre-modules'
@@ -88,7 +106,6 @@
 
 ;;; Load modules
 
-;; Load all modules
 (require 'lightemacs-module)
 
 (if (fboundp 'lightemacs-module-load)
@@ -107,12 +124,6 @@
 
 (when (fboundp 'lightemacs-user-init)
   (lightemacs-user-init))
-
-;;; Load the post-init.el file | TODO remove
-
-;; (let ((el-file (expand-file-name "post-init.el"
-;;                                  lightemacs-local-directory)))
-;;   (lightemacs-load-user-init el-file :no-error))
 
 ;;; Function: `lightemacs-user-post-init'
 

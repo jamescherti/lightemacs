@@ -13,7 +13,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 (require 'le-evil)
 
 (lightemacs-use-package evil-commentary

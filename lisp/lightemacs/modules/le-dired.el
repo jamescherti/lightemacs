@@ -14,7 +14,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (defvar lightemacs-dired-omit-parent-directory nil
   "When non-nil, omit the .. directory when `dired-omit-mode' is enabled.

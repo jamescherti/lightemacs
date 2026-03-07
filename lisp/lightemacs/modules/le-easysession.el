@@ -25,7 +25,7 @@
 
 ;;; Require
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (defvar lightemacs-easysession-load-session-on-startup t
   "If non-nil, automatically load the main session when Emacs starts.
@@ -76,16 +76,16 @@ Set to nil to ignore window size and position during session restoration.")
             (if (daemonp)
                 (add-hook 'server-after-make-frame-hook
                           #'easysession-load-including-geometry 102)
-              (add-hook 'emacs-startup-hook
+              (add-hook 'lightemacs-emacs-startup-hook
                         #'easysession-load-including-geometry 102))
           ;; Excluding geometry
           (if (daemonp)
               (add-hook 'server-after-make-frame-hook
                         #'easysession-load-including-geometry 102)
-            (add-hook 'emacs-startup-hook
+            (add-hook 'lightemacs-emacs-startup-hook
                       #'easysession-load-including-geometry 102))))
       ;; Auto save mode
-      (add-hook 'emacs-startup-hook #'easysession-save-mode 103)))
+      (add-hook 'lightemacs-emacs-startup-hook #'easysession-save-mode 103)))
 
   :init
   ;; Customizations

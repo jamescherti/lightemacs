@@ -15,8 +15,7 @@
 
 ;;; Require
 
-(require 'le-core-defun)
-(require 'le-core-defaults)
+(require 'lightemacs) ; lightemacs-verbose-message
 (require 'use-package)
 (require 'use-package-core) ; `use-package-normalize-keywords'
 
@@ -26,7 +25,6 @@
   "If non-nil, `lightemacs-use-package' may refresh package contents once.")
 
 ;; Internal variables
-
 
 (defvar lightemacs-use-package--packages-refreshed nil
   "Non-nil if package contents have been refreshed during the current session.
@@ -66,7 +64,8 @@ is `use-package' and the :ensure property is non-nil."
    ;;  (lightemacs-verbose-message "elpaca: Installing %s" name)
    ;;  (elpaca name)
    ;;  (push name lightemacs-use-package--installed))
-   ;;
+
+   ;; TODO
    ;; ;; Straight: Uses its own recipe-based cloning system.
    ;; ((and (eq lightemacs-package-manager 'straight)
    ;;       ensure-value
@@ -76,16 +75,18 @@ is `use-package' and the :ensure property is non-nil."
    ;;  (straight-use-package name)
    ;;  (push name lightemacs-use-package--installed))
 
-   ((and (eq lightemacs-package-manager 'use-package)
+   ((and (or (eq lightemacs-package-manager 'builtin-package)
+             (eq lightemacs-package-manager 'use-package))
          ensure-value
          (fboundp 'use-package-ensure-function)
          (not (memq name lightemacs-use-package--installed))
          ;; Do not refresh when :vc is used
          (not (plist-member normalized-args :vc)))
     (when (and lightemacs-use-package-refresh-contents
-               (eq lightemacs-package-manager 'use-package)
+               (or (eq lightemacs-package-manager 'builtin-package)
+                   (eq lightemacs-package-manager 'use-package))
                ensure-value
-               ;; TODO alternative to package-installed-p
+               ;; TODO alternative to package-installed-p?
                (not (package-installed-p name)))
       ;; Refresh packages
       (unless lightemacs-use-package--packages-refreshed
@@ -106,10 +107,6 @@ is `use-package' and the :ensure property is non-nil."
       (funcall use-package-ensure-function name (list ensure-value) nil))
     (push name lightemacs-use-package--installed))))
 
-;; (defun lightemacs--set-keyword (args keyword &rest forms)
-;;   "Safely set KEYWORD to FORMS in ARGS, replacing any existing declarations."
-;;   (append (cons keyword forms) (lightemacs-use-package-delete-keyword args keyword)))
-
 (defun lightemacs-use-package--plist-delete (plist property)
   "Delete PROPERTY from PLIST.
 This is in contrast to merely setting it to 0."
@@ -129,7 +126,9 @@ ARGS is the raw property list of keywords supplied to `use-package\='.
 This function processes the raw property list ARGS to ensure the
 appropriate package management keywords are present before passing
 them to `use-package\='."
-  (unless (memq lightemacs-package-manager '(straight elpaca use-package))
+  (unless (memq lightemacs-package-manager '(straight elpaca builtin-package
+                                                      ;; Deprecated:
+                                                      use-package))
     (error "The value '%s' is not a valid `lightemacs-package-manager'"
            lightemacs-package-manager))
 
@@ -148,8 +147,8 @@ them to `use-package\='."
     (unless disabled-value
       (cond
        ;; Straight
+       ;; --------
        ((eq lightemacs-package-manager 'straight)
-        ;; TODO remove :vc in this case?
         (let ((straight-is-member (plist-member effective-args :straight))
               (ensure-bool-value (if ensure-value t nil)))
           (when ensure-is-member
@@ -157,35 +156,48 @@ them to `use-package\='."
                                   effective-args
                                   :ensure)))
 
-          ;; Add :straight ensure-value?
+          ;; Remove :vc
           (when (not straight-is-member)
+            (let ((vc-is-member (plist-member normalized-args :vc)))
+              (when vc-is-member
+                (setq effective-args (lightemacs-use-package--plist-delete
+                                      effective-args :vc))))
+
             ;; If ':ensure nil' is present, translate that to
             ;; ':straight nil'
             (lightemacs-debug-message
               "[lightemacs] Added ':straight %s' to the %s package"
               ensure-bool-value name)
+
             ;; TODO: Should we just copy the value of ensure t or nil into
             ;; :straight?
-            (setq effective-args
-                  (append (list :straight
-                                (if ensure-is-member
-                                    ensure-bool-value
-                                  t)
-                                :ensure nil)
-                          effective-args)))))
+            (when (and straight-use-package-by-default
+                       (not ensure-bool-value))
+              (setq effective-args (append (list :straight
+                                                 (if ensure-is-member
+                                                     ensure-bool-value
+                                                   t))
+                                           effective-args))))
 
-       ;; Use-package or Elpaca
-       ;; TODO how about elpaca? (Answer: Elpaca uses standard :ensure syntax)
-       ((memq lightemacs-package-manager '(use-package elpaca))
+          ;; Explicitly append :ensure nil so package.el never attempts an
+          ;; install
+          (setq effective-args (append (list :ensure nil) effective-args))))
+
+       ;; Builtin package or Elpaca
+       ;; -------------------------
+       ((memq lightemacs-package-manager '(builtin-package
+                                           use-package
+                                           elpaca))
+        ;; Remove straight
         (when (plist-member effective-args :straight)
           (setq effective-args (lightemacs-use-package--plist-delete
                                 effective-args
                                 :straight)))
 
+        ;; Remove :vc
         (let ((vc-is-member (plist-member normalized-args :vc)))
           (when (and vc-is-member
-                     (or (eq lightemacs-package-manager 'elpaca)
-                         noninteractive
+                     (or noninteractive
                          (bound-and-true-p byte-compile-current-file)))
             (setq effective-args
                   (lightemacs-use-package--plist-delete effective-args :vc)))
@@ -193,10 +205,10 @@ them to `use-package\='."
           (when (and (not vc-is-member)
                      (not (eq lightemacs-package-manager 'elpaca))
                      use-package-always-ensure)
-            (when (bound-and-true-p lightemacs-debug)
-              (message "[lightemacs] Added ':ensure nil' to the %s package"
-                       name))
-
+            ;; Always replace :ensure with :ensure nil to prevent the native
+            ;; compiler from downloading from repositories such as MELPA
+            (lightemacs-debug-message
+              "[lightemacs] Added ':ensure nil' to the %s package" name)
             (setq effective-args
                   (lightemacs-use-package--plist-delete effective-args :ensure))
             (setq effective-args (append (list :ensure nil) effective-args)))))))

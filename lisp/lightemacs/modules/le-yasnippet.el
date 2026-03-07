@@ -20,7 +20,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package yasnippet
   :commands (yas-global-mode

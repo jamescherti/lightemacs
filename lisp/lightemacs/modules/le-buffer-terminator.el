@@ -28,6 +28,7 @@
 ;;; Code:
 
 (require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package buffer-terminator
   :commands (buffer-terminator-mode
@@ -38,7 +39,7 @@
 
   (lightemacs-module-hooks buffer-terminator
     buffer-terminator-mode
-    '(emacs-startup-hook)))
+    '(lightemacs-emacs-startup-hook)))
 
 (provide 'le-buffer-terminator)
 

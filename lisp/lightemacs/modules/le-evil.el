@@ -18,7 +18,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 ;;; Variables
 
@@ -89,8 +89,6 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   (setq evil-respect-visual-line-mode nil)
   (setq evil-want-C-g-bindings t)
 
-  (setq evil-search-module 'evil-search)
-
   :custom
   ;; (evil-want-C-u-scroll t)
   (evil-want-Y-yank-to-eol t)
@@ -101,8 +99,9 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
   :config
   ;; Occasionally, `evil' fails to respect the `evil-search-module'
-  ;; customization, causing search behavior to diverge from the configured
-  ;; value.
+  ;; when `evil-search-module' is in :custom, causing search behavior to diverge
+  ;; from the configured value.
+  (setq evil-search-module 'evil-search)
   (evil-select-search-module 'evil-search-module 'evil-search)
 
   ;; NOTE: This patch has been merged into the Emacs master branch but has not

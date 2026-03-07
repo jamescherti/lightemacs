@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package expand-region
   :commands (er/expand-region

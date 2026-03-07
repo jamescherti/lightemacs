@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package indent-bars
   :commands indent-bars-mode

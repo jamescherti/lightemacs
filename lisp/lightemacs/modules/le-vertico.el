@@ -19,7 +19,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (defvar lightemacs-vertico-current-arrow t)
 

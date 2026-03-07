@@ -17,7 +17,7 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
+(require 'lightemacs-use-package)
 
 (lightemacs-use-package goto-chg
   :commands (goto-last-change
