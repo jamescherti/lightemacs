@@ -160,6 +160,12 @@ them to `use-package\='."
 
           ;; Add :straight ensure-value?
           (when (not straight-is-member)
+            (let ((vc-is-member (plist-member normalized-args :vc)))
+              (when vc-is-member
+                (setq effective-args
+                      (lightemacs-use-package--plist-delete
+                       effective-args :vc))))
+
             ;; If ':ensure nil' is present, translate that to
             ;; ':straight nil'
             (lightemacs-debug-message
