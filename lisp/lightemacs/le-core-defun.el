@@ -391,19 +391,18 @@ Returns a list of the files that were compiled."
         (compiled-files nil))
     (when all-el-files
       (dolist (file all-el-files)
-        (let ((is-loaded nil))
+        (let ((is-loaded nil)
+              (file-base (file-name-sans-extension file)))
           (setq is-loaded
                 (catch 'loaded
                   (dolist (lh load-history)
                     (let ((lh-file (car lh)))
-                      (when (and lh-file
-                                 (file-equal-p
-                                  file
-                                  (concat (file-name-sans-extension lh-file)
-                                          ".el")))
-                        (throw 'loaded t))))
+                      (when lh-file
+                        (dolist (suffix load-file-rep-suffixes)
+                          (when (or (file-equal-p lh-file (concat file-base ".el" suffix))
+                                    (file-equal-p lh-file (concat file-base ".elc" suffix)))
+                            (throw 'loaded t))))))
                   nil))
-
           (when is-loaded
             (let ((compiled nil))
               ;; Byte-compile
@@ -446,7 +445,6 @@ Returns a list of the files that were compiled."
 ;;           (message "Successfully cleaned up %d compiled files." (length deleted))
 ;;         (message "No compiled files were found to delete.")))
 ;;     deleted))
-
 
 (provide 'le-core-defun)
 
