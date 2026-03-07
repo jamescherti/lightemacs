@@ -383,26 +383,26 @@ If LOADED-ONLY is non-nil, return only the files that are currently loaded."
                     (lightemacs-find-el-files lightemacs-local-directory))))
 
     (if loaded-only
-        (let ((filtered-files nil))
+        (let ((loaded-hash (make-hash-table :test 'equal))
+              (filtered-files nil))
+          (dolist (lh load-history)
+            (let ((lh-file (car lh)))
+              (when (stringp lh-file)
+                (let ((base lh-file))
+                  (dolist (suffix load-file-rep-suffixes)
+                    (when (and (> (length suffix) 0)
+                               (string-suffix-p suffix base))
+                      (setq base (substring base 0 (- (length suffix))))))
+                  (when (string-match-p "\\.elc?\\'" base)
+                    (setq base (file-name-sans-extension base)))
+                  (puthash (file-truename base) t loaded-hash)))))
           (dolist (file all-el-files)
-            (let* ((file-base (file-name-sans-extension file))
-                   (is-loaded
-                    (catch 'loaded
-                      (dolist (lh load-history)
-                        (let ((lh-file (car lh)))
-                          (when lh-file
-                            (dolist (suffix load-file-rep-suffixes)
-                              (when (or (file-equal-p
-                                         lh-file
-                                         (concat file-base ".el" suffix))
-                                        (file-equal-p
-                                         lh-file
-                                         (concat file-base ".elc" suffix)))
-                                (throw 'loaded t))))))
-                      nil)))
-              (when is-loaded
+            (let ((base file))
+              (when (string-match-p "\\.el\\'" base)
+                (setq base (file-name-sans-extension base)))
+              (when (gethash (file-truename base) loaded-hash)
                 (push file filtered-files))))
-          filtered-files)
+          (nreverse filtered-files))
       all-el-files)))
 
 (defun lightemacs-compile-all-files ()
