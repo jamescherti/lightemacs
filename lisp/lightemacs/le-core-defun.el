@@ -391,32 +391,46 @@ Returns a list of the files that were compiled."
         (compiled-files nil))
     (when all-el-files
       (dolist (file all-el-files)
-        (let ((compiled nil))
-          ;; Byte-compile
-          (condition-case err
-              (progn
-                (byte-compile-file file)
-                (setq compiled t))
-            (error
-             (message "Byte-compile failed for %s: %s"
-                      file (error-message-string err))))
+        (let ((is-loaded nil))
+          (setq is-loaded
+                (catch 'loaded
+                  (dolist (lh load-history)
+                    (let ((lh-file (car lh)))
+                      (when (and lh-file
+                                 (file-equal-p
+                                  file
+                                  (concat (file-name-sans-extension lh-file)
+                                          ".el")))
+                        (throw 'loaded t))))
+                  nil))
 
-          ;; Native compile
-          (when (and (native-comp-available-p)
-                     (fboundp 'native-compile))
-            (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
-                              (comp-el-to-eln-filename file))))
-              (when eln-file
-                (condition-case err
-                    (progn
-                      (native-compile-async file)
-                      (setq compiled t))
-                  (error
-                   (message "Native-compile failed for %s: %s"
-                            file (error-message-string err)))))))
+          (when is-loaded
+            (let ((compiled nil))
+              ;; Byte-compile
+              (condition-case err
+                  (progn
+                    (byte-compile-file file)
+                    (setq compiled t))
+                (error
+                 (message "Byte-compile failed for %s: %s"
+                          file (error-message-string err))))
 
-          (when compiled
-            (push file compiled-files))))
+              ;; Native compile
+              (when (and (native-comp-available-p)
+                         (fboundp 'native-compile))
+                (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
+                                  (comp-el-to-eln-filename file))))
+                  (when eln-file
+                    (condition-case err
+                        (progn
+                          (native-compile-async file)
+                          (setq compiled t))
+                      (error
+                       (message "Native-compile failed for %s: %s"
+                                file (error-message-string err)))))))
+
+              (when compiled
+                (push file compiled-files))))))
       (message "Finished compiling %d files." (length compiled-files)))
     compiled-files))
 
