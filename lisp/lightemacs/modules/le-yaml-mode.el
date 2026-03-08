@@ -21,7 +21,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 (lightemacs-use-package yaml-mode
   :commands yaml-mode

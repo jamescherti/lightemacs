@@ -23,7 +23,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 (lightemacs-use-package treesit-auto
   :commands (global-treesit-auto-mode

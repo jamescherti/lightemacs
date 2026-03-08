@@ -36,7 +36,8 @@
 ;;; use-package
 
 (require 'lightemacs-module)
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 (lightemacs-use-package apheleia
   :commands (apheleia-mode

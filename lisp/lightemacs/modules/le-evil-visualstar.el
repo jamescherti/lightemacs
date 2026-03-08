@@ -21,7 +21,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 (lightemacs-use-package evil-visualstar
   :commands global-evil-visualstar-mode

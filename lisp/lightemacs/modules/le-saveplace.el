@@ -15,7 +15,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 ;; TODO fix shut-up
 ;; (require 'le-shut-up)

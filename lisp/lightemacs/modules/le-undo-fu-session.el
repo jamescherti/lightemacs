@@ -18,7 +18,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 ;;; Variables
 
@@ -41,7 +42,8 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
   (when (executable-find "zstd")
     ;; zstd is used due to its superior performance, as execution speed is the
     ;; primary objective within the Emacs environment.
-    (setq undo-fu-session-compression 'zst)))
+    (setq undo-fu-session-compression 'zst))
+  (undo-fu-session-global-mode))
 
 ;;; Quiet
 

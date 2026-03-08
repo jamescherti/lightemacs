@@ -18,7 +18,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 (defvar lightemacs-dtrt-indent-inhibit nil
   "Non-nil inhibits automatic indentation detection via `dtrt-indent'.

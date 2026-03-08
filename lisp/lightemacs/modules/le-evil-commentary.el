@@ -13,7 +13,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 (require 'le-evil)
 
 (lightemacs-use-package evil-commentary

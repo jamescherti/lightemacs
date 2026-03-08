@@ -17,7 +17,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 (require 'le-yasnippet)
 
 (lightemacs-use-package yasnippet-snippets

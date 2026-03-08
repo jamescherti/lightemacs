@@ -13,60 +13,111 @@
 
 ;;; Code:
 
-;;; Update defaults
+(defvar lightemacs--early-init-done nil)
+(unless lightemacs--early-init-done
+  (setq lightemacs--early-init-done t)
+  (setq load-prefer-newer t)
+  (add-to-list 'load-path
+               (expand-file-name "lisp/lightemacs" user-emacs-directory))
 
-;; This will be restored later by minimal-emacs.d
-(setq load-prefer-newer t)
+  ;; Update defaults
+  (setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
+  (defvar minimal-emacs--backup-gc-cons-percentage gc-cons-percentage)
+  (setq gc-cons-threshold most-positive-fixnum)
+  (setq gc-cons-percentage 1.0)
 
-(setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
-(defvar minimal-emacs--backup-gc-cons-percentage gc-cons-percentage)
-(setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 1.0)
+  ;; Defined later in le-core-defaults
 
-;; Defined later in le-core-defaults
+  (setq lightemacs-user-directory user-emacs-directory)
 
-(setq lightemacs-user-directory user-emacs-directory)
-(setq lightemacs-local-directory (expand-file-name "lisp/local/"
-                                                   lightemacs-user-directory))
+  ;; Load defaults
+  (add-to-list 'load-path (expand-file-name "lisp/lightemacs"
+                                            user-emacs-directory))
+  (require 'le-core-defaults)
+  (unless lightemacs-package-manager
+    (setq lightemacs-package-manager 'builtin-package))
 
-;;; Load defaults
+  ;; Overwrite Minimal-emacs.d defaults
+  (setq minimal-emacs-frame-title-format "%b – Lightemacs")
+  (setq minimal-emacs-package-initialize-and-refresh nil)  ; Managed by Lightemacs
+  (setq minimal-emacs-gc-cons-percentage 0.1)
+  (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
+  (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
+  (setq minimal-emacs-ui-features '())
 
-(add-to-list 'load-path (expand-file-name "lisp/lightemacs"
-                                          user-emacs-directory))
-(require 'le-core-defaults)
+  (setq minimal-emacs-load-pre-early-init nil)
+  (setq minimal-emacs-load-post-early-init nil)
+  (setq minimal-emacs-load-pre-init nil)
+  (setq minimal-emacs-load-post-init nil)
 
-;;; Load: config.el
+  (setq package-enable-at-startup nil)
+  (setq package-archive-priorities '(("gnu"          . 90)
+                                     ("nongnu"       . 80)
+                                     ("melpa"        . 70)
+                                     ("melpa-stable" . 50)))
+  (setq package-archives
+        '(("melpa"        . "https://melpa.org/packages/")
+          ("gnu"          . "https://elpa.gnu.org/packages/")
+          ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
+          ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
-(load (expand-file-name "config" lightemacs-local-directory)
-      :no-error
-      (not (bound-and-true-p init-file-debug)))
+  (setq minimal-emacs-load-compiled-init-files t)
 
-;;; Function: `lightemacs-user-pre-early-init'
+  (add-to-list 'load-path
+               (expand-file-name "modules/" lightemacs-local-directory))
+  (add-to-list 'load-path lightemacs-local-modules-directory)
+  (add-to-list 'load-path lightemacs-core-directory)
+  (add-to-list 'load-path lightemacs-modules-directory)
 
-(when (fboundp 'lightemacs-user-pre-early-init)
-  (funcall 'lightemacs-user-pre-early-init))
+  ;; Reduce cluttering
+  ;;
+  ;; Emacs, by default, stores various configuration files, caches, backups, and
+  ;; other data in the ~/.emacs.d directory. Over time, this directory can
+  ;; become cluttered with numerous files, making it difficult to manage and
+  ;; maintain.
+  ;;
+  ;; A common solution to this issue is installing the no-littering package;
+  ;; however, this package is not essential.
+  ;;
+  ;; An alternative lightweight approach is to simply change the default
+  ;; ~/.emacs.d directory to ~/.emacs.d/var/, which will contain all the files
+  ;; that Emacs typically stores in the base directory.
+  (setq user-emacs-directory lightemacs-var-directory)
+  (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+  (setq minimal-emacs-user-directory (expand-file-name
+                                      "init/" lightemacs-core-directory))
 
-;;; Load: lightemacs.el
+  (setq custom-theme-directory
+        (expand-file-name "themes/" minimal-emacs-user-directory))
 
-(require 'lightemacs)
+  ;; Evil defaults
 
-;;; Load minimal-emacs.d early-init.el
+  ;; Load: config.el
+  (load (expand-file-name "config" lightemacs-local-directory)
+        :no-error
+        (not (bound-and-true-p init-file-debug)))
 
-(lightemacs-load-user-init
- (expand-file-name "early-init.el" minimal-emacs-user-directory))
+  ;; Function: `lightemacs-user-pre-early-init'
+  (when (fboundp 'lightemacs-user-pre-early-init)
+    (funcall 'lightemacs-user-pre-early-init))
 
-;;; Adjust variables after early-init
+  ;; Load: lightemacs.el
+  (require 'lightemacs)
 
-(when (and lightemacs-native-comp-excluded-cpus
-           (boundp 'native-comp-async-jobs-number))
-  (setq native-comp-async-jobs-number
-        (lightemacs--calculate-native-comp-async-jobs-number)))
+  ;; Load minimal-emacs.d early-init.el
+  (lightemacs-load-user-init
+   (expand-file-name "early-init.el" minimal-emacs-user-directory))
 
-(setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
+  ;; Adjust variables after early-init
+  (when (and lightemacs-native-comp-excluded-cpus
+             (boundp 'native-comp-async-jobs-number))
+    (setq native-comp-async-jobs-number
+          (lightemacs--calculate-native-comp-async-jobs-number)))
 
-;;; Function: `lightemacs-user-post-early-init'
+  (setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
 
-(when (fboundp 'lightemacs-user-post-early-init)
-  (funcall 'lightemacs-user-post-early-init))
+  ;; Function: `lightemacs-user-post-early-init'
+  (when (fboundp 'lightemacs-user-post-early-init)
+    (funcall 'lightemacs-user-post-early-init)))
 
 ;;; early-init.el ends here

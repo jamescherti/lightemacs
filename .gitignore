@@ -1,5 +1,6 @@
 /lisp/lightemacs/init/README.md
-/lisp/local
+/lisp/local/
+/lisp/lightemacs/var/
 /eln-cache
 /var
 /etc

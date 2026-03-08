@@ -22,7 +22,8 @@
 
 ;;; Code:
 
-(require 'lightemacs-use-package)
+(eval-when-compile
+  (require 'lightemacs-use-package))
 
 (lightemacs-use-package wgrep
   :commands (wgrep-change-to-wgrep-mode
