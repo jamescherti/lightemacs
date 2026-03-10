@@ -65,7 +65,7 @@ If FORCE is non-nil, reload the current theme even if it is already active."
      ;; TODO remove eval and replace it with elpaca?
      ((and (eq lightemacs-package-manager 'elpaca)
            (fboundp 'elpaca))
-      (elpaca lightemacs-theme-package)
+      (eval `(elpaca ,lightemacs-theme-package) t)
       (when (fboundp 'elpaca-wait)
         (elpaca-wait))))
 
