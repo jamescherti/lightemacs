@@ -111,22 +111,19 @@
                         (prin1-to-string (abbreviate-file-name
                                           lightemacs-core-directory))))
 
-        ;; TODO remove
-        ;; (when (eq lightemacs-package-manager 'elpaca)
-        ;;   (insert
-        ;;    (format
-        ;;     (concat
-        ;;      "(let ((lightemacs--no-bootstrap t))\n"
-        ;;      "  (load (expand-file-name \"le-core-pm-elpaca.el\"\n"
-        ;;      "                          lightemacs-core-directory)\n"
-        ;;      "nil\n"
-        ;;      "'nomessage))\n\n"))))
+        (when (eq lightemacs-package-manager 'elpaca)
+          (insert (concat
+                   "(let ((lightemacs--no-bootstrap t))\n"
+                   "  (load (expand-file-name \"le-core-pm-elpaca.el\"\n"
+                   "                          lightemacs-core-directory)\n"
+                   "nil\n"
+                   "'nomessage))\n\n")))
 
         (when (eq lightemacs-package-manager 'straight)
           (insert (format "(setq straight-use-package-by-default %s)\n\n"
-                          (prin1-to-string
-                           (when straight-use-package-by-default
-                             t))))
+                          (if straight-use-package-by-default
+                              "t"
+                            "nil")))
           (insert
            (format
             (concat
