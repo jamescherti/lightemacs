@@ -20,13 +20,14 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'le-evil)
 
 (eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t))
+
+(require 'le-evil)
 
 (lightemacs-use-package evil-collection
   :if (not noninteractive)

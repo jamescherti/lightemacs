@@ -13,6 +13,7 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (defvar bootstrap-version)
 
 (let ((bootstrap-file (expand-file-name
@@ -20,14 +21,14 @@
                        (or (bound-and-true-p straight-base-dir)
                            lightemacs-var-directory)))
       (bootstrap-version 7))
-  (unless (bound-and-true-p lightemacs--no-bootstrap)
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp))))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)

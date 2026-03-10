@@ -22,19 +22,18 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 (require 'le-package-lint)
 
 (lightemacs-use-package package-lint-flymake
   :commands (package-lint-flymake-setup
-             package-lint-flymake)
+             package-lint-flymake))
 
-  :init
-  (lightemacs-module-hooks package-lint-flymake
-    package-lint-flymake-setup
-    '(emacs-lisp-mode-hook)))
+(lightemacs-module-hooks package-lint-flymake
+  package-lint-flymake-setup
+  '(emacs-lisp-mode-hook))
 
 (provide 'le-package-lint-flymake)
 

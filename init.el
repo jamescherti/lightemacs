@@ -23,7 +23,53 @@
   (error "The value '%s' is not a valid `lightemacs-package-manager'"
          lightemacs-package-manager))
 
+;;; require
+
+(require 'lightemacs)
+
+;;; Call `lightemacs-user-pre-init'
+
+(when (fboundp 'lightemacs-user-pre-init)
+  (lightemacs-user-pre-init))
+
+;;; Load: init.el
+
+(when (and (fboundp 'lightemacs-load-user-init)
+           (boundp 'minimal-emacs-user-directory))
+  (lightemacs-load-user-init
+   (expand-file-name "init.el" minimal-emacs-user-directory)))
+
+;;; Configure the package manager
+
+(defvar lightemacs-use-package--package-manager-loaded nil)
+
+(unless lightemacs-use-package--package-manager-loaded
+  (when (bound-and-true-p lightemacs-package-manager)
+    (cond
+     ;; Straight
+     ((eq lightemacs-package-manager 'straight)
+      (require 'le-core-pm-straight))
+
+     ;; Elpaca
+     ((eq lightemacs-package-manager 'elpaca)
+      (require 'le-core-pm-elpaca))
+
+     ;; use-package (built-in)
+     ((or (eq lightemacs-package-manager 'builtin-package)
+          (eq lightemacs-package-manager 'use-package))
+      (require 'le-core-pm-use-package))
+
+     (t
+      (error
+       (concat "[lightemacs]"
+               "Invalid value for `lightemacs-package-manager': '%S'. Valid "
+               "choices are: 'straight, 'elpaca, or 'use-package.")
+       lightemacs-package-manager))))
+
+  (setq lightemacs-use-package--package-manager-loaded t))
+
 ;; Generate loadable config
+
 (defun lightemacs--generate-le-autogen-config ()
   "Generate the Elisp config."
   ;; Load le-autogen-config here
@@ -60,23 +106,34 @@
         (insert (format "(setq lightemacs-package-manager '%s)\n\n"
                         (prin1-to-string lightemacs-package-manager)))
 
-        (when (eq lightemacs-package-manager 'elpaca)
-          (insert
-           (format
-            (concat
-             "(let ((lightemacs--no-bootstrap t))\n"
-             "  (load (expand-file-name \"le-core-pm-elpaca.el\"\n"
-             "                          lightemacs-core-directory)\n"
-             "nil\n"
-             "'nomessage))\n\n"))))
+        ;; TODO remove
+        ;; (when (eq lightemacs-package-manager 'elpaca)
+        ;;   (insert
+        ;;    (format
+        ;;     (concat
+        ;;      "(let ((lightemacs--no-bootstrap t))\n"
+        ;;      "  (load (expand-file-name \"le-core-pm-elpaca.el\"\n"
+        ;;      "                          lightemacs-core-directory)\n"
+        ;;      "nil\n"
+        ;;      "'nomessage))\n\n"))))
 
         (when (eq lightemacs-package-manager 'straight)
+          (insert (format "(setq straight-use-package-by-default %s)\n\n"
+                          (prin1-to-string
+                           (when straight-use-package-by-default
+                             t))))
           (insert
            (format
             (concat
-             "(let ((lightemacs--no-bootstrap t))\n"
-             "  (load (expand-file-name \"le-core-pm-straight.el\"\n"
-             "                          lightemacs-core-directory)\n"
+             "(let ((lightemacs--no-bootstrap t)\n"
+             "      (bootstrap-version 7))\n"
+             "  (setq user-emacs-directory lightemacs-var-directory)\n"
+             "  (setq straight-base-dir lightemacs-var-directory)\n"
+             "  (setq straight-disable-compile t)\n"
+             "  (setq straight-disable-native-compile t)\n"
+             "  (load (expand-file-name\n"
+             "         \"straight/repos/straight.el/bootstrap.el\"\n"
+             "         lightemacs-var-directory)\n"
              "        nil\n"
              "        'nomessage))\n\n"))))
 
@@ -113,55 +170,6 @@
 ;; Call it first for `lightemacs-package-manager'
 (lightemacs--generate-le-autogen-config)
 
-;;; require
-
-(require 'lightemacs)
-
-;;; Call `lightemacs-user-pre-init'
-
-(when (fboundp 'lightemacs-user-pre-init)
-  (lightemacs-user-pre-init))
-
-;;; Load: init.el
-
-(when (and (fboundp 'lightemacs-load-user-init)
-           (boundp 'minimal-emacs-user-directory))
-  (lightemacs-load-user-init
-   (expand-file-name "init.el" minimal-emacs-user-directory)))
-
-;;; Configure the package manager
-
-;; TODO Is this is necessary?
-(unless lightemacs-package-manager
-  (error "Invalid `lightemacs-package-manager': %S"
-         lightemacs-package-manager))
-
-(defvar lightemacs-use-package--package-manager-loaded nil)
-
-(unless lightemacs-use-package--package-manager-loaded
-  (when (bound-and-true-p lightemacs-package-manager)
-    (cond
-     ;; Straight
-     ((eq lightemacs-package-manager 'straight)
-      (require 'le-core-pm-straight))
-
-     ;; Elpaca
-     ((eq lightemacs-package-manager 'elpaca)
-      (require 'le-core-pm-elpaca))
-
-     ;; use-package (built-in)
-     ((or (eq lightemacs-package-manager 'builtin-package)
-          (eq lightemacs-package-manager 'use-package))
-      (require 'le-core-pm-use-package))
-
-     (t
-      (error
-       (concat "[lightemacs]"
-               "Invalid value for `lightemacs-package-manager': '%S'. Valid "
-               "choices are: 'straight, 'elpaca, or 'use-package.")
-       lightemacs-package-manager))))
-
-  (setq lightemacs-use-package--package-manager-loaded t))
 
 ;;; Hook `lightemacs-after-init-hook'
 

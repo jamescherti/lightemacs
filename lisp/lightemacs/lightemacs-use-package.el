@@ -233,8 +233,10 @@ them to `use-package'."
                 "[lightemacs] Added ':straight %s' to the %s package"
                 straight-value name)
 
-              (setq effective-args (append (list :straight straight-value)
-                                           effective-args))
+              (unless straight-value
+                (setq effective-args (append (list :straight straight-value)
+                                             effective-args)))
+
 
               ;; (setq ensure-is-member straight-value)
               (setq ensure-value straight-value)

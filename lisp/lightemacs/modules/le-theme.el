@@ -52,35 +52,19 @@ Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
-  (unless (memq lightemacs-theme-name lightemacs-theme--package-installed)
-    (cond
-     ((and (eq lightemacs-package-manager 'straight)
-           (fboundp 'straight-use-package))
-      (straight-use-package lightemacs-theme-package))
-
-     ((eq lightemacs-package-manager 'builtin-package)
-      (unless (package-installed-p lightemacs-theme-package)
-        (package-install lightemacs-theme-package)))
-
-     ;; TODO remove eval and replace it with elpaca?
-     ((and (eq lightemacs-package-manager 'elpaca)
-           (fboundp 'elpaca))
-      (eval `(elpaca ,lightemacs-theme-package) t)
-      (when (fboundp 'elpaca-wait)
-        (elpaca-wait))))
-
-    (push lightemacs-theme-name lightemacs-theme--package-installed)
-
-    (when (and lightemacs-theme-name
-               (or force
-                   (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
-
-      (if (memq lightemacs-theme-name (custom-available-themes))
-          (progn
-            (mapc #'disable-theme custom-enabled-themes)
-            (load-theme lightemacs-theme-name t))
-        (warn "[lightemacs] The theme '%s' is not available"
-              lightemacs-theme-name)))))
+  (when (and lightemacs-theme-name
+             (or force
+                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
+    (eval
+     `(lightemacs-use-package ,lightemacs-theme-package
+        :config
+        (if (memq ',lightemacs-theme-name (custom-available-themes))
+            (let ((inhibit-redisplay t))
+              (mapc #'disable-theme custom-enabled-themes)
+              (load-theme ',lightemacs-theme-name t))
+          (warn "[lightemacs] The theme '%s' is not available"
+                ',lightemacs-theme-name)))
+     t)))
 
 ;;; Font
 
@@ -106,10 +90,11 @@ If PACKAGE is non-nil, require it before loading the theme."
      `(defun ,theme-fn-name ()
         ,docstring
         (interactive)
-        ,(when package
-           `(lightemacs-use-package ,package :demand t))
+        (setq lightemacs-theme-package (if ',package
+                                           ',package
+                                         nil))
         (setq lightemacs-theme-name ',theme-sym)
-        (lightemacs-load-default-theme))
+        (lightemacs-load-default-theme t))
      t)))
 
 ;;; Main
