@@ -15,7 +15,7 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package inhibit-mouse

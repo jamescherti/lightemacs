@@ -27,7 +27,7 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 ;;; Variables

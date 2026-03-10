@@ -21,7 +21,7 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y

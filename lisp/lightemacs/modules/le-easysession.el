@@ -25,7 +25,7 @@
 
 ;;; Require
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 (defvar lightemacs-easysession-load-session-on-startup t

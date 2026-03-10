@@ -18,7 +18,7 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 (defvar lightemacs-dtrt-indent-inhibit nil

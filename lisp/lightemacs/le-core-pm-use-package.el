@@ -21,7 +21,7 @@
         (package-refresh-contents))
       (package-install 'use-package)))
 
-  (eval-when-compile
+  (eval-and-compile
     (require 'use-package))
 
   ;; Initialize

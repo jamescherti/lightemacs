@@ -19,7 +19,7 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 (defvar lightemacs-vertico-current-arrow t)

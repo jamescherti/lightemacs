@@ -18,11 +18,11 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 (require 'le-evil)
 
-(eval-when-compile
+(eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)

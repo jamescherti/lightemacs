@@ -22,7 +22,7 @@
 
 ;;; Code:
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'

@@ -38,7 +38,7 @@
 ;;
 ;; URL: https://github.com/radian-software/prescient.el
 
-(eval-when-compile
+(eval-and-compile
   (require 'lightemacs-use-package))
 (require 'le-vertico)
 (require 'le-prescient)
