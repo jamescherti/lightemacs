@@ -251,29 +251,29 @@ cursor."
 ;;                              ;; noforce
 ;;                              t))))))
 
-(defmacro lightemacs-shield-macros (&rest body)
-  "Eval BODY while preventing premature macro expansion.
+;; (defmacro lightemacs-shield-macros (&rest body)
+;;   "Eval BODY while preventing premature macro expansion.
+;;
+;; Use this when a form contains code to be evaluated later, and that code depends
+;; on a macro not yet defined. If the macro treats its arguments specially, an
+;; argument resembling a macro call might be expanded too early, breaking
+;; evaluation. Wrapping the outer (or higher) macro in this form avoids that
+;; problem."
+;;   (declare (indent 0))
+;;   `(eval '(progn ,@body) lexical-binding))
 
-Use this when a form contains code to be evaluated later, and that code depends
-on a macro not yet defined. If the macro treats its arguments specially, an
-argument resembling a macro call might be expanded too early, breaking
-evaluation. Wrapping the outer (or higher) macro in this form avoids that
-problem."
-  (declare (indent 0))
-  `(eval '(progn ,@body) lexical-binding))
-
-(defmacro lightemacs-shield-macros-when-compiling (feature &rest body)
-  "Evaluate BODY, shielding macros only if FEATURE is not yet available.
-If FEATURE is already present, expand BODY normally.
-During byte-compilation, attempt to load FEATURE eagerly."
-  (declare (indent 0))
-  (let ((available (featurep feature)))
-    (when (bound-and-true-p byte-compile-current-file)
-      (setq available (require feature nil 'noerror)))
-    (if available
-        `(progn ,@body)
-      `(lightemacs-shield-macros
-         (progn ,@body)))))
+;; (defmacro lightemacs-shield-macros-when-compiling (feature &rest body)
+;;   "Evaluate BODY, shielding macros only if FEATURE is not yet available.
+;; If FEATURE is already present, expand BODY normally.
+;; During byte-compilation, attempt to load FEATURE eagerly."
+;;   (declare (indent 0))
+;;   (let ((available (featurep feature)))
+;;     (when (bound-and-true-p byte-compile-current-file)
+;;       (setq available (require feature nil 'noerror)))
+;;     (if available
+;;         `(progn ,@body)
+;;       `(lightemacs-shield-macros
+;;          (progn ,@body)))))
 
 (defun lightemacs-find-parent-directory ()
   "Open a `dired' buffer for the current file's directory and select the file.
@@ -466,7 +466,7 @@ Returns a list of the files that were compiled."
           ;; Byte-compile
           (condition-case err
               (progn
-                ;; (byte-compile-file file)
+                (byte-compile-file file)
                 (setq compiled t))
             (error
              (message "Byte-compile failed for %s: %s"
@@ -480,7 +480,7 @@ Returns a list of the files that were compiled."
               (when eln-file
                 (condition-case err
                     (progn
-                      ;; (native-compile-async file)
+                      (native-compile-async file)
                       (setq compiled t))
                   (error
                    (message "Native-compile failed for %s: %s"

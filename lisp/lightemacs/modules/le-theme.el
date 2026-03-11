@@ -48,23 +48,32 @@ Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
 
 (defvar lightemacs-theme--package-installed nil)
 
+(defun lightemacs-theme--apply (theme)
+  "Apply THEME, disabling previously enabled themes."
+  (if (memq theme (custom-available-themes))
+      (let ((inhibit-redisplay t))
+        (mapc #'disable-theme custom-enabled-themes)
+        (load-theme theme t))
+    (warn "[lightemacs] The theme '%s' is not available" theme)))
+
 (defun lightemacs-load-default-theme (&optional force)
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
-  (when (and lightemacs-theme-name
-             (or force
-                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
+  (cond
+   ((and lightemacs-theme-package
+         lightemacs-theme-name
+         (or force
+             (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
     (eval
      `(lightemacs-use-package ,lightemacs-theme-package
         :config
-        (if (memq ',lightemacs-theme-name (custom-available-themes))
-            (let ((inhibit-redisplay t))
-              (mapc #'disable-theme custom-enabled-themes)
-              (load-theme ',lightemacs-theme-name t))
-          (warn "[lightemacs] The theme '%s' is not available"
-                ',lightemacs-theme-name)))
-     t)))
+        (lightemacs-theme--apply ',lightemacs-theme-name)))
+    ;; lexical-binding: t
+    t)
+
+   (lightemacs-theme-name
+    (lightemacs-theme--apply lightemacs-theme-name))))
 
 ;;; Font
 
@@ -73,9 +82,6 @@ If FORCE is non-nil, reload the current theme even if it is already active."
 This function ignores all _ARGS to be compatible with `advice-add'."
   (when lightemacs-theme-default-font
     (set-frame-font lightemacs-theme-default-font nil t :inhibit-customize)))
-
-(unless (bound-and-true-p byte-compile-current-file)
-  (advice-add 'load-theme :after #'lightemacs-theme--apply-default-font))
 
 ;;; Utility functions
 
@@ -102,10 +108,13 @@ If PACKAGE is non-nil, require it before loading the theme."
 (defun lightemacs-theme--load-theme ()
   "Load the default theme."
   (lightemacs-load-default-theme t)
-  (when (daemonp)
-    (remove-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)))
+  ;; (when (daemonp)
+  ;;   (remove-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme))
+  )
 
-(when lightemacs-theme-package
+(unless noninteractive
+  (advice-add 'load-theme :after #'lightemacs-theme--apply-default-font)
+
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
     (defvar le-theme--theme-loaded nil)

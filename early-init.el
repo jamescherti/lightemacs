@@ -51,15 +51,6 @@
   (setq minimal-emacs-load-post-init nil)
 
   (setq package-enable-at-startup nil)
-  (setq package-archive-priorities '(("gnu"          . 90)
-                                     ("nongnu"       . 80)
-                                     ("melpa"        . 70)
-                                     ("melpa-stable" . 50)))
-  (setq package-archives
-        '(("melpa"        . "https://melpa.org/packages/")
-          ("gnu"          . "https://elpa.gnu.org/packages/")
-          ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
-          ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
   (setq minimal-emacs-load-compiled-init-files t)
 

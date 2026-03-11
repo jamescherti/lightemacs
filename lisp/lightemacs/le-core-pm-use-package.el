@@ -13,19 +13,18 @@
 
 ;;; Code:
 
-(unless (bound-and-true-p byte-compile-current-file)
-  ;; Install use-package if necessary
-  (when (version< emacs-version "29.1")
-    (unless (package-installed-p 'use-package)
-      (unless package-archive-contents
-        (package-refresh-contents))
-      (package-install 'use-package)))
+;; Install use-package if necessary
+(when (version< emacs-version "29.1")
+  (unless (package-installed-p 'use-package)
+    (unless package-archive-contents
+      (package-refresh-contents))
+    (package-install 'use-package)))
 
-  (eval-and-compile
-    (require 'use-package))
+(eval-and-compile
+  (require 'use-package))
 
-  ;; Initialize
-  (package-initialize))
+;; Initialize
+(package-initialize)
 
 (provide 'le-core-pm-use-package)
 

@@ -30,8 +30,7 @@
 ;; when condition therefore succeeds, the message is emitted to the compilation
 ;; log, and le-autogen-config.el is loaded into the compiler process so that the
 ;; macro expansion environment has the required context.
-(when (or (bound-and-true-p byte-compile-current-file)
-          (bound-and-true-p comp-compiling))
+(when (bound-and-true-p byte-compile-current-file)
   (let* ((macroexp-file (and (fboundp 'macroexp-file-name)
                              (macroexp-file-name)))
          (byte-comp-cur-file (and (boundp 'byte-compile-current-file)
