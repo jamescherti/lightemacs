@@ -147,6 +147,8 @@ to Emacs standard behavior.")
           (jenkinsfile-mode              . "melpa")
           (vimrc-mode                    . "melpa")
           (vterm                         . "melpa")
+          (undo-fu                       . "melpa") ; nongnu is outdated
+          (undo-fu-session               . "melpa") ; nongnu is outdated
 
           (flymake-ansible-lint          . "melpa")
           (flymake-bashate               . "melpa")
@@ -223,8 +225,6 @@ to Emacs standard behavior.")
           (paredit                       . "nongnu")
           (popup                         . "nongnu")
           (rainbow-delimiters            . "nongnu")
-          (undo-fu                       . "nongnu")
-          (undo-fu-session               . "nongnu")
           (wgrep                         . "nongnu")
           (with-editor                   . "nongnu")
           (ws-butler                     . "nongnu"))))
