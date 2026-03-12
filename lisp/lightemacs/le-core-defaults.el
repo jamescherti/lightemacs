@@ -162,6 +162,7 @@ to Emacs standard behavior.")
           (markdown-mode                 . "melpa") ; nongnu is outdated
           (lsp-mode                      . "melpa")
           (lsp-ui                        . "melpa")
+          (modus-themes                  . "melpa") ; gnu is outdated
 
           (annalist                      . "melpa-stable")
           (ansible-doc                   . "melpa-stable")
@@ -187,7 +188,6 @@ to Emacs standard behavior.")
           (visual-fill-column            . "melpa-stable") ; nongnu is outdated
           (yasnippet-snippets            . "melpa-stable") ; nongnu is outdated
 
-          (modus-themes                  . "gnu")
           (ace-window                    . "gnu")
           (avy                           . "gnu")
           (corfu                         . "gnu")
