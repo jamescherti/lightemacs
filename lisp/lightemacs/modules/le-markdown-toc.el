@@ -18,7 +18,7 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
-(defvar lightemacs-markdown-toc-restore-window-start nil)
+(defvar lightemacs-markdown-toc-restore-window-start t)
 
 (lightemacs-use-package markdown-toc
   :commands (markdown-toc-generate-toc
