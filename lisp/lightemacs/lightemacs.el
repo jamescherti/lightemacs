@@ -132,31 +132,26 @@ window.
 
 To also restore the mark, this macro can be combined with
 `save-mark-and-excursion'. For preservation of horizontal scroll only (hscroll),
-consider using the `lightemacs-save-window-hscroll' macro.
+consider using the `kirigami--save-window-hscroll' macro.
 
 Example:
-  (lightemacs-save-window-hscroll
-        (lightemacs-save-window-start
-          (save-mark-and-excursion
-            ;;; Add code here
-            t))
+  (lightemacs-save-window-start
+    ;;; Add code here
+    t)
 
 This macro is appropriate when it is necessary to maintain the visual layout of
-the buffer, particularly if BODY may scroll the window or otherwise move the
+the buffer, especially if BODY may scroll the window or otherwise move the
 cursor."
   (declare (indent 0) (debug t))
   (let ((window (make-symbol "window"))
-        (buffer (make-symbol "buffer"))
-        (should-restore (make-symbol "should-restore"))
-        (lines-before-cursor (make-symbol "lines-before-cursor")))
+        (window-buffer (make-symbol "window-buffer"))
+        (lines-before-cursor (make-symbol "lines-before-cursor"))
+        (start-pos (make-symbol "start-pos")))
     `(let* ((,window (selected-window))
-            ;; Check conditions and capture scroll BEFORE body runs
-            (,should-restore (and (window-live-p ,window)
-                                  (eq (current-buffer)
-                                      (window-buffer ,window))))
-            (,buffer (window-buffer ,window))
+            (,window-buffer (window-buffer ,window))
             (,lines-before-cursor
-             (when ,should-restore
+             (when (and (window-live-p ,window)
+                        (eq (current-buffer) ,window-buffer))
                (count-screen-lines
                 (save-excursion
                   (goto-char (window-start ,window))
@@ -169,87 +164,21 @@ cursor."
                 ,window))))
        (unwind-protect
            (progn ,@body)
-         ;; Ensure the window and buffer still exist before attempting
-         ;; restoration
-         (when (and ,should-restore
+         (when (and ,lines-before-cursor
                     (window-live-p ,window)
-                    (buffer-live-p ,buffer)
-                    (eq (current-buffer) ,buffer))
-           (set-window-start ,window
-                             (save-excursion
-                               (vertical-motion (- ,lines-before-cursor)
-                                                ,window)
-                               (beginning-of-visual-line)
-                               (point))
-                             ;; noforce
-                             t))))))
-
-;; TODO remove
-;; (defmacro lightemacs-save-window-start (&rest body)
-;;   "Preserve and restore `window-start' relative to the lines above the cursor.
-;;
-;; This macro saves the first visible line in the selected window. After BODY
-;; executes, the window is restored so that the same lines remain visible above the
-;; cursor, maintaining the relative vertical position of the cursor within the
-;; window.
-;;
-;; To also restore the mark, this macro can be combined with
-;; `save-mark-and-excursion'. For preservation of horizontal scroll only (hscroll),
-;; consider using the `lightemacs-save-window-hscroll' macro.
-;;
-;; Example:
-;;   (lightemacs-save-window-hscroll
-;;         (lightemacs-save-window-start
-;;           (save-mark-and-excursion
-;;             ;;; Add code here
-;;             t))
-;;
-;; This macro is appropriate when it is necessary to maintain the visual layout of
-;; the buffer, particularly if BODY may scroll the window or otherwise move the
-;; cursor."
-;;   (declare (indent 0) (debug t))
-;;   (let ((window (make-symbol "window"))
-;;         (buffer (make-symbol "buffer"))
-;;         (should-restore (make-symbol "should-restore"))
-;;         (lines-before-cursor (make-symbol "lines-before-cursor")))
-;;     `(let* ((,window (selected-window))
-;;             ;; Check conditions and capture scroll BEFORE body runs
-;;             (,should-restore (and (window-live-p ,window)
-;;                                   (eq (current-buffer) (window-buffer ,window))))
-;;             (,buffer (window-buffer ,window))
-;;             (,lines-before-cursor
-;;              (when ,should-restore (count-screen-lines
-;;                                     (save-excursion
-;;                                       (goto-char (window-start))
-;;                                       (beginning-of-visual-line)
-;;                                       (point))
-;;                                     (save-excursion
-;;                                       (beginning-of-visual-line)
-;;                                       (point))
-;;                                     nil
-;;                                     ,window))))
-;;        (unwind-protect
-;;            (progn ,@body)
-;;          (when ,should-restore
-;;            (set-window-start ,window
-;;                              ;; Dotimes and (line-move-visual -1) is more
-;;                              ;; accurate than (line-move-visual N).
-;;                              (save-excursion
-;;                                (dotimes (_ ,lines-before-cursor)
-;;                                  (condition-case nil
-;;                                      (let ((line-move-visual t)
-;;                                            (line-move-ignore-invisible t)
-;;                                            ;; Disable the "Goal Column" behavior
-;;                                            ;; so it moves vertically
-;;                                            (temporary-goal-column 0)
-;;                                            (goal-column nil))
-;;                                        (line-move -1))
-;;                                    (error nil)))
-;;
-;;                                (beginning-of-visual-line)
-;;                                (point))
-;;                              ;; noforce
-;;                              t))))))
+                    (buffer-live-p ,window-buffer)
+                    (eq ,window-buffer (window-buffer ,window)))
+           (with-selected-window ,window
+             (let ((,start-pos (save-excursion
+                                 (beginning-of-visual-line)
+                                 (vertical-motion (- ,lines-before-cursor)
+                                                  ,window)
+                                 (beginning-of-visual-line)
+                                 (point))))
+               (set-window-start ,window
+                                 ,start-pos
+                                 ;; No force
+                                 t))))))))
 
 ;; (defmacro lightemacs-shield-macros (&rest body)
 ;;   "Eval BODY while preventing premature macro expansion.
@@ -358,7 +287,7 @@ exist."
                                    byte-compile-dest-file-function
                                  #'byte-compile-dest-file)
                                source-file)))
-        (when (and elc-file (file-exists-p elc-file))
+        (when (and elc-file (file-regular-p elc-file))
           (push elc-file elc-files))))
     elc-files))
 
@@ -368,7 +297,7 @@ exist."
     (dolist (source-file list-el-files)
       (let ((eln-file (when (fboundp 'comp-el-to-eln-filename)
                         (comp-el-to-eln-filename source-file))))
-        (when (and eln-file (file-exists-p eln-file))
+        (when (and eln-file (file-regular-p eln-file))
           (push eln-file eln-files))))
     eln-files))
 
@@ -405,14 +334,14 @@ Returns a list of the files that were successfully deleted."
 If LOADED-ONLY is non-nil, return only the files that are currently loaded."
   (let ((all-el-files nil))
     ;; Collect standard init files
-    (when (and user-init-file (file-exists-p user-init-file))
+    (when (and user-init-file (file-regular-p user-init-file))
       (push user-init-file all-el-files))
 
     (let ((early-init (if (boundp 'early-init-file)
                           early-init-file
                         (expand-file-name "early-init.el"
                                           user-emacs-directory))))
-      (when (file-exists-p early-init)
+      (when (file-regular-p early-init)
         (push early-init all-el-files)))
 
     ;; Collect files from modules directory
@@ -548,6 +477,57 @@ Returns a list of the files that were compiled."
   (add-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
   (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
   (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
+
+;;; `lightemacs-keyboard-quit'
+
+(defun lightemacs-keyboard-quit ()
+  "Execute a context-aware cancel operation.
+
+This command acts as a replacement for the default `keyboard-quit'. It evaluates
+the current editor state to determine the correct cancellation action,
+specifically fixing the issue where the default function fails to close an
+unfocused minibuffer.
+
+The execution follows this priority:
+1. If any minibuffer is open, it aborts the current recursive edit.
+2. If in Evil visual state, it exits to normal state.
+3. If a region is active, it deactivates the mark.
+4. If in a completion or help buffer, it closes that window.
+5. Otherwise, it executes the standard `keyboard-quit'.
+
+:returns: nil
+:raises quit: When falling back to the standard `keyboard-quit' function."
+  (interactive)
+  (cond
+   ;; Handle minibuffer by aborting the current recursive level.
+   ((> (minibuffer-depth) 0)
+    (abort-recursive-edit))
+
+   ;; Handle Evil visual state to ensure state machine synchronization.
+   ((and (bound-and-true-p evil-local-mode)
+         (fboundp 'evil-visual-state-p)
+         (fboundp 'evil-exit-visual-state)
+         (evil-visual-state-p))
+    (evil-exit-visual-state))
+
+   ;; Handle standard Emacs region/mark.
+   ((region-active-p)
+    (deactivate-mark))
+
+   ;; Clear Evil search highlights.
+   ;; TODO Make this optional
+   ;; ((and (fboundp 'evil-ex-nohighlight)
+   ;;       (and (boundp 'evil-ex-search-highlight-all)
+   ;;            evil-ex-search-highlight-all))
+   ;;  (evil-ex-nohighlight))
+
+   ;; Close transient UI windows like Help or Completions.
+   ((derived-mode-p 'completion-list-mode 'help-mode)
+    (delete-completion-window))
+
+   ;; Fallback to default quit behavior.
+   (t
+    (keyboard-quit))))
 
 ;;; Provide lightemacs
 

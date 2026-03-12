@@ -21,6 +21,8 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
+(require 'lightemacs)
+
 ;;; Variables
 
 (eval-and-compile
@@ -99,6 +101,10 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   (evil-want-C-u-delete t)
 
   :config
+  (define-key evil-insert-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
+  (define-key evil-normal-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
+  (define-key evil-visual-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
+
   ;; Occasionally, `evil' fails to respect the `evil-search-module'
   ;; when `evil-search-module' is in :custom, causing search behavior to diverge
   ;; from the configured value.

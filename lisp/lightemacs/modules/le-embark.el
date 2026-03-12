@@ -51,10 +51,10 @@
         '(display-buffer-at-bottom (window-height . fit-window-to-buffer)))
 
   ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
+  (push '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+          nil
+          (window-parameters (mode-line-format . none)))
+        display-buffer-alist))
 
 ;;; Provide
 (provide 'le-embark)

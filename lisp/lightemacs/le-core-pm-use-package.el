@@ -13,18 +13,18 @@
 
 ;;; Code:
 
+;; Initialize
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
 ;; Install use-package if necessary
 (when (version< emacs-version "29.1")
   (unless (package-installed-p 'use-package)
-    (unless package-archive-contents
-      (package-refresh-contents))
     (package-install 'use-package)))
 
-(eval-and-compile
-  (require 'use-package))
-
-;; Initialize
-(package-initialize)
+(require 'use-package)
 
 (provide 'le-core-pm-use-package)
 

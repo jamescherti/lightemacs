@@ -48,7 +48,7 @@
          (config-file (expand-file-name "le-autogen-config.el" current-dir)))
     (message "[lightemacs] Loading the compiler configuration from: %s"
              current-file)
-    (if (and current-file (file-exists-p config-file))
+    (if (and current-file (file-regular-p config-file))
         ;; Pass 't' to MUST-SUFFIX to enforce exact file name matching
         (load config-file nil nil nil t)
       (error "[lightemacs] Could not locate le-autogen-config.el for %s"

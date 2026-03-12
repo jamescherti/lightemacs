@@ -17,8 +17,7 @@
 (unless lightemacs--early-init-done
   (setq lightemacs--early-init-done t)
   (setq load-prefer-newer t)
-  (add-to-list 'load-path
-               (expand-file-name "lisp/lightemacs" user-emacs-directory))
+  (push (expand-file-name "lisp/lightemacs/" user-emacs-directory) load-path)
 
   ;; Update defaults
   (setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
@@ -31,15 +30,13 @@
   (setq lightemacs-user-directory user-emacs-directory)
 
   ;; Load defaults
-  (add-to-list 'load-path (expand-file-name "lisp/lightemacs"
-                                            user-emacs-directory))
   (require 'le-core-defaults)
   (unless lightemacs-package-manager
     (setq lightemacs-package-manager 'builtin-package))
 
   ;; Overwrite Minimal-emacs.d defaults
-  (setq minimal-emacs-frame-title-format "%b – Lightemacs")
-  (setq minimal-emacs-package-initialize-and-refresh nil)  ; Managed by Lightemacs
+  (setq minimal-emacs-frame-title-format "%b - Lightemacs")
+  (setq minimal-emacs-package-initialize-and-refresh nil)
   (setq minimal-emacs-gc-cons-percentage 0.1)
   (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
   (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
@@ -54,11 +51,8 @@
 
   (setq minimal-emacs-load-compiled-init-files t)
 
-  (add-to-list 'load-path
-               (expand-file-name "modules/" lightemacs-local-directory))
-  (add-to-list 'load-path lightemacs-local-modules-directory)
-  (add-to-list 'load-path lightemacs-core-directory)
-  (add-to-list 'load-path lightemacs-modules-directory)
+  (push lightemacs-local-modules-directory load-path)
+  (push lightemacs-modules-directory load-path)
 
   ;; Reduce cluttering
   ;;

@@ -37,12 +37,7 @@
   :init
   ;; Setting this to nil is not reliable
   ;; https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples
-  (setq indent-bars-prefer-character t)
-
-  ;; When `indent-bars-prefer-character' is set to t, displaying indent bars on
-  ;; blank lines causes cursor movement issues when moving downward, resulting
-  ;; in abrupt shifts of the window start or cursor position.
-  (setq indent-bars-display-on-blank-lines nil))
+  (setq indent-bars-prefer-character t))
 
 (provide 'le-indent-bars)
 

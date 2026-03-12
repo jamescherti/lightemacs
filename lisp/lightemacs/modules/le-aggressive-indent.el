@@ -38,12 +38,12 @@
 
   :config
   ;; Protected commands
-  (add-to-list 'aggressive-indent-protected-commands 'evil-redo)
-  (add-to-list 'aggressive-indent-protected-commands 'evil-undo)
-  (add-to-list 'aggressive-indent-protected-commands 'evil-commentary)
-  (add-to-list 'aggressive-indent-protected-commands 'comment-or-uncomment-region)
-  (add-to-list 'aggressive-indent-protected-commands 'comment-dwim)
-  (add-to-list 'aggressive-indent-protected-commands 'comment-box)
+  (push 'evil-redo aggressive-indent-protected-commands)
+  (push 'evil-undo aggressive-indent-protected-commands)
+  (push 'evil-commentary aggressive-indent-protected-commands)
+  (push 'comment-or-uncomment-region aggressive-indent-protected-commands)
+  (push 'comment-dwim aggressive-indent-protected-commands)
+  (push 'comment-box aggressive-indent-protected-commands)
 
   ;; Exclude modes
   (setq aggressive-indent-excluded-modes 'html-mode))

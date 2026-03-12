@@ -63,30 +63,32 @@ Set to nil to ignore window size and position during session restoration.")
   :preface
   (defun le-easysession-setup ()
     "Lightemacs: Setup EasySession."
-    (if (fboundp 'easysession-setup)
-        ;; The `easysession-setup' function adds hooks:
-        ;; - To enable automatic session loading during `emacs-startup-hook', or
-        ;;   `server-after-make-frame-hook' when running in daemon mode.
-        ;; - To automatically save the session at regular intervals, and when Emacs
-        ;;   exits.
-        (easysession-setup)
-      ;; Legacy
-      (when lightemacs-easysession-load-session-on-startup
-        (if lightemacs-easysession-restore-geometry-on-startup
-            ;; Including geometry
+    (when lightemacs-easysession-load-session-on-startup
+      (if (fboundp 'easysession-setup)
+          ;; The `easysession-setup' function adds hooks:
+          ;; - To enable automatic session loading during `emacs-startup-hook',
+          ;;   or `server-after-make-frame-hook' when running in daemon mode.
+          ;; - To automatically save the session at regular intervals, and when
+          ;;   Emacs exits.
+          (easysession-setup)
+        ;; Legacy
+        (when lightemacs-easysession-load-session-on-startup
+          (if lightemacs-easysession-restore-geometry-on-startup
+              ;; Including geometry
+              (if (daemonp)
+                  (add-hook 'server-after-make-frame-hook
+                            #'easysession-load-including-geometry 102)
+                (add-hook 'lightemacs-emacs-startup-hook
+                          #'easysession-load-including-geometry 102))
+            ;; Excluding geometry
             (if (daemonp)
                 (add-hook 'server-after-make-frame-hook
                           #'easysession-load-including-geometry 102)
               (add-hook 'lightemacs-emacs-startup-hook
-                        #'easysession-load-including-geometry 102))
-          ;; Excluding geometry
-          (if (daemonp)
-              (add-hook 'server-after-make-frame-hook
-                        #'easysession-load-including-geometry 102)
-            (add-hook 'lightemacs-emacs-startup-hook
-                      #'easysession-load-including-geometry 102))))
-      ;; Auto save mode
-      (add-hook 'lightemacs-emacs-startup-hook #'easysession-save-mode 103)))
+                        #'easysession-load-including-geometry 102))))))
+
+    ;; Auto save mode
+    (add-hook 'lightemacs-emacs-startup-hook #'easysession-save-mode 103))
 
   :init
   ;; Customizations

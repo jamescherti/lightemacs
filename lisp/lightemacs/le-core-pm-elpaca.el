@@ -31,7 +31,7 @@
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
        (order (cdr elpaca-order))
        (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (push (if (file-exists-p build) build repo) load-path)
 
   (unless (bound-and-true-p lightemacs--no-bootstrap)
     (unless (file-exists-p repo)
@@ -61,18 +61,16 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-;; TODO windows
-;; Uncomment for systems which cannot create symlinks:
-;; (elpaca-no-symlink-mode)
-
-(unless (package-installed-p 'use-package)
-  (elpaca use-package))
+;; Enable 'elpaca-no-symlink-mode' on Windows, as symlink creation often fails
+;; without Administrator privileges or Developer Mode.
+(when (eq system-type 'windows-nt)
+  (elpaca-no-symlink-mode 1))
 
 ;; Install use-package support
 (elpaca
-    elpaca-use-package
-  ;; Enable use-package :ensure support for Elpaca.
-  (elpaca-use-package-mode))
+ elpaca-use-package
+ ;; Enable use-package :ensure support for Elpaca.
+ (elpaca-use-package-mode))
 
 (provide 'le-core-pm-elpaca)
 
