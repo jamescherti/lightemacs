@@ -178,11 +178,10 @@ cursor."
                                                   ,window)
                                  (beginning-of-visual-line)
                                  (point))))
-               (when ,start-pos
-                 (set-window-start ,window
-                                   ,start-pos
-                                   ;; No force
-                                   t)))))))))
+               (set-window-start ,window
+                                 ,start-pos
+                                 ;; No force
+                                 t))))))))
 
 ;; (defmacro lightemacs-shield-macros (&rest body)
 ;;   "Eval BODY while preventing premature macro expansion.
