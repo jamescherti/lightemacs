@@ -170,18 +170,19 @@ cursor."
          (when (and ,lines-before-cursor
                     (window-live-p ,window)
                     (buffer-live-p ,window-buffer)
-                    (eq (window-buffer window) (current-buffer)))
-           (let ((,start-pos (save-excursion
-                               (beginning-of-visual-line)
-                               (vertical-motion (- ,lines-before-cursor)
-                                                ,window)
-                               (beginning-of-visual-line)
-                               (point))))
-             (when ,start-pos
-               (set-window-start ,window
-                                 ,start-pos
-                                 ;; No force
-                                 t))))))))
+                    (eq (window-buffer ,window) (current-buffer)))
+           (with-selected-window ,window
+             (let ((,start-pos (save-excursion
+                                 (beginning-of-visual-line)
+                                 (vertical-motion (- ,lines-before-cursor)
+                                                  ,window)
+                                 (beginning-of-visual-line)
+                                 (point))))
+               (when ,start-pos
+                 (set-window-start ,window
+                                   ,start-pos
+                                   ;; No force
+                                   t)))))))))
 
 ;; TODO remove
 ;; (defmacro lightemacs-save-window-start (&rest body)
