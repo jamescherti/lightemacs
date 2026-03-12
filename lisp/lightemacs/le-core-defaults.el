@@ -159,6 +159,9 @@ to Emacs standard behavior.")
           (yaml-mode                     . "melpa")
           (page-break-lines              . "melpa") ; nongnu is outdated
           (edit-indirect                 . "melpa") ; nongnu is outdated
+          (markdown-mode                 . "melpa") ; nongnu is outdated
+          (lsp-mode                      . "melpa")
+          (lsp-ui                        . "melpa")
 
           (annalist                      . "melpa-stable")
           (ansible-doc                   . "melpa-stable")
@@ -217,7 +220,6 @@ to Emacs standard behavior.")
           (gptel                         . "nongnu")
           (lua-mode                      . "nongnu")
           (magit                         . "nongnu")
-          (markdown-mode                 . "nongnu")
           (paredit                       . "nongnu")
           (popup                         . "nongnu")
           (rainbow-delimiters            . "nongnu")
