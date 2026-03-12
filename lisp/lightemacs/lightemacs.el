@@ -170,7 +170,7 @@ cursor."
          (when (and ,lines-before-cursor
                     (window-live-p ,window)
                     (buffer-live-p ,window-buffer)
-                    (eq (window-buffer ,window) (current-buffer)))
+                    (eq window-buffer (window-buffer ,window)))
            (with-selected-window ,window
              (let ((,start-pos (save-excursion
                                  (beginning-of-visual-line)
