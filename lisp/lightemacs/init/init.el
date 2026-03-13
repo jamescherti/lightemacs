@@ -161,7 +161,6 @@
 ;;; Tramp
 
 (setq tramp-verbose 1)
-(setq tramp-completion-reread-directory-timeout 50)
 
 ;;; Files
 
@@ -329,19 +328,9 @@
 ;; 2. Resolving the issue of random half-screen jumps during scrolling.
 (setq auto-window-vscroll nil)
 
-;; Number of lines of margin at the top and bottom of a window.
-(setq scroll-margin 0)
-
-;; Number of lines of continuity when scrolling by screenfuls.
-(setq next-screen-context-lines 0)
-
 ;; Horizontal scrolling
 (setq hscroll-margin 2
       hscroll-step 1)
-
-;;; Mouse
-
-(setq mouse-yank-at-point nil)
 
 ;; Emacs 29
 (when (memq 'context-menu minimal-emacs-ui-features)
@@ -370,10 +359,6 @@
 ;; A longer delay can be annoying as it causes a noticeable pause after each
 ;; deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
-
-;; Disable visual indicators in the fringe for buffer boundaries and empty lines
-(setq-default indicate-buffer-boundaries nil)
-(setq-default indicate-empty-lines nil)
 
 ;; Continue wrapped lines at whitespace rather than breaking in the
 ;; middle of a word.
