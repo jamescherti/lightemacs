@@ -271,8 +271,6 @@
 ;; Auto-revert in Emacs is a feature that automatically updates the contents of
 ;; a buffer to reflect changes made to the underlying file.
 
-(setq auto-revert-verbose t)
-
 ;; Revert other buffers (e.g, Dired)
 (setq global-auto-revert-non-file-buffers t)
 (setq global-auto-revert-ignore-modes '(Buffer-menu-mode))  ; Resolve issue #29
@@ -283,7 +281,6 @@
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup 'mode)
-(setq recentf-exclude nil)
 
 ;;; saveplace
 
@@ -296,17 +293,12 @@
 ;; `savehist-mode' is an Emacs feature that preserves the minibuffer history
 ;; between sessions.
 (setq history-length 300)
-(setq savehist-save-minibuffer-history t)  ;; Default
 (setq savehist-additional-variables
       '(register-alist                   ; macros
         mark-ring global-mark-ring       ; marks
         search-ring regexp-search-ring)) ; searches
 
 ;;; Frames and windows
-
-;; However, do not resize windows pixelwise, as this can cause crashes in some
-;; cases when resizing too many windows at once or rapidly.
-(setq window-resize-pixelwise nil)
 
 (setq resize-mini-windows 'grow-only)
 
@@ -365,9 +357,6 @@
 
 ;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
-
-;; Do not extend the cursor to fit wide characters
-(setq x-stretch-cursor nil)
 
 ;; Reduce rendering/line scan work by not rendering cursors or regions in
 ;; non-focused windows.
