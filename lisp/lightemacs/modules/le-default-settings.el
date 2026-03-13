@@ -20,7 +20,6 @@
 
 ;;; Misc
 
-(setq auto-revert-verbose (not lightemacs-reduce-messages))
 (setq next-error-verbose (not lightemacs-reduce-messages))
 
 ;; TODO: move to m.e.?
