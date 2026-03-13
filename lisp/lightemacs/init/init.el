@@ -132,7 +132,7 @@
 
 (setq whitespace-line-column nil)  ; Use the value of `fill-column'.
 
-;; Disable truncation of printed s-expressions in the message buffer
+;; Disable ellipsis when printing s-expressions in the message buffer
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
@@ -172,8 +172,10 @@
 ;; Ignoring this is acceptable since it will redirect to the buffer regardless.
 (setq find-file-suppress-same-file-warnings t)
 
-;; Resolve symlinks so that operations are conducted from the file's directory
+;; Resolve symlinks to avoid duplicate buffers
 (setq find-file-visit-truename t
+      ;; Automatically follow a symlink to its source if that source is managed
+      ;; by a version control system, rather than asking for permission.
       vc-follow-symlinks t)
 
 ;; Prefer vertical splits over horizontal ones
@@ -252,9 +254,7 @@
          ,(file-name-concat auto-save-list-file-prefix "\\2-") sha1)))
 
 ;; Ensure the directory for auto-save session logs exists with restricted
-;; permissions. This directory stores the control files used by
-;; `recover-session' to restore files after a crash.
-
+;; permissions.
 (when auto-save-default
   (let ((auto-save-dir (file-name-directory auto-save-list-file-prefix)))
     (unless (file-exists-p auto-save-dir)
@@ -270,9 +270,6 @@
 ;;; Auto revert
 ;; Auto-revert in Emacs is a feature that automatically updates the contents of
 ;; a buffer to reflect changes made to the underlying file.
-(setq revert-without-query (list ".")  ; Do not prompt
-      auto-revert-stop-on-user-input nil
-      auto-revert-verbose t)
 
 ;; Revert other buffers (e.g, Dired)
 (setq global-auto-revert-non-file-buffers t)
