@@ -271,6 +271,8 @@
 ;; Auto-revert in Emacs is a feature that automatically updates the contents of
 ;; a buffer to reflect changes made to the underlying file.
 
+(setq auto-revert-verbose t)
+
 ;; Revert other buffers (e.g, Dired)
 (setq global-auto-revert-non-file-buffers t)
 (setq global-auto-revert-ignore-modes '(Buffer-menu-mode))  ; Resolve issue #29
