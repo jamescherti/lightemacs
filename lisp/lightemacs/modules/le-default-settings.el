@@ -76,22 +76,14 @@
 
 (setq vc-git-print-log-follow t)
 
-;;; Minibuffer
+;;; UI
 
-(setq minibuffer-default-prompt-format " [default %s]")
-;; TODO use macro?
-(add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
-
-;;; Mode line
-
-(setq line-number-mode t)
-(setq column-number-mode t)
-(setq mode-line-position-column-line-format '("%l:%C"))
-
-;;; Frame
-
-;; TODO use macro?
-(add-hook 'lightemacs-after-init-hook #'window-divider-mode)
+(unless noninteractive
+  (setq minibuffer-default-prompt-format " [default %s]")
+  (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
+  (setq line-number-mode t)
+  (setq column-number-mode t)
+  (setq mode-line-position-column-line-format '("%l:%C")))
 
 ;;; auto-mode-alist
 
@@ -119,15 +111,15 @@
          ("/Eask\\'" . emacs-lisp-mode)
          ("/Cask\\'" . emacs-lisp-mode)))
 
-;;; proced
+;;; `proced'
 
-;; You can launch proced
-(add-hook 'proced-mode-hook 'proced-toggle-auto-update)
-(setq proced-tree-flag t)
-(setq proced-auto-update-flag 'visible)
-(setq proced-enable-color-flag t)
-(setq proced-auto-update-interval 1)
-(setq proced-filter 'user) ; Change interactively with `s'
+(unless noninteractive
+  (setq proced-tree-flag t)
+  (setq proced-auto-update-flag 'visible)
+  (setq proced-enable-color-flag t)
+  (setq proced-auto-update-interval 1)
+  (setq proced-filter 'user) ; Change interactively with `s'
+  (add-hook 'proced-mode-hook 'proced-toggle-auto-update))
 
 ;;; Patches
 
@@ -259,12 +251,6 @@
                     (* (syntax whitespace)) "()")
                1))))))
 
-;;; Python
-
-;; We're using `dtrt-indent'
-(setq python-indent-guess-indent-offset nil)
-(defvar python-indent-offset 4)
-
 ;;; Empty the minibuffer after `y-or-n-p'
 
 (defun lightemacs--empty-minibuffer (orig-fun &rest args)
@@ -277,9 +263,10 @@ ARGS are the arguments passed to the original function."
       (apply orig-fun args)
     (message nil)))
 
-(with-eval-after-load 'subr
-  (when (fboundp 'y-or-n-p)
-    (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer)))
+(unless noninteractive
+  (with-eval-after-load 'subr
+    (when (fboundp 'y-or-n-p)
+      (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer))))
 
 ;;; Provide
 

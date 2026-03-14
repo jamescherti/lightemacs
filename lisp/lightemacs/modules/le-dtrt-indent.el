@@ -62,6 +62,9 @@ If all conditions are satisfied, `dtrt-indent-mode' is enabled silently."
   (setq dtrt-indent-verbosity (if init-file-debug 1 0))
   (setq dtrt-indent-max-lines 1900)  ; Faster
 
+  ;; We're using `dtrt-indent'
+  (setq python-indent-guess-indent-offset nil)
+
   ;; By default, `dtrt-indent' detects SMIE-based modes and lets
   ;; `smie-config-guess' handle indentation. However, `dtrt-indent' also sets
   ;; additional variables that SMIE does not (for example,

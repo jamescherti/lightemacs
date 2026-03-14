@@ -13,8 +13,9 @@
 
 ;;; Code:
 
-(global-set-key (kbd "C--") 'text-scale-decrease)
-(global-set-key (kbd "C-+") 'text-scale-increase)
+(unless noninteractive
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "C-+") 'text-scale-increase))
 
 (provide 'le-default-keybindings)
 
