@@ -65,14 +65,11 @@
 ;; Uncomment for systems which cannot create symlinks:
 ;; (elpaca-no-symlink-mode)
 
-(unless (package-installed-p 'use-package)
-  (elpaca use-package))
-
 ;; Install use-package support
 (elpaca
-    elpaca-use-package
-  ;; Enable use-package :ensure support for Elpaca.
-  (elpaca-use-package-mode))
+ elpaca-use-package
+ ;; Enable use-package :ensure support for Elpaca.
+ (elpaca-use-package-mode))
 
 (provide 'le-core-pm-elpaca)
 
