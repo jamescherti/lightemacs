@@ -108,9 +108,8 @@ If PACKAGE is non-nil, require it before loading the theme."
 (defun lightemacs-theme--load-theme ()
   "Load the default theme."
   (lightemacs-load-default-theme t)
-  ;; (when (daemonp)
-  ;;   (remove-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme))
-  )
+  (when (daemonp)
+    (remove-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)))
 
 (unless noninteractive
   (advice-add 'load-theme :after #'lightemacs-theme--apply-default-font)

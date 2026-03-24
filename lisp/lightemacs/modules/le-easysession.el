@@ -50,7 +50,8 @@ Set to nil to ignore window size and position during session restoration.")
              easysession-get-session-name
              easysession-load
              easysession-switch-to-and-restore-geometry
-             easysession-load-including-geometry)
+             easysession-load-including-geometry
+             easysession-setup)
 
   :bind (("C-c ss" . easysession-save)
          ("C-c sl" . easysession-switch-to)  ; Load
