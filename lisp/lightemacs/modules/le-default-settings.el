@@ -117,9 +117,8 @@
   (setq proced-tree-flag t)
   (setq proced-auto-update-flag 'visible)
   (setq proced-enable-color-flag t)
-  (setq proced-auto-update-interval 1)
   (setq proced-filter 'user) ; Change interactively with `s'
-  (add-hook 'proced-mode-hook 'proced-toggle-auto-update))
+  (setq proced-auto-update-interval 1))
 
 ;;; Patches
 
