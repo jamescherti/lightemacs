@@ -60,20 +60,22 @@ Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
-  (cond
-   ((and lightemacs-theme-package
-         lightemacs-theme-name
-         (or force
-             (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
-    (eval
-     `(lightemacs-use-package ,lightemacs-theme-package
-        :config
-        (lightemacs-theme--apply ',lightemacs-theme-name)))
-    ;; lexical-binding: t
-    t)
+  (unwind-protect
+      (cond
+       ((and lightemacs-theme-package
+             lightemacs-theme-name
+             (or force
+                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
+        (eval
+         `(lightemacs-use-package ,lightemacs-theme-package
+            :config
+            (lightemacs-theme--apply ',lightemacs-theme-name)))
+        ;; lexical-binding: t
+        t)
 
-   (lightemacs-theme-name
-    (lightemacs-theme--apply lightemacs-theme-name))))
+       (lightemacs-theme-name
+        (lightemacs-theme--apply lightemacs-theme-name)))
+    (lightemacs-theme--apply-default-font)))
 
 ;;; Font
 
