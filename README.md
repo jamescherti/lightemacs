@@ -66,7 +66,7 @@ Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs confi
       - [Supported package managers](#supported-package-managers)
       - [Configuration Example for the package manager](#configuration-example-for-the-package-manager)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
-  - [Modules Enabled by Default](#modules-enabled-by-default)
+  - [Modules Enabled by Default in le-flavor-essential](#modules-enabled-by-default-in-le-flavor-essential)
     - [Enabled by Default: Default theme (le-theme)](#enabled-by-default-default-theme-le-theme)
     - [Enabled by Default: Better minibuffer and navigation (le-consult, le-embark, and le-vertico, le-marginalia, le-orderless, le-consult-dir)](#enabled-by-default-better-minibuffer-and-navigation-le-consult-le-embark-and-le-vertico-le-marginalia-le-orderless-le-consult-dir)
     - [Enabled by Default: Better completion (le-corfu and le-cape)](#enabled-by-default-better-completion-le-corfu-and-le-cape)
@@ -242,7 +242,7 @@ To customize your Emacs setup to include various user interface elements, you ca
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
-## Modules Enabled by Default
+## Modules Enabled by Default in le-flavor-essential
 
 Here are the modules that are enabled by default by the flavor that is enabled by default (`le-flavor-essential`):
 
@@ -620,6 +620,8 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 
 ### Other Modules Enabled by Default
 
+- **le-term**: Customizes the built-in terminal emulators `term` and `ansi-term`. It disables confirmation prompts when terminating active processes, removes horizontal scroll margins to avoid cursor-induced visual shifts, and hides the mode line to maximize usable space.
+
 - **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/lisp/local/config.el` file:
   ```emacs-lisp
   (add-hook 'prog-mode-hook #'outline-minor-mode)
@@ -829,6 +831,8 @@ Continue pressing `C-=` until the selection encompasses exactly the text you wan
 ### Other modules disabled by default
 
 Here are a few other modules disabled by default:
+
+* **le-server**: Enables the built-in Emacs server, which allows external programs such as `emacsclient` to connect to a single running instance of Emacs. This makes it possible to open files in an existing session rather than starting a new Emacs process each time. Once the server is running, the `emacsclient` command can be used in the terminal to open files in the active Emacs session. For example, running `emacsclient -n filename.txt` opens the file in the existing Emacs frame without blocking the terminal process.
 
 - **le-kirigami**: Configure the [kirigami](https://github.com/jamescherti/kirigami.el) package, which unifies text folding across diverse Emacs modes (outline, outline-indent, org, markdown, hideshow, treesit, etc.), enabling a single configuration for fold operations. It also improves folding logic in `outline`, `markdown-mode`, and `org-mode` (handling deep folds, content-based closing, and sibling visibility) while fixing upstream issues.
 

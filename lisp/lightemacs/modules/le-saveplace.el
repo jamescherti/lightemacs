@@ -18,9 +18,6 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
-;; TODO fix shut-up
-;; (require 'le-shut-up)
-
 (defvar lightemacs-saveplace-recenter-after-find-file nil
   "If non-nil, recenter the buffer after restoring the cursor position.")
 

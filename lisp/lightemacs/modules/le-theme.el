@@ -53,37 +53,68 @@ Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
   (if (memq theme (custom-available-themes))
       (let ((inhibit-redisplay t))
         (mapc #'disable-theme custom-enabled-themes)
-        (load-theme theme t))
+        (condition-case err
+            (load-theme theme t)
+          (error (display-warning 'lightemacs
+                                  (format "Failed to load theme '%s': %s"
+                                          theme (error-message-string err))
+                                  :warning))))
     (warn "[lightemacs] The theme '%s' is not available" theme)))
 
 (defun lightemacs-load-default-theme (&optional force)
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
-  (unwind-protect
-      (cond
-       ((and lightemacs-theme-package
-             lightemacs-theme-name
-             (or force
-                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
-        (eval
-         `(lightemacs-use-package ,lightemacs-theme-package
-            :config
-            (lightemacs-theme--apply ',lightemacs-theme-name)))
-        ;; lexical-binding: t
-        t)
+  (cond
+   ((and lightemacs-theme-package
+         lightemacs-theme-name
+         (or force
+             (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
+    (eval
+     `(lightemacs-use-package ,lightemacs-theme-package
+        :config
+        (lightemacs-theme--apply ',lightemacs-theme-name)))
+    ;; lexical-binding: t
+    t)
 
-       (lightemacs-theme-name
-        (lightemacs-theme--apply lightemacs-theme-name)))
-    (lightemacs-theme--apply-default-font)))
+   (lightemacs-theme-name
+    (lightemacs-theme--apply lightemacs-theme-name))))
 
 ;;; Font
-
-(defun lightemacs-theme--apply-default-font (&rest _args)
+(defun lightemacs-theme-load-default-font (&rest _args)
   "Apply the default font defined in `lightemacs-theme-default-font'.
-This function ignores all _ARGS to be compatible with `advice-add'."
-  (when lightemacs-theme-default-font
-    (set-frame-font lightemacs-theme-default-font nil t :inhibit-customize)))
+This function is idempotent and ignores _ARGS for `advice-add' compatibility."
+  (when (and (display-graphic-p)
+             lightemacs-theme-default-font)
+    (let* ((get-fam (lambda (font)
+                      (let* ((spec (font-spec :name (if (stringp font)
+                                                        font
+                                                      (font-xlfd-name font))))
+                             (family (font-get spec :family)))
+                        (cond
+                         ((symbolp family) (symbol-name family))
+                         ((stringp family) family)
+                         (t nil)))))
+           (current-family (funcall get-fam (frame-parameter nil 'font)))
+           (target-family (funcall get-fam lightemacs-theme-default-font)))
+
+      ;; Only apply if the family has changed to prevent UI flicker
+      (unless (and current-family
+                   target-family
+                   (string-equal (downcase current-family)
+                                 (downcase target-family)))
+        (condition-case err
+            (progn
+              (set-frame-font lightemacs-theme-default-font
+                              nil t :inhibit-customize)
+              (setq default-frame-alist
+                    (assq-delete-all 'font default-frame-alist))
+              (add-to-list 'default-frame-alist
+                           (cons 'font lightemacs-theme-default-font)))
+          (error
+           (display-warning 'lightemacs
+                            (format "Font error: %s" (error-message-string err))
+                            :warning)))))))
 
 ;;; Utility functions
 
@@ -108,20 +139,35 @@ If PACKAGE is non-nil, require it before loading the theme."
 ;;; Main
 
 (defun lightemacs-theme--load-theme ()
-  "Load the default theme."
-  (lightemacs-load-default-theme t)
+  "Load the default theme and font appropriately for GUI or TUI frames."
+  ;; Load the theme colors (runs exactly once for the daemon lifecycle)
+  ;;
+  ;; Themes are global state: When `load-theme' evaluates, it modifies the
+  ;; custom-enabled-themes variable and updates Emacs's internal registry of
+  ;; face definitions (such as backgrounds, foregrounds, and syntax colors). The
+  ;; headless daemon process retains this data in memory permanently, even when
+  ;; zero client frames exist.
+  (lightemacs-load-default-theme (daemonp))
+
+  ;; Apply the font
+  ;;
+  ;; Fonts are tied to display capabilities: While a font can be set globally,
+  ;; the process of creating a brand new X11 or Wayland window often prompts
+  ;; Emacs to recalculate frame parameters based on system defaults. This is why
+  ;; the font sometimes drops and needs to be reapplied, while the theme faces
+  ;; persist.
+  ;;
+  ;; When you spawn a new client frame afterward, Emacs often resets the font
+  ;; parameters.
   (when (daemonp)
-    (remove-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)))
+    (lightemacs-theme-load-default-font)))
 
 (unless noninteractive
-  (advice-add 'load-theme :after #'lightemacs-theme--apply-default-font)
+  (advice-add 'load-theme :after #'lightemacs-theme-load-default-font)
 
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
-    (defvar le-theme--theme-loaded nil)
-    (unless le-theme--theme-loaded
-      (lightemacs-theme--load-theme)
-      (setq le-theme--theme-loaded t))))
+    (lightemacs-theme--load-theme)))
 
 (provide 'le-theme)
 

@@ -195,7 +195,10 @@
    ;; and retention of key combinations by presenting context-sensitive
    ;; completions, thereby enhancing navigation through complex or highly
    ;; customized keymaps.
-   le-which-key))
+   le-which-key
+
+   ;; Built-in Emacs terminal emulator
+   le-term))
 
 ;;; Provide
 

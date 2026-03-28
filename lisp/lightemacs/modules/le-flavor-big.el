@@ -96,6 +96,7 @@
    le-kirigami
    le-buffer-terminator
    le-elisp-autofmt
+   le-term
    ))
 
 ;;; Provide
