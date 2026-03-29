@@ -138,8 +138,6 @@ If PACKAGE is non-nil, require it before loading the theme."
 
 ;;; Main
 
-(defvar lightemacs-theme--loaded nil)
-
 (defun lightemacs-theme--load-theme ()
   "Load the default theme and font appropriately for GUI or TUI frames."
   ;; Load the theme colors (runs exactly once for the daemon lifecycle)
@@ -149,9 +147,7 @@ If PACKAGE is non-nil, require it before loading the theme."
   ;; face definitions (such as backgrounds, foregrounds, and syntax colors). The
   ;; headless daemon process retains this data in memory permanently, even when
   ;; zero client frames exist.
-  (unless lightemacs-theme--loaded
-    (lightemacs-load-default-theme t)
-    (setq lightemacs-theme--loaded t))
+  (lightemacs-load-default-theme (daemonp))
 
   ;; Apply the font
   ;;
