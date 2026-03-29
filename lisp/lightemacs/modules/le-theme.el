@@ -104,7 +104,13 @@ This function is idempotent and ignores _ARGS for `advice-add' compatibility."
                    (string-equal (downcase current-family)
                                  (downcase target-family)))
         (condition-case err
-            (set-frame-font lightemacs-theme-default-font nil t :inhibit-customize)
+            (progn
+              (set-frame-font lightemacs-theme-default-font
+                              nil t :inhibit-customize)
+              (setq default-frame-alist
+                    (assq-delete-all 'font default-frame-alist))
+              (add-to-list 'default-frame-alist
+                           (cons 'font lightemacs-theme-default-font)))
           (error
            (display-warning 'lightemacs
                             (format "Font error: %s" (error-message-string err))
