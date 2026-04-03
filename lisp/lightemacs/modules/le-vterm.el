@@ -55,7 +55,10 @@
     ;; Inhibit early horizontal scrolling
     (setq-local hscroll-margin 0)
     ;; Suppress prompts for terminating active processes when closing vterm
-    (setq-local confirm-kill-processes nil))
+    (setq-local confirm-kill-processes nil)
+    (let ((proc (get-buffer-process (current-buffer))))
+      (when proc
+        (set-process-query-on-exit-flag proc nil))))
 
   :init
   (add-hook 'vterm-mode-hook #'lightemacs-vterm--setup)
