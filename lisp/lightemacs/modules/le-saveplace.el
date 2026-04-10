@@ -33,9 +33,7 @@ preventing output in the echo area while saving buffer positions.")
   ;; TODO use on first file?
   :hook (lightemacs-after-init . save-place-mode)
 
-  ;; TODO: Fix embark-collect-mode recentering when selecting .el files
   :preface
-  ;; Fix embark collect recentering
   (defun lightemacs-saveplace--recenter (buffer)
     "Recenter the window displaying BUFFER.
 BUFFER is the target buffer that needs to be recentered."
@@ -48,29 +46,27 @@ BUFFER is the target buffer that needs to be recentered."
     "Recenter the current window when `scroll-conservatively' >= 101.
   This function is called by `save-place-after-find-file-hook'.
   It avoids recentering while an EasySession session is in progress."
-    (when (and (or (>= scroll-conservatively 101)
-                   lightemacs-saveplace-recenter-after-find-file)
+    (when (and lightemacs-saveplace-recenter-after-find-file
+               (>= scroll-conservatively 101)
                (not (bound-and-true-p easysession-load-in-progress))
-               (> (point) (point-min)))
+               (buffer-file-name (buffer-base-buffer)))
       ;; (lightemacs-saveplace--recenter (current-buffer))
       ;; Use a timer to ensure a window exists when recenter is called
       (run-with-timer 0 nil #'lightemacs-saveplace--recenter (current-buffer))))
 
-  :init
-  (setq save-place-limit 500)
-
-  :preface
   (defun lightemacs--around-save-place-kill-emacs-hook (fn &rest args)
     "Advice around `save-place-kill-emacs-hook' to optionally suppress messages.
 FN is the original function being advised.
 ARGS are the arguments passed to FN.
 If `lightemacs-saveplace-quiet' is non-nil, output generated during execution.
-Otherwise,the function executes normally."
+Otherwise, the function executes normally."
     (if lightemacs-saveplace-quiet
-        ;; TODO fix shut-up
         (let ((inhibit-message t))
           (apply fn args))
       (apply fn args)))
+
+  :init
+  (setq save-place-limit 500)
 
   :config
   (add-hook 'save-place-after-find-file-hook
