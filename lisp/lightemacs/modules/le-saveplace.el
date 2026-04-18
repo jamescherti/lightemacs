@@ -37,10 +37,11 @@ preventing output in the echo area while saving buffer positions.")
   (defun lightemacs-saveplace--recenter (buffer)
     "Recenter the window displaying BUFFER.
 BUFFER is the target buffer that needs to be recentered."
-    (when (buffer-live-p buffer)
-      (when-let* ((win (get-buffer-window buffer)))
-        (with-selected-window win
-          (recenter)))))
+    (ignore-errors
+      (when (buffer-live-p buffer)
+        (when-let* ((win (get-buffer-window buffer)))
+          (with-selected-window win
+            (recenter))))))
 
   (defun lightemacs-saveplace--after-find-file ()
     "Recenter the current window when `scroll-conservatively' >= 101.
