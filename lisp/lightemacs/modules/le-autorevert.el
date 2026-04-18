@@ -27,7 +27,9 @@
   :hook (lightemacs-on-first-file . global-auto-revert-mode)
   :custom
   (auto-revert-interval 4)
-  (auto-revert-use-notify t))
+  (auto-revert-use-notify t)
+  :init
+  (setq auto-revert-verbose (not lightemacs-reduce-messages)))
 
 (provide 'le-autorevert)
 
