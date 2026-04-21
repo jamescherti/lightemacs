@@ -269,24 +269,25 @@ them to `use-package'."
           (setq ensure-value t))
 
         ;; Remove :vc
-        (let ((vc-is-member (plist-member effective-args :vc)))
-          (when (and vc-is-member
-                     (or noninteractive
-                         (bound-and-true-p byte-compile-current-file)))
-            (setq effective-args
-                  (lightemacs-use-package--plist-delete effective-args :vc)))
-
-          ;; (when (and (not vc-is-member)
-          ;;            (not (eq lightemacs-package-manager 'elpaca))
-          ;;            use-package-always-ensure)
-          ;;    ;; Always replace :ensure with :ensure nil to prevent the native
-          ;;    ;; compiler from downloading from repositories such as MELPA
-          ;;    (lightemacs-debug-message
-          ;;      "[lightemacs] Added ':ensure nil' to the %s package" name)
-          ;;    (setq effective-args
-          ;;          (lightemacs-use-package--plist-delete effective-args :ensure))
-          ;;    (setq effective-args (append (list :ensure nil) effective-args)))
-          ))))
+        ;; (let ((vc-is-member (plist-member effective-args :vc)))
+        ;;   (when (and vc-is-member
+        ;;              (or noninteractive
+        ;;                  (bound-and-true-p byte-compile-current-file)))
+        ;;     (setq effective-args
+        ;;           (lightemacs-use-package--plist-delete effective-args :vc)))
+        ;;
+        ;;   ;; (when (and (not vc-is-member)
+        ;;   ;;            (not (eq lightemacs-package-manager 'elpaca))
+        ;;   ;;            use-package-always-ensure)
+        ;;   ;;    ;; Always replace :ensure with :ensure nil to prevent the native
+        ;;   ;;    ;; compiler from downloading from repositories such as MELPA
+        ;;   ;;    (lightemacs-debug-message
+        ;;   ;;      "[lightemacs] Added ':ensure nil' to the %s package" name)
+        ;;   ;;    (setq effective-args
+        ;;   ;;          (lightemacs-use-package--plist-delete effective-args :ensure))
+        ;;   ;;    (setq effective-args (append (list :ensure nil) effective-args)))
+        ;;   )
+        )))
     ;; Return the 3 elements as a list
     (list effective-args
           nil ; removed: normalized-args
