@@ -4,7 +4,7 @@
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
-;; Version: 1.4.1
+;; Version: 1.4.2
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -169,7 +169,9 @@
 ;; Ignoring this is acceptable since it will redirect to the buffer regardless.
 (setq find-file-suppress-same-file-warnings t)
 
-;; Resolve symlinks to avoid duplicate buffers
+;; Automatically resolve symlinks to their true paths. This sets the correct
+;; working directory so C-x C-f opens in the right folder and version control
+;; tools recognize the Git repository.
 (setq find-file-visit-truename t
       ;; Automatically follow a symlink to its source if that source is managed
       ;; by a version control system, rather than asking for permission.
