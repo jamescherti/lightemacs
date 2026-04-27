@@ -54,8 +54,8 @@
       (error "[lightemacs] Could not locate le-autogen-config.el for %s"
              (or current-file default-directory)))))
 
+(require 'lightemacs) ; lightemacs-verbose-message
 (eval-and-compile
-  (require 'lightemacs) ; lightemacs-verbose-message
   (require 'use-package)
   ;; `use-package-normalize-keywords'
   (require 'use-package-core))
@@ -184,10 +184,14 @@ them to `use-package'."
          ;;      (use-package-normalize-keywords name effective-args))))
          (disabled-is-member (plist-member effective-args :disabled))
          (disabled-value (when disabled-is-member
-                           (car (plist-get effective-args :disabled))))
+                           (plist-get effective-args :disabled)
+                           ;; (car (plist-get effective-args :disabled))
+                           ))
          (ensure-is-member (plist-member effective-args :ensure))
          (ensure-value (when ensure-is-member
-                         (car (plist-get effective-args :ensure)))))
+                         (plist-get effective-args :ensure)
+                         ;; (car (plist-get effective-args :ensure))
+                         )))
 
     ;; (when (plist-member normalized-args :ensure)
     ;;   (error ":ensure is not part of normalized keywords"))
@@ -198,7 +202,6 @@ them to `use-package'."
        ;; Straight
        ;; --------
        ((eq lightemacs-package-manager 'straight)
-        ;; (message "IT IS STRAIGHT")
         (let ((straight-is-member (plist-member effective-args :straight)))
           ;; Explicitly append :ensure nil so package.el never attempts an
           ;; install
@@ -207,7 +210,6 @@ them to `use-package'."
           ;; TODO forbit using :straight
 
           ;; Remove :vc
-          ;; (message "STRAIGHT IS MEMBER: %s" straight-is-member)
           (when (not straight-is-member)
             (let ((vc-is-member (plist-member effective-args :vc)))
               (when vc-is-member
@@ -244,11 +246,7 @@ them to `use-package'."
                 (lightemacs-debug-message
                   "[lightemacs] Added ':ensure nil' to the %s package" name)
                 (setq effective-args (append (list :ensure nil)
-                                             effective-args))))
-
-
-            ;; (message "FINAL ENSURE%s" ensure-value)
-            )))
+                                             effective-args)))))))
 
        ;; Builtin package or Elpaca
        ;; -------------------------
@@ -262,11 +260,11 @@ them to `use-package'."
                                 :straight)))
 
         ;; Force :ensure t at compile time if it is not explicitly provided
-        (when (and (eq lightemacs-package-manager 'elpaca)
-                   (not ensure-is-member))
-          (setq effective-args (append effective-args (list :ensure t)))
-          (setq ensure-is-member t)
-          (setq ensure-value t))
+        ;; (when (and (eq lightemacs-package-manager 'elpaca)
+        ;;            (not ensure-is-member))
+        ;;   (setq effective-args (append effective-args (list :ensure t)))
+        ;;   (setq ensure-is-member t)
+        ;;   (setq ensure-value t))
 
         ;; Remove :vc
         ;; (let ((vc-is-member (plist-member effective-args :vc)))
@@ -300,33 +298,11 @@ them to `use-package'."
 NAME and ARGS are the same arguments as the `use-package' macro.
 Normalization and manager selection occur at macro-expansion time."
   (declare (indent defun))
-  ;; (message
-  ;;  "(Before) PACKAGE MANAGER for %s: %s" name lightemacs-package-manager)
   (let* ((normalized-result (lightemacs-use-package--normalize name args))
          (effective-args (nth 0 normalized-result))
          (_normalized-args (nth 1 normalized-result))
          (_ensure-value (nth 2 normalized-result)))
     `(progn
-       ;; TODO remove
-       ;; (message "(After) PACKAGE MANAGER for %s: %s"
-       ;;          ',name lightemacs-package-manager)
-       ;;
-       ;; (message "[DEBUG] Ensure:%S effective:%S normalized-args:%S"
-       ;;          ',ensure-value ',effective-args ',normalized-args)
-       ;; This block is compiled into the .elc.
-       ;; During batch compilation, the condition is true (it is compiling),
-       ;; so the `unless' body is skipped and NOT expanded or executed.
-       ;; TODO Replace with with an advice
-       ;; (lightemacs-use-package--before-package ',name ',effective-args
-       ;;                                         ',normalized-args
-       ;;                                         ',ensure-value)
-       ;; TODO should I use this one instead?
-       ;; (unless (or noninteractive
-       ;;             (bound-and-true-p byte-compile-current-file))
-       ;;   (lightemacs-use-package--before-package ',name ',effective-args
-       ;;                                           ',normalized-args
-       ;;                                           ',ensure-value))
-
        (use-package ,name ,@effective-args))))
 
 ;;; Provide
