@@ -133,7 +133,13 @@ adds that file to the recentf list.")
   :config
   (when lightemacs-recentf-track-switch-to-buffer
     (add-hook 'window-buffer-change-functions
-              #'lightemacs-recentf--add-file-on-buffer-change)))
+              #'lightemacs-recentf--add-file-on-buffer-change))
+
+  (setq recentf-exclude
+        (append recentf-exclude
+                (list
+                 "^/\\(?:su\\|sudo\\)?:"
+                 "COMMIT_EDITMSG\\'"))))
 
 (provide 'le-recentf)
 
