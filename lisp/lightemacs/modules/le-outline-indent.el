@@ -25,6 +25,7 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 (lightemacs-use-package outline-indent
   :commands (outline-indent-minor-mode
@@ -43,7 +44,13 @@
              outline-indent-open-folds
              outline-indent-close-folds)
   :init
-  (setq outline-indent-ellipsis lightemacs-ellipsis))
+  (setq outline-indent-ellipsis lightemacs-ellipsis)
+
+  (lightemacs-module-hooks outline-indent-minor
+    outline-indent-minor-mode '(yaml-mode-hook
+                                yaml-ts-mode-hook
+                                python-mode-hook
+                                python-ts-mode-hook)))
 
 (provide 'le-outline-indent)
 

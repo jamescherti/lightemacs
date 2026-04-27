@@ -11,8 +11,23 @@
 
 ;; Update the ellipsis in `outline-mode' and `outline-minor-mode' using
 ;; the `lightemacs-ellipsis' variable.
+;;
+;; Bug fix: outline-end-of-subtree misses final newline when at end of buffer
 
 ;;; Code:
+
+;;; Hooks
+
+(require 'lightemacs-module)
+
+;;; lightemacs-module-hooks
+
+(lightemacs-module-hooks outline-minor
+  outline-minor-mode
+  '(emacs-lisp-mode-hook
+    diff-mode-hook
+    markdown-mode-hook
+    conf-mode-hook))
 
 ;;; Update the outline ellipsis
 

@@ -27,6 +27,8 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package treesit-auto
+  :if (and (fboundp 'treesit-available-p)
+           (treesit-available-p))
   :commands (global-treesit-auto-mode
              treesit-auto-add-to-auto-mode-alist)
   :hook (lightemacs-after-init . lightemacs-treesit-auto--setup)

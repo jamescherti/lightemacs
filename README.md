@@ -622,21 +622,59 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 
 - **le-term**: Customizes the built-in terminal emulators `term` and `ansi-term`. It disables confirmation prompts when terminating active processes, removes horizontal scroll margins to avoid cursor-induced visual shifts, and hides the mode line to maximize usable space.
 
-- **le-outline**: Update the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. The `outline-minor-mode` enabled code folding in programming and can be configured by adding the following to the `~/.emacs.d/lisp/local/config.el` file:
+- **le-kirigami**: Configure the [kirigami](https://github.com/jamescherti/kirigami.el) package, which unifies text folding across diverse Emacs modes (outline, outline-indent, org, markdown, hideshow, treesit, etc.), enabling a single configuration for fold operations. It also improves folding logic in `outline`, `markdown-mode`, and `org-mode` (handling deep folds, content-based closing, and sibling visibility) while fixing upstream issues.
+
+- **le-outline**: Fixes outline bugs, configure hooks, and updates the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `outline-minor-mode`:
   ```emacs-lisp
-  (add-hook 'prog-mode-hook #'outline-minor-mode)
+  (setq lightemacs-outline-minor-target-hooks '(emacs-lisp-mode-hook markdown-mode-hook conf-mode-hook))
   ```
 
-  You can also, as an alternative to prog-mode-hook, add hook to specific modes:
+* **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `hs-minor-mode` for specific languages:
   ```emacs-lisp
-  (add-hook 'grep-mode-hook #'outline-minor-mode)
-  (add-hook 'conf-mode-hook #'outline-minor-mode)
-  (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
-  (add-hook 'js-mode-hook #'outline-minor-mode)
-  (add-hook 'js-ts-mode-hook #'outline-minor-mode)
-  (add-hook 'markdown-ts-mode-hook #'outline-minor-mode)
-  (add-hook 'markdown-mode-hook #'outline-minor-mode)
+  (setq lightemacs-hs-minor-target-hooks '(;; Systems and General Purpose
+                                           c-mode-hook
+                                           c++-mode-hook
+                                           java-mode-hook
+                                           rust-mode-hook
+                                           go-mode-hook
+                                           ruby-mode-hook
+
+                                           ;; Web and Frontend
+                                           js-mode-hook
+                                           typescript-mode-hook
+                                           css-mode-hook
+
+                                           ;; Scripting, Data, and Infrastructure
+                                           sh-mode-hook
+                                           json-mode-hook
+                                           lua-mode-hook))
   ```
+
+- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `treesit-fold-mode` for specific languages:
+  ```emacs-lisp
+  (setq lightemacs-treesit-fold-target-hooks '(c-ts-mode-hook
+                                               c++-ts-mode-hook
+                                               java-ts-mode-hook
+                                               rust-ts-mode-hook
+                                               go-ts-mode-hook
+                                               ruby-ts-mode-hook
+                                               js-ts-mode-hook
+                                               typescript-ts-mode-hook
+                                               tsx-ts-mode-hook
+                                               css-ts-mode-hook
+                                               html-ts-mode-hook
+                                               bash-ts-mode-hook
+                                               cmake-ts-mode-hook
+                                               dockerfile-ts-mode-hook
+                                               json-ts-mode-hook
+                                               toml-ts-mode-hook
+                                               markdown-ts-mode-hook
+                                               kotlin-ts-mode-hook
+                                               swift-ts-mode-hook
+                                               elixir-ts-mode-hook
+                                               zig-ts-mode-hook))
+  ```
+
 - **le-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **le-wgrep**: The [wgrep](https://github.com/mhayashi1120/Emacs-wgrep) (Writable Grep) package enables you to convert a grep, consult-ripgrep, or Embark Export buffers into an editable interface. It allows in-place modification of matched lines within the results buffer, which can then be propagated back to the corresponding files upon confirmation. This facilitates precise, bulk edits across multiple files efficiently, eliminating the need to open each file individually, and effectively transforms the grep results buffer into a controlled, multi-file editing environment.
 - **le-group-markdown**: Configures the [markdown-mode](https://github.com/jrblevin/markdown-mode) package, which provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM). This group also configures [markdown-toc](https://github.com/ardumont/markdown-toc).
@@ -834,14 +872,7 @@ Here are a few other modules disabled by default:
 
 * **le-server**: Enables the built-in Emacs server, which allows external programs such as `emacsclient` to connect to a single running instance of Emacs. This makes it possible to open files in an existing session rather than starting a new Emacs process each time. Once the server is running, the `emacsclient` command can be used in the terminal to open files in the active Emacs session. For example, running `emacsclient -n filename.txt` opens the file in the existing Emacs frame without blocking the terminal process.
 
-- **le-kirigami**: Configure the [kirigami](https://github.com/jamescherti/kirigami.el) package, which unifies text folding across diverse Emacs modes (outline, outline-indent, org, markdown, hideshow, treesit, etc.), enabling a single configuration for fold operations. It also improves folding logic in `outline`, `markdown-mode`, and `org-mode` (handling deep folds, content-based closing, and sibling visibility) while fixing upstream issues.
-
 - **le-buffer-terminator**: Configures the [buffer-terminator](https://github.com/jamescherti/buffer-terminator.el) package, which automatically kills inactive buffers to maintain a clean workspace and optimize performance. The `buffer-terminator-mode` kills buffers inactive for `buffer-terminator-inactivity-timeout` (default: 30 mins) every `buffer-terminator-interval` (default: 10 minutes). It safely preserves special buffers, unsaved modified files, visible buffers, buffers with running processes.
-
-- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. By default, the module does not start `treesit-fold-mode` automatically. To enable it in specific modes such as `python-ts-mode`:
-  ```emacs-lisp
-  (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
-  ```
 
 - **le-rainbow-delimiters**: Configures [rainbow-delimiters](https://github.com/Fanael/rainbow-delimiters) is a minor mode that highlights parentheses, brackets, and braces according to their nesting depth, with each level displayed in a distinct color. This makes it easier to identify matching delimiters, navigate code structure, and understand which statements are at a given depth. Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure rainbow-delimiters for Emacs Lisp:
   ```emacs-lisp

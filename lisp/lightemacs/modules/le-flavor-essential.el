@@ -18,9 +18,8 @@
 (lightemacs-module-load
  '(le-flavor-micro
 
-   ;; Update the ellipsis in `outline-mode' and `outline-minor-mode' using
-   ;; `lightemacs-ellipsis'
-   le-outline
+   ;; Code folding
+   le-group-code-folding
 
    ;; Preserve the minibuffer history between sessions. It saves the history of
    ;; inputs in the minibuffer, such as commands, search strings, and other
