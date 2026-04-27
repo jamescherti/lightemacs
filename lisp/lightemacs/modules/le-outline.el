@@ -14,6 +14,8 @@
 
 ;;; Code:
 
+;;; Update the outline ellipsis
+
 (defun le-outline--set-buffer-local-ellipsis (ellipsis)
   "Apply the ellipsis ELLIPSIS to outline mode locally to a buffer."
   (let* ((display-table (or buffer-display-table (make-display-table)))
@@ -41,6 +43,55 @@
 
 (add-hook 'outline-minor-mode-hook #'le-outline--update-ellipsis)
 (add-hook 'outline-mode-hook #'le-outline--update-ellipsis)
+
+;;; Bug fix: TODO: This bug fix was sent to the Emacs developers
+
+;; Issue report:
+;;   [PATCH] outline-end-of-subtree misses final newline when at end of buffer
+;;   When using outline-mode (or outline-minor-mode), making a
+;;   subtree invisible that is located at the very end of
+;;   the buffer causes the final newline to be incorrectly
+;;   flagged as invisible.
+;;
+;;   This occurs because outline-end-of-subtree relies on
+;;   (and (bolp) (not (eolp))) to decide whether to call
+;;   outline--end-of-previous. At the end of a buffer terminating
+;;   with a newline, point is at an empty line, making
+;;   (not (eolp)) evaluate to nil, which makes the function skips
+;;   stepping back over the final newline before the visibility
+;;   is flagged. This results in the ellipsis swallowing the
+;;   end-of-buffer marker.
+;;
+;;   Steps to reproduce:
+;;   1. emacs -Q
+;;   2. Set require-final-newline to t
+;;   2. Switch to *scratch* and evaluate: (outline-mode)
+;;   3. Insert the following text:
+;;   * Heading 1
+;;   * Heading 2
+;;   4. Move point to "Heading 2" and type: M-x outline-hide-subtree
+;;   5. Observe that the end of the buffer is swallowed into the
+;;   ellipsis.
+;;
+;;   Expected behavior:
+;;   The invisible region should terminate before the final
+;;   newline, leaving the end-of-buffer reachable and visible
+;;   outside the hidden subtree.
+;;
+;;   The attached patch fixes this by explicitly checking for
+;;   (eobp) before deciding to step backward.
+
+(defun outline-indent--advice-backtrack-whitespace (&rest _args)
+  "Backtrack over whitespace-only lines to prevent them from being folded.
+This advice ensures that empty lines between headings or at the end of
+the buffer remain visible when a fold is applied."
+  (if (eobp)
+      (if (bolp)
+          (forward-char -1))))
+
+(with-eval-after-load 'outline
+  (advice-add 'outline-end-of-subtree :after
+              #'outline-indent--advice-backtrack-whitespace))
 
 (provide 'le-outline)
 
