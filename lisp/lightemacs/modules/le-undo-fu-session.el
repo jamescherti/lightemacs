@@ -34,6 +34,7 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
   :commands undo-fu-session-global-mode
   :init
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"
+                                             "/MERGE_MSG\\'"
                                              "/git-rebase-todo\\'"
                                              "\\.gpg$"))
   (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode)
