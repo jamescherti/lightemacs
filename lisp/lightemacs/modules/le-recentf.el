@@ -138,7 +138,9 @@ adds that file to the recentf list.")
   (setq recentf-exclude
         (append recentf-exclude
                 (list
-                 "^/\\(?:su\\|sudo\\)?:"
+                 ;; Exclude transient Git files
+                 "MERGE_MSG\\'"
+                 "git-rebase-todo\\'"
                  "COMMIT_EDITMSG\\'"))))
 
 (provide 'le-recentf)
