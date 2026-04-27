@@ -629,7 +629,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
   (setq lightemacs-outline-minor-target-hooks '(emacs-lisp-mode-hook markdown-mode-hook conf-mode-hook))
   ```
 
-* **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `hs-minor-mode` for specific languages:
+- **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `hs-minor-mode` for specific languages:
   ```emacs-lisp
   (setq lightemacs-hs-minor-target-hooks '(;; Systems and General Purpose
                                            c-mode-hook

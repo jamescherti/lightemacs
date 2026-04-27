@@ -96,7 +96,7 @@
 ;;   The attached patch fixes this by explicitly checking for
 ;;   (eobp) before deciding to step backward.
 
-(defun outline-indent--advice-backtrack-whitespace (&rest _args)
+(defun le-outline--advice-backtrack-whitespace (&rest _args)
   "Backtrack over whitespace-only lines to prevent them from being folded.
 This advice ensures that empty lines between headings or at the end of
 the buffer remain visible when a fold is applied."
@@ -106,7 +106,7 @@ the buffer remain visible when a fold is applied."
 
 (with-eval-after-load 'outline
   (advice-add 'outline-end-of-subtree :after
-              #'outline-indent--advice-backtrack-whitespace))
+              #'le-outline--advice-backtrack-whitespace))
 
 (provide 'le-outline)
 
