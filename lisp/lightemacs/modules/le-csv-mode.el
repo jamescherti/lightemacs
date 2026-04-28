@@ -9,9 +9,8 @@
 
 ;;; Commentary:
 
-;; `csv-mode' is a major mode for Emacs that transforms the experience of
-;; editing Comma-Separated Value files by bridging the gap between raw text
-;; manipulation and a spreadsheet interface.
+;; `csv-mode' is a major mode for Emacs that enhances the experience of
+;; editing Comma-Separated Value files
 ;;
 ;; Its most impactful feature is the ability to align fields into visually
 ;; distinct, vertically synchronized columns, which instantly renders dense,

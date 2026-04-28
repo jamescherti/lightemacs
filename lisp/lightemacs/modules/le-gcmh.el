@@ -9,13 +9,13 @@
 
 ;;; Commentary:
 
-;; Gcmh (Garbage Collector Magic Hack) optimizes Emacs’ garbage collection
-;; behavior by adjusting the garbage collection threshold dynamically. Instead
-;; of collecting memory frequently during normal editing, gcmh increases the
-;; threshold while Emacs is idle, reducing interruptions and improving perceived
-;; performance. It also restores the threshold during active usage to prevent
-;; excessive memory use. In essence, it makes Emacs feel more responsive by
-;; tuning garbage collection automatically.
+;; Gcmh (Garbage Collector Magic Hack) optimizes Emacs' garbage collection
+;; behavior by adjusting the garbage collection threshold dynamically. During
+;; active use, it raises the threshold to reduce the frequency of garbage
+;; collections and minimize interruptions. When Emacs becomes idle, it lowers
+;; the threshold and triggers a collection, reclaiming memory at a convenient
+;; time. This improves perceived responsiveness while keeping memory
+;; usage under control.
 ;;
 ;; URL: https://gitlab.com/koral/gcmh
 ;;      https://github.com/emacsmirror/gcmh

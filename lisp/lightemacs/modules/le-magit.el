@@ -10,10 +10,6 @@
 ;;; Commentary:
 
 ;; Magit provides a comprehensive interface to the Git version control system.
-;; It aims to serve as a full-featured Git porcelain. Although it does not yet
-;; cover every Git command, it is sufficiently complete to enable even
-;; experienced Git users to perform nearly all their routine version control
-;; tasks entirely within Emacs.
 ;;
 ;; URL: https://github.com/magit/magit
 

@@ -9,10 +9,10 @@
 
 ;;; Commentary:
 
-;; Dumb-jump provides context-aware 'go to definition' functionality for 50+
-;; programming languages without requiring a language server. It works by using
-;; simple heuristics and regular expression searches to locate the definitions
-;; of functions, variables, and symbols across project files. Unlike more
+;; Dumb-jump provides a 'go to definition' functionality for 50+ programming
+;; languages without requiring a language server. It works by using simple
+;; heuristics and regular expression searches to locate the definitions of
+;; functions, variables, and symbols across project files. Unlike more
 ;; sophisticated language-aware tools, `dumb-jump' does not parse code
 ;; semantically, which makes it lightweight and fast, but sometimes less
 ;; precise. It integrates with popular navigation packages like `xref', allowing
