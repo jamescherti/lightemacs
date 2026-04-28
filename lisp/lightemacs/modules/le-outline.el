@@ -25,9 +25,10 @@
 (lightemacs-module-hooks outline-minor
   outline-minor-mode
   '(emacs-lisp-mode-hook
-    diff-mode-hook
+    lisp-mode-hook
+    conf-mode-hook
     markdown-mode-hook
-    conf-mode-hook))
+    diff-mode-hook))
 
 ;;; Update the outline ellipsis
 

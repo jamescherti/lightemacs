@@ -50,7 +50,8 @@
     outline-indent-minor-mode '(yaml-mode-hook
                                 yaml-ts-mode-hook
                                 python-mode-hook
-                                python-ts-mode-hook)))
+                                python-ts-mode-hook
+                                haskell-mode-hook)))
 
 (provide 'le-outline-indent)
 

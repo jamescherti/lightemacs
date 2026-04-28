@@ -39,7 +39,9 @@
     ;; Scripting, Data, and Infrastructure
     sh-mode-hook
     json-mode-hook
-    lua-mode-hook))
+    lua-mode-hook
+    nxml-mode-hook
+    html-mode-hook))
 
 (provide 'le-hideshow)
 
