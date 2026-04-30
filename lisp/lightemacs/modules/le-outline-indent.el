@@ -47,11 +47,7 @@
   (setq outline-indent-ellipsis lightemacs-ellipsis)
 
   (lightemacs-module-hooks outline-indent-minor
-    outline-indent-minor-mode '(yaml-mode-hook
-                                yaml-ts-mode-hook
-                                python-mode-hook
-                                python-ts-mode-hook
-                                haskell-mode-hook)))
+    outline-indent-minor-mode '()))
 
 (provide 'le-outline-indent)
 

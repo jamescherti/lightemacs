@@ -45,29 +45,7 @@
 
   (lightemacs-module-hooks treesit-fold
     treesit-fold-mode
-    '(c-ts-mode-hook
-      c++-ts-mode-hook
-      java-ts-mode-hook
-      rust-ts-mode-hook
-      go-ts-mode-hook
-      ruby-ts-mode-hook
-      js-ts-mode-hook
-      typescript-ts-mode-hook
-      tsx-ts-mode-hook
-      css-ts-mode-hook
-      html-ts-mode-hook
-      bash-ts-mode-hook
-      cmake-ts-mode-hook
-      dockerfile-ts-mode-hook
-      json-ts-mode-hook
-      toml-ts-mode-hook
-      markdown-ts-mode-hook
-
-      ;; Third-party packages
-      kotlin-ts-mode-hook
-      swift-ts-mode-hook
-      elixir-ts-mode-hook
-      zig-ts-mode-hook))
+    '())
 
   :config
   (set-face-attribute 'treesit-fold-replacement-face nil
