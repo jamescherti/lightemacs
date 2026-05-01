@@ -626,7 +626,11 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
 
 - **le-outline**: Fixes outline bugs, configure hooks, and updates the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `outline-minor-mode`:
   ```emacs-lisp
-  (setq lightemacs-outline-minor-target-hooks '(emacs-lisp-mode-hook markdown-mode-hook conf-mode-hook))
+  (setq lightemacs-outline-minor-target-hooks '(emacs-lisp-mode-hook
+                                                lisp-mode-hook
+                                                conf-mode-hook
+                                                markdown-mode-hook
+                                                diff-mode-hook))
   ```
 
 - **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `hs-minor-mode` for specific languages:
@@ -647,7 +651,9 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
                                            ;; Scripting, Data, and Infrastructure
                                            sh-mode-hook
                                            json-mode-hook
-                                           lua-mode-hook))
+                                           lua-mode-hook
+                                           nxml-mode-hook
+                                           html-mode-hook))
   ```
 
 - **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `treesit-fold-mode` for specific languages:
@@ -663,12 +669,14 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
                                                tsx-ts-mode-hook
                                                css-ts-mode-hook
                                                html-ts-mode-hook
-                                               bash-ts-mode-hook
                                                cmake-ts-mode-hook
                                                dockerfile-ts-mode-hook
                                                json-ts-mode-hook
                                                toml-ts-mode-hook
                                                markdown-ts-mode-hook
+                                               bash-ts-mode-hook
+
+                                               ;; Third-party packages
                                                kotlin-ts-mode-hook
                                                swift-ts-mode-hook
                                                elixir-ts-mode-hook

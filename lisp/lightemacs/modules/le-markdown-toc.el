@@ -37,10 +37,8 @@
         (when (and (consp buffer-undo-list)
                    (null (car buffer-undo-list)))
           (setq buffer-undo-list (cdr buffer-undo-list)))
-        (let ((undo-handle (prepare-change-group)))
-          (unwind-protect
-              (apply fn args)
-            (undo-amalgamate-change-group undo-handle))))))
+        (with-undo-amalgamate
+          (apply fn args)))))
 
   :config
   (when lightemacs-markdown-toc-restore-window-start
