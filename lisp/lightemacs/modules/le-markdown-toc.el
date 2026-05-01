@@ -37,9 +37,17 @@
         (when (and (consp buffer-undo-list)
                    (null (car buffer-undo-list)))
           (setq buffer-undo-list (cdr buffer-undo-list)))
-        (let ((undo-handle (prepare-change-group)))
+        (let ((undo-handle (prepare-change-group))
+              ;; Don't truncate any undo data in the middle of this, otherwise
+              ;; Emacs might truncate part of the resulting undo step.
+              (undo-outer-limit nil)
+              (undo-limit most-positive-fixnum)
+              (undo-strong-limit most-positive-fixnum))
           (unwind-protect
-              (apply fn args)
+              (progn
+                (activate-change-group undo-handle)
+                (apply fn args))
+            (accept-change-group undo-handle)
             (undo-amalgamate-change-group undo-handle))))))
 
   :config
