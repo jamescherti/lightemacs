@@ -155,10 +155,10 @@ cursor."
                (count-screen-lines
                 (save-excursion
                   (goto-char (window-start ,window))
-                  (beginning-of-visual-line)
+                  (vertical-motion 0)
                   (point))
                 (save-excursion
-                  (beginning-of-visual-line)
+                  (vertical-motion 0)
                   (point))
                 nil
                 ,window))))
@@ -170,10 +170,10 @@ cursor."
                     (eq ,window-buffer (window-buffer ,window)))
            (with-selected-window ,window
              (let ((,start-pos (save-excursion
-                                 (beginning-of-visual-line)
+                                 (vertical-motion 0)
                                  (vertical-motion (- ,lines-before-cursor)
                                                   ,window)
-                                 (beginning-of-visual-line)
+                                 (vertical-motion 0)
                                  (point))))
                (set-window-start ,window
                                  ,start-pos
