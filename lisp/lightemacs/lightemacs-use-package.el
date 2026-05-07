@@ -289,37 +289,38 @@ them to `use-package'."
         ;;
         ;; To fix this, we need to prevent use-package from attempting to
         ;; install packages during compilation.
-        (when (memq lightemacs-package-manager '(builtin-package
-                                                 use-package))
-          (let ((vc-is-member (plist-member effective-args :vc)))
-            (when (or
-                   ;; Async native JIT compilation always spawns an isolated
-                   ;; background worker process using emacs -batch. Because it
-                   ;; runs in batch mode, the noninteractive variable is
-                   ;; automatically set to t. This catches all async native
-                   ;; compilation.
-                   noninteractive
-                   ;; byte-compile-current-file: Compiling a file
-                   ;; synchronously/interactively (e.g., using M-x
-                   ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
-                   ;; doesn't run in batch mode. However, native compilation
-                   ;; always runs the byte-compiler as its first pass to
-                   ;; generate the initial representation of the code.
-                   ;; Therefore, byte-compile-current-file will always be
-                   ;; non-nil during this phase.
-                   (bound-and-true-p byte-compile-current-file))
-              (when vc-is-member
-                (setq effective-args
-                      (lightemacs-use-package--plist-delete effective-args :vc)))
-
-              ;; Always replace :ensure with :ensure nil to prevent the native
-              ;; compiler from downloading from repositories such as MELPA
-              (lightemacs-debug-message
-                "[lightemacs] Added ':ensure nil' to the %s package for compilation"
-                name)
-              (setq effective-args
-                    (lightemacs-use-package--plist-delete effective-args :ensure))
-              (setq effective-args (append (list :ensure nil) effective-args))))))))
+        ;; (when (memq lightemacs-package-manager '(builtin-package
+        ;;                                          use-package))
+        ;;   (let ((vc-is-member (plist-member effective-args :vc)))
+        ;;     (when (or
+        ;;            ;; Async native JIT compilation always spawns an isolated
+        ;;            ;; background worker process using emacs -batch. Because it
+        ;;            ;; runs in batch mode, the noninteractive variable is
+        ;;            ;; automatically set to t. This catches all async native
+        ;;            ;; compilation.
+        ;;            noninteractive
+        ;;            ;; byte-compile-current-file: Compiling a file
+        ;;            ;; synchronously/interactively (e.g., using M-x
+        ;;            ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
+        ;;            ;; doesn't run in batch mode. However, native compilation
+        ;;            ;; always runs the byte-compiler as its first pass to
+        ;;            ;; generate the initial representation of the code.
+        ;;            ;; Therefore, byte-compile-current-file will always be
+        ;;            ;; non-nil during this phase.
+        ;;            (bound-and-true-p byte-compile-current-file))
+        ;;       (when vc-is-member
+        ;;         (setq effective-args
+        ;;               (lightemacs-use-package--plist-delete effective-args :vc)))
+        ;;
+        ;;       ;; Always replace :ensure with :ensure nil to prevent the native
+        ;;       ;; compiler from downloading from repositories such as MELPA
+        ;;       (lightemacs-debug-message
+        ;;         "[lightemacs] Added ':ensure nil' to the %s package for compilation"
+        ;;         name)
+        ;;       (setq effective-args
+        ;;             (lightemacs-use-package--plist-delete effective-args :ensure))
+        ;;       (setq effective-args (append (list :ensure nil) effective-args)))))
+        )))
     ;; Return the 3 elements as a list
     (list effective-args
           nil ; removed: normalized-args
