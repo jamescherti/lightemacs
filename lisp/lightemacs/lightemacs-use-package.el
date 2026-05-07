@@ -266,26 +266,58 @@ them to `use-package'."
         ;;   (setq ensure-is-member t)
         ;;   (setq ensure-value t))
 
-        ;; Remove :vc
-        ;; (let ((vc-is-member (plist-member effective-args :vc)))
-        ;;   (when (and vc-is-member
-        ;;              (or noninteractive
-        ;;                  (bound-and-true-p byte-compile-current-file)))
-        ;;     (setq effective-args
-        ;;           (lightemacs-use-package--plist-delete effective-args :vc)))
+        ;; Edge case: When Emacs runs async native compilation in an isolated,
+        ;; noninteractive background worker process (emacs -Q -batch).
         ;;
-        ;;   ;; (when (and (not vc-is-member)
-        ;;   ;;            (not (eq lightemacs-package-manager 'elpaca))
-        ;;   ;;            use-package-always-ensure)
-        ;;   ;;    ;; Always replace :ensure with :ensure nil to prevent the native
-        ;;   ;;    ;; compiler from downloading from repositories such as MELPA
-        ;;   ;;    (lightemacs-debug-message
-        ;;   ;;      "[lightemacs] Added ':ensure nil' to the %s package" name)
-        ;;   ;;    (setq effective-args
-        ;;   ;;          (lightemacs-use-package--plist-delete effective-args :ensure))
-        ;;   ;;    (setq effective-args (append (list :ensure nil) effective-args)))
-        ;;   )
-        )))
+        ;; In this isolated background environment, packages are not recognized
+        ;; as installed because the main session's package state (like
+        ;; package-alist or package-vc data) is not fully loaded. When the
+        ;; compiler evaluates top-level forms or expands the use-package macro
+        ;; for tmp-diff-hl.el, it sees the :vc and :ensure keywords. Thinking
+        ;; the package is missing, it generates and executes the code to install
+        ;; it (via package-vc-install).
+        ;;
+        ;; This installation attempt triggers two things that cause the
+        ;; compilation log errors:
+        ;;
+        ;; It attempts to fetch archive contents to resolve dependencies,
+        ;; causing the proxy authentication error.
+        ;;
+        ;; It attempts to clone the git repository, which prompts for user input
+        ;; (Overwrite previous checkout...) and causes the background process to
+        ;; hang or fail since it is running noninteractively.
+        ;;
+        ;; To fix this, we need to prevent use-package from attempting to
+        ;; install packages during compilation.
+        (let ((vc-is-member (plist-member effective-args :vc)))
+          (when (or
+                 ;; Async native JIT compilation always spawns an isolated
+                 ;; background worker process using emacs -batch. Because it
+                 ;; runs in batch mode, the noninteractive variable is
+                 ;; automatically set to t. This catches all async native
+                 ;; compilation.
+                 noninteractive
+                 ;; byte-compile-current-file: Compiling a file
+                 ;; synchronously/interactively
+                 ;; (e.g., using M-x emacs-lisp-native-compile or M-x
+                 ;; byte-compile-file), Emacs doesn't run in batch mode.
+                 ;; However, native compilation always runs the byte-compiler as
+                 ;; its first pass to generate the initial representation of the
+                 ;; code. Therefore, byte-compile-current-file will always be
+                 ;; non-nil during this phase.
+                 (bound-and-true-p byte-compile-current-file))
+            (when vc-is-member
+              (setq effective-args
+                    (lightemacs-use-package--plist-delete effective-args :vc)))
+
+            ;; Always replace :ensure with :ensure nil to prevent the native
+            ;; compiler from downloading from repositories such as MELPA
+            (lightemacs-debug-message
+              "[lightemacs] Added ':ensure nil' to the %s package for compilation"
+              name)
+            (setq effective-args
+                  (lightemacs-use-package--plist-delete effective-args :ensure))
+            (setq effective-args (append (list :ensure nil) effective-args)))))))
     ;; Return the 3 elements as a list
     (list effective-args
           nil ; removed: normalized-args
