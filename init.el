@@ -108,16 +108,16 @@
       (insert
        (concat "(when (bound-and-true-p byte-compile-current-file)\n"))
 
-      (insert (format "(setq lightemacs-user-directory %s)\n"
+      (insert (format "  (setq lightemacs-user-directory %s)\n"
                       (prin1-to-string (abbreviate-file-name
                                         lightemacs-user-directory))))
-      (insert (format "(setq lightemacs-local-directory %s)\n"
+      (insert (format "  (setq lightemacs-local-directory %s)\n"
                       (prin1-to-string (abbreviate-file-name
                                         lightemacs-local-directory))))
-      (insert (format "(setq lightemacs-var-directory %s)\n"
+      (insert (format "  (setq lightemacs-var-directory %s)\n"
                       (prin1-to-string (abbreviate-file-name
                                         lightemacs-var-directory))))
-      (insert (format "(setq lightemacs-core-directory %s)\n\n"
+      (insert (format "  (setq lightemacs-core-directory %s)\n\n"
                       (prin1-to-string (abbreviate-file-name
                                         lightemacs-core-directory))))
 
@@ -161,11 +161,20 @@
           (format
            ")\n\n"))))
 
+      ;; Initialize the package system so the compiler knows packages are
+      ;; already installed and does not attempt to clone them over the network.
+      (when (memq lightemacs-package-manager '(builtin-package
+                                               use-package))
+        (insert (format "  (setq package-user-dir %s)\n"
+                        (prin1-to-string (abbreviate-file-name
+                                          package-user-dir))))
+        (insert "  (package-initialize)\n\n"))
+
       ;; use-package optimization
       (let ((val (if (boundp 'use-package-expand-minimally)
                      use-package-expand-minimally
                    t)))
-        (insert (format "(setq use-package-expand-minimally %S)\n\n" val))
+        (insert (format "  (setq use-package-expand-minimally %S)\n\n" val))
         (setq use-package-expand-minimally val))
 
       ;; End byte/native compile only
