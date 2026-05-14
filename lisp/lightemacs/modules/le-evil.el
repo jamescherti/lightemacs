@@ -145,9 +145,68 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
     (add-to-list
      'evil-insert-state-bindings
-     '("\C-h" . lightemacs-evil-delete-backward-C-h)))
+     '("\C-h" . lightemacs-evil-delete-backward-C-h))))
 
-  ;; Eldoc
+;;; Synchronize `evil-shift-width' with `tab-width'.
+
+(defun lightemacs-evil--update-shift-width ()
+  "Synchronize `evil-shift-width' with `tab-width'.
+Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
+  (unless (derived-mode-p 'org-mode)
+    (setq-local evil-shift-width tab-width)))
+
+(add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
+
+;;; Patch: Fixes #2021: Fix 'wrong-type-argument wholenump' in evil-line-move
+
+;; URL: https://github.com/emacs-evil/evil/pull/2022
+;; When executing visual line movements, such as evil-previous-visual-line, that
+;; hit the beginning a buffer, evil-line-move can crash with a
+;; wrong-type-argument wholenump error:
+;;
+;; Fixes:
+;; ------
+;; Debugger entered--Lisp error: (wrong-type-argument wholenump -5)
+;;   line-move-to-column(-5)
+;;   line-move-finish(-5.625 1 t)
+;;   evil-line-move(-1)
+;;   evilcursor-previous-visual-line(1)
+;;   evilcursor-forward-line(-1)
+;;   evilcursor-smart-previous-line(nil)
+;;   funcall-interactively(evilcursor-smart-previous-line nil)
+;;   command-execute(evilcursor-smart-previous-line)
+(defun evil-line-move-sanitize-columns-advice (&rest _)
+  "Clamp column variables to 0 to prevent wholenump errors at boundaries."
+  ;; Sanitize goal-column
+  (when (numberp goal-column)
+    (setq goal-column (max 0 goal-column)))
+
+  ;; Sanitize temporary-goal-column (which can be a number or a cons cell)
+  (cond
+   ((numberp temporary-goal-column)
+    (setq temporary-goal-column (max 0 temporary-goal-column)))
+   ((consp temporary-goal-column)
+    (when (numberp (car temporary-goal-column))
+      (setcar temporary-goal-column (max 0 (car temporary-goal-column)))))))
+
+(with-eval-after-load 'evil-common
+  (advice-add 'evil-line-move :before #'evil-line-move-sanitize-columns-advice))
+
+;;; Patch: Fix eldoc
+
+;; To improve the ElDoc experience for Evil mode users, this pull request fixes
+;; #1969 by adding the following commands to the ElDoc system:
+;;
+;; evil-delete-*
+;; evil-insert-*
+;; evil-append-*
+;;
+;; This resolves the issue where ElDoc help disappears from the minibuffer when
+;; using Evil mode after executing certain commands, such as deleting words or
+;; characters, or switching to insert mode.
+;;
+;; URL: https://github.com/emacs-evil/evil/pull/1980
+(with-eval-after-load 'evil
   (with-eval-after-load 'eldoc
     (eldoc-add-command 'evil-normal-state
                        'lightemacs-evil-delete-backward-C-h
@@ -179,18 +238,6 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
       ;; Add yank commands (`evil-yank' and `evil-yank-line')
       (eldoc-add-command-completions "evil-yank"))))
-
-;;; Keybindings
-
-;;; Synchronize `evil-shift-width' with `tab-width'.
-
-(defun lightemacs-evil--update-shift-width ()
-  "Synchronize `evil-shift-width' with `tab-width'.
-Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
-  (unless (derived-mode-p 'org-mode)
-    (setq-local evil-shift-width tab-width)))
-
-(add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
 
 ;;; Provide
 
