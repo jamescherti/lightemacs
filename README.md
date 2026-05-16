@@ -642,6 +642,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
                                            rust-mode-hook
                                            go-mode-hook
                                            ruby-mode-hook
+                                           php-mode-hook
 
                                            ;; Web and Frontend
                                            js-mode-hook
@@ -664,6 +665,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
                                                rust-ts-mode-hook
                                                go-ts-mode-hook
                                                ruby-ts-mode-hook
+                                               php-ts-mode-hook
                                                js-ts-mode-hook
                                                typescript-ts-mode-hook
                                                tsx-ts-mode-hook
