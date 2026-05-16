@@ -30,25 +30,26 @@
   (defun le-markdown-toc--markdown-toc-generate-toc-advice (fn &rest args)
     "Restore `window-start' after generating a table of contents.
   FN is the advised function. ARGS are the function arguments."
-    (lightemacs-save-window-start
-      (save-window-excursion
-        ;; Safely remove the automatic undo boundary inserted by the command
-        ;; loop. This merges the upcoming changes with the previous undo step.
-        (when (and (consp buffer-undo-list)
-                   (null (car buffer-undo-list)))
-          (setq buffer-undo-list (cdr buffer-undo-list)))
-        (let ((undo-handle (prepare-change-group))
-              ;; Don't truncate any undo data in the middle of this, otherwise
-              ;; Emacs might truncate part of the resulting undo step.
-              (undo-outer-limit nil)
-              (undo-limit most-positive-fixnum)
-              (undo-strong-limit most-positive-fixnum))
-          (unwind-protect
-              (progn
-                (activate-change-group undo-handle)
-                (apply fn args))
-            (accept-change-group undo-handle)
-            (undo-amalgamate-change-group undo-handle))))))
+    (lightemacs-save-window-scroll
+      (lightemacs-save-window-start
+        (save-window-excursion
+          ;; Safely remove the automatic undo boundary inserted by the command
+          ;; loop. This merges the upcoming changes with the previous undo step.
+          (when (and (consp buffer-undo-list)
+                     (null (car buffer-undo-list)))
+            (setq buffer-undo-list (cdr buffer-undo-list)))
+          (let ((undo-handle (prepare-change-group))
+                ;; Don't truncate any undo data in the middle of this, otherwise
+                ;; Emacs might truncate part of the resulting undo step.
+                (undo-outer-limit nil)
+                (undo-limit most-positive-fixnum)
+                (undo-strong-limit most-positive-fixnum))
+            (unwind-protect
+                (progn
+                  (activate-change-group undo-handle)
+                  (apply fn args))
+              (accept-change-group undo-handle)
+              (undo-amalgamate-change-group undo-handle)))))))
 
   :config
   (when lightemacs-markdown-toc-restore-window-start

@@ -1012,8 +1012,8 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 ### Useful functions and macros
 
 - `lightemacs-recenter-if-out-of-view` (macro): Execute BODY and recenter if point is outside the original window bounds.
-- `lightemacs-save-window-hscroll` (macro): Execute BODY while preserving the horizontal scroll of the selected window. This macro saves the current `window-hscroll` of the selected window. After BODY executes, the horizontal scroll is restored exactly, leaving the vertical position and window start unchanged. Use this macro when you only need to maintain horizontal alignment, without restoring the lines above the cursor.
-- `lightemacs-save-window-start` (macro): Preserve and restore `window-start` relative to the lines above the cursor. This macro saves the first visible line in the selected window. After BODY executes, the window is restored so that the same lines remain visible above the cursor, maintaining the relative vertical position of the cursor within the window. To also restore the mark, this macro can be combined with `save-mark-and-excursion`. For preservation of horizontal scroll only (hscroll), consider using the `lightemacs-save-window-hscroll` macro.
+- `lightemacs-save-window-scroll` (macro): Execute BODY while preserving the `window-hscroll` and `window-vscroll`.
+- `lightemacs-save-window-start` (macro): Execute BODY while preserving and restoring `window-start` relative to the lines above the cursor. This macro saves the first visible line in the selected window. After BODY executes, the window is restored so that the same lines remain visible above the cursor, maintaining the relative vertical position of the cursor within the window. To also restore the mark, this macro can be combined with `save-mark-and-excursion`. For preservation of horizontal scroll only (hscroll), consider using the `lightemacs-save-window-hscroll` macro.
 
 ## Author and license
 

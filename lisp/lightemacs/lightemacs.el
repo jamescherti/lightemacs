@@ -97,77 +97,33 @@ recentering is skipped."
                   (not (pos-visible-in-window-p (point) ,win-sym)))
          (recenter)))))
 
-(defmacro lightemacs-save-window-vscroll (&rest body)
-  "Execute BODY while preserving the vertical scroll of the selected window.
-
-This macro saves the current `window-vscroll` of the selected window.
-After BODY executes, the vertical scroll is restored exactly, leaving
-the vertical position and window start unchanged.
-
-Use this macro when you only need to maintain vertical alignment,
-without restoring the lines above the cursor."
-  (declare (indent 0) (debug t))
-  (let ((window (make-symbol "window"))
-        (vscroll (make-symbol "vscroll"))
-        (should-restore (make-symbol "should-restore")))
-    `(let* ((,window (selected-window))
-            ;; Check conditions and capture scroll BEFORE body runs
-            (,should-restore (and (window-live-p ,window)
-                                  (eq (current-buffer) (window-buffer ,window))))
-            (,vscroll (when ,should-restore
-                        (window-vscroll ,window))))
-       (unwind-protect
-           (progn ,@body) ; Execute body exactly ONCE
-         ;; Restore only if conditions were originally met
-         (when (and ,should-restore (window-live-p ,window))
-           (set-window-vscroll ,window ,vscroll))))))
-
-(defmacro lightemacs-save-window-hscroll (&rest body)
-  "Execute BODY while preserving the horizontal scroll of the selected window.
-
-This macro saves the current `window-hscroll` of the selected window.
-After BODY executes, the horizontal scroll is restored exactly, leaving
-the vertical position and window start unchanged.
-
-Use this macro when you only need to maintain horizontal alignment,
-without restoring the lines above the cursor."
-  (declare (indent 0) (debug t))
-  (let ((window (make-symbol "window"))
-        (hscroll (make-symbol "hscroll"))
-        (should-restore (make-symbol "should-restore")))
-    `(let* ((,window (selected-window))
-            ;; Check conditions and capture scroll BEFORE body runs
-            (,should-restore (and (window-live-p ,window)
-                                  (eq (current-buffer) (window-buffer ,window))))
-            (,hscroll (when ,should-restore
-                        (window-hscroll ,window))))
-       (unwind-protect
-           (progn ,@body) ; Execute body exactly ONCE
-         ;; Restore only if conditions were originally met
-         (when (and ,should-restore (window-live-p ,window))
-           (set-window-hscroll ,window ,hscroll))))))
-
 (defmacro lightemacs-save-window-scroll (&rest body)
   "Execute BODY while preserving the horizontal and vertical scroll."
   (declare (indent 0) (debug t))
   (let ((window (make-symbol "window"))
+        (window-buffer (make-symbol "window-buffer"))
         (hscroll (make-symbol "hscroll"))
         (vscroll (make-symbol "vscroll"))
         (should-restore (make-symbol "should-restore")))
     `(let* ((,window (selected-window))
+            (,window-buffer (window-buffer ,window))
             ;; Check conditions and capture scroll BEFORE body runs
             (,should-restore (and (window-live-p ,window)
-                                  (eq (current-buffer) (window-buffer ,window))))
+                                  (eq (current-buffer)
+                                      (window-buffer ,window))))
             (,hscroll (when ,should-restore
                         (window-hscroll ,window)))
             (,vscroll (when ,should-restore
-                        (window-vscroll ,window))))
+                        (window-vscroll ,window t))))
        (unwind-protect
            ;; Execute body exactly ONCE
            (progn ,@body)
          ;; Restore only if conditions were originally met
-         (when (and ,should-restore (window-live-p ,window))
-           (set-window-vscroll ,window ,vscroll)
+         (when (and ,should-restore
+                    (window-live-p ,window)
+                    (buffer-live-p ,window-buffer)
+                    (eq ,window-buffer (window-buffer ,window)))
+           (set-window-vscroll ,window ,vscroll t)
            (set-window-hscroll ,window ,hscroll))))))
 
 (defmacro lightemacs-save-window-start (&rest body)
@@ -179,13 +135,8 @@ cursor, maintaining the relative vertical position of the cursor within the
 window.
 
 To also restore the mark, this macro can be combined with
-`save-mark-and-excursion'. For preservation of horizontal scroll only (hscroll),
-consider using the `kirigami--save-window-hscroll' macro.
-
-Example:
-  (lightemacs-save-window-start
-    ;;; Add code here
-    t)
+`save-mark-and-excursion'. For preservation of horizontal and vertical scroll,
+consider using the `lightemacs-save-window-scroll' macro.
 
 This macro is appropriate when it is necessary to maintain the visual layout of
 the buffer, especially if BODY may scroll the window or otherwise move the
