@@ -643,6 +643,7 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
                                            go-mode-hook
                                            ruby-mode-hook
                                            php-mode-hook
+                                           perl-mode-hook
 
                                            ;; Web and Frontend
                                            js-mode-hook
