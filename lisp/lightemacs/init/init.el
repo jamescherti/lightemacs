@@ -102,6 +102,9 @@
 
 (setq display-time-default-load-average nil) ; Omit load average
 
+;; Force the mouse to paste text at the active cursor position.
+(setq mouse-yank-at-point t)
+
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
@@ -121,8 +124,6 @@
 (setq bookmark-save-flag 1)
 
 (setq uniquify-buffer-name-style 'forward)
-
-(setq remote-file-name-inhibit-cache 50)
 
 ;; Disable fontification during user input to reduce lag in large buffers.
 ;; Also helps marginally with scrolling performance.
@@ -201,6 +202,9 @@
 
 (setq compilation-ask-about-save nil
       compilation-always-kill t
+      ;; Parse up to 2048 characters per line in compilation buffers. This
+      ;; safely catches deep errors and long paths without risking hangs.
+      compilation-max-output-line-length 2048
       compilation-scroll-output 'first-error)
 
 ;; Skip confirmation prompts when creating a new file or buffer
