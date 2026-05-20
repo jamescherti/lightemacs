@@ -75,8 +75,6 @@
   (setq custom-theme-directory
         (expand-file-name "themes/" minimal-emacs-user-directory))
 
-  ;; Evil defaults
-
   ;; Load: config.el
   (load (expand-file-name "config" lightemacs-local-directory)
         :no-error
@@ -93,9 +91,12 @@
   (lightemacs-load-user-init
    (expand-file-name "early-init.el" minimal-emacs-user-directory))
 
-  ;; Adjust variables after early-init
-  (when (and lightemacs-native-comp-excluded-cpus
-             (boundp 'native-comp-async-jobs-number))
+  ;; Increase the number of CPUs
+  (when (and (bound-and-true-p lightemacs-native-comp-excluded-cpus)
+             (numberp lightemacs-native-comp-excluded-cpus)
+             (featurep 'native-compile)
+             (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
     (setq native-comp-async-jobs-number
           (lightemacs--calculate-native-comp-async-jobs-number)))
 
