@@ -92,17 +92,13 @@ all settings in this block are skipped."
 
 ;;; Function: `lightemacs-module-load'
 
-(defvar lightemacs-module--loaded nil)
-
 (defun lightemacs-module-load (modules)
   "Load all modules listed in MODULES.
 If a module fails to load, an error warning is displayed and the module
 is not added to the loaded list."
   (dolist (feature-symbol modules)
-    (unless (memq feature-symbol lightemacs-module--loaded)
-      (lightemacs-verbose-message "Load module: %s" feature-symbol)
-      (require feature-symbol)
-      (push feature-symbol lightemacs-module--loaded))))
+    (lightemacs-verbose-message "Load module: %s" feature-symbol)
+    (require feature-symbol)))
 
 ;;; Provide
 
