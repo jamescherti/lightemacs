@@ -33,6 +33,12 @@ For instance:
   (add-hook \\='lightemacs-dired-filter-setup-hook
             \\='dired-filter-by-git-ignored)")
 
+(defvar lightemacs-dired-filter-global-enabled nil
+  "Global state for Dired filters.")
+
+(defvar-local lightemacs-dired-filter-local-enabled 'unspecified
+  "Buffer-local state for Dired filters. Can be \\='unspecified, t, or nil.")
+
 ;;; Use-package dired-filter
 
 (lightemacs-use-package dired-filter
@@ -46,29 +52,40 @@ For instance:
               ("C-c F" . lightemacs-dired-filter-global-toggle))
 
   :preface
-  (defvar lightemacs--dired-filter-global-enabled nil
-    "Global state for Dired filters.")
-
-  (defvar-local lightemacs--dired-filter-local-enabled 'unspecified
-    "Buffer-local state for Dired filters. Can be \='unspecified, t, or nil.")
-
   (defun lightemacs-dired-filter--enabled ()
     "Return t if filters should be enabled in the current buffer."
-    (if (eq lightemacs--dired-filter-local-enabled 'unspecified)
-        lightemacs--dired-filter-global-enabled
-      lightemacs--dired-filter-local-enabled))
+    (if (eq lightemacs-dired-filter-local-enabled 'unspecified)
+        lightemacs-dired-filter-global-enabled
+      lightemacs-dired-filter-local-enabled))
 
   (defun lightemacs-dired-filter--enable-filters ()
     "Enable `dired' filters based on user configuration."
-    (dired-filter-pop-all)  ; TODO check one by one using a loop
-    (when (lightemacs-dired-filter--enabled)
-      (when (derived-mode-p 'dired-mode)
-        (run-hooks 'lightemacs-dired-filter-setup-hook))))
+    (when (derived-mode-p 'dired-mode)
+      (let ((enabled (lightemacs-dired-filter--enabled))
+            (changed nil))
+        (dolist (filter-func lightemacs-dired-filter-setup-hook)
+          (when (fboundp filter-func)
+            (let* ((filter-name-str (replace-regexp-in-string
+                                     "^dired-filter-by-" ""
+                                     (symbol-name filter-func)))
+                   (filter-name (intern filter-name-str))
+                   (is-active (and (boundp 'dired-filter-stack)
+                                   (assq filter-name dired-filter-stack))))
+              (if enabled
+                  (unless is-active
+                    (funcall filter-func)) ; triggers autoload and add filter
+                (when is-active
+                  (setq dired-filter-stack
+                        (assq-delete-all filter-name dired-filter-stack))
+                  (setq changed t))))))
+        (when changed
+          (if (fboundp 'dired-filter-update)
+              (dired-filter-update)
+            (revert-buffer))))))
 
   (defun lightemacs-dired-filter--apply-state ()
     "Save point, apply the filter state, and restore point."
-    (when (and (boundp 'dired-filter-stack)
-               (fboundp 'dired-goto-file)
+    (when (and (fboundp 'dired-goto-file)
                (fboundp 'dired-get-file-for-visit))
       (let ((dired-file (condition-case nil
                             (dired-get-file-for-visit)
@@ -84,7 +101,7 @@ This function enables or disables all filters listed in
 to the current Dired buffer; when toggled off, all filters are removed,
 restoring the full file listing."
     (interactive)
-    (setq lightemacs--dired-filter-local-enabled
+    (setq lightemacs-dired-filter-local-enabled
           (not (lightemacs-dired-filter--enabled)))
     (lightemacs-dired-filter--apply-state)
     (message "Local Dired filters turned %s"
@@ -95,19 +112,19 @@ restoring the full file listing."
 This applies the new global value to all open Dired buffers unless a specific
 local value was set by the user."
     (interactive)
-    (setq lightemacs--dired-filter-global-enabled
-          (not lightemacs--dired-filter-global-enabled))
+    (setq lightemacs-dired-filter-global-enabled
+          (not lightemacs-dired-filter-global-enabled))
     (dolist (buf (buffer-list))
       (with-current-buffer buf
         (when (and (derived-mode-p 'dired-mode)
-                   (eq lightemacs--dired-filter-local-enabled 'unspecified))
+                   (eq lightemacs-dired-filter-local-enabled 'unspecified))
           (lightemacs-dired-filter--apply-state))))
     (when (called-interactively-p 'any)
       (message "Global Dired filters turned %s"
-               (if lightemacs--dired-filter-global-enabled "on" "off"))))
+               (if lightemacs-dired-filter-global-enabled "on" "off"))))
 
   :init
-  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--enable-filters))
+  (add-hook 'dired-mode-hook #'lightemacs-dired-filter--apply-state))
 
 (provide 'le-dired-filter)
 
