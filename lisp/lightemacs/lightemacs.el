@@ -215,7 +215,7 @@ If the buffer is not visiting a file, opens the current `default-directory'."
       (setq dir default-directory))
     (when dir
       (when-let* ((dired-buf (find-file-noselect dir)))
-        (switch-to-buffer dired-buf nil t)
+        (set-window-buffer nil dired-buf)
         (when file
           (with-current-buffer dired-buf
             (when (derived-mode-p 'dired-mode)
