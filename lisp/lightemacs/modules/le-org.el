@@ -35,6 +35,9 @@
   ("\\.org\\'" . org-mode)
 
   :init
+  ;; Enable modules on an opt-in basis to reduce initial Org load latency.
+  (setq org-modules nil)
+
   (setq org-tags-column 0)
 
   (with-eval-after-load 'org-src
