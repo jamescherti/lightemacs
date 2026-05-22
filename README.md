@@ -899,6 +899,12 @@ Here are a few other modules disabled by default:
 
 - **le-package-lint-flymake**: Configures [package-lint](https://github.com/purcell/package-lint) to integrate with Flymake, providing real-time evaluation of Emacs Lisp package metadata and formatting. It assists in identifying packaging errors, verifying required headers, and ensuring adherence to standard archive guidelines directly within the buffer. The **le-package-lint-flymake** module activates automatically for `emacs-lisp-mode`. You must also add the **le-flymake** module to your `config.el` to ensure Flymake starts when editing source code.
 
+- **le-flymake-ansible-lint**: Configures [flymake-ansible-lint](https://github.com/jamescherti/flymake-ansible-lint.el), a package that provides a Flymake backend for ansible-lint, enabling real-time syntax and style checking for Ansible playbooks and roles within Emacs. Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure it:
+  ```emacs-lisp
+  ;; By default, `lightemacs-flymake-ansible-lint-target-hooks' is set to '(ansible-mode-hook)
+  (setq lightemacs-flymake-ansible-lint-target-hooks '(ansible-mode-hook))
+  ```
+
 - **le-magit**: Configures [Magit](https://github.com/magit/magit/) provides a comprehensive interface to the Git version control system. **Usage:** Press `C-x g`.
 
 - **le-csv-mode**: Configures [csv-mode](https://elpa.gnu.org/packages/csv-mode.html), which provides a major mode that enhances the experience of editing Comma-Separated Value. Its most impactful feature is the ability to align fields into visually distinct, vertically synchronized columns, which instantly renders dense, delimited text into a readable table format. Beyond mere visualization, the package provides tools for structural editing, allowing users to sort rows based on specific fields, transpose columns, and perform rectangular operations such as killing or yanking specific vertical slices of data.
