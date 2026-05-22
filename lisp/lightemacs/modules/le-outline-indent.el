@@ -36,6 +36,7 @@
              outline-indent-forward-same-level
              outline-indent-backward-same-level
              outline-indent-select
+             outline-indent-narrow
              outline-indent-insert-heading
              outline-indent-toggle-fold
              outline-indent-open-fold-rec
@@ -47,7 +48,33 @@
   (setq outline-indent-ellipsis lightemacs-ellipsis)
 
   (lightemacs-module-hooks outline-indent-minor
-    outline-indent-minor-mode '()))
+    outline-indent-minor-mode '())
+
+  :config
+
+  ;; Fold management
+  (define-key outline-indent-minor-mode-map (kbd "C-c o o") 'outline-indent-open-fold)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o c") 'outline-indent-close-fold)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o m") 'outline-indent-close-folds)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o r") 'outline-indent-open-folds)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o O") 'outline-indent-open-fold-rec)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o TAB") 'outline-indent-toggle-fold)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o t") 'outline-indent-toggle-level-at-point)
+
+  ;; Select and narrow
+  (define-key outline-indent-minor-mode-map (kbd "C-c o v") 'outline-indent-select)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o n") 'outline-indent-narrow)
+
+  ;; Navigation at same indentation level (matches native outline-mode layout)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o f") 'outline-indent-forward-same-level)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o b") 'outline-indent-backward-same-level)
+
+  ;; Shift left or right
+  (define-key outline-indent-minor-mode-map (kbd "C-c o <right>") 'outline-indent-shift-right)
+  (define-key outline-indent-minor-mode-map (kbd "C-c o <left>") 'outline-indent-shift-left)
+
+  ;; Insert heading
+  (define-key outline-indent-minor-mode-map (kbd "C-c o i") 'outline-indent-insert-heading))
 
 (provide 'le-outline-indent)
 
