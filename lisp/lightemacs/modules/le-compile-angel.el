@@ -26,20 +26,22 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 (lightemacs-use-package compile-angel
   :commands (compile-angel-on-load-mode
              compile-angel-on-save-local-mode
              compile-angel-on-save-mode)
 
-  :hook
-  (lightemacs-after-init . compile-angel-on-load-mode)
-
   :init
   ;; Verbose
   (when init-file-debug
     (setq compile-angel-verbose init-file-debug)
     (setq compile-angel-debug init-file-debug))
+
+  (lightemacs-module-hooks compile-angel-on-load
+    compile-angel-on-load-mode
+    '(lightemacs-emacs-startup-hook))
 
   :preface
   (defun le-compile-angel-exclude (path)
