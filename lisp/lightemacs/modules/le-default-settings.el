@@ -271,10 +271,6 @@ ARGS are the arguments passed to the original function."
 
 (global-set-key [remap keyboard-quit] #'lightemacs-keyboard-quit)
 
-;;; window divider
-
-(add-hook 'lightemacs-after-init-hook #'window-divider-mode)
-
 ;;; Provide
 
 (provide 'le-default-settings)
