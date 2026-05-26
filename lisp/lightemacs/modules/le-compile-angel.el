@@ -52,10 +52,12 @@ prefixed with a forward slash, is appended to that list. This ensures that the
 specified file or directory is ignored during the compilation process managed by
 `compile-angel-on-load-mode'."
     (when (and (stringp path)
+               ;; TODO compile-angel-excluded-files
                (not (member path compile-angel-excluded-files)))
       (if (fboundp 'compile-angel-exclude-file)
           (compile-angel-exclude-file path)
         (push (concat "/" (file-name-nondirectory path))
+              ;; TODO compile-angel-excluded-files
               compile-angel-excluded-files))))
 
   :config
@@ -74,7 +76,7 @@ specified file or directory is ignored during the compilation process managed by
 (provide 'le-compile-angel)
 
 ;; Local variables:
-;; byte-compile-warnings: (not free-vars)
+;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
 ;;; le-compile-angel.el ends here
