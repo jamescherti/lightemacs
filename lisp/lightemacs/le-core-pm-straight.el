@@ -16,12 +16,21 @@
 (require 'lightemacs)
 (defvar bootstrap-version)
 
+(when (bound-and-true-p lightemacs--no-bootstrap)
+  ;; Force the correct directory to avoid ~/.emacs.d/ leaks
+  (setq straight-base-dir lightemacs-var-directory)
+  ;; Disable all straight.el modification checks and builds
+  (setq straight-check-for-modifications nil)
+  (setq straight-disable-compile t)
+  (setq straight-disable-native-compile t))
+
 (let ((bootstrap-file (expand-file-name
                        "straight/repos/straight.el/bootstrap.el"
                        (or (bound-and-true-p straight-base-dir)
                            lightemacs-var-directory)))
       (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
+  (when (and (not (bound-and-true-p lightemacs--no-bootstrap))
+             (not (file-exists-p bootstrap-file)))
     (with-current-buffer
         (url-retrieve-synchronously
          "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"

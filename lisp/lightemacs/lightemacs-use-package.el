@@ -13,7 +13,7 @@
 
 ;;; Code:
 
-;;; Require
+;;; Configuration
 
 ;; When lightemacs-use-package.el is compiled, the following top-level code is
 ;; translated into byte-code and is not executed at that moment.
@@ -28,37 +28,61 @@
 ;; background Emacs process is compiling le-easysession.el at that moment, the
 ;; variable byte-compile-current-file (or comp-compiling) evaluates to t. The
 ;; when condition therefore succeeds, the message is emitted to the compilation
-;; log, and le-autogen-config.el is loaded into the compiler process so that the
-;; macro expansion environment has the required context.
-(when (bound-and-true-p byte-compile-current-file)
-  (let* ((macroexp-file (and (fboundp 'macroexp-file-name)
-                             (macroexp-file-name)))
-         (byte-comp-cur-file (and (boundp 'byte-compile-current-file)
-                                  byte-compile-current-file))
-         (env-file (getenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG"))
-         (current-file (or env-file
-                           ;; Return the name of the file from which the code
-                           ;; comes.
-                           macroexp-file
-                           byte-comp-cur-file
-                           load-file-name))
-         (current-dir (if current-file
-                          (file-name-directory current-file)
-                        default-directory))
-         (config-file (expand-file-name "le-autogen-config.el" current-dir)))
-    ;; (message "[lightemacs] Loading the compiler configuration from: %s"
-    ;;          current-file)
-    (if (and current-file (file-regular-p config-file))
-        ;; Pass 't' to MUST-SUFFIX to enforce exact file name matching
-        (load config-file nil nil nil t)
-      (error "[lightemacs] Could not locate le-autogen-config.el for %s"
-             (or current-file default-directory)))))
-
-(require 'lightemacs) ; lightemacs-verbose-message
 (eval-and-compile
   (require 'use-package)
   ;; `use-package-normalize-keywords'
-  (require 'use-package-core))
+  (require 'use-package-core)
+
+  (when (and (not (bound-and-true-p lightemacs-use-package--compiler-env-loaded))
+             (or noninteractive
+                 (bound-and-true-p byte-compile-current-file)
+                 (bound-and-true-p comp-compiling)))
+    (let* ((env-file (getenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG"))
+           ;; Pre-declare diagnostic variables so they survive for the error message
+           root-dir
+           search-dir
+           macroexp-file
+           (config-file
+            (or env-file
+                (progn
+                  (setq search-dir
+                        (let ((current-file
+                               (or (setq macroexp-file
+                                         (and (fboundp 'macroexp-file-name)
+                                              (macroexp-file-name)))
+                                   (and (boundp 'byte-compile-current-file)
+                                        byte-compile-current-file)
+                                   load-file-name)))
+                          (when current-file
+                            (file-name-directory current-file))))
+                  (setq root-dir
+                        (when search-dir
+                          (locate-dominating-file search-dir "init.el")))
+                  (when root-dir
+                    (expand-file-name "var/le-autogen-config.el"
+                                      root-dir))))))
+      (if (and config-file (file-exists-p config-file))
+          (progn
+            (message "[lightemacs] Loading the compiler configuration from: %s"
+                     config-file)
+            (load config-file nil 'nomessage nil t))
+        (error
+         (concat
+          "[lightemacs] Could not locate le-autogen-config.el"
+          " root-dir:%s"
+          " search-dir:%s"
+          " macroexp-file:%s"
+          " byte-compile-current-file:%s"
+          " load-file-name:%s")
+         root-dir
+         search-dir
+         macroexp-file
+         (bound-and-true-p byte-compile-current-file)
+         load-file-name)))))
+
+;;; Require
+
+(require 'lightemacs) ; lightemacs-verbose-message
 
 ;;; Variables
 
@@ -161,7 +185,7 @@ This is in contrast to merely setting it to 0."
       (setq plist (cddr plist)))
     p))
 
-(defun lightemacs-use-package--normalize (name args)
+(defun lightemacs-use-package--normalize (_name args)
   "Normalize ARGS for the package NAME based on the active manager.
 
 NAME is the symbol identifying the package.
@@ -230,21 +254,25 @@ them to `use-package'."
                                         nil)
                                     ;; TODO global value?
                                     t)))
-              (lightemacs-debug-message
-                "[lightemacs] Added ':straight %s' to the %s package"
-                straight-value name)
+              (let ((vc-is-member (plist-member effective-args :vc)))
+                (when vc-is-member
+                  (setq effective-args (lightemacs-use-package--plist-delete
+                                        effective-args :vc))))
+
+              ;; (lightemacs-debug-message
+              ;;   "[lightemacs] Added ':straight %s' to the %s package"
+              ;;   straight-value name)
 
               (unless straight-value
                 (setq effective-args (append (list :straight straight-value)
                                              effective-args)))
 
-
               ;; (setq ensure-is-member straight-value)
               (setq ensure-value straight-value)
 
               (unless ensure-is-member ; not user specified
-                (lightemacs-debug-message
-                  "[lightemacs] Added ':ensure nil' to the %s package" name)
+                ;; (lightemacs-debug-message
+                ;;   "[lightemacs] Added ':ensure nil' to the %s package" name)
                 (setq effective-args (append (list :ensure nil)
                                              effective-args)))))))
 
@@ -258,7 +286,6 @@ them to `use-package'."
           (setq effective-args (lightemacs-use-package--plist-delete
                                 effective-args
                                 :straight)))
-
         ;; Force :ensure t at compile time if it is not explicitly provided
         ;; (when (and (eq lightemacs-package-manager 'elpaca)
         ;;            (not ensure-is-member))
@@ -291,35 +318,52 @@ them to `use-package'."
         ;; install packages during compilation.
         ;; (when (memq lightemacs-package-manager '(builtin-package
         ;;                                          use-package))
-        ;;   (let ((vc-is-member (plist-member effective-args :vc)))
-        ;;     (when (or
-        ;;            ;; Async native JIT compilation always spawns an isolated
-        ;;            ;; background worker process using emacs -batch. Because it
-        ;;            ;; runs in batch mode, the noninteractive variable is
-        ;;            ;; automatically set to t. This catches all async native
-        ;;            ;; compilation.
-        ;;            noninteractive
-        ;;            ;; byte-compile-current-file: Compiling a file
-        ;;            ;; synchronously/interactively (e.g., using M-x
-        ;;            ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
-        ;;            ;; doesn't run in batch mode. However, native compilation
-        ;;            ;; always runs the byte-compiler as its first pass to
-        ;;            ;; generate the initial representation of the code.
-        ;;            ;; Therefore, byte-compile-current-file will always be
-        ;;            ;; non-nil during this phase.
-        ;;            (bound-and-true-p byte-compile-current-file))
-        ;;       (when vc-is-member
-        ;;         (setq effective-args
-        ;;               (lightemacs-use-package--plist-delete effective-args :vc)))
+        ;;   ;; (let ((vc-is-member (plist-member effective-args :vc)))
+        ;;   ;;   (when (or
+        ;;   ;;          ;; Async native JIT compilation always spawns an isolated
+        ;;   ;;          ;; background worker process using emacs -batch. Because it
+        ;;   ;;          ;; runs in batch mode, the noninteractive variable is
+        ;;   ;;          ;; automatically set to t. This catches all async native
+        ;;   ;;          ;; compilation.
+        ;;   ;;          noninteractive
+        ;;   ;;          ;; byte-compile-current-file: Compiling a file
+        ;;   ;;          ;; synchronously/interactively (e.g., using M-x
+        ;;   ;;          ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
+        ;;   ;;          ;; doesn't run in batch mode. However, native compilation
+        ;;   ;;          ;; always runs the byte-compiler as its first pass to
+        ;;   ;;          ;; generate the initial representation of the code.
+        ;;   ;;          ;; Therefore, byte-compile-current-file will always be
+        ;;   ;;          ;; non-nil during this phase.
+        ;;   ;;          (bound-and-true-p byte-compile-current-file))
+        ;;   ;;     (when vc-is-member
+        ;;   ;;       (setq effective-args
+        ;;   ;;             (lightemacs-use-package--plist-delete effective-args :vc)))))
         ;;
-        ;;       ;; Always replace :ensure with :ensure nil to prevent the native
-        ;;       ;; compiler from downloading from repositories such as MELPA
-        ;;       (lightemacs-debug-message
-        ;;         "[lightemacs] Added ':ensure nil' to the %s package for compilation"
-        ;;         name)
-        ;;       (setq effective-args
-        ;;             (lightemacs-use-package--plist-delete effective-args :ensure))
-        ;;       (setq effective-args (append (list :ensure nil) effective-args)))))
+        ;;   ;; Replace :ensure with :ensure nil to prevent the native compiler
+        ;;   ;; from downloading from repositories
+        ;;   ;; (when (or
+        ;;   ;;        ;; Async native JIT compilation always spawns an isolated
+        ;;   ;;        ;; background worker process using emacs -batch. Because it
+        ;;   ;;        ;; runs in batch mode, the noninteractive variable is
+        ;;   ;;        ;; automatically set to t. This catches all async native
+        ;;   ;;        ;; compilation.
+        ;;   ;;        noninteractive
+        ;;   ;;        ;; byte-compile-current-file: Compiling a file
+        ;;   ;;        ;; synchronously/interactively (e.g., using M-x
+        ;;   ;;        ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
+        ;;   ;;        ;; doesn't run in batch mode. However, native compilation
+        ;;   ;;        ;; always runs the byte-compiler as its first pass to
+        ;;   ;;        ;; generate the initial representation of the code.
+        ;;   ;;        ;; Therefore, byte-compile-current-file will always be
+        ;;   ;;        ;; non-nil during this phase.
+        ;;   ;;        (bound-and-true-p byte-compile-current-file))
+        ;;   ;;   (lightemacs-debug-message
+        ;;   ;;     "[lightemacs] Added ':ensure nil' to the %s package for compilation"
+        ;;   ;;     name)
+        ;;   ;;   (setq effective-args
+        ;;   ;;         (lightemacs-use-package--plist-delete effective-args :ensure))
+        ;;   ;;   (setq effective-args (append (list :ensure nil) effective-args)))
+        ;;   )
         )))
     ;; Return the 3 elements as a list
     (list effective-args
@@ -338,7 +382,17 @@ Normalization and manager selection occur at macro-expansion time."
          (_normalized-args (nth 1 normalized-result))
          (_ensure-value (nth 2 normalized-result)))
     `(progn
-       (use-package ,name ,@effective-args))))
+       (use-package ,name ,@effective-args))
+    ;; `(let ((use-package-ensure-function
+    ;;         (if (or noninteractive (bound-and-true-p byte-compile-current-file))
+    ;;             #'ignore
+    ;;           use-package-ensure-function))
+    ;;        (use-package-pre-ensure-function
+    ;;         (if (or noninteractive (bound-and-true-p byte-compile-current-file))
+    ;;             #'ignore
+    ;;           use-package-pre-ensure-function)))
+    ;;    (use-package ,name ,@effective-args))
+    ))
 
 ;;; Provide
 
