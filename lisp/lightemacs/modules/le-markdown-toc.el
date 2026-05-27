@@ -38,9 +38,13 @@ FN is the advised function. ARGS are the function arguments."
             (setq buffer-undo-list (cdr buffer-undo-list)))
           (let ((undo-outer-limit nil)
                 (undo-limit most-positive-fixnum)
-                (undo-strong-limit most-positive-fixnum))
+                (undo-strong-limit most-positive-fixnum)
+                (pos (point)))
             (atomic-change-group
-              (apply fn args)))))))
+              (apply fn args)
+              ;; Push the saved position inside the group so it becomes part of
+              ;; the atomic undo record.
+              (push pos buffer-undo-list)))))))
 
   :config
   (when lightemacs-markdown-toc-restore-window-start
