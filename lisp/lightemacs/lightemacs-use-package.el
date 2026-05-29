@@ -82,7 +82,7 @@
 
 ;;; Require
 
-(require 'lightemacs) ; lightemacs-verbose-message
+(require 'lightemacs) ; `lightemacs-verbose-message'
 
 ;;; Variables
 
@@ -175,22 +175,10 @@ startup performance when configuring multiple packages.")
 ;;   ;;    ))
 ;;   )
 
-(defun lightemacs-use-package--plist-delete (plist property)
-  "Delete PROPERTY from PLIST.
-This is in contrast to merely setting it to 0."
-  (let (p)
-    (while plist
-      (if (not (eq property (car plist)))
-          (setq p (plist-put p (car plist) (nth 1 plist))))
-      (setq plist (cddr plist)))
-    p))
-
 (defun lightemacs-use-package--normalize (_name args)
   "Normalize ARGS for the package NAME based on the active manager.
-
 NAME is the symbol identifying the package.
 ARGS is the raw property list of keywords supplied to `use-package'.
-
 This function processes the raw property list ARGS to ensure the
 appropriate package management keywords are present before passing
 them to `use-package'."
@@ -200,188 +188,149 @@ them to `use-package'."
     (error "The value '%s' is not a valid `lightemacs-package-manager'"
            lightemacs-package-manager))
 
-  (let* ((effective-args (copy-sequence args))
-         ;; (normalized-args
-         ;;  (when (and name
-         ;;             effective-args)
-         ;;    (let ((use-package-always-ensure nil))
-         ;;      (use-package-normalize-keywords name effective-args))))
-         (disabled-is-member (plist-member effective-args :disabled))
-         (disabled-value (when disabled-is-member
-                           (plist-get effective-args :disabled)
-                           ;; (car (plist-get effective-args :disabled))
-                           ))
-         (ensure-is-member (plist-member effective-args :ensure))
+  (let* ((ensure-is-member (memq :ensure args))
          (ensure-value (when ensure-is-member
-                         (plist-get effective-args :ensure)
-                         ;; (car (plist-get effective-args :ensure))
-                         )))
+                         (let ((val (cadr ensure-is-member)))
+                           (if (keywordp val) t val))))
+         (straight-is-member (memq :straight args)))
 
-    ;; (when (plist-member normalized-args :ensure)
-    ;;   (error ":ensure is not part of normalized keywords"))
+    (when (and ensure-is-member
+               ensure-value)
+      ;; To avoid conflict with straight
+      (error
+       "`lightemacs-use-package': The only supported value for :ensure is nil"))
 
-    ;; Short-circuit the expansion entirely if the package is disabled.
-    (unless disabled-value
-      (cond
-       ;; Straight
-       ;; --------
-       ((eq lightemacs-package-manager 'straight)
-        (let ((straight-is-member (plist-member effective-args :straight)))
-          ;; Explicitly append :ensure nil so package.el never attempts an
-          ;; install
-          ;; (setq effective-args (append (list :ensure nil) effective-args))
+    (when straight-is-member
+      ;; :straight is not supported by elpaca and the built-in use-package
+      (error "`lightemacs-use-package': Modifying :straight is not allowed"))
 
-          ;; TODO forbit using :straight
+    (cond
+     ;; Straight
+     ((eq lightemacs-package-manager 'straight)
+      (setq args (copy-sequence args))
+      (let ((vc-is-member (memq :vc args)))
+        (if (and vc-is-member)
+            ;; `:vc' takes precedence over `:straight'
+            (setq args (append (list :straight nil)
+                               args))
+          ;; Straight mode
+          ;; ensure is non-nil: straight = ensure-value
+          ;; ensure is nil: straight is nil??
+          (let ((straight-value (if ensure-is-member
+                                    (if ensure-value t nil)
+                                  (bound-and-true-p
+                                   straight-use-package-by-default))))
 
-          ;; Remove :vc
-          (when (not straight-is-member)
-            (let ((vc-is-member (plist-member effective-args :vc)))
-              (when vc-is-member
-                (setq effective-args (lightemacs-use-package--plist-delete
-                                      effective-args :vc))))
+            ;; Add straight
+            (unless straight-value
+              (setq args (append (list :straight straight-value)
+                                 args)))
 
-            ;; TODO support
-            ;; (bound-and-true-p straight-use-package-by-default)
+            ;; (setq ensure-value straight-value)
+            ;; Explicitly append :ensure nil so package.el never attempts an
+            ;; install
+            (setq args (append (list :ensure nil)
+                               args))))))
 
-            (when (and ensure-is-member
-                       ensure-value)
-              (error "When straight is enabled, the only supported value for :ensure is nil"))
-
-            ;; If ':ensure nil' is present, translate that to ':straight nil'. Default to t.
-            (let ((straight-value (if ensure-is-member
-                                      (if ensure-value
-                                          t
-                                        nil)
-                                    ;; TODO global value?
-                                    t)))
-              (let ((vc-is-member (plist-member effective-args :vc)))
-                (when vc-is-member
-                  (setq effective-args (lightemacs-use-package--plist-delete
-                                        effective-args :vc))))
-
-              ;; (lightemacs-debug-message
-              ;;   "[lightemacs] Added ':straight %s' to the %s package"
-              ;;   straight-value name)
-
-              (unless straight-value
-                (setq effective-args (append (list :straight straight-value)
-                                             effective-args)))
-
-              ;; (setq ensure-is-member straight-value)
-              (setq ensure-value straight-value)
-
-              (unless ensure-is-member ; not user specified
-                ;; (lightemacs-debug-message
-                ;;   "[lightemacs] Added ':ensure nil' to the %s package" name)
-                (setq effective-args (append (list :ensure nil)
-                                             effective-args)))))))
-
-       ;; Builtin package or Elpaca
-       ;; -------------------------
-       ((memq lightemacs-package-manager '(builtin-package
-                                           use-package
-                                           elpaca))
-        ;; Remove straight
-        (when (plist-member effective-args :straight)
-          (setq effective-args (lightemacs-use-package--plist-delete
-                                effective-args
-                                :straight)))
-        ;; Force :ensure t at compile time if it is not explicitly provided
-        ;; (when (and (eq lightemacs-package-manager 'elpaca)
-        ;;            (not ensure-is-member))
-        ;;   (setq effective-args (append effective-args (list :ensure t)))
-        ;;   (setq ensure-is-member t)
-        ;;   (setq ensure-value t))
-
-        ;; Edge case: When Emacs runs async native compilation in an isolated,
-        ;; noninteractive background worker process (emacs -Q -batch).
-        ;;
-        ;; In this isolated background environment, packages are not recognized
-        ;; as installed because the main session's package state (like
-        ;; package-alist or package-vc data) is not fully loaded. When the
-        ;; compiler evaluates top-level forms or expands the use-package macro
-        ;; for tmp-diff-hl.el, it sees the :vc and :ensure keywords. Thinking
-        ;; the package is missing, it generates and executes the code to install
-        ;; it (via package-vc-install).
-        ;;
-        ;; This installation attempt triggers two things that cause the
-        ;; compilation log errors:
-        ;;
-        ;; It attempts to fetch archive contents to resolve dependencies,
-        ;; causing the proxy authentication error.
-        ;;
-        ;; It attempts to clone the git repository, which prompts for user input
-        ;; (Overwrite previous checkout...) and causes the background process to
-        ;; hang or fail since it is running noninteractively.
-        ;;
-        ;; To fix this, we need to prevent use-package from attempting to
-        ;; install packages during compilation.
-        ;; (when (memq lightemacs-package-manager '(builtin-package
-        ;;                                          use-package))
-        ;;   ;; (let ((vc-is-member (plist-member effective-args :vc)))
-        ;;   ;;   (when (or
-        ;;   ;;          ;; Async native JIT compilation always spawns an isolated
-        ;;   ;;          ;; background worker process using emacs -batch. Because it
-        ;;   ;;          ;; runs in batch mode, the noninteractive variable is
-        ;;   ;;          ;; automatically set to t. This catches all async native
-        ;;   ;;          ;; compilation.
-        ;;   ;;          noninteractive
-        ;;   ;;          ;; byte-compile-current-file: Compiling a file
-        ;;   ;;          ;; synchronously/interactively (e.g., using M-x
-        ;;   ;;          ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
-        ;;   ;;          ;; doesn't run in batch mode. However, native compilation
-        ;;   ;;          ;; always runs the byte-compiler as its first pass to
-        ;;   ;;          ;; generate the initial representation of the code.
-        ;;   ;;          ;; Therefore, byte-compile-current-file will always be
-        ;;   ;;          ;; non-nil during this phase.
-        ;;   ;;          (bound-and-true-p byte-compile-current-file))
-        ;;   ;;     (when vc-is-member
-        ;;   ;;       (setq effective-args
-        ;;   ;;             (lightemacs-use-package--plist-delete effective-args :vc)))))
-        ;;
-        ;;   ;; Replace :ensure with :ensure nil to prevent the native compiler
-        ;;   ;; from downloading from repositories
-        ;;   ;; (when (or
-        ;;   ;;        ;; Async native JIT compilation always spawns an isolated
-        ;;   ;;        ;; background worker process using emacs -batch. Because it
-        ;;   ;;        ;; runs in batch mode, the noninteractive variable is
-        ;;   ;;        ;; automatically set to t. This catches all async native
-        ;;   ;;        ;; compilation.
-        ;;   ;;        noninteractive
-        ;;   ;;        ;; byte-compile-current-file: Compiling a file
-        ;;   ;;        ;; synchronously/interactively (e.g., using M-x
-        ;;   ;;        ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
-        ;;   ;;        ;; doesn't run in batch mode. However, native compilation
-        ;;   ;;        ;; always runs the byte-compiler as its first pass to
-        ;;   ;;        ;; generate the initial representation of the code.
-        ;;   ;;        ;; Therefore, byte-compile-current-file will always be
-        ;;   ;;        ;; non-nil during this phase.
-        ;;   ;;        (bound-and-true-p byte-compile-current-file))
-        ;;   ;;   (lightemacs-debug-message
-        ;;   ;;     "[lightemacs] Added ':ensure nil' to the %s package for compilation"
-        ;;   ;;     name)
-        ;;   ;;   (setq effective-args
-        ;;   ;;         (lightemacs-use-package--plist-delete effective-args :ensure))
-        ;;   ;;   (setq effective-args (append (list :ensure nil) effective-args)))
-        ;;   )
-        )))
-    ;; Return the 3 elements as a list
-    (list effective-args
-          nil ; removed: normalized-args
-          (if ensure-value
-              t
-            nil))))
+     ;; Builtin package or Elpaca
+     ;; -------------------------
+     ;; ((or (eq lightemacs-package-manager 'builtin-package)
+     ;;      (eq lightemacs-package-manager 'use-package)
+     ;;      (eq lightemacs-package-manager 'elpaca-package))
+     ;;
+     ;;  ;; Remove straight
+     ;;  ;; (when (memq :straight args)
+     ;;  ;;   (setq args (lightemacs-use-package--plist-delete
+     ;;  ;;                         args
+     ;;  ;;                         :straight)))
+     ;;  ;; Force :ensure t at compile time if it is not explicitly provided
+     ;;  ;; (when (and (eq lightemacs-package-manager 'elpaca)
+     ;;  ;;            (not ensure-is-member))
+     ;;  ;;   (setq args (append args (list :ensure t)))
+     ;;  ;;   (setq ensure-is-member t)
+     ;;  ;;   (setq ensure-value t))
+     ;;
+     ;;  ;; Edge case: When Emacs runs async native compilation in an isolated,
+     ;;  ;; noninteractive background worker process (emacs -Q -batch).
+     ;;  ;;
+     ;;  ;; In this isolated background environment, packages are not recognized
+     ;;  ;; as installed because the main session's package state (like
+     ;;  ;; package-alist or package-vc data) is not fully loaded. When the
+     ;;  ;; compiler evaluates top-level forms or expands the use-package macro
+     ;;  ;; for tmp-diff-hl.el, it sees the :vc and :ensure keywords. Thinking
+     ;;  ;; the package is missing, it generates and executes the code to install
+     ;;  ;; it (via package-vc-install).
+     ;;  ;;
+     ;;  ;; This installation attempt triggers two things that cause the
+     ;;  ;; compilation log errors:
+     ;;  ;;
+     ;;  ;; It attempts to fetch archive contents to resolve dependencies,
+     ;;  ;; causing the proxy authentication error.
+     ;;  ;;
+     ;;  ;; It attempts to clone the git repository, which prompts for user input
+     ;;  ;; (Overwrite previous checkout...) and causes the background process to
+     ;;  ;; hang or fail since it is running noninteractively.
+     ;;  ;;
+     ;;  ;; To fix this, we need to prevent use-package from attempting to
+     ;;  ;; install packages during compilation.
+     ;;  ;; (when (memq lightemacs-package-manager '(builtin-package
+     ;;  ;;                                          use-package))
+     ;;  ;;   ;; (let ((vc-is-member (plist-member args :vc)))
+     ;;  ;;   ;;   (when (or
+     ;;  ;;   ;;          ;; Async native JIT compilation always spawns an isolated
+     ;;  ;;   ;;          ;; background worker process using emacs -batch. Because it
+     ;;  ;;   ;;          ;; runs in batch mode, the noninteractive variable is
+     ;;  ;;   ;;          ;; automatically set to t. This catches all async native
+     ;;  ;;   ;;          ;; compilation.
+     ;;  ;;   ;;          noninteractive
+     ;;  ;;   ;;          ;; byte-compile-current-file: Compiling a file
+     ;;  ;;   ;;          ;; synchronously/interactively (e.g., using M-x
+     ;;  ;;   ;;          ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
+     ;;  ;;   ;;          ;; doesn't run in batch mode. However, native compilation
+     ;;  ;;   ;;          ;; always runs the byte-compiler as its first pass to
+     ;;  ;;   ;;          ;; generate the initial representation of the code.
+     ;;  ;;   ;;          ;; Therefore, byte-compile-current-file will always be
+     ;;  ;;   ;;          ;; non-nil during this phase.
+     ;;  ;;   ;;          (bound-and-true-p byte-compile-current-file))
+     ;;  ;;   ;;     (when vc-is-member
+     ;;  ;;   ;;       (setq args
+     ;;  ;;   ;;             (lightemacs-use-package--plist-delete args :vc)))))
+     ;;  ;;
+     ;;  ;;   ;; Replace :ensure with :ensure nil to prevent the native compiler
+     ;;  ;;   ;; from downloading from repositories
+     ;;  ;;   ;; (when (or
+     ;;  ;;   ;;        ;; Async native JIT compilation always spawns an isolated
+     ;;  ;;   ;;        ;; background worker process using emacs -batch. Because it
+     ;;  ;;   ;;        ;; runs in batch mode, the noninteractive variable is
+     ;;  ;;   ;;        ;; automatically set to t. This catches all async native
+     ;;  ;;   ;;        ;; compilation.
+     ;;  ;;   ;;        noninteractive
+     ;;  ;;   ;;        ;; byte-compile-current-file: Compiling a file
+     ;;  ;;   ;;        ;; synchronously/interactively (e.g., using M-x
+     ;;  ;;   ;;        ;; emacs-lisp-native-compile or M-x byte-compile-file), Emacs
+     ;;  ;;   ;;        ;; doesn't run in batch mode. However, native compilation
+     ;;  ;;   ;;        ;; always runs the byte-compiler as its first pass to
+     ;;  ;;   ;;        ;; generate the initial representation of the code.
+     ;;  ;;   ;;        ;; Therefore, byte-compile-current-file will always be
+     ;;  ;;   ;;        ;; non-nil during this phase.
+     ;;  ;;   ;;        (bound-and-true-p byte-compile-current-file))
+     ;;  ;;   ;;   (lightemacs-debug-message
+     ;;  ;;   ;;     "[lightemacs] Added ':ensure nil' to the %s package for compilation"
+     ;;  ;;   ;;     name)
+     ;;  ;;   ;;   (setq args
+     ;;  ;;   ;;         (lightemacs-use-package--plist-delete args :ensure))
+     ;;  ;;   ;;   (setq args (append (list :ensure nil) args)))
+     ;;  ;;   )
+     ;;  )
+     )
+    args))
 
 (defmacro lightemacs-use-package (name &rest args)
   "Provide a formal interface for package configuration via `use-package'.
 NAME and ARGS are the same arguments as the `use-package' macro.
 Normalization and manager selection occur at macro-expansion time."
   (declare (indent defun))
-  ;; This for example adds :straight nil when :ensure is nil
-  (let* ((normalized-result (lightemacs-use-package--normalize name args))
-         (effective-args (nth 0 normalized-result))
-         (_normalized-args (nth 1 normalized-result))
-         (_ensure-value (nth 2 normalized-result)))
+  (let* ((effective-args (lightemacs-use-package--normalize name args)))
     `(progn
        (use-package ,name ,@effective-args))))
 
