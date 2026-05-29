@@ -377,22 +377,13 @@ them to `use-package'."
 NAME and ARGS are the same arguments as the `use-package' macro.
 Normalization and manager selection occur at macro-expansion time."
   (declare (indent defun))
+  ;; This for example adds :straight nil when :ensure is nil
   (let* ((normalized-result (lightemacs-use-package--normalize name args))
          (effective-args (nth 0 normalized-result))
          (_normalized-args (nth 1 normalized-result))
          (_ensure-value (nth 2 normalized-result)))
     `(progn
-       (use-package ,name ,@effective-args))
-    ;; `(let ((use-package-ensure-function
-    ;;         (if (or noninteractive (bound-and-true-p byte-compile-current-file))
-    ;;             #'ignore
-    ;;           use-package-ensure-function))
-    ;;        (use-package-pre-ensure-function
-    ;;         (if (or noninteractive (bound-and-true-p byte-compile-current-file))
-    ;;             #'ignore
-    ;;           use-package-pre-ensure-function)))
-    ;;    (use-package ,name ,@effective-args))
-    ))
+       (use-package ,name ,@effective-args))))
 
 ;;; Provide
 

@@ -219,6 +219,7 @@
         ;; already installed and does not attempt to clone them over the network.
         (when (memq lightemacs-package-manager '(builtin-package
                                                  use-package))
+          (insert "\n(setq package-enable-at-startup nil)\n\n")
           (insert "\n(package-initialize)\n\n"))
 
         (insert ";;; le-autogen-config.el ends here\n")))))
