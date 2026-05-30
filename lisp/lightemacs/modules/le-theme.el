@@ -140,27 +140,27 @@ If PACKAGE is non-nil, require it before loading the theme."
 
 (defun lightemacs-theme--load-theme ()
   "Load the default theme and font appropriately for GUI or TUI frames."
-  ;; Load the theme colors (runs exactly once for the daemon lifecycle)
-  ;;
-  ;; Themes are global state: When `load-theme' evaluates, it modifies the
-  ;; custom-enabled-themes variable and updates Emacs's internal registry of
-  ;; face definitions (such as backgrounds, foregrounds, and syntax colors). The
-  ;; headless daemon process retains this data in memory permanently, even when
-  ;; zero client frames exist.
-  (lightemacs-load-default-theme (daemonp))
-
-  ;; Apply the font
-  ;;
-  ;; Fonts are tied to display capabilities: While a font can be set globally,
-  ;; the process of creating a brand new X11 or Wayland window often prompts
-  ;; Emacs to recalculate frame parameters based on system defaults. This is why
-  ;; the font sometimes drops and needs to be reapplied, while the theme faces
-  ;; persist.
-  ;;
-  ;; When you spawn a new client frame afterward, Emacs often resets the font
-  ;; parameters.
-  (when (daemonp)
-    (lightemacs-theme-load-default-font)))
+  (let ((inhibit-redisplay t))
+    (unwind-protect
+        ;; Load the theme colors (runs exactly once for the daemon lifecycle)
+        ;;
+        ;; Themes are global state: When `load-theme' evaluates, it modifies the
+        ;; custom-enabled-themes variable and updates Emacs's internal registry
+        ;; of face definitions (such as backgrounds, foregrounds, and syntax
+        ;; colors). The headless daemon process retains this data in memory
+        ;; permanently, even when zero client frames exist.
+        (lightemacs-load-default-theme (daemonp))
+      ;; Apply the font
+      ;;
+      ;; Fonts are tied to display capabilities: While a font can be set
+      ;; globally, the process of creating a brand new X11 or Wayland window
+      ;; often prompts Emacs to recalculate frame parameters based on system
+      ;; defaults. This is why the font sometimes drops and needs to be
+      ;; reapplied, while the theme faces persist.
+      ;;
+      ;; When you spawn a new client frame afterward, Emacs often resets the
+      ;; font parameters.
+      (lightemacs-theme-load-default-font))))
 
 (unless noninteractive
   (advice-add 'load-theme :after #'lightemacs-theme-load-default-font)
