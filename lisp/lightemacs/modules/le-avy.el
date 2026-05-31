@@ -47,7 +47,7 @@
    avy-ignored-modes '(image-mode doc-view-mode pdf-view-mode exwm-mode)
    ;; Determine the list of windows to consider in search of candidates.
    avy-all-windows nil
-   ;; The alternative ‘avy-all-windows’ for use with M-x
+   ;; The alternative 'avy-all-windows' for use with M-x
    ;; universal-argument.
    avy-all-windows-alt t
    ;; When non-nil, a gray background will be added during the selection.

@@ -180,24 +180,36 @@ cursor."
                                  t))))))))
 
 (defun lightemacs-find-parent-directory ()
-  "Open a `dired' buffer for the current file's directory and select the file.
-If the buffer is not visiting a file, opens the current `default-directory'."
+  "Go to the parent directory or superior archive buffer of the current buffer.
+If the current buffer is a subfile of an archive or tar file, switch to the
+superior archive buffer. Otherwise, open a `dired' buffer for the current
+file's directory and select the file. If the buffer is not visiting a file,
+open `default-directory'."
   (interactive)
-  (let* ((buf (or (buffer-base-buffer) (current-buffer)))
-         (file (buffer-file-name buf))
-         dir)
-    (if file
-        (setq dir (file-name-directory file))
-      (setq dir default-directory))
-    (when dir
-      (when-let* ((dired-buf (find-file-noselect dir)))
-        (set-window-buffer nil dired-buf)
-        (when file
-          (with-current-buffer dired-buf
-            (when (derived-mode-p 'dired-mode)
-              (when (fboundp 'dired-goto-file)
-                (dired-goto-file file))
-              (lightemacs-recenter-maybe))))))))
+  (let ((superior-buffer
+         (let ((archive (bound-and-true-p archive-superior-buffer))
+               (tar (bound-and-true-p tar-superior-buffer)))
+           (cond ((and archive (buffer-live-p archive)) archive)
+                 ((and tar (buffer-live-p tar)) tar)))))
+    (cond
+     ;; Archive and tar superior buffer
+     (superior-buffer
+      (set-window-buffer nil superior-buffer))
+
+     ;; Files
+     (t
+      (let* ((buf (or (buffer-base-buffer) (current-buffer)))
+             (file (buffer-file-name buf))
+             (dir (if file (file-name-directory file) default-directory)))
+        (when dir
+          (when-let* ((dired-buf (find-file-noselect dir)))
+            (set-window-buffer nil dired-buf)
+            (when file
+              (with-current-buffer dired-buf
+                (when (derived-mode-p 'dired-mode)
+                  (when (fboundp 'dired-goto-file)
+                    (dired-goto-file file))
+                  (lightemacs-recenter-maybe)))))))))))
 
 ;;; early-init.el and init.el functions
 

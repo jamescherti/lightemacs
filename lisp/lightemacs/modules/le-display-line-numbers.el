@@ -10,7 +10,7 @@
 ;;; Commentary:
 
 ;; Show line numbers on the left side of the buffer. The numbers update
-;; automatically as you add, remove, or scroll lines, but they don’t change the
+;; automatically as you add, remove, or scroll lines, but they don't change the
 ;; actual text.
 
 ;;; Code:
