@@ -46,7 +46,7 @@ Optionally, the following features can be enabled by loading additional Lightema
 
 The Lightemacs project is built upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files (`init.el` and `early-init.el`), allowing it to be configured identically to minimal-emacs.d while inheriting its high-quality default settings and efficient startup performance.
 
-Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs configuration with only essential defaults, Lightemacs extends this foundation by enabling a curated set of modern features and optimizations out of the box. While minimal-emacs.d requires users to manually configure and enable most enhancements, Lightemacs activates performance improvements, advanced completion systems, persistent undo, snippet support, and additional filetype modes automatically, while still retaining full configurability and compatibility with minimal-emacs.d’s initialization files.
+Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs configuration with only essential defaults, Lightemacs extends this foundation by enabling a curated set of modern features and optimizations out of the box. While minimal-emacs.d requires users to manually configure and enable most enhancements, Lightemacs activates performance improvements, advanced completion systems, persistent undo, snippet support, and additional filetype modes automatically, while still retaining full configurability and compatibility with minimal-emacs.d's initialization files.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
@@ -212,7 +212,7 @@ By default, `lightemacs-package-manager` is set to `'builtin-package`, which use
 
 #### Supported package managers
 
-- **`'use-package`** (default): Uses Emacs’ native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
+- **`'use-package`** (default): Uses Emacs' native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
 
 - **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
 
@@ -317,7 +317,7 @@ Keybindings for Consult:
   Open a buffer in a new tab (if tab support is enabled).
 
 - `C-x r b` → `consult-bookmark`
-  Jump to a bookmark using Consult’s interface.
+  Jump to a bookmark using Consult's interface.
 
 - `C-x p b` → `consult-project-buffer`
   Switch buffers within the current project.
@@ -475,7 +475,7 @@ The default undo system in Emacs has two main issues that undo-fu fixes:
 1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
 2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
 
-If you use Evil mode, the `le-undo-fu` module will replace Evil’s undo system with `undo-fu`.
+If you use Evil mode, the `le-undo-fu` module will replace Evil's undo system with `undo-fu`.
 
 ### Enabled by Default: Keybindings (le-default-keybindings)
 
@@ -614,7 +614,7 @@ The **le-flymake** defines the following keybindings for navigating Flymake diag
 - `M-g n`: Move to the **next** error or warning in the current buffer.
 - `M-g p`: Move to the **previous** error or warning in the current buffer.
 
-These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs’ convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively.
+These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs' convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively.
 
 (Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
 
@@ -686,9 +686,9 @@ These keys are bound in `flymake-mode-map`, so they are active only when `flymak
                                                zig-ts-mode-hook))
   ```
 
-- **le-vim-tab-bar**: Enhances Emacs’ built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
+- **le-vim-tab-bar**: Enhances Emacs' built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **le-wgrep**: The [wgrep](https://github.com/mhayashi1120/Emacs-wgrep) (Writable Grep) package enables you to convert a grep, consult-ripgrep, or Embark Export buffers into an editable interface. It allows in-place modification of matched lines within the results buffer, which can then be propagated back to the corresponding files upon confirmation. This facilitates precise, bulk edits across multiple files efficiently, eliminating the need to open each file individually, and effectively transforms the grep results buffer into a controlled, multi-file editing environment.
-- **le-group-markdown**: Configures the [markdown-mode](https://github.com/jrblevin/markdown-mode) package, which provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM). This group also configures [markdown-toc](https://github.com/ardumont/markdown-toc).
+- **le-group-markdown**: Configures [markdown-mode](https://github.com/jrblevin/markdown-mode) or `markdown-ts-mode` (available on Emacs >= 31) to provide syntax highlighting for Markdown documents. This group also configures [markdown-toc](https://github.com/ardumont/markdown-toc) when `markdown-mode` is active. The variable `lightemacs-maybe-markdown-ts-prefer-tree-sitter` defaults to `t`, which signals a preference for using Tree-sitter for Markdown editing whenever possible.
 - **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 - **le-winner**: Track changes in the window configuration, allowing undoing actions such as closing windows using `winner-undo`.
@@ -710,7 +710,7 @@ Here are a few interesting features that Lightemacs provides:
 - Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
 
 The `le-group-evil` group of modules includes:
-- **le-evil** and *le-evil-collection**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file’s directory with the file preselected by pressing the `-` key, and includes additional enhancements.
+- **le-evil** and *le-evil-collection**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file's directory with the file preselected by pressing the `-` key, and includes additional enhancements.
 - le-evil-commentary: Configures [evil-commentary](https://github.com/linktohack/evil-commentary/), which allows commenting or uncommenting text in Normal or Visual mode by pressing `gc`.
 - le-evil-surround: Configures [evil-surround](https://github.com/emacs-evil/evil-surround/), which enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
 - **le-goto-chg**: Configures [goto-chg](https://github.com/emacs-evil/goto-chg), which allows navigating to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
@@ -916,7 +916,7 @@ Here are a few other modules disabled by default:
   (add-hook 'prog-mode-hook #'diff-hl-mode)
   ```
 
-- **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don’t change the actual text.
+- **le-display-line-numbers**: Enables the built-in `display-line-numbers-mode` line numbers in the buffer's display, showing the current line number next to each line. It updates dynamically as lines are added, removed, or scroll lines, but they don't change the actual text.
 
 - **le-ace-window**: Configures [ace-window](https://github.com/abo-abo/ace-window) provides a fast and efficient method for switching between windows in a frame. Instead of cycling through windows sequentially or using more cumbersome key sequences, Ace Window displays a single-letter label on each visible window, allowing the user to jump directly to a target window by pressing the corresponding key. The `other-window` keybinding is remapped to `ace-window`, which provides a faster and more visual method for switching between windows (default `C-x o`).
 
@@ -928,13 +928,13 @@ Here are a few other modules disabled by default:
 
 Elisp file-type modules are disabled by default:
 
-- **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter’s `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available.) It also ensures that the indentation adheres to the YAML standard: two spaces and no tabs.
+- **le-group-yaml**: Configures [yaml-mode](https://github.com/yoshiki/yaml-mode) when Tree-sitter's `yaml-ts-mode` is unavailable. (The variable `lightemacs-yaml-mode-prefer-treesitter` defaults to `t`, indicating a preference for using Tree-sitter for YAML editing whenever possible. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available.) It also ensures that the indentation adheres to the YAML standard: two spaces and no tabs.
 
 - **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`.)
 
 - **le-enhanced-evil-paredit**: (Only for Evil and Paredit users) This module configures the [enhanced-evil-paredit](https://github.com/jamescherti/enhanced-evil-paredit.el) package, which prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking any operation that would break the parenthetical structure. This ensures Lisp code remains syntactically correct while retaining the editing capabilities of *evil-mode*. This module automatically enables `enhanced-evil-paredit-mode` whenever `paredit-mode` is activated.
 
-- **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil’s built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
+- **le-evil-snipe**: Provides two-character motions for rapid navigation within text, similar to Evil's built-in `f`/`F`/`t`/`T` commands, but with incremental highlighting of potential targets as you type. By default, `s` (forward) and `S` (backward) are bound to `evil-snipe-s` and `evil-snipe-S`, respectively. **Usage:** Pressing `s` in normal mode prompts you to type two characters, then jumps the cursor to the nearest matching occurrence while highlighting all matches incrementally.
 
 - **le-inhibit-mouse**: Enables the [inhibit-mouse](https://github.com/jamescherti/inhibit-mouse.el) package that disables of mouse input.
 
@@ -960,7 +960,7 @@ Here are the built-in packages that Lightemacs enhances the defaults:
 
 In addition to modules, Lightemacs provides the following features:
 - Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
-- Lightemacs configures `use-package` to automatically refresh Emacs package archives once per session when installing a package that isn’t already present. This allows missing packages to be installed without manually running `package-refresh-contents` and prevents repeated refreshes in the same session, resolving issues such as invalid GPG keys when installing packages after the package list has become outdated.
+- Lightemacs configures `use-package` to automatically refresh Emacs package archives once per session when installing a package that isn't already present. This allows missing packages to be installed without manually running `package-refresh-contents` and prevents repeated refreshes in the same session, resolving issues such as invalid GPG keys when installing packages after the package list has become outdated.
 
 ## Useful variables, functions, and macros
 

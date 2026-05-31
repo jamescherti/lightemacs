@@ -16,15 +16,16 @@
 (require 'lightemacs-module)
 
 (lightemacs-module-load
- '(;; The markdown-mode package provides a major mode for Emacs for syntax
-   ;; highlighting, editing commands, and preview support for Markdown
-   ;; documents. It supports core Markdown syntax as well as extensions like
-   ;; GitHub Flavored Markdown (GFM).
-   le-markdown-mode
+ '(;; Configures `markdown-mode' or `markdown-ts-mode' (available on
+   ;; Emacs >= 31) to provide syntax highlighting, editing commands, and preview
+   ;; support for Markdown documents.
+   le-maybe-markdown-ts))
 
-   ;; Automatically generate or refresh the table of contents in Markdown files
-   ;; using the 'markdown-toc-generate-or-refresh-toc' function.
-   le-markdown-toc))
+(unless (bound-and-true-p lightemacs-maybe-markdown-ts--tree-sitter)
+  (lightemacs-module-load
+   '(;; Generate or refresh the table of contents in Markdown files using the
+     ;; 'markdown-toc-generate-or-refresh-toc' function.
+     le-markdown-toc)))
 
 (provide 'le-group-markdown)
 

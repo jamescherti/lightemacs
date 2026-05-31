@@ -9,9 +9,9 @@
 
 ;;; Commentary:
 
-;; Automatically generate or refresh the table of contents in Markdown files
-;; using the 'markdown-toc-generate-or-refresh-toc' function.
-;; URL: https://github.com/ardumont/markdown-toc
+;; Generate or refresh the table of contents in Markdown files using the
+;; 'markdown-toc-generate-or-refresh-toc' function. URL:
+;; https://github.com/ardumont/markdown-toc
 
 ;;; Code:
 
@@ -21,6 +21,7 @@
 (defvar lightemacs-markdown-toc-restore-window-start t)
 
 (lightemacs-use-package markdown-toc
+  :after markdown-mode
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc

@@ -24,25 +24,21 @@
 
 (defvar lightemacs-group-yaml-prefer-yaml-ts-mode t
   "Non-nil indicates a preference for using Tree-sitter for YAML editing.
-
 When non-nil and Tree-sitter support for YAML is available, the third-party
 package `yaml-mode' will not be loaded; instead, `yaml-ts-mode' (Tree-sitter)
 will be used.
-
 Setting this variable to nil forces `yaml-mode' to load even if
 Tree-sitter is available.")
 
-;;; Maybe load `yaml-mode'
+;;; Choose between `yaml-ts-mode' and `yaml-mode'
 
-(when (or (not lightemacs-group-yaml-prefer-yaml-ts-mode)
-          (not (if (fboundp 'treesit-ready-p)
-                   (treesit-ready-p 'yaml)
-                 nil)))
+(if (and lightemacs-group-yaml-prefer-yaml-ts-mode
+         (fboundp 'treesit-ready-p)
+         (treesit-ready-p 'yaml))
+    ;; Configure `yaml-ts-mode'
+    (lightemacs-module-load '(le-yaml-ts-mode))
+  ;; Configure `yaml-mode'
   (lightemacs-module-load '(le-yaml-mode)))
-
-;;; Configure `yaml-ts-mode'
-
-(lightemacs-module-load '(le-yaml-ts-mode))
 
 (provide 'le-group-yaml)
 
