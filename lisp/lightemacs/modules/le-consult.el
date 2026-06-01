@@ -39,6 +39,7 @@
              consult-bookmark
              consult-buffer
              consult-buffer-other-frame
+             consult-buffer-other-tab
              consult-buffer-other-window
              ;; consult-compile-error
              consult-complex-command
@@ -48,6 +49,7 @@
              consult-global-mark
              consult-goto-line
              consult-grep
+             consult-grep-match
              consult-history
              consult-isearch-history
              consult-keep-lines
@@ -59,6 +61,7 @@
              consult-mark
              consult-mode-command
              consult-org-agenda
+             consult-org-heading
              consult-outline
              consult-project-buffer
              consult-recent-file
@@ -68,6 +71,8 @@
              consult-register-format
              consult-theme
              consult-yank-pop
+             consult-yank-from-kill-ring
+             consult-yank-replace
              consult-imenu
              consult-info
              consult-xref)
@@ -113,6 +118,9 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
 
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref)
+
+  ;; Use Consult to select completion in region if not using Corfu
+  ;; (setq completion-in-region-function #'consult-completion-in-region)
 
   :config
   (require 'consult-imenu)
@@ -213,6 +221,7 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
 
   ;; M-g bindings in `goto-map'
   ;; (keymap-global-set "M-g e" #'consult-compile-error)
+  (keymap-global-set "M-g r" #'consult-grep-match)
   (keymap-global-set "M-g f" #'consult-flymake)
   (keymap-global-set "M-g g" #'consult-goto-line)
   (keymap-global-set "M-g M-g" #'consult-goto-line)
