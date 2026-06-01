@@ -13,9 +13,9 @@
 
 ;;; Code:
 
-(defvar lightemacs--early-init-done nil)
-(unless lightemacs--early-init-done
-  (setq lightemacs--early-init-done t)
+(defvar lightemacs--early-init-loaded nil)
+(unless lightemacs--early-init-loaded
+  (setq lightemacs--early-init-loaded t)
   (setq load-prefer-newer t)
   (push (expand-file-name "lisp/lightemacs/" user-emacs-directory) load-path)
 
@@ -80,9 +80,9 @@
         :no-error
         (not (bound-and-true-p init-file-debug)))
 
-  ;; Function: `lightemacs-user-pre-early-init'
-  (when (fboundp 'lightemacs-user-pre-early-init)
-    (funcall 'lightemacs-user-pre-early-init))
+  ;; Run hooks: `lightemacs-pre-early-init-hook'
+
+  (run-hooks 'lightemacs-pre-early-init-hook)
 
   ;; Load: lightemacs.el
   (require 'lightemacs)
@@ -102,8 +102,7 @@
 
   (setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
 
-  ;; Function: `lightemacs-user-post-early-init'
-  (when (fboundp 'lightemacs-user-post-early-init)
-    (funcall 'lightemacs-user-post-early-init)))
+  ;; Run hooks: `lightemacs-post-early-init-hook'
+  (run-hooks 'lightemacs-post-early-init-hook))
 
 ;;; early-init.el ends here

@@ -117,6 +117,23 @@ If `lightemacs-package-manager' is elpaca, this hook runs after
 `elpaca-after-init-hook'. Otherwise, it runs after `emacs-startup-hook', similar
 to Emacs standard behavior.")
 
+;;; Hooks: Initializer hooks
+
+(defvar lightemacs-pre-early-init-hook nil
+  "Hook run before early-init.el execution.")
+
+(defvar lightemacs-post-early-init-hook nil
+  "Hook run after early-init.el execution.")
+
+(defvar lightemacs-pre-init-hook nil
+  "Hook run before init.el execution.")
+
+(defvar lightemacs-before-modules-hook nil
+  "Hook run before loading modules in init.el.")
+
+(defvar lightemacs-after-modules-hook nil
+  "Hook run after loading modules in init.el.")
+
 ;;; Packages
 
 (defvar lightemacs--le-core-default-done nil)

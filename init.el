@@ -27,10 +27,9 @@
 
 (require 'lightemacs)
 
-;;; Call `lightemacs-user-pre-init'
+;;; Run hooks: `lightemacs-pre-init-hook'
 
-(when (fboundp 'lightemacs-user-pre-init)
-  (lightemacs-user-pre-init))
+(run-hooks 'lightemacs-pre-init-hook)
 
 ;;; Load: init.el
 
@@ -101,11 +100,9 @@
   (add-hook 'after-init-hook 'lightemacs--run-after-init-hook 104)
   (add-hook 'emacs-startup-hook 'lightemacs--run-emacs-startup-hook 105)))
 
-;;; Function: `lightemacs-user-pre-modules'
+;;; Run hooks: `lightemacs-before-modules-hook'
 
-;; Load function: `lightemacs-user-pre-modules'
-(when (fboundp 'lightemacs-user-pre-modules)
-  (lightemacs-user-pre-modules))
+(run-hooks 'lightemacs-before-modules-hook)
 
 ;;; Additional paths
 
@@ -289,21 +286,9 @@
       (lightemacs-module-load lightemacs-modules))
   (error "Undefined function: lightemacs-module-load"))
 
-;;; Function: `lightemacs-user-post-modules'
+;;; Run hooks: `lightemacs-after-modules-hook'
 
-;; Load function: `lightemacs-user-post-modules'
-(when (fboundp 'lightemacs-user-post-modules)
-  (lightemacs-user-post-modules))
-
-;;; Function: `lightemacs-user-init'
-
-(when (fboundp 'lightemacs-user-init)
-  (lightemacs-user-init))
-
-;;; Function: `lightemacs-user-post-init'
-
-(when (fboundp 'lightemacs-user-post-init)
-  (funcall 'lightemacs-user-post-init))
+(run-hooks 'lightemacs-after-modules-hook)
 
 ;;; Provide
 
