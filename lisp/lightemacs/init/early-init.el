@@ -4,7 +4,7 @@
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
-;; Version: 1.4.2
+;; Version: 1.5.0
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -196,10 +196,9 @@ pre-early-init.el, and post-early-init.el.")
 
 ;;; Native compilation and Byte compilation
 
-(if (and (featurep 'native-compile)
-         (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (setq package-native-compile t)
+(unless (and (featurep 'native-compile)
+             (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq native-comp-jit-compilation nil)
   (setq features (delq 'native-compile features)))
