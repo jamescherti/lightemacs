@@ -22,7 +22,7 @@
 ;;   | grep -v '^le-easysession' | grep -v '-evil' | grep -v '^le-vterm' \
 ;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel' \
 ;;   | grep -v '^le-yaml' | grep -v '^le-group-emacs-lisp' | \
-;;   grep -v '^le-group-markdown' | grep -v '^le-diminish' | sort
+;;   grep -v '^le-maybe-markdown-ts' | grep -v '^le-diminish' | sort
 
 ;;; Code:
 
@@ -58,7 +58,7 @@
    le-flymake
    le-git-modes
    le-goto-chg
-   le-group-yaml
+   le-maybe-yaml-ts
    le-helpful
    le-highlight-defined
    le-indent-bars

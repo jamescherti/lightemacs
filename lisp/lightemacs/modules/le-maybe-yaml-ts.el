@@ -1,4 +1,4 @@
-;;; le-group-yaml.el --- group-yaml -*- lexical-binding: t -*-
+;;; le-maybe-yaml-ts.el --- group-yaml -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -40,10 +40,10 @@ Tree-sitter is available.")
   ;; Configure `yaml-mode'
   (lightemacs-module-load '(le-yaml-mode)))
 
-(provide 'le-group-yaml)
+(provide 'le-maybe-yaml-ts)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 
-;;; le-group-yaml.el ends here
+;;; le-maybe-yaml-ts.el ends here

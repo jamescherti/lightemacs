@@ -21,7 +21,7 @@
 
 ;;; Variables
 
-(defvar lightemacs-maybe-markdown-ts-prefer-tree-sitter t
+(defvar lightemacs-markdown-prefer-tree-sitter t
   "Non-nil indicates a preference for using Tree-sitter for Markdown editing.
 When non-nil and Tree-sitter support for Markdown is available, the third-party
 package `markdown-mode' will not be loaded; instead,
@@ -33,7 +33,7 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
 ;;; Choose between `markdown-mode' and `markdown-ts-mode'
 
 (if (and (>= emacs-major-version 31)
-         lightemacs-maybe-markdown-ts-prefer-tree-sitter
+         lightemacs-markdown-prefer-tree-sitter
          (fboundp 'treesit-ready-p)
          (treesit-ready-p 'markdown))
     (progn
