@@ -155,8 +155,8 @@ to Emacs standard behavior.")
           (dired-hacks-utils             . "melpa")
           (elisp-autofmt                 . "melpa")
           (evil                          . "melpa")
-          (evil-surround                 . "melpa")  ;; nongnu is outdated
           (evil-collection               . "melpa")
+          (evil-surround                 . "melpa")  ;; nongnu is outdated
           (flymake-yamllint              . "melpa")
           (flyspell-lazy                 . "melpa")  ;; Unmaintained
           (helpful                       . "melpa")
