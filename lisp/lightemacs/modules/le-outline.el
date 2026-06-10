@@ -59,6 +59,8 @@
 ;;; Bug fix: TODO: This bug fix was sent to the Emacs developers
 
 ;; Issue report:
+;;   FYI: Merged into Emacs 32: 8decb653ffd8b046ffcccb5e9aa2e8a820ce6ab0
+;;
 ;;   [PATCH] outline-end-of-subtree misses final newline when at end of buffer
 ;;   When using outline-mode (or outline-minor-mode), making a
 ;;   subtree invisible that is located at the very end of
@@ -101,9 +103,11 @@ the buffer remain visible when a fold is applied."
       (if (bolp)
           (forward-char -1))))
 
-(with-eval-after-load 'outline
-  (advice-add 'outline-end-of-subtree :after
-              #'le-outline--advice-backtrack-whitespace))
+;; Merged into Emacs 32: 8decb653ffd8b046ffcccb5e9aa2e8a820ce6ab0
+(when (< emacs-major-version 32)
+  (with-eval-after-load 'outline
+    (advice-add 'outline-end-of-subtree :after
+                #'le-outline--advice-backtrack-whitespace)))
 
 (provide 'le-outline)
 
