@@ -1,4 +1,4 @@
-;;; early-init.el --- Early Init -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; early-init.el --- Early Init -*- lexical-binding: t; -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
