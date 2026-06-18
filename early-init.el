@@ -88,15 +88,18 @@
   (require 'lightemacs)
 
   ;; Load minimal-emacs.d early-init.el
-  (lightemacs-load-user-init
-   (expand-file-name "early-init.el" minimal-emacs-user-directory))
+  (if (fboundp 'lightemacs-load-user-init)
+      (lightemacs-load-user-init
+       (expand-file-name "early-init.el" minimal-emacs-user-directory))
+    (error "Undefined: lightemacs-load-user-init"))
 
   ;; Increase the number of CPUs
   (when (and (bound-and-true-p lightemacs-native-comp-excluded-cpus)
              (numberp lightemacs-native-comp-excluded-cpus)
              (featurep 'native-compile)
              (fboundp 'native-comp-available-p)
-             (native-comp-available-p))
+             (native-comp-available-p)
+             (fboundp 'lightemacs--calculate-native-comp-async-jobs-number))
     (setq native-comp-async-jobs-number
           (lightemacs--calculate-native-comp-async-jobs-number)))
 
@@ -104,5 +107,9 @@
 
   ;; Run hooks: `lightemacs-post-early-init-hook'
   (run-hooks 'lightemacs-post-early-init-hook))
+
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
 
 ;;; early-init.el ends here
