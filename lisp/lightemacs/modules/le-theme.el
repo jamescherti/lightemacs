@@ -119,13 +119,25 @@ This function is idempotent and ignores _ARGS for `advice-add' compatibility."
               (add-to-list 'default-frame-alist
                            (cons 'font lightemacs-theme-default-font))
 
-              ;; Force fixed-pitch to mirror the default font family
+              ;; Force fixed-pitch to mirror the default font family and scale.
+              ;; This must be explicitly defined; omitting it makes Emacs
+              ;; to drop back to system fallback monospaced fonts
+              ;; (e.g., Courier). This prevents layout breakage from font-family
+              ;; mismatches or size discrepancies in code blocks, Org tables,
+              ;; and alignment- sensitive UI elements. Setting ':height 1.0'
+              ;; ensures a strict 1:1 baseline rendering scale relative to the
+              ;; default frame text.
               (set-face-attribute 'fixed-pitch nil
                                   :family target-family
                                   :height 1.0)
 
-              ;; Apply the variable font if defined, otherwise let Emacs handle
-              ;; it
+              ;; Apply the variable-pitch configuration only if explicitly
+              ;; defined. When `lightemacs-theme-variable-font' is nil, we
+              ;; purposely leave this face unmodified. This allows Emacs to
+              ;; query native windowing system capabilities and automatically
+              ;; resolve to the standard system proportional font
+              ;; (e.g., Helvetica on macOS, Segoe UI on Windows, or fontconfig
+              ;; sans-serif aliases on Linux/BSD).
               (when variable-family
                 (set-face-attribute 'variable-pitch nil
                                     :family variable-family
