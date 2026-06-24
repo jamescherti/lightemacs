@@ -41,8 +41,13 @@ Set to nil to disable loading a theme at startup.")
 Set to nil to disable installing this package at startup.")
 
 (defvar lightemacs-theme-default-font nil
-  "Default font to apply after the theme is loaded.
+  "Default fixed-pitch font to apply after the theme is loaded.
 Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
+
+(defvar lightemacs-theme-variable-font nil
+  "Default proportional font for `variable-pitch' face.
+Set to a string, such as \"Sans Serif\", or nil to fall back to the system
+default.")
 
 ;;; Theme
 
@@ -87,16 +92,18 @@ This function is idempotent and ignores _ARGS for `advice-add' compatibility."
   (when (and (display-graphic-p)
              lightemacs-theme-default-font)
     (let* ((get-fam (lambda (font)
-                      (let* ((spec (font-spec :name (if (stringp font)
-                                                        font
-                                                      (font-xlfd-name font))))
-                             (family (font-get spec :family)))
-                        (cond
-                         ((symbolp family) (symbol-name family))
-                         ((stringp family) family)
-                         (t nil)))))
+                      (when font
+                        (let* ((spec (font-spec :name (if (stringp font)
+                                                          font
+                                                        (font-xlfd-name font))))
+                               (family (font-get spec :family)))
+                          (cond
+                           ((symbolp family) (symbol-name family))
+                           ((stringp family) family)
+                           (t nil))))))
            (current-family (funcall get-fam (frame-parameter nil 'font)))
-           (target-family (funcall get-fam lightemacs-theme-default-font)))
+           (target-family (funcall get-fam lightemacs-theme-default-font))
+           (variable-family (funcall get-fam lightemacs-theme-variable-font)))
 
       ;; Only apply if the family has changed to prevent UI flicker
       (unless (and current-family
@@ -110,7 +117,19 @@ This function is idempotent and ignores _ARGS for `advice-add' compatibility."
               (setq default-frame-alist
                     (assq-delete-all 'font default-frame-alist))
               (add-to-list 'default-frame-alist
-                           (cons 'font lightemacs-theme-default-font)))
+                           (cons 'font lightemacs-theme-default-font))
+
+              ;; Force fixed-pitch to mirror the default font family
+              (set-face-attribute 'fixed-pitch nil
+                                  :family target-family
+                                  :height 1.0)
+
+              ;; Apply the variable font if defined, otherwise let Emacs handle
+              ;; it
+              (when variable-family
+                (set-face-attribute 'variable-pitch nil
+                                    :family variable-family
+                                    :height 1.0)))
           (error
            (display-warning 'lightemacs
                             (format "Font error: %s" (error-message-string err))
