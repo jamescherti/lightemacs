@@ -22,9 +22,6 @@
 
 (setq next-error-verbose (not lightemacs-reduce-messages))
 
-;; TODO: move to m.e.?
-(setq eldoc-documentation-strategy #'eldoc-documentation-compose)
-
 (setq warning-minimum-level (if init-file-debug :warning :error))
 
 ;; Alternative: (setq-default display-fill-column-indicator-character ?┊)
