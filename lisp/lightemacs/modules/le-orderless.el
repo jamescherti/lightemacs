@@ -30,9 +30,11 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package orderless
+  :init
+  (setq completion-pcm-leading-wildcard t)
+  (setq completion-category-defaults nil)
   :config
   (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
   ;; Using `basic' for file completion instead of `partial-completion' for
   ;; files.
   ;;
@@ -40,8 +42,7 @@
   ;; avoids unexpected expansions, and delegates all fuzzy and out-of-order
   ;; matching to Orderless, resulting in more predictable and consistent
   ;; completion behavior.
-  (setq completion-category-overrides '((file (styles basic))))
-  (setq completion-pcm-leading-wildcard t))
+  (setq completion-category-overrides '((file (styles basic)))))
 
 (provide 'le-orderless)
 
