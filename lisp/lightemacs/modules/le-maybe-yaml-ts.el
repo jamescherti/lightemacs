@@ -34,7 +34,7 @@ Tree-sitter is available.")
 
 (if (and lightemacs-group-yaml-prefer-yaml-ts-mode
          (fboundp 'treesit-ready-p)
-         (treesit-ready-p 'yaml))
+         (treesit-ready-p 'yaml t))
     ;; Configure `yaml-ts-mode'
     (lightemacs-module-load '(le-yaml-ts-mode))
   ;; Configure `yaml-mode'

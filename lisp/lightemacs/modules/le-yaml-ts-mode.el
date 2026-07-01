@@ -40,7 +40,7 @@ Versions affected by this bug: Emacs 30.1, 30.2, and <= 29.*."
 (defun lightemacs-yaml-ts-mode--setup ()
   "Configure `yaml-ts-mode'."
   (when (and (fboundp 'treesit-ready-p)
-             (funcall 'treesit-ready-p 'yaml))
+             (treesit-ready-p 'yaml t))
     (add-to-list 'auto-mode-alist '("\.[Yy][Aa][Mm]?[Ll]\\'" . yaml-ts-mode))))
 
 (add-hook 'lightemacs-after-init-hook #'lightemacs-yaml-ts-mode--setup)
