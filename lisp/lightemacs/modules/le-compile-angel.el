@@ -47,18 +47,18 @@
   (defun le-compile-angel-exclude (path)
     "Add a file or directory to the list of exclusions for compilation.
 PATH should be a string representing a file or directory path. If PATH is not
-already present in `compile-angel-excluded-files', the basename of PATH,
+already present in `compile-angel-excluded-path-suffixes', the basename of PATH,
 prefixed with a forward slash, is appended to that list. This ensures that the
 specified file or directory is ignored during the compilation process managed by
 `compile-angel-on-load-mode'."
     (when (and (stringp path)
-               ;; TODO compile-angel-excluded-files
-               (not (member path compile-angel-excluded-files)))
+               ;; TODO compile-angel-excluded-path-suffixes
+               (not (member path compile-angel-excluded-path-suffixes)))
       (if (fboundp 'compile-angel-exclude-file)
           (compile-angel-exclude-file path)
         (push (concat "/" (file-name-nondirectory path))
-              ;; TODO compile-angel-excluded-files
-              compile-angel-excluded-files))))
+              ;; TODO compile-angel-excluded-path-suffixes
+              compile-angel-excluded-path-suffixes))))
 
   :config
   ;; TODO add support to compile-angel
