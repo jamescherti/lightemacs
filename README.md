@@ -819,6 +819,8 @@ Continue pressing `C-=` until the selection encompasses exactly the text you wan
 
 Here are a few other modules disabled by default:
 
+- **le-buffer-guardian**: Enables [buffer-guardian](https://github.com/jamescherti/buffer-guardian.el), a global mode that automatically saves buffers without requiring manual intervention. By default, `buffer-guardian-mode` saves file-visiting buffers when: Switching to another buffer, Switching to another window or frame, The window configuration changes (e.g., window splits), The minibuffer is opened, Emacs loses focus.
+
 - **le-server**: Enables the built-in Emacs server, which allows external programs such as `emacsclient` to connect to a single running instance of Emacs. This makes it possible to open files in an existing session rather than starting a new Emacs process each time. Once the server is running, the `emacsclient` command can be used in the terminal to open files in the active Emacs session. For example, running `emacsclient -n filename.txt` opens the file in the existing Emacs frame without blocking the terminal process.
 
 - **le-buffer-terminator**: Configures the [buffer-terminator](https://github.com/jamescherti/buffer-terminator.el) package, which automatically kills inactive buffers to maintain a clean workspace and optimize performance. The `buffer-terminator-mode` kills buffers inactive for `buffer-terminator-inactivity-timeout` (default: 30 mins) every `buffer-terminator-interval` (default: 10 minutes). It safely preserves special buffers, unsaved modified files, visible buffers, buffers with running processes.
