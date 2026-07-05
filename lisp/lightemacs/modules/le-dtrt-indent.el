@@ -31,15 +31,12 @@
              dtrt-indent-highlight)
 
   :init
-  ;; TODO write a better major-mode-after-body hook
-  (lightemacs-module-hooks dtrt-indent
-    dtrt-indent-mode
-    '(prog-mode-hook
-      text-mode-hook))
-
   (setq dtrt-indent-verbosity (if init-file-debug 1 0))
   (setq dtrt-indent-max-lines 1900)  ; Faster
 
+  (lightemacs-module-hooks dtrt-indent-local
+    dtrt-indent-mode
+    '())
   (lightemacs-module-hooks dtrt-indent-global
     dtrt-indent-global-mode
     '(lightemacs-after-init-hook))
