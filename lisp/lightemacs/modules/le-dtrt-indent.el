@@ -40,7 +40,9 @@
   (setq dtrt-indent-verbosity (if init-file-debug 1 0))
   (setq dtrt-indent-max-lines 1900)  ; Faster
 
-  (add-hook 'after-init-hook #'dtrt-indent-global-mode)
+  (lightemacs-module-hooks dtrt-indent-global
+    dtrt-indent-global-mode
+    '(lightemacs-after-init-hook))
 
   ;; We're using `dtrt-indent'
   (setq python-indent-guess-indent-offset nil)
