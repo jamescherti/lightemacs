@@ -15,6 +15,12 @@
 
 ;;; Configuration
 
+;; The init.el file serializes the package manager state into a dedicated,
+;; loadable file (le-autogen-config.el). This file is injected it via an
+;; environment variable or path discovery to ensure that macros from
+;; use-package, straight, or elpaca expand correctly during asynchronous or
+;; batch compilation without forcing a full, heavy framework initialization.
+;;
 ;; When lightemacs-use-package.el is compiled, the following top-level code is
 ;; translated into byte-code and is not executed at that moment.
 ;;
@@ -33,52 +39,67 @@
   ;; `use-package-normalize-keywords'
   (require 'use-package-core)
 
+  (defun lightemacs-use-package--detect-autogen-config ()
+    "Dynamically locate the autogen configuration file.
+Returns the absolute path to the configuration file, or nil if not found."
+    ;; (let ((file (expand-file-name "var/le-autogen-config.el" lightemacs-user-directory)))
+    ;;   (if (file-regular-p file)
+    ;;       file
+    ;;     (error "The autogen config file doesn't exist: %s" file)))
+
+    ;; TODO find another solution
+    (getenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG")
+
+    ;; (let* ((framework-file (locate-library "lightemacs-use-package.el" t))
+    ;;        (current-file
+    ;;         (or
+    ;;          ;; (and (fboundp 'macroexp-file-name) (macroexp-file-name))
+    ;;          ;; (bound-and-true-p byte-compile-current-file)
+    ;;          ;; load-file-name
+    ;;          framework-file))
+    ;;        ;; Resolve symlinks to prevent incorrect directory traversal
+    ;;        (true-current (and current-file (file-truename current-file)))
+    ;;        (search-dir (and true-current (file-name-directory true-current)))
+    ;;        (root-dir (and search-dir (locate-dominating-file search-dir
+    ;;                                                          "init.el"))))
+    ;;
+    ;;   (cond
+    ;;    (root-dir
+    ;;     (if (file-regular-p framework-file)
+    ;;         (expand-file-name "var/le-autogen-config.el" root-dir)
+    ;;       (error "The autogen config file does not exist: %s"
+    ;;              (expand-file-name "var/le-autogen-config.el" root-dir))))
+    ;;    ;; (t
+    ;;    ;;  ;; Fallback: user-emacs-directory is globally inherited by default
+    ;;    ;;  (expand-file-name "le-autogen-config.el" user-emacs-directory))
+    ;;    ))
+    )
+
   (when (and (not (bound-and-true-p lightemacs-use-package--compiler-env-loaded))
-             (or noninteractive
-                 (bound-and-true-p byte-compile-current-file)
-                 (bound-and-true-p comp-compiling)))
-    (let* ((env-file (getenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG"))
-           ;; Pre-declare diagnostic variables so they survive for the error message
-           root-dir
-           search-dir
-           macroexp-file
+             (bound-and-true-p byte-compile-current-file))
+    (let* (;; root-dir
            (config-file
-            (or env-file
-                (progn
-                  (setq search-dir
-                        (let ((current-file
-                               (or (setq macroexp-file
-                                         (and (fboundp 'macroexp-file-name)
-                                              (macroexp-file-name)))
-                                   (and (boundp 'byte-compile-current-file)
-                                        byte-compile-current-file)
-                                   load-file-name)))
-                          (when current-file
-                            (file-name-directory current-file))))
-                  (setq root-dir
-                        (when search-dir
-                          (locate-dominating-file search-dir "init.el")))
-                  (when root-dir
-                    (expand-file-name "var/le-autogen-config.el"
-                                      root-dir))))))
-      (if (and config-file (file-exists-p config-file))
+            (lightemacs-use-package--detect-autogen-config)))
+      (if (and config-file (file-regular-p config-file))
           (progn
             (message "[lightemacs] Loading the compiler configuration from: %s"
                      config-file)
             (load config-file nil 'nomessage nil t))
-        (error
-         (concat
-          "[lightemacs] Could not locate le-autogen-config.el"
-          " root-dir:%s"
-          " search-dir:%s"
-          " macroexp-file:%s"
-          " byte-compile-current-file:%s"
-          " load-file-name:%s")
-         root-dir
-         search-dir
-         macroexp-file
-         (bound-and-true-p byte-compile-current-file)
-         load-file-name)))))
+        (error "[lightemacs] Could not locate le-autogen-config.el")
+        ;; (error
+        ;;  (concat
+        ;;   "[lightemacs] Could not locate le-autogen-config.el"
+        ;;   " config:%s"
+        ;;   " macroexp-file-name:%s"
+        ;;   " byte-compile-current-file:%s"
+        ;;   " load-file-name:%s"
+        ;;   " lib:%s")
+        ;;  config-file
+        ;;  (and (fboundp 'macroexp-file-name) (macroexp-file-name))
+        ;;  (bound-and-true-p byte-compile-current-file)
+        ;;  load-file-name
+        ;;  (locate-library "lightemacs-use-package.el" t))
+        ))))
 
 ;;; Require
 
@@ -200,19 +221,23 @@ them to `use-package'."
       (error
        "`lightemacs-use-package': The only supported value for :ensure is nil"))
 
-    (when straight-is-member
-      ;; :straight is not supported by elpaca and the built-in use-package
-      (error "`lightemacs-use-package': Modifying :straight is not allowed"))
+    ;; (when straight-is-member
+    ;;   ;; :straight is not supported by elpaca and the built-in use-package
+    ;;   (error "`lightemacs-use-package': Modifying :straight is not allowed"))
 
     (cond
      ;; Straight
      ((eq lightemacs-package-manager 'straight)
       (setq args (copy-sequence args))
       (let ((vc-is-member (memq :vc args)))
-        (if (and vc-is-member)
+        (if vc-is-member
             ;; `:vc' takes precedence over `:straight'
-            (setq args (append (list :straight nil)
-                               args))
+            ;; (setq args (append (list :straight nil)
+            ;;                    args))
+            ;; (error "`lightemacs-use-package': %s: :vc is not allowed when the package manager is straight" name)
+            t
+          ;; This part adds support for `:ensure nil`
+          ;;
           ;; Straight mode
           ;; ensure is non-nil: straight = ensure-value
           ;; ensure is nil: straight is nil??
@@ -222,7 +247,7 @@ them to `use-package'."
                                    straight-use-package-by-default))))
 
             ;; Add straight
-            (unless straight-value
+            (when (and (not straight-is-member) (not straight-value))
               (setq args (append (list :straight straight-value)
                                  args)))
 

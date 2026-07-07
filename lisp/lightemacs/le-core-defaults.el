@@ -179,7 +179,7 @@ to Emacs standard behavior.")
           (page-break-lines              . "melpa") ; nongnu is outdated
           (edit-indirect                 . "melpa") ; nongnu is outdated
           (markdown-mode                 . "melpa") ; nongnu is outdated
-          (lsp-mode                      . "melpa")
+          (lsp-mode                      . "melpa-stable")
           (lsp-ui                        . "melpa")
           (modus-themes                  . "melpa") ; gnu is outdated
           (ace-window                    . "melpa") ; gnu is outdated

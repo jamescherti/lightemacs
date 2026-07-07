@@ -140,6 +140,7 @@
   (let* ((file-dir lightemacs-var-directory)
          (file-path (expand-file-name "le-autogen-config.el" file-dir)))
     (setq lightemacs-autogen-config-file file-path)
+    ;; TODO Find another solution
     (setenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG" file-path)
     ;; Ensure the local directory exists
     (unless (file-directory-p file-dir)
@@ -185,12 +186,15 @@
                   "          'nomessage)))\n\n"))
 
         (when (eq lightemacs-package-manager 'straight)
-          (insert "(unless (fboundp 'straight-use-package)\n"
-                  "  (let ((lightemacs--no-bootstrap t))\n"
-                  "    (load (expand-file-name \"le-core-pm-straight.el\"\n"
-                  "                            lightemacs-core-directory)\n"
-                  "          nil\n"
-                  "          'nomessage)))\n\n"))
+          (insert
+           "(setq straight-disable-compile t)\n"
+           "(setq straight-disable-native-compile t)\n"
+           "(unless (fboundp 'straight-use-package)\n"
+           "  (let ((lightemacs--no-bootstrap t))\n"
+           "    (load (expand-file-name \"le-core-pm-straight.el\"\n"
+           "                            lightemacs-core-directory)\n"
+           "          nil\n"
+           "          'nomessage)))\n\n"))
 
         ;; use-package optimization
         (let ((val (if (boundp 'use-package-expand-minimally)

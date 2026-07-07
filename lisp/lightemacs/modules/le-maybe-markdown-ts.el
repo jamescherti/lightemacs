@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Configures `markdown-mode' or `markdown-ts-mode' (available on Emacs >= 31)
+;; Configures `markdown-mode' or `markdown-ts-mode' (available on Emacs >= 32)
 ;; to provide syntax highlighting, editing commands, and preview support for
 ;; Markdown documents. This group also configures `markdown-toc' when
 ;; `markdown-mode' is active.

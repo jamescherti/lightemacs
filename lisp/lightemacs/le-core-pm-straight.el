@@ -40,7 +40,15 @@
 
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
+;; Ensure the built-in `use-package' is not pulled
+(straight-use-package '(use-package :type built-in))
+
+;; For some reason, without this, straight pulls seq when a package that
+;; requires it, such as transient, is installed. Explicitly setting them to
+;; built-in ensures these overrides are ignored by the build process. Note that
+;; even adding (seq . (seq :type built-in)) to straight-recipe-overrides does
+;; not fix this issue.
+(straight-use-package '(seq :type built-in))
 
 (setq straight-use-package-by-default t)
 
