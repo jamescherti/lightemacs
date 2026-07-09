@@ -229,13 +229,13 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
   (keymap-global-set "M-g m" #'consult-mark)
   (keymap-global-set "M-g k" #'consult-global-mark)
   (keymap-global-set "M-g i" #'consult-imenu)
-  (keymap-global-set "M-g I" #'consult-imenu-multi)
+  (keymap-global-set "M-g I" 'consult-imenu-multi)
 
   ;; M-s bindings in `search-map'
   (keymap-global-set "M-s d" #'consult-find)
   (keymap-global-set "M-s c" #'consult-locate)
   (keymap-global-set "M-s g" #'consult-grep)
-  (keymap-global-set "M-s G" #'consult-git-grep)
+  (keymap-global-set "M-s G" 'consult-git-grep)
   (keymap-global-set "M-s r" #'consult-ripgrep)
   (keymap-global-set "M-s l" #'consult-line)
   (keymap-global-set "M-s L" #'consult-line-multi)
