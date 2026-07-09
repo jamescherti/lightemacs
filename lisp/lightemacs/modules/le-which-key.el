@@ -99,10 +99,8 @@
    )
 
   :config
-  ;; TODO remove
-  (with-eval-after-load 'which-key  ; Reason: no-require: t
-    ;; Set up side-window that opens on bottom.
-    (which-key-setup-side-window-bottom)))
+  ;; Set up side-window that opens on bottom.
+  (which-key-setup-side-window-bottom))
 
 (provide 'le-which-key)
 

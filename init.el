@@ -189,6 +189,10 @@
           (insert
            "(setq straight-disable-compile t)\n"
            "(setq straight-disable-native-compile t)\n"
+           ;; Force the correct directory to avoid ~/.emacs.d/ leaks
+           "(setq straight-base-dir lightemacs-var-directory)\n"
+           ;; Disable all straight.el modification checks and builds
+           "(setq straight-check-for-modifications nil)\n"
            "(unless (fboundp 'straight-use-package)\n"
            "  (let ((lightemacs--no-bootstrap t))\n"
            "    (load (expand-file-name \"le-core-pm-straight.el\"\n"
@@ -228,6 +232,24 @@
 ;; Call it first for `lightemacs-package-manager'
 (lightemacs--generate-le-autogen-config)
 
+;; Inject the config path into the async native compiler environment
+(setq native-comp-async-env-modifier-form
+      `(progn
+         (setq user-emacs-directory ,lightemacs-var-directory)
+         (setq lightemacs-user-directory ,lightemacs-user-directory)
+         (setq lightemacs-local-directory ,lightemacs-local-directory)
+         (setq lightemacs-var-directory ,lightemacs-var-directory)
+         (setq lightemacs-core-directory ,lightemacs-core-directory)
+         (setq lightemacs-package-manager ',lightemacs-package-manager)
+
+         ;; TODO
+         ;; (setq package-user-dir ,package-user-dir)
+
+         ;; TODO include?
+         ;; (setq treesit-extra-load-path ',treesit-extra-load-path)
+
+         (setenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG" ,lightemacs-autogen-config-file)))
+
 ;; TODO this is broken
 ;; (setq native-comp-async-env-modifier-form
 ;;       `(progn
@@ -235,26 +257,11 @@
 ;;            (load ,lightemacs-autogen-config-file nil 'nomessage nil t)
 ;;
 ;;            ;; TODO remove
-;;            ;; Inject configuration variables directly from the parent session
-;;            ;; (setq lightemacs-package-manager ',lightemacs-package-manager)
-;;            ;;
-;;            ;; (setq lightemacs-user-directory ,lightemacs-user-directory)
-;;            ;; (setq lightemacs-local-directory ,lightemacs-local-directory)
-;;            ;; (setq lightemacs-var-directory ,lightemacs-var-directory)
-;;            ;; (setq lightemacs-core-directory ,lightemacs-core-directory)
-;;            ;;
-;;            ;; (setq user-emacs-directory lightemacs-var-directory)
-;;            ;;
 ;;            ;; (setq use-package-expand-minimally ,use-package-expand-minimally)
 ;;            ;; (setq use-package-always-ensure
 ;;            ;;       ,(bound-and-true-p use-package-always-ensure))
-;;            ;; (setq package-user-dir ,package-user-dir)
 ;;            ;;
 ;;            ;; ;; Inject core paths from the parent session
-;;            ;; (setq treesit-extra-load-path ',treesit-extra-load-path)
-;;            ;;
-;;            ;; ;; TODO add load-path?
-;;            ;; ;; (setq load-path ',load-path)
 ;;            ;;
 ;;            ;; ;; Inject conditional package manager initialization blocks
 ;;            ;; ,(cond

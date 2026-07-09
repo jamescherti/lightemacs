@@ -77,6 +77,7 @@ If FORCE is non-nil, reload the current theme even if it is already active."
              (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
     (eval
      `(lightemacs-use-package ,lightemacs-theme-package
+        :demand t
         :config
         (lightemacs-theme--apply ',lightemacs-theme-name)))
     ;; lexical-binding: t

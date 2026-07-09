@@ -30,8 +30,8 @@
              evil-surround-mode
              global-evil-surround-mode)
   :hook (evil-mode . global-evil-surround-mode)
-  :config
-  (global-evil-surround-mode))
+  :init
+  (global-evil-surround-mode 1))
 
 (provide 'le-evil-surround)
 

@@ -44,7 +44,7 @@
   ;; minibuffer or inserting a literal newline.
   (setq evil-collection-corfu-key-themes '(default magic-return))
 
-  :config
+  :init
   ;; Fix magic-return issue in GUI mode
   ;;
   ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled

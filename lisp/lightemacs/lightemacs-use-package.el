@@ -76,7 +76,8 @@ Returns the absolute path to the configuration file, or nil if not found."
     )
 
   (when (and (not (bound-and-true-p lightemacs-use-package--compiler-env-loaded))
-             (bound-and-true-p byte-compile-current-file))
+             (or (bound-and-true-p byte-compile-current-file)
+                 (bound-and-true-p comp-compiling)))
     (let* (;; root-dir
            (config-file
             (lightemacs-use-package--detect-autogen-config)))
@@ -99,7 +100,22 @@ Returns the absolute path to the configuration file, or nil if not found."
         ;;  (bound-and-true-p byte-compile-current-file)
         ;;  load-file-name
         ;;  (locate-library "lightemacs-use-package.el" t))
-        ))))
+        )))
+
+  ;; Conditionally declare the package manager function for the compiler. At
+  ;; this point, `lightemacs-package-manager' is guaranteed to be set correctly
+  ;; for this compilation process.
+  ;;
+  ;; This silences warnings such as:
+  ;; Warning (native-compiler): file.el: Warning: the function
+  ;; `straight-use-package' might not be defined at runtime.
+  (cond
+   ((eq lightemacs-package-manager 'straight)
+    (unless (fboundp 'straight-use-package)
+      (autoload 'straight-use-package "straight")))
+   ((eq lightemacs-package-manager 'elpaca)
+    (unless (fboundp 'elpaca)
+      (autoload 'elpaca "elpaca")))))
 
 ;;; Require
 
@@ -109,6 +125,11 @@ Returns the absolute path to the configuration file, or nil if not found."
 
 (defvar lightemacs-use-package-refresh-contents t
   "If non-nil, `lightemacs-use-package' may refresh package contents once.")
+
+(defvar lightemacs-use-package-modifiers nil
+  "An alist of modifiers injected into `lightemacs-use-package' at expansion.
+Elements should be structured as (PACKAGE-NAME :KEYWORD VALUE...).
+For example: \\='((some-package :straight t :defer t)).")
 
 ;; Internal variables
 
@@ -355,7 +376,9 @@ them to `use-package'."
 NAME and ARGS are the same arguments as the `use-package' macro.
 Normalization and manager selection occur at macro-expansion time."
   (declare (indent defun))
-  (let* ((effective-args (lightemacs-use-package--normalize name args)))
+  (let* ((injected-args (cdr (assq name lightemacs-use-package-modifiers)))
+         (combined-args (append injected-args args))
+         (effective-args (lightemacs-use-package--normalize name combined-args)))
     `(progn
        (use-package ,name ,@effective-args))))
 

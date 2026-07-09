@@ -39,7 +39,7 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
                                              "\\.gpg$"))
   (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode)
 
-  :config
+  :init
   (when (executable-find "zstd")
     ;; zstd is used due to its superior performance, as execution speed is the
     ;; primary objective within the Emacs environment.

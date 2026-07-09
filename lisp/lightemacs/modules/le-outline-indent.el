@@ -51,7 +51,6 @@
     outline-indent-minor-mode '())
 
   :config
-
   ;; Fold management
   (define-key outline-indent-minor-mode-map (kbd "C-c o o") 'outline-indent-open-fold)
   (define-key outline-indent-minor-mode-map (kbd "C-c o c") 'outline-indent-close-fold)

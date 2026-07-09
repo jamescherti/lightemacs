@@ -35,7 +35,7 @@
   ;; `xref-find-definitions'. A priority of 90 ensures it is used only when no
   ;; more specific backend is available.
   (with-eval-after-load 'xref
-    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90))
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 80))
 
   (setq dumb-jump-quiet lightemacs-reduce-messages)
   (setq dumb-jump-aggressive nil)

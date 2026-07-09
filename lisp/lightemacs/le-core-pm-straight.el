@@ -16,13 +16,7 @@
 (require 'lightemacs)
 (defvar bootstrap-version)
 
-(when (bound-and-true-p lightemacs--no-bootstrap)
-  ;; Force the correct directory to avoid ~/.emacs.d/ leaks
-  (setq straight-base-dir lightemacs-var-directory)
-  ;; Disable all straight.el modification checks and builds
-  (setq straight-check-for-modifications nil)
-  (setq straight-disable-compile t)
-  (setq straight-disable-native-compile t))
+(defvar lightemacs-straight-bootstrap-url)
 
 (let ((bootstrap-file (expand-file-name
                        "straight/repos/straight.el/bootstrap.el"
@@ -33,22 +27,13 @@
              (not (file-exists-p bootstrap-file)))
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         (or (bound-and-true-p lightemacs-straight-bootstrap-url)
+             "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el")
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
 
   (load bootstrap-file nil 'nomessage))
-
-;; Ensure the built-in `use-package' is not pulled
-(straight-use-package '(use-package :type built-in))
-
-;; For some reason, without this, straight pulls seq when a package that
-;; requires it, such as transient, is installed. Explicitly setting them to
-;; built-in ensures these overrides are ignored by the build process. Note that
-;; even adding (seq . (seq :type built-in)) to straight-recipe-overrides does
-;; not fix this issue.
-(straight-use-package '(seq :type built-in))
 
 (setq straight-use-package-by-default t)
 

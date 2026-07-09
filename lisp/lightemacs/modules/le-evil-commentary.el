@@ -20,8 +20,8 @@
 (lightemacs-use-package evil-commentary
   :after evil
   :commands evil-commentary-mode
-  :config
-  (evil-commentary-mode))
+  :init
+  (evil-commentary-mode 1))
 
 (provide 'le-evil-commentary)
 

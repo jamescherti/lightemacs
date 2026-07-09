@@ -27,8 +27,8 @@
 (lightemacs-use-package evil-visualstar
   :commands global-evil-visualstar-mode
   :after evil
-  :config
-  (global-evil-visualstar-mode))
+  :init
+  (global-evil-visualstar-mode 1))
 
 (provide 'le-evil-visualstar)
 
