@@ -223,7 +223,7 @@
           (insert "\n(setq package-enable-at-startup nil)\n\n")
           (insert "\n(package-initialize)\n\n"))
 
-        (insert ";;; le-autogen-config.el ends here\n")))))
+        (insert "\n;;; le-autogen-config.el ends here\n")))))
 
 ;; Call it first for `lightemacs-package-manager'
 (lightemacs--generate-le-autogen-config)
