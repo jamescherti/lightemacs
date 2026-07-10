@@ -25,10 +25,7 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package embark-consult
-  :after (embark consult)
-  ;; TODO: Obsolete
-  ;; :hook (embark-collect-mode . consult-preview-at-point-mode)
-  )
+  :after (embark consult))
 
 ;;; Provide
 (provide 'le-embark-consult)

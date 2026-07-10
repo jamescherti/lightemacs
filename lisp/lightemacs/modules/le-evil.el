@@ -210,7 +210,6 @@ Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
   (with-eval-after-load 'eldoc
     (eldoc-add-command 'evil-normal-state
                        'lightemacs-evil-delete-backward-C-h
-                       'evil-delete-backward-C-h  ;; Patch pending TODO
                        'evil-change
                        'evil-replace)
 

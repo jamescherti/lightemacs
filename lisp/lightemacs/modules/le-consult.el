@@ -101,11 +101,6 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
               'lightemacs-consult--crm-indicator)
 
   :init
-  ;; Enable automatic preview at point in the *Completions* buffer.
-  ;; Obsolete (TODO)
-  ;; (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
-  ;; (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
-
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.

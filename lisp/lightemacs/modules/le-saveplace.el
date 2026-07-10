@@ -29,8 +29,6 @@ preventing output in the echo area while saving buffer positions.")
 (lightemacs-use-package saveplace
   :ensure nil
   :commands save-place-mode
-
-  ;; TODO use on first file?
   :hook (lightemacs-after-init . save-place-mode)
 
   :preface

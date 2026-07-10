@@ -24,7 +24,6 @@
   (setq inhibit-mouse-adjust-show-help-function t)
   (setq inhibit-mouse-adjust-mouse-highlight t)
 
-  ;; TODO Add this to inhibit-mouse
   (add-hook 'inhibit-mouse-mode-hook
             #'(lambda()
                 ;; Enable or disable `tooltip-mode'. When tooltip-mode is
@@ -38,7 +37,6 @@
                       (tooltip-mode -1)
                     (tooltip-mode 1)))))
 
-  ;; TODO Add this to inhibit-mouse
   (add-hook 'inhibit-mouse-mode-hook
             #'(lambda()
                 ;; Enable or disable the context menu based on the state of

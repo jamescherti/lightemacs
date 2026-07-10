@@ -61,7 +61,6 @@ buffer, followed by regular files.")
                           "\\|^flycheck_.*"
                           "\\|^flymake_.*"))
 
-  ;; TODO: Disable on Windows
   (if lightemacs-dired-omit-parent-directory
       ;; All dotfiles
       (setq dired-omit-files (concat dired-omit-files "\\|^\\."))

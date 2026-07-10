@@ -56,7 +56,6 @@ adds that file to the recentf list.")
     (when (and (fboundp 'recentf-cleanup)
                (bound-and-true-p recentf-mode))
       (let ((inhibit-message lightemacs-recentf-quiet))
-        ;; TODO fix shut-up
         (ignore-errors
           (recentf-cleanup)))))
 
@@ -65,7 +64,6 @@ adds that file to the recentf list.")
     (when (and (fboundp 'recentf-save-list)
                (bound-and-true-p recentf-mode))
       (let ((inhibit-message lightemacs-recentf-quiet))
-        ;; TODO fix shut-up
         (recentf-save-list))))
 
   (defun lightemacs-recentf--cleanup-and-save ()
@@ -90,7 +88,6 @@ adds that file to the recentf list.")
     ;; Mode
     (unless (bound-and-true-p recentf-mode)
       (let ((inhibit-message lightemacs-recentf-quiet))
-        ;; TODO fix shut-up
         (recentf-mode 1)))
 
     ;; Replace `recentf-save-list' with a quiet version that cleans up and saves

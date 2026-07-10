@@ -30,7 +30,6 @@
   :commands evil-snipe-mode
 
   :hook
-  ;; TODO: on first input
   (evil-mode . evil-snipe-mode)
 
   :init

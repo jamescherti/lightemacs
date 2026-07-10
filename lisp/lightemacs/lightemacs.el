@@ -501,13 +501,6 @@ The execution follows this priority:
    ((region-active-p)
     (deactivate-mark))
 
-   ;; Clear Evil search highlights.
-   ;; TODO Make this optional
-   ;; ((and (fboundp 'evil-ex-nohighlight)
-   ;;       (and (boundp 'evil-ex-search-highlight-all)
-   ;;            evil-ex-search-highlight-all))
-   ;;  (evil-ex-nohighlight))
-
    ;; Close transient UI windows like Help or Completions.
    ((derived-mode-p 'completion-list-mode 'help-mode)
     (delete-completion-window))

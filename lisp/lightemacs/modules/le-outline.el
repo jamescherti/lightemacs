@@ -56,7 +56,7 @@
 (add-hook 'outline-minor-mode-hook #'le-outline--update-ellipsis)
 (add-hook 'outline-mode-hook #'le-outline--update-ellipsis)
 
-;;; Bug fix: TODO: This bug fix was sent to the Emacs developers
+;;; Bug fix: This bug fix was sent to the Emacs developers
 
 ;; Issue report:
 ;;   FYI: Merged into Emacs 32: 8decb653ffd8b046ffcccb5e9aa2e8a820ce6ab0

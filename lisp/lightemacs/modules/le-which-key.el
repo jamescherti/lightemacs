@@ -22,9 +22,6 @@
 (lightemacs-use-package which-key
   :ensure nil
   :commands which-key-mode
-
-  ;; TODO Fix first key press
-  ;; :hook (lightemacs-on-first-input-hook . which-key-mode)
   :hook (lightemacs-after-init . which-key-mode)
 
   :init
