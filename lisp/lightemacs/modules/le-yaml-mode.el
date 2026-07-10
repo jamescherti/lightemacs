@@ -27,7 +27,13 @@
 (lightemacs-use-package yaml-mode
   :commands yaml-mode
   :mode (("\\.yaml\\'" . yaml-mode)
-         ("\\.yml\\'" . yaml-mode)))
+         ("\\.yml\\'" . yaml-mode))
+  :preface
+  (defun lightemacs-yaml-mode--setup ()
+    "Set indentation rules for `yaml-mode'."
+    (setq-local tab-width yaml-indent-offset))
+  :init
+  (add-hook 'yaml-mode-hook #'lightemacs-yaml-mode--setup))
 
 (provide 'le-yaml-mode)
 
