@@ -30,6 +30,7 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package orderless
+  :demand t
   :init
   (setq completion-pcm-leading-wildcard t)
   (setq completion-category-defaults nil)
