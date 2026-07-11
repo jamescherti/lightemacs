@@ -77,7 +77,9 @@ Returns the absolute path to the configuration file, or nil if not found."
 
   (when (and (not (bound-and-true-p lightemacs-use-package--compiler-env-loaded))
              (or (bound-and-true-p byte-compile-current-file)
-                 (bound-and-true-p comp-compiling)))
+                 ;; (bound-and-true-p comp-compiling)
+                 ;; noninteractive
+                 ))
     (let* (;; root-dir
            (config-file
             (lightemacs-use-package--detect-autogen-config)))
@@ -109,13 +111,22 @@ Returns the absolute path to the configuration file, or nil if not found."
   ;; This silences warnings such as:
   ;; Warning (native-compiler): file.el: Warning: the function
   ;; `straight-use-package' might not be defined at runtime.
-  (cond
-   ((eq lightemacs-package-manager 'straight)
-    (unless (fboundp 'straight-use-package)
-      (autoload 'straight-use-package "straight")))
-   ((eq lightemacs-package-manager 'elpaca)
-    (unless (fboundp 'elpaca)
-      (autoload 'elpaca "elpaca")))))
+  ;; (cond
+  ;;  ((eq lightemacs-package-manager 'straight)
+  ;;   (unless (fboundp 'straight-use-package)
+  ;;     (autoload 'straight-use-package "straight"))
+  ;;
+  ;;   (declare-function straight-use-package "straight"
+  ;;                     (melpa-style-recipe
+  ;;                      &optional
+  ;;                      no-clone
+  ;;                      no-build
+  ;;                      cause
+  ;;                      interactive)))
+  ;;  ((eq lightemacs-package-manager 'elpaca)
+  ;;   (unless (fboundp 'elpaca)
+  ;;     (autoload 'elpaca "elpaca"))))
+  )
 
 ;;; Require
 
