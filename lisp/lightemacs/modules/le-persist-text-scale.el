@@ -37,15 +37,15 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 (lightemacs-use-package persist-text-scale
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
-
-  :hook (lightemacs-after-init . persist-text-scale-mode)
-
-  :init
-  (setq text-scale-mode-step 1.07))
+  :config
+  (lightemacs-module-hooks persist-text-scale
+    persist-text-scale-mode
+    '(lightemacs-after-init-hook)))
 
 (provide 'le-persist-text-scale)
 

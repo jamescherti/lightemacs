@@ -29,9 +29,22 @@
 
 (require 'le-evil)
 
+(defvar lightemacs-evil-collection-inhibit-unimpaired-mode nil
+  "Inhibit `global-evil-collection-unimpaired-mode' when non-nil.
+
+By default, the `evil-collection' package automatically activates unimpaired
+bindings globally. While these Vim-like bracket shortcuts (e.g., [b and ]b to
+cycle buffers) are convenient, they aggressively hijack the [ and ] prefixes
+across the entire editor.
+
+Setting this variable to t deactivates these global overrides after
+initialization, allowing users to retain standard major-mode behaviors unless
+they explicitly opt out of the inhibition.")
+
 (lightemacs-use-package evil-collection
   :if (not noninteractive)
-  :functions evil-collection-init
+  :functions (evil-collection-init
+              global-evil-collection-unimpaired-mode)
   :after evil
   :init
   ;; By default, when the completion menu is active, Evil's insert state or the
@@ -45,20 +58,25 @@
   (setq evil-collection-corfu-key-themes '(default magic-return))
 
   :init
-  ;; Fix magic-return issue in GUI mode
-  ;;
+  ;; Corfu: Fix magic-return issue in GUI mode
   ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled
   ;; URL: https://github.com/emacs-evil/evil-collection/pull/895
   (with-eval-after-load 'corfu
     (when (memq 'magic-return evil-collection-corfu-key-themes)
       (evil-define-key 'insert corfu-map (kbd "<return>") 'corfu-insert)))
 
-  (evil-collection-init))
+  (evil-collection-init)
+
+  ;; Disable unimpaired mappings globally
+  (when lightemacs-evil-collection-inhibit-unimpaired-mode
+    (when (bound-and-true-p global-evil-collection-unimpaired-mode)
+      (global-evil-collection-unimpaired-mode -1))))
 
 (provide 'le-evil-collection)
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
+;; env-allow-syntax-checker-package-lint: nil
 ;; End:
 
 ;;; le-evil-collection.el ends here
