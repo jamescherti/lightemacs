@@ -20,6 +20,7 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 (require 'le-evil)
 
 (lightemacs-use-package evil-surround
@@ -29,9 +30,14 @@
              evil-surround-region
              evil-surround-mode
              global-evil-surround-mode)
-  :hook (evil-mode . global-evil-surround-mode)
   :init
-  (global-evil-surround-mode 1))
+  (lightemacs-module-hooks evil-surround-global
+    global-evil-surround-mode
+    '(evil-mode-hook))
+
+  (lightemacs-module-hooks evil-surround-local
+    evil-surround-mode
+    nil))
 
 (provide 'le-evil-surround)
 

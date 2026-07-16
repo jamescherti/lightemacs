@@ -62,7 +62,9 @@
     (global-set-key (kbd "C-c z m") 'kirigami-close-folds)
     (global-set-key (kbd "C-c z r") 'kirigami-open-folds)
     (global-set-key (kbd "C-c z O") 'kirigami-open-fold-rec)
-    (global-set-key (kbd "C-c z TAB") 'kirigami-toggle-fold)))
+    (global-set-key (kbd "C-c z TAB") 'kirigami-toggle-fold))
+
+  (kirigami-global-mode 1))
 
 (provide 'le-kirigami)
 
