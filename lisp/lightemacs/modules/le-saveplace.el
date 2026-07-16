@@ -17,6 +17,7 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 (defvar lightemacs-saveplace-recenter-after-find-file nil
   "If non-nil, recenter the buffer after restoring the cursor position.")
@@ -29,7 +30,6 @@ preventing output in the echo area while saving buffer positions.")
 (lightemacs-use-package saveplace
   :ensure nil
   :commands save-place-mode
-  :hook (lightemacs-after-init . save-place-mode)
 
   :preface
   (defun lightemacs-saveplace--recenter (buffer)
@@ -43,8 +43,8 @@ BUFFER is the target buffer that needs to be recentered."
 
   (defun lightemacs-saveplace--after-find-file ()
     "Recenter the current window when `scroll-conservatively' >= 101.
-  This function is called by `save-place-after-find-file-hook'.
-  It avoids recentering while an EasySession session is in progress."
+This function is called by `save-place-after-find-file-hook'.
+It avoids recentering while an EasySession session is in progress."
     (when (and lightemacs-saveplace-recenter-after-find-file
                (>= scroll-conservatively 101)
                (not (bound-and-true-p easysession-load-in-progress))
@@ -65,7 +65,12 @@ Otherwise, the function executes normally."
       (apply fn args)))
 
   :init
-  (setq save-place-limit 500)
+  (lightemacs-module-setq-maybe saveplace
+    save-place-limit 500)
+
+  (lightemacs-module-hooks saveplace
+    save-place-mode
+    '(lightemacs-after-init-hook))
 
   :config
   (add-hook 'save-place-after-find-file-hook
@@ -78,6 +83,7 @@ Otherwise, the function executes normally."
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
+;; env-allow-syntax-checker-package-lint: nil
 ;; End:
 
 ;;; le-saveplace.el ends here
