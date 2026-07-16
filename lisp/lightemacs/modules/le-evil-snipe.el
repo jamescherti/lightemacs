@@ -24,6 +24,7 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-use-module)
 (require 'le-evil)
 
 (lightemacs-use-package evil-snipe
@@ -42,7 +43,15 @@
 
   ;; Allow character folding so equivalent characters match (e.g.,
   ;; accents/diacritics)
-  (setq evil-snipe-char-fold t))
+  (setq evil-snipe-char-fold t)
+
+  (lightemacs-module-hooks evil-snipe-global
+    evil-snipe-mode
+    lightemacs-on-first-buffer-hook)
+
+  (lightemacs-module-hooks evil-snipe-local
+    evil-snipe-local-mode
+    nil))
 
 (provide 'le-evil-snipe)
 
