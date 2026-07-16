@@ -22,7 +22,6 @@
   :commands (electric-pair-mode
              electric-pair-local-mode
              electric-pair-delete-pair)
-  :hook (lightemacs-on-first-buffer . electric-pair-mode)
   :init
   (lightemacs-module-hooks electric-pair-global
     electric-pair-mode
