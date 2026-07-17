@@ -83,7 +83,6 @@ Otherwise, the function executes normally."
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
-;; env-allow-syntax-checker-package-lint: nil
 ;; End:
 
 ;;; le-saveplace.el ends here

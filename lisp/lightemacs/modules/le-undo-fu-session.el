@@ -74,7 +74,6 @@ ORIG-FN is the original function and ARGS are its arguments."
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
-;; env-allow-syntax-checker-package-lint: nil
 ;; End:
 
 ;;; le-undo-fu-session.el ends here

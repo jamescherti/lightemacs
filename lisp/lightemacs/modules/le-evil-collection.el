@@ -75,7 +75,6 @@ they explicitly opt out of the inhibition.")
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
-;; env-allow-syntax-checker-package-lint: nil
 ;; End:
 
 ;;; le-evil-collection.el ends here
