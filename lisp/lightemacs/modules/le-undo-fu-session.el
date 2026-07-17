@@ -20,6 +20,7 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 ;;; Variables
 
@@ -37,20 +38,27 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
                                              "/MERGE_MSG\\'"
                                              "/git-rebase-todo\\'"
                                              "\\.gpg$"))
-  (add-hook 'lightemacs-after-init-hook #'undo-fu-session-global-mode)
 
   :init
   (when (executable-find "zstd")
     ;; zstd is used due to its superior performance, as execution speed is the
     ;; primary objective within the Emacs environment.
     (setq undo-fu-session-compression 'zst))
-  (undo-fu-session-global-mode))
+
+  (lightemacs-module-hooks undo-fu-session-local
+    undo-fu-session-mode
+    '())
+
+  (lightemacs-module-hooks undo-fu-session-global
+    undo-fu-session-global-mode
+    '(lightemacs-after-init-hook)))
 
 ;;; Quiet
 
 (defun lightemacs--undo-fu-session-silence-a (orig-fn &rest args)
   "Advice to selectively inhibit `undo-fu-session' messages.
-If `lightemacs-undo-fu-session-quiet' is non-nil, `inhibit-message' is set to t.
+If `lightemacs-undo-fu-session-quiet' is non-nil, the `inhibit-message' variable
+is set to t.
 ORIG-FN is the original function and ARGS are its arguments."
   (let ((inhibit-message (or inhibit-message lightemacs-undo-fu-session-quiet)))
     (apply orig-fn args)))
@@ -66,6 +74,7 @@ ORIG-FN is the original function and ARGS are its arguments."
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
+;; env-allow-syntax-checker-package-lint: nil
 ;; End:
 
 ;;; le-undo-fu-session.el ends here

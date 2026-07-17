@@ -43,9 +43,13 @@
   :commands (apheleia-mode
              apheleia-global-mode)
   :init
-  (lightemacs-module-hooks apheleia
+  (lightemacs-module-hooks apheleia-local
     apheleia-mode
-    '(prog-mode-hook)))
+    '(prog-mode-hook))
+
+  (lightemacs-module-hooks apheleia-global
+    apheleia-global-mode
+    '()))
 
 (provide 'le-apheleia)
 
