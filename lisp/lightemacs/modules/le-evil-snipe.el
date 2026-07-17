@@ -28,10 +28,8 @@
 (require 'le-evil)
 
 (lightemacs-use-package evil-snipe
-  :commands evil-snipe-mode
-
-  :hook
-  (evil-mode . evil-snipe-mode)
+  :commands (evil-snipe-mode
+             evil-snipe-local-mode)
 
   :init
   ;; Enable smart case sensitivity: uppercase searches are case-sensitive,
