@@ -57,7 +57,6 @@ they explicitly opt out of the inhibition.")
   ;; minibuffer or inserting a literal newline.
   (setq evil-collection-corfu-key-themes '(default magic-return))
 
-  :init
   ;; Corfu: Fix magic-return issue in GUI mode
   ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled
   ;; URL: https://github.com/emacs-evil/evil-collection/pull/895

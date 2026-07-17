@@ -28,20 +28,19 @@
 
 (lightemacs-use-package expand-region
   :commands (er/expand-region
-             er/mark-word
+             er/mark-comment
+             er/mark-defun
+             er/mark-email
+             er/mark-inside-pairs
+             er/mark-inside-quotes
+             er/mark-method-call
+             er/mark-next-accessor
+             er/mark-outside-pairs
+             er/mark-outside-quotes
              er/mark-symbol
              er/mark-symbol-with-prefix
-             er/mark-next-accessor
-             er/mark-method-call
-             er/mark-inside-quotes
-             er/mark-outside-quotes
-             er/mark-inside-pairs
-             er/mark-outside-pairs
-             er/mark-comment
              er/mark-url
-             er/mark-email
-             er/mark-defun)
-  :commands er/expand-region
+             er/mark-word)
   :bind ("C-=" . er/expand-region))
 
 (provide 'le-expand-region)
