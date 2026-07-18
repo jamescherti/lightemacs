@@ -17,7 +17,6 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package org
-  :ensure nil
   :commands (org-mode
              org-indent-mode
              org-set-tags-command
