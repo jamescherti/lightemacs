@@ -706,14 +706,14 @@ The **mod-apheleia** loads *apheleia* in a deferred manner and remains inactive 
 Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Apheleia for Bash/sh, Python, and Emacs Lisp:
 ```emacs-lisp
 ;; By default, `lightemacs-apheleia-mode-target-hooks' is set to `prog-mode-hook'.
-(setq lightemacs-apheleia-target-hooks '(;; Python
-                                         python-mode-hook
-                                         python-ts-mode-hook
-                                         ;; Bash/sh
-                                         sh-mode-hook
-                                         bash-ts-mode-hook
-                                         ;; Elisp
-                                         emacs-lisp-mode-hook))
+(setq lightemacs-apheleia-local-target-hooks '(;; Python
+                                               python-mode-hook
+                                               python-ts-mode-hook
+                                               ;; Bash/sh
+                                               sh-mode-hook
+                                               bash-ts-mode-hook
+                                               ;; Elisp
+                                               emacs-lisp-mode-hook))
 ```
 
 ### Disabled by default: Persisting and Restoring all buffers, windows/split, tab-bar, frames... (le-easysession)
@@ -777,8 +777,7 @@ The **le-group-emacs-lisp** group enables the following modules:
   Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure aggressive-indent for Emacs Lisp:
   ```emacs-lisp
   ;; By default, `lightemacs-aggressive-indent-mode-target-hooks' is set to `prog-mode-hook'.
-  (setq lightemacs-aggressive-indent-target-hooks '(;; Elisp
-                                                    emacs-lisp-mode-hook))
+  (setq lightemacs-aggressive-indent-local-target-hooks '(emacs-lisp-mode-hook))
   ```
 
 - **le-elisp-autofmt**: Configures [elisp-autofmt](https://codeberg.org/ideasman42/emacs-elisp-autofmt), which provides an automatic code formatter for Emacs Lisp. It includes the `elisp-autofmt-mode` minor mode, along with `elisp-autofmt-buffer` and `elisp-autofmt-region` commands to format the entire buffer or selection.

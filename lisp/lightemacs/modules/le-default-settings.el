@@ -87,6 +87,9 @@
 (nconc auto-mode-alist
        '(("\\.ebuild\\'" . sh-mode) ; Gentoo ebuilds
 
+         ("/LICENSE\\'" . text-mode)
+         ("rc\\'" . conf-mode)
+
          ;; Linux
          ("\\.service\\'" . conf-mode) ; PKGBUILD / systemd service
          ("\\.socket\\'" . conf-mode)
