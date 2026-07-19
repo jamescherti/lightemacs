@@ -24,8 +24,10 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
-(lightemacs-use-package embark-consult
-  :after (embark consult))
+(require 'le-embark)
+(require 'le-consult)
+
+(lightemacs-use-package embark-consult)
 
 ;;; Provide
 (provide 'le-embark-consult)
