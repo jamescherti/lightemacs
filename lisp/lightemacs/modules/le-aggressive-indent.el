@@ -35,8 +35,8 @@
   (lightemacs-module-hooks aggressive-indent-local
     aggressive-indent-mode
     '(emacs-lisp-mode-hook
+      lisp-mode-hook
       ;; lisp-interaction-mode-hook ; TODO
-      ;; lisp-mode-hook ; TODO
       ;; clojure-mode ; TODO
       ;; clojurescript-mode ; TODO
       scheme-mode-hook))
