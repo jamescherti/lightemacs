@@ -74,8 +74,4 @@
 
 (provide 'le-core-pm-elpaca)
 
-;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars callargs)
-;; End:
-
 ;;; le-core-pm-elpaca.el ends here

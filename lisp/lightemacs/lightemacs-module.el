@@ -104,8 +104,4 @@ is not added to the loaded list."
 
 (provide 'lightemacs-module)
 
-;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
-;; End:
-
 ;;; lightemacs-module.el ends here

@@ -21,11 +21,27 @@
   (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
+(defvar lightemacs-corfu-add-to-savehist t)
+
 (lightemacs-use-package corfu
   :commands (global-corfu-mode
              corfu-mode)
 
   :init
+  (setq tab-always-indent 'complete)
+
+  (lightemacs-module-hooks corfu-global
+    global-corfu-mode
+    '(lightemacs-on-first-input-hook))
+
+  (lightemacs-module-hooks corfu-local
+    corfu-mode
+    nil)
+
+  (when lightemacs-corfu-add-to-savehist
+    (with-eval-after-load 'savehist
+      (add-to-list 'savehist-additional-variables 'corfu-history)))
+
   ;; Select first candidate, except for directories
   (setq corfu-preselect 'directory)
 
@@ -36,7 +52,6 @@
                                   eat-mode
                                   vterm-mode)
                              t))
-  (setq tab-always-indent 'complete)
   (setq corfu-auto nil)
   (setq corfu-auto-delay 0.24)
   (setq corfu-auto-prefix 2)
@@ -56,15 +71,7 @@
   (setq corfu-quit-no-match nil)
 
   ;; Configure handling of exact matches
-  (setq corfu-on-exact-match nil)
-
-  (lightemacs-module-hooks corfu-global
-    global-corfu-mode
-    '(lightemacs-on-first-input-hook))
-
-  (lightemacs-module-hooks corfu-local
-    corfu-mode
-    nil))
+  (setq corfu-on-exact-match nil))
 
 (provide 'le-corfu)
 

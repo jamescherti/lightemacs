@@ -251,7 +251,7 @@ to Emacs standard behavior.")
 (provide 'le-core-defaults)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-core-defaults.el ends here

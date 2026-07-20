@@ -20,16 +20,16 @@
   (package-refresh-contents))
 
 ;; Install use-package if necessary
-(when (version< emacs-version "29.1")
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package)))
+(when (and (version< emacs-version "29.1")
+           (not (package-installed-p 'use-package)))
+  (package-install 'use-package))
 
 (require 'use-package)
 
 (provide 'le-core-pm-use-package)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-core-pm-use-package.el ends here

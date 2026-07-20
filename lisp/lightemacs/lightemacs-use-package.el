@@ -397,8 +397,4 @@ Normalization and manager selection occur at macro-expansion time."
 
 (provide 'lightemacs-use-package)
 
-;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
-;; End:
-
 ;;; lightemacs-use-package.el ends here

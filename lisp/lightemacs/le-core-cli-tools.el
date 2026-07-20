@@ -28,8 +28,4 @@
 
 (provide 'le-core-cli-tools)
 
-;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
-;; End:
-
 ;;; le-core-cli-tools.el ends here

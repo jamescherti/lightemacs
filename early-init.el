@@ -106,7 +106,7 @@
 (run-hooks 'lightemacs-post-early-init-hook)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; early-init.el ends here

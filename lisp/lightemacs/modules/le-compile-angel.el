@@ -74,7 +74,7 @@ specified file or directory is ignored during the compilation process managed by
 (provide 'le-compile-angel)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-compile-angel.el ends here

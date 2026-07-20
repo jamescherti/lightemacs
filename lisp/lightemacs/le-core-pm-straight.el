@@ -40,7 +40,7 @@
 (provide 'le-core-pm-straight)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars callargs)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; le-core-pm-straight.el ends here
