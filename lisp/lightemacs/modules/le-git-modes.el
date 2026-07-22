@@ -28,6 +28,7 @@
    ("/info/exclude\\'" . gitignore-mode)
    ("/git/ignore\\'" . gitignore-mode)
    ("/.gitignore_global\\'" . gitignore-mode)  ; jc-dotfiles
+   ("/.gitignore\\.global\\'" . gitignore-mode)  ; jc-dotfiles
 
    ("/\\.gitconfig\\'" . gitconfig-mode)
    ("/\\.git/config\\'" . gitconfig-mode)
