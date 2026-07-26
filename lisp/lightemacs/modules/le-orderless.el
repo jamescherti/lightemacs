@@ -35,7 +35,7 @@
   (setq completion-pcm-leading-wildcard t)
   (setq completion-category-defaults nil)
   :config
-  (setq completion-styles '(orderless basic))
+  (setq completion-styles '(basic orderless))
   ;; Using `basic' for file completion instead of `partial-completion' for
   ;; files.
   ;;
