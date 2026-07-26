@@ -52,6 +52,7 @@
 (if (boundp 'use-short-answers)
     (setq use-short-answers t)
   (advice-add 'yes-or-no-p :override #'y-or-n-p))
+(setq revert-buffer-quick-short-answers t)
 
 ;;; package.el
 
@@ -201,7 +202,7 @@
 
 ;;; comint (general command interpreter in a window)
 
-(setq ansi-color-for-comint-mode t
+(setq ansi-color-for-comint-mode t ; Renders native ANSI colors in the shell
       comint-prompt-read-only t
       comint-buffer-maximum-size 4096)
 
@@ -551,15 +552,18 @@ This should be called after changing `auto-save-list-file-prefix'."
 ;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
 
+;; Disable margin indicators to prevent line-height shifts caused by emoji font
+;; rendering issues. This disables both `left-fringe' and `margin' indicators.
+(setq eglot-code-action-indications '(eldoc-hint))
+
 ;; Eglot optimization
 (if minimal-emacs-debug
     (setq eglot-events-buffer-config '(:size 2000000 :format full))
   ;; This reduces log clutter to improves performance.
-  ;; (setq jsonrpc-event-hook nil)
+  (setq jsonrpc-event-hook nil)
   ;; Reduce memory usage and avoid cluttering *EGLOT events* buffer
   (setq eglot-events-buffer-size 0)  ; Deprecated
-  (unless minimal-emacs-debug
-    (setq eglot-events-buffer-config '(:size 0 :format short))))
+  (setq eglot-events-buffer-config '(:size 0 :format short)))
 
 ;;; Flymake
 
