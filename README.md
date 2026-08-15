@@ -157,46 +157,6 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 
 *(Files and directories intended for user modification, such as `~/.emacs.d/lisp/local/config.el` or any files within `~/.emacs.d/lisp/local/`, are not tracked by Git.)*
 
-## Customizations
-
-### Package Manager Selection
-
-Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
-
-By default, `lightemacs-package-manager` is set to `'builtin-package`, which uses the built-in `package.el` together with `use-package`.
-
-#### Supported package managers
-
-- **`'use-package`** (default): Uses Emacs' native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
-
-- **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
-
-- **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
-
-#### Configuration Example for the package manager
-
-Add the following to `~/.emacs.d/lisp/local/config.el`:
-
-```elisp
-(setq lightemacs-package-manager 'builtin-package)
-```
-
-This guarantees that the built-in `use-package` will manage package installation, loading, and configuration according to the semantics of the selected package manager.
-
-### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
-
-The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
-
-**Note:** Enabling the tool-bar or menu-bar may slightly increase your startup time.
-
-To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
-
-``` emacs-lisp
-(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
-```
-
-These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
-
 ## The le-flavor-essential module
 
 Here are some of the modules that are enabled by default by the `le-flavor-essential` module:
@@ -937,6 +897,46 @@ Elisp file-type modules are disabled by default:
 Here are the built-in packages that Lightemacs enhances the defaults:
 
 - `M-x proced`: A built-in Emacs utility that provides a specialized interface for monitoring and managing system processes, effectively acting as an interactive version of the Unix `ps` or `top` commands.
+
+## Customizations
+
+### Package Manager Selection
+
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
+
+By default, `lightemacs-package-manager` is set to `'builtin-package`, which uses the built-in `package.el` together with `use-package`.
+
+#### Supported package managers
+
+- **`'use-package`** (default): Uses Emacs' native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
+
+- **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
+
+- **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
+
+#### Configuration Example for the package manager
+
+Add the following to `~/.emacs.d/lisp/local/config.el`:
+
+```elisp
+(setq lightemacs-package-manager 'builtin-package)
+```
+
+This guarantees that the built-in `use-package` will manage package installation, loading, and configuration according to the semantics of the selected package manager.
+
+### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
+
+The Lightemacs project is based on the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files, which means it can be configured in exactly the same way as minimal-emacs.d.
+
+**Note:** Enabling the tool-bar or menu-bar may slightly increase your startup time.
+
+To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
+
+``` emacs-lisp
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+```
+
+These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
 ## Other Features
 
