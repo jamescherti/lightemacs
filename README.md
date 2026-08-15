@@ -88,23 +88,6 @@ To update your Lightemacs configuration and its submodules, run the following co
 git -C ~/.emacs.d pull
 ```
 
-## The hierarchy of Lightemacs files
-
-If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follows:
-
-### Files that must not be modified:
-
-- `~/.emacs.d/var/`: Contains all files generated dynamically by Emacs and its plugins. Lightemacs redirects such files here to prevent cluttering `~/.emacs.d/`.
-- `~/.emacs.d/lisp/lightemacs/`: Contains the modules and libraries used by Lightemacs (do not modify these files).
-- `~/.emacs.d/early-init.el` and `~/.emacs.d/init.el`: Initialization files (do not modify these files).
-
-### Files and directories you may edit:
-
-- `~/.emacs.d/lisp/local/config.el`: The main configuration file, where you may adjust settings or install packages.
-- `~/.emacs.d/lisp/local/modules/`: A directory for your personal modules.
-
-*(Files and directories intended for user modification, such as `~/.emacs.d/lisp/local/config.el` or any files within `~/.emacs.d/lisp/local/`, are not tracked by Git.)*
-
 ## Example configurations
 
 The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration for Lightemacs, allowing settings to be adjusted and additional packages to be installed. (If the configuration directory is changed, for example to `~/.lightemacs.d/`, the main configuration file will then be located at `~/.lightemacs.d/config.el`.)
@@ -140,6 +123,23 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 (setq lightemacs-modules '(le-flavor-big))
 
 ```
+
+## The hierarchy of Lightemacs files
+
+If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follows:
+
+### Files that must not be modified:
+
+- `~/.emacs.d/var/`: Contains all files generated dynamically by Emacs and its plugins. Lightemacs redirects such files here to prevent cluttering `~/.emacs.d/`.
+- `~/.emacs.d/lisp/lightemacs/`: Contains the modules and libraries used by Lightemacs (do not modify these files).
+- `~/.emacs.d/early-init.el` and `~/.emacs.d/init.el`: Initialization files (do not modify these files).
+
+### Files and directories you may edit:
+
+- `~/.emacs.d/lisp/local/config.el`: The main configuration file, where you may adjust settings or install packages.
+- `~/.emacs.d/lisp/local/modules/`: A directory for your personal modules.
+
+*(Files and directories intended for user modification, such as `~/.emacs.d/lisp/local/config.el` or any files within `~/.emacs.d/lisp/local/`, are not tracked by Git.)*
 
 ## Customizations
 
