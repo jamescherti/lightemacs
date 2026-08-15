@@ -8,19 +8,16 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 **Features:**
 
-* **Optimized startup:** Achieves exceptionally fast initialization times through carefully tuned default settings.
-* **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
-* **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow. By default, only essential features are active.
-* **Lazy evaluation:** Packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
-* **Preconfigured performance enhancements:** Improves the responsiveness of built-in and third-party packages out of the box. Adjustments to tools like Consult, Show-Paren, and Evil mode eliminate perceived input lag and ensure a highly efficient editing experience.
+- **Optimized startup:** Achieves exceptionally fast initialization times through carefully tuned default settings.
+- **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
+- **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow. By default, only essential features are active.
+- **Lazy evaluation:** Packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
+- **Preconfigured performance enhancements:** Improves the responsiveness of built-in and third-party packages out of the box. Adjustments to tools like Consult, Show-Paren, and Evil mode eliminate perceived input lag and ensure a highly efficient editing experience.
+- *Native compilation:* Developed with native compilation in mind. Every component, including initialization files and modules containing use-package declarations, can be natively compiled to maximize execution speed.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
-**What is the difference between Lightemacs and minimal-emacs.d?**
-
-The Lightemacs project is built upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files (`init.el` and `early-init.el`), allowing it to be configured identically to minimal-emacs.d while inheriting its high-quality default settings and efficient startup performance.
-
-Unlike minimal-emacs.d, which provides a minimal and highly flexible Emacs configuration with only essential defaults, Lightemacs extends this foundation by enabling a curated set of modern features and optimizations out of the box. While minimal-emacs.d requires users to manually configure and enable most enhancements, Lightemacs activates performance improvements, advanced completion systems, persistent undo, snippet support, and additional filetype modes automatically, while still retaining full configurability and compatibility with minimal-emacs.d's initialization files.
+Lightemacs is built directly on [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d), inheriting its fast startup and highly optimized defaults. While minimal-emacs.d offers a bare foundation that requires manual setup, Lightemacs works out of the box. It automatically enables modern features like advanced completion, persistent undo, and performance optimizations, all while retaining full compatibility with minimal-emacs.d's configuration structure.
 
 ## Requirements
 
