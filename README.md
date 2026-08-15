@@ -17,31 +17,6 @@ Lightemacs tweaks packages to improve performance. For example, adjusting the de
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
-Here are some of the modules that are enabled by default by the `le-flavor-essential` module:
-
-- Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless).
-- Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
-- Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions.
-- Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
-- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
-- Additional file types: Markdown, Yaml, and Org.
-- Configure Dired to display directories first and enable `dired-filter` to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`. **Usage:** Use `C-c f` to toggle the filters on and off, showing or hiding the relevant files.
-- Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
-- Save and restore the default theme using the `lightemacs-theme-name` variable.
-- Functions for automatically detecting indentation offsets.
-- Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
-
-Optionally, the following features can be enabled by loading additional Lightemacs modules:
-- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
-- **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
-- **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
-- Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
-- **le-yasnippet** and **le-yasnippet-snippets**: A template system that enhances text editing by enabling users to define and use snippets.
-- **le-vterm**: A faster, more efficient terminal.
-- **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
-- **le-paredit**: A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions.
-- And many others.
-
 **What is the difference between Lightemacs and minimal-emacs.d?**
 
 The Lightemacs project is built upon the [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) initialization files (`init.el` and `early-init.el`), allowing it to be configured identically to minimal-emacs.d while inheriting its high-quality default settings and efficient startup performance.
@@ -180,6 +155,33 @@ To customize your Emacs setup to include various user interface elements, you ca
 ```
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
+
+## The le-flavor-essential module
+
+Here are some of the modules that are enabled by default by the `le-flavor-essential` module:
+
+- Enhanced Emacs completion and navigation capabilities (Consult, Embark, and Vertico, Marginalia, Orderless).
+- Better sorting and filtering `M-x` (Vertico) and completion (Corfu) candidate lists with prescient.el, which adaptively ranks candidates based on selection frequency and recency, ensuring commonly used options or completions appear first.
+- Ensure that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions.
+- Improved undo/redo functionality with persistent undo history saved and restored across Emacs sessions, even after restarts.
+- Preserve minibuffer history between sessions (savehist), persist and restore cursor position (saveplace), automatically update buffer contents to reflect changes in the underlying file on disk (autorevert), and maintain a list of recently accessed files (recentf).
+- Additional file types: Markdown, Yaml, and Org.
+- Configure Dired to display directories first and enable `dired-filter` to hide dotfiles, omit specified files, and exclude files listed in `.gitignore`. **Usage:** Use `C-c f` to toggle the filters on and off, showing or hiding the relevant files.
+- Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"` String used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`...
+- Save and restore the default theme using the `lightemacs-theme-name` variable.
+- Functions for automatically detecting indentation offsets.
+- Reduce clutter in the mode line by hiding or shortening the names of minor modes users rarely need to see (diminish.el). This makes the interface cleaner and allows you to focus only on the information that is actually useful.
+
+Optionally, the following features can be enabled by loading additional Lightemacs modules:
+- Press `C-=` to expand the selection step by step, from a word to a sentence, paragraph, or entire function, until it covers the text you want.
+- **le-group-evil**: Provides Vim-style keybindings (Evil) with additional features, including commenting and uncommenting by pressing the `g` and `c` keys in sequence (`gc`), performing two-character searches with the `s` key as an alternative to `f`, and surrounding text in visual mode.
+- **le-treesit-auto**: Better Syntax highlighting with Tree-sitter. (If the Tree-sitter parser is unavailable or incompatible, it falls back to the original major mode.)
+- Ensure that all Elisp libraries are both byte-compiled and native-compiled to speed up Emacs.
+- **le-yasnippet** and **le-yasnippet-snippets**: A template system that enhances text editing by enabling users to define and use snippets.
+- **le-vterm**: A faster, more efficient terminal.
+- **le-indent-bars**: Visual indentation guides, optimized for performance and customization.
+- **le-paredit**: A package that assists in editing Lisp code by maintaining the structural integrity of s-expressions.
+- And many others.
 
 ## Modules Enabled by Default in le-flavor-essential
 
