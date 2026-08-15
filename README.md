@@ -69,9 +69,57 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
 ;; le-flavor-essential includes:
-;; le-flavor-micro  le-savehist le-dired-filter le-elec-pair le-paren le-recentf le-saveplace le-persist-text-scale le-corfu le-cape le-vertico le-consult le-consult-dir le-embark le-embark-consult le-prescient le-vertico-prescient le-corfu-prescient le-orderless le-marginalia le-autorevert le-undo-fu le-undo-fu-session le-bufferfile le-vim-tab-bar le-markdown-mode le-markdown-toc le-org le-org-appear le-dtrt-indent le-wgrep le-which-key le-term
-(setq lightemacs-modules '(le-flavor-essential))
+;; -----------------------------
+(setq lightemacs-modules '(;; le-flavor-essential enables:
+                           ;; ----------------------------
+                           ;; le-theme le-default-keybindings
+                           ;; le-default-settings le-dired le-savehist
+                           ;; le-elec-pair le-paren le-recentf le-saveplace
+                           ;; le-dired-filter le-corfu le-cape le-vertico
+                           ;; le-consult le-embark le-embark-consult
+                           ;; le-orderless le-marginalia le-autorevert
+                           ;; le-undo-fu le-undo-fu-session le-org
+                           ;; le-term
+                           le-flavor-essential
 
+                           ;; Vim tab bar
+                           le-vim-tab-bar
+
+                           ;; This package provides functions to detects the
+                           ;; indentation offset used in existing source code
+                           ;; files and automatically adjusts Emacs settings
+                           ;; accordingly, thereby simplifying the editing of
+                           ;; files created in external environments.
+                           le-dtrt-indent
+
+                           ;; prescient.el is a library for sorting and
+                           ;; filtering lists of candidates, such as those
+                           ;; presented by packages like Vertico or Corfu.
+                           le-prescient
+                           le-vertico-prescient
+                           le-corfu-prescient
+
+                           ;; The persist-text-scale Emacs package provides
+                           ;; `persist-text-scale-mode', which ensures that all
+                           ;; adjustments made with `text-scale-increase' and
+                           ;; `text-scale-decrease' are persisted and restored
+                           ;; across sessions.
+                           le-persist-text-scale
+
+                           ;; The `which-key' mode dynamically displays
+                           ;; available keybindings in a popup or dedicated
+                           ;; buffer.
+                           le-which-key
+
+                           ;; Filetype: Markdown
+                           ;; Provides a major mode for Emacs for syntax
+                           ;; highlighting, editing commands, and preview
+                           ;; support for Markdown documents.
+                           le-markdown-mode
+
+                           ;; The bufferfile package provides helper functions to delete, rename, or
+                           ;; copy buffer files.
+                           le-bufferfile))
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
