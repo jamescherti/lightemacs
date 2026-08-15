@@ -164,18 +164,11 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-consult-dir**: Configures the [consult-dir](https://github.com/karthink/consult-dir) package which extends the Consult framework by providing convenient ways to quickly switch to and insert directory paths. It supports switching to recent directories, project roots (if available), bookmarks, or TRAMP hosts. Similar to tools like *autojump* or *fasd*, it enables fast directory-jumping in Emacs. The command `M-x consult-dir` is globally available on `C-x C-d`, and is also bound within the minibuffer completion map to allow directory switching while completing file paths. Additionally, `consult-dir-jump-file` is bound to `C-x C-j` in the minibuffer, enabling direct navigation to files within a chosen directory, thereby extending the file-jumping workflow directly from minibuffer-based commands. (By default, this module also integrates with `fasd`, providing directory candidates from it when `fasd` is installed.)
 
-- **le-corfu**: [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab. To make Corfu complete only when the user presses Tab, add the following to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; By default, Corfu shows completions automatically without requiring the user
-  ;; to press Tab. To make Corfu complete only when the user presses Tab:
-  ;;
-  ;; To make Corfu complete only when the user presses Tab:
-  (setq corfu-auto nil)
-  ```
+- **le-corfu**: [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab.
 
-- **le-cape**: [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
+- **le-cape**: Configures [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
-- The **le-prescient** configures [prescient.el](https://github.com/radian-software/prescient.el) is a library for sorting and filtering lists of candidates, such as those presented by packages like Vertico or Corfu. The main benefit of *prescient.el* is that it adaptively orders candidates based on both frequency and recency of selection, making frequently used options appear first without sacrificing predictable filtering results. Additional prescient modules:
+- **le-prescient**: Configures [prescient.el](https://github.com/radian-software/prescient.el) is a library for sorting and filtering lists of candidates, such as those presented by packages like Vertico or Corfu. The main benefit of *prescient.el* is that it adaptively orders candidates based on both frequency and recency of selection, making frequently used options appear first without sacrificing predictable filtering results. Additional prescient modules:
   - **le-vertico-prescient**: When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
 
   - **le-corfu-prescient**: When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
@@ -183,7 +176,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-dired**: Configures Dired to display directories before files and to omit specified files and directories (e.g., `.git`, `*.pyc`, `*.o`). Customizations:
   - The parent directory entry (`..`) can be hidden by setting the variable `lightemacs-dired-omit-parent-directory` to `t`. (The `..` entry is redundant since pressing the `-` key navigates to the parent directory.)
   - The variable `lightemacs-dired-hide-details-mode`, enabled by default, hides file details such as permissions, sizes, and modification dates.
-- **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git. The **le-dired-filter** module only enables `dired-filter-by-omit`:
+- **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git. By default, the **le-dired-filter** module only enables `dired-filter-by-omit`:
   ```emacs-lisp
   ;; By default, `dired-filter-by-omit' excludes "."
   (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit))
@@ -197,17 +190,9 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-default-keybindings**: Increase or decrease the text scale using Ctrl combined with `+` or `-`.
 
-- **le-outline-indent**: The `le-outline-indent` module configures the [outline-indent](https://github.com/jamescherti/outline-indent.el) package, which provides `outline-indent-minor-mode`, a minor mode that enables code folding according to indentation levels. In addition to code folding, *outline-indent* allows: Moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, move backward/forward to the indentation level of the current line, and other features. The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`. The following example can be added to the `~/.emacs.d/lisp/local/config.el` file to automatically enable `outline-indent-minor-mode` for YAML and Python files:
-  ```emacs-lisp
-  (with-eval-after-load 'le-outline-indent
-    (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-    (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+- **le-outline-indent**: The `le-outline-indent` module configures the [outline-indent](https://github.com/jamescherti/outline-indent.el) package, which provides `outline-indent-minor-mode`, a minor mode that enables code folding according to indentation levels. In addition to code folding, *outline-indent* allows: Moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, move backward/forward to the indentation level of the current line, and other features. The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
 
-    (add-hook 'python-mode-hook #'outline-indent-minor-mode)
-    (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode))
-  ```
-
-- **le-savehist**: Configures **savehist**, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
+- **le-savehist**: Configures savehist, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
 
 - **le-saveplace**: Enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off. (When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
 
