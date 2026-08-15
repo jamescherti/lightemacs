@@ -8,12 +8,11 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 **Features:**
 
-- Fast startup with optimized default settings.
-- Minimalistic, distraction-free user interface.
-- Modular design: Lightemacs provides a set of modules that can be enabled or disabled individually. Each module loads its packages only when needed, ensuring fast, deferred startup. By default, only essential modules are enabled.
-- Lightemacs modules are loaded lazily: packages remain inactive until triggered by hooks, key mapping or file associations. This accelerates startup and minimizes loaded functions.
-
-Lightemacs tweaks packages to improve performance. For example, adjusting the default parameters of Consult can eliminate perceived lag, and optimizing Show-Paren makes it more responsive, optimizing Evil mode (optional mode), and many others. Lightemacs saves time by preconfiguring these settings, allowing Emacs to feel faster and more efficient.
+* **Optimized startup:** Achieves exceptionally fast initialization times through carefully tuned default settings.
+* **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
+* **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow. By default, only essential features are active.
+* **Lazy evaluation:** Packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
+* **Preconfigured performance enhancements:** Improves the responsiveness of built-in and third-party packages out of the box. Adjustments to tools like Consult, Show-Paren, and Evil mode eliminate perceived input lag and ensure a highly efficient editing experience.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
