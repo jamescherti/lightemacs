@@ -18,9 +18,6 @@
 (lightemacs-module-load
  '(le-flavor-micro
 
-   ;; Code folding
-   le-group-code-folding
-
    ;; Preserve the minibuffer history between sessions. It saves the history of
    ;; inputs in the minibuffer, such as commands, search strings, and other
    ;; prompts, to a file.
@@ -36,10 +33,6 @@
    ;; paired characters, improving code readability and helping to quickly
    ;; identify unbalanced expressions.
    le-paren
-
-   ;; Track changes in the window configuration, allowing undoing actions such
-   ;; as closing windows using `winner-undo'.
-   le-winner
 
    ;; Recentf is an maintains a list of recently accessed files, making it
    ;; easier to reopen files you have worked on recently.

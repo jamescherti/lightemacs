@@ -33,7 +33,7 @@ For instance:
   (add-hook \\='lightemacs-dired-filter-setup-hook
             \\='dired-filter-by-git-ignored)")
 
-(defvar lightemacs-dired-filter-global-enabled nil
+(defvar lightemacs-dired-filter-global-enabled t
   "Global state for Dired filters.")
 
 (defvar-local lightemacs-dired-filter-local-enabled 'unspecified
