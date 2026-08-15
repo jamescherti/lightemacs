@@ -65,11 +65,11 @@ git -C ~/.emacs.d pull
 
 ## Example configurations
 
-The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration for Lightemacs, allowing settings to be adjusted and additional packages to be installed. (If the configuration directory is changed, for example to `~/.lightemacs.d/`, the main configuration file will then be located at `~/.lightemacs.d/config.el`.)
+The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration for Lightemacs, allowing settings to be adjusted and additional packages to be installed. (If the configuration directory is changed, for example to `~/.lightemacs.d/`, the main configuration file will then be located at `~/.lightemacs.d/lisp/local/config.el`.)
 
 (The `lightemacs-modules` list specifies which modules Lightemacs loads. If the list is empty, no modules load, resulting in a configuration identical to minimal-emacs.d. The Lightemacs framework is minimalist, allowing you to choose exactly what you need for your configuration.)
 
-Example 1: The default `config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
+Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
 
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
@@ -87,7 +87,6 @@ Example 2: The configuration above does not include Vim Keybindings, providing s
 
                            ;; Vim keybindings
                            le-group-evil))
-
 ```
 
 Example 3: This configuration includes most of modules ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)):
@@ -96,7 +95,53 @@ Example 3: This configuration includes most of modules ([le-flavor-big](https://
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
 (setq lightemacs-modules '(le-flavor-big))
+```
 
+## Your own module
+
+You can define your own modules to extend the configuration. For instance, create a new file named `~/.emacs.d/lisp/local/modules/my-first-module.el`:
+```elisp
+;;; my-first-module.el --- my-first-module -*- lexical-binding: t -*-
+
+;; Author: Your name <name@domain.com>
+;; URL: https://github.com/jamescherti/lightemacs
+;; Package-Requires: ((emacs "29.1"))
+;; Keywords: maint
+;; Version: 0.0.9
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;;; Commentary:
+
+;; My first module.
+
+;;; Code:
+
+;; Display of line numbers in the buffer:
+(setq-default display-line-numbers-type 'relative)
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook #'display-line-numbers-mode))
+
+(provide 'my-first-module)
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
+
+;;; my-first-module.el ends here
+```
+
+Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appending it to the `lightemacs-modules` list:
+
+```elisp
+;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
+
+(setq lightemacs-modules '(le-flavor-essential
+
+                           ;; My module
+                           my-first-module
+
+                           ;; Vim keybindings
+                           le-group-evil))
 ```
 
 ## The hierarchy of Lightemacs files
@@ -214,7 +259,7 @@ Here are examples of alternative built-in themes:
 Vertico, Consult, Marginalia, and Embark collectively enhance Emacs' completion and navigation capabilities:
 - **le-vertico** configures [Vertico](https://github.com/minad/vertico), a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
 - **le-consult** configures [Consult](https://github.com/minad/consult), a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. *(Try `M-x consult-rg` to search your project using ripgrep, or `M-x consult-fd` to quickly locate files in your workspace.)* This module configures: consult, consult-xref, and consult-imenu. This module also provides improved default settings for `consult-fd`, `consult-find`, `consult-grep`, and `consult-ripgrep`, enhancing file and text search performance and usability.
-- **le-embark** configures [Embark](https://github.com/oantolin/embark), a tool that provides context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
+- **le-embark** configures [Embark](https://github.com/oantolin/embark), a tool that provides context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
 - **le-marginalia** configures [Marginalia](https://github.com/minad/marginalia), a package that enriches minibuffer completions with contextual annotations. It enhances Vertico by adding rich annotations to completion candidates, such as file sizes, documentation, or metadata.
 - **le-orderless**: Enable flexible, unordered matching (Orderless) for Vertico. This allows you to type multiple parts of a candidate in any order, making it easier to find functions, variables, or files even if you only remember fragments. It speeds up navigation by removing the need to type exact prefixes. For example, typing "main test" matches "test_main.py", "read me" matches "README.md".
 - **le-consult-dir**: Configures the [consult-dir](https://github.com/karthink/consult-dir) package which extends the Consult framework by providing convenient ways to quickly switch to and insert directory paths. It supports switching to recent directories, project roots (if available), bookmarks, or TRAMP hosts. Similar to tools like *autojump* or *fasd*, it enables fast directory-jumping in Emacs. The command `M-x consult-dir` is globally available on `C-x C-d`, and is also bound within the minibuffer completion map to allow directory switching while completing file paths. Additionally, `consult-dir-jump-file` is bound to `C-x C-j` in the minibuffer, enabling direct navigation to files within a chosen directory, thereby extending the file-jumping workflow directly from minibuffer-based commands. (By default, this module also integrates with `fasd`, providing directory candidates from it when `fasd` is installed.)
@@ -374,7 +419,7 @@ The main benefit of *prescient.el* is that it adaptively orders candidates based
 
 ### Enabled by Default: Enhanced File Management (le-dired and le-dired-filter)
 
-* **le-dired**: Configures Dired to display directories before files and to omit specified files and directories (e.g., `.git`, `*.pyc`, `*.o`). Customizations:
+- **le-dired**: Configures Dired to display directories before files and to omit specified files and directories (e.g., `.git`, `*.pyc`, `*.o`). Customizations:
   - The parent directory entry (`..`) can be hidden by setting the variable `lightemacs-dired-omit-parent-directory` to `t`. (The `..` entry is redundant since pressing the `-` key navigates to the parent directory.)
   - The variable `lightemacs-dired-hide-details-mode`, enabled by default, hides file details such as permissions, sizes, and modification dates.
 - **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git.
@@ -741,9 +786,9 @@ The **le-easysession** module automatically persists and restores the *scratch* 
 
 Customizations:
 
-* **`lightemacs-easysession-load-session-on-startup`** (Default: `t`): If non-nil, Emacs will automatically restore the main session on startup. Set this to `nil` to disable automatic session loading.
+- **`lightemacs-easysession-load-session-on-startup`** (Default: `t`): If non-nil, Emacs will automatically restore the main session on startup. Set this to `nil` to disable automatic session loading.
 
-* **`lightemacs-easysession-restore-geometry-on-startup`** (Default: `t`): If non-nil, window geometry (size and position of frames) is restored along with the session. This setting works together with `lightemacs-easysession-load-session-on-startup`. Set to `nil` to ignore window size and position during session restoration.
+- **`lightemacs-easysession-restore-geometry-on-startup`** (Default: `t`): If non-nil, window geometry (size and position of frames) is restored along with the session. This setting works together with `lightemacs-easysession-load-session-on-startup`. Set to `nil` to ignore window size and position during session restoration.
 
 ### Disabled by default: Efficient template expansion with snippets (le-yasnippet and le-yasnippet-snippets)
 
@@ -812,7 +857,7 @@ It can be enabled interactively with `M-x indent-bars-mode` or set to load autom
 
 The **le-expand-region** module configures the [expand-region](https://github.com/magnars/expand-region.el) package, which allows you to progressively enlarge your text selection.
 
-Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units—first the containing sentence, then the paragraph, and potentially the entire function.
+Pressing `C-=` (`Control` + `=`) initially selects a small unit, such as a word. Subsequent presses expand the selection to increasingly larger syntactic units-first the containing sentence, then the paragraph, and potentially the entire function.
 
 Continue pressing `C-=` until the selection encompasses exactly the text you want.
 
@@ -869,7 +914,7 @@ Here are a few other modules disabled by default:
 
 Elisp file-type modules are disabled by default:
 
-* **le-maybe-yaml-ts**: Configures `yaml-ts-mode` if available; otherwise, it configures [yaml-mode](https://github.com/yoshiki/yaml-mode). The variable `lightemacs-yaml-prefer-treesitter` defaults to `t`, indicating a preference for Tree-sitter. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available. This module also ensures that indentation adheres to the YAML standard by using two spaces and no tabs.
+- **le-maybe-yaml-ts**: Configures `yaml-ts-mode` if available; otherwise, it configures [yaml-mode](https://github.com/yoshiki/yaml-mode). The variable `lightemacs-yaml-prefer-treesitter` defaults to `t`, indicating a preference for Tree-sitter. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available. This module also ensures that indentation adheres to the YAML standard by using two spaces and no tabs.
 
 - **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`.)
 
@@ -881,7 +926,7 @@ Elisp file-type modules are disabled by default:
 
 - **le-diminish**: Diminish reduces clutter in the mode line by hiding or shortening the names of minor modes you rarely need to see. This makes the interface cleaner and allows you to focus only on the information that is actually useful.
 
-* **le-xclip**: This module integrates the [xclip](https://elpa.gnu.org/packages/xclip.html) package, enabling copy and paste between Emacs running in a terminal and the system GUI clipboard. (IMPORTANT: The le-xclip package only activates the xclip package when Emacs is executed in a terminal.) The xclip package relies on external command-line tools depending on the platform: `xclip` or `xsel` for X11, `pbpaste`/`pbcopy` for macOS, `getclip`/`putclip` for Cygwin, `wl-clipboard` for Wayland, and `termux-clipboard-get`/`termux-clipboard-set` for Termux.
+- **le-xclip**: This module integrates the [xclip](https://elpa.gnu.org/packages/xclip.html) package, enabling copy and paste between Emacs running in a terminal and the system GUI clipboard. (IMPORTANT: The le-xclip package only activates the xclip package when Emacs is executed in a terminal.) The xclip package relies on external command-line tools depending on the platform: `xclip` or `xsel` for X11, `pbpaste`/`pbcopy` for macOS, `getclip`/`putclip` for Cygwin, `wl-clipboard` for Wayland, and `termux-clipboard-get`/`termux-clipboard-set` for Termux.
 
 - **le-pathaction**: Configures [pathaction.el](https://github.com/jamescherti/pathaction.el), a package that integrates the [pathaction CLI](https://github.com/jamescherti/pathaction), allowing execution of `.pathaction.yaml` rules directly from Emacs. Pathaction acts as a universal Makefile for all files in the filesystem, mapping files or directories to commands defined in YAML with optional Jinja2 templating and tags for multiple actions per file type. The tool targets developers working across many projects and ecosystems and provides a single consistent command to run the appropriate action for any file.
 
