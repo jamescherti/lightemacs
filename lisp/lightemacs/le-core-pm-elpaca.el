@@ -50,7 +50,6 @@
             (progn (message "%s" (buffer-string)) (kill-buffer buffer))
           (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-                                        ;)
 
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)

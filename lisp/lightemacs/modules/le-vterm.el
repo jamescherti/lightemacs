@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -61,11 +62,14 @@
         (set-process-query-on-exit-flag proc nil))))
 
   :init
-  (add-hook 'vterm-mode-hook #'lightemacs-vterm--setup)
+  (lightemacs-module-hooks vterm
+    lightemacs-vterm--setup
+    '(vterm-mode-hook))
 
-  (setq vterm-timer-delay 0.05)
-  (setq vterm-kill-buffer-on-exit t)
-  (setq vterm-max-scrollback 5000))
+  (lightemacs-module-setq-maybe vterm
+    vterm-timer-delay 0.05
+    vterm-kill-buffer-on-exit t
+    vterm-max-scrollback 5000))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)

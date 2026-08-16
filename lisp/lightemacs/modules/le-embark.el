@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -33,22 +34,21 @@
              embark-prefix-help-command
              embark-eldoc-first-target)
 
-  :bind
-  (("C-."     . embark-act)
-   ("C-;"     . embark-dwim)
-   ("C-h B"   . embark-bindings)
-   ("C-c C-;" . embark-export)
-   ("C-c C-l" . embark-collect))
-
   :init
-  ;; Replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
+  (lightemacs-module-bind embark
+    (keymap-global-set "C-." #'embark-act)
+    (keymap-global-set "C-;" #'embark-dwim)
+    (keymap-global-set "C-h B" #'embark-bindings)
+    (keymap-global-set "C-c C-;" #'embark-export)
+    (keymap-global-set "C-c C-l" #'embark-collect))
 
-
-  (setq embark-quit-after-action nil)
-  (setq embark-mixed-indicator-delay 1)
-  (setq embark-verbose-indicator-display-action
-        '(display-buffer-at-bottom (window-height . fit-window-to-buffer)))
+  (lightemacs-module-setq-maybe embark
+    ;; Replace the key help with a completing-read interface
+    prefix-help-command #'embark-prefix-help-command
+    embark-quit-after-action nil
+    embark-mixed-indicator-delay 1
+    embark-verbose-indicator-display-action
+    '(display-buffer-at-bottom (window-height . fit-window-to-buffer)))
 
   ;; Hide the mode line of the Embark live/completions buffers
   (push '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -56,7 +56,6 @@
           (window-parameters (mode-line-format . none)))
         display-buffer-alist))
 
-;;; Provide
 (provide 'le-embark)
 
 ;; Local variables:

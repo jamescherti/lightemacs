@@ -15,6 +15,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -22,9 +23,12 @@
   :ensure nil
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)
-  :hook ((prog-mode . display-line-numbers-mode)
-         (text-mode . display-line-numbers-mode)
-         (conf-mode . display-line-numbers-mode)))
+  :init
+  (lightemacs-module-hooks display-line-numbers
+    display-line-numbers-mode
+    '(prog-mode-hook
+      text-mode-hook
+      conf-mode-hook)))
 
 (provide 'le-display-line-numbers)
 

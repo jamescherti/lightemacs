@@ -15,6 +15,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -22,11 +23,14 @@
   :ensure nil
   :commands (show-paren-mode
              show-paren-local-mode)
-  :hook (lightemacs-on-first-buffer . show-paren-mode)
   :init
-  (setq show-paren-delay 0.08))
+  (lightemacs-module-hooks paren
+    show-paren-mode
+    '(lightemacs-on-first-buffer-hook))
 
-;;; Provide
+  (lightemacs-module-setq-maybe paren
+    show-paren-delay 0.08))
+
 (provide 'le-paren)
 
 ;; Local variables:

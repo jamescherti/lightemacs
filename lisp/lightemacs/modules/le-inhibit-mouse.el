@@ -15,14 +15,16 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package inhibit-mouse
   :commands inhibit-mouse-mode
   :init
-  (setq inhibit-mouse-adjust-show-help-function t)
-  (setq inhibit-mouse-adjust-mouse-highlight t)
+  (lightemacs-module-setq-maybe inhibit-mouse
+    inhibit-mouse-adjust-show-help-function t
+    inhibit-mouse-adjust-mouse-highlight t)
 
   (add-hook 'inhibit-mouse-mode-hook
             #'(lambda()

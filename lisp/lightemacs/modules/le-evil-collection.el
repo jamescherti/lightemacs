@@ -18,6 +18,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -55,7 +56,8 @@ they explicitly opt out of the inhibition.")
   ;; corfu-map. This ensures that when the completion popup is visible,
   ;; pressing Enter selects the highlighted candidate instead of exiting the
   ;; minibuffer or inserting a literal newline.
-  (setq evil-collection-corfu-key-themes '(default magic-return))
+  (lightemacs-module-setq-maybe evil-collection
+    evil-collection-corfu-key-themes '(default magic-return))
 
   ;; Corfu: Fix magic-return issue in GUI mode
   ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled

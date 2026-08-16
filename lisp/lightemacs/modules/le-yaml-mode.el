@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -33,7 +34,9 @@
     "Set indentation rules for `yaml-mode'."
     (setq-local tab-width yaml-indent-offset))
   :init
-  (add-hook 'yaml-mode-hook #'lightemacs-yaml-mode--setup))
+  (lightemacs-module-hooks yaml-mode
+    lightemacs-yaml-mode--setup
+    '(yaml-mode-hook)))
 
 (provide 'le-yaml-mode)
 

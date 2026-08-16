@@ -14,6 +14,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -23,27 +24,29 @@
              winner-undo
              winner-redo)
 
-  :hook
-  (lightemacs-on-first-buffer . winner-mode)
-
   :init
+  (lightemacs-module-hooks winner
+    winner-mode
+    '(lightemacs-on-first-buffer-hook))
+
   ;; (setq winner-ring-size 40)
   ;; (setq winner-dont-bind-my-keys t)
-  (setq winner-boring-buffers '("*Completions*"
-                                "*Minibuf-0*"
-                                "*Minibuf-1*"
-                                "*Minibuf-2*"
-                                "*Minibuf-3*"
-                                "*Minibuf-4*"
-                                "*Compile-Log*"
-                                "*inferior-lisp*"
-                                "*Fuzzy Completions*"
-                                "*Apropos*"
-                                "*Help*"
-                                "*cvs*"
-                                "*Buffer List*"
-                                "*Ibuffer*"
-                                "*esh command on file*")))
+  (lightemacs-module-setq-maybe winner
+    winner-boring-buffers '("*Completions*"
+                            "*Minibuf-0*"
+                            "*Minibuf-1*"
+                            "*Minibuf-2*"
+                            "*Minibuf-3*"
+                            "*Minibuf-4*"
+                            "*Compile-Log*"
+                            "*inferior-lisp*"
+                            "*Fuzzy Completions*"
+                            "*Apropos*"
+                            "*Help*"
+                            "*cvs*"
+                            "*Buffer List*"
+                            "*Ibuffer*"
+                            "*esh command on file*")))
 
 (provide 'le-winner)
 

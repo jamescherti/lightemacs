@@ -26,6 +26,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -45,11 +46,6 @@ PATH, this option has no effect.")
              consult-dir--pick
              consult-dir-default-command)
   :functions consult-dir--fasd-dirs
-
-  :bind (("C-x C-d" . lightemacs-consult-dir)
-         :map minibuffer-local-completion-map
-         ("C-x C-d" . lightemacs-consult-dir)
-         ("C-x C-j" . consult-dir-jump-file))
 
   :preface
   ;; Fixes: https://github.com/karthink/consult-dir/issues/43
@@ -87,7 +83,14 @@ customized."
   ;; The purpose of prepending paths with / when consult-dir-shadow-filenames
   ;; set to t is unclear.
   ;; Issue: https://github.com/karthink/consult-dir/issues/44
-  (setq consult-dir-shadow-filenames nil)
+  (lightemacs-module-setq-maybe consult-dir
+    consult-dir-shadow-filenames nil)
+
+  (lightemacs-module-bind consult-dir
+    (keymap-global-set "C-x C-d" #'lightemacs-consult-dir)
+    (with-eval-after-load 'consult-dir
+      (keymap-set minibuffer-local-completion-map "C-x C-d" #'lightemacs-consult-dir)
+      (keymap-set minibuffer-local-completion-map "C-x C-j" #'consult-dir-jump-file)))
 
   :config
   ;; FASD

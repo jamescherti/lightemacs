@@ -34,12 +34,12 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
 (lightemacs-use-package undo-fu-session
   :commands undo-fu-session-global-mode
   :init
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"
-                                             "/MERGE_MSG\\'"
-                                             "/git-rebase-todo\\'"
-                                             "\\.gpg$"))
+  (lightemacs-module-setq-maybe undo-fu-session
+    undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"
+                                         "/MERGE_MSG\\'"
+                                         "/git-rebase-todo\\'"
+                                         "\\.gpg$"))
 
-  :init
   (when (executable-find "zstd")
     ;; zstd is used due to its superior performance, as execution speed is the
     ;; primary objective within the Emacs environment.

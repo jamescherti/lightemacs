@@ -25,6 +25,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -32,7 +33,6 @@
   :commands (csv-mode
              csv-guess-set-separator
              csv-align-mode)
-  :hook (csv-mode . lightemacs-csv-mode--setup)
 
   :preface
   (defun lightemacs-csv-mode--setup ()
@@ -44,8 +44,13 @@
   ("\\.[cC][sS][vV]\\'" . csv-mode)
 
   :init
-  (setq csv-align-max-width 100)
-  (setq csv-separators '("," "\t" ";" "|")))
+  (lightemacs-module-hooks csv-mode
+    lightemacs-csv-mode--setup
+    '(csv-mode-hook))
+
+  (lightemacs-module-setq-maybe csv-mode
+    csv-align-max-width 100
+    csv-separators '("," "\t" ";" "|")))
 
 (provide 'le-csv-mode)
 

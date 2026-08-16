@@ -22,6 +22,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -37,18 +38,17 @@
   (with-eval-after-load 'xref
     (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 80))
 
-  (setq dumb-jump-quiet lightemacs-reduce-messages)
-  (setq dumb-jump-aggressive nil)
-
-  ;; Number of seconds a rg/grep/find command can take before being warned to
-  ;; use ag and config.
-  (setq dumb-jump-max-find-time 3)
-
-  ;; Use `completing-read' so that selection of jump targets integrates with the
-  ;; active completion framework (e.g., Vertico, Ivy, Helm, Icomplete),
-  ;; providing a consistent minibuffer-based interface whenever multiple
-  ;; definitions are found.
-  (setq dumb-jump-selector 'completing-read)
+  (lightemacs-module-setq-maybe dumb-jump
+    dumb-jump-quiet lightemacs-reduce-messages
+    dumb-jump-aggressive nil
+    ;; Number of seconds a rg/grep/find command can take before being warned to
+    ;; use ag and config.
+    dumb-jump-max-find-time 3
+    ;; Use `completing-read' so that selection of jump targets integrates with the
+    ;; active completion framework (e.g., Vertico, Ivy, Helm, Icomplete),
+    ;; providing a consistent minibuffer-based interface whenever multiple
+    ;; definitions are found.
+    dumb-jump-selector 'completing-read)
 
   :config
   ;; If ripgrep is available, force `dumb-jump' to use it because it is

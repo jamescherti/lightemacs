@@ -16,84 +16,87 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package which-key
   :ensure nil
   :commands which-key-mode
-  :hook (lightemacs-after-init . which-key-mode)
-
   :init
-  (setq
-   ;; Maximum number of columns displayed. nil lets which-key choose
-   ;; automatically. Benefit: Adjusts to available space dynamically. Drawback:
-   ;; Can result in inconsistent layout across sessions.
-   which-key-max-display-columns nil  ; nil or 3
+  (lightemacs-module-hooks which-key
+    which-key-mode
+    '(lightemacs-after-init-hook))
 
-   ;; Minimum number of lines to display in the which-key buffer.
-   which-key-min-display-lines 6
+  (lightemacs-module-setq-maybe which-key
+    ;; Maximum number of columns displayed. nil lets which-key choose
+    ;; automatically. Benefit: Adjusts to available space dynamically. Drawback:
+    ;; Can result in inconsistent layout across sessions.
+    which-key-max-display-columns nil  ; nil or 3
 
-   ;; Sort uppercase keys after lowercase.
-   which-key-sort-uppercase-first nil
+    ;; Minimum number of lines to display in the which-key buffer.
+    which-key-min-display-lines 6
 
-   ;; Sorting strategy for key display. Alphabetical order makes keybindings
-   ;; predictable.
-   which-key-sort-order 'which-key-key-order-alpha
+    ;; Sort uppercase keys after lowercase.
+    which-key-sort-uppercase-first nil
 
-   ;; which-key-sort-order 'which-key-prefix-then-key-order
+    ;; Sorting strategy for key display. Alphabetical order makes keybindings
+    ;; predictable.
+    which-key-sort-order 'which-key-key-order-alpha
 
-   ;; Slot for side window display. `which-key' uses a side window to show key
-   ;; suggestions.
-   ;;
-   ;; This determines the layering order of this window relative to other side
-   ;; windows (like compilation buffers, help buffers, or other popup windows).
-   ;; Negative values, such as -10, push the which-key window behind most other
-   ;; side windows, preventing it from covering or overlapping important
-   ;; content.
-   ;;
-   ;; Setting a highly negative slot can cause the which-key window to
-   ;; appear "below" other side windows, which may make it less immediately
-   ;; noticeable. If another window pops up with a higher slot, which-key may be
-   ;; partially hidden or layered awkwardly.
-   which-key-side-window-slot -10
+    ;; which-key-sort-order 'which-key-prefix-then-key-order
 
-   ;; Padding between columns in the which-key display. Improves readability.
-   which-key-add-column-padding 1
+    ;; Slot for side window display. `which-key' uses a side window to show key
+    ;; suggestions.
+    ;;
+    ;; This determines the layering order of this window relative to other side
+    ;; windows (like compilation buffers, help buffers, or other popup windows).
+    ;; Negative values, such as -10, push the which-key window behind most other
+    ;; side windows, preventing it from covering or overlapping important
+    ;; content.
+    ;;
+    ;; Setting a highly negative slot can cause the which-key window to
+    ;; appear "below" other side windows, which may make it less immediately
+    ;; noticeable. If another window pops up with a higher slot, which-key may be
+    ;; partially hidden or layered awkwardly.
+    which-key-side-window-slot -10
 
-   ;; Allow multiple replacement rules for keys. Provides flexible key display
-   ;; customization.
-   which-key-allow-multiple-replacements t
+    ;; Padding between columns in the which-key display. Improves readability.
+    which-key-add-column-padding 1
 
-   ;; which-key-echo-keystrokes 0.02
+    ;; Allow multiple replacement rules for keys. Provides flexible key display
+    ;; customization.
+    which-key-allow-multiple-replacements t
 
-   ;; Time to wait before displaying which-key after the first key press.
-   ;; Reduces delay, improving responsiveness.
-   which-key-idle-delay 1.3
+    ;; which-key-echo-keystrokes 0.02
 
-   ;; Secondary delay for updating which-key after each subsequent key press.
-   ;; Makes updates faster and more responsive after the first key.
-   which-key-idle-secondary-delay 0.1
+    ;; Time to wait before displaying which-key after the first key press.
+    ;; Reduces delay, improving responsiveness.
+    which-key-idle-delay 1.3
 
-   ;; Maximum length of key descriptions. Prevents overly long lines in the
-   ;; which-key popup.
-   which-key-max-description-length 32  ; Alternative: 40
+    ;; Secondary delay for updating which-key after each subsequent key press.
+    ;; Makes updates faster and more responsive after the first key.
+    which-key-idle-secondary-delay 0.1
 
-   ;; which-key-allow-evil-operators t
+    ;; Maximum length of key descriptions. Prevents overly long lines in the
+    ;; which-key popup.
+    which-key-max-description-length 32  ; Alternative: 40
 
-   ;; which-key-prevent-C-h-from-cycling t
-   ;; which-key-special-keys nil
-   ;; which-key-use-C-h-for-paging t
+    ;; which-key-allow-evil-operators t
 
-   ;; String separator between key and description.
-   ;; which-key-separator "  "
-   which-key-separator " "
+    ;; which-key-prevent-C-h-from-cycling t
+    ;; which-key-special-keys nil
+    ;; which-key-use-C-h-for-paging t
 
-   ;; Prefix string indicating the start of a key sequence. Visually
-   ;; distinguishes prefix keys. Extra characters may slightly increase clutter.
-   ;; which-key-prefix-prefix "+"
-   ;; which-key-prefix-prefix (if (display-graphic-p) "… " "... ")
-   )
+    ;; String separator between key and description.
+    ;; which-key-separator "  "
+    which-key-separator " "
+
+    ;; Prefix string indicating the start of a key sequence. Visually
+    ;; distinguishes prefix keys. Extra characters may slightly increase clutter.
+    ;; which-key-prefix-prefix "+"
+    ;; which-key-prefix-prefix (if (display-graphic-p) "… " "... ")
+    )
 
   :config
   ;; Set up side-window that opens on bottom.

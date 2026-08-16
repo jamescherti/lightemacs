@@ -23,6 +23,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -48,7 +49,6 @@ adds that file to the recentf list.")
              recentf
              recentf-cleanup
              recentf-save-list)
-  :bind ("C-c f" . recentf)
 
   :preface
   (defun lightemacs-recentf--cleanup ()
@@ -119,10 +119,14 @@ adds that file to the recentf list.")
         (recentf-add-file file-name))))
 
   :init
-  ;; Settings
-  (setq recentf-max-menu-items 10)
-  (setq recentf-max-saved-items 750)
-  (setq recentf-auto-cleanup 'never)  ; Managed by this module
+  (lightemacs-module-bind recentf
+    (keymap-global-set "C-c f" #'recentf))
+
+  (lightemacs-module-setq-maybe recentf
+    ;; Settings
+    recentf-max-menu-items 10
+    recentf-max-saved-items 750
+    recentf-auto-cleanup 'never)  ; Managed by this module
 
   ;; Enable
   (add-hook 'lightemacs-on-first-buffer-hook #'lightemacs-recentf--enable)

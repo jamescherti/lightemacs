@@ -19,16 +19,19 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package ace-window
   :commands ace-window
-  :bind
-  ([remap other-window] . ace-window)
   :init
-  (setq aw-background t)
-  (setq aw-scope 'frame))
+  (lightemacs-module-setq-maybe ace-window
+    aw-background t
+    aw-scope 'frame)
+
+  (lightemacs-module-bind ace-window
+    (global-set-key [remap other-window] #'ace-window)))
 
 (provide 'le-ace-window)
 

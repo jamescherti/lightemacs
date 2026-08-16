@@ -25,13 +25,19 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package xclip
   :if (not (display-graphic-p))
   :commands xclip-mode
-  :hook (lightemacs-after-init . xclip-mode))
+  :init
+  (lightemacs-module-hooks xclip
+    xclip-mode
+    '(lightemacs-after-init-hook)))
+
+;;; Provide
 
 (provide 'le-xclip)
 

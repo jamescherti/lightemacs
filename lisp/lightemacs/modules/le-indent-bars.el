@@ -29,6 +29,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -37,7 +38,10 @@
   :init
   ;; Setting this to nil is not reliable
   ;; https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples
-  (setq indent-bars-prefer-character t))
+  (lightemacs-module-setq-maybe indent-bars
+    indent-bars-prefer-character t))
+
+;;; Provide
 
 (provide 'le-indent-bars)
 

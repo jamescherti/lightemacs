@@ -18,6 +18,7 @@
 
 ;;; Require
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 (require 'le-dired)
@@ -46,10 +47,6 @@ For instance:
              dired-filter-by-git-ignored
              dired-filter-by-dot-files
              dired-filter-by-omit)
-
-  :bind (:map dired-mode-map
-              ("C-c f" . lightemacs-dired-filter-local-toggle)
-              ("C-c F" . lightemacs-dired-filter-global-toggle))
 
   :preface
   (defun lightemacs-dired-filter--enabled ()
@@ -124,6 +121,11 @@ local value was set by the user."
                (if lightemacs-dired-filter-global-enabled "on" "off"))))
 
   :init
+  (lightemacs-module-bind dired-filter
+    (with-eval-after-load 'dired-filter
+      (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-local-toggle)
+      (define-key dired-mode-map (kbd "C-c F") #'lightemacs-dired-filter-global-toggle)))
+
   (add-hook 'dired-mode-hook #'lightemacs-dired-filter--apply-state))
 
 (provide 'le-dired-filter)

@@ -32,20 +32,19 @@
              evil-snipe-local-mode)
 
   :init
-  ;; Enable smart case sensitivity: uppercase searches are case-sensitive,
-  ;; lowercase are case-insensitive
-  (setq evil-snipe-smart-case t)
-
-  ;; Restrict repeat operations to the visible region only
-  (setq evil-snipe-repeat-scope 'visible)
-
-  ;; Allow character folding so equivalent characters match (e.g.,
-  ;; accents/diacritics)
-  (setq evil-snipe-char-fold t)
+  (lightemacs-module-setq-maybe evil-snipe
+    ;; Enable smart case sensitivity: uppercase searches are case-sensitive,
+    ;; lowercase are case-insensitive
+    evil-snipe-smart-case t
+    ;; Restrict repeat operations to the visible region only
+    evil-snipe-repeat-scope 'visible
+    ;; Allow character folding so equivalent characters match (e.g.,
+    ;; accents/diacritics)
+    evil-snipe-char-fold t)
 
   (lightemacs-module-hooks evil-snipe-global
     evil-snipe-mode
-    lightemacs-on-first-buffer-hook)
+    '(lightemacs-on-first-buffer-hook))
 
   (lightemacs-module-hooks evil-snipe-local
     evil-snipe-local-mode

@@ -22,6 +22,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -29,20 +30,23 @@
   :if (not (fboundp 'igc-info))
   :commands (gcmh-mode
              gcmh-idle-garbage-collect)
-  :hook
-  (lightemacs-on-first-buffer . gcmh-mode)
 
   :init
-  (setq gcmh-verbose init-file-debug
-        gcmh-auto-idle-delay-factor 10
+  (lightemacs-module-hooks gcmh
+    gcmh-mode
+    '(lightemacs-on-first-buffer-hook))
 
-        gcmh-high-cons-threshold (* 100 1024 1024)
-        gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold
+  (lightemacs-module-setq-maybe gcmh
+    gcmh-verbose init-file-debug
+    gcmh-auto-idle-delay-factor 10
 
-        ;; This variable determines how long Emacs should wait (in seconds) while
-        ;; being idle before triggering garbage collection. "Idle" here means no
-        ;; keyboard or mouse input is received for the specified period.
-        gcmh-idle-delay 'auto))
+    gcmh-high-cons-threshold (* 100 1024 1024)
+    gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold
+
+    ;; This variable determines how long Emacs should wait (in seconds) while
+    ;; being idle before triggering garbage collection. "Idle" here means no
+    ;; keyboard or mouse input is received for the specified period.
+    gcmh-idle-delay 'auto))
 
 (provide 'le-gcmh)
 

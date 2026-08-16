@@ -18,6 +18,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -54,51 +55,46 @@ pressing `C-h', since it is prefixed with `evil-delete'."
              evil-select-search-module
              evil-define-key*)
 
-  ;; Pressing '-' opens a `dired' buffer for the directory containing the
-  ;; current file, automatically selecting that file. This provides a fast way
-  ;; to navigate and manage files without manually switching to the directory.
-  :bind (:map evil-normal-state-map
-              ("-" . lightemacs-find-parent-directory))
-
-  :hook (lightemacs-after-init . evil-mode)
-
   :init
-  (setq evil-search-wrap lightemacs-cycle)
+  (lightemacs-module-hooks evil
+    evil-mode
+    '(lightemacs-after-init-hook))
 
-  ;; Time in seconds of idle before updating search highlighting.
-  (setq evil-ex-hl-update-delay 0.05)
+  (lightemacs-module-bind evil
+    ;; Pressing '-' opens a `dired' buffer for the directory containing the
+    ;; current file, automatically selecting that file. This provides a fast way
+    ;; to navigate and manage files without manually switching to the directory.
+    (with-eval-after-load 'evil
+      (define-key evil-normal-state-map (kbd "-") #'lightemacs-find-parent-directory)))
 
-  ;; Make :s in visual mode operate only on the actual visual selection
-  ;; (character or block), instead of the full lines covered by the selection
-  (setq evil-ex-visual-char-range t)
-
-  ;; Use Vim-style regular expressions in search and substitute commands,
-  ;; allowing features like \v (very magic), \zs, and \ze for precise matches
-  (setq evil-ex-search-vim-style-regexp t)
-
-  ;; Disable copying the selection to the clipboard on every cursor move in
-  ;; visual mode to increase performance
-  (setq evil-visual-update-x-selection-p nil)
-
-  ;; Do not modify the mode line to show Evil state
-  (setq evil-mode-line-format nil)
-
-  ;; Suppress motion errors during keyboard macro execution in Evil
-  (setq evil-kbd-macro-suppress-motion-error t)
-
-  ;; Better Vim emulation
-  ;; (setq evil-symbol-word-search t)
-  (setq evil-want-abbrev-expand-on-insert-exit nil)
-  (setq evil-respect-visual-line-mode nil)
-  (setq evil-want-C-g-bindings t)
-
-  :custom
-  ;; (evil-want-C-u-scroll t)
-  (evil-want-Y-yank-to-eol t)
-  (evil-want-C-i-jump t)
-  (evil-want-C-h-delete t)
-  (evil-want-C-w-delete t)
-  (evil-want-C-u-delete t)
+  (lightemacs-module-setq-maybe evil
+    evil-search-wrap lightemacs-cycle
+    ;; Time in seconds of idle before updating search highlighting.
+    evil-ex-hl-update-delay 0.05
+    ;; Make :s in visual mode operate only on the actual visual selection
+    ;; (character or block), instead of the full lines covered by the selection
+    evil-ex-visual-char-range t
+    ;; Use Vim-style regular expressions in search and substitute commands,
+    ;; allowing features like \v (very magic), \zs, and \ze for precise matches
+    evil-ex-search-vim-style-regexp t
+    ;; Disable copying the selection to the clipboard on every cursor move in
+    ;; visual mode to increase performance
+    evil-visual-update-x-selection-p nil
+    ;; Do not modify the mode line to show Evil state
+    evil-mode-line-format nil
+    ;; Suppress motion errors during keyboard macro execution in Evil
+    evil-kbd-macro-suppress-motion-error t
+    ;; Better Vim emulation
+    ;; evil-symbol-word-search t
+    evil-want-abbrev-expand-on-insert-exit nil
+    evil-respect-visual-line-mode nil
+    evil-want-C-g-bindings t
+    ;; evil-want-C-u-scroll t
+    evil-want-Y-yank-to-eol t
+    evil-want-C-i-jump t
+    evil-want-C-h-delete t
+    evil-want-C-w-delete t
+    evil-want-C-u-delete t)
 
   :config
   (define-key evil-insert-state-map (kbd "C-g") #'lightemacs-keyboard-quit)

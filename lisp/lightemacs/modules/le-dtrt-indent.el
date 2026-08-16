@@ -31,26 +31,25 @@
              dtrt-indent-highlight)
 
   :init
-  (setq dtrt-indent-verbosity (if init-file-debug 1 0))
-  (setq dtrt-indent-max-lines 1900)  ; Faster
+  (lightemacs-module-setq-maybe dtrt-indent
+    dtrt-indent-verbosity (if init-file-debug 1 0)
+    dtrt-indent-max-lines 1900  ; Faster
+    ;; We're using `dtrt-indent'
+    python-indent-guess-indent-offset nil
+    ;; By default, `dtrt-indent' detects SMIE-based modes and lets
+    ;; `smie-config-guess' handle indentation. However, `dtrt-indent' also sets
+    ;; additional variables that SMIE does not (for example,
+    ;; `dtrt-indent-hook-generic-mapping-list'). Setting this option to non-nil
+    ;; forces `dtrt-indent' to run in SMIE-based modes as well, ensuring these
+    ;; extra settings are applied.
+    dtrt-indent-run-after-smie t)
 
   (lightemacs-module-hooks dtrt-indent-local
     dtrt-indent-mode
     '())
   (lightemacs-module-hooks dtrt-indent-global
     dtrt-indent-global-mode
-    '(lightemacs-after-init-hook))
-
-  ;; We're using `dtrt-indent'
-  (setq python-indent-guess-indent-offset nil)
-
-  ;; By default, `dtrt-indent' detects SMIE-based modes and lets
-  ;; `smie-config-guess' handle indentation. However, `dtrt-indent' also sets
-  ;; additional variables that SMIE does not (for example,
-  ;; `dtrt-indent-hook-generic-mapping-list'). Setting this option to non-nil
-  ;; forces `dtrt-indent' to run in SMIE-based modes as well, ensuring these
-  ;; extra settings are applied.
-  (setq dtrt-indent-run-after-smie t))
+    '(lightemacs-after-init-hook)))
 
 (provide 'le-dtrt-indent)
 

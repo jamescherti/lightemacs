@@ -25,6 +25,7 @@
 
 ;;; Require
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -51,15 +52,8 @@ Set to nil to ignore window size and position during session restoration.")
              easysession-load
              easysession-switch-to-and-restore-geometry
              easysession-load-including-geometry
-             easysession-setup)
-
-  :bind (("C-c ss" . easysession-save)
-         ("C-c sl" . easysession-switch-to)  ; Load
-         ("C-c sL" . easysession-switch-to-and-restore-geometry)
-         ("C-c sr" . easysession-rename)
-         ("C-c se" . easysession-edit)
-         ("C-c sR" . easysession-reset)
-         ("C-c sd" . easysession-delete))
+             easysession-setup
+             easysession-edit)
 
   :preface
   (defun le-easysession-setup ()
@@ -92,17 +86,25 @@ Set to nil to ignore window size and position during session restoration.")
     (add-hook 'lightemacs-emacs-startup-hook #'easysession-save-mode 103))
 
   :init
-  ;; Customizations
-  ;; (setq easysession-save-mode-lighter-show-session-name t)
-  (setq easysession-mode-line-misc-info t)
+  (lightemacs-module-bind easysession
+    (keymap-global-set "C-c s s" #'easysession-save)
+    (keymap-global-set "C-c s l" #'easysession-switch-to)  ; Load
+    (keymap-global-set "C-c s L" #'easysession-switch-to-and-restore-geometry)
+    (keymap-global-set "C-c s r" #'easysession-rename)
+    (keymap-global-set "C-c s e" #'easysession-edit)
+    (keymap-global-set "C-c s R" #'easysession-reset)
+    (keymap-global-set "C-c s d" #'easysession-delete))
 
-  ;; Non-nil: `easysession-setup' loads the session automatically.
-  ;; Nil: session is not loaded automatically; the user can load it manually.
-  (setq easysession-setup-load-session t)
-
-  ;; Priority depth used when `easysession-setup' adds `easysession' hooks.
-  ;; 102 ensures that the session is loaded after all other packages.
-  (setq easysession-setup-add-hook-depth 102)
+  (lightemacs-module-setq-maybe easysession
+    ;; Customizations
+    ;; easysession-save-mode-lighter-show-session-name t
+    easysession-mode-line-misc-info t
+    ;; Non-nil: `easysession-setup' loads the session automatically.
+    ;; Nil: session is not loaded automatically; the user can load it manually.
+    easysession-setup-load-session t
+    ;; Priority depth used when `easysession-setup' adds `easysession' hooks.
+    ;; 102 ensures that the session is loaded after all other packages.
+    easysession-setup-add-hook-depth 102)
 
   (add-hook 'lightemacs-after-init-hook #'le-easysession-setup))
 

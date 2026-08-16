@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -32,7 +33,11 @@
   :if (not (daemonp))
   :commands (server-running-p
              server-start)
-  :hook (lightemacs-after-init . lightemacs-server--start)
+  :init
+  (lightemacs-module-hooks server
+    lightemacs-server--start
+    '(lightemacs-after-init-hook))
+
   :preface
   (defun lightemacs-server--start ()
     "Start the Emacs server if no server process is currently active.

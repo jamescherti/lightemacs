@@ -17,6 +17,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -29,12 +30,15 @@
              cape-file
              cape-history
              cape-line
-             cape-capf-buster)
-
-  :bind
-  ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+             cape-capf-buster
+             cape-prefix-map)
 
   :init
+  (lightemacs-module-bind cape
+    ;; Alternative key: M-<tab>, M-p, M-+
+    (keymap-global-set "C-c p" #'cape-prefix-map))
+
+  ;; TODO Make it customizable
   (add-hook 'completion-at-point-functions 'cape-dabbrev)
   (add-hook 'completion-at-point-functions 'cape-file)
   (add-hook 'completion-at-point-functions 'cape-elisp-block))

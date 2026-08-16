@@ -24,13 +24,16 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package vim-tab-bar
   :commands vim-tab-bar-mode
   :init
-  (add-hook 'lightemacs-after-init-hook #'vim-tab-bar-mode))
+  (lightemacs-module-hooks vim-tab-bar
+    vim-tab-bar-mode
+    '(lightemacs-after-init-hook)))
 
 (provide 'le-vim-tab-bar)
 

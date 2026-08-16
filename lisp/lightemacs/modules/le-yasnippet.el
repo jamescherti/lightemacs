@@ -32,13 +32,14 @@
              yas-expand-snippet)
   :functions yas-filtered-definition
   :init
-  (setq yas-verbosity 0)
-  (setq yas-indent-line 'fixed)
-  (setq yas-triggers-in-field nil)  ; Snippet inside of snippets
-  (setq yas-also-auto-indent-first-line t)
-  (setq yas-also-indent-empty-lines t)
-  (setq yas-snippet-revival nil)  ; Sometimes, undo loops when this is activated
-  (setq yas-wrap-around-region nil)
+  (lightemacs-module-setq-maybe yasnippet
+    yas-verbosity 0
+    yas-indent-line 'fixed
+    yas-triggers-in-field nil  ; Snippet inside of snippets
+    yas-also-auto-indent-first-line t
+    yas-also-indent-empty-lines t
+    yas-snippet-revival nil  ; Sometimes, undo loops when this is activated
+    yas-wrap-around-region nil)
 
   (lightemacs-module-hooks yasnippet-global
     yas-global-mode

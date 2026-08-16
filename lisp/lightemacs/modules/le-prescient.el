@@ -18,6 +18,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -38,19 +39,20 @@
   :init
   (add-hook 'lightemacs-after-init-hook #'prescient-persist-mode)
 
-  ;; Other parameters: TODO
-  ;; (setq prescient-aggressive-file-save t)
-  ;; (setq prescient-frequency-decay 0.997)
-  ;; (setq prescient-frequency-threshold 0.05)
-  ;; (setq prescient-history-length 200)
-  ;; (setq prescient-sort-full-matches-first t)
-  ;; (setq prescient-completion-highlight-matches nil)
-  ;; (setq completion-preview-sort-function #'prescient-completion-sort)
+  (lightemacs-module-setq-maybe prescient
+    ;; Other parameters: TODO
+    ;; prescient-aggressive-file-save t
+    ;; prescient-frequency-decay 0.997
+    ;; prescient-frequency-threshold 0.05
+    ;; prescient-history-length 200
+    ;; prescient-sort-full-matches-first t
+    ;; prescient-completion-highlight-matches nil
+    ;; completion-preview-sort-function #'prescient-completion-sort
 
-  ;; Disabling length-based sorting. You might have noticed M-x is now sorting
-  ;; all commands by shortest-first. If this is distracting to you, it can be
-  ;; disabled!
-  (setq prescient-sort-length-enable nil))
+    ;; Disabling length-based sorting. You might have noticed M-x is now sorting
+    ;; all commands by shortest-first. If this is distracting to you, it can be
+    ;; disabled!
+    prescient-sort-length-enable nil))
 
 (provide 'le-prescient)
 

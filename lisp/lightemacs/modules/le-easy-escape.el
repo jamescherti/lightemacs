@@ -26,12 +26,16 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package easy-escape
   :commands easy-escape-minor-mode
-  :hook (emacs-lisp-mode . easy-escape-minor-mode))
+  :init
+  (lightemacs-module-hooks easy-escape
+    easy-escape-minor-mode
+    '(emacs-lisp-mode-hook)))
 
 (provide 'le-easy-escape)
 

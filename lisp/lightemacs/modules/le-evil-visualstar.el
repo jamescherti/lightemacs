@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -28,7 +29,9 @@
   :commands global-evil-visualstar-mode
   :after evil
   :init
-  (global-evil-visualstar-mode 1))
+  (lightemacs-module-hooks evil-visualstar
+    global-evil-visualstar-mode
+    '(lightemacs-after-init-hook)))
 
 (provide 'le-evil-visualstar)
 

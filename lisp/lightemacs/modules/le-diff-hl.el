@@ -20,6 +20,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -27,10 +28,11 @@
   :commands (diff-hl-mode
              global-diff-hl-mode)
   :init
-  (setq diff-hl-flydiff-delay 0.4)  ; Faster
-  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
-  (setq diff-hl-update-async t)  ; Do not block Emacs
-  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
+  (lightemacs-module-setq-maybe diff-hl
+    diff-hl-flydiff-delay 0.4  ; Faster
+    diff-hl-show-staged-changes nil  ; Realtime feedback
+    diff-hl-update-async t  ; Do not block Emacs
+    diff-hl-global-modes '(not pdf-view-mode image-mode)))
 
 (provide 'le-diff-hl)
 

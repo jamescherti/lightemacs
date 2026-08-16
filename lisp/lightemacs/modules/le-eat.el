@@ -20,6 +20,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -45,10 +46,13 @@
     (setq-local confirm-kill-processes nil))
 
   :init
-  (add-hook 'eat-mode-hook #'lightemacs-eat--setup)
-  (setq eat-kill-buffer-on-exit t))
+  (lightemacs-module-hooks eat
+    lightemacs-eat--setup
+    '(eat-mode-hook))
 
-;;; Provide
+  (lightemacs-module-setq-maybe eat
+    eat-kill-buffer-on-exit t))
+
 (provide 'le-eat)
 
 ;; Local variables:

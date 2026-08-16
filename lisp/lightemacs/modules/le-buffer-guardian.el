@@ -23,13 +23,18 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package buffer-guardian
   :commands buffer-guardian-mode
-  :hook
-  (lightemacs-on-first-buffer . buffer-guardian-mode))
+  :init
+  (lightemacs-module-hooks buffer-guardian
+    buffer-guardian-mode
+    '(lightemacs-on-first-buffer-hook)))
+
+;;; Provide
 
 (provide 'le-buffer-guardian)
 

@@ -18,6 +18,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -26,8 +27,9 @@
              quick-sdcv-search-input)
 
   :init
-  (setq quick-sdcv-ellipsis lightemacs-ellipsis)
-  (setq quick-sdcv-unique-buffers t))
+  (lightemacs-module-setq-maybe quick-sdcv
+    quick-sdcv-ellipsis lightemacs-ellipsis
+    quick-sdcv-unique-buffers t))
 
 (provide 'le-quick-sdcv)
 

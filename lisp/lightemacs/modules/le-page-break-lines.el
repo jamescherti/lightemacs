@@ -22,14 +22,17 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package page-break-lines
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
-  :hook
-  (emacs-lisp-mode . page-break-lines-mode))
+  :init
+  (lightemacs-module-hooks page-break-lines
+    page-break-lines-mode
+    '(emacs-lisp-mode-hook)))
 
 (provide 'le-page-break-lines)
 

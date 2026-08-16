@@ -34,10 +34,9 @@
              compile-angel-on-save-mode)
 
   :init
-  ;; Verbose
-  (when init-file-debug
-    (setq compile-angel-verbose init-file-debug)
-    (setq compile-angel-debug init-file-debug))
+  (lightemacs-module-setq-maybe compile-angel
+    compile-angel-verbose init-file-debug
+    compile-angel-debug init-file-debug)
 
   (lightemacs-module-hooks compile-angel-on-load
     compile-angel-on-load-mode

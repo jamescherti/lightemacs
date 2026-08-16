@@ -19,6 +19,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -31,20 +32,17 @@
              vertico-exit-input)
   :functions vertico--index
 
-  ;; TODO keymap
-  ;; :bind (:map vertico-map
-  ;;             ("C-d" . vertico-exit-input)
-  ;;             ("C-j" . vertico-next)
-  ;;             ("C-k" . vertico-previous))
-
-  :hook (lightemacs-on-first-input . vertico-mode)
-
   :init
-  (setq vertico-scroll-margin 0)
-  (setq vertico-count 16)
-  (setq vertico-resize 'grow-only)
-  (setq vertico-cycle lightemacs-cycle)
-  (setq vertico-count-format nil) ; No prefix with number of entries
+  (lightemacs-module-hooks vertico
+    vertico-mode
+    '(lightemacs-on-first-input-hook))
+
+  (lightemacs-module-setq-maybe vertico
+    vertico-scroll-margin 0
+    vertico-count 16
+    vertico-resize 'grow-only
+    vertico-cycle lightemacs-cycle
+    vertico-count-format nil) ; No prefix with number of entries
 
   :preface
   (defun lightemacs-vertico-format-candidate-advice (orig-fun
@@ -63,7 +61,6 @@
   (advice-add 'vertico--format-candidate :around
               #'lightemacs-vertico-format-candidate-advice))
 
-;;; Provide
 (provide 'le-vertico)
 
 ;; Local variables:

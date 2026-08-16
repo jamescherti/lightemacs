@@ -16,6 +16,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -24,12 +25,15 @@
   :commands (auto-revert-mode
              global-auto-revert-mode
              auto-revert-handler)
-  :hook (lightemacs-on-first-file . global-auto-revert-mode)
-  :custom
-  (auto-revert-interval 4)
-  (auto-revert-use-notify t)
   :init
-  (setq auto-revert-verbose (not lightemacs-reduce-messages)))
+  (lightemacs-module-setq-maybe autorevert
+    auto-revert-interval 4
+    auto-revert-use-notify t
+    auto-revert-verbose (not lightemacs-reduce-messages))
+
+  (lightemacs-module-hooks autorevert-global
+    global-auto-revert-mode
+    '(lightemacs-on-first-file-hook)))
 
 (provide 'le-autorevert)
 

@@ -23,6 +23,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -41,7 +42,11 @@
              er/mark-symbol-with-prefix
              er/mark-url
              er/mark-word)
-  :bind ("C-=" . er/expand-region))
+  :init
+  (lightemacs-module-bind expand-region
+    (global-set-key (kbd "C-=") #'er/expand-region)))
+
+;;; Provide
 
 (provide 'le-expand-region)
 

@@ -18,6 +18,7 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
@@ -31,23 +32,25 @@
          ("\\.md\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
 
-  :bind (:map markdown-mode-map
-              ("C-c C-e" . markdown-do))
-
   :init
-  (setq markdown-fontify-code-blocks-natively t
+  (lightemacs-module-bind markdown-mode
+    (with-eval-after-load 'markdown-mode
+      (define-key markdown-mode-map (kbd "C-c C-e") #'markdown-do)))
 
-        ;; Other options
-        ;; markdown-asymmetric-header t
-        ;; markdown-italic-underscore t
-        ;; markdown-make-gfm-checkboxes-buttons t
-        ;; markdown-fontify-whole-heading-line t
+  (lightemacs-module-setq-maybe markdown-mode
+    markdown-fontify-code-blocks-natively t
 
-        ;; Extra languages made available when inserting GFM code blocks.
-        ;; Language strings must have be trimmed of whitespace and not
-        ;; contain any curly braces. They may be of arbitrary
-        ;; capitalization, though.
-        markdown-gfm-additional-languages '("sh")))
+    ;; Other options
+    ;; markdown-asymmetric-header t
+    ;; markdown-italic-underscore t
+    ;; markdown-make-gfm-checkboxes-buttons t
+    ;; markdown-fontify-whole-heading-line t
+
+    ;; Extra languages made available when inserting GFM code blocks.
+    ;; Language strings must have be trimmed of whitespace and not
+    ;; contain any curly braces. They may be of arbitrary
+    ;; capitalization, though.
+    markdown-gfm-additional-languages '("sh")))
 
 (provide 'le-markdown-mode)
 

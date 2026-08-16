@@ -40,8 +40,9 @@
              treesit-fold-open-recursively
              treesit-fold-line-comment-mode)
   :init
-  (setq treesit-fold-line-count-show t)
-  (setq treesit-fold-line-count-format lightemacs-ellipsis)
+  (lightemacs-module-setq-maybe treesit-fold
+    treesit-fold-line-count-show t
+    treesit-fold-line-count-format lightemacs-ellipsis)
 
   (lightemacs-module-hooks treesit-fold
     treesit-fold-mode

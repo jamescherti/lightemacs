@@ -101,21 +101,21 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
               'lightemacs-consult--crm-indicator)
 
   :init
-  ;; Optionally configure the register formatting. This improves the register
-  ;; preview for `consult-register', `consult-register-load',
-  ;; `consult-register-store' and the Emacs built-ins.
-  ;; (setq register-preview-function #'consult-register-format)
-
   ;; Optionally tweak the register preview window. This adds thin lines, sorting
   ;; and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
-  (setq register-preview-delay 0.5)
 
-  (setq xref-show-xrefs-function #'consult-xref)
-  (setq xref-show-definitions-function #'consult-xref)
-
-  ;; Use Consult to select completion in region if not using Corfu
-  ;; (setq completion-in-region-function #'consult-completion-in-region)
+  (lightemacs-module-setq-maybe consult
+    register-preview-delay 0.5
+    xref-show-xrefs-function #'consult-xref
+    xref-show-definitions-function #'consult-xref
+    consult-narrow-key "<"
+    consult-async-min-input 3
+    consult-async-refresh-delay 0.1
+    consult-async-input-throttle 0.2
+    consult-async-input-debounce 0.1
+    consult--gc-threshold (* 128 1024 1024)
+    consult--process-chunk (* 2 1024 1024))
 
   :config
   (require 'consult-imenu)
@@ -135,17 +135,6 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
    consult-source-recent-file consult-source-project-recent-file
    ;; :preview-key "M-."
    :preview-key '(:debounce 0.1 any))
-
-  ;; Configure the narrowing key. Both < and C-+ work reasonably well. "C-+"
-  (setq consult-narrow-key "<")
-
-  (setq consult-async-min-input 3
-        consult-async-refresh-delay 0.1
-        consult-async-input-throttle 0.2
-        consult-async-input-debounce 0.1)
-
-  (setq consult--gc-threshold (* 128 1024 1024))
-  (setq consult--process-chunk (* 2 1024 1024))
 
   ;; Fix `elpaca' with `with-eval-after-load'
   (with-eval-after-load 'le-core-cli-tools
@@ -176,12 +165,7 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
                   ;; Default
                   " --null --line-buffered --color=never --max-columns=1000"
                   " --path-separator / --smart-case --no-heading"
-                  " --with-filename --line-number --search-zip")))
-
-  ;; Optionally make narrowing help available in the minibuffer.
-  ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
-  )
+                  " --with-filename --line-number --search-zip"))))
 
 ;;; Keybindings
 

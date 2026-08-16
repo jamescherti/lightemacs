@@ -21,30 +21,35 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package paredit
   :commands paredit-mode
 
-  :hook ((emacs-lisp-mode . paredit-mode)
-         (lisp-interaction-mode . paredit-mode)
-         (lisp-mode . paredit-mode)
-         (eval-expression-minibuffer-setup . paredit-mode)
-         (scheme-mode . paredit-mode)
-         (ielm-mode . paredit-mode)
-         (cider-repl-mode . paredit-mode)
-         (clojure-mode . paredit-mode)
-         (geiser-repl-mode . paredit-mode)
-         (racket-mode . paredit-mode)
-         (racket-repl-mode . paredit-mode)
-         (slime-repl-mode . paredit-mode))
+  :init
+  (lightemacs-module-hooks paredit
+    paredit-mode
+    '(emacs-lisp-mode-hook
+      lisp-interaction-mode-hook
+      lisp-mode-hook
+      eval-expression-minibuffer-setup-hook
+      scheme-mode-hook
+      ielm-mode-hook
+      cider-repl-mode-hook
+      clojure-mode-hook
+      geiser-repl-mode-hook
+      racket-mode-hook
+      racket-repl-mode-hook
+      slime-repl-mode-hook))
 
-  :bind (:map paredit-mode-map
-              ("M-?" . nil)   ;; conflict with xref-find-references
-              ("M-;" . nil)   ;; conflict with comment-dwim
-              ("M-s" . nil)   ;; conflict with Consult
-              ("RET" . nil))
+  (lightemacs-module-bind paredit
+    (with-eval-after-load 'paredit
+      (define-key paredit-mode-map (kbd "M-?") nil)   ;; conflict with xref-find-references
+      (define-key paredit-mode-map (kbd "M-;") nil)   ;; conflict with comment-dwim
+      (define-key paredit-mode-map (kbd "M-s") nil)   ;; conflict with Consult
+      (define-key paredit-mode-map (kbd "RET") nil)))
 
   :config
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing

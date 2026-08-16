@@ -26,14 +26,16 @@
 
 ;;; Code:
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package orderless
   :demand t
   :init
-  (setq completion-pcm-leading-wildcard t)
-  (setq completion-category-defaults nil)
+  (lightemacs-module-setq-maybe orderless
+    completion-pcm-leading-wildcard t
+    completion-category-defaults nil)
   :config
   (setq completion-styles '(orderless basic))
   ;; Using `basic' for file completion instead of `partial-completion' for
