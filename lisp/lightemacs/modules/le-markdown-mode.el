@@ -26,7 +26,8 @@
   :commands (gfm-mode
              gfm-view-mode
              markdown-mode
-             markdown-view-mode)
+             markdown-view-mode
+             markdown-do)
 
   :mode (("\\.m(ark)?down$" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
