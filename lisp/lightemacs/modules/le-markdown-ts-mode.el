@@ -21,7 +21,7 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package markdown-ts-mode
-  :if (>= emacs-major-version 31)
+  :if (>= emacs-major-version 30)
   :ensure nil
   :commands markdown-ts-mode
   :mode ("\\.md\\'" . markdown-ts-mode)

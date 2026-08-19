@@ -32,7 +32,7 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
 
 ;;; Choose between `markdown-mode' and `markdown-ts-mode'
 
-(if (and (>= emacs-major-version 31)
+(if (and (>= emacs-major-version 30)
          lightemacs-markdown-prefer-tree-sitter
          (fboundp 'treesit-ready-p)
          (treesit-ready-p 'markdown t))
