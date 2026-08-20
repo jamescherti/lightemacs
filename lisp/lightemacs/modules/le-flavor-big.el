@@ -16,70 +16,56 @@
 (require 'lightemacs-module)
 
 (lightemacs-module-load
- '(;; All modules:
-   le-aggressive-indent
+ '(le-compile-angel
+
+   ;; Essential
+   le-flavor-essential
+
+   ;; Prescient
+   le-prescient
+   le-vertico-prescient
+   le-corfu-prescient
+
+   ;; Filetypes
+   le-csv-mode
+   le-maybe-markdown-ts
+   le-maybe-yaml-ts
+   le-git-modes
+
+   ;; Built-in
+   le-which-key
+   le-winner
+   le-display-line-numbers
+
+   ;; Development
    le-apheleia
-   le-autorevert
+   le-diff-hl
+   le-yasnippet
+   le-yasnippet-snippets
+   le-dtrt-indent
+   le-dumb-jump
+   le-flymake
+   le-group-code-folding
+
+   ;; Development: Elisp
+   le-group-emacs-lisp
+   le-paredit
+
+   ;; Misc
+   le-helpful
    le-avy
    le-buffer-terminator
    le-bufferfile
-   le-cape
-   le-compile-angel
-   le-consult
-   le-corfu
-   le-corfu-prescient
-   le-csv-mode
-   le-default-keybindings
-   le-default-settings
-   le-diff-hl
-   le-dired
-   le-dired-filter
-   le-display-line-numbers
-   le-dtrt-indent
-   le-dumb-jump
-   le-easy-escape
-   le-elec-pair
-   le-elisp-autofmt
-   le-elisp-refs
-   le-embark
-   le-embark-consult
    le-expand-region
-   le-flymake
-   le-git-modes
-   le-goto-chg
-   le-helpful
-   le-highlight-defined
    le-indent-bars
    le-kirigami
    le-magit
-   le-marginalia
-   le-maybe-markdown-ts
-   le-maybe-yaml-ts
-   le-orderless
-   le-org
    le-org-appear
    le-outline
    le-outline-indent
-   le-page-break-lines
-   le-paredit
-   le-paren
    le-persist-text-scale
-   le-prescient
-   le-recentf
-   le-savehist
-   le-saveplace
    le-stripspace
-   le-term
-   le-theme
-   le-undo-fu
-   le-undo-fu-session
-   le-vertico
-   le-vertico-prescient
-   le-vim-tab-bar
-   le-which-key
-   le-winner
-   le-yasnippet
-   le-yasnippet-snippets))
+   le-vim-tab-bar))
 
 ;;; Provide
 
