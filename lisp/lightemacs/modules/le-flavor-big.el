@@ -9,20 +9,7 @@
 
 ;;; Commentary:
 
-;; The "big" flavor enables all modules except:
-;;   - le-treesit-auto (optional, as not all users require Treesit)
-;;   - le-easysession (optional, for users who want session management)
-;;   - le-vterm (optional and requires external dependencies)
-;;   - le-gcmh (optional, for users who want gcmh)
-;;   - le-compile-angel (optional, for users who want to compile all .el files)
-;;
-;; Command to generate this flavor:
-;; ls le-*.el -1 | grep -v "^le-core" | sed 's/\.el$//' | \
-;;   grep -v '^le-flavor-' | grep -v '^le-treesit-auto' \
-;;   | grep -v '^le-easysession' | grep -v '-evil' | grep -v '^le-vterm' \
-;;   | grep -v '^le-gcmh' | | grep -v '^le-compile-angel' \
-;;   | grep -v '^le-yaml' | grep -v '^le-group-emacs-lisp' | \
-;;   grep -v '^le-maybe-markdown-ts' | grep -v '^le-diminish' | sort
+;; The "big" flavor enables is a good flavor for software developers.
 
 ;;; Code:
 
@@ -30,18 +17,19 @@
 
 (lightemacs-module-load
  '(;; All modules:
-   le-theme
-   le-ace-window
    le-aggressive-indent
    le-apheleia
    le-autorevert
    le-avy
+   le-buffer-terminator
    le-bufferfile
    le-cape
+   le-compile-angel
    le-consult
-   le-consult-dir
    le-corfu
    le-corfu-prescient
+   le-csv-mode
+   le-default-keybindings
    le-default-settings
    le-diff-hl
    le-dired
@@ -51,6 +39,7 @@
    le-dumb-jump
    le-easy-escape
    le-elec-pair
+   le-elisp-autofmt
    le-elisp-refs
    le-embark
    le-embark-consult
@@ -58,16 +47,14 @@
    le-flymake
    le-git-modes
    le-goto-chg
-   le-maybe-yaml-ts
    le-helpful
    le-highlight-defined
    le-indent-bars
-   le-default-keybindings
+   le-kirigami
    le-magit
    le-marginalia
-   le-markdown-mode
-   le-markdown-toc
-   le-edit-indirect
+   le-maybe-markdown-ts
+   le-maybe-yaml-ts
    le-orderless
    le-org
    le-org-appear
@@ -82,22 +69,17 @@
    le-savehist
    le-saveplace
    le-stripspace
+   le-term
+   le-theme
    le-undo-fu
    le-undo-fu-session
    le-vertico
    le-vertico-prescient
    le-vim-tab-bar
-   le-wgrep
    le-which-key
    le-winner
    le-yasnippet
-   le-yasnippet-snippets
-   le-csv-mode
-   le-kirigami
-   le-buffer-terminator
-   le-elisp-autofmt
-   le-term
-   ))
+   le-yasnippet-snippets))
 
 ;;; Provide
 
