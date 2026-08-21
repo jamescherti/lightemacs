@@ -26,6 +26,9 @@
 
 ;;; Variables
 
+(defvar lightemacs-evil-setup-undo-redo t)
+(defvar lightemacs-evil-setup-evil-search t)
+
 (eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)
@@ -34,26 +37,11 @@
 
 ;;; Use-package evil
 
-(defun lightemacs-evil-delete-backward-C-h ()
-  "In Evil insert state, make `C-h' behave like the `DEL' key.
-
-Correct `C-h' behavior to ensure `electric-pair' deletes adjacent pairs When
-using `electric-pair-mode', the expected behavior when pressing `C-h' near a
-pair of adjacent delimiters (e.g., () [] {}) is that both the opening and
-closing delimiters should be deleted together if they were inserted as a pair.
-This function corrects `C-h' behavior to ensure `electric-pair' deletes adjacent
-pairs.
-
-This function also prevents ElDoc help from disappearing in the minibuffer when
-pressing `C-h', since it is prefixed with `evil-delete'."
-  (interactive)
-  (when-let* ((del-binding (key-binding (kbd "DEL"))))
-    (call-interactively del-binding)))
-
 (lightemacs-use-package evil
   :commands (evil-mode
              evil-select-search-module
-             evil-define-key*)
+             evil-define-key*
+             evil-set-undo-system)
 
   :init
   (lightemacs-module-hooks evil
@@ -101,30 +89,52 @@ pressing `C-h', since it is prefixed with `evil-delete'."
   (define-key evil-normal-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
   (define-key evil-visual-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
 
-  ;; Occasionally, `evil' fails to respect the `evil-search-module'
-  ;; when `evil-search-module' is in :custom, causing search behavior to diverge
-  ;; from the configured value.
-  (setq evil-search-module 'evil-search)
-  (evil-select-search-module 'evil-search-module 'evil-search)
+  (when lightemacs-evil-setup-undo-redo
+    (if (< emacs-major-version 28)
+        (require 'le-undo-fu)
+      (progn
+        (setq evil-undo-system 'undo-redo)
+        (evil-set-undo-system 'undo-redo))))
 
-  ;; NOTE: This patch has been merged into the Emacs master branch but has not
-  ;; been officially released yet.
-  ;; URL: https://github.com/emacs-evil/evil/pull/1975
-  ;; commit 3b80eb5c4496c21d72e233159b9698a73321afc5
-  ;; Author: James Cherti <https://www.jamescherti.com/contact/>
-  ;; Date:   2025-08-07 09:11:23 -0400
-  ;;
-  ;; Fixes #1974: Correct C-h behavior to ensure electric-pair deletes adjacent
-  ;; pairs When using electric-pair-mode, the expected behavior when pressing
-  ;; C-h near a pair of adjacent delimiters (e.g., () [] {} "") is that both the
-  ;; opening and closing delimiters should be deleted together if they were
-  ;; inserted as a pair. This pull request fixes #1974. This pull request
-  ;; corrects C-h behavior to ensure electric-pair deletes adjacent pairs. It
-  ;; calls the same function as DEL (code 127) in electric-pair-mode-map:
+  (when lightemacs-evil-setup-evil-search
+    ;; Occasionally, `evil' fails to respect the `evil-search-module' when
+    ;; `evil-search-module' is in :custom, causing search behavior to diverge
+    ;; from the configured value.
+    (setq evil-search-module 'evil-search)
+    (evil-select-search-module 'evil-search-module 'evil-search)))
+
+;;; Patch: Correct C-h to ensure electric-pair deletes adjacent pairs
+
+;; URL: https://github.com/emacs-evil/evil/pull/1975
+;; commit 3b80eb5c4496c21d72e233159b9698a73321afc5
+;; Author: James Cherti <https://www.jamescherti.com/contact/>
+;; Date:   2025-08-07 09:11:23 -0400
+;;
+;; Fixes #1974: Correct C-h behavior to ensure electric-pair deletes adjacent
+;; pairs When using electric-pair-mode, the expected behavior when pressing
+;; C-h near a pair of adjacent delimiters (e.g., () [] {} "") is that both the
+;; opening and closing delimiters should be deleted together if they were
+;; inserted as a pair. This pull request fixes #1974. This pull request
+;; corrects C-h behavior to ensure electric-pair deletes adjacent pairs. It
+;; calls the same function as DEL (code 127) in electric-pair-mode-map:
+(defun lightemacs-evil-delete-backward-C-h ()
+  "In Evil insert state, make `C-h' behave like the `DEL' key.
+Correct `C-h' behavior to ensure `electric-pair' deletes adjacent pairs When
+using `electric-pair-mode', the expected behavior when pressing `C-h' near a
+pair of adjacent delimiters (e.g., () [] {}) is that both the opening and
+closing delimiters should be deleted together if they were inserted as a pair.
+This function corrects `C-h' behavior to ensure `electric-pair' deletes adjacent
+pairs.
+This function also prevents ElDoc help from disappearing in the minibuffer when
+pressing `C-h', since it is prefixed with `evil-delete'."
+  (interactive)
+  (when-let* ((del-binding (key-binding (kbd "DEL"))))
+    (call-interactively del-binding)))
+
+(with-eval-after-load 'evil
   (when (bound-and-true-p evil-want-C-h-delete)
     ;; Alternative, but it makes eldoc messages disappear
     ;; (define-key evil-insert-state-map (kbd "C-h") (kbd "DEL"))
-
     (define-key evil-insert-state-map (kbd "C-h")
                 #'lightemacs-evil-delete-backward-C-h)
 
@@ -139,9 +149,8 @@ pressing `C-h', since it is prefixed with `evil-delete'."
     ;; Alternative, but it makes eldoc messages disappear
     ;; (add-to-list 'evil-insert-state-bindings `("\C-h" . ,(kbd "DEL")))
 
-    (add-to-list
-     'evil-insert-state-bindings
-     '("\C-h" . lightemacs-evil-delete-backward-C-h))))
+    (add-to-list 'evil-insert-state-bindings
+                 '("\C-h" . lightemacs-evil-delete-backward-C-h))))
 
 ;;; Synchronize `evil-shift-width' with `tab-width'.
 
