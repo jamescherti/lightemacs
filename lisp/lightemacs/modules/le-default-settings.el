@@ -49,6 +49,21 @@
                     (file-name-concat lightemacs-var-directory "authinfo.gpg")
                     "~/.authinfo.gpg"))
 
+(defvar lightemacs-auto-calculate-read-process-output-max t)
+
+;; Increase single chunk bytes to read from subprocess
+(when lightemacs-auto-calculate-read-process-output-max
+  (setq read-process-output-max
+        (or (and (eq system-type 'gnu/linux)
+                 (condition-case nil
+                     ;; On GNU/Linux systems, the value should not exceed
+                     ;; /proc/sys/fs/pipe-max-size
+                     (with-temp-buffer
+                       (insert-file-contents "/proc/sys/fs/pipe-max-size")
+                       (string-to-number (buffer-string)))
+                   (error nil)))
+            (* 1024 1024))))
+
 ;;; treesit
 
 (setq treesit-font-lock-level 4) ; Max: 4
