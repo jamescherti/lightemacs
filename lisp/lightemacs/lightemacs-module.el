@@ -92,13 +92,57 @@ all settings in this block are skipped."
 
 ;;; Function: `lightemacs-module-load'
 
+;; (defun lightemacs-slow-module-load (modules)
+;;   "Load all modules listed in MODULES.
+;; If a module fails to load, an error warning is displayed and the module
+;; is not added to the loaded list."
+;;   (dolist (feature-symbol modules)
+;;     (lightemacs-verbose-message "Load module: %s" feature-symbol)
+;;     (require feature-symbol)))
+
+(defun lightemacs--remove-el-file-suffix (filename)
+  "Remove the Elisp file suffix from FILENAME and return it (.el, .el.gz...)."
+  (let ((suffixes (mapcar (lambda (ext) (concat ".el" ext))
+                          load-file-rep-suffixes)))
+    (catch 'done
+      (dolist (suffix suffixes filename)
+        (when (string-suffix-p suffix filename)
+          (setq filename (substring filename 0 (- (length suffix))))
+          (throw 'done t))))
+    filename))
+
 (defun lightemacs-module-load (modules)
   "Load all modules listed in MODULES.
 If a module fails to load, an error warning is displayed and the module
 is not added to the loaded list."
-  (dolist (feature-symbol modules)
-    (lightemacs-verbose-message "Load module: %s" feature-symbol)
-    (require feature-symbol)))
+  (let ((priority-path (cons (expand-file-name lightemacs-modules-directory)
+                             load-path)))
+    (dolist (feature-symbol modules)
+      (lightemacs-verbose-message "Load module: %s" feature-symbol)
+
+      (condition-case err
+          (unless (featurep feature-symbol)
+            (let ((exact-path (locate-library (symbol-name feature-symbol)
+                                              nil
+                                              priority-path)))
+              (if exact-path
+                  ;; Pass base path (e.g. "/path/to/le-modname") so `require'
+                  ;; searches for .elc first (which also triggers the .eln
+                  ;; native-compilation swap if available), gracefully falling
+                  ;; back to .el if uncompiled.
+                  (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
+                    (lightemacs-verbose-message "Load module: %s (%s)"
+                                                feature-symbol
+                                                base-path)
+                    (require feature-symbol base-path))
+
+                (error "Cannot find module '%s' in priority path" feature-symbol))))
+
+        (error
+         (display-warning 'lightemacs
+                          (format "Failed to load module '%s': %s"
+                                  feature-symbol (error-message-string err))
+                          :warning))))))
 
 ;;; Provide
 
