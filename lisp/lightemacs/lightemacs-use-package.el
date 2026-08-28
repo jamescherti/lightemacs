@@ -39,93 +39,94 @@
   ;; `use-package-normalize-keywords'
   (require 'use-package-core)
 
-  (defun lightemacs-use-package--detect-autogen-config ()
-    "Dynamically locate the autogen configuration file.
-Returns the absolute path to the configuration file, or nil if not found."
-    ;; (let ((file (expand-file-name "var/le-autogen-config.el" lightemacs-user-directory)))
-    ;;   (if (file-regular-p file)
-    ;;       file
-    ;;     (error "The autogen config file doesn't exist: %s" file)))
-
-    ;; TODO find another solution
-    (getenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG")
-
-    ;; (let* ((framework-file (locate-library "lightemacs-use-package.el" t))
-    ;;        (current-file
-    ;;         (or
-    ;;          ;; (and (fboundp 'macroexp-file-name) (macroexp-file-name))
-    ;;          ;; (bound-and-true-p byte-compile-current-file)
-    ;;          ;; load-file-name
-    ;;          framework-file))
-    ;;        ;; Resolve symlinks to prevent incorrect directory traversal
-    ;;        (true-current (and current-file (file-truename current-file)))
-    ;;        (search-dir (and true-current (file-name-directory true-current)))
-    ;;        (root-dir (and search-dir (locate-dominating-file search-dir
-    ;;                                                          "init.el"))))
-    ;;
-    ;;   (cond
-    ;;    (root-dir
-    ;;     (if (file-regular-p framework-file)
-    ;;         (expand-file-name "var/le-autogen-config.el" root-dir)
-    ;;       (error "The autogen config file does not exist: %s"
-    ;;              (expand-file-name "var/le-autogen-config.el" root-dir))))
-    ;;    ;; (t
-    ;;    ;;  ;; Fallback: user-emacs-directory is globally inherited by default
-    ;;    ;;  (expand-file-name "le-autogen-config.el" user-emacs-directory))
-    ;;    ))
-    )
-
-  (when (and (not (bound-and-true-p lightemacs-use-package--compiler-env-loaded))
-             (or (bound-and-true-p byte-compile-current-file)
-                 ;; (bound-and-true-p comp-compiling)
-                 ;; noninteractive
-                 ))
-    (let* (;; root-dir
-           (config-file
-            (lightemacs-use-package--detect-autogen-config)))
-      (if (and config-file (file-regular-p config-file))
-          (progn
-            (message "[lightemacs] Loading the compiler configuration from: %s"
-                     config-file)
-            (load config-file nil 'nomessage nil t))
-        (error "[lightemacs] Could not locate le-autogen-config.el")
-        ;; (error
-        ;;  (concat
-        ;;   "[lightemacs] Could not locate le-autogen-config.el"
-        ;;   " config:%s"
-        ;;   " macroexp-file-name:%s"
-        ;;   " byte-compile-current-file:%s"
-        ;;   " load-file-name:%s"
-        ;;   " lib:%s")
-        ;;  config-file
-        ;;  (and (fboundp 'macroexp-file-name) (macroexp-file-name))
-        ;;  (bound-and-true-p byte-compile-current-file)
-        ;;  load-file-name
-        ;;  (locate-library "lightemacs-use-package.el" t))
-        )))
-
-  ;; Conditionally declare the package manager function for the compiler. At
-  ;; this point, `lightemacs-package-manager' is guaranteed to be set correctly
-  ;; for this compilation process.
+  ;; TODO remove
+  ;; (defun lightemacs-use-package--detect-autogen-config ()
+  ;;     "Dynamically locate the autogen configuration file.
+  ;; Returns the absolute path to the configuration file, or nil if not found."
+  ;;     ;; (let ((file (expand-file-name "var/le-autogen-config.el" lightemacs-user-directory)))
+  ;;     ;;   (if (file-regular-p file)
+  ;;     ;;       file
+  ;;     ;;     (error "The autogen config file doesn't exist: %s" file)))
   ;;
-  ;; This silences warnings such as:
-  ;; Warning (native-compiler): file.el: Warning: the function
-  ;; `straight-use-package' might not be defined at runtime.
-  ;; (cond
-  ;;  ((eq lightemacs-package-manager 'straight)
-  ;;   (unless (fboundp 'straight-use-package)
-  ;;     (autoload 'straight-use-package "straight"))
+  ;;     ;; TODO find another solution
+  ;;     (getenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG")
   ;;
-  ;;   (declare-function straight-use-package "straight"
-  ;;                     (melpa-style-recipe
-  ;;                      &optional
-  ;;                      no-clone
-  ;;                      no-build
-  ;;                      cause
-  ;;                      interactive)))
-  ;;  ((eq lightemacs-package-manager 'elpaca)
-  ;;   (unless (fboundp 'elpaca)
-  ;;     (autoload 'elpaca "elpaca"))))
+  ;;     ;; (let* ((framework-file (locate-library "lightemacs-use-package.el" t))
+  ;;     ;;        (current-file
+  ;;     ;;         (or
+  ;;     ;;          ;; (and (fboundp 'macroexp-file-name) (macroexp-file-name))
+  ;;     ;;          ;; (bound-and-true-p byte-compile-current-file)
+  ;;     ;;          ;; load-file-name
+  ;;     ;;          framework-file))
+  ;;     ;;        ;; Resolve symlinks to prevent incorrect directory traversal
+  ;;     ;;        (true-current (and current-file (file-truename current-file)))
+  ;;     ;;        (search-dir (and true-current (file-name-directory true-current)))
+  ;;     ;;        (root-dir (and search-dir (locate-dominating-file search-dir
+  ;;     ;;                                                          "init.el"))))
+  ;;     ;;
+  ;;     ;;   (cond
+  ;;     ;;    (root-dir
+  ;;     ;;     (if (file-regular-p framework-file)
+  ;;     ;;         (expand-file-name "var/le-autogen-config.el" root-dir)
+  ;;     ;;       (error "The autogen config file does not exist: %s"
+  ;;     ;;              (expand-file-name "var/le-autogen-config.el" root-dir))))
+  ;;     ;;    ;; (t
+  ;;     ;;    ;;  ;; Fallback: user-emacs-directory is globally inherited by default
+  ;;     ;;    ;;  (expand-file-name "le-autogen-config.el" user-emacs-directory))
+  ;;     ;;    ))
+  ;;     )
+  ;;
+  ;;   (when (and (not (bound-and-true-p lightemacs-use-package--compiler-env-loaded))
+  ;;              (or (bound-and-true-p byte-compile-current-file)
+  ;;                  (bound-and-true-p comp-compiling)
+  ;;                  ;; noninteractive
+  ;;                  ))
+  ;;     (let* (;; root-dir
+  ;;            (config-file
+  ;;             (lightemacs-use-package--detect-autogen-config)))
+  ;;       (if (and config-file (file-regular-p config-file))
+  ;;           (progn
+  ;;             (message "[lightemacs] Loading the compiler configuration from: %s"
+  ;;                      config-file)
+  ;;             (load config-file nil 'nomessage nil t))
+  ;;         (error "[lightemacs] Could not locate le-autogen-config.el")
+  ;;         ;; (error
+  ;;         ;;  (concat
+  ;;         ;;   "[lightemacs] Could not locate le-autogen-config.el"
+  ;;         ;;   " config:%s"
+  ;;         ;;   " macroexp-file-name:%s"
+  ;;         ;;   " byte-compile-current-file:%s"
+  ;;         ;;   " load-file-name:%s"
+  ;;         ;;   " lib:%s")
+  ;;         ;;  config-file
+  ;;         ;;  (and (fboundp 'macroexp-file-name) (macroexp-file-name))
+  ;;         ;;  (bound-and-true-p byte-compile-current-file)
+  ;;         ;;  load-file-name
+  ;;         ;;  (locate-library "lightemacs-use-package.el" t))
+  ;;         )))
+  ;;
+  ;;   ;; Conditionally declare the package manager function for the compiler. At
+  ;;   ;; this point, `lightemacs-package-manager' is guaranteed to be set correctly
+  ;;   ;; for this compilation process.
+  ;;   ;;
+  ;;   ;; This silences warnings such as:
+  ;;   ;; Warning (native-compiler): file.el: Warning: the function
+  ;;   ;; `straight-use-package' might not be defined at runtime.
+  ;;   ;; (cond
+  ;;   ;;  ((eq lightemacs-package-manager 'straight)
+  ;;   ;;   (unless (fboundp 'straight-use-package)
+  ;;   ;;     (autoload 'straight-use-package "straight"))
+  ;;   ;;
+  ;;   ;;   (declare-function straight-use-package "straight"
+  ;;   ;;                     (melpa-style-recipe
+  ;;   ;;                      &optional
+  ;;   ;;                      no-clone
+  ;;   ;;                      no-build
+  ;;   ;;                      cause
+  ;;   ;;                      interactive)))
+  ;;   ;;  ((eq lightemacs-package-manager 'elpaca)
+  ;;   ;;   (unless (fboundp 'elpaca)
+  ;;   ;;     (autoload 'elpaca "elpaca"))))
   )
 
 ;;; Require
