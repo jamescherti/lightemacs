@@ -48,8 +48,8 @@
 
 (setq minimal-emacs-load-compiled-init-files t)
 
-(push lightemacs-local-modules-directory load-path)
 (push lightemacs-modules-directory load-path)
+(push lightemacs-local-modules-directory load-path)
 
 ;; Reduce cluttering
 ;;
