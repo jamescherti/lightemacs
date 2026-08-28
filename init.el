@@ -265,8 +265,8 @@
 
          (setq user-emacs-directory ,lightemacs-var-directory)
 
-         (setq use-package-expand-minimally t)
-         (setq use-package-always-ensure t)
+         (setq use-package-expand-minimally ,use-package-expand-minimally)
+         (setq use-package-always-ensure ,use-package-always-ensure)
          (setq package-user-dir ,package-user-dir)
          (setq treesit-extra-load-path ',treesit-extra-load-path)
 
@@ -278,7 +278,6 @@
 ;;          (unless (bound-and-true-p lightemacs-use-package--compiler-env-loaded)
 ;;            (load ,lightemacs-autogen-config-file nil 'nomessage nil t)
 ;;
-;;            ;; TODO remove
 ;;            ;; (setq use-package-expand-minimally ,use-package-expand-minimally)
 ;;            ;; (setq use-package-always-ensure
 ;;            ;;       ,(bound-and-true-p use-package-always-ensure))
