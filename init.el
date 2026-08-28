@@ -255,18 +255,20 @@
 ;; Inject the config path into the async native compiler environment
 (setq native-comp-async-env-modifier-form
       `(progn
-         (setq user-emacs-directory ,lightemacs-var-directory)
+         (setq lightemacs-package-manager ',lightemacs-package-manager)
+         (setq lightemacs-use-package--compiler-env-loaded t)
+
          (setq lightemacs-user-directory ,lightemacs-user-directory)
          (setq lightemacs-local-directory ,lightemacs-local-directory)
          (setq lightemacs-var-directory ,lightemacs-var-directory)
          (setq lightemacs-core-directory ,lightemacs-core-directory)
-         (setq lightemacs-package-manager ',lightemacs-package-manager)
 
-         ;; TODO
-         ;; (setq package-user-dir ,package-user-dir)
+         (setq user-emacs-directory ,lightemacs-var-directory)
 
-         ;; TODO include?
-         ;; (setq treesit-extra-load-path ',treesit-extra-load-path)
+         (setq use-package-expand-minimally t)
+         (setq use-package-always-ensure t)
+         (setq package-user-dir ,package-user-dir)
+         (setq treesit-extra-load-path ',treesit-extra-load-path)
 
          (setenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG" ,lightemacs-autogen-config-file)))
 

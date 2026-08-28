@@ -18,13 +18,16 @@
 
 (defun lightemacs-core--load-cli-tools ()
   "Find cli tools."
-  (setq lightemacs--ripgrep-executable (executable-find "rg"))
-  (setq lightemacs--fdfind-executable
-        (let ((fdfind-executable (executable-find "fd")))
-          (if fdfind-executable
-              fdfind-executable
-            ;; Debian
-            (executable-find "fdfind")))))
+  (unless lightemacs--ripgrep-executable
+    (setq lightemacs--ripgrep-executable (executable-find "rg")))
+
+  (unless lightemacs--fdfind-executable
+    (setq lightemacs--fdfind-executable
+          (let ((fdfind-executable (executable-find "fd")))
+            (if fdfind-executable
+                fdfind-executable
+              ;; Debian
+              (executable-find "fdfind"))))))
 
 (provide 'le-core-cli-tools)
 
