@@ -19,7 +19,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(require 'treesit nil t)
 
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 
@@ -33,12 +32,20 @@ Tree-sitter is available.")
 
 ;;; Choose between `yaml-ts-mode' and `yaml-mode'
 
-(if (and lightemacs-group-yaml-prefer-yaml-ts-mode
-         (treesit-ready-p 'yaml t))
-    ;; Configure `yaml-ts-mode'
-    (lightemacs-module-load '(le-yaml-ts-mode))
-  ;; Configure `yaml-mode'
-  (lightemacs-module-load '(le-yaml-mode)))
+(defun le-maybe-yaml-ts-load ()
+  "Initialize YAML mode routing after the UI is drawn to prevent blocking."
+  (require 'treesit nil t)
+  (if (and lightemacs-group-yaml-prefer-yaml-ts-mode
+           (fboundp 'treesit-ready-p)
+           (treesit-ready-p 'yaml t))
+      ;; Configure `yaml-ts-mode'
+      (lightemacs-module-load '(le-yaml-ts-mode))
+    ;; Configure `yaml-mode'
+    (lightemacs-module-load '(le-yaml-mode))))
+
+(add-hook 'after-init-hook #'le-maybe-yaml-ts-load)
+
+;;; Provide
 
 (provide 'le-maybe-yaml-ts)
 

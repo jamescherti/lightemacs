@@ -17,7 +17,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(require 'treesit nil t)
 
 ;;; Variables
 
@@ -32,14 +31,21 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
 
 ;;; Choose between `markdown-mode' and `markdown-ts-mode'
 
-(if (and (>= emacs-major-version 30)
-         lightemacs-markdown-prefer-tree-sitter
-         (fboundp 'treesit-ready-p)
-         (treesit-ready-p 'markdown t))
-    (progn
-      (setq lightemacs-maybe-markdown-ts--tree-sitter t)
-      (lightemacs-module-load '(le-markdown-ts-mode)))
-  (lightemacs-module-load '(le-markdown-mode)))
+(defun le-maybe-markdown-ts-load ()
+  "Initialize Markdown mode routing after the UI is drawn to prevent blocking."
+  (require 'treesit nil t)
+  (if (and (> emacs-major-version 30)
+           lightemacs-markdown-prefer-tree-sitter
+           (fboundp 'treesit-ready-p)
+           (treesit-ready-p 'markdown t))
+      (progn
+        (setq lightemacs-maybe-markdown-ts--tree-sitter t)
+        (lightemacs-module-load '(le-markdown-ts-mode)))
+    (lightemacs-module-load '(le-markdown-mode))))
+
+(add-hook 'after-init-hook #'le-maybe-markdown-ts-load)
+
+;;; Provide
 
 (provide 'le-maybe-markdown-ts)
 
