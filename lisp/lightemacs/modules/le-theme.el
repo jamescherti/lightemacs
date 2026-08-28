@@ -1,4 +1,4 @@
-;;; le-theme.el --- Module: tomorrow-night-deepblue-theme -*- lexical-binding: t -*-
+;;; le-theme.el --- Load the theme and the font -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -8,22 +8,8 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; The Emacs theme Tomorrow Night Deepblue is a beautiful deep blue variant of
-;; the Tomorrow Night theme, which is renowned for its elegant color
-;; palette that is pleasing to the eyes.
-;;
-;; The Tomorrow Night Deepblue features a deep blue background color that
-;; creates a calming atmosphere. The contrasting colors make it easy to
-;; distinguish between different elements of your code. The
-;; tomorrow-night-deepblue theme is also a great choice for programmer who miss
-;; the blue themes that were trendy a few years ago.
-;;
-;; The theme was inspired by classic text editors such as QuickBASIC, RHIDE, and
-;; Turbo Pascal, as well as tools such as Midnight Commander which featured blue
-;; backgrounds by default. There's something special about the early days of
-;; programming and the tools we used that brings back fond memories.
 
-;; URL: https://github.com/jamescherti/tomorrow-night-deepblue-theme.el
+;; Load the theme and the font.
 
 ;;; Code:
 
@@ -67,21 +53,21 @@ default.")
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active."
-  (cond
-   ((and lightemacs-theme-package
-         lightemacs-theme-name
-         (or force
-             (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
-    (eval
-     `(lightemacs-use-package ,lightemacs-theme-package
-        :demand t
-        :config
-        (lightemacs-theme--apply ',lightemacs-theme-name)))
-    ;; lexical-binding: t
-    t)
+  (when (and lightemacs-theme-name
+             (or force
+                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
+    (cond
+     (lightemacs-theme-package
+      (eval
+       `(lightemacs-use-package ,lightemacs-theme-package
+          :demand t
+          :config
+          (lightemacs-theme--apply ',lightemacs-theme-name)))
+      ;; lexical-binding: t
+      t)
 
-   (lightemacs-theme-name
-    (lightemacs-theme--apply lightemacs-theme-name))))
+     (t
+      (lightemacs-theme--apply lightemacs-theme-name)))))
 
 ;;; Font
 (defun lightemacs-theme-load-default-font (&optional frame &rest _args)
