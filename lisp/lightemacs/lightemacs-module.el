@@ -131,9 +131,9 @@ is not added to the loaded list."
                   ;; native-compilation swap if available), gracefully falling
                   ;; back to .el if uncompiled.
                   (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
-                    (lightemacs-verbose-message "Load module: %s (%s)"
-                                                feature-symbol
-                                                base-path)
+                    (lightemacs-debug-message "Load module path: %s (%s)"
+                                              feature-symbol
+                                              base-path)
                     (require feature-symbol base-path))
 
                 (error "Cannot find module '%s' in priority path" feature-symbol))))
