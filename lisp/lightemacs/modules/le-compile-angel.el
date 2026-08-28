@@ -40,7 +40,7 @@
 
   (lightemacs-module-hooks compile-angel-on-load
     compile-angel-on-load-mode
-    '(lightemacs-emacs-startup-hook))
+    '(lightemacs-after-init-hook))
 
   :preface
   (defun le-compile-angel-exclude (path)
