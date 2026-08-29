@@ -71,7 +71,7 @@ buffer, followed by regular files.")
   ;; Group directories first
   ;; (:config is better to avoid executable-find during init)
   (when lightemacs-dired-group-directories-first
-    (when (eq system-type "darwin")
+    (when (eq system-type 'darwin)
       (setq dired-use-ls-dired nil))
     (let ((args "--group-directories-first -ahlv"))
       (when (or (eq system-type 'darwin) (eq system-type 'berkeley-unix))
