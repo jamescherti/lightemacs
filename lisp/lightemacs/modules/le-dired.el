@@ -51,7 +51,7 @@ buffer, followed by regular files.")
         "\\`\\.[^.]")  ;; matches any file starting with . but not ..
 
   (setq dired-omit-files (concat
-                          "\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
+                          "\\.\\(?:elc\\|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
                           "\\|\\(?:\\.js\\)?\\.meta\\'"
                           "\\|^\\.DS_Store\\'"
                           "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
