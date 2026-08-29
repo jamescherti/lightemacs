@@ -17,11 +17,12 @@
 
 ;;; Write the automatically generated configuration
 
-(unless (memq lightemacs-package-manager '(straight elpaca builtin-package
-                                                    ;; Deprecated:
-                                                    use-package))
-  (error "The value '%s' is not a valid `lightemacs-package-manager'"
-         lightemacs-package-manager))
+;; TODO add back?
+;; (unless (memq lightemacs-package-manager '(straight elpaca builtin-package
+;;                                                     ;; Deprecated:
+;;                                                     use-package))
+;;   (error "The value '%s' is not a valid `lightemacs-package-manager'"
+;;          lightemacs-package-manager))
 
 ;;; require
 

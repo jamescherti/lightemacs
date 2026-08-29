@@ -236,11 +236,12 @@ ARGS is the raw property list of keywords supplied to `use-package'.
 This function processes the raw property list ARGS to ensure the
 appropriate package management keywords are present before passing
 them to `use-package'."
-  (unless (memq lightemacs-package-manager '(straight elpaca builtin-package
-                                                      ;; Deprecated:
-                                                      use-package))
-    (error "The value '%s' is not a valid `lightemacs-package-manager'"
-           lightemacs-package-manager))
+  ;; TODO add back?
+  ;; (unless (memq lightemacs-package-manager '(straight elpaca builtin-package
+  ;;                                                     ;; Deprecated:
+  ;;                                                     use-package))
+  ;;   (error "The value '%s' is not a valid `lightemacs-package-manager'"
+  ;;          lightemacs-package-manager))
 
   (let* ((ensure-is-member (memq :ensure args))
          (ensure-value (when ensure-is-member
