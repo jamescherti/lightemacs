@@ -52,12 +52,9 @@ buffer, followed by regular files.")
 
   (setq dired-omit-files (concat
                           "\\.\\(?:elc\\|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
-                          "\\|\\(?:\\.js\\)?\\.meta\\'"
                           "\\|^\\.DS_Store\\'"
                           "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
-                          "\\|^\\.ccls-cache\\'"
                           "\\|^__pycache__\\'"
-                          "\\|^\\.project\\(?:ile\\)?\\'"
                           "\\|^flycheck_.*"
                           "\\|^flymake_.*"))
 
