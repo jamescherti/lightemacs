@@ -20,14 +20,19 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package stripspace
-  :commands stripspace-local-mode
+  :commands (stripspace-local-mode
+             stripspace-global-mode)
 
   :init
-  (lightemacs-module-hooks stripspace
+  (lightemacs-module-hooks stripspace-local
     stripspace-local-mode
     '(prog-mode-hook
       text-mode-hook
-      conf-mode-hook)))
+      conf-mode-hook))
+
+  (lightemacs-module-hooks stripspace-global
+    stripspace-global-mode
+    nil))
 
 (provide 'le-stripspace)
 
