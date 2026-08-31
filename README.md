@@ -82,15 +82,16 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;; le-term
                            le-flavor-essential
 
+                           le-compile-angel
+
+                           ;; Filetype: Markdown
+                           ;; Provides a major mode for Emacs for syntax
+                           ;; highlighting, editing commands, and preview
+                           ;; support for Markdown documents.
+                           le-markdown-mode
+
                            ;; Vim tab bar
                            le-vim-tab-bar
-
-                           ;; This package provides functions to detects the
-                           ;; indentation offset used in existing source code
-                           ;; files and automatically adjusts Emacs settings
-                           ;; accordingly, thereby simplifying the editing of
-                           ;; files created in external environments.
-                           le-dtrt-indent
 
                            ;; prescient.el is a library for sorting and
                            ;; filtering lists of candidates, such as those
@@ -98,6 +99,12 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            le-prescient
                            le-vertico-prescient
                            le-corfu-prescient
+
+                           ;; Filetypes
+                           le-csv-mode
+                           le-maybe-markdown-ts
+                           le-maybe-yaml-ts
+                           le-git-modes
 
                            ;; The persist-text-scale Emacs package provides
                            ;; `persist-text-scale-mode', which ensures that all
@@ -111,15 +118,47 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;; buffer.
                            le-which-key
 
-                           ;; Filetype: Markdown
-                           ;; Provides a major mode for Emacs for syntax
-                           ;; highlighting, editing commands, and preview
-                           ;; support for Markdown documents.
-                           le-markdown-mode
+                           ;; Built-in
+                           le-winner
+                           le-display-line-numbers
 
-                           ;; The bufferfile package provides helper functions to delete, rename, or
-                           ;; copy buffer files.
-                           le-bufferfile))
+                           ;; This package provides functions to detects the
+                           ;; indentation offset used in existing source code
+                           ;; files and automatically adjusts Emacs settings
+                           ;; accordingly, thereby simplifying the editing of
+                           ;; files created in external environments.
+                           le-dtrt-indent
+
+                           ;; Development
+                           le-apheleia
+                           le-diff-hl
+                           le-yasnippet
+                           le-yasnippet-snippets
+                           le-dumb-jump
+                           le-flymake
+                           le-group-code-folding
+
+                           ;; Development: Elisp
+                           le-group-emacs-lisp
+                           le-paredit
+
+                           ;; The bufferfile package provides helper functions
+                           ;; to delete, rename, or copy buffer files.
+                           le-bufferfile
+
+                           ;; Misc
+                           le-helpful
+                           le-avy
+                           le-buffer-terminator
+                           le-expand-region
+                           le-indent-bars
+                           le-kirigami
+                           le-magit
+                           le-org-appear
+                           le-outline
+                           le-outline-indent
+                           le-stripspace))
+
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
