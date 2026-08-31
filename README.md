@@ -82,6 +82,8 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;; le-term
                            le-flavor-essential
 
+                           ;; le-group-evil  ;; Vim keybindings
+
                            le-compile-angel
 
                            ;; Filetype: Markdown
