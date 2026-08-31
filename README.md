@@ -86,9 +86,9 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;; le-term
                            le-flavor-essential
 
+                           ;; le-compile-angel  ;; Auto compile all .el files
                            ;; le-group-evil  ;; Vim keybindings
-
-                           le-compile-angel
+                           ;; le-buffer-guardian  ;; auto save
 
                            ;; Filetype: Markdown
                            ;; Provides a major mode for Emacs for syntax
