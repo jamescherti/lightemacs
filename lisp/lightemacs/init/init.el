@@ -330,7 +330,6 @@ This should be called after changing `auto-save-list-file-prefix'."
 
 ;; Enables Emacs to remember the last location within a file upon reopening.
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
-(setq save-place-limit 600)
 
 ;;; savehist
 
@@ -477,7 +476,6 @@ This should be called after changing `auto-save-list-file-prefix'."
 ;;; Dired and ls-lisp
 
 (setq dired-free-space nil
-      dired-dwim-target t  ; Propose a target for intelligent moving/copying
       dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
       dired-recursive-deletes 'top
