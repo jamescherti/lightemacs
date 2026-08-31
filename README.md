@@ -68,6 +68,10 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
+;; Defaults
+;; Apply only verified safe values while silently dropping risky or unverified ones.
+(setq enable-local-variables :safe)
+
 ;; le-flavor-essential includes:
 ;; -----------------------------
 (setq lightemacs-modules '(;; le-flavor-essential enables:
