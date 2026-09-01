@@ -16,15 +16,12 @@
 (require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'le-evil)
 
 (lightemacs-use-package evil-commentary
   :after evil
   :commands evil-commentary-mode
   :init
-  (lightemacs-module-hooks evil-commentary
-    evil-commentary-mode
-    '(lightemacs-after-init-hook)))
+  (evil-commentary-mode 1))
 
 (provide 'le-evil-commentary)
 
