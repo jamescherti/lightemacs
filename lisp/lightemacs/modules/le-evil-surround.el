@@ -21,10 +21,8 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 (require 'lightemacs-module)
-(require 'le-evil)
 
 (lightemacs-use-package evil-surround
-  :after evil
   :commands (evil-Surround-edit
              evil-surround-edit
              evil-surround-region

@@ -18,7 +18,6 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package evil-commentary
-  :after evil
   :commands evil-commentary-mode
   :init
   (lightemacs-module-hooks evil-commentary

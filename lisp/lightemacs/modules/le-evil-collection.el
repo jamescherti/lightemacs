@@ -28,16 +28,12 @@
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t))
 
-(require 'le-evil)
-
 (defvar lightemacs-evil-collection-inhibit-unimpaired-mode nil
   "Inhibit `global-evil-collection-unimpaired-mode' when non-nil.
-
 By default, the `evil-collection' package automatically activates unimpaired
 bindings globally. While these Vim-like bracket shortcuts (e.g., [b and ]b to
 cycle buffers) are convenient, they aggressively hijack the [ and ] prefixes
 across the entire editor.
-
 Setting this variable to t deactivates these global overrides after
 initialization, allowing users to retain standard major-mode behaviors unless
 they explicitly opt out of the inhibition.")
