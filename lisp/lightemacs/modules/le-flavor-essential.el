@@ -44,9 +44,6 @@
    ;; buffer to reflect changes made to the underlying file on disk.
    le-autorevert
 
-   ;; Configure `org-mode' and `org-agenda'
-   le-org
-
    ;; Built-in Emacs terminal emulator
    le-term))
 

@@ -21,7 +21,6 @@
    ;;   le-default-settings le-dired le-savehist
    ;;   le-elec-pair le-paren le-recentf le-saveplace
    ;;   le-autorevert
-   ;;   le-org
    ;;   le-term
    le-flavor-essential
 

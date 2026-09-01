@@ -84,7 +84,6 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;;   le-default-settings le-dired le-savehist
                            ;;   le-elec-pair le-paren le-recentf le-saveplace
                            ;;   le-autorevert
-                           ;;   le-org
                            ;;   le-term
                            le-flavor-essential
 
