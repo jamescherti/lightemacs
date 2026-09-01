@@ -25,7 +25,6 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 (require 'lightemacs-module)
-(require 'le-evil)
 
 (lightemacs-use-package evil-snipe
   :commands (evil-snipe-mode

@@ -21,7 +21,9 @@
   :after evil
   :commands evil-commentary-mode
   :init
-  (evil-commentary-mode 1))
+  (lightemacs-module-hooks evil-commentary
+    evil-commentary-mode
+    '(lightemacs-after-init-hook)))
 
 (provide 'le-evil-commentary)
 
