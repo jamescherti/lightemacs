@@ -80,20 +80,97 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
 ;; le-flavor-essential includes:
 ;; -----------------------------
 (setq lightemacs-modules '(;; le-flavor-essential enables:
-                           ;; ----------------------------
-                           ;; le-theme le-default-keybindings
-                           ;; le-default-settings le-dired le-savehist
-                           ;; le-elec-pair le-paren le-recentf le-saveplace
-                           ;; le-dired-filter le-corfu le-cape le-vertico
-                           ;; le-consult le-embark le-embark-consult
-                           ;; le-orderless le-marginalia le-autorevert
-                           ;; le-undo-fu le-undo-fu-session le-org
-                           ;; le-term
+                           ;;   le-theme le-default-keybindings
+                           ;;   le-default-settings le-dired le-savehist
+                           ;;   le-elec-pair le-paren le-recentf le-saveplace
+                           ;;   le-autorevert le-org le-term
                            le-flavor-essential
 
                            ;; le-compile-angel  ;; Auto compile all .el files
                            ;; le-group-evil  ;; Vim keybindings
-                           ;; le-buffer-guardian  ;; auto save
+                           ;; le-buffer-guardian  ;; Auto save
+                           ;; le-easysession
+
+                           ;; The undo-fu package is a lightweight wrapper
+                           ;; around Emacs' built-in undo system, providing more
+                           ;; convenient undo/redo functionality while
+                           ;; preserving access to the full undo history.
+                           le-undo-fu
+
+                           ;; The undo-fu-session package complements undo-fu by
+                           ;; enabling the saving and restoration of undo
+                           ;; history across Emacs sessions, even after
+                           ;; restarting.
+                           le-undo-fu-session
+
+                           ;; `dired': Filter dotfiles, omit files, and files
+                           ;; listed in .gitignore
+                           le-dired-filter
+
+                           ;; Corfu enhances in-buffer completion by displaying
+                           ;; a compact popup with current candidates,
+                           ;; positioned either below or above the point.
+                           ;; Candidates can be selected by navigating up or
+                           ;; down.
+                           le-corfu
+
+                           ;; (Cape integrates with corfu)
+                           ;;
+                           ;; Cape, or Completion At Point Extensions, extends
+                           ;; the capabilities of in-buffer completion. It
+                           ;; integrates with Corfu or the default completion
+                           ;; UI, by providing additional backends through
+                           ;; completion-at-point-functions.
+                           le-cape
+
+                           ;; (Vertico, Consult, and Embark collectively enhance
+                           ;; Emacs' completion and navigation capabilities.)
+                           ;;
+                           ;; Vertico provides a vertical completion interface,
+                           ;; making it easier to navigate and select from
+                           ;; completion candidates (e.g., when M-x is pressed).
+                           le-vertico
+
+                           ;; (Vertico, Consult, and Embark collectively enhance
+                           ;; Emacs' completion and navigation capabilities.)
+                           ;;
+                           ;; Consult offers a suite of commands for efficient
+                           ;; searching, previewing, and interacting with
+                           ;; buffers, file contents, and more, improving
+                           ;; various tasks.
+                           le-consult
+
+                           ;; (Vertico, Consult, and Embark collectively enhance
+                           ;; Emacs' completion and navigation capabilities.)
+                           ;;
+                           ;; Embark integrates with these tools to provide
+                           ;; context-sensitive actions and quick access to
+                           ;; commands based on the current selection, further
+                           ;; improving user efficiency and workflow within
+                           ;; Emacs. Together, they create a cohesive and
+                           ;; powerful environment for managing completions and
+                           ;; interactions.
+                           le-embark
+
+                           ;; Integration between Embark and Consult
+                           le-embark-consult
+
+                           ;; Enable flexible, unordered matching (Orderless)
+                           ;; for Vertico. This allows typing multiple parts of
+                           ;; a candidate in any order, making it easier to find
+                           ;; functions, variables, or files even if you only
+                           ;; remember fragments.
+                           ;;
+                           ;; Example in Vertico:
+                           ;; - Typing "main test" matches "test_main.py"
+                           ;; - Typing "read me" matches "README.md"
+                           le-orderless
+
+                           ;; Marginalia enriches minibuffer completions with
+                           ;; contextual annotations. It Enhances Vertico by
+                           ;; adding rich annotations to completion candidates,
+                           ;; such as file sizes, documentation, or metadata.
+                           le-marginalia
 
                            ;; Filetype: Markdown
                            ;; Provides a major mode for Emacs for syntax
@@ -169,7 +246,6 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            le-outline
                            le-outline-indent
                            le-stripspace))
-
 ```
 
 Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
