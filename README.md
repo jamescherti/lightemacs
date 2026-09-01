@@ -72,6 +72,11 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
 ;; Apply only verified safe values while silently dropping risky or unverified ones.
 (setq enable-local-variables :safe)
 
+;; Configure le-theme
+(setq lightemacs-theme-name 'ef-melissa-light)
+(setq lightemacs-theme-package 'ef-themes)
+(setq lightemacs-theme-default-font "DejaVu Sans Mono")
+
 ;; le-flavor-essential includes:
 ;; -----------------------------
 (setq lightemacs-modules '(;; le-flavor-essential enables:
