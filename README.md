@@ -89,17 +89,20 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            le-flavor-essential
 
                            ;; le-compile-angel  ;; Auto compile all .el files
-                           ;; le-group-evil  ;; Vim keybindings
+                           ;; le-group-evil  ;; Vim keybindings (evil + evil-collection)
+                           ;; le-evil-commentary
+                           ;; le-evil-surround
+                           ;; le-evil-visualstar
                            ;; le-buffer-guardian  ;; auto save
                            ;; le-magit
                            ;; le-server
                            ;; le-rainbow-delimiters
                            ;; le-gcmh
                            ;; le-package-lint-flymake
-                           ;; le-display-line-numbers
                            ;; le-ace-window
                            ;; le-xclip
-                           ;; le-evil-visualstar
+                           ;; le-inhibit-mouse
+                           ;; le-quick-sdcv
 
                            ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
                            ;; system, providing more convenient undo/redo functionality while preserving

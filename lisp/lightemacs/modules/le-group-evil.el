@@ -25,15 +25,6 @@
    le-evil
    le-evil-collection
 
-   ;; Comment or uncomment text in Normal or Visual mode
-   ;; by pressing 'gc'.
-   le-evil-commentary
-
-   ;; Evil-surround enables text surrounding in visual state using S<textobject>
-   ;; or gS<textobject>. For example, selecting text and pressing S" will wrap
-   ;; it in double quotes.
-   le-evil-surround
-
    ;; Goto-chg is Used by `evil-mode' for the motions 'g;' and 'g,' as well as
    ;; for the last-change register '.'.
    le-goto-chg))
