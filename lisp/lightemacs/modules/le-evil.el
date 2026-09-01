@@ -26,7 +26,7 @@
 
 ;;; Variables
 
-(defvar lightemacs-evil-setup-undo-redo t)
+;; (defvar lightemacs-evil-setup-undo-redo t)
 (defvar lightemacs-evil-setup-evil-search t)
 
 (eval-and-compile
@@ -89,8 +89,9 @@
   (define-key evil-normal-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
   (define-key evil-visual-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
 
+  (require 'le-undo-fu)
   (when lightemacs-evil-setup-undo-redo
-    (if (< emacs-major-version 28)
+    (if (< emacs-major-version 31)
         (require 'le-undo-fu)
       (progn
         (setq evil-undo-system 'undo-redo)
