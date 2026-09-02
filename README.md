@@ -63,7 +63,49 @@ The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration f
 
 (The `lightemacs-modules` list specifies which modules Lightemacs loads. If the list is empty, no modules load, resulting in a configuration identical to minimal-emacs.d. The Lightemacs framework is minimalist, allowing you to choose exactly what you need for your configuration.)
 
-Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
+### Example 1
+
+The ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)) configuration includes the most interesting modules:
+
+```elisp
+;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
+
+;; Defaults
+;; Apply only verified safe values while silently dropping risky or unverified ones.
+(setq enable-local-variables :safe)
+
+;; Configure le-theme
+(setq lightemacs-theme-name 'ef-melissa-light)
+(setq lightemacs-theme-package 'ef-themes)
+(setq lightemacs-theme-default-font "DejaVu Sans Mono")
+
+(setq lightemacs-modules '(le-flavor-big
+
+                           ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
+                           ;; le-group-evil
+                           ;; le-evil-commentary
+                           ;; le-evil-surround
+                           ;; le-evil-visualstar
+
+                           ;; le-easysession  ;; Persist and restore session
+                           ;; le-buffer-guardian  ;; Auto save buffers
+                           ;; le-magit
+                           ;; le-server
+                           ;; le-rainbow-delimiters
+                           ;; le-package-lint-flymake
+                           ;; le-ace-window
+                           ;; le-xclip
+                           ;; le-inhibit-mouse
+                           ;; le-quick-sdcv
+                           ;; le-which-key
+                           ))
+```
+
+- Uncomment le-group-evil if you need evil keybindings.
+
+### Example 2
+
+The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
 
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
@@ -248,29 +290,6 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            le-indent-bars
                            le-org-appear
                            le-stripspace))
-```
-
-Example 2: The configuration above does not include Vim Keybindings, providing standard Emacs behavior for users who do not use Evil-mode. To enable Vim Keybindings (Evil-mode), add [le-group-evil](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-group-evil.el) to the configuration:
-
-```elisp
-;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
-
-(setq lightemacs-modules '(le-flavor-essential
-
-                           ;; Vim keybindings
-                           le-group-evil))
-```
-
-Example 3: This configuration includes most of modules ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)):
-
-```elisp
-;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
-
-(setq lightemacs-modules '(le-flavor-big
-
-                           ;; Vim keybindings
-                           ;; le-group-evil
-                           ))
 ```
 
 ## Your own module
