@@ -32,7 +32,8 @@
   (setq lightemacs-package-manager 'builtin-package))
 
 ;; Overwrite Minimal-emacs.d defaults
-(setq minimal-emacs-frame-title-format "%b - Lightemacs")
+(defvar lightemacs-frame-title-format "%b - Lightemacs"
+  "Template for displaying the title bar of visible and iconified frame.")
 (setq minimal-emacs-package-initialize-and-refresh nil)
 (setq minimal-emacs-gc-cons-percentage 0.1)
 (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
@@ -80,6 +81,8 @@
 ;; Run hooks: `lightemacs-pre-early-init-hook'
 
 (run-hooks 'lightemacs-pre-early-init-hook)
+
+(setq minimal-emacs-frame-title-format lightemacs-frame-title-format)
 
 ;; Load: lightemacs.el
 (require 'lightemacs)

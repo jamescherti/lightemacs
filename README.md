@@ -78,6 +78,7 @@ The ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/li
 (setq lightemacs-theme-name 'ef-melissa-light)
 (setq lightemacs-theme-package 'ef-themes)
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
+(setq lightemacs-frame-title-format "%b - Lightemacs")
 
 (setq lightemacs-modules '(le-flavor-big
 
