@@ -26,7 +26,7 @@
 
 ;;; Variables
 
-;; (defvar lightemacs-evil-setup-undo-redo t)
+(defvar lightemacs-evil-setup-undo-redo t)
 (defvar lightemacs-evil-setup-evil-search t)
 
 (eval-and-compile
@@ -89,20 +89,35 @@
   (define-key evil-normal-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
   (define-key evil-visual-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
 
-  (require 'le-undo-fu)
-  (when lightemacs-evil-setup-undo-redo
-    (if (< emacs-major-version 31)
-        (require 'le-undo-fu)
-      (progn
-        (setq evil-undo-system 'undo-redo)
-        (evil-set-undo-system 'undo-redo))))
-
   (when lightemacs-evil-setup-evil-search
     ;; Occasionally, `evil' fails to respect the `evil-search-module' when
     ;; `evil-search-module' is in :custom, causing search behavior to diverge
     ;; from the configured value.
     (setq evil-search-module 'evil-search)
     (evil-select-search-module 'evil-search-module 'evil-search)))
+
+;;; Undo-redo
+
+(when lightemacs-evil-setup-undo-redo
+  (if (< emacs-major-version 31)
+      (progn
+        (require 'le-undo-fu)
+        (with-eval-after-load 'evil
+          (setq evil-undo-system 'undo-fu)
+          (evil-set-undo-system evil-undo-system)))
+    (with-eval-after-load 'evil
+      (setq evil-undo-system 'undo-redo)
+      (evil-set-undo-system evil-undo-system))))
+
+;;; Synchronize `evil-shift-width' with `tab-width'.
+
+(defun lightemacs-evil--update-shift-width ()
+  "Synchronize `evil-shift-width' with `tab-width'.
+Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
+  (unless (derived-mode-p 'org-mode)
+    (setq-local evil-shift-width tab-width)))
+
+(add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
 
 ;;; Patch: Correct C-h to ensure electric-pair deletes adjacent pairs
 
@@ -152,16 +167,6 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
     (add-to-list 'evil-insert-state-bindings
                  '("\C-h" . lightemacs-evil-delete-backward-C-h))))
-
-;;; Synchronize `evil-shift-width' with `tab-width'.
-
-(defun lightemacs-evil--update-shift-width ()
-  "Synchronize `evil-shift-width' with `tab-width'.
-Org mode is excluded, since `tab-width' is conventionally fixed at 8 there."
-  (unless (derived-mode-p 'org-mode)
-    (setq-local evil-shift-width tab-width)))
-
-(add-hook 'after-change-major-mode-hook #'lightemacs-evil--update-shift-width)
 
 ;;; Patch: Fixes #2021: Fix 'wrong-type-argument wholenump' in evil-line-move
 
