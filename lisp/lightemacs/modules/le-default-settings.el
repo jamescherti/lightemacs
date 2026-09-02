@@ -20,6 +20,8 @@
 
 ;;; Misc
 
+(setq enable-local-variables :safe)
+
 (setq next-error-verbose (not lightemacs-reduce-messages))
 
 (setq warning-minimum-level (if init-file-debug :warning :error))

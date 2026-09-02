@@ -70,15 +70,12 @@ The ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/li
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-;; Defaults
-;; Apply only verified safe values while silently dropping risky or unverified ones.
-(setq enable-local-variables :safe)
-
 ;; Configure le-theme
 (setq lightemacs-theme-name 'ef-melissa-light)
 (setq lightemacs-theme-package 'ef-themes)
-(setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-frame-title-format "%b - Lightemacs")
+(setq lightemacs-theme-default-font "DejaVu Sans Mono")
+(setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
 
 (setq lightemacs-modules '(le-flavor-big
 
@@ -111,14 +108,11 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
-;; Defaults
-;; Apply only verified safe values while silently dropping risky or unverified ones.
-(setq enable-local-variables :safe)
-
 ;; Configure le-theme
 (setq lightemacs-theme-name 'ef-melissa-light)
 (setq lightemacs-theme-package 'ef-themes)
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
+(setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
 
 ;; le-flavor-essential includes:
 ;; -----------------------------

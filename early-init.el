@@ -82,7 +82,17 @@
 
 (run-hooks 'lightemacs-pre-early-init-hook)
 
+;;; Update variables after config and pre-early-init
+
 (setq minimal-emacs-frame-title-format lightemacs-frame-title-format)
+
+;; Add lightemacs directories to `trusted-content'
+(when (boundp 'trusted-content)
+  (let ((dirs (list lightemacs-local-directory
+                    lightemacs-core-directory)))
+    (dolist (dir dirs)
+      ;; Ensure the path ends with a slash so it registers as a directory
+      (push (file-name-as-directory dir) trusted-content))))
 
 ;; Load: lightemacs.el
 (require 'lightemacs)

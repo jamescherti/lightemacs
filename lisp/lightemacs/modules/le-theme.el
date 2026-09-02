@@ -15,11 +15,11 @@
 
 ;;; Variables
 
-(defvar lightemacs-theme-name 'ef-melissa-light
+(defvar lightemacs-theme-name 'modus-vivendi
   "Default theme to load during initialization, if available.
 Set to nil to disable loading a theme at startup.")
 
-(defvar lightemacs-theme-package 'ef-themes
+(defvar lightemacs-theme-package nil
   "Theme package to install and use for `lightemacs-theme-name'.
 Set to nil to disable installing this package at startup.")
 
