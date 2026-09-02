@@ -24,18 +24,29 @@
    ;;   le-term
    le-flavor-essential
 
-   ;; le-compile-angel  ;; Auto compile all .el files
-   ;; le-group-evil  ;; Vim keybindings (evil + evil-collection)
+   ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
+   ;; le-group-evil
+   ;; le-evil-commentary
+   ;; le-evil-surround
    ;; le-evil-visualstar
-   ;; le-buffer-guardian  ;; auto save
+
+   ;; le-easysession  ;; Persist and restore session
+   ;; le-buffer-guardian  ;; Auto save buffers
    ;; le-magit
    ;; le-server
-   ;; le-gcmh
+   ;; le-rainbow-delimiters
    ;; le-package-lint-flymake
    ;; le-ace-window
    ;; le-xclip
    ;; le-inhibit-mouse
    ;; le-quick-sdcv
+   ;; le-which-key
+
+   ;; Auto compile all .el files
+   le-compile-angel
+
+   ;; The Garbage Collector Magic Hack
+   le-gcmh
 
    ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
    ;; system, providing more convenient undo/redo functionality while preserving
@@ -105,12 +116,6 @@
    ;; as file sizes, documentation, or metadata.
    le-marginalia
 
-   ;; Filetype: Markdown
-   ;; Provides a major mode for Emacs for syntax
-   ;; highlighting, editing commands, and preview
-   ;; support for Markdown documents.
-   le-markdown-mode
-
    ;; Vim tab bar
    le-vim-tab-bar
 
@@ -123,7 +128,7 @@
 
    ;; Filetypes
    le-csv-mode
-   le-maybe-markdown-ts
+   le-markdown-mode
    le-maybe-yaml-ts
    le-git-modes
 
@@ -133,11 +138,6 @@
    ;; `text-scale-decrease' are persisted and restored
    ;; across sessions.
    le-persist-text-scale
-
-   ;; The `which-key' mode dynamically displays
-   ;; available keybindings in a popup or dedicated
-   ;; buffer.
-   le-which-key
 
    ;; Built-in
    le-winner
@@ -166,10 +166,12 @@
 
    ;; Development: Elisp
    ;; le-group-emacs-lisp includes:
-   ;;   le-highlight-defined le-page-break-lines le-aggressive-indent
-   ;;   le-elisp-refs le-elisp-autofmt le-easy-escape
+   ;;   le-highlight-defined le-aggressive-indent
+   ;;   le-elisp-refs le-easy-escape
    le-group-emacs-lisp
    le-paredit
+   le-elisp-autofmt
+   le-page-break-lines
 
    ;; The bufferfile package provides helper functions
    ;; to delete, rename, or copy buffer files.

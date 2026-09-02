@@ -20,11 +20,6 @@
    ;; Emacs Lisp symbols in `emacs-lisp-mode' buffers.
    le-highlight-defined
 
-   ;; Enable `page-break-lines-mode', a minor mode that visually replaces ASCII
-   ;; form-feed characters (typically `^L`) with horizontal line separators in
-   ;; buffers.
-   le-page-break-lines
-
    ;; Enable `aggressive-indent-mode', a minor mode that Elisp code remains
    ;; consistently indented. It automatically reindents after every
    ;; modification, providing greater reliability than `electric-indent-mode'.
@@ -38,8 +33,6 @@
    ;; avoiding false matches caused by comments or variables sharing names with
    ;; functions.
    le-elisp-refs
-
-   le-elisp-autofmt
 
    ;; `easy-escape-minor-mode' improves the readability of Emacs Lisp regular
    ;; expressions through syntax highlighting and character composition.
