@@ -9,15 +9,22 @@
 
 ;;; Commentary:
 
-;; The easysession is a session manager for Emacs that can persist and restore
-;; file editing buffers, indirect buffers/clones, Dired buffers, windows/splits,
-;; the built-in tab-bar (including tabs, their buffers, and windows), and Emacs
-;; frames. It offers a convenient and effortless way to manage Emacs editing
-;; sessions and utilizes built-in Emacs functions to persist and restore frames.
+;; The easysession Emacs package provides a comprehensive session management for
+;; Emacs. It is capable of persisting and restoring file-visiting buffers,
+;; indirect buffers (clones), buffer narrowing, Dired buffers, window
+;; configurations, the built-in tab-bar (including tabs, their buffers, and
+;; associated windows), as well as entire Emacs frames (frame name, size,
+;; position, etc.).
 ;;
 ;; With easysession, your Emacs setup is restored automatically when you
 ;; restart. All files, Dired buffers, and window layouts come back as they were,
-;; so you can continue working right where you left off.
+;; so you can continue working right where you left off. While editing, you can
+;; also switch to another session, switch back, rename sessions, or delete them,
+;; giving you full control over multiple work environments.
+;;
+;; Easysession also supports extensions, enabling the restoration of Magit
+;; buffers and the scratch buffer. Custom extensions can also be created to
+;; extend its functionality.
 ;;
 ;; URL: https://github.com/jamescherti/easysession.el
 

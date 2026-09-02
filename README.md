@@ -87,11 +87,9 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;;   le-term
                            le-flavor-essential
 
-                           ;; le-compile-angel  ;; Auto compile all .el files
-                           ;; le-group-evil  ;; Vim keybindings (evil + evil-collection)
-                           ;; le-evil-commentary
-                           ;; le-evil-surround
-                           ;; le-evil-visualstar
+                           le-compile-angel  ;; Auto compile all .el files
+
+                           ;; le-easysession
                            ;; le-buffer-guardian  ;; auto save
                            ;; le-magit
                            ;; le-server
@@ -102,6 +100,11 @@ Example 1: The default `~/.emacs.d/lisp/local/config.el` configuration only cont
                            ;; le-xclip
                            ;; le-inhibit-mouse
                            ;; le-quick-sdcv
+
+                           ;; le-group-evil  ;; Vim keybindings (evil + evil-collection)
+                           ;; le-evil-commentary
+                           ;; le-evil-surround
+                           ;; le-evil-visualstar
 
                            ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
                            ;; system, providing more convenient undo/redo functionality while preserving
@@ -321,17 +324,58 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
                            le-group-evil))
 ```
 
-## Modules
+## Modules that are part of le-flavor-micro
+
+- **le-default-keybindings**: Default keybindings, such as "C--" (text-scale-decrease), "C-+" text-scale-increase, and "C-0" (text-scale-adjust).
+
+- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, scrolling, window behavior... *This is one of the most important modules. Keep it enabled.*
+
+- **le-dired**: Configures Dired to display directories before files and to omit specified files and directories (e.g., `.git`, `*.pyc`, `*.o`). The parent directory entry (`..`) can be hidden by setting the variable `lightemacs-dired-omit-parent-directory` to `t`. (The `..` entry is redundant since pressing the `-` key navigates to the parent directory.) The variable `lightemacs-dired-hide-details-mode`, enabled by default, hides file details such as permissions, sizes, and modification dates.
 
 - **le-theme**: Loads the default theme and font. It can be configured via the `lightemacs-theme-name` variable. To customize this theme and font, add the following to the `~/.emacs.d/lisp/local/config.el` file:
-  ```emacs-lisp
-  ;; Theme
-  (setq lightemacs-theme-name 'modus-operandi)
-  ;; (setq lightemacs-theme-name 'modus-vivendi)
 
-  ;; Font
-  (setq lightemacs-theme-default-font "Monospace")
+```emacs-lisp
+;; Theme
+(setq lightemacs-theme-name 'modus-operandi)
+;; (setq lightemacs-theme-name 'modus-vivendi)
+
+;; Font
+(setq lightemacs-theme-default-font "Monospace")
+```
+
+## Modules that are part of le-flavor-essential
+
+- le-flavor-micro: Includes le-theme, le-default-keybindings, le-default-settings, and le-dired.
+
+- **le-savehist**: Configures savehist, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
+
+- **le-elec-pair**: Automatically insert matching delimiters (), {}...
+
+- **le-which-key**: The built-in which-key package dynamically displays available keybindings in a popup or dedicated buffer as a key sequence is entered. It facilitates discovery and retention of key combinations by presenting context-sensitive completions, thereby enhancing navigation through complex or highly customized keymaps.
+
+- **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
+
+- **le-recentf**: Recentf maintains a list of recently accessed files, making it easier to reopen files you have worked on recently. In addition to its built-in capabilities, the **le-recentf** module provides the following enhancements: Inserts the current file at the beginning of the recent files list upon buffer switch, Cleans up the recent files list when quitting Emacs, prior to its automatic saving, Cleans up and saves the recentf list every `lightemacs-recentf--auto-save-timer-interval` seconds (default: 550), Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer. Key mapping: Use `C-f` to invoke `recentf`.
+
+- **le-saveplace**: Enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off. (When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
+
+- **le-autorevert**: Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk. To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/lisp/local/config.el`:
+  ```emacs-lisp
+  ;; To suppress minibuffer messages when Auto Revert reverts a buffer
+  (setq auto-revert-verbose nil)
   ```
+
+- **le-term**: Customizes the built-in terminal emulators `term` and `ansi-term`. It disables confirmation prompts when terminating active processes, removes horizontal scroll margins to avoid cursor-induced visual shifts, and hides the mode line to maximize usable space.
+
+## Other modules
+
+- **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git. By default, the **le-dired-filter** module only enables `dired-filter-by-omit`:
+  ```emacs-lisp
+  ;; By default, `dired-filter-by-omit' excludes "."
+  (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit))
+  ```
+
+- **le-easysession**: Configures [easysession](https://github.com/jamescherti/easysession.el), a comprehensive session management for Emacs. It is capable of persisting and restoring file-visiting buffers, indirect buffers (clones), buffer narrowing, Dired buffers, window configurations, the built-in tab-bar (including tabs, their buffers, and associated windows), as well as entire Emacs frames (frame name, size, position, etc.). This package is a robust desktop.el replacement.
 
 - **le-vertico**: Configures [Vertico](https://github.com/minad/vertico), a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
 
@@ -354,40 +398,17 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
   - **le-corfu-prescient**: When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
 
-- **le-dired**: Configures Dired to display directories before files and to omit specified files and directories (e.g., `.git`, `*.pyc`, `*.o`). Customizations:
-  - The parent directory entry (`..`) can be hidden by setting the variable `lightemacs-dired-omit-parent-directory` to `t`. (The `..` entry is redundant since pressing the `-` key navigates to the parent directory.)
-  - The variable `lightemacs-dired-hide-details-mode`, enabled by default, hides file details such as permissions, sizes, and modification dates.
-- **le-dired-filter**: Uses `dired-filter` to hide files, including dotfiles, omitted files, and files ignored by Git. By default, the **le-dired-filter** module only enables `dired-filter-by-omit`:
-  ```emacs-lisp
-  ;; By default, `dired-filter-by-omit' excludes "."
-  (setq lightemacs-dired-filter-setup-hook '(dired-filter-by-omit))
-  ```
-
 - **le-undo-fu**: Configures [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu), a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. (If you use Evil mode, the `le-undo-fu` module will replace Evil's undo system with `undo-fu`.)
 
 - **undo-fu-session**: Configures [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session), which complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting. The default undo system in Emacs has two main issues that undo-fu fixes:
   1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
   2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
 
-- **le-default-keybindings**: Increase or decrease the text scale using Ctrl combined with `+` or `-`.
-
 - **le-outline-indent**: The `le-outline-indent` module configures the [outline-indent](https://github.com/jamescherti/outline-indent.el) package, which provides `outline-indent-minor-mode`, a minor mode that enables code folding according to indentation levels. In addition to code folding, *outline-indent* allows: Moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, move backward/forward to the indentation level of the current line, and other features. The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
-
-- **le-savehist**: Configures savehist, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
-
-- **le-saveplace**: Enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off. (When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
-
-- **le-autorevert**: Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk. To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; To suppress minibuffer messages when Auto Revert reverts a buffer
-  (setq auto-revert-verbose nil)
-  ```
 
 - **le-persist-text-scale**: Configures the [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) package, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs. The text scale can be adjusted by pressing **Ctrl** together with `+` to increase it (`text-scale-increase`) or `-` to decrease it (`text-scale-decrease`). The le-persist-text-scale module.
 
 - **le-bufferfile**: configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files: `M-x bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name, `M-x bufferfile-delete`: Delete the file associated with a buffer and kill all buffers visiting the file, including clones/indirect buffers, `M-x bufferfile-copy`: Ensures that the destination directory exists and copies the file visited by the current buffer to a new file.
-
-- **le-recentf**: Recentf maintains a list of recently accessed files, making it easier to reopen files you have worked on recently. In addition to its built-in capabilities, the **le-recentf** module provides the following enhancements: Inserts the current file at the beginning of the recent files list upon buffer switch, Cleans up the recent files list when quitting Emacs, prior to its automatic saving, Cleans up and saves the recentf list every `lightemacs-recentf--auto-save-timer-interval` seconds (default: 550), Decrease recentf-mode verbosity by restricting its messages to the `*Messages*` buffer, preventing display in the minibuffer. Key mapping: Use `C-f` to invoke `recentf`.
 
 - The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation. The `le-dtrt-indent` module allows controlling automatic indentation detection via:
   - `lightemacs-dtrt-indent-inhibit`: When non-nil, disables automatic indentation detection in the current buffer.
@@ -402,8 +423,6 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
     ```
 
 - **le-flymake**: Configures Flymake, a built-in on-the-fly syntax checking tool that analyzes source code buffers in the background and highlights errors or warnings as you type. It invokes external syntax checkers or compilers asynchronously and annotates the buffer with diagnostic messages, which can be navigated using dedicated commands. Unlike language servers, Flymake itself does not perform analysis but provides a flexible framework that integrates with various backends, making it lightweight, extensible, and adaptable across different programming languages. By default, the **le-flymake** module enables Flymake automatically in `prog-mode` and `text-mode`. The **le-flymake** defines the following keybindings for navigating Flymake diagnostics: `M-g n`: Move to the **next** error or warning in the current buffer, `M-g p`: Move to the **previous** error or warning in the current buffer. These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs' convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively. (Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
-
-- **le-term**: Customizes the built-in terminal emulators `term` and `ansi-term`. It disables confirmation prompts when terminating active processes, removes horizontal scroll margins to avoid cursor-induced visual shifts, and hides the mode line to maximize usable space.
 
 - **le-kirigami**: Configure the [kirigami](https://github.com/jamescherti/kirigami.el) package, which unifies text folding across diverse Emacs modes (outline, outline-indent, org, markdown, hideshow, treesit, etc.), enabling a single configuration for fold operations. It also improves folding logic in `outline`, `markdown-mode`, and `org-mode` (handling deep folds, content-based closing, and sibling visibility) while fixing upstream issues.
 
@@ -473,11 +492,6 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-wgrep**: The [wgrep](https://github.com/mhayashi1120/Emacs-wgrep) (Writable Grep) package enables you to convert a grep, consult-ripgrep, or Embark Export buffers into an editable interface. It allows in-place modification of matched lines within the results buffer, which can then be propagated back to the corresponding files upon confirmation. This facilitates precise, bulk edits across multiple files efficiently, eliminating the need to open each file individually, and effectively transforms the grep results buffer into a controlled, multi-file editing environment.
 - **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
-- **le-elec-pair**: Automatically insert matching delimiters (), {}...
-- **le-paren**: `show-paren-mode` allows one to see matching pairs of parentheses and other characters. When point is on the opening character of one of the paired characters, the other is highlighted. When the point is after the closing character of one of the paired characters, the other is highlighted.
-- **le-which-key**: The built-in which-key package dynamically displays available keybindings in a popup or dedicated buffer as a key sequence is entered. It facilitates discovery and retention of key combinations by presenting context-sensitive completions, thereby enhancing navigation through complex or highly customized keymaps.
-
-- **le-default-settings**: Configure enhanced default settings, including improved defaults, Tree-sitter language source URLs for 54 programming languages (`treesit-language-source-alist`), backup files, warnings to ignore, a minibuffer depth indicator, scrolling, window behavior... *This is one of the most important modules. Keep it enabled.*
 
 - **le-theme**: The `le-theme` module loads the default theme. It can be configured via the `lightemacs-theme-name` variable. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
 
