@@ -132,8 +132,8 @@ local value was set by the user."
 
 (lightemacs-module-bind dired-filter
   (with-eval-after-load 'dired-filter
-    (define-key dired-mode-map (kbd "C-c f") #'lightemacs-dired-filter-local-toggle)
-    (define-key dired-mode-map (kbd "C-c F") #'lightemacs-dired-filter-global-toggle)))
+    (define-key dired-mode-map (kbd "C-c d") #'lightemacs-dired-filter-local-toggle)
+    (define-key dired-mode-map (kbd "C-c D") #'lightemacs-dired-filter-global-toggle)))
 
 (add-hook 'dired-mode-hook #'lightemacs-dired-filter--apply-state 80)
 
