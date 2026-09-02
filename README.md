@@ -126,7 +126,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;;   le-default-settings le-dired le-savehist
                            ;;   le-elec-pair le-paren le-recentf le-saveplace
                            ;;   le-autorevert
-                           ;;   le-term
                            le-flavor-essential
 
                            ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
@@ -379,8 +378,6 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
   ;; To suppress minibuffer messages when Auto Revert reverts a buffer
   (setq auto-revert-verbose nil)
   ```
-
-- **le-term**: Customizes the built-in terminal emulators `term` and `ansi-term`. It disables confirmation prompts when terminating active processes, removes horizontal scroll margins to avoid cursor-induced visual shifts, and hides the mode line to maximize usable space.
 
 ## Other modules
 

@@ -21,7 +21,6 @@
    ;;   le-default-settings le-dired le-savehist
    ;;   le-elec-pair le-paren le-recentf le-saveplace
    ;;   le-autorevert
-   ;;   le-term
    le-flavor-essential
 
    ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):

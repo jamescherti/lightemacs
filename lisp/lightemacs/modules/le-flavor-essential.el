@@ -42,10 +42,7 @@
 
    ;; Autorevert is a feature that automatically updates the contents of a
    ;; buffer to reflect changes made to the underlying file on disk.
-   le-autorevert
-
-   ;; Built-in Emacs terminal emulator
-   le-term))
+   le-autorevert))
 
 ;;; Provide
 
