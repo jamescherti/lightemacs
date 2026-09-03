@@ -26,7 +26,8 @@
 
 (lightemacs-use-package diff-hl
   :commands (diff-hl-mode
-             global-diff-hl-mode)
+             global-diff-hl-mode
+             diff-hl-update)
   :init
   (lightemacs-module-setq-maybe diff-hl
     diff-hl-flydiff-delay 0.4  ; Faster
