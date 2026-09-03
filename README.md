@@ -70,6 +70,8 @@ The ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/li
 ```elisp
 ;;; config.el --- Lightemacs Config -*- lexical-binding: t; -*-
 
+;;; Code:
+
 ;; Configure le-theme
 (setq lightemacs-theme-name 'ef-melissa-light)
 (setq lightemacs-theme-package 'ef-themes)
@@ -77,6 +79,10 @@ The ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/li
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
 
+;; For users who like features such as the menu bar and dialog boxes:
+;; (setq lightemacs-ui-features '(dialogs menu-bar tooltips context-menu))
+
+;; Modules that are enabled:
 (setq lightemacs-modules '(le-flavor-big
 
                            ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
@@ -97,6 +103,8 @@ The ([le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/li
                            ;; le-quick-sdcv
                            ;; le-which-key
                            ))
+
+;;; config.el ends here
 ```
 
 - Uncomment le-group-evil if you need evil keybindings.
@@ -111,6 +119,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 ;; Configure le-theme
 (setq lightemacs-theme-name 'ef-melissa-light)
 (setq lightemacs-theme-package 'ef-themes)
+(setq lightemacs-frame-title-format "%b - Lightemacs")
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
 
@@ -284,6 +293,8 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            le-indent-bars
                            le-org-appear
                            le-stripspace))
+
+;;; config.el ends here
 ```
 
 ## Your own module
