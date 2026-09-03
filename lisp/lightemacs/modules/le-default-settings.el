@@ -20,11 +20,9 @@
 
 ;;; Misc
 
-(setq enable-local-variables :safe)
-
-(setq next-error-verbose (not lightemacs-reduce-messages))
-
-(setq warning-minimum-level (if init-file-debug :warning :error))
+(setq enable-local-variables :safe
+      next-error-verbose (not lightemacs-reduce-messages)
+      warning-minimum-level (if init-file-debug :warning :error))
 
 ;; Alternative: (setq-default display-fill-column-indicator-character ?┊)
 (setq-default display-fill-column-indicator-character ?\N{U+2502})
@@ -93,11 +91,11 @@
 ;;; UI
 
 (unless noninteractive
-  (setq minibuffer-default-prompt-format " [default %s]")
-  (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode)
-  (setq line-number-mode t)
-  (setq column-number-mode t)
-  (setq mode-line-position-column-line-format '("%l:%C")))
+  (setq minibuffer-default-prompt-format " [default %s]"
+        line-number-mode t
+        column-number-mode t
+        mode-line-position-column-line-format '("%l:%C"))
+  (add-hook 'lightemacs-on-first-input-hook #'minibuffer-depth-indicate-mode))
 
 ;;; auto-mode-alist
 
@@ -131,11 +129,11 @@
 ;;; `proced'
 
 (unless noninteractive
-  (setq proced-tree-flag t)
-  (setq proced-auto-update-flag 'visible)
-  (setq proced-enable-color-flag t)
-  (setq proced-filter 'user) ; Change interactively with `s'
-  (setq proced-auto-update-interval 1))
+  (setq proced-tree-flag t
+        proced-auto-update-flag 'visible
+        proced-enable-color-flag t
+        proced-filter 'user ; Change interactively with `s'
+        proced-auto-update-interval 1))
 
 ;;; Patches
 
@@ -162,10 +160,8 @@
   (eldoc-add-command-completions
    "python-indent-dedent-line-backspace"
    "comment-indent-new-line"
-   "delete-char")
-
-  ;; TODO: Send patch to Emacs
-  (eldoc-add-command-completions
+   "delete-char"
+   ;; TODO: Send patch to Emacs
    "electric-pair-delete-pair"))
 
 (defun lightemacs-default-settings--sh-syntax-table ()
@@ -301,21 +297,19 @@ ARGS are the arguments passed to the original function."
 (defun lightemacs-term--setup ()
   "Configuration for term and `ansi-term' buffers."
   ;; Suppress prompts for terminating active processes when closing vterm
-  (setq-local confirm-kill-processes nil)
+  ;; Disable `hscroll-margin' in shell buffers to prevent visual jumping when
+  ;; the cursor approaches the left or right edges of the window.
+  ;; Disable the `mode-line'
+  (setq-local confirm-kill-processes nil
+              hscroll-margin 0
+              mode-line-format nil)
 
   ;; Prevent Emacs from prompting "Buffer has a running process; kill it?" when
   ;; closing the buffer or exiting the editor by silently disabling the
   ;; query-on-exit flag for the underlying shell process.
   (let ((proc (get-buffer-process (current-buffer))))
     (when proc
-      (set-process-query-on-exit-flag proc nil)))
-
-  ;; Disable `hscroll-margin' in shell buffers to prevent visual jumping when
-  ;; the cursor approaches the left or right edges of the window.
-  (setq-local hscroll-margin 0)
-
-  ;; Disable the `mode-line'
-  (setq-local mode-line-format nil))
+      (set-process-query-on-exit-flag proc nil))))
 
 (when lightemacs-term-setup
   (add-hook 'term-mode-hook #'lightemacs-term--setup t))
