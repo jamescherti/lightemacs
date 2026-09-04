@@ -177,17 +177,24 @@ is not added to the loaded list."
                                               nil
                                               priority-path)))
               (if exact-path
-                  ;; Pass base path (e.g. "/path/to/le-modname") so `require'
-                  ;; searches for .elc first (which also triggers the .eln
-                  ;; native-compilation swap if available), gracefully falling
-                  ;; back to .el if uncompiled.
-                  (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
-                    (lightemacs-debug-message "Load module path: %s (%s)"
-                                              feature-symbol
-                                              base-path)
-                    ;; Check and compile before attempting to load
-                    (lightemacs--compile-module-maybe base-path)
-                    (require feature-symbol base-path))
+                  (progn
+                    ;; Pass base path (e.g. "/path/to/le-modname") so `require'
+                    ;; searches for .elc first (which also triggers the .eln
+                    ;; native-compilation swap if available), gracefully falling
+                    ;; back to .el if uncompiled.
+                    (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
+                      (lightemacs-debug-message "Load module path: %s (%s)"
+                                                feature-symbol
+                                                base-path)
+
+                      ;; Load before compiling to prevent race conditions such
+                      ;; as: Debugger entered--Lisp error: (file-missing "Cannot
+                      ;; open load file" "No such file or directory"
+                      ;; "orderless") load("orderless" nil t)
+                      (require feature-symbol base-path)
+
+                      ;; Compile
+                      (lightemacs--compile-module-maybe base-path)))
                 (error "Cannot find module '%s'" feature-symbol))))
         (error
          (display-warning 'lightemacs

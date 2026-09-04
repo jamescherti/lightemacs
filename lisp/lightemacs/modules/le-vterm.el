@@ -28,7 +28,7 @@
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
 ;; Compilation of 'emacs-libvterm' module succeeded
 ;; Debugger entered--Lisp error: (error "Loading file
-;; /home/work/.emacs.d/lisp/lightemacs/modules/le-vterm.elc failed to provide
+;; ~/.emacs.d/lisp/lightemacs/modules/le-vterm.elc failed to provide
 ;; feature 'le-vterm'")
 (provide 'le-vterm)
 
