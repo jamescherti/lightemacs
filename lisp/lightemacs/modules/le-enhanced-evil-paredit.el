@@ -28,15 +28,20 @@
 
 (lightemacs-use-package enhanced-evil-paredit
   :after evil
+  :preface
+  (defun enhanced-evil-paredit--evil-snipe-setup ()
+    "Remove the S keybinding for `evil-snipe'."
+    (when (fboundp 'evil-define-key*)
+      (evil-define-key* 'normal enhanced-evil-paredit-mode-map (kbd "S") nil)))
+
   :init
+  ;; Remove the S keybinding from `enhanced-evil-paredit-mode-map' for
+  ;; `evil-snipe'.
+  (add-hook 'evil-snipe-mode-hook #'enhanced-evil-paredit--evil-snipe-setup)
+
   (lightemacs-module-hooks enhanced-evil-paredit
     enhanced-evil-paredit-mode
-    '(paredit-mode-hook))
-
-  (with-eval-after-load 'evil-snipe
-    (when (and (fboundp 'evil-define-key)
-               (fboundp 'evil-define-key*))
-      (evil-define-key 'normal enhanced-evil-paredit-mode-map (kbd "S") nil))))
+    '(paredit-mode-hook)))
 
 (provide 'le-enhanced-evil-paredit)
 
