@@ -20,6 +20,8 @@
 
 ;;; Misc
 
+(setq package-native-compile t)
+
 (setq enable-local-variables :safe
       next-error-verbose (not lightemacs-reduce-messages)
       warning-minimum-level (if init-file-debug :warning :error))

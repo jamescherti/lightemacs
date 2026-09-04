@@ -17,6 +17,14 @@
 
 (require 'lightemacs) ; `lightemacs-verbose-message'
 
+;;; Customization
+
+;; TODO Change this to t by default
+(defvar lightemacs-module-auto-compile nil
+  "Automatically byte and natively compile modules before loading.
+If non-nil, modules are checked and compiled if their source files are
+newer than their compiled counterparts. It defaults to nil.")
+
 ;;; Misc macros
 
 (defmacro lightemacs-module-hooks (name func hooks)
@@ -92,14 +100,6 @@ all settings in this block are skipped."
 
 ;;; Function: `lightemacs-module-load'
 
-;; (defun lightemacs-slow-module-load (modules)
-;;   "Load all modules listed in MODULES.
-;; If a module fails to load, an error warning is displayed and the module
-;; is not added to the loaded list."
-;;   (dolist (feature-symbol modules)
-;;     (lightemacs-verbose-message "Load module: %s" feature-symbol)
-;;     (require feature-symbol)))
-
 (defun lightemacs--remove-el-file-suffix (filename)
   "Remove the Elisp file suffix from FILENAME and return it (.el, .el.gz...)."
   (let ((suffixes (mapcar (lambda (ext) (concat ".el" ext))
@@ -111,10 +111,60 @@ all settings in this block are skipped."
           (throw 'done t))))
     filename))
 
+;; Byte compilation check
+(defun lightemacs--compile-module-maybe (base-path)
+  "Compile the Emacs Lisp module at BASE-PATH if necessary.
+It generates byte-compiled and natively compiled files only if the source file
+is newer than the existing artifacts. Native compilation is dispatched
+asynchronously.
+BASE-PATH is the base file path to the Emacs Lisp module without the extension."
+  (let ((el-file (concat base-path ".el")))
+    (when (file-exists-p el-file)
+      (let* ((elc-file (funcall
+                        (if (bound-and-true-p byte-compile-dest-file-function)
+                            byte-compile-dest-file-function
+                          #'byte-compile-dest-file)
+                        el-file))
+             (elc-file-exists (file-exists-p elc-file)))
+        (when (or (not elc-file-exists)
+                  (file-newer-than-file-p el-file elc-file))
+          ;; Clean up stale .elc files before recompiling
+          (when (and elc-file-exists
+                     (file-writable-p elc-file))
+            (lightemacs-verbose-message
+              "lightemacs-module-auto-compile: Delete: %s" elc-file)
+            (delete-file elc-file))
+          (lightemacs-verbose-message
+            "lightemacs-module-auto-compile: Byte compile: %s -> %s"
+            el-file elc-file)
+          (byte-compile-file el-file)))
+
+      ;; Native compilation check (Async)
+      (when (and (featurep 'native-compile)
+                 (fboundp 'native-comp-available-p)
+                 (native-comp-available-p)
+                 (fboundp 'comp-el-to-eln-filename)
+                 (fboundp 'native-compile-async))
+        (let* ((eln-file (comp-el-to-eln-filename el-file)))
+          (when (or (not (file-exists-p eln-file))
+                    (file-newer-than-file-p el-file eln-file))
+            ;; Suppress background compiler warnings/errors to avoid popups
+            (lightemacs-verbose-message
+              "lightemacs-module-auto-compile: Async native compile: %s"
+              el-file)
+            (native-compile-async el-file)))))))
+
 (defun lightemacs-module-load (modules)
   "Load all modules listed in MODULES.
 If a module fails to load, an error warning is displayed and the module
 is not added to the loaded list."
+  (when lightemacs-module-auto-compile
+    (require 'bytecomp)
+    (when (and (featurep 'native-compile)
+               (fboundp 'native-comp-available-p)
+               (native-comp-available-p))
+      (require 'comp nil t)))
+
   (let ((priority-path (cons (expand-file-name lightemacs-modules-directory)
                              load-path)))
     (dolist (feature-symbol modules)
@@ -134,10 +184,12 @@ is not added to the loaded list."
                     (lightemacs-debug-message "Load module path: %s (%s)"
                                               feature-symbol
                                               base-path)
+                    ;; Check and compile before attempting to load
+                    (when lightemacs-module-auto-compile
+                      (lightemacs--compile-module-maybe base-path))
                     (require feature-symbol base-path))
-
-                (error "Cannot find module '%s' in priority path" feature-symbol))))
-
+                (error "Cannot find module '%s' in `load-path'"
+                       feature-symbol))))
         (error
          (display-warning 'lightemacs
                           (format "Failed to load module '%s': %s"
