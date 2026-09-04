@@ -17,6 +17,7 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 ;;; Misc
 
@@ -74,7 +75,7 @@
 
 ;;; Tools (ripgrep and fd)
 
-(require 'le-core-cli-tools)
+(lightemacs-module-load '(le-core-cli-tools))
 
 (with-eval-after-load 'xref
   ;; Fix `elpaca' with `with-eval-after-load'

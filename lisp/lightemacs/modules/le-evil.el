@@ -101,7 +101,7 @@
 (when lightemacs-evil-setup-undo-redo
   (if (< emacs-major-version 31)
       (progn
-        (require 'le-undo-fu)
+        (lightemacs-module-load '(le-undo-fu))
         (with-eval-after-load 'evil
           (setq evil-undo-system 'undo-fu)
           (evil-set-undo-system evil-undo-system)))

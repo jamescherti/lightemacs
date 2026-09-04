@@ -25,7 +25,6 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 (require 'lightemacs-module)
-(require 'le-package-lint)
 
 (lightemacs-use-package package-lint-flymake
   :commands (package-lint-flymake-setup
