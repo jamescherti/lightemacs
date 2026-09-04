@@ -42,7 +42,7 @@
     diff-hl-mode
     nil)
 
-  (lightemacs-module-hooks diff-hl-flydiff-global
+  (lightemacs-module-hooks diff-hl-flydiff
     diff-hl-flydiff-mode
     '(global-diff-hl-mode-hook))
 
