@@ -171,36 +171,30 @@ is not added to the loaded list."
     (dolist (feature-symbol modules)
       (lightemacs-verbose-message "Load module: %s" feature-symbol)
 
-      (condition-case err
-          (unless (featurep feature-symbol)
-            (let ((exact-path (locate-library (symbol-name feature-symbol)
-                                              nil
-                                              priority-path)))
-              (if exact-path
-                  (progn
-                    ;; Pass base path (e.g. "/path/to/le-modname") so `require'
-                    ;; searches for .elc first (which also triggers the .eln
-                    ;; native-compilation swap if available), gracefully falling
-                    ;; back to .el if uncompiled.
-                    (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
-                      (lightemacs-debug-message "Load module path: %s (%s)"
-                                                feature-symbol
-                                                base-path)
+      (unless (featurep feature-symbol)
+        (let ((exact-path (locate-library (symbol-name feature-symbol)
+                                          nil
+                                          priority-path)))
+          (if exact-path
+              (progn
+                ;; Pass base path (e.g. "/path/to/le-modname") so `require'
+                ;; searches for .elc first (which also triggers the .eln
+                ;; native-compilation swap if available), gracefully falling
+                ;; back to .el if uncompiled.
+                (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
+                  (lightemacs-debug-message "Load module path: %s (%s)"
+                                            feature-symbol
+                                            base-path)
 
-                      ;; Load before compiling to prevent race conditions such
-                      ;; as: Debugger entered--Lisp error: (file-missing "Cannot
-                      ;; open load file" "No such file or directory"
-                      ;; "orderless") load("orderless" nil t)
-                      (require feature-symbol base-path)
+                  ;; Load before compiling to prevent race conditions such
+                  ;; as: Debugger entered--Lisp error: (file-missing "Cannot
+                  ;; open load file" "No such file or directory"
+                  ;; "orderless") load("orderless" nil t)
+                  (require feature-symbol base-path)
 
-                      ;; Compile
-                      (lightemacs--compile-module-maybe base-path)))
-                (error "Cannot find module '%s'" feature-symbol))))
-        (error
-         (display-warning 'lightemacs
-                          (format "Failed to load module '%s': %s"
-                                  feature-symbol (error-message-string err))
-                          :warning))))))
+                  ;; Compile
+                  (lightemacs--compile-module-maybe base-path)))
+            (error "Cannot find module '%s'" feature-symbol)))))))
 
 ;;; Provide
 
