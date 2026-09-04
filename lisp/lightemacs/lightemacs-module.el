@@ -101,9 +101,13 @@ all settings in this block are skipped."
 ;;; Function: `lightemacs-module-load'
 
 (defun lightemacs--remove-el-file-suffix (filename)
-  "Remove the Elisp file suffix from FILENAME and return it (.el, .el.gz...)."
-  (let ((suffixes (mapcar (lambda (ext) (concat ".el" ext))
-                          load-file-rep-suffixes)))
+  "Remove the Elisp suffix from FILENAME and return it (.el, .elc, .el.gz...).
+FILENAME is the full or relative path of the file as a string."
+  (let ((suffixes (apply #'append
+                         (mapcar (lambda (ext)
+                                   (list (concat ".elc" ext)
+                                         (concat ".el" ext)))
+                                 load-file-rep-suffixes))))
     (catch 'done
       (dolist (suffix suffixes filename)
         (when (string-suffix-p suffix filename)
@@ -133,12 +137,9 @@ BASE-PATH is the base path of the module without its file extension."
             ;; Clean up stale .elc files before recompiling
             (when (and elc-file-exists
                        (file-writable-p elc-file))
-              (lightemacs-verbose-message
-                "lightemacs-module-auto-compile: Delete: %s" elc-file)
+              (lightemacs-verbose-message "[DELETE] %s" elc-file)
               (delete-file elc-file))
-            (lightemacs-verbose-message
-              "lightemacs-module-auto-compile: Byte compile: %s -> %s"
-              el-file elc-file)
+            (lightemacs-verbose-message "[BYTE COMPILE] %s" el-file)
             (byte-compile-file el-file)))
 
         ;; Native compilation check (Async)
@@ -151,9 +152,7 @@ BASE-PATH is the base path of the module without its file extension."
             (when (or (not (file-exists-p eln-file))
                       (file-newer-than-file-p el-file eln-file))
               ;; Suppress background compiler warnings/errors to avoid popups
-              (lightemacs-verbose-message
-                "lightemacs-module-auto-compile: Async native compile: %s"
-                el-file)
+              (lightemacs-verbose-message "[ASYNC NATIVE COMPILE] %s" el-file)
               (native-compile-async el-file))))))))
 
 (defun lightemacs-module-load (modules)

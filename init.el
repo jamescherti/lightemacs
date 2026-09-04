@@ -39,6 +39,30 @@
   (lightemacs-load-user-init
    (expand-file-name "init.el" minimal-emacs-user-directory)))
 
+;;; Compile core modules and init files
+
+(require 'lightemacs-module)
+
+(let ((init-files '("early-init"
+                    "init")))
+  (dolist (name init-files)
+    ;; Compile Minimal-emacs init.el
+    (let ((base-path (expand-file-name name minimal-emacs-user-directory)))
+      (lightemacs--compile-module-maybe base-path))
+
+    ;; Compile Lightemacs early-init.el
+    (let ((base-path (expand-file-name name lightemacs-user-directory)))
+      (lightemacs--compile-module-maybe base-path))))
+
+(let ((core-modules '("le-core-cli-tools"
+                      "le-core-defaults"
+                      "lightemacs"
+                      "lightemacs-module"
+                      "lightemacs-use-package")))
+  (dolist (module core-modules)
+    (let ((base-path (expand-file-name module lightemacs-core-directory)))
+      (lightemacs--compile-module-maybe base-path))))
+
 ;;; Configure the package manager
 
 (defvar lightemacs-use-package--package-manager-loaded nil)
@@ -48,15 +72,24 @@
     (cond
      ;; Straight
      ((eq lightemacs-package-manager 'straight)
+      (lightemacs--compile-module-maybe
+       (expand-file-name "le-core-pm-straight"
+                         lightemacs-core-directory))
       (require 'le-core-pm-straight))
 
      ;; Elpaca
      ((eq lightemacs-package-manager 'elpaca)
+      (lightemacs--compile-module-maybe
+       (expand-file-name "le-core-pm-elpaca"
+                         lightemacs-core-directory))
       (require 'le-core-pm-elpaca))
 
      ;; use-package (built-in)
      ((or (eq lightemacs-package-manager 'builtin-package)
           (eq lightemacs-package-manager 'use-package))
+      (lightemacs--compile-module-maybe
+       (expand-file-name "le-core-pm-use-package"
+                         lightemacs-core-directory))
       (require 'le-core-pm-use-package))
 
      (t
@@ -339,7 +372,6 @@
 ;;; Load modules
 
 (require 'lightemacs-use-package)
-(require 'lightemacs-module)
 
 (if (fboundp 'lightemacs-module-load)
     (progn
