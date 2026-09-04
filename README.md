@@ -85,6 +85,9 @@ Here is an example based on **le-flavor-big**:
 ;; For users who like features such as the menu bar and dialog boxes:
 ;; (setq lightemacs-ui-features '(dialogs menu-bar tooltips context-menu))
 
+;; (add-hook 'python-mode-hook #'eglot-ensure)
+;; (add-hook 'python-ts-mode-hook #'eglot-ensure)
+
 ;; Modules that are enabled:
 (setq lightemacs-modules '(le-flavor-big
 
