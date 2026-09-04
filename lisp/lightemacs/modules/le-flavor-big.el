@@ -31,6 +31,7 @@
 
    ;; le-easysession  ;; Persist and restore session
    ;; le-buffer-guardian  ;; Auto save buffers
+   ;; le-apheleia
    ;; le-diff-hl
    ;; le-magit
    ;; le-server
@@ -153,7 +154,6 @@
    le-dtrt-indent
 
    ;; Development
-   le-apheleia
    le-yasnippet
    le-yasnippet-snippets
    le-dumb-jump

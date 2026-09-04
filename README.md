@@ -146,6 +146,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 
                            ;; le-easysession  ;; Persist and restore session
                            ;; le-buffer-guardian  ;; Auto save buffers
+                           ;; le-apheleia
                            ;; le-diff-hl
                            ;; le-magit
                            ;; le-server
