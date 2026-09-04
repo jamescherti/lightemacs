@@ -188,8 +188,7 @@ is not added to the loaded list."
                     ;; Check and compile before attempting to load
                     (lightemacs--compile-module-maybe base-path)
                     (require feature-symbol base-path))
-                (error "Cannot find module '%s' in `load-path'"
-                       feature-symbol))))
+                (error "Cannot find module '%s'" feature-symbol))))
         (error
          (display-warning 'lightemacs
                           (format "Failed to load module '%s': %s"
