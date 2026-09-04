@@ -333,7 +333,7 @@
          ,@(when (boundp 'package-user-dir)
              `((setq package-user-dir ,package-user-dir)))
 
-         (setq treesit-extra-load-path ,treesit-extra-load-path)))
+         (setq treesit-extra-load-path ',treesit-extra-load-path)))
 
 ;; TODO this is broken
 ;; (setq native-comp-async-env-modifier-form
