@@ -40,11 +40,9 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'le-vertico)
-(require 'le-prescient)
 
 (lightemacs-use-package vertico-prescient
-  :after vertico
+  :after (prescient vertico)
   :commands vertico-prescient-mode
   :hook (vertico-mode . vertico-prescient-mode)
   :init

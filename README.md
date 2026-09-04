@@ -155,6 +155,8 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-inhibit-mouse
                            ;; le-quick-sdcv
                            ;; le-which-key
+                           ;; le-paredit
+                           ;; le-enhanced-evil-paredit
 
                            ;; Auto compile all .el files
                            le-compile-angel
@@ -283,7 +285,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;;   le-highlight-defined le-aggressive-indent
                            ;;   le-elisp-refs le-easy-escape
                            le-group-emacs-lisp
-                           le-paredit
                            le-elisp-autofmt
                            le-page-break-lines
 

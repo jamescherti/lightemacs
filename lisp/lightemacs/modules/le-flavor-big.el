@@ -40,6 +40,8 @@
    ;; le-inhibit-mouse
    ;; le-quick-sdcv
    ;; le-which-key
+   ;; le-paredit
+   ;; le-enhanced-evil-paredit
 
    ;; Auto compile all .el files
    le-compile-angel
@@ -168,7 +170,6 @@
    ;;   le-highlight-defined le-aggressive-indent
    ;;   le-elisp-refs le-easy-escape
    le-group-emacs-lisp
-   le-paredit
    le-elisp-autofmt
    le-page-break-lines
 

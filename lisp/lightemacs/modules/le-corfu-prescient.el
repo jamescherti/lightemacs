@@ -39,11 +39,9 @@
 (require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'le-corfu)
-(require 'le-prescient)
 
 (lightemacs-use-package corfu-prescient
-  :after corfu
+  :after (corfu prescient)
   :commands corfu-prescient-mode
   :init
   (lightemacs-module-hooks corfu-prescient

@@ -19,7 +19,6 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'le-yasnippet)
 
 (lightemacs-use-package yasnippet-snippets
   :after yasnippet)

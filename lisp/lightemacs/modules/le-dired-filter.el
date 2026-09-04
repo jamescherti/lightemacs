@@ -21,7 +21,6 @@
 (require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'le-dired)
 
 ;;; Variables
 
@@ -42,6 +41,7 @@ For instance:
 ;;; Use-package dired-filter
 
 (lightemacs-use-package dired-filter
+  :after dired
   :commands (dired-filter-mode
              dired-filter-pop-all
              dired-filter-by-git-ignored
