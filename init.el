@@ -288,6 +288,7 @@
 ;; (lightemacs--generate-le-autogen-config)
 
 ;; Inject the config path into the async native compiler environment
+;; Inject the config path into the async native compiler environment
 (setq native-comp-async-env-modifier-form
       `(progn
          (setq lightemacs-package-manager ',lightemacs-package-manager)
@@ -310,7 +311,7 @@
                  (setq straight-check-for-modifications nil)
                  (let ((lightemacs--no-bootstrap t))
                    (load (expand-file-name "le-core-pm-straight.el"
-                                           lightemacs-core-directory)
+                                           ',lightemacs-core-directory)
                          nil
                          'nomessage)))))
            ((eq lightemacs-package-manager 'elpaca)
@@ -318,21 +319,21 @@
                (unless (fboundp 'elpaca)
                  (let ((lightemacs--no-bootstrap t))
                    (load (expand-file-name "le-core-pm-elpaca.el"
-                                           lightemacs-core-directory)
+                                           ',lightemacs-core-directory)
                          nil
-                         'nomessage)))))
-           ;; ((memq lightemacs-package-manager '(builtin-package use-package))
-           ;;  `(progn
-           ;;     (package-initialize)))
-           )
+                         'nomessage))))))
 
-         (setq use-package-expand-minimally ,use-package-expand-minimally)
-         (setq use-package-always-ensure ,use-package-always-ensure)
-         (setq package-user-dir ,package-user-dir)
-         (setq treesit-extra-load-path ',treesit-extra-load-path)
+         ;; Safely inject package variables only if they are bound
+         ,@(when (boundp 'use-package-expand-minimally)
+             `((setq use-package-expand-minimally ,use-package-expand-minimally)))
 
-         ;; (setenv "LIGHTEMACS__INTERNAL_LOAD_CONFIG" ,lightemacs-autogen-config-file)
-         ))
+         ,@(when (boundp 'use-package-always-ensure)
+             `((setq use-package-always-ensure ,use-package-always-ensure)))
+
+         ,@(when (boundp 'package-user-dir)
+             `((setq package-user-dir ,package-user-dir)))
+
+         (setq treesit-extra-load-path ,treesit-extra-load-path)))
 
 ;; TODO this is broken
 ;; (setq native-comp-async-env-modifier-form
