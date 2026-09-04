@@ -37,36 +37,35 @@
     nil)
 
   (lightemacs-module-setq-maybe corfu
-    tab-always-indent 'complete
-    ;; Select first candidate, except for directories
     corfu-preselect 'directory
     global-corfu-modes '((not erc-mode
                               circe-mode
                               help-mode
                               gud-mode
                               eat-mode
+                              term-mode
                               vterm-mode)
                          t)
-    corfu-auto nil
+    corfu-auto nil ; Security
     corfu-auto-delay 0.24
     corfu-auto-prefix 2
-    corfu-count 16
-    corfu-max-width 120
+    corfu-count 15
+    corfu-max-width 100
     corfu-cycle lightemacs-cycle
-    corfu-scroll-margin 1
+    corfu-scroll-margin 2
     corfu-preview-current nil  ; Disable current candidate preview
-    corfu-min-width 38
+    corfu-min-width 20
 
-    ;; Keep the completion popup open at boundaries, such as when inserting a
-    ;; space. Also, keep it open even if there are no matching candidates. This
-    ;; is beneficial because you can continue editing without the popup closing,
-    ;; allowing you to refine your input, apply filters, and more easily find
-    ;; the candidate you are searching for.
+    ;; Setting `corfu-quit-at-boundary' to nil prevents Corfu from closing the
+    ;; completion popup when the cursor reaches or crosses the completion
+    ;; boundary defined by the active completion-at-point-function (Capf).
+    ;; You can freely type spaces or delimiter characters to supply multiple
+    ;; filtering terms to Orderless without the session terminating.
     corfu-quit-at-boundary nil
-    corfu-quit-no-match nil
 
-    ;; Configure handling of exact matches
-    corfu-on-exact-match nil)
+    ;; Prevent the popup from closing when a typo results in zero matches.
+    ;; This allows using Backspace to correct the input and restore candidates.
+    corfu-quit-no-match nil)
 
   (when lightemacs-corfu-add-to-savehist
     (with-eval-after-load 'savehist
