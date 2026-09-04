@@ -31,6 +31,7 @@
 
    ;; le-easysession  ;; Persist and restore session
    ;; le-buffer-guardian  ;; Auto save buffers
+   ;; le-diff-hl
    ;; le-magit
    ;; le-server
    ;; le-rainbow-delimiters
@@ -153,7 +154,6 @@
 
    ;; Development
    le-apheleia
-   le-diff-hl
    le-yasnippet
    le-yasnippet-snippets
    le-dumb-jump

@@ -65,7 +65,7 @@ The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration f
 
 ### Example 1
 
-The **le-flavor-big** flavor provides a complete setup for software development and prose writing. It integrates a modern completion and search stack (Vertico, Consult, Embark, Orderless, Marginalia, Corfu, and Cape), persistent undo history via undo-fu-session, and performance optimizations through byte-compilation and gcmh. For coding, it adds automatic code formatting (Apheleia), on-the-fly syntax checking (Flymake), Git fringe diffs (diff-hl), snippets (YASnippet), jump-to-definition (dumb-jump), automatic indentation detection (dtrt-indent), and comprehensive code folding. It also includes dedicated major modes for Markdown, YAML, CSV, and Git configurations, full support for Emacs Lisp development with Paredit and formatting tools, and fast navigation utilities such as Avy and Expand Region. (See the [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el) source for the full package list).
+The **le-flavor-big** flavor provides a complete setup for software development and prose writing. It integrates a modern completion and search stack (Vertico, Consult, Embark, Orderless, Marginalia, Corfu, and Cape), persistent undo history via undo-fu-session, and performance optimizations through byte-compilation and gcmh. For coding, it adds automatic code formatting (Apheleia), on-the-fly syntax checking (Flymake), snippets (YASnippet), jump-to-definition (dumb-jump), automatic indentation detection (dtrt-indent), and comprehensive code folding. It also includes dedicated major modes for Markdown, YAML, CSV, and Git configurations, full support for Emacs Lisp development with Paredit and formatting tools, and fast navigation utilities such as Avy and Expand Region. (See the [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el) source for the full package list).
 
 Here is an example based on **le-flavor-big**:
 
@@ -146,6 +146,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 
                            ;; le-easysession  ;; Persist and restore session
                            ;; le-buffer-guardian  ;; Auto save buffers
+                           ;; le-diff-hl
                            ;; le-magit
                            ;; le-server
                            ;; le-rainbow-delimiters
@@ -268,7 +269,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 
                            ;; Development
                            le-apheleia
-                           le-diff-hl
                            le-yasnippet
                            le-yasnippet-snippets
                            le-dumb-jump
