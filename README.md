@@ -88,6 +88,8 @@ Here is an example based on **le-flavor-big**:
 ;; Modules that are enabled:
 (setq lightemacs-modules '(le-flavor-big
 
+                           le-display-line-numbers
+
                            ;; These modules are not included in le-flavor-big and can be uncommented
                            ;; if you need them:
 
@@ -97,8 +99,13 @@ Here is an example based on **le-flavor-big**:
                            ;; le-evil-surround
                            ;; le-evil-visualstar
 
+                           ;; le-display-line-numbers
+                           ;; le-vim-tab-bar
                            ;; le-easysession  ;; Persist and restore session
+                           ;; le-buffer-terminator
                            ;; le-buffer-guardian  ;; Auto save buffers
+                           ;; le-apheleia
+                           ;; le-diff-hl
                            ;; le-magit
                            ;; le-server
                            ;; le-rainbow-delimiters
@@ -108,6 +115,9 @@ Here is an example based on **le-flavor-big**:
                            ;; le-inhibit-mouse
                            ;; le-quick-sdcv
                            ;; le-which-key
+                           ;; le-paredit
+                           ;; le-enhanced-evil-paredit
+                           ;; le-indent-bars
                            ))
 
 ;;; config.el ends here
@@ -146,7 +156,9 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-evil-surround
                            ;; le-evil-visualstar
 
+                           ;; le-vim-tab-bar
                            ;; le-easysession  ;; Persist and restore session
+                           ;; le-buffer-terminator
                            ;; le-buffer-guardian  ;; Auto save buffers
                            ;; le-apheleia
                            ;; le-diff-hl
@@ -161,6 +173,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-which-key
                            ;; le-paredit
                            ;; le-enhanced-evil-paredit
+                           ;; le-indent-bars
 
                            ;; Auto compile all .el files
                            le-compile-angel
@@ -236,9 +249,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; as file sizes, documentation, or metadata.
                            le-marginalia
 
-                           ;; Vim tab bar
-                           le-vim-tab-bar
-
                            ;; prescient.el is a library for sorting and
                            ;; filtering lists of candidates, such as those
                            ;; presented by packages like Vertico or Corfu.
@@ -261,7 +271,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 
                            ;; Built-in
                            le-winner
-                           le-display-line-numbers
 
                            ;; This package provides functions to detects the
                            ;; indentation offset used in existing source code
@@ -298,9 +307,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; Misc
                            le-helpful
                            le-avy
-                           le-buffer-terminator
                            le-expand-region
-                           le-indent-bars
                            le-org-appear
                            le-stripspace))
 

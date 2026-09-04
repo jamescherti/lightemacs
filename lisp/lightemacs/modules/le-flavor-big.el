@@ -29,7 +29,10 @@
    ;; le-evil-surround
    ;; le-evil-visualstar
 
+   ;; le-display-line-numbers
+   ;; le-vim-tab-bar
    ;; le-easysession  ;; Persist and restore session
+   ;; le-buffer-terminator
    ;; le-buffer-guardian  ;; Auto save buffers
    ;; le-apheleia
    ;; le-diff-hl
@@ -44,6 +47,7 @@
    ;; le-which-key
    ;; le-paredit
    ;; le-enhanced-evil-paredit
+   ;; le-indent-bars
 
    ;; Auto compile all .el files
    le-compile-angel
@@ -119,9 +123,6 @@
    ;; as file sizes, documentation, or metadata.
    le-marginalia
 
-   ;; Vim tab bar
-   le-vim-tab-bar
-
    ;; prescient.el is a library for sorting and
    ;; filtering lists of candidates, such as those
    ;; presented by packages like Vertico or Corfu.
@@ -144,7 +145,6 @@
 
    ;; Built-in
    le-winner
-   le-display-line-numbers
 
    ;; This package provides functions to detects the
    ;; indentation offset used in existing source code
@@ -161,14 +161,12 @@
 
    ;; Code Folding
    ;; Includes:
-   ;;   le-outline le-outline-indent
-   ;;   le-hideshow le-treesit-fold le-kirigami
+   ;;   le-outline le-outline-indent le-hideshow le-treesit-fold le-kirigami
    le-group-code-folding
 
    ;; Development: Elisp
    ;; le-group-emacs-lisp includes:
-   ;;   le-highlight-defined le-aggressive-indent
-   ;;   le-elisp-refs le-easy-escape
+   ;;   le-highlight-defined le-aggressive-indent le-elisp-refs le-easy-escape
    le-group-emacs-lisp
    le-elisp-autofmt
    le-page-break-lines
@@ -180,9 +178,7 @@
    ;; Misc
    le-helpful
    le-avy
-   le-buffer-terminator
    le-expand-region
-   le-indent-bars
    le-org-appear
    le-stripspace))
 
