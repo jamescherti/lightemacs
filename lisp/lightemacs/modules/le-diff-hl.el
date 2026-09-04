@@ -49,11 +49,9 @@
   (lightemacs-module-setq-maybe diff-hl
     diff-hl-flydiff-delay 0.4  ; Faster
     diff-hl-draw-borders nil
-    diff-hl-disable-on-remote t
     diff-hl-show-staged-changes nil  ; Realtime feedback
     diff-hl-update-async t  ; Do not block Emacs
     diff-hl-global-modes '(not pdf-view-mode image-mode)))
-
 
 ;;; Bug fix: Update diff-hl after switching to a buffer
 
