@@ -41,7 +41,9 @@
     gcmh-auto-idle-delay-factor 10
 
     gcmh-high-cons-threshold (* 100 1024 1024)
-    gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold
+    gcmh-low-cons-threshold (if (boundp 'minimal-emacs-gc-cons-threshold)
+                                minimal-emacs-gc-cons-threshold
+                              800000)
 
     ;; This variable determines how long Emacs should wait (in seconds) while
     ;; being idle before triggering garbage collection. "Idle" here means no
