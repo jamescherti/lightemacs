@@ -85,9 +85,9 @@ Set to nil to ignore window size and position during session restoration.")
             ;; Excluding geometry
             (if (daemonp)
                 (add-hook 'server-after-make-frame-hook
-                          #'easysession-load-including-geometry 102)
+                          #'easysession-load 102)
               (add-hook 'lightemacs-emacs-startup-hook
-                        #'easysession-load-including-geometry 102))))))
+                        #'easysession-load 102))))))
 
     ;; Auto save mode
     (add-hook 'lightemacs-emacs-startup-hook #'easysession-save-mode 103))
