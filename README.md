@@ -201,6 +201,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; can be selected by navigating up or down.
                            le-corfu
                            le-corfu-popupinfo
+                           ;; le-nerd-icons-corfu
 
                            ;; (Cape integrates with corfu)
                            ;;
@@ -431,6 +432,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-corfu**: [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab.
 
 - **le-corfu-popupinfo**: Configures [corfu-popupinfo](https://github.com/minad/corfu), which displays a side window with extra details when you select a completion candidate. For example, when completing a function name like `find-file`, the popup automatically shows its docstring or the file path where the function is defined. (Requirement: corfu)
+
+- **le-nerd-icons-corfu**: Configures [nerd-icons-corfu](https://github.com/LuigiPiucco/nerd-icons-corfu), which adds a column of metadata icons to the left or right of candidates in the popup menu. Instead of plain text items, candidates appear with visual markers indicating their type (functions, variables, faces, keywords, modules...).
 
 - **le-cape**: Configures [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 

@@ -72,6 +72,7 @@
    ;; can be selected by navigating up or down.
    le-corfu
    le-corfu-popupinfo
+   ;; le-nerd-icons-corfu
 
    ;; (Cape integrates with corfu)
    ;;
