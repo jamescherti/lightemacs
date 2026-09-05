@@ -62,6 +62,7 @@ they explicitly opt out of the inhibition.")
     (when (memq 'magic-return evil-collection-corfu-key-themes)
       (evil-define-key 'insert corfu-map (kbd "<return>") 'corfu-insert)))
 
+  :config
   (evil-collection-init)
 
   ;; Disable unimpaired mappings globally
