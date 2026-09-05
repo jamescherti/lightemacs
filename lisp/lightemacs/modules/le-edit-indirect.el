@@ -27,8 +27,8 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package edit-indirect
-  :commands edit-indirect-mode
-  :commands edit-indirect-region)
+  :commands (edit-indirect-mode
+             edit-indirect-region))
 
 (provide 'le-edit-indirect)
 
