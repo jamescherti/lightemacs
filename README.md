@@ -200,6 +200,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; current candidates, positioned either below or above the point. Candidates
                            ;; can be selected by navigating up or down.
                            le-corfu
+                           le-corfu-popupinfo
 
                            ;; (Cape integrates with corfu)
                            ;;
@@ -428,6 +429,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-consult-dir**: Configures the [consult-dir](https://github.com/karthink/consult-dir) package which extends the Consult framework by providing convenient ways to quickly switch to and insert directory paths. It supports switching to recent directories, project roots (if available), bookmarks, or TRAMP hosts. Similar to tools like *autojump* or *fasd*, it enables fast directory-jumping in Emacs. The command `M-x consult-dir` is globally available on `C-x C-d`, and is also bound within the minibuffer completion map to allow directory switching while completing file paths. Additionally, `consult-dir-jump-file` is bound to `C-x C-j` in the minibuffer, enabling direct navigation to files within a chosen directory, thereby extending the file-jumping workflow directly from minibuffer-based commands. (By default, this module also integrates with `fasd`, providing directory candidates from it when `fasd` is installed.)
 
 - **le-corfu**: [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down. By default, Corfu shows completions automatically without requiring the user to press Tab.
+
+- **le-corfu-popupinfo**: Configures [corfu-popupinfo](https://github.com/minad/corfu), which displays a side window with extra details when you select a completion candidate. For example, when completing a function name like `find-file`, the popup automatically shows its docstring or the file path where the function is defined. (Requirement: corfu)
 
 - **le-cape**: Configures [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 

@@ -71,6 +71,7 @@
    ;; current candidates, positioned either below or above the point. Candidates
    ;; can be selected by navigating up or down.
    le-corfu
+   le-corfu-popupinfo
 
    ;; (Cape integrates with corfu)
    ;;
