@@ -48,6 +48,7 @@
    ;; le-paredit
    ;; le-enhanced-evil-paredit
    ;; le-indent-bars
+   ;; le-evil-matchit
 
    ;; Auto compile all .el files
    le-compile-angel

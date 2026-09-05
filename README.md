@@ -121,6 +121,7 @@ Here is an example based on **le-flavor-big**:
                            ;; le-paredit
                            ;; le-enhanced-evil-paredit
                            ;; le-indent-bars
+                           ;; le-evil-matchit
                            ))
 
 ;;; config.el ends here
@@ -177,6 +178,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-paredit
                            ;; le-enhanced-evil-paredit
                            ;; le-indent-bars
+                           ;; le-evil-matchit
 
                            ;; Auto compile all .el files
                            le-compile-angel
@@ -440,7 +442,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-prescient**: Configures [prescient.el](https://github.com/radian-software/prescient.el) is a library for sorting and filtering lists of candidates, such as those presented by packages like Vertico or Corfu. The main benefit of *prescient.el* is that it adaptively orders candidates based on both frequency and recency of selection, making frequently used options appear first without sacrificing predictable filtering results. Additional prescient modules:
   - **le-vertico-prescient**: When prescient.el is used with Vertico, prescient.el enhances minibuffer completion by dynamically reordering candidates based on frequency and recency, making it faster to select commonly used options while preserving consistent, predictable filtering. **Example:** When running `M-x` and repeatedly selecting the command `compile`, prescient.el will place `compile` near the top of the Vertico minibuffer list in future sessions, reducing the need to type its full name.
 
-  - **le-corfu-prescient**: When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
+- **le-corfu-prescient**: When prescient.el is used with Corfu, prescient.el improves both in-buffer completions and pop-up completion menus by making candidate ordering more predictable and adaptive to recent usage, thus speeding up repeated selections. **Example:** If you frequently choose the completion `printf` when editing C code, prescient.el will gradually move `printf` toward the top of the list whenever similar candidates are offered, reducing the number of keystrokes needed to select it.
 
 - **le-undo-fu**: Configures [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu), a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. (If you use Evil mode, the `le-undo-fu` module will replace Evil's undo system with `undo-fu`.)
 
@@ -451,6 +453,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-outline-indent**: The `le-outline-indent` module configures the [outline-indent](https://github.com/jamescherti/outline-indent.el) package, which provides `outline-indent-minor-mode`, a minor mode that enables code folding according to indentation levels. In addition to code folding, *outline-indent* allows: Moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, move backward/forward to the indentation level of the current line, and other features. The `le-outline-indent` module can be enabled using `M-x outline-indent-minor-mode`.
 
 - **le-persist-text-scale**: Configures the [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) package, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs. The text scale can be adjusted by pressing **Ctrl** together with `+` to increase it (`text-scale-increase`) or `-` to decrease it (`text-scale-decrease`). The le-persist-text-scale module.
+
+- **le-evil-matchit**: Configures [evil-matchit](https://github.com/redguardtoo/evil-matchit), which enables jumping between language-specific matching tags and control structures (such as HTML/XML tags, if/else/fi, def/end, and loop blocks). It provides out-of-the-box support for a wide array of syntaxes, ranging from Python indentation blocks and Bash shell scripting constructs to Git merge conflicts. **Note: Despite its name, the *evil-matchit* package is fully compatible with vanilla Emacs and does NOT require `evil-mode`.**
 
 - **le-bufferfile**: configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files: `M-x bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name, `M-x bufferfile-delete`: Delete the file associated with a buffer and kill all buffers visiting the file, including clones/indirect buffers, `M-x bufferfile-copy`: Ensures that the destination directory exists and copies the file visited by the current buffer to a new file.
 
