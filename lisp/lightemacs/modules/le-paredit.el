@@ -55,7 +55,8 @@
   ;; Prevent ElDoc help from disappearing in the minibuffer when executing
   ;; certain Paredit commands (e.g., `paredit-backward-delete').
   (with-eval-after-load 'eldoc
-    (eldoc-add-command-completions "paredit-")))
+    (when (fboundp 'eldoc-add-command-completions)
+      (eldoc-add-command-completions "paredit-"))))
 
 (provide 'le-paredit)
 
