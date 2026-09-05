@@ -57,9 +57,14 @@
 
 ;; TODO: Send a patch to diff-hl?
 
-(defun lightemacs--diff-hl-update-hook (window)
-  "Update diff-hl when WINDOW buffer changes, if `diff-hl-mode' is enabled."
-  (let ((buffer (window-buffer window)))
+(defun lightemacs--diff-hl-update-hook (frame-or-window)
+  "Update `diff-hl' when buffer changes in FRAME-OR-WINDOW.
+FRAME-OR-WINDOW is the frame or window whose buffer configuration changed."
+  (let* ((window (if (windowp frame-or-window)
+                     frame-or-window
+                   (frame-selected-window frame-or-window)))
+         (buffer (and (window-live-p window)
+                      (window-buffer window))))
     (when (buffer-live-p buffer)
       (with-current-buffer buffer
         (when (and (bound-and-true-p diff-hl-mode)
