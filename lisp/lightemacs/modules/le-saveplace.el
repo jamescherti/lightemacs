@@ -49,7 +49,6 @@ It avoids recentering while an EasySession session is in progress."
                (>= scroll-conservatively 101)
                (not (bound-and-true-p easysession-load-in-progress))
                (buffer-file-name (buffer-base-buffer)))
-      ;; (lightemacs-saveplace--recenter (current-buffer))
       ;; Use a timer to ensure a window exists when recenter is called
       (run-with-timer 0 nil #'lightemacs-saveplace--recenter (current-buffer))))
 
@@ -73,9 +72,11 @@ Otherwise, the function executes normally."
     '(lightemacs-after-init-hook))
 
   :config
+  ;; Recenter
   (add-hook 'save-place-after-find-file-hook
             #'lightemacs-saveplace--after-find-file)
 
+  ;; Quiet
   (advice-add 'save-place-kill-emacs-hook :around
               #'lightemacs--around-save-place-kill-emacs-hook))
 
