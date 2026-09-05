@@ -160,12 +160,13 @@
   ;; * lisp/emacs-lisp/eldoc.el (eldoc-remove-command-completions):
   ;; * lisp/progmodes/python.el (python-base-mode): Add more commands to
   ;; 'eldoc-add-command-completions'.
-  (eldoc-add-command-completions
-   "python-indent-dedent-line-backspace"
-   "comment-indent-new-line"
-   "delete-char"
-   ;; TODO: Send patch to Emacs
-   "electric-pair-delete-pair"))
+  (when (fboundp 'eldoc-add-command-completions)
+    (eldoc-add-command-completions
+     "python-indent-dedent-line-backspace"
+     "comment-indent-new-line"
+     "delete-char"
+     ;; TODO: Send patch to Emacs
+     "electric-pair-delete-pair")))
 
 (defun lightemacs-default-settings--sh-syntax-table ()
   "Enhance `sh-mode' and `bash-ts-mode' syntax table."
