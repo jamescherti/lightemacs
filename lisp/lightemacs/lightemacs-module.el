@@ -166,8 +166,9 @@ is not added to the loaded list."
                (native-comp-available-p))
       (require 'comp nil t)))
 
-  (let ((priority-path (cons (expand-file-name lightemacs-modules-directory)
-                             load-path)))
+  (let ((priority-path (cons lightemacs-modules-directory
+                             (cons lightemacs-local-modules-directory
+                                   load-path))))
     (dolist (feature-symbol modules)
       (lightemacs-verbose-message "Load module: %s" feature-symbol)
 
