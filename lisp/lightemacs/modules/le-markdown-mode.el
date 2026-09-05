@@ -29,7 +29,7 @@
              markdown-view-mode
              markdown-do)
 
-  :mode (("\\.m(ark)?down$" . markdown-mode)
+  :mode (("\\.m\\(?:ark\\)?down\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
 
