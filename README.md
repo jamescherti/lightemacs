@@ -148,8 +148,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 ;; le-flavor-essential includes:
 ;; -----------------------------
 (setq lightemacs-modules '(;; le-flavor-essential enables:
-                           ;;   le-theme le-default-keybindings
-                           ;;   le-default-settings le-dired le-savehist
+                           ;;   le-theme le-default-settings le-dired le-savehist
                            ;;   le-elec-pair le-paren le-recentf le-saveplace
                            ;;   le-autorevert
                            le-flavor-essential
@@ -370,9 +369,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 ## Modules that are part of le-flavor-micro
 
-- **le-default-keybindings**: Default keybindings, such as "C--" (text-scale-decrease), "C-+" text-scale-increase, and "C-0" (text-scale-adjust).
-
-- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, scrolling, window behavior... *This is one of the most important modules. Keep it enabled.*
+- **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, scrolling, window behavior... *This is one of the most important modules. Keep it enabled.* This also enables default keybindings, such as "C--" (text-scale-decrease), "C-+" text-scale-increase, and "C-0" (text-scale-adjust).
 
 - **le-dired**: Configures Dired to display directories before files and to omit specified files and directories (e.g., `.git`, `*.pyc`, `*.o`). The parent directory entry (`..`) can be hidden by setting the variable `lightemacs-dired-omit-parent-directory` to `t`. (The `..` entry is redundant since pressing the `-` key navigates to the parent directory.) The variable `lightemacs-dired-hide-details-mode`, enabled by default, hides file details such as permissions, sizes, and modification dates.
 
@@ -389,7 +386,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 ## Modules that are part of le-flavor-essential
 
-- le-flavor-micro: Includes le-theme, le-default-keybindings, le-default-settings, and le-dired.
+- le-flavor-micro: Includes le-theme, le-default-settings, and le-dired.
 
 - **le-savehist**: Configures savehist, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
 

@@ -18,9 +18,6 @@
 (lightemacs-module-load
  '(le-theme
 
-   ;; Lightemacs keybindings
-   le-default-keybindings
-
    ;; Default settings (minibuffer, Emacs...) Configure enhanced default
    ;; settings, including improved defaults, backup files, warnings to ignore, a
    ;; minibuffer depth indicator, window behavior...

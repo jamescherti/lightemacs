@@ -17,10 +17,8 @@
 
 (lightemacs-module-load
  '(;; le-flavor-essential enables:
-   ;;   le-theme le-default-keybindings
-   ;;   le-default-settings le-dired le-savehist
-   ;;   le-elec-pair le-paren le-recentf le-saveplace
-   ;;   le-autorevert
+   ;;   le-theme le-default-settings le-dired le-savehist le-elec-pair le-paren
+   ;;   le-recentf le-saveplace le-autorevert
    le-flavor-essential
 
    ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
