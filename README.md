@@ -80,7 +80,9 @@ Here is an example based on **le-flavor-big**:
 (setq lightemacs-frame-title-format "%b - Lightemacs")
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
+
 ;; (setq corfu-auto t) ; Auto completion (Disabled by default)
+;; (setq-default display-line-numbers-type 'relative)
 
 ;; For users who like features such as the menu bar and dialog boxes:
 ;; (setq lightemacs-ui-features '(dialogs menu-bar tooltips context-menu))
@@ -90,7 +92,6 @@ Here is an example based on **le-flavor-big**:
 
 ;; Modules that are enabled:
 (setq lightemacs-modules '(le-flavor-big
-
                            le-display-line-numbers
 
                            ;; These modules are not included in le-flavor-big and can be uncommented

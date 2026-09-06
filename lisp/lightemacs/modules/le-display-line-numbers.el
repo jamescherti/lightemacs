@@ -24,11 +24,20 @@
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)
   :init
-  (lightemacs-module-hooks display-line-numbers
+  (lightemacs-module-hooks display-line-numbers-global
+    global-display-line-numbers-mode
+    '())
+  (lightemacs-module-hooks display-line-numbers-local
     display-line-numbers-mode
     '(prog-mode-hook
       text-mode-hook
-      conf-mode-hook)))
+      conf-mode-hook
+      diff-mode
+      ibuffer-mode-hook
+      grep-mode-hook
+      helpful-mode-hook
+      dired-mode-hook
+      org-agenda-mode-hook)))
 
 (provide 'le-display-line-numbers)
 
