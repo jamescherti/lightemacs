@@ -324,6 +324,10 @@ ARGS are the arguments passed to the original function."
 
 ;;; tab-width
 
+(defvar lightemacs-sync-tab-width t
+  "Whether to synchronize `tab-width' with the major mode indent offset.
+When non-nil, `tab-width' is updated automatically when a major mode loads.")
+
 (defun lightemacs--guess-indent-offset ()
   "Guess and return the indentation offset of the current major mode."
   (let* ((mode-str (symbol-name major-mode))
@@ -361,7 +365,8 @@ ARGS are the arguments passed to the original function."
   (when-let* ((val (lightemacs--guess-indent-offset)))
     (setq-local tab-width val)))
 
-(add-hook 'after-change-major-mode-hook #'lightemacs--set-tab-width -10)
+(when lightemacs-sync-tab-width
+  (add-hook 'after-change-major-mode-hook #'lightemacs--set-tab-width -10))
 
 ;;; Provide
 
