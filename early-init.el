@@ -85,7 +85,7 @@
 (run-hooks 'lightemacs-pre-early-init-hook)
 
 ;; Add lightemacs directories to `trusted-content'
-(unless (< emacs-major-version 31)
+(unless (< emacs-major-version 30)
   (unless (boundp 'trusted-content)
     (setq trusted-content nil))
 
