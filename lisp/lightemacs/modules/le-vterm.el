@@ -62,9 +62,7 @@
         (set-process-query-on-exit-flag proc nil))))
 
   :init
-  (lightemacs-module-hooks vterm
-    lightemacs-vterm--setup
-    '(vterm-mode-hook))
+  (add-hook 'vterm-mode-hook #'lightemacs-vterm--setup)
 
   (lightemacs-module-setq-maybe vterm
     vterm-timer-delay 0.05
