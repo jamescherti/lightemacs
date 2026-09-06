@@ -57,33 +57,45 @@
 
   (lightemacs-module-setq-maybe evil
     evil-search-wrap lightemacs-cycle
+    ;; Enabling `evil-want-fine-undo' provides more granular tracking of text
+    ;; changes. This allows you to revert small typos without losing an entire
+    ;; insertion block, making the undo system behave more like vanilla Emacs
+    ;; than standard Vim. While this clutters the history, the increased control
+    ;; makes the tradeoff worth it.
+    evil-want-fine-undo t
     ;; Time in seconds of idle before updating search highlighting.
-    evil-ex-hl-update-delay 0.05
-    ;; Make :s in visual mode operate only on the actual visual selection
-    ;; (character or block), instead of the full lines covered by the selection
-    evil-ex-visual-char-range t
-    ;; Use Vim-style regular expressions in search and substitute commands,
-    ;; allowing features like \v (very magic), \zs, and \ze for precise matches
-    evil-ex-search-vim-style-regexp t
+    evil-ex-hl-update-delay 0.01
+    ;; Prevent Evil state from being echoed, preserving Eldoc display in the
+    ;; minibuffer (If set to t, Eldoc output in the minibuffer will be
+    ;; overridden)
+    evil-echo-state nil
     ;; Disable copying the selection to the clipboard on every cursor move in
     ;; visual mode to increase performance
     evil-visual-update-x-selection-p nil
-    ;; Do not modify the mode line to show Evil state
-    evil-mode-line-format nil
-    ;; Suppress motion errors during keyboard macro execution in Evil
-    evil-kbd-macro-suppress-motion-error t
-    ;; Better Vim emulation
-    ;; evil-symbol-word-search t
-    evil-want-abbrev-expand-on-insert-exit nil
-    evil-respect-visual-line-mode nil
-    evil-want-C-g-bindings t
-    ;; evil-want-C-u-scroll t
+    ;; This modifies Y to yank text from the cursor to the end of the line. This
+    ;; is a adopted modern default (also used by Neovim) because it makes Y
+    ;; consistent with C (change to end of line) and D (delete to end of line).
+    ;; Traditional Vim behavior makes Y duplicate yy (yank whole line), which is
+    ;; redundant.
     evil-want-Y-yank-to-eol t
-    evil-want-C-i-jump t
+    ;; Make :s/text/text2/g in visual mode operate only on the actual visual
+    ;; selection (character or block), instead of the full lines covered by the
+    ;; selection
+    evil-ex-visual-char-range t
+    ;; Enabling these provides standard readline and Vim insert mode behavior.
+    ;; This allows users to delete characters, words, and lines using standard
+    ;; terminal keybindings while in insert mode.
     evil-want-C-h-delete t
     evil-want-C-w-delete t
-    evil-want-C-u-delete t)
-
+    evil-want-C-u-delete t
+    ;; Enable automatic horizontal split below and automatic vertical split to
+    ;; the right.
+    ;;
+    ;; Forcing horizontal splits to open below and vertical splits to open on
+    ;; the right aligns window management with modern IDEs and terminal
+    ;; multiplexers.
+    evil-split-window-below t
+    evil-vsplit-window-right t)
   :config
   (define-key evil-insert-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
   (define-key evil-normal-state-map (kbd "C-g") #'lightemacs-keyboard-quit)
