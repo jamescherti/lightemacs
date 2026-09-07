@@ -118,8 +118,9 @@
     ;; Occasionally, `evil' fails to respect the `evil-search-module' when
     ;; `evil-search-module' is in :custom, causing search behavior to diverge
     ;; from the configured value.
-    (setq evil-search-module 'evil-search)
-    (evil-select-search-module 'evil-search-module 'evil-search)))
+    (if (>= emacs-major-version 29)
+        (setopt evil-search-module 'evil-search)
+      (customize-set-variable 'evil-search-module 'evil-search))))
 
 ;;; Synchronize `evil-shift-width' with `tab-width'.
 
