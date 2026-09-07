@@ -35,6 +35,19 @@
   (setq evil-want-keybinding nil)
   (setq evil-collection-setup-minibuffer t))
 
+;;; Undo-redo
+
+(when lightemacs-evil-setup-undo-redo
+  (with-eval-after-load 'evil
+    (let ((undo-system (if (< emacs-major-version 31)
+                           (progn
+                             (lightemacs-module-load '(le-undo-fu))
+                             'undo-fu)
+                         'undo-redo)))
+      (if (>= emacs-major-version 29)
+          (setopt evil-undo-system undo-system)
+        (customize-set-variable 'evil-undo-system undo-system)))))
+
 ;;; Use-package evil
 
 (lightemacs-use-package evil
@@ -108,19 +121,6 @@
     (setq evil-search-module 'evil-search)
     (evil-select-search-module 'evil-search-module 'evil-search)))
 
-;;; Undo-redo
-
-(when lightemacs-evil-setup-undo-redo
-  (if (< emacs-major-version 31)
-      (progn
-        (lightemacs-module-load '(le-undo-fu))
-        (with-eval-after-load 'evil
-          (setq evil-undo-system 'undo-fu)
-          (evil-set-undo-system evil-undo-system)))
-    (with-eval-after-load 'evil
-      (setq evil-undo-system 'undo-redo)
-      (evil-set-undo-system evil-undo-system))))
-
 ;;; Synchronize `evil-shift-width' with `tab-width'.
 
 (defun lightemacs-evil--update-shift-width ()
@@ -179,41 +179,6 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
     (add-to-list 'evil-insert-state-bindings
                  '("\C-h" . lightemacs-evil-delete-backward-C-h))))
-
-;;; Patch: Fixes #2021: Fix 'wrong-type-argument wholenump' in evil-line-move
-
-;; URL: https://github.com/emacs-evil/evil/pull/2022
-;; When executing visual line movements, such as evil-previous-visual-line, that
-;; hit the beginning a buffer, evil-line-move can crash with a
-;; wrong-type-argument wholenump error:
-;;
-;; Fixes:
-;; ------
-;; Debugger entered--Lisp error: (wrong-type-argument wholenump -5)
-;;   line-move-to-column(-5)
-;;   line-move-finish(-5.625 1 t)
-;;   evil-line-move(-1)
-;;   evilcursor-previous-visual-line(1)
-;;   evilcursor-forward-line(-1)
-;;   evilcursor-smart-previous-line(nil)
-;;   funcall-interactively(evilcursor-smart-previous-line nil)
-;;   command-execute(evilcursor-smart-previous-line)
-(defun evil-line-move-sanitize-columns-advice (&rest _)
-  "Clamp column variables to 0 to prevent wholenump errors at boundaries."
-  ;; Sanitize goal-column
-  (when (numberp goal-column)
-    (setq goal-column (max 0 goal-column)))
-
-  ;; Sanitize temporary-goal-column (which can be a number or a cons cell)
-  (cond
-   ((numberp temporary-goal-column)
-    (setq temporary-goal-column (max 0 temporary-goal-column)))
-   ((consp temporary-goal-column)
-    (when (numberp (car temporary-goal-column))
-      (setcar temporary-goal-column (max 0 (car temporary-goal-column)))))))
-
-(with-eval-after-load 'evil-common
-  (advice-add 'evil-line-move :before #'evil-line-move-sanitize-columns-advice))
 
 ;;; Patch: Fix eldoc
 
