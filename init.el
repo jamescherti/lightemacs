@@ -172,6 +172,31 @@
 ;; Inject the config path into the async native compiler environment
 (setq native-comp-async-env-modifier-form
       `(progn
+         ;; The async workers run via emacs -batch and do not load your full
+         ;; user configuration. Therefore, global variables like
+         ;; create-lockfiles revert to their default value of t inside the
+         ;; worker processes.
+         ;;
+         ;; When multiple workers initialize straight.el simultaneously, they
+         ;; concurrently attempt to verify or regenerate straight-autoloads.el.
+         ;;
+         ;; The first worker creates a file system lock
+         ;; (.#straight-autoloads.el). When a second worker tries to access the
+         ;; file, it encounters the lock. Since it runs non-interactively in
+         ;; batch mode, it cannot prompt you for a resolution and immediately
+         ;; throws a lock conflict error.
+         ;;
+         ;; The following fixes: ■ Warning (native-compiler): Error: file-locked
+         ;; ("~/.emacs.d/var/straight/build/straight/straight-autoloads.el"
+         ;; "user@myhost (pid 111111)" "Cannot resolve lock conflict in batch
+         ;; mode")
+         ;;
+         ;; This ensures the background compilation processes act
+         ;; strictly as read-only environments regarding your package
+         ;; manager state, eliminating the race condition on the
+         ;; autoload file.
+         (setq create-lockfiles nil)
+
          (setq lightemacs-package-manager ',lightemacs-package-manager)
          (setq lightemacs-use-package--compiler-env-loaded t)
 
@@ -189,6 +214,18 @@
                  ;; Disable all straight.el modification checks and builds
                  (setq straight-disable-compile t)
                  (setq straight-disable-native-compile t)
+
+                 ;; Prevent the concurrent write attempts entirely, which fixes:
+                 ;; ■ Warning (native-compiler): Error: file-locked
+                 ;; ("~/.emacs.d/var/straight/build/straight/straight-autoloads.el"
+                 ;; "user@myhost (pid 111111)" "Cannot resolve lock conflict in
+                 ;; batch mode")
+                 ;;
+                 ;; This ensures the background compilation processes act
+                 ;; strictly as read-only environments regarding your package
+                 ;; manager state, eliminating the race condition on the
+                 ;; autoload file.
+                 (setq straight-disable-autoloads t)
                  (setq straight-check-for-modifications nil)
                  (let ((lightemacs--no-bootstrap t))
                    (load (expand-file-name "le-core-pm-straight.el"
