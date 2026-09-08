@@ -55,15 +55,15 @@ they explicitly opt out of the inhibition.")
   (lightemacs-module-setq-maybe evil-collection
     evil-collection-corfu-key-themes '(default magic-return))
 
+  :config
+  (evil-collection-init)
+
   ;; Corfu: Fix magic-return issue in GUI mode
   ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled
   ;; URL: https://github.com/emacs-evil/evil-collection/pull/895
   (with-eval-after-load 'corfu
     (when (memq 'magic-return evil-collection-corfu-key-themes)
       (evil-define-key 'insert corfu-map (kbd "<return>") 'corfu-insert)))
-
-  :config
-  (evil-collection-init)
 
   ;; Disable unimpaired mappings globally
   (when lightemacs-evil-collection-inhibit-unimpaired-mode
