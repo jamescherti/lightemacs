@@ -215,6 +215,7 @@
                  (setq straight-disable-compile t)
                  (setq straight-disable-native-compile t)
 
+                 ;; TODO is this still necessary?
                  ;; Prevent the concurrent write attempts entirely, which fixes:
                  ;; ■ Warning (native-compiler): Error: file-locked
                  ;; ("~/.emacs.d/var/straight/build/straight/straight-autoloads.el"
@@ -225,7 +226,8 @@
                  ;; strictly as read-only environments regarding your package
                  ;; manager state, eliminating the race condition on the
                  ;; autoload file.
-                 (setq straight-disable-autoloads t)
+                 ;; (setq straight-disable-autoloads t)
+
                  (setq straight-check-for-modifications nil)
                  (let ((lightemacs--no-bootstrap t))
                    (load (expand-file-name "le-core-pm-straight.el"
