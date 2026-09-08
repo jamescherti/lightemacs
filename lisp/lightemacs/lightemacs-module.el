@@ -143,11 +143,20 @@ BASE-PATH is the base path of the module without its file extension."
             (byte-compile-file el-file)))
 
         ;; Native compilation check (Async)
-        (when (and (featurep 'native-compile)
-                   (fboundp 'native-comp-available-p)
-                   (native-comp-available-p)
-                   (fboundp 'comp-el-to-eln-filename)
-                   (fboundp 'native-compile-async))
+        (when (and
+               ;; Prevent this function from from attempting to spawn async
+               ;; compilation processes when it is being executed by a
+               ;; background worker or any non-interactive script.
+               ;; TODO
+               ;; (not noninteractive)
+               ;; (not (bound-and-true-p comp-no-spawn))
+
+               ;; Is native compilation available?
+               (featurep 'native-compile)
+               (fboundp 'native-comp-available-p)
+               (native-comp-available-p)
+               (fboundp 'comp-el-to-eln-filename)
+               (fboundp 'native-compile-async))
           (let* ((eln-file (comp-el-to-eln-filename el-file)))
             (when (or (not (file-exists-p eln-file))
                       (file-newer-than-file-p el-file eln-file))

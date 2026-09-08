@@ -212,6 +212,13 @@
             `(progn
                (unless (fboundp 'straight-use-package)
                  ;; Disable all straight.el modification checks and builds
+                 ;;
+                 ;; TODO: We do not need those two lines
+                 ;; When I injected (setq straight-disable-compile t) into the
+                 ;; async background workers, I created a configuration
+                 ;; mismatch. When the background worker loaded straight.el, it
+                 ;; saw the new rules (compile = t / disabled) and compared them
+                 ;; against the existing build cache (compile = nil / enabled).
                  (setq straight-disable-compile t)
                  (setq straight-disable-native-compile t)
 
