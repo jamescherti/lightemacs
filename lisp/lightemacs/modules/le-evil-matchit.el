@@ -40,7 +40,7 @@
   :init
   (lightemacs-module-hooks evil-matchit-global
     global-evil-matchit-mode
-    '(lightemacs-after-init-hook))
+    '(evil-mode-hook))
 
   (lightemacs-module-hooks evil-matchit-local
     evil-matchit-mode

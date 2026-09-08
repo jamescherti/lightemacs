@@ -27,11 +27,10 @@
 
 (lightemacs-use-package evil-visualstar
   :commands global-evil-visualstar-mode
-  :after evil
   :init
   (lightemacs-module-hooks evil-visualstar
     global-evil-visualstar-mode
-    '(lightemacs-after-init-hook)))
+    '(evil-mode-hook)))
 
 (provide 'le-evil-visualstar)
 

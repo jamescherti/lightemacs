@@ -43,7 +43,7 @@
 
   (lightemacs-module-hooks evil-snipe-global
     evil-snipe-mode
-    '(lightemacs-on-first-buffer-hook))
+    '(evil-mode-hook))
 
   (lightemacs-module-hooks evil-snipe-local
     evil-snipe-local-mode
