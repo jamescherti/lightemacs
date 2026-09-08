@@ -160,15 +160,8 @@
 
 ;;; `display-line-numbers-mode'
 
-(setq-default
- ;; Setting `display-line-numbers-width' to a fixed, sufficiently large integer.
- ;; By default, Emacs calculates the required width of the line number column
- ;; dynamically. Fixing this width prevents the redisplay engine from repeatedly
- ;; checking if the margin needs to expand or shrink as you scroll through the
- ;; buffer.
- display-line-numbers-width 3
- ;; Display line numbers disregarding any narrowing.
- display-line-numbers-widen t)
+(setq-default display-line-numbers-width 3
+              display-line-numbers-widen t)
 
 ;;; imenu
 
