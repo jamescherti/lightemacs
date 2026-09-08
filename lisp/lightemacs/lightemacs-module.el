@@ -148,8 +148,8 @@ BASE-PATH is the base path of the module without its file extension."
                ;; compilation processes when it is being executed by a
                ;; background worker or any non-interactive script.
                ;; TODO
-               ;; (not noninteractive)
-               ;; (not (bound-and-true-p comp-no-spawn))
+               (not noninteractive)
+               (not (bound-and-true-p comp-no-spawn))
 
                ;; Is native compilation available?
                (featurep 'native-compile)
