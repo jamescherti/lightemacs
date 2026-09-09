@@ -56,24 +56,26 @@ This function only affects the current window and does nothing if the current
 buffer is not displayed in the selected window."
   (when (eq (current-buffer) (window-buffer))
     (let ((point (point))
-          (wend (window-end nil t))
-          (wstart (window-start nil))
+          (win-end (window-end nil t))
+          (win-start (window-start))
           (do-recenter nil))
-      (when (numberp arg)
-        (setq arg (abs arg)))
-
-      ;; If the end of the buffer is not already on the screen, scroll to
-      ;; position it near the bottom.
-      (overlay-recenter (point))
 
       (cond
-       ((> point wend)
+       ;; `win-end', the character position returned by `window-end', is the
+       ;; first position that is completely off-screen. If the point equals
+       ;; window-end, it is no longer visible and requires recentering.
+       ((>= point win-end)
         (setq do-recenter t)
-        (when (and adjust-arg arg)
-          (setq arg (* -1 arg))))
+        ;; If `adjust-arg' is nil and the caller intentionally passes a negative
+        ;; arg, this breaks the documented behavior of recenter. The absolute
+        ;; value conversion should only be applied when adjust-arg is non-nil.
+        (when (and adjust-arg (numberp arg))
+          (setq arg (- (abs arg)))))
 
-       ((< point wstart)
-        (setq do-recenter t)))
+       ((< point win-start)
+        (setq do-recenter t)
+        (when (and adjust-arg (numberp arg))
+          (setq arg (abs arg)))))
 
       (when do-recenter
         (recenter arg t)))))
