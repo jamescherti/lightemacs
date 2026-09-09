@@ -41,6 +41,8 @@
 
 ;;; Configure the package manager
 
+(require 'lightemacs-module) ; lightemacs--compile-module-maybe
+
 (defvar lightemacs-use-package--package-manager-loaded nil)
 
 (unless lightemacs-use-package--package-manager-loaded
@@ -81,8 +83,6 @@
 
 ;; These are compiled after the package manager is loaded to ensure it is
 ;; initialized at runtime rather than at compile time.
-
-(require 'lightemacs-module)
 
 (let ((init-files '("early-init"
                     "init")))
