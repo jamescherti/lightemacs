@@ -39,30 +39,6 @@
   (lightemacs-load-user-init
    (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;;; Compile core modules and init files
-
-(require 'lightemacs-module)
-
-(let ((init-files '("early-init"
-                    "init")))
-  (dolist (name init-files)
-    ;; Compile Minimal-emacs init.el
-    (let ((base-path (expand-file-name name minimal-emacs-user-directory)))
-      (lightemacs--compile-module-maybe base-path))
-
-    ;; Compile Lightemacs early-init.el
-    (let ((base-path (expand-file-name name lightemacs-user-directory)))
-      (lightemacs--compile-module-maybe base-path))))
-
-(let ((core-modules '("le-core-cli-tools"
-                      "le-core-defaults"
-                      "lightemacs"
-                      "lightemacs-module"
-                      "lightemacs-use-package")))
-  (dolist (module core-modules)
-    (let ((base-path (expand-file-name module lightemacs-core-directory)))
-      (lightemacs--compile-module-maybe base-path))))
-
 ;;; Configure the package manager
 
 (defvar lightemacs-use-package--package-manager-loaded nil)
@@ -100,6 +76,33 @@
        lightemacs-package-manager))))
 
   (setq lightemacs-use-package--package-manager-loaded t))
+
+;;; Compile core modules and init files
+
+;; These are compiled after the package manager is loaded to ensure it is
+;; initialized at runtime rather than at compile time.
+
+(require 'lightemacs-module)
+
+(let ((init-files '("early-init"
+                    "init")))
+  (dolist (name init-files)
+    ;; Compile Minimal-emacs init.el
+    (let ((base-path (expand-file-name name minimal-emacs-user-directory)))
+      (lightemacs--compile-module-maybe base-path))
+
+    ;; Compile Lightemacs early-init.el
+    (let ((base-path (expand-file-name name lightemacs-user-directory)))
+      (lightemacs--compile-module-maybe base-path))))
+
+(let ((core-modules '("le-core-cli-tools"
+                      "le-core-defaults"
+                      "lightemacs"
+                      "lightemacs-module"
+                      "lightemacs-use-package")))
+  (dolist (module core-modules)
+    (let ((base-path (expand-file-name module lightemacs-core-directory)))
+      (lightemacs--compile-module-maybe base-path))))
 
 ;;; Prepare hook `lightemacs-after-init-hook'
 
