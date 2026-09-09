@@ -363,54 +363,6 @@ ARGS are the arguments passed to the original function."
 
 (global-set-key [remap keyboard-quit] #'lightemacs-keyboard-quit)
 
-;;; tab-width
-
-(defvar lightemacs-sync-tab-width t
-  "Whether to synchronize `tab-width' with the major mode indent offset.
-When non-nil, `tab-width' is updated automatically when a major mode loads.")
-
-(defun lightemacs--guess-indent-offset ()
-  "Guess and return the indentation offset of the current major mode."
-  ;; `org-mode' tab-width should remain 8
-  (unless (derived-mode-p 'org-mode)
-    (let* ((mode-str (symbol-name major-mode))
-           (base-name (cond ((string-suffix-p "-ts-mode" mode-str)
-                             (substring mode-str 0 -8))
-                            ((string-suffix-p "-mode" mode-str)
-                             (substring mode-str 0 -5))
-                            (t mode-str)))
-           (suffixes '("-indent-offset"
-                       "-offset"
-                       "-basic-offset"
-                       "-indent-level"
-                       "-tab-width")))
-      (catch 'found
-        ;; Iterate through standard suffix conventions
-        (dolist (suffix suffixes)
-          (let ((var (intern-soft (concat base-name suffix))))
-            (when (and var
-                       (boundp var)
-                       (numberp (symbol-value var)))
-              (throw 'found (symbol-value var)))))
-
-        ;; Fallback to C-style basic offset
-        (when (and (boundp 'c-basic-offset) (numberp c-basic-offset))
-          (throw 'found c-basic-offset))
-
-        ;; Fallback to standard Emacs indent variable
-        (when (and (boundp 'standard-indent) (numberp standard-indent))
-          (throw 'found standard-indent))
-
-        nil))))
-
-(defun lightemacs--set-tab-width ()
-  "Synchronize `tab-width' with the mode offset."
-  (when-let* ((val (lightemacs--guess-indent-offset)))
-    (setq-local tab-width val)))
-
-(when lightemacs-sync-tab-width
-  (add-hook 'after-change-major-mode-hook #'lightemacs--set-tab-width -10))
-
 ;;; Provide
 
 (provide 'le-default-settings)
