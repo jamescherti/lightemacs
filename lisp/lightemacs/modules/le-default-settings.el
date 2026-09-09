@@ -363,6 +363,22 @@ ARGS are the arguments passed to the original function."
 
 (global-set-key [remap keyboard-quit] #'lightemacs-keyboard-quit)
 
+;;; Python
+
+;; By default, Emacs `python-mode' and `python-ts-mode' set tab-width to 8. PEP
+;; 8 specifies a standard indentation level of 4 spaces for Python code. Setting
+;; `tab-width' to `python-indent-offset' ensures correct visual alignment and
+;; consistency with standard Python indentation rules.
+;; TODO Send a patch to Emacs
+(defun lightemacs--python-tab-width-setup ()
+  "Set the buffer-local `tab-width` to 4 for Python files.
+This function takes no arguments."
+  (when (boundp 'python-indent-offset)
+    (setq tab-width python-indent-offset)))
+
+(add-hook 'python-mode-hook #'lightemacs--python-tab-width-setup)
+(add-hook 'python-ts-mode-hook #'lightemacs--python-tab-width-setup)
+
 ;;; Provide
 
 (provide 'le-default-settings)
