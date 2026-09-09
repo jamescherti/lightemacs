@@ -59,7 +59,6 @@ buffer is not displayed in the selected window."
           (win-end (window-end nil t))
           (win-start (window-start))
           (do-recenter nil))
-
       (cond
        ;; `win-end', the character position returned by `window-end', is the
        ;; first position that is completely off-screen. If the point equals
