@@ -50,25 +50,25 @@
     (cond
      ;; Straight
      ((eq lightemacs-package-manager 'straight)
+      (require 'le-core-pm-straight)
       (lightemacs--compile-module-maybe
        (expand-file-name "le-core-pm-straight"
-                         lightemacs-core-directory))
-      (require 'le-core-pm-straight))
+                         lightemacs-core-directory)))
 
      ;; Elpaca
      ((eq lightemacs-package-manager 'elpaca)
+      (require 'le-core-pm-elpaca)
       (lightemacs--compile-module-maybe
        (expand-file-name "le-core-pm-elpaca"
-                         lightemacs-core-directory))
-      (require 'le-core-pm-elpaca))
+                         lightemacs-core-directory)))
 
      ;; use-package (built-in)
      ((or (eq lightemacs-package-manager 'builtin-package)
           (eq lightemacs-package-manager 'use-package))
+      (require 'le-core-pm-use-package)
       (lightemacs--compile-module-maybe
        (expand-file-name "le-core-pm-use-package"
-                         lightemacs-core-directory))
-      (require 'le-core-pm-use-package))
+                         lightemacs-core-directory)))
 
      (t
       (error
