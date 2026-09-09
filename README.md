@@ -80,6 +80,7 @@ Here is an example based on **le-flavor-big**:
 (setq lightemacs-frame-title-format "%b - Lightemacs")
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
+;; (setq lightemacs-reduce-messages t)
 
 ;; (setq corfu-auto t) ; Auto completion (Disabled by default)
 ;; (setq-default display-line-numbers-type 'relative)
@@ -103,7 +104,6 @@ Here is an example based on **le-flavor-big**:
                            ;; le-evil-surround
                            ;; le-evil-visualstar
 
-                           ;; le-display-line-numbers
                            ;; le-vim-tab-bar
                            ;; le-easysession  ;; Persist and restore session
                            ;; le-buffer-terminator
@@ -144,7 +144,16 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 (setq lightemacs-frame-title-format "%b - Lightemacs")
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
+;; (setq lightemacs-reduce-messages t)
+
 ;; (setq corfu-auto t) ; Auto completion (Disabled by default)
+;; (setq-default display-line-numbers-type 'relative)
+
+;; For users who like features such as the menu bar and dialog boxes:
+;; (setq lightemacs-ui-features '(dialogs menu-bar tooltips context-menu))
+
+;; (add-hook 'python-mode-hook #'eglot-ensure)
+;; (add-hook 'python-ts-mode-hook #'eglot-ensure)
 
 ;; le-flavor-essential includes:
 ;; -----------------------------
@@ -153,6 +162,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;;   le-elec-pair le-paren le-recentf le-saveplace
                            ;;   le-autorevert
                            le-flavor-essential
+                           le-display-line-numbers
 
                            ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
                            ;; le-group-evil
