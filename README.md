@@ -65,9 +65,7 @@ The `~/.emacs.d/lisp/local/config.el` file serves as the primary configuration f
 
 ### Example 1
 
-The **le-flavor-big** flavor provides a complete setup for software development and prose writing. It integrates a modern completion and search stack (Vertico, Consult, Embark, Orderless, Marginalia, Corfu, and Cape), persistent undo history via undo-fu-session, and performance optimizations through byte-compilation and gcmh. For coding, it adds automatic code formatting (Apheleia), on-the-fly syntax checking (Flymake), snippets (YASnippet), jump-to-definition (dumb-jump), automatic indentation detection (dtrt-indent), and comprehensive code folding. It also includes dedicated major modes for Markdown, YAML, CSV, and Git configurations, full support for Emacs Lisp development with Paredit and formatting tools, and fast navigation utilities such as Avy and Expand Region. (See the [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el) source for the full package list).
-
-Here is an example based on **le-flavor-big**:
+Here is an example of `~/.emacs.d/lisp/local/config.el` based on **le-flavor-big**:
 
 ```elisp
 ;;; config.el --- Lightemacs Configuration -*- lexical-binding: t; -*-
@@ -127,6 +125,8 @@ Here is an example based on **le-flavor-big**:
 
 ;;; config.el ends here
 ```
+
+The **le-flavor-big** flavor provides a complete setup for software development and prose writing. It integrates a modern completion and search stack (Vertico, Consult, Embark, Orderless, Marginalia, Corfu, and Cape), persistent undo history via undo-fu-session, and performance optimizations through byte-compilation and gcmh. For coding, it adds automatic code formatting (Apheleia), on-the-fly syntax checking (Flymake), snippets (YASnippet), jump-to-definition (dumb-jump), automatic indentation detection (dtrt-indent), and comprehensive code folding. It also includes dedicated major modes for Markdown, YAML, CSV, and Git configurations, full support for Emacs Lisp development with Paredit and formatting tools, and fast navigation utilities such as Avy and Expand Region. (See the [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el) source for the full package list).
 
 Notes:
 - Uncomment le-group-evil if you need evil keybindings.
