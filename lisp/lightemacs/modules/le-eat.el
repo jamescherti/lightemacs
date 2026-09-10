@@ -46,6 +46,16 @@
     (setq-local confirm-kill-processes nil))
 
   :init
+  ;; straight.el symlinks or copies only Elisp files into the build/ directory,
+  ;; leaving non-Elisp resources (such as terminfo data and shell integration
+  ;; scripts) behind in the repository folder.
+  (when (eq lightemacs-package-manager 'straight)
+    (let ((eat-repo-dir (expand-file-name "straight/repos/emacs-eat/"
+                                          (or (bound-and-true-p straight-base-dir)
+                                              lightemacs-var-directory))))
+      (setq eat-term-shell-integration-directory (expand-file-name "integration" eat-repo-dir)
+            eat-term-terminfo-directory (expand-file-name "terminfo" eat-repo-dir))))
+
   (lightemacs-module-hooks eat
     lightemacs-eat--setup
     '(eat-mode-hook))
