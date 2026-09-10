@@ -31,7 +31,8 @@
     ;; This prevents that during byte-compilation (`use-package' eagerly loads
     ;; packages when compiling).
     (when (fboundp 'vterm-module-compile)
-      (advice-add #'vterm-module-compile :override #'ignore))))
+      (advice-add #'vterm-module-compile :override #'ignore)
+      (provide 'vterm-module))))
 
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
 ;; Compilation of 'emacs-libvterm' module succeeded
