@@ -40,15 +40,17 @@ git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.emacs.d
 
 To install *Lightemacs* in a non-default directory, use the `--init-directory` Emacs option to specify your desired configuration path. For example, to install *Lightemacs* in `~/.lightemacs.d/`, follow these steps:
 
-1. Clone the repository into `~/.lightemacs.d/` using:
-   ```
-   git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.lightemacs.d
-   ```
+Step 1: Clone the repository into `~/.lightemacs.d/` using:
 
-2. Start Emacs with the new configuration directory:
-   ```
-   emacs --init-directory ~/.lightemacs.d
-   ```
+```
+git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.lightemacs.d
+```
+
+Step 2: Start Emacs with the new configuration directory:
+
+```
+emacs --init-directory ~/.lightemacs.d
+```
 
 ## Update Lightemacs
 
@@ -405,7 +407,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 ## Modules that are part of le-flavor-essential
 
-- le-flavor-micro: Includes le-theme, le-default-settings, and le-dired.
+- **le-flavor-micro**: Includes le-theme, le-default-settings, and le-dired.
 
 - **le-savehist**: Configures savehist, a built-in Emacs feature that preserves the minibuffer history between sessions. It saves the history of inputs in the minibuffer, such as commands, search strings, and other prompts, to a file. This allows users to retain their minibuffer history across Emacs restarts.
 
@@ -419,11 +421,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-saveplace**: Enables `save-place-mode`, which makes Emacs remember the last location within a file when reopened. This facilitates resuming work exactly where it was left off. (When `scroll-conservatively` is set to 101 or higher, Emacs may position the point near the bottom of the window, which can be disorienting. The **le-saveplace** module addresses this by automatically recentering the window after `save-place` restores the cursor position, ensuring that the point is more centrally located even when `scroll-conservatively` is high.)
 
-- **le-autorevert**: Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk. To suppress minibuffer messages when Auto Revert reverts a buffer, add the following line to `~/.emacs.d/lisp/local/config.el`:
-  ```emacs-lisp
-  ;; To suppress minibuffer messages when Auto Revert reverts a buffer
-  (setq auto-revert-verbose nil)
-  ```
+- **le-autorevert**: Auto-revert is a feature that automatically updates the contents of a buffer to reflect changes made to the underlying file on disk.
 
 ## Other modules
 
