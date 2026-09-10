@@ -34,7 +34,7 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
 (defun le-maybe-markdown-ts-load ()
   "Initialize Markdown mode routing after the UI is drawn to prevent blocking."
   (require 'treesit nil t)
-  (if (and (> emacs-major-version 30)
+  (if (and (>= emacs-major-version 32)
            lightemacs-markdown-prefer-tree-sitter
            (fboundp 'treesit-ready-p)
            (treesit-ready-p 'markdown t))
