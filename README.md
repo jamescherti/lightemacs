@@ -73,8 +73,12 @@ Here is an example of `~/.emacs.d/lisp/local/config.el` based on **le-flavor-big
 ;;; Code:
 
 ;; Configure le-theme
-(setq lightemacs-theme-name 'ef-melissa-light)
-(setq lightemacs-theme-package 'ef-themes)
+(setq lightemacs-theme-name 'modus-vivendi)
+
+;; Alternative theme
+;; (setq lightemacs-theme-name 'ef-melissa-light)
+;; (setq lightemacs-theme-package 'ef-themes)
+
 (setq lightemacs-frame-title-format "%b - Lightemacs")
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
@@ -139,8 +143,12 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
 ;;; config.el --- Lightemacs Configuration -*- lexical-binding: t; -*-
 
 ;; Configure le-theme
-(setq lightemacs-theme-name 'ef-melissa-light)
-(setq lightemacs-theme-package 'ef-themes)
+(setq lightemacs-theme-name 'modus-vivendi)
+
+;; Alternative theme
+;; (setq lightemacs-theme-name 'ef-melissa-light)
+;; (setq lightemacs-theme-package 'ef-themes)
+
 (setq lightemacs-frame-title-format "%b - Lightemacs")
 (setq lightemacs-theme-default-font "DejaVu Sans Mono")
 (setq lightemacs-theme-variable-font "Deja Vu Sans") ; optional
@@ -388,8 +396,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 ```emacs-lisp
 ;; Theme
-(setq lightemacs-theme-name 'modus-operandi)
-;; (setq lightemacs-theme-name 'modus-vivendi)
+(setq lightemacs-theme-name 'modus-vivendi)
+;; (setq lightemacs-theme-name 'modus-operandi)
 
 ;; Font
 (setq lightemacs-theme-default-font "Monospace")
