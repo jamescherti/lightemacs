@@ -139,8 +139,4 @@ local value was set by the user."
 
 (provide 'le-dired-filter)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-dired-filter.el ends here

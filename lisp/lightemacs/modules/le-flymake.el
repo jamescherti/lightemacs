@@ -51,8 +51,4 @@
 
 (provide 'le-flymake)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-flymake.el ends here

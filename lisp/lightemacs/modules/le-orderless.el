@@ -49,8 +49,4 @@
 
 (provide 'le-orderless)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-orderless.el ends here

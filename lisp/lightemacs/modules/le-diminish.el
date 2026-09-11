@@ -23,8 +23,4 @@
 
 (provide 'le-diminish)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-diminish.el ends here

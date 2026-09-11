@@ -44,8 +44,4 @@
 
 (provide 'le-git-modes)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-git-modes.el ends here

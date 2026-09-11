@@ -41,8 +41,4 @@
 
 (provide 'le-xclip)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-xclip.el ends here

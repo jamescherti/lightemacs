@@ -191,8 +191,4 @@ If PACKAGE is non-nil, require it before loading the theme."
 
 (provide 'le-theme)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-theme.el ends here

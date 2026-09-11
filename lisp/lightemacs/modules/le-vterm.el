@@ -71,8 +71,4 @@
     vterm-kill-buffer-on-exit t
     vterm-max-scrollback 5000))
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-vterm.el ends here

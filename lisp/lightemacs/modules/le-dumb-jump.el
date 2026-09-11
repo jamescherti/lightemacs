@@ -74,8 +74,4 @@
 
 (provide 'le-dumb-jump)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-dumb-jump.el ends here

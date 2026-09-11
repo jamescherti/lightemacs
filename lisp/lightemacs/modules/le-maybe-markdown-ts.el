@@ -49,8 +49,4 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
 
 (provide 'le-maybe-markdown-ts)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-maybe-markdown-ts.el ends here

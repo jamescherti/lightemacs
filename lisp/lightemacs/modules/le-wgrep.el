@@ -31,8 +31,4 @@
 
 (provide 'le-wgrep)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-wgrep.el ends here

@@ -52,8 +52,4 @@
 
 (provide 'le-gcmh)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-gcmh.el ends here

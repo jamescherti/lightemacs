@@ -50,8 +50,4 @@
 
 (provide 'le-winner)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-winner.el ends here

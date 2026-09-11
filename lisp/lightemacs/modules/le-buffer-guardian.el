@@ -38,8 +38,4 @@
 
 (provide 'le-buffer-guardian)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-buffer-guardian.el ends here

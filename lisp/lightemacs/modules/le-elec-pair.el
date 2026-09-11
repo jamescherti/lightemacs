@@ -34,8 +34,4 @@
 ;;; Provide
 (provide 'le-elec-pair)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-elec-pair.el ends here

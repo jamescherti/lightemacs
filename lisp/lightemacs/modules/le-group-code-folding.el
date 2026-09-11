@@ -27,8 +27,4 @@
 
 (provide 'le-group-code-folding)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-group-code-folding.el ends here

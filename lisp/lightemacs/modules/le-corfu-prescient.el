@@ -57,8 +57,4 @@
 
 (provide 'le-corfu-prescient)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-corfu-prescient.el ends here

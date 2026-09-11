@@ -55,8 +55,4 @@
 
 (provide 'le-markdown-mode)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-markdown-mode.el ends here

@@ -59,8 +59,4 @@
 
 (provide 'le-vertico-prescient)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-vertico-prescient.el ends here

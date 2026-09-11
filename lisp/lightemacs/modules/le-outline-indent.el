@@ -81,8 +81,4 @@
 
 (provide 'le-outline-indent)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-outline-indent.el ends here

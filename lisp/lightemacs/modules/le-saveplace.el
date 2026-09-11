@@ -82,8 +82,4 @@ Otherwise, the function executes normally."
 
 (provide 'le-saveplace)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-saveplace.el ends here

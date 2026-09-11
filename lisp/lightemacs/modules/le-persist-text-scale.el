@@ -52,8 +52,4 @@
 
 (provide 'le-persist-text-scale)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-persist-text-scale.el ends here

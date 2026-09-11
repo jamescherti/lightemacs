@@ -50,8 +50,4 @@
 
 (provide 'le-expand-region)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-expand-region.el ends here

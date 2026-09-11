@@ -39,8 +39,4 @@
 
 (provide 'le-package-lint)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-package-lint.el ends here

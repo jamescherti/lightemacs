@@ -238,8 +238,4 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
 
 (provide 'le-consult)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-consult.el ends here

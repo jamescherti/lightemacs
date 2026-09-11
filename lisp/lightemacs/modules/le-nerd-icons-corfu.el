@@ -53,8 +53,4 @@
 
 (provide 'le-nerd-icons-corfu)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-nerd-icons-corfu.el ends here

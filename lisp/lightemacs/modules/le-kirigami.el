@@ -75,8 +75,4 @@
 
 (provide 'le-kirigami)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-kirigami.el ends here

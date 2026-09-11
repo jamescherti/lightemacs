@@ -231,8 +231,4 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
 (provide 'le-evil)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-evil.el ends here

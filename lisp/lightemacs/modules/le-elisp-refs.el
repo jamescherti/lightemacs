@@ -31,8 +31,4 @@
 
 (provide 'le-elisp-refs)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-elisp-refs.el ends here

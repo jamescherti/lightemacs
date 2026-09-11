@@ -26,8 +26,4 @@
 
 (provide 'le-goto-chg)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-goto-chg.el ends here

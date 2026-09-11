@@ -39,8 +39,4 @@
 
 (provide 'le-undo-fu)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-undo-fu.el ends here

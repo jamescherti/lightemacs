@@ -31,8 +31,4 @@
 
 (provide 'le-flavor-micro)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-flavor-micro.el ends here

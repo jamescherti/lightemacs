@@ -116,8 +116,4 @@ customized."
 
 (provide 'le-consult-dir)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-consult-dir.el ends here

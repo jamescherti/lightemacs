@@ -30,8 +30,4 @@
 
 (provide 'le-markdown-ts-mode)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-markdown-ts-mode.el ends here

@@ -30,8 +30,4 @@
 
 (provide 'le-savehist)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-savehist.el ends here

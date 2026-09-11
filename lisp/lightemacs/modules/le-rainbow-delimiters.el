@@ -41,8 +41,4 @@
 
 (provide 'le-rainbow-delimiters)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-rainbow-delimiters.el ends here

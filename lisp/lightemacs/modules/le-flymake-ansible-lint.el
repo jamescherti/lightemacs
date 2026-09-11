@@ -30,8 +30,4 @@
 
 (provide 'le-flymake-ansible-lint)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-flymake-ansible-lint.el ends here

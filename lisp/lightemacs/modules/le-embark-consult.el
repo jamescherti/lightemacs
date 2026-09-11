@@ -30,8 +30,4 @@
 ;;; Provide
 (provide 'le-embark-consult)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-embark-consult.el ends here

@@ -41,8 +41,4 @@
 
 (provide 'le-display-line-numbers)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-display-line-numbers.el ends here

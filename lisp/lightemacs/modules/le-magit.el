@@ -39,8 +39,4 @@
 
 (provide 'le-magit)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-magit.el ends here

@@ -32,8 +32,4 @@
 
 (provide 'le-edit-indirect)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-edit-indirect.el ends here

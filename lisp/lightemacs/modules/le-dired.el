@@ -80,8 +80,4 @@ buffer, followed by regular files.")
 
 (provide 'le-dired)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-dired.el ends here

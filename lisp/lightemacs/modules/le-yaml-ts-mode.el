@@ -55,8 +55,4 @@ Versions affected by this bug: Emacs 30.1, 30.2, and <= 29.*."
 
 (provide 'le-yaml-ts-mode)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-yaml-ts-mode.el ends here

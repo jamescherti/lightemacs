@@ -31,8 +31,4 @@
 
 (provide 'le-elisp-autofmt)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-elisp-autofmt.el ends here

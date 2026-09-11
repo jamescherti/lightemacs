@@ -45,8 +45,4 @@
 
 (provide 'le-enhanced-evil-paredit)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-enhanced-evil-paredit.el ends here

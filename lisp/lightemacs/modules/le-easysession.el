@@ -117,8 +117,4 @@ Set to nil to ignore window size and position during session restoration.")
 
 (provide 'le-easysession)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-easysession.el ends here

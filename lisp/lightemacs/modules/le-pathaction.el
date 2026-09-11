@@ -31,8 +31,4 @@
 
 (provide 'le-pathaction)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-pathaction.el ends here

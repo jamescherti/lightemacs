@@ -65,8 +65,4 @@
 
 (provide 'le-eat)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-eat.el ends here

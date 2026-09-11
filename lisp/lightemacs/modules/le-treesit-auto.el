@@ -48,8 +48,4 @@
 
 (provide 'le-treesit-auto)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-treesit-auto.el ends here

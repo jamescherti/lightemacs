@@ -60,8 +60,4 @@
 
 (provide 'le-paredit)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-paredit.el ends here

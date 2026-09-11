@@ -55,8 +55,4 @@
 
 (provide 'le-inhibit-mouse)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-inhibit-mouse.el ends here

@@ -386,8 +386,4 @@ This function takes no arguments."
 
 (provide 'le-default-settings)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-default-settings.el ends here

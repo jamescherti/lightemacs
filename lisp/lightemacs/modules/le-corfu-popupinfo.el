@@ -44,8 +44,4 @@
 
 (provide 'le-corfu-popupinfo)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-corfu-popupinfo.el ends here

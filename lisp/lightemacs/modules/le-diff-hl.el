@@ -83,8 +83,4 @@ FRAME-OR-WINDOW is the frame or window whose buffer configuration changed."
 
 (provide 'le-diff-hl)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-diff-hl.el ends here

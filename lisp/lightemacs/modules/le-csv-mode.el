@@ -54,8 +54,4 @@
 
 (provide 'le-csv-mode)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-csv-mode.el ends here

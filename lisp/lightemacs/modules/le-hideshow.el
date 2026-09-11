@@ -27,8 +27,4 @@
 
 (provide 'le-hideshow)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-hideshow.el ends here

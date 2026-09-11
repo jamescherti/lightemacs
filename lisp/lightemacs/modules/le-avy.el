@@ -59,8 +59,4 @@
 
 (provide 'le-avy)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-avy.el ends here

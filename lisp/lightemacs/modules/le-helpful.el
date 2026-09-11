@@ -52,8 +52,4 @@
 
 (provide 'le-helpful)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-helpful.el ends here

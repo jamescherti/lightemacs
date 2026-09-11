@@ -42,8 +42,4 @@
 
 (provide 'le-buffer-terminator)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-buffer-terminator.el ends here

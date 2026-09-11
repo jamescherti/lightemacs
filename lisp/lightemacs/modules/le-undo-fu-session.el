@@ -72,8 +72,4 @@ ORIG-FN is the original function and ARGS are its arguments."
 
 (provide 'le-undo-fu-session)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-undo-fu-session.el ends here

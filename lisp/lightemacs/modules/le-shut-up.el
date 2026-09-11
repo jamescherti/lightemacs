@@ -28,8 +28,4 @@
 
 (provide 'le-shut-up)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-shut-up.el ends here

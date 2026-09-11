@@ -104,8 +104,4 @@
 
 (provide 'le-which-key)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-which-key.el ends here

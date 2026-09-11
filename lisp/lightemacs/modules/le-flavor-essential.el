@@ -48,8 +48,4 @@
 
 (provide 'le-flavor-essential)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-flavor-essential.el ends here

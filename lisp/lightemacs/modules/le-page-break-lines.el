@@ -36,8 +36,4 @@
 
 (provide 'le-page-break-lines)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-page-break-lines.el ends here

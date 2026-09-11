@@ -72,8 +72,4 @@ they explicitly opt out of the inhibition.")
 
 (provide 'le-evil-collection)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-evil-collection.el ends here

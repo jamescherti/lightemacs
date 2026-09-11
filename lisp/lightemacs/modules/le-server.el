@@ -49,8 +49,4 @@ detected, it initializes a new server instance."
 
 (provide 'le-server)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-server.el ends here

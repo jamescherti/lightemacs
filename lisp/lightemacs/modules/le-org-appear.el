@@ -30,8 +30,4 @@
 
 (provide 'le-org-appear)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-org-appear.el ends here

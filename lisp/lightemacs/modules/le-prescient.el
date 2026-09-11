@@ -56,8 +56,4 @@
 
 (provide 'le-prescient)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-prescient.el ends here

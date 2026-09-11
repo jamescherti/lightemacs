@@ -33,8 +33,4 @@
 
 (provide 'le-paren)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-paren.el ends here

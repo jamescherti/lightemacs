@@ -37,8 +37,4 @@
 
 (provide 'le-nerd-icons)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-nerd-icons.el ends here

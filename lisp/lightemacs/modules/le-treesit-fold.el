@@ -56,8 +56,4 @@
 
 (provide 'le-treesit-fold)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-treesit-fold.el ends here

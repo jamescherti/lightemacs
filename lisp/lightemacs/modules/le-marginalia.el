@@ -40,8 +40,4 @@
 
 (provide 'le-marginalia)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-marginalia.el ends here

@@ -39,8 +39,4 @@
 
 (provide 'le-easy-escape)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-easy-escape.el ends here

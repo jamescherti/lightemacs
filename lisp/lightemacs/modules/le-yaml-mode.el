@@ -40,8 +40,4 @@
 
 (provide 'le-yaml-mode)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-yaml-mode.el ends here

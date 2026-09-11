@@ -29,8 +29,4 @@
 
 (provide 'le-highlight-defined)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-highlight-defined.el ends here

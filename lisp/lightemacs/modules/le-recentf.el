@@ -146,8 +146,4 @@ adds that file to the recentf list.")
 
 (provide 'le-recentf)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-recentf.el ends here

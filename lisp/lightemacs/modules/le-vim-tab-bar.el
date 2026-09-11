@@ -37,8 +37,4 @@
 
 (provide 'le-vim-tab-bar)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-vim-tab-bar.el ends here

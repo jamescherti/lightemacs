@@ -45,8 +45,4 @@
 
 (provide 'le-indent-bars)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-indent-bars.el ends here

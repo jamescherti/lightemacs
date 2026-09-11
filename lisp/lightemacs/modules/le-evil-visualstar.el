@@ -34,8 +34,4 @@
 
 (provide 'le-evil-visualstar)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-evil-visualstar.el ends here

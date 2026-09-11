@@ -35,8 +35,4 @@
 
 (provide 'le-ace-window)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-ace-window.el ends here

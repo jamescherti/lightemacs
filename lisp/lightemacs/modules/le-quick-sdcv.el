@@ -33,8 +33,4 @@
 
 (provide 'le-quick-sdcv)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-quick-sdcv.el ends here

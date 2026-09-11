@@ -51,8 +51,4 @@
 
 (provide 'le-evil-snipe)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-evil-snipe.el ends here

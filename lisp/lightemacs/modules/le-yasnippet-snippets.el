@@ -25,8 +25,4 @@
 
 (provide 'le-yasnippet-snippets)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-yasnippet-snippets.el ends here

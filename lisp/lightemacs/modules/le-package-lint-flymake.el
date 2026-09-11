@@ -38,8 +38,4 @@
 
 (provide 'le-package-lint-flymake)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-package-lint-flymake.el ends here

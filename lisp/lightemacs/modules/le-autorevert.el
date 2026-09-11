@@ -53,8 +53,4 @@ instances are often misleading. This behavior is controlled by the variable
 
 (provide 'le-autorevert)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-autorevert.el ends here

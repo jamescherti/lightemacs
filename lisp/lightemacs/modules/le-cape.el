@@ -45,8 +45,4 @@
 
 (provide 'le-cape)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-cape.el ends here

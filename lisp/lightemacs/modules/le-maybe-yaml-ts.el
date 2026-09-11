@@ -49,8 +49,4 @@ Tree-sitter is available.")
 
 (provide 'le-maybe-yaml-ts)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-maybe-yaml-ts.el ends here

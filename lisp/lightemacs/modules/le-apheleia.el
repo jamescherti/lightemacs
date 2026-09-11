@@ -51,8 +51,4 @@
 
 (provide 'le-apheleia)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-apheleia.el ends here

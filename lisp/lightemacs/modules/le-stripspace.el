@@ -36,8 +36,4 @@
 
 (provide 'le-stripspace)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-stripspace.el ends here

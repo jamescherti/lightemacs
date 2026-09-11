@@ -58,8 +58,4 @@
 
 (provide 'le-aggressive-indent)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-aggressive-indent.el ends here

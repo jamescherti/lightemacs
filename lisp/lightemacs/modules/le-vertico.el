@@ -63,8 +63,4 @@
 
 (provide 'le-vertico)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-vertico.el ends here

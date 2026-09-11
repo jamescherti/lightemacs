@@ -54,8 +54,4 @@ FN is the advised function. ARGS are the function arguments."
 
 (provide 'le-markdown-toc)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-markdown-toc.el ends here

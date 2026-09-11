@@ -39,8 +39,4 @@
 
 (provide 'le-evil-surround)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-evil-surround.el ends here

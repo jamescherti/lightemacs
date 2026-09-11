@@ -45,8 +45,4 @@
 
 (provide 'le-bufferfile)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-bufferfile.el ends here

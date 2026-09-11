@@ -26,8 +26,4 @@
 
 (provide 'le-evil-commentary)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-evil-commentary.el ends here
