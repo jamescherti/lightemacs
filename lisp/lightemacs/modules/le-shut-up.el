@@ -26,10 +26,6 @@
 (lightemacs-use-package shut-up
   :demand t)
 
-(when (and (eq lightemacs-package-manager 'elpaca)
-           (fboundp 'elpaca-wait))
-  (elpaca-wait))
-
 (provide 'le-shut-up)
 
 ;; Local variables:

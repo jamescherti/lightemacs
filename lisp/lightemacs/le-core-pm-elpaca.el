@@ -69,8 +69,6 @@
  ;; Enable use-package :ensure support for Elpaca.
  (elpaca-use-package-mode 1))
 
-(elpaca-wait)
-
 (provide 'le-core-pm-elpaca)
 
 ;;; le-core-pm-elpaca.el ends here
