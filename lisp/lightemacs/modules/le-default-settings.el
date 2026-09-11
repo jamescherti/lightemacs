@@ -195,8 +195,8 @@
   ;; ElDoc help in the minibuffer for the following cases:
   ;; - All modes: Added "comment-indent-new-line".
   ;; - All modes: Added "delete-char" for handling when the user presses delete.
-  ;; - Python mode: Added "python-indent-dedent-line-backspace" for handling when
-  ;; the user presses backspace.
+  ;; - Python mode: Added "python-indent-dedent-line-backspace" for handling
+  ;;   when the user presses backspace.
   ;;
   ;; * lisp/emacs-lisp/eldoc.el (eldoc-remove-command-completions):
   ;; * lisp/progmodes/python.el (python-base-mode): Add more commands to
@@ -236,9 +236,9 @@
   ;;
   ;; Mark !%:.^~, as punctuation rather than symbol constituents
   ;;
-  ;; In Bash, the characters !%:.^~, are not valid in variable names. In sh, they
-  ;; are not permitted in either function or variable names. Treating them as
-  ;; punctuation is convenient, as they are rarely used in function names and
+  ;; In Bash, the characters !%:.^~, are not valid in variable names. In sh,
+  ;; they are not permitted in either function or variable names. Treating them
+  ;; as punctuation is convenient, as they are rarely used in function names and
   ;; never in variable names. Even among commands, their usage is uncommon. The
   ;; only character among these that is commonly seen in command names is '.',
   ;; although it is rarely used in function names.
@@ -281,8 +281,9 @@
               (nil
                "^\\s-*\\([[:alpha:]_][[:alnum:]_]*\\)\\s-*()"
                1)))
-          ;; The difference between the Bash regular expression and the sh regular
-          ;; expression is that Bash also allows hyphens (-) in function names.
+          ;; The difference between the Bash regular expression and the sh
+          ;; regular expression is that Bash also allows hyphens (-) in function
+          ;; names.
           (bash
            . ((nil
                ;; function FOO
