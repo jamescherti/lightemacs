@@ -322,9 +322,8 @@ ARGS are the arguments passed to the original function."
     (message nil)))
 
 (unless noninteractive
-  (with-eval-after-load 'subr
-    (when (fboundp 'y-or-n-p)
-      (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer))))
+  (advice-add 'yes-or-no-p :around 'lightemacs--empty-minibuffer)
+  (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer))
 
 ;;; term
 
