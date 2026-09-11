@@ -374,7 +374,10 @@ ARGS are the arguments passed to the original function."
   "Set the buffer-local `tab-width` to 4 for Python files.
 This function takes no arguments."
   (when (boundp 'python-indent-offset)
-    (setq tab-width python-indent-offset)))
+    (setq tab-width python-indent-offset))
+  ;; PEP 8 - Style Guide for Python Code:
+  ;; https://peps.python.org/pep-0008/#maximum-line-length
+  (setq-local fill-column 79))
 
 (add-hook 'python-mode-hook #'lightemacs--python-tab-width-setup)
 (add-hook 'python-ts-mode-hook #'lightemacs--python-tab-width-setup)
