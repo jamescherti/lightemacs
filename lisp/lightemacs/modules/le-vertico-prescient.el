@@ -38,21 +38,24 @@
 ;;
 ;; URL: https://github.com/radian-software/prescient.el
 
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
+
+(lightemacs-module-load '(prescient))
 
 (lightemacs-use-package vertico-prescient
   :after (prescient vertico)
   :commands vertico-prescient-mode
-  :hook (vertico-mode . vertico-prescient-mode)
   :init
-  (setq vertico-prescient-enable-sorting t)
-
-  ;; Don't override `display-sort-function'
-  (setq vertico-prescient-override-sorting nil)
-
-  ;; Use Orderless instead
-  (setq vertico-prescient-enable-filtering nil))
+  (lightemacs-module-setq-maybe vertico-prescient
+    vertico-prescient-enable-sorting t
+    ;; Don't override `display-sort-function'
+    vertico-prescient-override-sorting nil
+    ;; Use Orderless instead
+    vertico-prescient-enable-filtering nil)
+  :config
+  (vertico-prescient-mode 1))
 
 (provide 'le-vertico-prescient)
 
