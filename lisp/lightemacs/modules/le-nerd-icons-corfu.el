@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Requires: corfu
+;; Requires: nerd-icons, corfu
 ;;
 ;; `nerd-icons-corfu' adds a column of metadata icons to the left or right of
 ;; candidates in the popup menu.
@@ -43,10 +43,12 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
+(lightemacs-module-load '(nerd-icons))
+
 (lightemacs-use-package nerd-icons-corfu
   :after corfu
-  :commands (nerd-icons-corfu-formatter)
-  :config
+  :commands nerd-icons-corfu-formatter
+  :init
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (provide 'le-nerd-icons-corfu)

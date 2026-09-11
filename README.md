@@ -199,6 +199,8 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-enhanced-evil-paredit
                            ;; le-indent-bars
                            ;; le-evil-matchit
+                           ;; le-nerd-icons-dired
+                           ;; le-nerd-icons-corfu
 
                            ;; Auto compile all .el files
                            le-compile-angel
@@ -223,7 +225,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; can be selected by navigating up or down.
                            le-corfu
                            le-corfu-popupinfo
-                           ;; le-nerd-icons-corfu
 
                            ;; (Cape integrates with corfu)
                            ;;
@@ -450,6 +451,10 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-corfu-popupinfo**: Configures [corfu-popupinfo](https://github.com/minad/corfu), which displays a side window with extra details when you select a completion candidate. For example, when completing a function name like `find-file`, the popup automatically shows its docstring or the file path where the function is defined. (Requirement: corfu)
 
 - **le-nerd-icons-corfu**: Configures [nerd-icons-corfu](https://github.com/LuigiPiucco/nerd-icons-corfu), which adds a column of metadata icons to the left or right of candidates in the popup menu. Instead of plain text items, candidates appear with visual markers indicating their type (functions, variables, faces, keywords, modules...).
+
+- **le-nerd-icons-dired**: Configures [nerd-icons-dired](https://github.com/rainstormstudio/nerd-icons-dired), which adds Nerd Font icons to file and folder listings in Dired. It displays icons beside their names to help identify file types at a glance.
+
+- **le-nerd-icons**: Configures [nerd-icons](https://github.com/rainstormstudio/nerd-icons.el), an icon library that provides glyphs and symbols from Nerd Fonts across Emacs buffers, modes, and completion interfaces. After enabling this module, run `M-x nerd-icons-install-fonts` to install the required font files.
 
 - **le-cape**: Configures [Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
