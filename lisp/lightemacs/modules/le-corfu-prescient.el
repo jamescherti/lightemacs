@@ -40,20 +40,20 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
+(lightemacs-module-load '(prescient))
+
 (lightemacs-use-package corfu-prescient
-  :after (corfu prescient)
+  :after (prescient corfu)
   :commands corfu-prescient-mode
   :init
-  (lightemacs-module-hooks corfu-prescient
-    corfu-prescient-mode
-    '(corfu-mode-hook))
-
   (lightemacs-module-setq-maybe corfu-prescient
     corfu-prescient-enable-sorting t
     ;; Do not override `display-sort-function'
     corfu-prescient-override-sorting nil
     ;; Use Orderless instead
-    corfu-prescient-enable-filtering nil))
+    corfu-prescient-enable-filtering nil)
+  :config
+  (corfu-prescient-mode 1))
 
 (provide 'le-corfu-prescient)
 
