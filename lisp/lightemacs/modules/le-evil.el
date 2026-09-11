@@ -77,7 +77,7 @@
     ;; makes the tradeoff worth it.
     evil-want-fine-undo t
     ;; Time in seconds of idle before updating search highlighting.
-    evil-ex-hl-update-delay 0.05
+    evil-ex-hl-update-delay 0.01
     ;; Prevent Evil state from being echoed, preserving Eldoc display in the
     ;; minibuffer (If set to t, Eldoc output in the minibuffer will be
     ;; overridden)
