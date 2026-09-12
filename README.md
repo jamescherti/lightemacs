@@ -87,9 +87,9 @@ Here is an example of `~/.emacs.d/lisp/local/config.el` based on **le-flavor-big
 ;; (setq lightemacs-reduce-messages t)
 
 ;; Enable tree-sitter based major modes globally for Emacs 31+
-(when (>= emacs-major-version 31)
-  (with-eval-after-load 'treesit
-    (setopt treesit-enabled-modes t)))
+;; (when (>= emacs-major-version 31)
+;;   (with-eval-after-load 'treesit
+;;     (setopt treesit-enabled-modes t)))
 
 ;; (setq corfu-auto t) ; Auto completion (Disabled by default)
 ;; (setq-default display-line-numbers-type 'relative)
