@@ -29,6 +29,16 @@
 (defvar lightemacs-evil-setup-undo-redo t)
 (defvar lightemacs-evil-setup-evil-search t)
 
+(defvar lightemacs-evil-suppress-search-failed lightemacs-reduce-messages
+  "Non-nil means suppress \='search failed\=' messages from Evil search commands.
+When non-nil, failed search motions like `evil-ex-search-next' (n) and
+`evil-ex-search-previous' (N) fail silently.
+Key benefits:
+- Prevents overwriting informative messages in the echo area, such as
+  Eldoc documentation signatures, Flymake diagnostics, or which-key hints.
+- Avoids visual noise during rapid repeat motions.
+- Keyboard macros will still correctly abort on a failed search.")
+
 (eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)
@@ -226,6 +236,26 @@ pressing `C-h', since it is prefixed with `evil-delete'."
 
       ;; Add yank commands (`evil-yank' and `evil-yank-line')
       (eldoc-add-command-completions "evil-yank"))))
+
+;;; Reduce messages
+
+(defun lightemacs-evil--suppress-evil-search-error (orig-fn &rest args)
+  "Handle `search-failed' errors from Evil search commands.
+ORIG-FN is the original Evil function being advised.
+ARGS is the list of arguments passed to ORIG-FN."
+  (if lightemacs-evil-suppress-search-failed
+      (condition-case err
+          (apply orig-fn args)
+        (search-failed
+         (when executing-kbd-macro
+           ;; Propagate the error so keyboard macros abort properly
+           (signal (car err) (cdr err)))))
+    (apply orig-fn args)))
+
+(when lightemacs-evil-suppress-search-failed
+  (with-eval-after-load 'evil-commands
+    (advice-add 'evil-ex-search-next :around #'lightemacs-evil--suppress-evil-search-error)
+    (advice-add 'evil-ex-search-previous :around #'lightemacs-evil--suppress-evil-search-error)))
 
 ;;; Provide
 

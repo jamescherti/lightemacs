@@ -32,6 +32,7 @@
     '(prog-mode-hook
       text-mode-hook
       conf-mode-hook
+      embark-collect-mode-hook
       diff-mode
       ibuffer-mode-hook
       grep-mode-hook
