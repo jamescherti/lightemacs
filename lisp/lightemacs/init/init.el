@@ -100,6 +100,9 @@
       ;; code on your machine.
       enable-local-eval nil)
 
+;;  `prettify-symbols-mode': Show unprettified symbol at point
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+
 ;;; Minibuffer
 
 (setq enable-recursive-minibuffers t ; Allow nested minibuffers
@@ -211,7 +214,13 @@
 
 (setq ansi-color-for-comint-mode t ; Renders native ANSI colors in the shell
       comint-prompt-read-only t
-      comint-buffer-maximum-size 4096)
+      comint-buffer-maximum-size 4096
+      ;; Move the cursor to the bottom when the process prints new output
+      comint-move-point-for-output t
+      ;; Scroll the window viewport down when new output arrives
+      comint-scroll-to-bottom-on-output t
+      ;; Snap the view back down to the prompt the moment you start typing
+      comint-scroll-to-bottom-on-input t)
 
 ;;; Compilation
 
@@ -224,6 +233,10 @@
 
       ;; Skip confirmation prompts when creating a new file or buffer
       confirm-nonexistent-file-or-buffer nil)
+
+;; Add the ANSI color filter to the compilation filter hook to apply colors
+;; immediately during compilation output processing.
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 ;;; Backup files
 
@@ -372,8 +385,7 @@ This should be called after changing `auto-save-list-file-prefix'."
 
  ;; Emacs recenters the window when the cursor moves past
  ;; `scroll-conservatively' lines beyond the window edge. A value over 101
- ;; disables recentering; the default (0) is too eager. Here it is set to 20 for
- ;; a balanced behavior.
+ ;; disables recentering; the default (0) is too eager.
  scroll-conservatively 11
 
  ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
@@ -415,6 +427,10 @@ This should be called after changing `auto-save-list-file-prefix'."
  delete-pair-blink-delay 0.03)
 
 (setq-default
+ ;; Saves CPU cycles by preventing the display engine from continually
+ ;; calculating and redrawing hollow cursors in inactive windows.
+ cursor-in-non-selected-windows nil
+
  ;; Continue wrapped lines at whitespace rather than breaking in the
  ;; middle of a word.
  word-wrap t
