@@ -23,7 +23,7 @@
 (eval-and-compile
   (require 'lightemacs-use-package))
 
-(lightemacs-module-load '(nerd-icons))
+(lightemacs-module-load '(le-nerd-icons))
 
 (lightemacs-use-package nerd-icons-dired
   :commands nerd-icons-dired-mode
