@@ -17,9 +17,10 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'lightemacs-module)
 
 (defvar lightemacs-corfu-add-to-savehist t)
 
@@ -29,24 +30,16 @@
              corfu-history-mode)
 
   :init
-  (lightemacs-module-hooks corfu-global
-    global-corfu-mode
-    '(lightemacs-on-first-input-hook))
-
-  (lightemacs-module-hooks corfu-local
-    corfu-mode
-    nil)
-
+  ;; TODO: For some reason, global-corfu-modes in lightemacs-module-setq-maybe
+  ;; isn't set
+  (setq global-corfu-modes `((not erc-mode
+                                  circe-mode
+                                  help-mode
+                                  gud-mode
+                                  ,@lightemacs-terminal-modes)
+                             t))
   (lightemacs-module-setq-maybe corfu
     corfu-preselect 'directory
-    global-corfu-modes '((not erc-mode
-                              circe-mode
-                              help-mode
-                              gud-mode
-                              eat-mode
-                              term-mode
-                              vterm-mode)
-                         t)
     corfu-auto nil ; Security and performance default
     corfu-auto-delay 0.24
     corfu-auto-prefix 2
@@ -67,6 +60,14 @@
     ;; Prevent the popup from closing when a typo results in zero matches.
     ;; This allows using Backspace to correct the input and restore candidates.
     corfu-quit-no-match (if corfu-auto 'separator nil))
+
+  (lightemacs-module-hooks corfu-global
+    global-corfu-mode
+    '(lightemacs-on-first-input-hook))
+
+  (lightemacs-module-hooks corfu-local
+    corfu-mode
+    nil)
 
   (when lightemacs-corfu-add-to-savehist
     (with-eval-after-load 'savehist

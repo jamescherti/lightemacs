@@ -22,6 +22,9 @@
 
 ;;; Default keybindings
 
+;;; `lightemacs-keyboard-quit'
+(global-set-key [remap keyboard-quit] #'lightemacs-keyboard-quit)
+
 ;; This keymap override is necessary because Emacs resolves keybindings through
 ;; a strict and often competitive hierarchy.
 ;;
@@ -326,7 +329,7 @@ ARGS are the arguments passed to the original function."
   (advice-add 'yes-or-no-p :around 'lightemacs--empty-minibuffer)
   (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer))
 
-;;; term and ansi-term
+;;; `term' and `ansi-term'
 
 ;; `term' and `ansi-term' are built-in Emacs terminal emulators that allow
 ;; interaction with a shell as if it were running in a standalone terminal
@@ -340,16 +343,24 @@ ARGS are the arguments passed to the original function."
 
 (defvar lightemacs-term-optimize t
   "Non-nil means apply performance optimizations to `term-mode' buffers.
-When non-nil, `lightemacs--optimize-terminal' runs in `term-mode-hook'.")
+When non-nil, `lightemacs--all-terminals-optimize' runs in `term-mode-hook'.")
 
-(add-hook 'term-mode-hook #'lightemacs--terminal-disable-kill-prompt)
+(add-hook 'term-mode-hook #'lightemacs--all-terminals-disable-kill-prompt)
 
 (when lightemacs-term-optimize
-  (add-hook 'term-mode-hook #'lightemacs--optimize-terminal t))
+  (add-hook 'term-mode-hook #'lightemacs--all-terminals-optimize t))
 
-;;; `lightemacs-keyboard-quit'
+;;; Disable terminal in some global modes
 
-(global-set-key [remap keyboard-quit] #'lightemacs-keyboard-quit)
+(setq whitespace-global-modes `(not ,@lightemacs-terminal-modes))
+
+(with-eval-after-load 'display-fill-column-indicator
+  (add-to-list 'global-display-fill-column-indicator-modes
+               (cons 'not lightemacs-terminal-modes)))
+
+(with-eval-after-load 'loaddefs
+  (add-to-list 'global-completion-preview-modes
+               (cons 'not lightemacs-terminal-modes)))
 
 ;;; Python
 

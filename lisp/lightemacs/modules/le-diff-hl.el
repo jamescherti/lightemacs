@@ -22,6 +22,7 @@
 
 ;;; Require
 
+(require 'lightemacs)
 (require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
@@ -51,7 +52,9 @@
     diff-hl-draw-borders nil
     diff-hl-show-staged-changes nil  ; Realtime feedback
     diff-hl-update-async t  ; Do not block Emacs
-    diff-hl-global-modes '(not pdf-view-mode image-mode)))
+    diff-hl-global-modes `(not pdf-view-mode
+                               image-mode
+                               ,@lightemacs-terminal-modes)))
 
 ;;; Bug fix: Update diff-hl after switching to a buffer
 
