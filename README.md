@@ -477,17 +477,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-bufferfile**: configures [bufferfile](https://github.com/jamescherti/bufferfile.el), package that provides helper functions to delete, rename, or copy buffer files: `M-x bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name, `M-x bufferfile-delete`: Delete the file associated with a buffer and kill all buffers visiting the file, including clones/indirect buffers, `M-x bufferfile-copy`: Ensures that the destination directory exists and copies the file visited by the current buffer to a new file.
 
-- The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation. The `le-dtrt-indent` module allows controlling automatic indentation detection via:
-  - `lightemacs-dtrt-indent-inhibit`: When non-nil, disables automatic indentation detection in the current buffer.
-  - `lightemacs-dtrt-indent-excluded-modes`: List of major modes where `dtrt-indent` should not run. For example:
-    ```emacs-lisp
-    ;; Exclude Python and Yaml/Ansible
-    (setq lightemacs-dtrt-indent-excluded-modes '(python-mode
-                                                  python-ts-mode
-                                                  yaml-mode
-                                                  yaml-ts-mode
-                                                  ansible-mode))
-    ```
+- The **le-dtrt-indent** module configures the [dtrt-indent](https://github.com/jscheid/dtrt-indent) package, which provides functions to automatically detect the indentation offset, defined as the number of spaces or the tab width used for code indentation.
 
 - **le-flymake**: Configures Flymake, a built-in on-the-fly syntax checking tool that analyzes source code buffers in the background and highlights errors or warnings as you type. It invokes external syntax checkers or compilers asynchronously and annotates the buffer with diagnostic messages, which can be navigated using dedicated commands. Unlike language servers, Flymake itself does not perform analysis but provides a flexible framework that integrates with various backends, making it lightweight, extensible, and adaptable across different programming languages. By default, the **le-flymake** module enables Flymake automatically in `prog-mode` and `text-mode`. The **le-flymake** defines the following keybindings for navigating Flymake diagnostics: `M-g n`: Move to the **next** error or warning in the current buffer, `M-g p`: Move to the **previous** error or warning in the current buffer. These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs' convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively. (Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
 

@@ -34,6 +34,7 @@
   (lightemacs-module-setq-maybe dtrt-indent
     dtrt-indent-verbosity (if init-file-debug 1 0)
     dtrt-indent-max-lines 1900  ; Faster
+    dtrt-indent-global-modes '(prog-mode text-mode conf-mode)
     ;; We're using `dtrt-indent'
     python-indent-guess-indent-offset nil
     ;; By default, `dtrt-indent' detects SMIE-based modes and lets
