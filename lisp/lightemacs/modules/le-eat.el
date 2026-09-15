@@ -43,6 +43,10 @@ When non-nil, `lightemacs--optimize-terminal' runs in `eat-mode-hook'.")
   (lightemacs-module-setq-maybe eat
     eat-maximum-latency 0.01
     eat-kill-buffer-on-exit t
+    ;; Prevent Emacs from prompting "Buffer has a running process; kill it?"
+    ;; when closing the buffer or exiting the editor by silently disabling the
+    ;; query-on-exit flag for the underlying shell process.
+    eat-query-before-killing-running-terminal nil
     ;; Set the amount of characters retained by `eat'.
     eat-term-scrollback-size (* 64 1024))
 

@@ -326,7 +326,7 @@ ARGS are the arguments passed to the original function."
   (advice-add 'yes-or-no-p :around 'lightemacs--empty-minibuffer)
   (advice-add 'y-or-n-p :around 'lightemacs--empty-minibuffer))
 
-;;; term
+;;; term and ansi-term
 
 ;; `term' and `ansi-term' are built-in Emacs terminal emulators that allow
 ;; interaction with a shell as if it were running in a standalone terminal
@@ -341,6 +341,8 @@ ARGS are the arguments passed to the original function."
 (defvar lightemacs-term-optimize t
   "Non-nil means apply performance optimizations to `term-mode' buffers.
 When non-nil, `lightemacs--optimize-terminal' runs in `term-mode-hook'.")
+
+(add-hook 'term-mode-hook #'lightemacs--terminal-disable-kill-prompt)
 
 (when lightemacs-term-optimize
   (add-hook 'term-mode-hook #'lightemacs--optimize-terminal t))

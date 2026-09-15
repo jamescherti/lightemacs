@@ -529,19 +529,34 @@ The execution follows this priority:
     corfu-mode)
   "List of minor modes to disable in terminal emulator buffers.")
 
+(defun lightemacs--disable-process-query-on-exit ()
+  "Disable the query-on-exit flag for the process in the current buffer."
+  (let ((proc (get-buffer-process (current-buffer))))
+    (when proc
+      (set-process-query-on-exit-flag proc nil))))
+
+(defun lightemacs--terminal-disable-kill-prompt ()
+  "Prevent Emacs from prompting: Buffer has a running process; kill it?"
+  ;; Prevent Emacs from prompting "Buffer has a running process; kill it?" when
+  ;; closing the buffer or exiting the editor by silently disabling the
+  ;; query-on-exit flag for the underlying shell process.
+  (cond
+   ;; Vterm creates the process during mode init, so it exists now.
+   ((derived-mode-p 'vterm-mode)
+    (lightemacs--disable-process-query-on-exit))
+   ;; Term create the process AFTER the mode hook runs. We must defer
+   ;; the flag change using their respective exec hooks.
+   ((derived-mode-p 'term-mode)
+    (add-hook 'term-exec-hook #'lightemacs--disable-process-query-on-exit nil t))))
+
 (defun lightemacs--optimize-terminal ()
-  "Optimize `vterm', `eat', or `term'/`ansi-term'."
+  "Configure `vterm', `eat', or `term'/`ansi-term'."
   (let ((eat-p (derived-mode-p 'eat-mode))
         (vterm-p (derived-mode-p 'vterm-mode))
         (term-p (derived-mode-p 'term-mode))
         ;; (ghostel-p (derived-mode-p 'ghostel-mode))
         (inhibit-redisplay t)
         (inhibit-message t))
-    (when term-p
-      ;; Disable `hscroll-margin' in shell buffers to prevent visual jumping
-      ;; when the cursor approaches the left or right edges of the window.
-      (setq-local hscroll-margin 0))
-
     (when eat-p
       (setq-local font-lock-defaults '(nil t)))
 
@@ -555,26 +570,12 @@ The execution follows this priority:
     (when (or term-p eat-p vterm-p)
       (setq-local line-spacing 0))
 
-    ;; Prevent Emacs from prompting "Buffer has a running process; kill it?"
-    ;; when closing the buffer or exiting the editor by silently disabling the
-    ;; query-on-exit flag for the underlying shell process.
-    (when vterm-p
-      (let ((proc (get-buffer-process (current-buffer))))
-        (when proc
-          (set-process-query-on-exit-flag proc nil))))
-
     ;; Disallows automatic horizontal scrolling of windows.
     (setq-local auto-hscroll-mode nil)
 
     ;; Prevents Emacs from drawing highlight boxes over non-breaking spaces and
     ;; soft hyphens.
     (setq-local nobreak-char-display nil)
-
-    ;; Suppress prompts for terminating active processes when closing
-    (setq-local confirm-kill-processes nil)
-
-    ;; Hide the mode-line
-    (setq mode-line-format nil)
 
     ;; Disable modes
     (dolist (mode lightemacs-terminal-disabled-modes)

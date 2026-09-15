@@ -61,6 +61,7 @@ When non-nil, `lightemacs--optimize-terminal' runs in `vterm-mode-hook'.")
     ;; Set the amount of lines retained by `vterm'.
     vterm-max-scrollback 5000)
 
+  (add-hook 'vterm-mode-hook #'lightemacs--terminal-disable-kill-prompt)
   (when lightemacs-vterm-optimize
     (add-hook 'vterm-mode-hook #'lightemacs--optimize-terminal)))
 
