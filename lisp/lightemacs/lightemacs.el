@@ -585,6 +585,16 @@ The execution follows this priority:
         (ignore-errors
           (funcall mode -1))))))
 
+;;; Interactive functions
+
+(defun lightemacs-edit-config ()
+  "Open the local lightemacs configuration file (config.el).
+Ensure the parent directory exists before opening the file."
+  (interactive)
+  (let ((config-file (expand-file-name "config.el" lightemacs-local-directory)))
+    (make-directory lightemacs-local-directory t)
+    (find-file config-file)))
+
 ;;; Provide lightemacs
 
 (provide 'lightemacs)
