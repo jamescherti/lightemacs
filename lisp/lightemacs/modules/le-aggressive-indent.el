@@ -55,7 +55,9 @@
   (add-to-list 'aggressive-indent-protected-commands 'comment-box)
 
   ;; Exclude modes
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  (dolist (mode lightemacs-terminal-modes)
+    (add-to-list 'aggressive-indent-excluded-modes mode)))
 
 (provide 'le-aggressive-indent)
 
