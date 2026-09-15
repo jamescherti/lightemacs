@@ -510,6 +510,80 @@ The execution follows this priority:
    (t
     (keyboard-quit))))
 
+;;; Terminals
+
+(defvar lightemacs-terminal-disabled-modes
+  '(electric-pair-local-mode
+    electric-indent-local-mode
+    display-line-numbers-mode
+    display-fill-column-indicator-mode
+    hl-line-mode
+    show-paren-local-mode
+    eldoc-mode
+    evil-surround-mode
+    evil-snipe-local-mode
+    flymake-mode
+    flycheck-mode
+    yas-minor-mode
+    company-mode
+    corfu-mode)
+  "List of minor modes to disable in terminal emulator buffers.")
+
+(defun lightemacs--optimize-terminal ()
+  "Optimize `vterm', `eat', or `term'/`ansi-term'."
+  (let ((eat-p (derived-mode-p 'eat-mode))
+        (vterm-p (derived-mode-p 'vterm-mode))
+        (term-p (derived-mode-p 'term-mode))
+        ;; (ghostel-p (derived-mode-p 'ghostel-mode))
+        (inhibit-redisplay t)
+        (inhibit-message t))
+    (when term-p
+      ;; Disable `hscroll-margin' in shell buffers to prevent visual jumping
+      ;; when the cursor approaches the left or right edges of the window.
+      (setq-local hscroll-margin 0))
+
+    (when eat-p
+      (setq-local font-lock-defaults '(nil t)))
+
+    (when (or term-p eat-p)
+      ;; Stops long lines from wrapping
+      (setq-local truncate-lines t)
+      ;; Setting this variable to `most-positive-fixnum' makes Emacs scrolls
+      ;; only enough to bring point into view rather than recentering.
+      (setq-local scroll-conservatively most-positive-fixnum))
+
+    (when (or term-p eat-p vterm-p)
+      (setq-local line-spacing 0))
+
+    ;; Prevent Emacs from prompting "Buffer has a running process; kill it?"
+    ;; when closing the buffer or exiting the editor by silently disabling the
+    ;; query-on-exit flag for the underlying shell process.
+    (when vterm-p
+      (let ((proc (get-buffer-process (current-buffer))))
+        (when proc
+          (set-process-query-on-exit-flag proc nil))))
+
+    ;; Disallows automatic horizontal scrolling of windows.
+    (setq-local auto-hscroll-mode nil)
+
+    ;; Prevents Emacs from drawing highlight boxes over non-breaking spaces and
+    ;; soft hyphens.
+    (setq-local nobreak-char-display nil)
+
+    ;; Suppress prompts for terminating active processes when closing
+    (setq-local confirm-kill-processes nil)
+
+    ;; Hide the mode-line
+    (setq mode-line-format nil)
+
+    ;; Disable modes
+    (dolist (mode lightemacs-terminal-disabled-modes)
+      (when (and (boundp mode)
+                 (symbol-value mode)
+                 (fboundp mode))
+        (ignore-errors
+          (funcall mode -1))))))
+
 ;;; Provide lightemacs
 
 (provide 'lightemacs)

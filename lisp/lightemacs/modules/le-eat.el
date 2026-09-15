@@ -20,9 +20,14 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
+
+(defvar lightemacs-eat-optimize t
+  "Non-nil means apply performance optimizations to `eat-mode' buffers.
+When non-nil, `lightemacs--optimize-terminal' runs in `eat-mode-hook'.")
 
 (lightemacs-use-package eat
   :commands (eat
@@ -34,18 +39,16 @@
              eat-term-make)
   :functions eat-self-input
 
-  :preface
-  (defun lightemacs-eat--setup ()
-    ;; Hide the mode-line
-    (setq mode-line-format nil)
-
-    ;; Inhibit early horizontal scrolling
-    (setq-local hscroll-margin 0)
-
-    ;; Suppress prompts for terminating active processes when closing eat
-    (setq-local confirm-kill-processes nil))
-
   :init
+  (lightemacs-module-setq-maybe eat
+    eat-maximum-latency 0.01
+    eat-kill-buffer-on-exit t
+    ;; Set the amount of characters retained by `eat'.
+    eat-term-scrollback-size (* 64 1024))
+
+  (when lightemacs-eat-optimize
+    (add-hook 'eat-mode-hook #'lightemacs--optimize-terminal))
+
   ;; straight.el symlinks or copies only Elisp files into the build/ directory,
   ;; leaving non-Elisp resources (such as terminfo data and shell integration
   ;; scripts) behind in the repository folder.
@@ -54,14 +57,7 @@
                                           (or (bound-and-true-p straight-base-dir)
                                               lightemacs-var-directory))))
       (setq eat-term-shell-integration-directory (expand-file-name "integration" eat-repo-dir)
-            eat-term-terminfo-directory (expand-file-name "terminfo" eat-repo-dir))))
-
-  (lightemacs-module-hooks eat
-    lightemacs-eat--setup
-    '(eat-mode-hook))
-
-  (lightemacs-module-setq-maybe eat
-    eat-kill-buffer-on-exit t))
+            eat-term-terminfo-directory (expand-file-name "terminfo" eat-repo-dir)))))
 
 (provide 'le-eat)
 

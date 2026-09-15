@@ -15,6 +15,7 @@
 
 ;;; Require
 
+(require 'lightemacs)
 (eval-and-compile
   (require 'lightemacs-use-package))
 (require 'lightemacs-module)
@@ -337,27 +338,12 @@ ARGS are the arguments passed to the original function."
 ;; ANSI escape sequences, resulting in better compatibility with interactive
 ;; command-line programs like `top', `vim', or `htop'.
 
-(defvar lightemacs-term-setup t)
+(defvar lightemacs-term-optimize t
+  "Non-nil means apply performance optimizations to `term-mode' buffers.
+When non-nil, `lightemacs--optimize-terminal' runs in `term-mode-hook'.")
 
-(defun lightemacs-term--setup ()
-  "Configuration for term and `ansi-term' buffers."
-  ;; Suppress prompts for terminating active processes when closing vterm
-  ;; Disable `hscroll-margin' in shell buffers to prevent visual jumping when
-  ;; the cursor approaches the left or right edges of the window.
-  ;; Disable the `mode-line'
-  (setq-local confirm-kill-processes nil
-              hscroll-margin 0
-              mode-line-format nil)
-
-  ;; Prevent Emacs from prompting "Buffer has a running process; kill it?" when
-  ;; closing the buffer or exiting the editor by silently disabling the
-  ;; query-on-exit flag for the underlying shell process.
-  (let ((proc (get-buffer-process (current-buffer))))
-    (when proc
-      (set-process-query-on-exit-flag proc nil))))
-
-(when lightemacs-term-setup
-  (add-hook 'term-mode-hook #'lightemacs-term--setup t))
+(when lightemacs-term-optimize
+  (add-hook 'term-mode-hook #'lightemacs--optimize-terminal t))
 
 ;;; `lightemacs-keyboard-quit'
 
@@ -385,5 +371,9 @@ This function takes no arguments."
 ;;; Provide
 
 (provide 'le-default-settings)
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 ;;; le-default-settings.el ends here

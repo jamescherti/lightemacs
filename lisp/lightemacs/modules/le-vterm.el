@@ -21,6 +21,7 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
@@ -31,6 +32,10 @@
 ;; ~/.emacs.d/lisp/lightemacs/modules/le-vterm.elc failed to provide
 ;; feature 'le-vterm'")
 (provide 'le-vterm)
+
+(defvar lightemacs-vterm-optimize t
+  "Non-nil means apply performance optimizations to `vterm-mode' buffers.
+When non-nil, `lightemacs--optimize-terminal' runs in `vterm-mode-hook'.")
 
 (when noninteractive
   (with-eval-after-load 'eval
@@ -49,26 +54,14 @@
              vterm-send-key
              vterm-module-compile)
   :functions vterm--self-insert
-
-  :preface
-  (defun lightemacs-vterm--setup ()
-    "Initialize local settings for the vterm buffer."
-    ;; Hide the mode-line
-    (setq mode-line-format nil)
-    ;; Inhibit early horizontal scrolling
-    (setq-local hscroll-margin 0)
-    ;; Suppress prompts for terminating active processes when closing vterm
-    (setq-local confirm-kill-processes nil)
-    (let ((proc (get-buffer-process (current-buffer))))
-      (when proc
-        (set-process-query-on-exit-flag proc nil))))
-
   :init
-  (add-hook 'vterm-mode-hook #'lightemacs-vterm--setup)
-
   (lightemacs-module-setq-maybe vterm
-    vterm-timer-delay 0.05
+    vterm-timer-delay 0.01
     vterm-kill-buffer-on-exit t
-    vterm-max-scrollback 5000))
+    ;; Set the amount of lines retained by `vterm'.
+    vterm-max-scrollback 5000)
+
+  (when lightemacs-vterm-optimize
+    (add-hook 'vterm-mode-hook #'lightemacs--optimize-terminal)))
 
 ;;; le-vterm.el ends here
