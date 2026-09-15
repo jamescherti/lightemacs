@@ -18,9 +18,10 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'lightemacs-module)
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'lightemacs-module)
 
 (lightemacs-use-package dtrt-indent
   :commands (dtrt-indent-global-mode
@@ -31,10 +32,10 @@
              dtrt-indent-highlight)
 
   :init
+  (setq dtrt-indent-global-modes (copy-sequence lightemacs-text-editing-modes))
   (lightemacs-module-setq-maybe dtrt-indent
     dtrt-indent-verbosity (if init-file-debug 1 0)
     dtrt-indent-max-lines 1900  ; Faster
-    dtrt-indent-global-modes '(prog-mode text-mode conf-mode)
     ;; We're using `dtrt-indent'
     python-indent-guess-indent-offset nil
     ;; By default, `dtrt-indent' detects SMIE-based modes and lets

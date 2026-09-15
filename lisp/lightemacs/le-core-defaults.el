@@ -220,6 +220,9 @@ This prevents, for example, `global-hl-line-mode' from automatically
 reactivating the local mode via hooks. Setting the global minor mode variable to
 nil locally acts as a shield for this specific buffer.")
 
+(defvar lightemacs-text-editing-modes '(prog-mode text-mode conf-mode)
+  "List of major modes in which text editing global modes should be enabled.")
+
 ;;; Hooks: Initializer hooks
 
 (defvar lightemacs-pre-early-init-hook nil
