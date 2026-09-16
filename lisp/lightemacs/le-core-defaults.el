@@ -127,7 +127,9 @@ to Emacs standard behavior.")
 (defvar lightemacs-all-terminals-disabled-modes
   '(;; Highlights the current line, which is generally unnecessary in a
     ;; terminal buffer and can alter the appearance of terminal output.
-    hl-line-mode
+    ;; NOTE: This was disabled by le-default-settings
+    ;; hl-line-mode
+
     ;; Displays line numbers in the window margin, which are not part of the
     ;; terminal's character grid.
     display-line-numbers-mode
@@ -173,7 +175,9 @@ to Emacs standard behavior.")
 (defvar lightemacs-all-terminals-disabled-global-modes
   '(;; Highlights the current line, which is generally unnecessary in a
     ;; terminal buffer and can alter the appearance of terminal output.
-    global-hl-line-mode
+    ;; NOTE: This was disabled by le-default-settings
+    ;; global-hl-line-mode
+
     ;; Displays line numbers in the window margin, which are not part of the
     ;; terminal's character grid.
     global-display-line-numbers-mode

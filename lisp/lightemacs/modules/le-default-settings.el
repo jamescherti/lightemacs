@@ -381,6 +381,33 @@ This function takes no arguments."
 (add-hook 'python-mode-hook #'lightemacs--python-tab-width-setup)
 (add-hook 'python-ts-mode-hook #'lightemacs--python-tab-width-setup)
 
+;;; hl-line
+
+(defun lightemacs-terminal--buffer-p (buf)
+  "Return non-nil if BUF is a terminal emulator buffer."
+  (when (buffer-live-p buf)
+    (with-current-buffer buf
+      (apply #'derived-mode-p lightemacs-terminal-modes))))
+
+;; Configure `global-hl-line-buffers' with a predicate evaluated by
+;; `buffer-match-p' to control where global line highlighting is active.
+(setq global-hl-line-buffers
+      '(not (or
+             ;; `cursor-face-highlight-mode': Excludes buffers using specialized
+             ;; face highlighting to prevent visual overlap and conflicts.
+             (lambda (b) (buffer-local-value 'cursor-face-highlight-mode b))
+             ;; Leading space names: Excludes internal or temporary buffers
+             ;; starting with a space character.
+             (lambda (b) (string-match-p "\\` " (buffer-name b)))
+             ;; `minibufferp': Prevents line highlighting inside the minibuffer.
+             minibufferp
+             ;; `lightemacs-terminal--buffer-p': Excludes terminal emulators
+             ;; defined in lightemacs-terminal-modes (vterm, eat, term, and
+             ;; ghostel). Terminal buffers manage their own display and cursor
+             ;; rendering; disabling highlighting prevents visual artifacts and
+             ;; performance overhead during rapid output updates.
+             lightemacs-terminal--buffer-p)))
+
 ;;; Provide
 
 (provide 'le-default-settings)
