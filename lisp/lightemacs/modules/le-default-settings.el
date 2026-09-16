@@ -123,7 +123,6 @@
 (lightemacs-module-load '(le-core-cli-tools))
 
 (with-eval-after-load 'xref
-  ;; Fix `elpaca' with `with-eval-after-load'
   (with-eval-after-load 'le-core-cli-tools
     (if (fboundp 'lightemacs-core--load-cli-tools)
         (lightemacs-core--load-cli-tools)
