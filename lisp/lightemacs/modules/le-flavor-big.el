@@ -47,6 +47,7 @@
    ;; le-enhanced-evil-paredit
    ;; le-indent-bars
    ;; le-evil-matchit
+   ;; le-winner
 
    ;; Auto compile all .el files
    le-compile-angel
@@ -143,9 +144,6 @@
    ;; `text-scale-decrease' are persisted and restored
    ;; across sessions.
    le-persist-text-scale
-
-   ;; Built-in
-   le-winner
 
    ;; This package provides functions to detects the
    ;; indentation offset used in existing source code

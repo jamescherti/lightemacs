@@ -127,6 +127,9 @@ Here is an example of `~/.emacs.d/lisp/local/config.el` based on **le-flavor-big
                            ;; le-enhanced-evil-paredit
                            ;; le-indent-bars
                            ;; le-evil-matchit
+                           ;; le-nerd-icons-dired
+                           ;; le-nerd-icons-corfu
+                           ;; le-winner
                            ))
 
 ;;; config.el ends here
@@ -201,6 +204,7 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-evil-matchit
                            ;; le-nerd-icons-dired
                            ;; le-nerd-icons-corfu
+                           ;; le-winner
 
                            ;; Auto compile all .el files
                            le-compile-angel
@@ -296,9 +300,6 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; `text-scale-decrease' are persisted and restored
                            ;; across sessions.
                            le-persist-text-scale
-
-                           ;; Built-in
-                           le-winner
 
                            ;; This package provides functions to detects the
                            ;; indentation offset used in existing source code
