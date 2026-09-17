@@ -34,7 +34,7 @@
              flymake-goto-prev-error)
   :init
   (lightemacs-module-setq-maybe flymake
-    flymake-wrap-around nil)
+    flymake-wrap-around lightemacs-cycle)
 
   (lightemacs-module-hooks flymake
     flymake-mode

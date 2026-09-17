@@ -407,6 +407,14 @@ This function takes no arguments."
              ;; performance overhead during rapid output updates.
              lightemacs-terminal--buffer-p)))
 
+;;; Flymake
+
+;; Make `next-error' and `previous-error' behavior predictable.
+;; When multiple compilation or search buffers exist, Emacs can sometimes guess
+;; the wrong one. This setting forces Emacs to prioritize the current buffer or
+;; the most recently generated unnavigated error buffer.
+(setq-default next-error-find-buffer-function 'next-error-buffer-unnavigated-current)
+
 ;;; Provide
 
 (provide 'le-default-settings)
