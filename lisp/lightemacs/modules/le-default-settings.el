@@ -420,12 +420,11 @@ This function takes no arguments."
 (setq ispell-quietly lightemacs-reduce-messages)
 
 (setq
- ;; Performance tweak: Only check words that have been typed or edited, instead
- ;; of also checking words that point moves across. This can reduce
- ;; spell-checking activity when navigating through existing text. The tradeoff
- ;; is that existing misspellings are not checked merely because point moves
- ;; across them, so they may remain undetected until the text is edited or
- ;; checked explicitly.
+ ;; Performance tweak: Only check words that are actively typed or edited,
+ ;; rather than checking words as the point moves across them. This reduces
+ ;; spell-checking performance cost when navigating existing text. The tradeoff
+ ;; is that pre-existing misspellings remain undetected until the text is
+ ;; modified or explicitly checked.
  flyspell-check-changes t
 
  ;; Performance tweak: Force Flyspell to run spell-checks using idle timers
