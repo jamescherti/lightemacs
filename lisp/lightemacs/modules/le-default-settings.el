@@ -415,6 +415,24 @@ This function takes no arguments."
 ;; the most recently generated unnavigated error buffer.
 (setq-default next-error-find-buffer-function 'next-error-buffer-unnavigated-current)
 
+;;; Flyspell
+
+(setq ispell-quietly lightemacs-reduce-messages)
+
+(setq
+ ;; Performance tweak: Only check words that have been typed or edited, instead
+ ;; of also checking words that point moves across. This can reduce
+ ;; spell-checking activity when navigating through existing text. The tradeoff
+ ;; is that existing misspellings are not checked merely because point moves
+ ;; across them, so they may remain undetected until the text is edited or
+ ;; checked explicitly.
+ flyspell-check-changes t
+
+ ;; Performance tweak: Force Flyspell to run spell-checks using idle timers
+ ;; rather than blocking via sit-for. This prevents brief input delays while
+ ;; typing.
+ flyspell-delay-use-timer t)
+
 ;;; Provide
 
 (provide 'le-default-settings)
