@@ -20,15 +20,7 @@
   (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-;;; Default keybindings
-
-;;; `lightemacs-keyboard-quit'
-(global-set-key [remap keyboard-quit] #'lightemacs-keyboard-quit)
-
-;; This keymap override is necessary because Emacs resolves keybindings through
-;; a strict and often competitive hierarchy.
-;;
-;; Standard global bindings are easily shadowed by major modes, minor modes, or
+;;; Default keybindingsare easily shadowed by major modes, minor modes, or
 ;; keymap managers like Evil mode. By injecting our custom keymap directly into
 ;; emulation-mode-map-alists, we place these specific bindings at the absolute
 ;; highest precedence level possible within the Emacs input system.
@@ -451,6 +443,16 @@ This function takes no arguments."
   ;; Ensure the buffer remains writable when so-long triggers, overriding the
   ;; default behavior that locks the buffer as read-only.
   (setf (alist-get 'buffer-read-only so-long-variable-overrides nil t) nil)
+
+  ;; Emacs 29+ display engine is optimized for truncated lines. Override
+  ;; so-long's legacy default which forces expensive line wrapping.
+  (setf (alist-get 'truncate-lines so-long-variable-overrides nil t) nil)
+
+  ;; By default, `so-long-mode' disables `line-move-visual', forcing the arrow
+  ;; keys to navigate by logical lines rather than visual screen lines. While
+  ;; this prevents layout calculation lag on massive wrapped lines, it changes
+  ;; the default movement behavior you might expect.
+  (setf (alist-get 'line-move-visual so-long-variable-overrides nil t) nil)
 
   ;; Retain line numbers for usability
   (setq so-long-minor-modes (delq 'display-line-numbers-mode so-long-minor-modes))
