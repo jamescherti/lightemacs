@@ -16,7 +16,10 @@
 (require 'lightemacs-module)
 
 (lightemacs-module-load
- '(;; le-flavor-essential enables:
+ '(;; Auto compile all .el files
+   le-compile-angel
+
+   ;; le-flavor-essential enables:
    ;;   le-theme le-default-settings le-dired le-savehist le-elec-pair le-paren
    ;;   le-recentf le-saveplace le-autorevert
    le-flavor-essential
@@ -49,8 +52,7 @@
    ;; le-evil-matchit
    ;; le-winner
 
-   ;; Auto compile all .el files
-   le-compile-angel
+   le-so-long
 
    ;; The Garbage Collector Magic Hack
    le-gcmh
