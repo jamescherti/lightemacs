@@ -434,6 +434,9 @@ This function takes no arguments."
 
 ;;; so-long (TODO: Separate module)
 
+;; Read:
+;; https://www.jamescherti.com/prevent-emacs-freeze-so-long-files-very-long-lines/
+
 ;; Lower the threshold to catch minified files earlier (Default: 10000).
 (setq so-long-action 'so-long-minor-mode)
 
@@ -454,6 +457,9 @@ This function takes no arguments."
 
   ;; Keep syntax highlighting and reduce it.
   (setq so-long-minor-modes (delq 'font-lock-mode so-long-minor-modes))
+
+  ;; Reduce the Tree-sitter decoration level
+  (add-to-list 'so-long-variable-overrides '(treesit-font-lock-level . 1))
 
   ;; Limit font-lock to the minimum decoration level to save CPU cycles
   (add-to-list 'so-long-variable-overrides '(font-lock-maximum-decoration . 1))
