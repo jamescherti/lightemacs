@@ -495,58 +495,9 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
                                                 diff-mode-hook))
   ```
 
-- **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `hs-minor-mode` for specific languages:
-  ```emacs-lisp
-  (setq lightemacs-hs-minor-target-hooks '(;; Systems and General Purpose
-                                           c-mode-hook
-                                           c++-mode-hook
-                                           java-mode-hook
-                                           rust-mode-hook
-                                           go-mode-hook
-                                           ruby-mode-hook
-                                           php-mode-hook
-                                           perl-mode-hook
+- **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes.
 
-                                           ;; Web and Frontend
-                                           js-mode-hook
-                                           typescript-mode-hook
-                                           css-mode-hook
-
-                                           ;; Scripting, Data, and Infrastructure
-                                           sh-mode-hook
-                                           json-mode-hook
-                                           lua-mode-hook
-                                           nxml-mode-hook
-                                           html-mode-hook))
-  ```
-
-- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `treesit-fold-mode` for specific languages:
-  ```emacs-lisp
-  (setq lightemacs-treesit-fold-target-hooks '(c-ts-mode-hook
-                                               c++-ts-mode-hook
-                                               java-ts-mode-hook
-                                               rust-ts-mode-hook
-                                               go-ts-mode-hook
-                                               ruby-ts-mode-hook
-                                               php-ts-mode-hook
-                                               js-ts-mode-hook
-                                               typescript-ts-mode-hook
-                                               tsx-ts-mode-hook
-                                               css-ts-mode-hook
-                                               html-ts-mode-hook
-                                               cmake-ts-mode-hook
-                                               dockerfile-ts-mode-hook
-                                               json-ts-mode-hook
-                                               toml-ts-mode-hook
-                                               markdown-ts-mode-hook
-                                               bash-ts-mode-hook
-
-                                               ;; Third-party packages
-                                               kotlin-ts-mode-hook
-                                               swift-ts-mode-hook
-                                               elixir-ts-mode-hook
-                                               zig-ts-mode-hook))
-  ```
+- **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
 
 - **le-vim-tab-bar**: Enhances Emacs' built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
 - **le-wgrep**: The [wgrep](https://github.com/mhayashi1120/Emacs-wgrep) (Writable Grep) package enables you to convert a grep, consult-ripgrep, or Embark Export buffers into an editable interface. It allows in-place modification of matched lines within the results buffer, which can then be propagated back to the corresponding files upon confirmation. This facilitates precise, bulk edits across multiple files efficiently, eliminating the need to open each file individually, and effectively transforms the grep results buffer into a controlled, multi-file editing environment.

@@ -44,9 +44,77 @@
     treesit-fold-line-count-show t
     treesit-fold-line-count-format lightemacs-ellipsis)
 
-  (lightemacs-module-hooks treesit-fold
-    treesit-fold-mode
+  (lightemacs-module-hooks treesit-fold-global
+    global-treesit-fold-mode
     '())
+
+  (lightemacs-module-hooks treesit-fold-local
+    treesit-fold-mode
+    '(;; Systems and General Purpose
+      c-ts-mode-hook
+      c++-ts-mode-hook
+      java-ts-mode-hook
+      rust-ts-mode-hook
+      go-ts-mode-hook
+      ruby-ts-mode-hook
+      php-ts-mode-hook
+      csharp-ts-mode-hook
+      go-mod-ts-mode-hook
+      lua-ts-mode-hook
+
+      ;; Web and Frontend
+      js-ts-mode-hook
+      typescript-ts-mode-hook
+      tsx-ts-mode-hook
+      css-ts-mode-hook
+      html-ts-mode-hook
+      heex-ts-mode-hook
+      xml-ts-mode-hook
+
+      ;; Scripting and Infrastructure
+      bash-ts-mode-hook
+      cmake-ts-mode-hook
+      dockerfile-ts-mode-hook
+      awk-ts-mode-hook
+      vimscript-ts-mode-hook
+      nix-ts-mode-hook
+
+      ;; Data and Configuration
+      json-ts-mode-hook
+      toml-ts-mode-hook
+
+      ;; Build Systems and Makefiles
+      makefile-ts-mode-hook
+
+      ;; Hardware Description and Shaders
+      verilog-ts-mode-hook
+      vhdl-ts-mode-hook
+      hlsl-ts-mode-hook
+
+      ;; Scientific, Data Science, and Academic
+      latex-ts-mode-hook
+      beancount-ts-mode-hook
+
+      ;; Documentation and Diagrams
+      markdown-ts-mode-hook
+      mermaid-ts-mode-hook
+
+      ;; Other
+      gdscript-ts-mode-hook
+      clojure-ts-mode-hook
+      caml-ts-mode-hook
+      ocaml-ts-mode-hook
+      erlang-ts-mode-hook
+      elixir-ts-mode-hook
+      scala-ts-mode-hook
+      dart-ts-mode-hook
+      haskell-ts-mode-hook
+      julia-ts-mode-hook
+      kotlin-ts-mode-hook
+      gleam-ts-mode-hook
+      noir-ts-mode-hook
+      swift-ts-mode-hook
+      zig-ts-mode-hook))
 
   :config
   (set-face-attribute 'treesit-fold-replacement-face nil

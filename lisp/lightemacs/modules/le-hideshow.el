@@ -23,7 +23,28 @@
 
 (lightemacs-module-hooks hs-minor
   hs-minor-mode
-  '())
+  '(;; Systems and General Purpose
+    c-mode-hook
+    c++-mode-hook
+    java-mode-hook
+    rust-mode-hook
+    go-mode-hook
+    ruby-mode-hook
+    php-mode-hook
+    perl-mode-hook
+
+    ;; Web and Frontend
+    js-mode-hook
+    typescript-mode-hook
+    css-mode-hook
+
+    ;; Scripting, Data, and Infrastructure
+    sh-mode-hook ; for bash/shell scripts
+    json-mode-hook
+    lua-mode-hook
+    nxml-mode-hook
+    ;; mhtml and html
+    html-mode-hook))
 
 (provide 'le-hideshow)
 
