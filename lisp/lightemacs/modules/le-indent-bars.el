@@ -34,12 +34,7 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package indent-bars
-  :commands indent-bars-mode
-  :init
-  ;; Setting this to nil is not reliable
-  ;; https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples
-  (lightemacs-module-setq-maybe indent-bars
-    indent-bars-prefer-character t))
+  :commands indent-bars-mode)
 
 ;;; Provide
 
