@@ -37,20 +37,20 @@
    ;; le-buffer-guardian  ;; Auto save buffers
    ;; le-apheleia
    ;; le-diff-hl
+   ;; le-xclip
+   ;; le-quick-sdcv
+   ;; le-which-key
+   ;; le-indent-bars
+   ;; le-evil-matchit
+   ;; le-paredit
+   ;; le-enhanced-evil-paredit
+   ;; le-inhibit-mouse
+   ;; le-winner
+   ;; le-ace-window
    ;; le-magit
    ;; le-server
    ;; le-rainbow-delimiters
    ;; le-package-lint-flymake
-   ;; le-ace-window
-   ;; le-xclip
-   ;; le-inhibit-mouse
-   ;; le-quick-sdcv
-   ;; le-which-key
-   ;; le-paredit
-   ;; le-enhanced-evil-paredit
-   ;; le-indent-bars
-   ;; le-evil-matchit
-   ;; le-winner
 
    le-so-long
 

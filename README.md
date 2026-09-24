@@ -114,22 +114,20 @@ Here is an example of `~/.emacs.d/lisp/local/config.el` based on **le-flavor-big
                            ;; le-buffer-guardian  ;; Auto save buffers
                            ;; le-apheleia
                            ;; le-diff-hl
+                           ;; le-xclip
+                           ;; le-quick-sdcv
+                           ;; le-which-key
+                           ;; le-indent-bars
+                           ;; le-evil-matchit
+                           ;; le-paredit
+                           ;; le-enhanced-evil-paredit
+                           ;; le-inhibit-mouse
+                           ;; le-winner
+                           ;; le-ace-window
                            ;; le-magit
                            ;; le-server
                            ;; le-rainbow-delimiters
                            ;; le-package-lint-flymake
-                           ;; le-ace-window
-                           ;; le-xclip
-                           ;; le-inhibit-mouse
-                           ;; le-quick-sdcv
-                           ;; le-which-key
-                           ;; le-paredit
-                           ;; le-enhanced-evil-paredit
-                           ;; le-indent-bars
-                           ;; le-evil-matchit
-                           ;; le-nerd-icons-dired
-                           ;; le-nerd-icons-corfu
-                           ;; le-winner
                            ))
 
 ;;; config.el ends here
@@ -189,22 +187,20 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; le-buffer-guardian  ;; Auto save buffers
                            ;; le-apheleia
                            ;; le-diff-hl
+                           ;; le-xclip
+                           ;; le-quick-sdcv
+                           ;; le-which-key
+                           ;; le-indent-bars
+                           ;; le-evil-matchit
+                           ;; le-paredit
+                           ;; le-enhanced-evil-paredit
+                           ;; le-inhibit-mouse
+                           ;; le-winner
+                           ;; le-ace-window
                            ;; le-magit
                            ;; le-server
                            ;; le-rainbow-delimiters
                            ;; le-package-lint-flymake
-                           ;; le-ace-window
-                           ;; le-xclip
-                           ;; le-inhibit-mouse
-                           ;; le-quick-sdcv
-                           ;; le-which-key
-                           ;; le-paredit
-                           ;; le-enhanced-evil-paredit
-                           ;; le-indent-bars
-                           ;; le-evil-matchit
-                           ;; le-nerd-icons-dired
-                           ;; le-nerd-icons-corfu
-                           ;; le-winner
 
                            le-so-long
 
