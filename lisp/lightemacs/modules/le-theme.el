@@ -40,7 +40,9 @@ default.")
   "Apply THEME, disabling previously enabled themes."
   (if (memq theme (custom-available-themes))
       (let ((inhibit-redisplay t))
-        (mapc #'disable-theme custom-enabled-themes)
+        (dolist (enabled-theme custom-enabled-themes)
+          (unless (eq enabled-theme theme)
+            (disable-theme enabled-theme)))
         (condition-case err
             (load-theme theme t)
           (error (display-warning 'lightemacs
