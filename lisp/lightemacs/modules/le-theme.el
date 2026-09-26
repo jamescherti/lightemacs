@@ -34,8 +34,6 @@ default.")
 
 ;;; Theme
 
-(defvar lightemacs-theme--package-installed nil)
-
 (defun lightemacs-theme--apply (theme)
   "Apply THEME, disabling previously enabled themes."
   (if (memq theme (custom-available-themes))
@@ -64,9 +62,9 @@ If FORCE is non-nil, reload the current theme even if it is already active."
        `(lightemacs-use-package ,lightemacs-theme-package
           :demand t
           :config
-          (lightemacs-theme--apply ',lightemacs-theme-name)))
-      ;; lexical-binding: t
-      t)
+          (lightemacs-theme--apply ',lightemacs-theme-name))
+       ;; lexical-binding: t
+       t))
 
      (t
       (lightemacs-theme--apply lightemacs-theme-name)))))
@@ -150,9 +148,7 @@ If PACKAGE is non-nil, require it before loading the theme."
      `(defun ,theme-fn-name ()
         ,docstring
         (interactive)
-        (setq lightemacs-theme-package (if ',package
-                                           ',package
-                                         nil))
+        (setq lightemacs-theme-package ',package)
         (setq lightemacs-theme-name ',theme-sym)
         (lightemacs-load-default-theme t))
      t)))
