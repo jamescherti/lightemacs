@@ -40,7 +40,6 @@ default.")
   "Apply THEME, disabling previously enabled themes."
   (if (memq theme (custom-available-themes))
       (progn
-        (mapc #'disable-theme custom-enabled-themes)
         (dolist (enabled-theme custom-enabled-themes)
           (unless (eq enabled-theme theme)
             (disable-theme enabled-theme)))
@@ -187,10 +186,7 @@ If PACKAGE is non-nil, require it before loading the theme."
 (unless noninteractive
   (advice-add 'load-theme :after #'lightemacs-theme-load-default-font)
   (add-hook 'after-make-frame-functions #'lightemacs-theme-load-default-font)
-
-  (if (daemonp)
-      (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
-    (lightemacs-theme--load-theme)))
+  (lightemacs-theme--load-theme))
 
 (provide 'le-theme)
 
