@@ -39,7 +39,8 @@ default.")
 (defun lightemacs-theme--apply (theme)
   "Apply THEME, disabling previously enabled themes."
   (if (memq theme (custom-available-themes))
-      (let ((inhibit-redisplay t))
+      (progn
+        (mapc #'disable-theme custom-enabled-themes)
         (dolist (enabled-theme custom-enabled-themes)
           (unless (eq enabled-theme theme)
             (disable-theme enabled-theme)))
@@ -170,7 +171,7 @@ If PACKAGE is non-nil, require it before loading the theme."
         ;; of face definitions (such as backgrounds, foregrounds, and syntax
         ;; colors). The headless daemon process retains this data in memory
         ;; permanently, even when zero client frames exist.
-        (lightemacs-load-default-theme (daemonp))
+        (lightemacs-load-default-theme)
       ;; Apply the font
       ;;
       ;; Fonts are tied to display capabilities: While a font can be set
