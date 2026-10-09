@@ -1,6 +1,18 @@
-# Lightemacs - Fast and Lightweight Emacs Framework
+# Lightemacs - Fast, Lightweight, Customizable Emacs framework
 
-The Lightemacs project is a **fast and lightweight Emacs framework** that uses modern Emacs features and essential packages, which improves completion, navigation, editing efficiency, and usability. It offers a minimalist alternative to frameworks like Doom Emacs or Spacemacs, allowing full customization to adapt the environment to your specific workflow.
+- GitHub repository: [jamescherti/lightemacs](https://github.com/jamescherti/lightemacs)
+- Author: [James Cherti](https://www.jamescherti.com/)
+- License: GPL
+
+## Introduction
+
+Lightemacs is a fast, lightweight, and customizable Emacs framework:
+
+- Fast: Your entire configuration is natively compiled.
+- Lightweight: You can define precisely which packages to include or exclude.
+- Customizable: Include only what you need. Passing an empty module list reduces the configuration directly to a base minimal Emacs setup.
+
+It also gives you the freedom to use one of the following package managers: package.el, straight.el, and elpaca.
 
 <p align="center">
 <img src="https://jamescherti.com/misc/lightemacs-m.png" width="40%" />
@@ -8,7 +20,7 @@ The Lightemacs project is a **fast and lightweight Emacs framework** that uses m
 
 **Features:**
 
-- **Optimized startup:** Achieves fast initialization times through carefully tuned default settings.
+- **Optimized startup:** Fast initialization times through carefully tuned default settings. (Based on minimal-emacs.d)
 - **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
 - **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow. By default, only essential features are active.
 - **Lazy evaluation:** The majority of packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
