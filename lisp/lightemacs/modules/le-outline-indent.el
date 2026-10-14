@@ -53,7 +53,6 @@
     outline-indent-minor-mode
     '(;; Python
       python-mode-hook
-      python-ts-mode-hook
 
       ;; Yaml
       yaml-mode-hook

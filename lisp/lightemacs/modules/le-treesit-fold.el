@@ -61,6 +61,7 @@
       csharp-ts-mode-hook
       go-mod-ts-mode-hook
       lua-ts-mode-hook
+      python-ts-mode-hook
 
       ;; Web and Frontend
       js-ts-mode-hook
