@@ -39,10 +39,11 @@
     css-mode-hook
 
     ;; Scripting, Data, and Infrastructure
-    sh-mode-hook ; for bash/shell scripts
+    sh-mode-hook
     json-mode-hook
     lua-mode-hook
     nxml-mode-hook
+
     ;; mhtml and html
     html-mode-hook))
 

@@ -62,6 +62,7 @@
       go-mod-ts-mode-hook
       lua-ts-mode-hook
       python-ts-mode-hook
+      bash-ts-mode-hook
 
       ;; Web and Frontend
       js-ts-mode-hook
@@ -83,6 +84,7 @@
       ;; Data and Configuration
       json-ts-mode-hook
       toml-ts-mode-hook
+      yaml-ts-mode-hook
 
       ;; Build Systems and Makefiles
       makefile-ts-mode-hook
