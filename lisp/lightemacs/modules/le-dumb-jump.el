@@ -23,9 +23,9 @@
 ;;; Code:
 
 (require 'lightemacs-module)
+(require 'le-core-cli-tools)
 (eval-and-compile
   (require 'lightemacs-use-package))
-(require 'lightemacs-module)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (lightemacs-module-load '(le-core-cli-tools))
@@ -75,3 +75,7 @@
 (provide 'le-dumb-jump)
 
 ;;; le-dumb-jump.el ends here
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
