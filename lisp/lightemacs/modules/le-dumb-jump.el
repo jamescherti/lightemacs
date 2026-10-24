@@ -23,7 +23,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(require 'le-core-cli-tools)
 (eval-and-compile
   (require 'lightemacs-use-package))
 
