@@ -31,6 +31,7 @@
 
   :mode (("\\.m\\(?:ark\\)?down\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
+         ("\\.mdx\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
 
   :init

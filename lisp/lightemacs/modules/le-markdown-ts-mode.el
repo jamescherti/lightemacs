@@ -24,7 +24,9 @@
   :if (>= emacs-major-version 32)
   :ensure nil
   :commands markdown-ts-mode
-  :mode ("\\.md\\'" . markdown-ts-mode)
+  :mode (("\\.m\\(?:ark\\)?down\\'" . markdown-ts-mode)
+         ("\\.md\\'" . markdown-ts-mode)
+         ("\\.mdx\\'" . markdown-ts-mode))
   :config
   (add-to-list 'major-mode-remap-alist '(markdown-mode . markdown-ts-mode)))
 
