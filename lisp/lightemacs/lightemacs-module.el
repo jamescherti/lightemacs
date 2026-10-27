@@ -109,7 +109,7 @@ FILENAME is the full or relative path of the file as a string."
                                          (concat ".el" ext)))
                                  load-file-rep-suffixes))))
     (catch 'done
-      (dolist (suffix suffixes filename)
+      (dolist (suffix suffixes)
         (when (string-suffix-p suffix filename)
           (setq filename (substring filename 0 (- (length suffix))))
           (throw 'done t))))

@@ -69,7 +69,7 @@ stored in `minimal-emacs-gc-cons-threshold'.")
   "Value to which `gc-cons-threshold' is set after Emacs startup.
 Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 
-(defvar minimal-emacs-gc-cons-percentage gc-cons-percentage
+(defvar minimal-emacs-gc-cons-percentage minimal-emacs--backup-gc-cons-percentage
   "Value to which `gc-cons-percentage' is set after Emacs startup.
 Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 
@@ -152,7 +152,7 @@ FILENAME is the full or relative path of the file as a string."
                                          (concat ".el" ext)))
                                  load-file-rep-suffixes))))
     (catch 'done
-      (dolist (suffix suffixes filename)
+      (dolist (suffix suffixes)
         (when (string-suffix-p suffix filename)
           (setq filename (substring filename 0 (- (length suffix))))
           (throw 'done t))))
@@ -186,7 +186,7 @@ FILENAME is the full or relative path of the file as a string."
 
 (defun minimal-emacs--restore-gc ()
   "Restore garbage collection settings."
-  (if (and (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+  (if (and (numberp minimal-emacs-gc-cons-threshold-restore-delay)
            ;; In noninteractive mode, the event loop does not run
            (not noninteractive))
       ;; Defer garbage collection during initialization to avoid 2 collections.
@@ -198,7 +198,8 @@ FILENAME is the full or relative path of the file as a string."
     ;; `gc-cons-threshold' is managed by minimal-emacs.d
     (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc 105)
   ;; gc-cons-threshold is not managed by minimal-emacs.d.
-  (when (= gc-cons-threshold most-positive-fixnum)
+  (when (= gc-cons-threshold
+           (if noninteractive 268435456 most-positive-fixnum))
     (setq gc-cons-threshold minimal-emacs--backup-gc-cons-threshold
           gc-cons-percentage minimal-emacs--backup-gc-cons-percentage)))
 
@@ -207,9 +208,8 @@ FILENAME is the full or relative path of the file as a string."
 (unless (and (featurep 'native-compile)
              (fboundp 'native-comp-available-p)
              (native-comp-available-p))
-  ;; Deactivate the `native-compile' feature if it is not available
-  (setq native-comp-jit-compilation nil
-        features (delq 'native-compile features)))
+  ;; Disable JIT compilation if native compilation is unavailable.
+  (setq native-comp-jit-compilation nil))
 
 (setq native-comp-warning-on-missing-source init-file-debug
       native-comp-async-report-warnings-errors init-file-debug
@@ -326,6 +326,7 @@ this stage of initialization."
 
 (defun minimal-emacs--restore-file-name-handler-alist ()
   "Restore `file-name-handler-alist'."
+  (advice-remove 'command-line-1 #'minimal-emacs--respect-file-handlers)
   (set-default-toplevel-value
    'file-name-handler-alist
    ;; Merge instead of overwrite to preserve any changes made since startup.
@@ -343,8 +344,9 @@ this stage of initialization."
    'file-name-handler-alist
    (if (locate-file-internal "calc-loaddefs.el" load-path)
        nil
-     (list (rassq 'jka-compr-handler
-                  minimal-emacs--old-file-name-handler-alist))))
+     (let ((handler (rassq 'jka-compr-handler
+                           minimal-emacs--old-file-name-handler-alist)))
+       (when handler (list handler)))))
 
   ;; Ensure the new value persists through any current let-binding.
   (put 'file-name-handler-alist 'initial-value
@@ -426,13 +428,16 @@ this stage of initialization."
             (setq mode-line-format minimal-emacs--hidden-mode-line)
             (kill-local-variable 'minimal-emacs--hidden-mode-line)))))))
 
-(advice-add 'startup--load-user-init-file :around
-            #'minimal-emacs--startup-load-user-init-file)
+(unless (or noninteractive
+            init-file-debug)
+  (advice-add 'startup--load-user-init-file :around
+              #'minimal-emacs--startup-load-user-init-file))
 
 ;;; UI elements
 
 (defun minimal-emacs--setup-toolbar (&rest _)
   "Setup the toolbar. The _ argument is ignored."
+  (advice-remove 'startup--load-user-init-file #'minimal-emacs--setup-toolbar)
   (when (fboundp 'tool-bar-setup)
     (advice-remove 'tool-bar-setup #'ignore)
     (when (bound-and-true-p tool-bar-mode)
@@ -455,7 +460,7 @@ this stage of initialization."
     ;; visible.
     (unless initial-window-system
       (set-frame-parameter nil 'menu-bar-lines 0))
-    (unless (memq window-system '(mac ns))
+    (unless (memq initial-window-system '(mac ns))
       (setq menu-bar-mode nil)))
 
   (when (fboundp 'tool-bar-setup)
