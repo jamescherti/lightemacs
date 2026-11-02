@@ -63,7 +63,9 @@ buffer is not displayed in the selected window."
        ;; `win-end', the character position returned by `window-end', is the
        ;; first position that is completely off-screen. If the point equals
        ;; window-end, it is no longer visible and requires recentering.
-       ((>= point win-end)
+       ((and (>= point win-end)
+             (or (< win-end (point-max))
+                 (not (pos-visible-in-window-p point nil t))))
         (setq do-recenter t)
         ;; If `adjust-arg' is nil and the caller intentionally passes a negative
         ;; arg, this breaks the documented behavior of recenter. The absolute
@@ -79,24 +81,28 @@ buffer is not displayed in the selected window."
       (when do-recenter
         (recenter arg t)))))
 
-(defmacro lightemacs-recenter-if-out-of-view (&rest body)
-  "Execute BODY and recenter if point is off-screen.
-
-This checks if the point is visible in the selected window after
-execution. If the buffer changes or the window is deleted,
-recentering is skipped."
-  (declare (indent 0) (debug t))
-  (let ((win-sym (make-symbol "start-window")))
-    `(let ((,win-sym (selected-window)))
-       ;; use prog1 to return the result of body
-       (progn ,@body)
-       (when (and (>= scroll-conservatively 101)
-                  (window-live-p ,win-sym)
-                  (eq (current-buffer) (window-buffer ,win-sym))
-                  ;; pos-visible-in-window-p handles partial lines and
-                  ;; redisplay logic more robustly than manual arithmetic.
-                  (not (pos-visible-in-window-p (point) ,win-sym)))
-         (recenter)))))
+;; README:
+;; - `lightemacs-recenter-if-out-of-view` (macro): Execute BODY and recenter if
+;; point is outside the original window bounds.
+;;
+;; (defmacro lightemacs-recenter-if-out-of-view (&rest body)
+;;   "Execute BODY and recenter if point is off-screen.
+;;
+;; This checks if the point is visible in the selected window after
+;; execution. If the buffer changes or the window is deleted,
+;; recentering is skipped."
+;;   (declare (indent 0) (debug t))
+;;   (let ((win-sym (make-symbol "start-window")))
+;;     `(let ((,win-sym (selected-window)))
+;;        ;; use prog1 to return the result of body
+;;        (progn ,@body)
+;;        (when (and (>= scroll-conservatively 101)
+;;                   (window-live-p ,win-sym)
+;;                   (eq (current-buffer) (window-buffer ,win-sym))
+;;                   ;; pos-visible-in-window-p handles partial lines and
+;;                   ;; redisplay logic more robustly than manual arithmetic.
+;;                   (not (pos-visible-in-window-p (point) ,win-sym)))
+;;          (recenter)))))
 
 (defmacro lightemacs-save-window-scroll (&rest body)
   "Execute BODY while preserving the horizontal and vertical scroll."
