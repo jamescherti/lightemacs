@@ -24,10 +24,16 @@
 
 (eval-and-compile
   (require 'lightemacs-use-package))
+(require 'lightemacs-module)
 
 (lightemacs-use-package pathaction
   :commands (pathaction-edit
              pathaction-run))
+
+(lightemacs-module-bind pathaction
+  ;; C-c bindings in `mode-specific-map'
+  (global-set-key (kbd "C-c p e") 'pathaction-edit)
+  (global-set-key (kbd "C-c p r") 'pathaction-run))
 
 (provide 'le-pathaction)
 
