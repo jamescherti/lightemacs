@@ -32,8 +32,8 @@
 
 (lightemacs-module-bind pathaction
   ;; C-c bindings in `mode-specific-map'
-  (global-set-key (kbd "C-c p e") 'pathaction-edit)
-  (global-set-key (kbd "C-c p r") 'pathaction-run))
+  (global-set-key (kbd "C-x p e") 'pathaction-edit)
+  (global-set-key (kbd "C-x p r") 'pathaction-run))
 
 (provide 'le-pathaction)
 
