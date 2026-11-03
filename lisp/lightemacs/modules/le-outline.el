@@ -29,6 +29,7 @@
     lisp-mode-hook
     conf-mode-hook
     markdown-mode-hook
+    markdown-ts-mode-hook
     diff-mode-hook))
 
 ;;; Update the outline ellipsis

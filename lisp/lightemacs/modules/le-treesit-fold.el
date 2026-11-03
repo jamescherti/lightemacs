@@ -99,7 +99,6 @@
       beancount-ts-mode-hook
 
       ;; Documentation and Diagrams
-      markdown-ts-mode-hook
       mermaid-ts-mode-hook
 
       ;; Other
