@@ -34,6 +34,7 @@
 
 (lightemacs-use-package consult
   :commands (consult-fd
+             consult-customize
              consult-register-window
              consult-ripgrep
              consult-bookmark
@@ -147,7 +148,8 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
                       lightemacs--fdfind-executable
                     "fd")
                   ;; Lightemacs
-                  " --hidden --exclude .git --absolute-path"
+                  " --hidden --absolute-path "
+                  " --exclude=.git --exclude=.svn --exclude=.hg "
                   (if (memq system-type '(cygwin windows-nt ms-dos))
                       " --path-separator=/"
                     "")
@@ -165,7 +167,7 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
                   ;; Default
                   " --null --line-buffered --color=never --max-columns=1000"
                   " --path-separator / --smart-case --no-heading"
-                  " --with-filename --line-number --search-zip"))))
+                  " --with-filename --line-number"))))
 
 ;;; Keybindings
 
@@ -237,5 +239,9 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
 ;;; Provide
 
 (provide 'le-consult)
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 ;;; le-consult.el ends here
