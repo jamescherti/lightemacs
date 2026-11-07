@@ -2,7 +2,7 @@
 
 - GitHub repository: [jamescherti/lightemacs](https://github.com/jamescherti/lightemacs)
 - Author: [James Cherti](https://www.jamescherti.com/)
-- License: GPL
+- License: GPL 3.0 or later
 
 ## Introduction
 
