@@ -19,6 +19,8 @@
  '(;; Auto compile all .el files
    le-compile-angel
 
+   le-exec-path-from-shell
+
    ;; le-flavor-essential enables:
    ;;   le-theme le-default-settings le-dired le-savehist le-elec-pair le-paren
    ;;   le-recentf le-saveplace le-autorevert

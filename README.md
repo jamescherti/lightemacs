@@ -219,6 +219,9 @@ The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-fl
                            ;; Auto compile all .el files
                            le-compile-angel
 
+                           ;; Import environment variables like $PATH from a login shell
+                           le-exec-path-from-shell
+
                            ;; The Garbage Collector Magic Hack
                            le-gcmh
 
@@ -608,6 +611,8 @@ Here are a few other modules disabled by default:
 
 - **le-magit**: Configures [Magit](https://github.com/magit/magit/) provides a comprehensive interface to the Git version control system. **Usage:** Press `C-x g`.
 
+- **le-exec-path-from-shell**: Configures [exec-path-from-shell](https://github.com/purcell/exec-path-from-shell) to import environment variables, such as `PATH`, from a login shell into Emacs. This allows the editor to locate shell-configured executables when launched from a desktop environment.
+
 - **le-csv-mode**: Configures [csv-mode](https://elpa.gnu.org/packages/csv-mode.html), which provides a major mode that enhances the experience of editing Comma-Separated Value. Its most impactful feature is the ability to align fields into visually distinct, vertically synchronized columns, which instantly renders dense, delimited text into a readable table format. Beyond mere visualization, the package provides tools for structural editing, allowing users to sort rows based on specific fields, transpose columns, and perform rectangular operations such as killing or yanking specific vertical slices of data.
 
 - **le-git-modes**: Configures [git-modes](https://github.com/magit/git-modes), an Emacs major modes for managing Git configuration files, such as `.gitattributes`, `.gitconfig`, and `.gitignore`.
@@ -626,8 +631,6 @@ Here are a few other modules disabled by default:
 - **le-compile-angel**: Configures [Compile-angel](https://github.com/jamescherti/compile-angel.el/), a package that speeds up Emacs by ensuring that all Elisp libraries are both byte-compiled and native-compiled.
 
 - **le-eat**: Eat (Emulate A Terminal) is a terminal emulator implemented entirely in Emacs Lisp. It supports full-screen terminal applications such as Emacs itself and offers high performance, operating over three times faster than Term. Eat provides advanced features like Sixel graphics, complete mouse support, shell integration, and reduced screen flicker for smoother performance.
-
-Elisp file-type modules are disabled by default:
 
 - **le-maybe-yaml-ts**: Configures `yaml-ts-mode` if available; otherwise, it configures [yaml-mode](https://github.com/yoshiki/yaml-mode). The variable `lightemacs-yaml-prefer-treesitter` defaults to `t`, indicating a preference for Tree-sitter. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available. This module also ensures that indentation adheres to the YAML standard by using two spaces and no tabs.
 
