@@ -49,6 +49,12 @@
   (lightemacs-module-bind avy
     (keymap-global-set "C-:" #'avy-goto-char)
     (keymap-global-set "C-'" #'avy-goto-char-2)
+    (with-eval-after-load 'org
+      ;; Preserve the global Avy navigation binding C-' inside Org buffers. By
+      ;; default, `org-mode-map' intercepts C-' for `org-cycle-agenda-files',
+      ;; taking precedence over `global-map'. We rebind it here after Org loads
+      ;; to avoid a void-variable error and maintain consistent jump behavior.
+      (define-key org-mode-map (kbd "C-'") #'avy-goto-char-2))
     (keymap-global-set "M-g j" #'avy-goto-char-timer)  ;; TODO: Change?
     (keymap-global-set "M-g w" #'avy-goto-word-1)
     ;; Conflicts with Consult: (TODO)
@@ -58,5 +64,9 @@
     (keymap-global-set "M-g l" #'avy-goto-line)))
 
 (provide 'le-avy)
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 ;;; le-avy.el ends here
