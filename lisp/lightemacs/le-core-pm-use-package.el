@@ -16,7 +16,10 @@
 ;; Initialize
 (package-initialize)
 
-(unless package-archive-contents
+(defvar lightemacs-use-package-init-refresh t)
+
+(when (and (not (bound-and-true-p package-archive-contents))
+           lightemacs-use-package-init-refresh)
   (package-refresh-contents))
 
 ;; Install use-package if necessary
