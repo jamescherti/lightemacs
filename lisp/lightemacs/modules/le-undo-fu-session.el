@@ -32,7 +32,7 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
 ;;; `use-package'
 
 (lightemacs-use-package undo-fu-session
-  :commands undo-fu-session-global-mode
+  :commands (undo-fu-session-mode undo-fu-session-global-mode)
   :init
   (lightemacs-module-setq-maybe undo-fu-session
     undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"

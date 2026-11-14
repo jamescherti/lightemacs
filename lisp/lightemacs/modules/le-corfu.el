@@ -83,8 +83,20 @@
   ;; will immediately place it above your most frequently used candidates.
   ;; Prescient prevents this by keeping high-frequency candidates near the top
   ;; even if they were not the absolute last item selected.
-  (lightemacs-module-hooks corfu-history corfu-history-mode '()))
+  (defun my-enable-corfu-history ()
+    "Load `corfu-history' and enable `corfu-history-mode'."
+    (require 'corfu-history)
+    (unless (fboundp 'corfu-history-mode)
+      (error "Library corfu-history does not define corfu-history-mode"))
+    (corfu-history-mode 1))
+
+  (lightemacs-module-hooks corfu-history
+    my-enable-corfu-history '()))
 
 (provide 'le-corfu)
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 ;;; le-corfu.el ends here
