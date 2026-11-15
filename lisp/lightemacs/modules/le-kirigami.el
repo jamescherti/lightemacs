@@ -48,14 +48,15 @@
   (require 'lightemacs-use-package))
 
 (lightemacs-use-package kirigami
-  :commands (kirigami-open-fold
+  :commands (kirigami-mode
+             kirigami-global-mode
+             kirigami-open-fold
              kirigami-open-fold-rec
              kirigami-close-fold
              kirigami-toggle-fold
              kirigami-open-folds
              kirigami-close-folds-except-current
-             kirigami-close-folds
-             kirigami-global-mode)
+             kirigami-close-folds)
   :init
   (lightemacs-module-bind kirigami
     (global-set-key (kbd "C-c z o") 'kirigami-open-fold)

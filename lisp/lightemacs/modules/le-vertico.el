@@ -30,7 +30,7 @@
              vertico-next
              vertico-previous
              vertico-exit-input)
-  :functions vertico--index
+  :functions (vertico--index vertico-sort-history-length-alpha)
 
   :init
   (lightemacs-module-hooks vertico
@@ -57,10 +57,17 @@
         formatted-cand)))
 
   :config
+  (require 'vertico-sort)
+  (setq vertico-sort-function #'vertico-sort-history-length-alpha)
+
   ;; Prefix current candidate with arrow
   (advice-add 'vertico--format-candidate :around
               #'lightemacs-vertico-format-candidate-advice))
 
 (provide 'le-vertico)
+
+;; Local variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 ;;; le-vertico.el ends here
