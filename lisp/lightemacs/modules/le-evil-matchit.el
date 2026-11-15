@@ -47,6 +47,7 @@
     '())
 
   (with-eval-after-load 'evil
+    (require 'evil-matchit)
     (require 'evil-matchit-evil-setup)))
 
 (provide 'le-evil-matchit)
