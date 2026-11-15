@@ -30,7 +30,8 @@
              vertico-next
              vertico-previous
              vertico-exit-input)
-  :functions (vertico--index vertico-sort-history-length-alpha)
+  :functions (vertico--index
+              vertico-sort-history-length-alpha)
 
   :init
   (lightemacs-module-hooks vertico
@@ -57,8 +58,16 @@
         formatted-cand)))
 
   :config
+  ;; Vertico's default `vertico-sort-function' checks
+  ;; (fboundp 'vertico-sort-history-length-alpha) at load time and falls back
+  ;; to nil if the function is not yet defined. When loading Vertico directly
+  ;; from `load-path' without a package manager to generate autoloads,
+  ;; `vertico-sort-history-length-alpha' is not loaded yet, leaving
+  ;; `vertico-sort-function' set to nil. Load `vertico-sort' explicitly and
+  ;; restore the default history-based sorting function.
   (require 'vertico-sort)
-  (setq vertico-sort-function #'vertico-sort-history-length-alpha)
+  (lightemacs-module-setq-maybe vertico
+    vertico-sort-function #'vertico-sort-history-length-alpha)
 
   ;; Prefix current candidate with arrow
   (advice-add 'vertico--format-candidate :around

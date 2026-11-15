@@ -26,8 +26,7 @@
 
 (lightemacs-use-package corfu
   :commands (global-corfu-mode
-             corfu-mode
-             corfu-history-mode)
+             corfu-mode)
 
   :init
   ;; TODO: For some reason, global-corfu-modes in lightemacs-module-setq-maybe
@@ -67,31 +66,7 @@
 
   (lightemacs-module-hooks corfu-local
     corfu-mode
-    nil)
-
-  (when lightemacs-corfu-add-to-savehist
-    (with-eval-after-load 'savehist
-      (add-to-list 'savehist-additional-variables 'corfu-history)))
-
-  ;; Corfu: Corfu candidate lists are typically shorter, so its default sorting
-  ;; is simpler. To get it to sort by recency, you must explicitly enable
-  ;; corfu-history-mode.
-  ;;
-  ;; Comparison with Corfu Prescient: While corfu-history sorts purely by
-  ;; recency (your most recent selection goes to the top), Prescient tracks both
-  ;; recency and frequency. With corfu-history, selecting a rare candidate once
-  ;; will immediately place it above your most frequently used candidates.
-  ;; Prescient prevents this by keeping high-frequency candidates near the top
-  ;; even if they were not the absolute last item selected.
-  (defun my-enable-corfu-history ()
-    "Load `corfu-history' and enable `corfu-history-mode'."
-    (require 'corfu-history)
-    (unless (fboundp 'corfu-history-mode)
-      (error "Library corfu-history does not define corfu-history-mode"))
-    (corfu-history-mode 1))
-
-  (lightemacs-module-hooks corfu-history
-    my-enable-corfu-history '()))
+    nil))
 
 (provide 'le-corfu)
 
