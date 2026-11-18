@@ -43,6 +43,8 @@
 
 (use-package corfu-prescient
   :after (prescient corfu)
+  ;; Activate the integration when both dependencies have loaded.
+  :demand t
   :commands corfu-prescient-mode
   :init
   (lightemacs-module-setq-maybe corfu-prescient

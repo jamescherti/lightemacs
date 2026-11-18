@@ -45,6 +45,8 @@
 
 (use-package vertico-prescient
   :after (prescient vertico)
+  ;; Activate the integration when both dependencies have loaded.
+  :demand t
   :commands vertico-prescient-mode
   :init
   (lightemacs-module-setq-maybe vertico-prescient

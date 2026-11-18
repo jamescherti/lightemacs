@@ -43,7 +43,10 @@ Tree-sitter is available.")
     ;; Configure `yaml-mode'
     (lightemacs-module-load '(le-yaml-mode))))
 
-(add-hook 'after-init-hook #'le-maybe-yaml-ts-load)
+;; Modules loaded after initialization have already missed this hook.
+(if after-init-time
+    (le-maybe-yaml-ts-load)
+  (add-hook 'after-init-hook #'le-maybe-yaml-ts-load))
 
 ;;; Provide
 

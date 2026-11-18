@@ -31,11 +31,6 @@
 (defvar lightemacs-recentf-cleanup-and-auto-save-interval 550
   "Interval in seconds for running `recentf-cleanup' and `recentf-save-list'.")
 
-(defvar lightemacs-recentf-track-switch-to-buffer nil
-  "Non-nil means track buffer switches and add the visited file to `recentf'.
-When enabled, switching to a buffer visiting a file automatically
-adds that file to the recentf list.")
-
 (defvar lightemacs-recentf-quiet lightemacs-reduce-messages
   "Non-nil means suppress messages during recentf cleanup and save operations.")
 
@@ -109,14 +104,6 @@ adds that file to the recentf list.")
       (setq lightemacs-recentf--auto-save-timer nil))
     (recentf-mode -1))
 
-  ;; Add file at the beginning of the recent list after switching buffer.
-  (defun lightemacs-recentf--add-file-on-buffer-change (&rest _args)
-    "Add file at the beginning of the recent list after switching buffer."
-    (when (and (fboundp 'recentf-add-file)
-               (bound-and-true-p recentf-mode))
-      (when-let* ((file-name (buffer-file-name (buffer-base-buffer))))
-        (recentf-add-file file-name))))
-
   :init
   (lightemacs-module-bind recentf
     (keymap-global-set "C-c f" #'recentf))
@@ -125,23 +112,15 @@ adds that file to the recentf list.")
     ;; Settings
     recentf-max-menu-items 10
     recentf-max-saved-items 750
+    recentf-exclude (list
+                     ;; Exclude transient Git files
+                     "MERGE_MSG\\'"
+                     "git-rebase-todo\\'"
+                     "COMMIT_EDITMSG\\'")
     recentf-auto-cleanup 'never)  ; Managed by this module
 
   ;; Enable
-  (add-hook 'lightemacs-on-first-buffer-hook #'lightemacs-recentf--enable)
-
-  :config
-  (when lightemacs-recentf-track-switch-to-buffer
-    (add-hook 'window-buffer-change-functions
-              #'lightemacs-recentf--add-file-on-buffer-change))
-
-  (setq recentf-exclude
-        (append recentf-exclude
-                (list
-                 ;; Exclude transient Git files
-                 "MERGE_MSG\\'"
-                 "git-rebase-todo\\'"
-                 "COMMIT_EDITMSG\\'"))))
+  (add-hook 'lightemacs-on-first-buffer-hook #'lightemacs-recentf--enable))
 
 (provide 'le-recentf)
 

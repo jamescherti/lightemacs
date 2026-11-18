@@ -45,7 +45,10 @@ Versions affected by this bug: Emacs 30.1, 30.2, and <= 29.*."
              (treesit-ready-p 'yaml t))
     (add-to-list 'auto-mode-alist '("\\.[yY][aA]?[mM][lL]\\'" . yaml-ts-mode))))
 
-(add-hook 'lightemacs-after-init-hook #'lightemacs-yaml-ts-mode--setup)
+;; The routing module can select this backend after startup has finished.
+(if after-init-time
+    (lightemacs-yaml-ts-mode--setup)
+  (add-hook 'lightemacs-after-init-hook #'lightemacs-yaml-ts-mode--setup))
 
 ;;; Enhance `yaml-ts-mode' indentation
 

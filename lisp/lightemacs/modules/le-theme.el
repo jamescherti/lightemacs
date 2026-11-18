@@ -88,6 +88,8 @@ This function is idempotent and ignores any additional arguments _ARGS for
                                                           (font-xlfd-name font))))
                                  (family (font-get spec :family)))
                             (cond
+                             ;; A missing family must stay nil.
+                             ((null family) nil)
                              ((symbolp family) (symbol-name family))
                              ((stringp family) family)
                              (t nil))))))
@@ -102,8 +104,9 @@ This function is idempotent and ignores any additional arguments _ARGS for
                                    (downcase target-family)))
           (condition-case err
               (progn
-                (set-frame-font lightemacs-theme-default-font
-                                nil t :inhibit-customize)
+                ;; A new client frame should only update its own font.
+                (set-frame-font lightemacs-theme-default-font nil
+                                (list target-frame) :inhibit-customize)
                 (setq default-frame-alist
                       (assq-delete-all 'font default-frame-alist))
                 (add-to-list 'default-frame-alist
@@ -117,7 +120,7 @@ This function is idempotent and ignores any additional arguments _ARGS for
                 ;; and alignment- sensitive UI elements. Setting ':height 1.0'
                 ;; ensures a strict 1:1 baseline rendering scale relative to the
                 ;; default frame text.
-                (set-face-attribute 'fixed-pitch nil
+                (set-face-attribute 'fixed-pitch target-frame
                                     :family target-family
                                     :height 1.0)
 
@@ -129,7 +132,7 @@ This function is idempotent and ignores any additional arguments _ARGS for
                 ;; (e.g., Helvetica on macOS, Segoe UI on Windows, or fontconfig
                 ;; sans-serif aliases on Linux/BSD).
                 (when variable-family
-                  (set-face-attribute 'variable-pitch nil
+                  (set-face-attribute 'variable-pitch target-frame
                                       :family variable-family
                                       :height 1.0)))
             (error

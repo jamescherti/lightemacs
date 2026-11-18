@@ -43,7 +43,10 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
         (lightemacs-module-load '(le-markdown-ts-mode)))
     (lightemacs-module-load '(le-markdown-mode))))
 
-(add-hook 'after-init-hook #'le-maybe-markdown-ts-load)
+;; Modules loaded after initialization have already missed this hook.
+(if after-init-time
+    (le-maybe-markdown-ts-load)
+  (add-hook 'after-init-hook #'le-maybe-markdown-ts-load))
 
 ;;; Provide
 
