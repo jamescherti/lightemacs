@@ -16,6 +16,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 ;;; Variables
 
 (defvar lightemacs-markdown-prefer-tree-sitter t
