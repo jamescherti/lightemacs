@@ -17,6 +17,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package exec-path-from-shell
   :demand t

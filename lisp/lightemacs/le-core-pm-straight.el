@@ -82,7 +82,7 @@ _ARGS is the normalized declaration supplied by `use-package'."
 ;; (advice-add 'use-package-normalize-keywords :filter-args
 ;;             #'lightemacs--straight-use-package-map-ensure)
 
-;;; Require
+;;; Provide
 
 (provide 'le-core-pm-straight)
 

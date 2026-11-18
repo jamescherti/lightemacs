@@ -20,6 +20,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package shut-up
   :demand t)

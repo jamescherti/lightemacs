@@ -22,6 +22,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package embark
   :commands (embark-act

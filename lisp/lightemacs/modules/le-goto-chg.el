@@ -17,6 +17,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package goto-chg
   :commands (goto-last-change

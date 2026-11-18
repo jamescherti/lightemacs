@@ -14,6 +14,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package evil-commentary
   :commands evil-commentary-mode

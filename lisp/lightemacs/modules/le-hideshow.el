@@ -15,11 +15,12 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'use-package)
+
 ;;; Hooks
 
 ;;; lightemacs-module-hooks
-
-(require 'lightemacs)
 
 (use-package hideshow
   :ensure nil

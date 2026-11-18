@@ -19,6 +19,7 @@
 ;;; Require
 
 (require 'lightemacs)
+(require 'use-package)
 
 ;;; Variables
 

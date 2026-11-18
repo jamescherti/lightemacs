@@ -18,6 +18,9 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'use-package)
+
 ;; When prescient.el is used with Corfu, prescient.el improves both in-buffer
 ;; completions and pop-up completion menus by making candidate ordering more
 ;; predictable and adaptive to recent usage, thus speeding up repeated
@@ -36,8 +39,7 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
-(require 'lightemacs)
-(lightemacs-module-load '(prescient))
+(lightemacs-module-load '(le-prescient))
 
 (use-package corfu-prescient
   :after (prescient corfu)

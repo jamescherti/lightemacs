@@ -17,6 +17,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+(require 'use-package)
 
 (use-package yasnippet-snippets
   :after yasnippet)

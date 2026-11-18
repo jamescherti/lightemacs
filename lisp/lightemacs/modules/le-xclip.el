@@ -26,6 +26,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package xclip
   :if (not (display-graphic-p))

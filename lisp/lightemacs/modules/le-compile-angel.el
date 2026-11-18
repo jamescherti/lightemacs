@@ -25,6 +25,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package compile-angel
   :commands (compile-angel-on-load-mode

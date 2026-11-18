@@ -26,6 +26,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package csv-mode
   :commands (csv-mode

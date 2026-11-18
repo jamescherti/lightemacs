@@ -20,6 +20,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package ace-window
   :commands ace-window

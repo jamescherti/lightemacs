@@ -34,6 +34,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package apheleia
   :commands (apheleia-mode

@@ -20,6 +20,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package avy
   :commands (avy-goto-char

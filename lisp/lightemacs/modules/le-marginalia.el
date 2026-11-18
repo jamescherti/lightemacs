@@ -16,6 +16,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package marginalia
   :commands (marginalia-mode

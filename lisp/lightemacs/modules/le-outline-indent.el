@@ -24,6 +24,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package outline-indent
   :commands (outline-indent-minor-mode

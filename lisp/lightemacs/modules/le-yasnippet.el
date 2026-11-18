@@ -21,6 +21,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package yasnippet
   :commands (yas-global-mode

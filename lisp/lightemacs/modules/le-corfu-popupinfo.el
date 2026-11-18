@@ -26,6 +26,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package corfu-popupinfo
   :ensure nil ; This is part of corfu

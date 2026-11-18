@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package evil-matchit
   :commands (evil-matchit-mode

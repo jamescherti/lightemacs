@@ -44,6 +44,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package kirigami
   :commands (kirigami-mode

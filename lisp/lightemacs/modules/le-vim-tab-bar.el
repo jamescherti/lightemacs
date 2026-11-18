@@ -25,6 +25,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package vim-tab-bar
   :commands vim-tab-bar-mode

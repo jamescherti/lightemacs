@@ -18,6 +18,9 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'use-package)
+
 (eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)
@@ -33,8 +36,6 @@ across the entire editor.
 Setting this variable to t deactivates these global overrides after
 initialization, allowing users to retain standard major-mode behaviors unless
 they explicitly opt out of the inhibition.")
-
-(require 'lightemacs)
 
 (use-package evil-collection
   :if (not noninteractive)

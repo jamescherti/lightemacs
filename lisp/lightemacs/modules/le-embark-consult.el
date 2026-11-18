@@ -21,6 +21,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package embark-consult
   :after (embark consult))

@@ -18,6 +18,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package cape
   :commands (cape-abbrev

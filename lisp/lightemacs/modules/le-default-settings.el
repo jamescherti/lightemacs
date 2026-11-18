@@ -17,6 +17,8 @@
 
 (require 'lightemacs)
 
+;;; Variables
+
 ;;; Default keybindingsare easily shadowed by major modes, minor modes, or
 ;; keymap managers like Evil mode. By injecting our custom keymap directly into
 ;; emulation-mode-map-alists, we place these specific bindings at the absolute

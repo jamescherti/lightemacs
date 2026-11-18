@@ -34,6 +34,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package bufferfile
   :commands (bufferfile-rename

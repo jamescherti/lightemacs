@@ -24,6 +24,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package treesit-fold
   :if (and (fboundp 'treesit-available-p)

@@ -19,6 +19,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package dtrt-indent
   :commands (dtrt-indent-global-mode

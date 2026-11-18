@@ -20,9 +20,10 @@
 
 ;;; Code:
 
-;;; Use-package `flymake'
-
 (require 'lightemacs)
+(require 'use-package)
+
+;;; Use-package `flymake'
 
 (use-package flymake
   :ensure nil

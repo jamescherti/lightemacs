@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 ;;; Variables
 
 (defvar lightemacs-theme-name 'modus-vivendi

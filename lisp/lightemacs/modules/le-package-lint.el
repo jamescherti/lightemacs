@@ -29,6 +29,7 @@
 
 ;;; Code:
 
+(require 'use-package)
 
 (use-package package-lint
   :commands (package-lint-batch-and-exit

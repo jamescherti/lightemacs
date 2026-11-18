@@ -40,6 +40,8 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
+
 (lightemacs-module-load '(le-nerd-icons))
 
 (use-package nerd-icons-corfu

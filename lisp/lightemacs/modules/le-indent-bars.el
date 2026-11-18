@@ -29,6 +29,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 (use-package indent-bars
   :commands indent-bars-mode)
 

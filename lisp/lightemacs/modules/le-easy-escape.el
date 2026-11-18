@@ -27,6 +27,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package easy-escape
   :commands easy-escape-minor-mode

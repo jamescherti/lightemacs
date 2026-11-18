@@ -23,6 +23,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package edit-indirect
   :commands (edit-indirect-mode

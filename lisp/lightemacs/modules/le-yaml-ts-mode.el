@@ -21,6 +21,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 ;;; Fix `yaml-ts-mode' comment-start-skip
 
 (defun lightemacs-yaml-ts-mode--fix-comment-start-skip ()

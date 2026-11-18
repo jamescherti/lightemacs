@@ -15,6 +15,9 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'use-package)
+
 
 (defvar lightemacs-markdown-toc-restore-window-start t)
 

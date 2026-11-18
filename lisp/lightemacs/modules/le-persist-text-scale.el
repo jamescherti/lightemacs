@@ -36,6 +36,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package persist-text-scale
   :commands (persist-text-scale-mode

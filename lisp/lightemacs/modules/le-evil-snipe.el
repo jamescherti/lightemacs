@@ -23,6 +23,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package evil-snipe
   :commands (evil-snipe-mode

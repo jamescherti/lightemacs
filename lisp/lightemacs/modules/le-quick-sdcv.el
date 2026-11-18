@@ -19,6 +19,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package quick-sdcv
   :commands (quick-sdcv-search-at-point

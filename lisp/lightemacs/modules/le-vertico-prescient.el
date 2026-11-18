@@ -21,6 +21,9 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'use-package)
+
 ;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
 ;; completion by dynamically reordering candidates based on frequency and
 ;; recency, making it faster to select commonly used options while preserving
@@ -38,8 +41,7 @@
 ;;
 ;; URL: https://github.com/radian-software/prescient.el
 
-(require 'lightemacs)
-(lightemacs-module-load '(prescient))
+(lightemacs-module-load '(le-prescient))
 
 (use-package vertico-prescient
   :after (prescient vertico)

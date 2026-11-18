@@ -27,6 +27,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package orderless
   :demand t

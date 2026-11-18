@@ -26,6 +26,9 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+(require 'use-package)
+
 ;; Variables
 
 (defvar lightemacs-consult-dir-fasd-support t
@@ -35,8 +38,6 @@ be added as a source for `consult-dir'. If fasd is not installed or not found in
 PATH, this option has no effect.")
 
 ;;; Use-package
-
-(require 'lightemacs)
 
 (use-package consult-dir
   :commands (consult-dir

@@ -17,6 +17,8 @@
 
 ;;; Code:
 
+(require 'use-package)
+
 
 (use-package markdown-ts-mode
   :if (>= emacs-major-version 32)

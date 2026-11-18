@@ -19,6 +19,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package prescient
   :commands (prescient-completion-sort

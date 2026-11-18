@@ -14,6 +14,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package elec-pair
   :ensure nil

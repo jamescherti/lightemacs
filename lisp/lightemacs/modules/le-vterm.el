@@ -22,6 +22,8 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
+
 (require 'le-core-terminals)
 
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
@@ -43,8 +45,6 @@ When non-nil, `lightemacs--all-terminals-optimize' runs in `vterm-mode-hook'.")
     (when (fboundp 'vterm-module-compile)
       (advice-add #'vterm-module-compile :override #'ignore)
       (provide 'vterm-module))))
-
-(require 'lightemacs)
 
 (use-package vterm
   :if (bound-and-true-p module-file-suffix)

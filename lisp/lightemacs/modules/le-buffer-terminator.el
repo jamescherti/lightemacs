@@ -28,6 +28,7 @@
 ;;; Code:
 
 (require 'lightemacs)
+(require 'use-package)
 
 (use-package buffer-terminator
   :commands (buffer-terminator-mode
