@@ -107,16 +107,21 @@ all settings in this block are skipped."
 ;;; Function: `lightemacs-module-load'
 
 (defun lightemacs-module-load (modules)
-  "Load all modules listed in MODULES.
-If a module fails to load, an error warning is displayed and the module
-is not added to the loaded list."
-  (let ((load-path (cons lightemacs-modules-directory
-                         (cons lightemacs-local-modules-directory
-                               load-path))))
+  "Load the features in MODULES in order.
+Search the bundled module directory before the local module directory.
+Propagate any error raised while loading a module."
+  (let ((priority-path (cons lightemacs-modules-directory
+                             (cons lightemacs-local-modules-directory
+                                   load-path))))
     (dolist (feature-symbol modules)
       (lightemacs-verbose-message "Load module: %s" feature-symbol)
-      (if (not (featurep feature-symbol))
-          (require feature-symbol)))))
+      (unless (featurep feature-symbol)
+        (let ((filename (locate-library (symbol-name feature-symbol)
+                                        nil priority-path)))
+          (unless filename
+            (error "Cannot find module '%s'" feature-symbol))
+          (require feature-symbol
+                   (lightemacs--remove-el-file-suffix filename)))))))
 
 ;;; Provide
 
