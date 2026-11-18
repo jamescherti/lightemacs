@@ -652,8 +652,6 @@ Here are a few other modules disabled by default:
 
 - **le-quick-sdcv**: Configures the [quick-sdcv](https://github.com/jamescherti/quick-sdcv.el) package, which enables Emacs to function as an offline dictionary, allowing searching for words and translations directly within the editor using local dictionary files. It is a lightweight interface for the `sdcv` command-line tool.
 
-- **le-shut-up**: The *shut-up* package suppresses output from functions that normally print to the *Messages* buffer or to the echo area. It provides a macro called `shut-up` that temporarily silences messages while evaluating its body. This is useful when running code that would otherwise clutter the user's *Messages* buffer with unnecessary output.
-
 - **le-evil-visualstar**: Enables [evil-visualstar](https://github.com/bling/evil-visualstar), which allows searching for the current visual selection using `*` or `#`. **Usage:** Create a visual selection with `v` or `V`, then press `*` to search forward or `#` to search backward. When `evil-visualstar/persistent` is non-nil, visual state remains active, enabling repeated searches without reselecting the text.
 
 - **so-long**: Configures the built-in *so-long* package, which helps Emacs reduce performance degradation and unresponsiveness when opening files with exceptionally long lines, such as minified source code or large datasets. It detects such files and disables various minor modes and font-locking features that are known to cause performance issues in these situations.
