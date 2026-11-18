@@ -114,70 +114,6 @@ all settings in this block are skipped."
 
 ;;; Function: `lightemacs-module-load'
 
-(defun lightemacs--remove-el-file-suffix (filename)
-  "Remove the Elisp suffix from FILENAME and return it (.el, .elc, .el.gz...).
-FILENAME is the full or relative path of the file as a string."
-  (let ((suffixes (apply #'append
-                         (mapcar (lambda (ext)
-                                   (list (concat ".elc" ext)
-                                         (concat ".el" ext)))
-                                 load-file-rep-suffixes))))
-    (catch 'done
-      (dolist (suffix suffixes)
-        (when (string-suffix-p suffix filename)
-          (setq filename (substring filename 0 (- (length suffix))))
-          (throw 'done t))))
-    filename))
-
-;; Byte compilation check
-(defun lightemacs--compile-module-maybe (base-path)
-  "Byte and natively compile the module at BASE-PATH when needed.
-This function verifies whether the source file (.el) is newer than its
-corresponding byte-compiled (.elc) or natively compiled (.eln) artifacts.
-If the source file is newer, byte compilation is performed synchronously,
-and native compilation is dispatched asynchronously.
-BASE-PATH is the base path of the module without its file extension."
-  (when lightemacs-module-auto-compile
-    (let ((el-file (concat base-path ".el")))
-      (when (file-exists-p el-file)
-        (let* ((elc-file (funcall
-                          (if (bound-and-true-p byte-compile-dest-file-function)
-                              byte-compile-dest-file-function
-                            #'byte-compile-dest-file)
-                          el-file))
-               (elc-file-exists (file-exists-p elc-file)))
-          (when (or (not elc-file-exists)
-                    (file-newer-than-file-p el-file elc-file))
-            ;; Clean up stale .elc files before recompiling
-            (when (and elc-file-exists
-                       (file-writable-p elc-file))
-              (lightemacs-verbose-message "[DELETE] %s" elc-file)
-              (delete-file elc-file))
-            (lightemacs-verbose-message "[BYTE COMPILE] %s" el-file)
-            (byte-compile-file el-file)))
-
-        ;; Native compilation check (Async)
-        (when (and
-               ;; Prevent this function from from attempting to spawn async
-               ;; compilation processes when it is being executed by a
-               ;; background worker or any non-interactive script.
-               ;; TODO
-               (not noninteractive)
-               (not (bound-and-true-p comp-no-spawn))
-
-               ;; Is native compilation available?
-               (featurep 'native-compile)
-               (fboundp 'native-comp-available-p)
-               (native-comp-available-p)
-               (fboundp 'comp-el-to-eln-filename)
-               (fboundp 'native-compile-async))
-          (let* ((eln-file (comp-el-to-eln-filename el-file)))
-            (when (or (not (file-exists-p eln-file))
-                      (file-newer-than-file-p el-file eln-file))
-              ;; Suppress background compiler warnings/errors to avoid popups
-              (lightemacs-verbose-message "[ASYNC NATIVE COMPILE] %s" el-file)
-              (native-compile-async el-file))))))))
-
 (defun lightemacs-module-load (modules)
   "Load all modules listed in MODULES.
 If a module fails to load, an error warning is displayed and the module
@@ -214,10 +150,7 @@ is not added to the loaded list."
                   ;; as: Debugger entered--Lisp error: (file-missing "Cannot
                   ;; open load file" "No such file or directory"
                   ;; "orderless") load("orderless" nil t)
-                  (require feature-symbol base-path)
-
-                  ;; Compile
-                  (lightemacs--compile-module-maybe base-path)))
+                  (require feature-symbol base-path)))
             (error "Cannot find module '%s'" feature-symbol)))))))
 
 ;;; Provide
