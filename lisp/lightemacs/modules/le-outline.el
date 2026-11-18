@@ -18,8 +18,6 @@
 
 ;;; Hooks
 
-(require 'lightemacs-module)
-
 ;;; lightemacs-module-hooks
 
 (lightemacs-module-hooks outline-minor

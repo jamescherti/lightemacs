@@ -20,8 +20,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package yasnippet
   :commands (yas-global-mode
              yas-minor-mode

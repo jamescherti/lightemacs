@@ -17,8 +17,6 @@
 
 ;;; Hooks
 
-(require 'lightemacs-module)
-
 ;;; lightemacs-module-hooks
 
 (lightemacs-module-hooks hs-minor

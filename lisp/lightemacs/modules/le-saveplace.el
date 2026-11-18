@@ -15,8 +15,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (defvar lightemacs-saveplace-recenter-after-find-file nil
   "If non-nil, recenter the buffer after restoring the cursor position.")
 

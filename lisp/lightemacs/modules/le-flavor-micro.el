@@ -13,8 +13,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (lightemacs-module-load
  '(le-theme
 

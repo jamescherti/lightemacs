@@ -21,8 +21,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (defvar lightemacs-server-quiet lightemacs-reduce-messages
   "Non-nil means suppress messages when starting the Emacs server.")
 

@@ -29,8 +29,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package indent-bars
   :commands indent-bars-mode)
 

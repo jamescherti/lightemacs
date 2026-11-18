@@ -22,8 +22,6 @@
 
 ;;; Use-package `flymake'
 
-(require 'lightemacs-module)
-
 (use-package flymake
   :ensure nil
   :commands (flymake-mode

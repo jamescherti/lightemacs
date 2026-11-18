@@ -22,8 +22,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package evil-snipe
   :commands (evil-snipe-mode
              evil-snipe-local-mode)

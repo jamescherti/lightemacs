@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (require 'lightemacs)
 
 ;;; Variables

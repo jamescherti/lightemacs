@@ -19,8 +19,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package helpful
   :commands (helpful-callable
              helpful-variable

@@ -23,8 +23,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package buffer-guardian
   :commands buffer-guardian-mode
   :init

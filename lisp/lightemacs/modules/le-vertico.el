@@ -19,8 +19,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (defvar lightemacs-vertico-current-arrow t)
 
 (use-package vertico

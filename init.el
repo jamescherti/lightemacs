@@ -199,8 +199,6 @@
 
 ;;; Load modules
 
-(require 'lightemacs-module)
-
 (lightemacs-module-load lightemacs-modules)
 
 ;;; Run hooks: `lightemacs-after-modules-hook'

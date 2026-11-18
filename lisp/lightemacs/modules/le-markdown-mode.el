@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package markdown-mode
   :commands (gfm-mode
              gfm-view-mode

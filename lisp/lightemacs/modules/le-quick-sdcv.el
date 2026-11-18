@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package quick-sdcv
   :commands (quick-sdcv-search-at-point
              quick-sdcv-search-input)

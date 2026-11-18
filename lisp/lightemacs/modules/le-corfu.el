@@ -18,7 +18,6 @@
 ;;; Code:
 
 (require 'lightemacs)
-(require 'lightemacs-module)
 
 (defvar lightemacs-corfu-add-to-savehist t)
 

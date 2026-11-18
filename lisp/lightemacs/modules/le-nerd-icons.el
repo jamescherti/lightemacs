@@ -21,8 +21,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package nerd-icons
   :commands (nerd-icons-icon-for-buffer
              nerd-icons-icon-for-dir

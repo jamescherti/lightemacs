@@ -22,8 +22,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package enhanced-evil-paredit
   :after evil
   :preface

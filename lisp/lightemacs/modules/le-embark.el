@@ -21,8 +21,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package embark
   :commands (embark-act
              embark-export

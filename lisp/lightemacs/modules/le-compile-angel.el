@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package compile-angel
   :commands (compile-angel-on-load-mode
              compile-angel-on-save-local-mode

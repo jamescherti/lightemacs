@@ -23,7 +23,6 @@
 ;;; Require
 
 (require 'lightemacs)
-(require 'lightemacs-module)
 
 ;;; use-package diff-hl
 

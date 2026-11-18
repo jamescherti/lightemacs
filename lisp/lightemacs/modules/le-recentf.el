@@ -23,8 +23,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 ;; Global variables
 
 (defvar lightemacs-recentf-cleanup-and-auto-save-interval 550

@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package evil-matchit
   :commands (evil-matchit-mode
              global-evil-matchit-mode)

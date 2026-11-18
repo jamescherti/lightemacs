@@ -13,8 +13,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package evil-commentary
   :commands evil-commentary-mode
   :init

@@ -26,8 +26,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 ;; Variables
 
 (defvar lightemacs-consult-dir-fasd-support t

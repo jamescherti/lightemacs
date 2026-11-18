@@ -13,8 +13,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (lightemacs-module-load
  '(;; Enable `highlight-defined-mode', a minor mode that highlights defined
    ;; Emacs Lisp symbols in `emacs-lisp-mode' buffers.

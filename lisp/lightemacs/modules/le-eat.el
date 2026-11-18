@@ -21,7 +21,6 @@
 ;;; Code:
 
 (require 'lightemacs)
-(require 'lightemacs-module)
 (require 'le-core-terminals)
 
 (defvar lightemacs-eat-optimize t

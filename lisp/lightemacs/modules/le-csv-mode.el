@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package csv-mode
   :commands (csv-mode
              csv-guess-set-separator

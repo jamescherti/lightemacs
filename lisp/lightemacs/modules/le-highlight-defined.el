@@ -16,8 +16,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package highlight-defined
   :commands highlight-defined-mode
   :init

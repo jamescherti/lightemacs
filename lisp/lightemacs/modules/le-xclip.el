@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package xclip
   :if (not (display-graphic-p))
   :commands xclip-mode

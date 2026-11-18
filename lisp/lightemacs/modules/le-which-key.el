@@ -16,8 +16,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package which-key
   :ensure nil
   :commands which-key-mode

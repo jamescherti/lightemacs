@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (eval-and-compile
   ;; This has to be defined before evil
   (setq evil-want-integration t)

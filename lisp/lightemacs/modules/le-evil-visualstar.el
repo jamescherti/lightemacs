@@ -21,8 +21,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package evil-visualstar
   :commands global-evil-visualstar-mode
   :init

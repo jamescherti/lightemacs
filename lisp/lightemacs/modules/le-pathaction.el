@@ -22,8 +22,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package pathaction
   :commands (pathaction-edit
              pathaction-run))

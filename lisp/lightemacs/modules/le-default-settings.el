@@ -16,7 +16,6 @@
 ;;; Require
 
 (require 'lightemacs)
-(require 'lightemacs-module)
 
 ;;; Default keybindingsare easily shadowed by major modes, minor modes, or
 ;; keymap managers like Evil mode. By injecting our custom keymap directly into

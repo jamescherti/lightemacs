@@ -17,8 +17,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package cape
   :commands (cape-abbrev
              cape-dabbrev

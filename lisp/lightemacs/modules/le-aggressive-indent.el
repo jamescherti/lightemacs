@@ -23,7 +23,6 @@
 ;;; Code:
 
 (require 'lightemacs)
-(require 'lightemacs-module)
 
 (use-package aggressive-indent
   :commands (aggressive-indent-mode

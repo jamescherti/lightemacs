@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 ;;; Load `yaml-mode' or `yaml-ts-mode'
 
 (defvar lightemacs-group-yaml-prefer-yaml-ts-mode t

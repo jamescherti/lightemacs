@@ -35,8 +35,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package persist-text-scale
   :commands (persist-text-scale-mode
              persist-text-scale-restore)

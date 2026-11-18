@@ -22,7 +22,6 @@
 ;;; Code:
 
 (require 'lightemacs)
-(require 'lightemacs-module)
 (require 'le-core-terminals)
 
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y

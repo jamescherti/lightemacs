@@ -18,8 +18,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 ;;; Variables
 
 (defvar lightemacs-undo-fu-session-quiet lightemacs-reduce-messages

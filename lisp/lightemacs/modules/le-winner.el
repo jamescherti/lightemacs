@@ -14,8 +14,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package winner
   :ensure nil
   :commands (winner-mode

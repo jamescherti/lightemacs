@@ -16,8 +16,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (lightemacs-module-load
  '(le-outline
    le-outline-indent

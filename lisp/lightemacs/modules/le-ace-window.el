@@ -19,8 +19,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package ace-window
   :commands ace-window
   :init

@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (use-package corfu-popupinfo
   :ensure nil ; This is part of corfu
   :commands corfu-popupinfo-mode

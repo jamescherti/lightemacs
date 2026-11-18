@@ -22,8 +22,6 @@
 
 ;;; Code:
 
-(require 'lightemacs-module)
-
 (lightemacs-module-load '(le-package-lint))
 
 (use-package package-lint-flymake
