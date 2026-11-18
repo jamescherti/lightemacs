@@ -26,6 +26,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package easy-escape
   :commands easy-escape-minor-mode
   :init

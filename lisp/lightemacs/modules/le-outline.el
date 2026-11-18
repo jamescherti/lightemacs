@@ -16,7 +16,9 @@
 
 ;;; Code:
 
-;;; Hooks
+;;; Require
+
+(require 'lightemacs)
 
 ;;; lightemacs-module-hooks
 

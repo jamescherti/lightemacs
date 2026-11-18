@@ -18,6 +18,8 @@
 
 ;;; Code:
 
+;;; Require
+
 (require 'lightemacs)
 
 ;;; Variables
@@ -55,6 +57,8 @@ Key benefits:
         (customize-set-variable 'evil-undo-system undo-system)))))
 
 ;;; Use-package evil
+
+(require 'lightemacs)
 
 (use-package evil
   :commands (evil-mode

@@ -34,6 +34,8 @@ Setting this variable to t deactivates these global overrides after
 initialization, allowing users to retain standard major-mode behaviors unless
 they explicitly opt out of the inhibition.")
 
+(require 'lightemacs)
+
 (use-package evil-collection
   :if (not noninteractive)
   :functions (evil-collection-init

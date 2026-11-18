@@ -17,6 +17,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package flymake-ansible-lint
   :commands flymake-ansible-lint-setup
   :init

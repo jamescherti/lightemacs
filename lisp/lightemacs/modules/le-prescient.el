@@ -18,6 +18,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package prescient
   :commands (prescient-completion-sort
              prescient-persist-mode)

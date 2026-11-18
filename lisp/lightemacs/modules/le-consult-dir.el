@@ -36,6 +36,8 @@ PATH, this option has no effect.")
 
 ;;; Use-package
 
+(require 'lightemacs)
+
 (use-package consult-dir
   :commands (consult-dir
              consult-dir-jump-file

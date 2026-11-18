@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package elec-pair
   :ensure nil
   :commands (electric-pair-mode

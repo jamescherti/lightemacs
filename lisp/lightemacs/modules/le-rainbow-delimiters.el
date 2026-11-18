@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package rainbow-delimiters
   :commands rainbow-delimiters-mode
   :init

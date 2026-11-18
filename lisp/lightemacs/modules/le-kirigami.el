@@ -43,6 +43,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package kirigami
   :commands (kirigami-mode
              kirigami-global-mode

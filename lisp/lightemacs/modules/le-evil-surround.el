@@ -18,6 +18,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package evil-surround
   :commands (evil-Surround-edit
              evil-surround-edit

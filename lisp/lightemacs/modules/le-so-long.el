@@ -17,6 +17,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package so-long
   :ensure nil
   :commands (global-so-long-mode

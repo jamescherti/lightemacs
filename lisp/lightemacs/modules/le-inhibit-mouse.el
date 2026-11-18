@@ -15,6 +15,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package inhibit-mouse
   :commands inhibit-mouse-mode
   :init

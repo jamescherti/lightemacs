@@ -38,6 +38,7 @@
 ;;
 ;; URL: https://github.com/radian-software/prescient.el
 
+(require 'lightemacs)
 (lightemacs-module-load '(prescient))
 
 (use-package vertico-prescient

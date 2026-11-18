@@ -19,6 +19,7 @@
 
 ;;; Code:
 
+(require 'lightemacs)
 (lightemacs-module-load '(le-nerd-icons))
 
 (use-package nerd-icons-dired

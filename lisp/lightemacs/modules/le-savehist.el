@@ -16,6 +16,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package savehist
   :ensure nil
   :commands savehist-mode

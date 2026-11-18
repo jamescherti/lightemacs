@@ -15,6 +15,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package marginalia
   :commands (marginalia-mode
              marginalia-cycle)

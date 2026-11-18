@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (lightemacs-module-load
  '(;; Auto compile all .el files
    le-compile-angel

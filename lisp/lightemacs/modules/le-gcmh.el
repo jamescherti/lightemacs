@@ -22,6 +22,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package gcmh
   :if (not (fboundp 'igc-info))
   :commands (gcmh-mode

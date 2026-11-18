@@ -23,6 +23,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package treesit-auto
   :if (and (fboundp 'treesit-available-p)
            (treesit-available-p))

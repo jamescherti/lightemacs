@@ -27,7 +27,6 @@
 (setq lightemacs-user-directory user-emacs-directory)
 
 ;; Load defaults
-(require 'le-core-defaults)
 (unless lightemacs-package-manager
   (setq lightemacs-package-manager 'builtin-package))
 
@@ -76,9 +75,12 @@
       (expand-file-name "themes/" minimal-emacs-user-directory))
 
 ;; Load: config.el
+
 (load (expand-file-name "config" lightemacs-local-directory)
       :no-error
       (not (bound-and-true-p init-file-debug)))
+
+(require 'lightemacs)
 
 ;; Run hooks: `lightemacs-pre-early-init-hook'
 
@@ -94,9 +96,6 @@
     (dolist (dir dirs)
       ;; Ensure the path ends with a slash so it registers as a directory
       (push (file-name-as-directory dir) trusted-content))))
-
-;; Load: lightemacs.el
-(require 'lightemacs)
 
 ;; Load minimal-emacs.d early-init.el
 (lightemacs-load-user-init

@@ -19,6 +19,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package avy
   :commands (avy-goto-char
              avy-goto-word-0

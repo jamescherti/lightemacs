@@ -15,6 +15,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package stripspace
   :commands (stripspace-local-mode
              stripspace-global-mode)

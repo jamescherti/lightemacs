@@ -18,6 +18,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (lightemacs-module-load
  '(;; evil and evil-collection
    le-evil

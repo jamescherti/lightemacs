@@ -21,6 +21,8 @@
 
 (defvar lightemacs-vertico-current-arrow t)
 
+(require 'lightemacs)
+
 (use-package vertico
   :commands (vertico-mode
              vertico-next

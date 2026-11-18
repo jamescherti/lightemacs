@@ -27,6 +27,8 @@
   "Non-nil means apply performance optimizations to `eat-mode' buffers.
 When non-nil, `lightemacs--all-terminals-optimize' runs in `eat-mode-hook'.")
 
+(require 'lightemacs)
+
 (use-package eat
   :commands (eat
              eat-eshell-mode

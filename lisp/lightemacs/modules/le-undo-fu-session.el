@@ -18,6 +18,10 @@
 
 ;;; Code:
 
+;;; Require
+
+(require 'lightemacs)
+
 ;;; Variables
 
 (defvar lightemacs-undo-fu-session-quiet lightemacs-reduce-messages

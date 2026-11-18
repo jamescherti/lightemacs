@@ -22,6 +22,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package page-break-lines
   :commands (page-break-lines-mode
              global-page-break-lines-mode)

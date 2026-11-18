@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (lightemacs-module-load
  '(le-theme
 
@@ -24,8 +26,6 @@
    ;; Configure `dired' to hide details such as file ownership and permissions,
    ;; and to group directories first.
    le-dired))
-
-;;; Provide
 
 (provide 'le-flavor-micro)
 

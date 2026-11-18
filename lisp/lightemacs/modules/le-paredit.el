@@ -21,6 +21,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package paredit
   :commands paredit-mode
 

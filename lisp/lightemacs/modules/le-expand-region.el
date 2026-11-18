@@ -23,6 +23,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package expand-region
   :commands (er/expand-region
              er/mark-comment

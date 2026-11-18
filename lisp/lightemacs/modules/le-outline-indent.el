@@ -23,6 +23,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package outline-indent
   :commands (outline-indent-minor-mode
              outline-indent-shift-left

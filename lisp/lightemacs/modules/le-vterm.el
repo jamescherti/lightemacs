@@ -44,6 +44,8 @@ When non-nil, `lightemacs--all-terminals-optimize' runs in `vterm-mode-hook'.")
       (advice-add #'vterm-module-compile :override #'ignore)
       (provide 'vterm-module))))
 
+(require 'lightemacs)
+
 (use-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm

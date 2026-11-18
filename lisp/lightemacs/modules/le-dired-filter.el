@@ -18,6 +18,8 @@
 
 ;;; Require
 
+(require 'lightemacs)
+
 ;;; Variables
 
 ;; `dired-filter-by-omit' is configured by le-dired. It not only hides

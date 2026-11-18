@@ -15,6 +15,8 @@
 
 ;;; Code:
 
+(require 'lightemacs)
+
 (use-package org-appear
   :commands org-appear-mode
   :init
