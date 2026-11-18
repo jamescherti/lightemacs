@@ -22,6 +22,7 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
+(require 'le-core-terminals)
 
 (defvar lightemacs-eat-optimize t
   "Non-nil means apply performance optimizations to `eat-mode' buffers.

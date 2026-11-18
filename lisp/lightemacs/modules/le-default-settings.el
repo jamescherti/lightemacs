@@ -330,6 +330,8 @@ ARGS are the arguments passed to the original function."
 ;; ANSI escape sequences, resulting in better compatibility with interactive
 ;; command-line programs like `top', `vim', or `htop'.
 
+(require 'le-core-terminals)
+
 (defvar lightemacs-term-optimize t
   "Non-nil means apply performance optimizations to `term-mode' buffers.
 When non-nil, `lightemacs--all-terminals-optimize' runs in `term-mode-hook'.")
