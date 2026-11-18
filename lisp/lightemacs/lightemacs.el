@@ -250,23 +250,6 @@ exist."
           (not (bound-and-true-p init-file-debug))
           :nosuffix)))
 
-;;; Native comp functions
-
-(defun lightemacs--calculate-native-comp-async-jobs-number ()
-  "Set `native-comp-async-jobs-number' based on the available CPUs."
-  ;; The `num-processors' function is only available in Emacs >= 28.1
-  (cond
-   ((and (boundp 'lightemacs-native-comp-excluded-cpus)
-         (fboundp 'num-processors))
-    (max 1 (- (funcall 'num-processors) lightemacs-native-comp-excluded-cpus)))
-
-   ((boundp 'native-comp-async-jobs-number)
-    native-comp-async-jobs-number)
-
-   (t
-    ;; Half (See `native-comp-async-jobs-number' default value)
-    0)))
-
 ;;; Hooks: On first input/file/buffer
 
 (defvar lightemacs-on-first-input-hook nil

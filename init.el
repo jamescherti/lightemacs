@@ -132,7 +132,7 @@
            ((eq lightemacs-package-manager 'elpaca)
             `(progn
                (unless (fboundp 'elpaca)
-                 (let ((lightemacs--no-bootstrap t))
+                 (let ((lightemacs--no-package-manager-bootstrap t))
                    (load (expand-file-name "le-core-pm-elpaca.el"
                                            ',lightemacs-core-directory)
                          nil
@@ -191,7 +191,7 @@
                  ;; (setq straight-disable-autoloads t)
 
                  (setq straight-check-for-modifications nil)
-                 (let ((lightemacs--no-bootstrap t))
+                 (let ((lightemacs--no-package-manager-bootstrap t))
                    (load (expand-file-name "le-core-pm-straight.el"
                                            ',lightemacs-core-directory)
                          nil

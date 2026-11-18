@@ -28,7 +28,7 @@
                        (or (bound-and-true-p straight-base-dir)
                            lightemacs-var-directory)))
       (bootstrap-version 7))
-  (when (and (not (bound-and-true-p lightemacs--no-bootstrap))
+  (when (and (not (bound-and-true-p lightemacs--no-package-manager-bootstrap))
              (not (file-exists-p bootstrap-file)))
     (with-current-buffer
         (url-retrieve-synchronously
@@ -44,18 +44,43 @@
 
 ;;; Map ':ensure nil' to ':straight nil' during keyword normalization.
 
-(defun my/use-package-map-ensure-to-straight (fn-args)
-  "Map `:ensure nil' to `:straight nil' during keyword normalization.
-FN-ARGS is a list containing two elements: the NAME of the package (a symbol),
-and the ARGS property list provided to the `use-package' declaration."
-  (let ((name (car fn-args))
-        (keywords (cadr fn-args)))
-    (if (and (plist-member keywords :ensure)
-             (not (plist-get keywords :ensure)))
-        (list name (append (list :straight nil) keywords))
-      fn-args)))
+(defun lightemacs--straight-use-package-ensure-disabled-p (_name args)
+  "Return non-nil when ARGS contains a normalized `:ensure nil'.
+_NAME is the package name supplied by `use-package'."
+  (equal (plist-get args :ensure) '(nil)))
 
-(advice-add 'use-package-normalize-keywords :filter-args #'my/use-package-map-ensure-to-straight)
+(defun lightemacs--straight-use-package-disabled-value (name _args)
+  "Return the normalized value of `:straight nil' for package NAME.
+_ARGS is the normalized declaration supplied by `use-package'."
+  (use-package-normalize/:straight name :straight '(nil)))
+
+(require 'use-package-core)
+(add-to-list 'use-package-defaults
+             '(:straight lightemacs--straight-use-package-disabled-value
+                         lightemacs--straight-use-package-ensure-disabled-p))
+
+;; TODO remove
+;; (defun lightemacs--straight-use-package-map-ensure (fn-args)
+;;   "Add `:straight nil' for a single explicit `:ensure nil' group.
+;; FN-ARGS contains the arguments to `use-package-normalize-keywords'.
+;; An explicit `:straight' takes precedence regardless of its position."
+;;   (let* ((declaration (cadr fn-args))
+;;          (ensure-group (memq :ensure declaration))
+;;          (ensure-args (cdr ensure-group))
+;;          (remaining (cdr ensure-args)))
+;;     (if
+;;         (and (consp ensure-args)
+;;              (null (car ensure-args))
+;;              (or (null remaining) (keywordp (car remaining)))
+;;              (not (memq :ensure remaining))
+;;              (not (memq :straight declaration)))
+;;         (cons (car fn-args)
+;;               (cons (cons :straight (cons nil declaration))
+;;                     (cddr fn-args)))
+;;       fn-args)))
+;;
+;; (advice-add 'use-package-normalize-keywords :filter-args
+;;             #'lightemacs--straight-use-package-map-ensure)
 
 ;;; Require
 

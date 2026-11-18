@@ -762,8 +762,6 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 #### Other variables
 
-- `lightemacs-native-comp-excluded-cpus`: By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely.
-
 - `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
 
 - `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'builtin-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-module` handles installation and configuration of packages.

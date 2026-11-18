@@ -82,10 +82,6 @@ Choices are:
 This variable controls how the `lightemacs-module' macro handles
 installation and configuration of packages.")
 
-(defvar lightemacs-native-comp-excluded-cpus nil
-  "Number of CPUs to reserve and not use for `native-compile'.
-Set this to nil to disable this feature.")
-
 (defvar lightemacs-load-compiled-init-files t
   "If non-nil, attempt to load byte-compiled .elc for init files.
 This will enable Lightemacs to load byte-compiled or possibly native-compiled

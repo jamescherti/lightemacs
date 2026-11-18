@@ -15,9 +15,7 @@
 
 ;; Bootstrap
 (defvar elpaca-installer-version 0.12)
-(defvar elpaca-directory (expand-file-name "elpaca/" lightemacs-var-directory))
-
-;; The following two defvar have been added
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
@@ -28,10 +26,10 @@
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
        (order (cdr elpaca-order))
        (default-directory repo))
-  (push (if (file-exists-p build) build repo) load-path)
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
 
-                                        ;(unless (bound-and-true-p lightemacs--no-bootstrap)
-  (unless (file-exists-p repo)
+  (when (and (not (file-exists-p repo))
+             (not (bound-and-true-p lightemacs--no-package-manager-bootstrap)))
     (make-directory repo t)
     (when (<= emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
@@ -50,7 +48,6 @@
             (progn (message "%s" (buffer-string)) (kill-buffer buffer))
           (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)
     (elpaca-generate-autoloads "elpaca" repo)
