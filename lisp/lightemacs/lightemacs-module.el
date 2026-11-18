@@ -17,14 +17,6 @@
 
 (require 'lightemacs) ; `lightemacs-verbose-message'
 
-;;; Customization
-
-;; TODO Change this to t by default
-(defvar lightemacs-module-auto-compile nil
-  "Automatically byte and natively compile modules before loading.
-If non-nil, modules are checked and compiled if their source files are
-newer than their compiled counterparts. It defaults to nil.")
-
 ;;; Misc macros
 
 (defmacro lightemacs-module-hooks (name func hooks)
@@ -118,40 +110,13 @@ all settings in this block are skipped."
   "Load all modules listed in MODULES.
 If a module fails to load, an error warning is displayed and the module
 is not added to the loaded list."
-  (when lightemacs-module-auto-compile
-    (require 'bytecomp)
-    (when (and (featurep 'native-compile)
-               (fboundp 'native-comp-available-p)
-               (native-comp-available-p))
-      (require 'comp nil t)))
-
-  (let ((priority-path (cons lightemacs-modules-directory
-                             (cons lightemacs-local-modules-directory
-                                   load-path))))
+  (let ((load-path (cons lightemacs-modules-directory
+                         (cons lightemacs-local-modules-directory
+                               load-path))))
     (dolist (feature-symbol modules)
       (lightemacs-verbose-message "Load module: %s" feature-symbol)
-
-      (unless (featurep feature-symbol)
-        (let ((exact-path (locate-library (symbol-name feature-symbol)
-                                          nil
-                                          priority-path)))
-          (if exact-path
-              (progn
-                ;; Pass base path (e.g. "/path/to/le-modname") so `require'
-                ;; searches for .elc first (which also triggers the .eln
-                ;; native-compilation swap if available), gracefully falling
-                ;; back to .el if uncompiled.
-                (let ((base-path (lightemacs--remove-el-file-suffix exact-path)))
-                  (lightemacs-debug-message "Load module path: %s (%s)"
-                                            feature-symbol
-                                            base-path)
-
-                  ;; Load before compiling to prevent race conditions such
-                  ;; as: Debugger entered--Lisp error: (file-missing "Cannot
-                  ;; open load file" "No such file or directory"
-                  ;; "orderless") load("orderless" nil t)
-                  (require feature-symbol base-path)))
-            (error "Cannot find module '%s'" feature-symbol)))))))
+      (if (not (featurep feature-symbol))
+          (require feature-symbol)))))
 
 ;;; Provide
 

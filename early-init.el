@@ -99,10 +99,8 @@
 (require 'lightemacs)
 
 ;; Load minimal-emacs.d early-init.el
-(if (fboundp 'lightemacs-load-user-init)
-    (lightemacs-load-user-init
-     (expand-file-name "early-init.el" minimal-emacs-user-directory))
-  (error "Undefined: lightemacs-load-user-init"))
+(lightemacs-load-user-init
+ (expand-file-name "early-init.el" minimal-emacs-user-directory))
 
 ;; Increase the number of CPUs
 (when (and (bound-and-true-p lightemacs-native-comp-excluded-cpus)

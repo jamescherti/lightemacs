@@ -23,8 +23,7 @@
 
 ;;; Load: init.el
 
-(when (and (fboundp 'lightemacs-load-user-init)
-           (boundp 'minimal-emacs-user-directory))
+(when (boundp 'minimal-emacs-user-directory)
   (lightemacs-load-user-init
    (expand-file-name "init.el" minimal-emacs-user-directory)))
 
@@ -202,7 +201,6 @@
 
 (require 'lightemacs-module)
 
-(lightemacs-module-load lightemacs-core-modules)
 (lightemacs-module-load lightemacs-modules)
 
 ;;; Run hooks: `lightemacs-after-modules-hook'

@@ -47,10 +47,6 @@ Lightemacs provides a range of modules that can be selectively enabled or
 disabled according to your preferences, with all modules ensuring packages are
 loaded only when needed, enabling exceptionally fast, deferred startup.")
 
-(defvar lightemacs-core-modules '()
-  "Core modules that are enabled by default.
-Do not modify this variable.")
-
 (defvar lightemacs-verbose nil
   "Enable displaying verbose messages.")
 
