@@ -14,7 +14,9 @@
 ;;; Code:
 
 (setq load-prefer-newer t)
+
 (push (expand-file-name "lisp/lightemacs/" user-emacs-directory) load-path)
+(require 'lightemacs)
 
 ;; Update defaults
 (setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
@@ -79,8 +81,6 @@
 (load (expand-file-name "config" lightemacs-local-directory)
       :no-error
       (not (bound-and-true-p init-file-debug)))
-
-(require 'lightemacs)
 
 ;; Run hooks: `lightemacs-pre-early-init-hook'
 

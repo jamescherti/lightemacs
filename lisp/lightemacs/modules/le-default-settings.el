@@ -423,6 +423,34 @@ This function takes no arguments."
  ;; typing.
  flyspell-delay-use-timer t)
 
+;;; Remove stale early-init.elc
+
+;; If a user generates a stale early-init.elc, Emacs will load the stale .elc
+;; file before it ever has a chance to read inside the updated .el source file.
+;; While the standard advice is to avoid byte-compiling initialization files
+;; altogether, in practice, many users rely on configuration frameworks,
+;; automated scripts, or package managers that compile the entire ~/.emacs.d
+;; directory.
+;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2026-06/msg01711.html
+
+(defun lightemacs--delete-stale-early-init-elc ()
+  "Delete early-init.elc when early-init.el has a newer modification time."
+  (let* ((early-init-el (expand-file-name "early-init.el"
+                                          lightemacs-user-directory))
+         (early-init-elc (concat early-init-el "c")))
+    (condition-case err
+        (when
+            (and (file-exists-p early-init-elc)
+                 ;; (file-exists-p early-init-el) ; Not necessary
+                 (file-newer-than-file-p early-init-el early-init-elc))
+          (delete-file early-init-elc)
+          (message "[Lightemacs] Deleted stale %s" early-init-elc))
+      (file-error
+       (message "[Lightemacs] Could not clean up %s: %s"
+                early-init-elc (error-message-string err))))))
+
+(add-hook 'kill-emacs-hook #'lightemacs--delete-stale-early-init-elc)
+
 ;;; Provide
 
 (provide 'le-default-settings)
