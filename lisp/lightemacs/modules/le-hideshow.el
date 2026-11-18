@@ -19,11 +19,13 @@
 
 ;;; lightemacs-module-hooks
 
-(use-package hs-minor
+(require 'lightemacs)
+
+(use-package hideshow
   :ensure nil
   :commands hs-minor-mode
   :init
-  (lightemacs-module-hooks hs-minor
+  (lightemacs-module-hooks hideshow
     hs-minor-mode
     '(;; Systems and General Purpose
       c-mode-hook
