@@ -21,7 +21,6 @@
 
 (require 'use-package)
 
-
 (use-package elisp-refs
   :commands (elisp-refs-function
              elisp-refs-macro

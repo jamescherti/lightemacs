@@ -18,7 +18,6 @@
 
 (require 'use-package)
 
-
 (use-package git-modes
   :commands (gitattributes-mode
              gitconfig-mode

@@ -24,7 +24,6 @@
 
 (require 'use-package)
 
-
 (use-package wgrep
   :commands (wgrep-change-to-wgrep-mode
              wgrep-finish-edit))

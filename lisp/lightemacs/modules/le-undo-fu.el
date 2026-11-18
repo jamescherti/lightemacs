@@ -24,7 +24,6 @@
 
 (require 'use-package)
 
-
 (use-package undo-fu
   :commands (undo-fu-only-undo
              undo-fu-only-redo

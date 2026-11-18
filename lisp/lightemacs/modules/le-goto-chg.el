@@ -19,7 +19,6 @@
 
 (require 'use-package)
 
-
 (use-package goto-chg
   :commands (goto-last-change
              goto-last-change-reverse))

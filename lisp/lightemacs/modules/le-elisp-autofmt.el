@@ -23,7 +23,6 @@
 
 (require 'use-package)
 
-
 (use-package elisp-autofmt
   :commands (elisp-autofmt-mode
              elisp-autofmt-buffer

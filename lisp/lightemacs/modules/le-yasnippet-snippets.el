@@ -18,9 +18,9 @@
 ;;; Code:
 
 (require 'use-package)
-(require 'use-package)
 
 (use-package yasnippet-snippets
+  :demand t
   :after yasnippet)
 
 (provide 'le-yasnippet-snippets)

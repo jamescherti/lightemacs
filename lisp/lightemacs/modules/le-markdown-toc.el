@@ -18,7 +18,6 @@
 (require 'lightemacs)
 (require 'use-package)
 
-
 (defvar lightemacs-markdown-toc-restore-window-start t)
 
 (use-package markdown-toc

@@ -19,7 +19,6 @@
 
 (require 'use-package)
 
-
 (use-package exec-path-from-shell
   :demand t
   :functions exec-path-from-shell-initialize

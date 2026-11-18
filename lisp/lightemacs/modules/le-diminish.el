@@ -18,7 +18,6 @@
 
 (require 'use-package)
 
-
 (use-package diminish)
 
 (provide 'le-diminish)

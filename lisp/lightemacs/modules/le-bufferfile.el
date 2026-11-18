@@ -36,7 +36,6 @@
 
 (require 'use-package)
 
-
 (use-package bufferfile
   :commands (bufferfile-rename
              bufferfile-delete

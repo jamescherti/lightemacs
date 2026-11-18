@@ -23,8 +23,8 @@
 
 (require 'use-package)
 
-
 (use-package embark-consult
+  :demand t
   :after (embark consult))
 
 ;;; Provide
