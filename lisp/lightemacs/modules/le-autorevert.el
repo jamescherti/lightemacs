@@ -17,13 +17,11 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (defvar lightemacs-autorevert-disable-dired-verbose t
   "Set to non-nil to disable `auto-revert-verbose' in Dired buffers.")
 
-(lightemacs-use-package autorevert
+(use-package autorevert
   :ensure nil
   :commands (auto-revert-mode
              global-auto-revert-mode

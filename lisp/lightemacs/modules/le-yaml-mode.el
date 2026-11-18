@@ -22,10 +22,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package yaml-mode
+(use-package yaml-mode
   :commands yaml-mode
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode))

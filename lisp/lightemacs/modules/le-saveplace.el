@@ -15,8 +15,6 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
 (defvar lightemacs-saveplace-recenter-after-find-file nil
@@ -27,7 +25,7 @@
 This affects the messages shown during the `save-place-kill-emacs-hook',
 preventing output in the echo area while saving buffer positions.")
 
-(lightemacs-use-package saveplace
+(use-package saveplace
   :ensure nil
   :commands save-place-mode
 

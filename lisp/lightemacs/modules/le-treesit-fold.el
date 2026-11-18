@@ -23,11 +23,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package treesit-fold
+(use-package treesit-fold
   :if (and (fboundp 'treesit-available-p)
            (treesit-available-p))
   :commands (treesit-fold-close

@@ -22,10 +22,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package undo-fu
+(use-package undo-fu
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all

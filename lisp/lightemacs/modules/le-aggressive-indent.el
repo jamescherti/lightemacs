@@ -24,10 +24,8 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package aggressive-indent
+(use-package aggressive-indent
   :commands (aggressive-indent-mode
              global-aggressive-indent-mode)
 

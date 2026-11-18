@@ -20,12 +20,10 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (defvar lightemacs-vertico-current-arrow t)
 
-(lightemacs-use-package vertico
+(use-package vertico
   :commands (vertico-mode
              vertico-next
              vertico-previous

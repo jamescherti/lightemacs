@@ -22,10 +22,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package wgrep
+(use-package wgrep
   :commands (wgrep-change-to-wgrep-mode
              wgrep-finish-edit))
 

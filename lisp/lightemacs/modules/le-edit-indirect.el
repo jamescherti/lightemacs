@@ -23,10 +23,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package edit-indirect
+(use-package edit-indirect
   :commands (edit-indirect-mode
              edit-indirect-region))
 

@@ -24,12 +24,10 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 ;;; use-package diff-hl
 
-(lightemacs-use-package diff-hl
+(use-package diff-hl
   :commands (diff-hl-mode
              global-diff-hl-mode
              diff-hl-flydiff

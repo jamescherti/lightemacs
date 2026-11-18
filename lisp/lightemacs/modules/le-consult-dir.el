@@ -27,8 +27,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 ;; Variables
 
@@ -40,7 +38,7 @@ PATH, this option has no effect.")
 
 ;;; Use-package
 
-(lightemacs-use-package consult-dir
+(use-package consult-dir
   :commands (consult-dir
              consult-dir-jump-file
              consult-dir--pick

@@ -22,10 +22,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package evil-visualstar
+(use-package evil-visualstar
   :commands global-evil-visualstar-mode
   :init
   (lightemacs-module-hooks evil-visualstar

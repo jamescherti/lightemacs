@@ -19,12 +19,10 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (defvar lightemacs-corfu-add-to-savehist t)
 
-(lightemacs-use-package corfu
+(use-package corfu
   :commands (global-corfu-mode
              corfu-mode)
 

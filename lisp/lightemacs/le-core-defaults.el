@@ -51,13 +51,6 @@ loaded only when needed, enabling exceptionally fast, deferred startup.")
   "Core modules that are enabled by default.
 Do not modify this variable.")
 
-(defvar lightemacs-excluded-packages nil
-  "List of package symbols that should be excluded from initialization.
-Each element must be a symbol naming a package that would otherwise be
-initialized by Lightemacs. Packages listed here are skipped during the
-initialization process. Only packages declared via the `lightemacs-module'
-macro are affected by this variable.")
-
 (defvar lightemacs-verbose nil
   "Enable displaying verbose messages.")
 

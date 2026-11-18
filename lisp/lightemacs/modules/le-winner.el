@@ -15,10 +15,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package winner
+(use-package winner
   :ensure nil
   :commands (winner-mode
              winner-undo

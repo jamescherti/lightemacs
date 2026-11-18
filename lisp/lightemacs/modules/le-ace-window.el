@@ -20,10 +20,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package ace-window
+(use-package ace-window
   :commands ace-window
   :init
   (lightemacs-module-setq-maybe ace-window

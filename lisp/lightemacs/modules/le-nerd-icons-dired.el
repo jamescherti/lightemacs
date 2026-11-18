@@ -20,12 +20,10 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (lightemacs-module-load '(le-nerd-icons))
 
-(lightemacs-use-package nerd-icons-dired
+(use-package nerd-icons-dired
   :commands nerd-icons-dired-mode
   :init
   (lightemacs-module-hooks nerd-icons-dired

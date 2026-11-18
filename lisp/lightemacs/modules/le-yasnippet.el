@@ -20,11 +20,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package yasnippet
+(use-package yasnippet
   :commands (yas-global-mode
              yas-minor-mode
              yas-load-directory

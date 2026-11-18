@@ -24,10 +24,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package expand-region
+(use-package expand-region
   :commands (er/expand-region
              er/mark-comment
              er/mark-defun

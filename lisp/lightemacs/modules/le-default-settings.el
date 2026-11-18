@@ -16,8 +16,6 @@
 ;;; Require
 
 (require 'lightemacs)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
 ;;; Default keybindingsare easily shadowed by major modes, minor modes, or

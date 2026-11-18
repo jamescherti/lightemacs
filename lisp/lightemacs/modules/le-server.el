@@ -22,13 +22,11 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (defvar lightemacs-server-quiet lightemacs-reduce-messages
   "Non-nil means suppress messages when starting the Emacs server.")
 
-(lightemacs-use-package server
+(use-package server
   :ensure nil
   :if (not (daemonp))
   :commands (server-running-p

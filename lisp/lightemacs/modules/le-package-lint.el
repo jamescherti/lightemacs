@@ -29,10 +29,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package package-lint
+(use-package package-lint
   :commands (package-lint-batch-and-exit
              package-lint-current-buffer
              package-lint-buffer))

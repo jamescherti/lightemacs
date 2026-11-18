@@ -17,12 +17,9 @@
 
 ;;; Write the automatically generated configuration
 
-;; TODO add back?
-;; (unless (memq lightemacs-package-manager '(straight elpaca builtin-package
-;;                                                     ;; Deprecated:
-;;                                                     use-package))
-;;   (error "The value '%s' is not a valid `lightemacs-package-manager'"
-;;          lightemacs-package-manager))
+(unless (memq lightemacs-package-manager '(straight elpaca builtin-package))
+  (error "The value '%s' is not a valid `lightemacs-package-manager'"
+         lightemacs-package-manager))
 
 ;;; require
 
@@ -43,9 +40,9 @@
 
 (require 'lightemacs-module) ; lightemacs--compile-module-maybe
 
-(defvar lightemacs-use-package--package-manager-loaded nil)
+(defvar lightemacs--package-manager-loaded nil)
 
-(unless lightemacs-use-package--package-manager-loaded
+(unless lightemacs--package-manager-loaded
   (when (bound-and-true-p lightemacs-package-manager)
     (cond
      ;; Straight
@@ -77,7 +74,7 @@
                "choices are: 'straight, 'elpaca, or 'use-package.")
        lightemacs-package-manager))))
 
-  (setq lightemacs-use-package--package-manager-loaded t))
+  (setq lightemacs--package-manager-loaded t))
 
 ;;; Compile core modules and init files
 
@@ -98,8 +95,7 @@
 (let ((core-modules '("le-core-cli-tools"
                       "le-core-defaults"
                       "lightemacs"
-                      "lightemacs-module"
-                      "lightemacs-use-package")))
+                      "lightemacs-module")))
   (dolist (module core-modules)
     (let ((base-path (expand-file-name module lightemacs-core-directory)))
       (lightemacs--compile-module-maybe base-path))))
@@ -266,8 +262,6 @@
          (setq treesit-extra-load-path ',treesit-extra-load-path)))
 
 ;;; Load modules
-
-(require 'lightemacs-use-package)
 
 (if (fboundp 'lightemacs-module-load)
     (progn

@@ -22,10 +22,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package nerd-icons
+(use-package nerd-icons
   :commands (nerd-icons-icon-for-buffer
              nerd-icons-icon-for-dir
              nerd-icons-icon-for-extension

@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package stripspace
+(use-package stripspace
   :commands (stripspace-local-mode
              stripspace-global-mode)
 

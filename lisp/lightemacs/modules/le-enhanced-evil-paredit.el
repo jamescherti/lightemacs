@@ -23,10 +23,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package enhanced-evil-paredit
+(use-package enhanced-evil-paredit
   :after evil
   :preface
   (defun enhanced-evil-paredit--evil-snipe-setup ()

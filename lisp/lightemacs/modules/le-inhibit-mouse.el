@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package inhibit-mouse
+(use-package inhibit-mouse
   :commands inhibit-mouse-mode
   :init
   (lightemacs-module-setq-maybe inhibit-mouse

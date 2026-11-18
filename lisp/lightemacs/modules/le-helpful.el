@@ -20,10 +20,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package helpful
+(use-package helpful
   :commands (helpful-callable
              helpful-variable
              helpful-key

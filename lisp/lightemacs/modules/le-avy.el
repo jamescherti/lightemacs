@@ -20,10 +20,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package avy
+(use-package avy
   :commands (avy-goto-char
              avy-goto-word-0
              avy-goto-word-1

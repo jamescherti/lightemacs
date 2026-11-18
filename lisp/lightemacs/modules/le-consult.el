@@ -23,8 +23,6 @@
 
 ;; Require
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
@@ -32,7 +30,7 @@
 
 ;;; Use-package consult
 
-(lightemacs-use-package consult
+(use-package consult
   :commands (consult-fd
              consult-customize
              consult-register-window

@@ -21,10 +21,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package embark-consult
+(use-package embark-consult
   :after (embark consult))
 
 ;;; Provide

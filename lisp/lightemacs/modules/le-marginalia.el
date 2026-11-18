@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package marginalia
+(use-package marginalia
   :commands (marginalia-mode
              marginalia-cycle)
 

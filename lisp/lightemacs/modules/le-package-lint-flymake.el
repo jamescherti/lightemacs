@@ -23,12 +23,10 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (lightemacs-module-load '(le-package-lint))
 
-(lightemacs-use-package package-lint-flymake
+(use-package package-lint-flymake
   :commands (package-lint-flymake-setup
              package-lint-flymake)
   :init

@@ -24,10 +24,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package treesit-auto
+(use-package treesit-auto
   :if (and (fboundp 'treesit-available-p)
            (treesit-available-p))
   :commands (global-treesit-auto-mode

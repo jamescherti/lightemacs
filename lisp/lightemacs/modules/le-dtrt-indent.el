@@ -20,10 +20,8 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package dtrt-indent
+(use-package dtrt-indent
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode
              dtrt-indent-adapt

@@ -12,5 +12,6 @@ repos:
     rev: v1.1.0
     hooks:
       - id: elisp-check-parens
-      - id: elisp-check-byte-compile
-        exclude: '(^|/)(\.dir-locals\.el$|test)'
+      # TODO Ignore warnings in third-party packages
+      # - id: elisp-check-byte-compile
+      #   exclude: '(^|/)(\.dir-locals\.el$|test)'

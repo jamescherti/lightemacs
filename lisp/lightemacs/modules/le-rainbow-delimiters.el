@@ -29,10 +29,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package rainbow-delimiters
+(use-package rainbow-delimiters
   :commands rainbow-delimiters-mode
   :init
   (lightemacs-module-hooks rainbow-delimiters

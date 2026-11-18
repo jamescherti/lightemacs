@@ -21,10 +21,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package elisp-autofmt
+(use-package elisp-autofmt
   :commands (elisp-autofmt-mode
              elisp-autofmt-buffer
              elisp-autofmt-region))

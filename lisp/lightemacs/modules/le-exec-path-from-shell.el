@@ -17,10 +17,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package exec-path-from-shell
+(use-package exec-path-from-shell
   :demand t
   :functions exec-path-from-shell-initialize
   :config

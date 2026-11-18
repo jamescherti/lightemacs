@@ -23,10 +23,8 @@
 ;;; Use-package `flymake'
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package flymake
+(use-package flymake
   :ensure nil
   :commands (flymake-mode
              flymake-show-buffer-diagnostics

@@ -24,10 +24,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package buffer-guardian
+(use-package buffer-guardian
   :commands buffer-guardian-mode
   :init
   (lightemacs-module-hooks buffer-guardian

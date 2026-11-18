@@ -17,10 +17,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package highlight-defined
+(use-package highlight-defined
   :commands highlight-defined-mode
   :init
   (lightemacs-module-hooks highlight-defined

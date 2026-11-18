@@ -19,8 +19,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (require 'lightemacs)
 
@@ -60,7 +58,7 @@ Key benefits:
 
 ;;; Use-package evil
 
-(lightemacs-use-package evil
+(use-package evil
   :commands (evil-mode
              evil-select-search-module
              evil-define-key*

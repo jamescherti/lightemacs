@@ -13,7 +13,12 @@
 
 ;;; Code:
 
+;;; Require
+
 (require 'lightemacs)
+
+;;; Bootstrap
+
 (defvar bootstrap-version)
 
 (defvar lightemacs-straight-bootstrap-url)
@@ -36,6 +41,23 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq straight-use-package-by-default t)
+
+;;; Map ':ensure nil' to ':straight nil' during keyword normalization.
+
+(defun my/use-package-map-ensure-to-straight (fn-args)
+  "Map `:ensure nil' to `:straight nil' during keyword normalization.
+FN-ARGS is a list containing two elements: the NAME of the package (a symbol),
+and the ARGS property list provided to the `use-package' declaration."
+  (let ((name (car fn-args))
+        (keywords (cadr fn-args)))
+    (if (and (plist-member keywords :ensure)
+             (not (plist-get keywords :ensure)))
+        (list name (append (list :straight nil) keywords))
+      fn-args)))
+
+(advice-add 'use-package-normalize-keywords :filter-args #'my/use-package-map-ensure-to-straight)
+
+;;; Require
 
 (provide 'le-core-pm-straight)
 

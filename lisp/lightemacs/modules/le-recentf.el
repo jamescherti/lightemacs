@@ -24,8 +24,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 ;; Global variables
 
@@ -43,7 +41,7 @@ adds that file to the recentf list.")
 ;; Local variables
 (defvar lightemacs-recentf--auto-save-timer nil)
 
-(lightemacs-use-package recentf
+(use-package recentf
   :ensure nil
   :commands (recentf-mode
              recentf

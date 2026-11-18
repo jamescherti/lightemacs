@@ -26,10 +26,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package xclip
+(use-package xclip
   :if (not (display-graphic-p))
   :commands xclip-mode
   :init

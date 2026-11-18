@@ -22,14 +22,12 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (defvar lightemacs-eat-optimize t
   "Non-nil means apply performance optimizations to `eat-mode' buffers.
 When non-nil, `lightemacs--all-terminals-optimize' runs in `eat-mode-hook'.")
 
-(lightemacs-use-package eat
+(use-package eat
   :commands (eat
              eat-eshell-mode
              eat-eshell-visual-command-mode

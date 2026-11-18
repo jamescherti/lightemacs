@@ -19,8 +19,6 @@
 ;;; Require
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 ;;; Variables
 
@@ -40,7 +38,7 @@ For instance:
 
 ;;; Use-package dired-filter
 
-(lightemacs-use-package dired-filter
+(use-package dired-filter
   :after dired
   :commands (dired-filter-mode
              dired-filter-pop-all

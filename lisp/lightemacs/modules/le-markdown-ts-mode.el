@@ -17,10 +17,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package markdown-ts-mode
+(use-package markdown-ts-mode
   :if (>= emacs-major-version 32)
   :ensure nil
   :commands markdown-ts-mode

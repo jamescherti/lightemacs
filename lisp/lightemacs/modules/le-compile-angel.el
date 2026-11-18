@@ -24,11 +24,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package compile-angel
+(use-package compile-angel
   :commands (compile-angel-on-load-mode
              compile-angel-on-save-local-mode
              compile-angel-on-save-mode)

@@ -17,10 +17,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package which-key
+(use-package which-key
   :ensure nil
   :commands which-key-mode
   :init

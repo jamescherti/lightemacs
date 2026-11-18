@@ -18,10 +18,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package cape
+(use-package cape
   :commands (cape-abbrev
              cape-dabbrev
              cape-dict

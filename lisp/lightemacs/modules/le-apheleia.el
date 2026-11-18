@@ -34,10 +34,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package apheleia
+(use-package apheleia
   :commands (apheleia-mode
              apheleia-global-mode)
   :init

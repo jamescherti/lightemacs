@@ -27,10 +27,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package orderless
+(use-package orderless
   :demand t
   :init
   (lightemacs-module-setq-maybe orderless

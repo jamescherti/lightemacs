@@ -30,10 +30,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package indent-bars
+(use-package indent-bars
   :commands indent-bars-mode)
 
 ;;; Provide

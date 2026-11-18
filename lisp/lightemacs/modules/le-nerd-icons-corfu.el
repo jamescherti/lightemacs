@@ -40,12 +40,10 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (lightemacs-module-load '(le-nerd-icons))
 
-(lightemacs-use-package nerd-icons-corfu
+(use-package nerd-icons-corfu
   :after corfu
   :commands nerd-icons-corfu-formatter
   :init

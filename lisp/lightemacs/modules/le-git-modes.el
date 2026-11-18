@@ -16,10 +16,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package git-modes
+(use-package git-modes
   :commands (gitattributes-mode
              gitconfig-mode
              gitignore-mode)

@@ -22,11 +22,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package pathaction
+(use-package pathaction
   :commands (pathaction-edit
              pathaction-run))
 

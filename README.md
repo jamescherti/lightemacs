@@ -677,7 +677,7 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 
 ### Package Manager Selection
 
-Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages via `lightemacs-use-package`.
+Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages.
 
 By default, `lightemacs-package-manager` is set to `'builtin-package`, which uses the built-in `package.el` together with `use-package`.
 
@@ -724,7 +724,9 @@ In addition to modules, Lightemacs provides the following features:
 ### Useful variables
 
 #### Ellipsis
+
 Change the default Ellipsis using the `lightemacs-ellipsis` variable, which defaults to `" ▼"`. This string used to indicate folded sections in `org-mode`, `outline-mode`, `outline-minor-mode`... This ellipsis appears at the end of a heading or section that has been collapsed. Modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
+
 ```emacs-lisp
 (setq lightemacs-ellipsis " ▼")
 ```
@@ -762,15 +764,9 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-native-comp-excluded-cpus`: By default, Emacs uses only half of the available CPUs for native compilation. The `lightemacs-native-comp-excluded-cpus` variable adjusts that behavior by reserving the specified number of CPUs and using the remainder for native compilation, thereby increasing parallelism and speeding up the process. Set this to `nil` to disable CPU reservation entirely.
 
-- `lightemacs-excluded-packages`: List of package symbols that should be excluded from initialization. Each element must be a symbol naming a package that would otherwise be initialized by Lightemacs. Packages listed here are skipped during the initialization process. Only packages declared via `lightemacs-module` are affected by this variable.
-
 - `lightemacs-verbose`: Enable displaying verbose messages in the `*Messages*` buffer.
 
-- `lightemacs-use-package-refresh-contents`: If non-nil, `lightemacs-module` may refresh package contents once. Refresh package contents when `lightemacs-use-package-refresh-contents` is non-nil and the package is not installed.
-
 - `lightemacs-package-manager`: Specifies which package manager to use in Lightemacs. Choices are: `'builtin-package`, `'straight`, or `'elpaca`. This variable controls how `lightemacs-module` handles installation and configuration of packages.
-
-- `lightemacs-load-compiled-init-files`: If non-nil, attempt to load byte-compiled .elc for init files. This will enable Lightemacs to load byte-compiled or possibly native-compiled init files for the following initialization files.
 
 ### Useful functions and macros
 

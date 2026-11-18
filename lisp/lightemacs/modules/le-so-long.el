@@ -18,10 +18,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package so-long
+(use-package so-long
   :ensure nil
   :commands (global-so-long-mode
              so-long-mode)

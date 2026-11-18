@@ -17,10 +17,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package goto-chg
+(use-package goto-chg
   :commands (goto-last-change
              goto-last-change-reverse))
 

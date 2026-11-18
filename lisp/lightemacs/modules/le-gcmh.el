@@ -23,10 +23,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package gcmh
+(use-package gcmh
   :if (not (fboundp 'igc-info))
   :commands (gcmh-mode
              gcmh-idle-garbage-collect)

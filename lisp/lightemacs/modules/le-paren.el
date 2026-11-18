@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package paren
+(use-package paren
   :ensure nil
   :commands (show-paren-mode
              show-paren-local-mode)

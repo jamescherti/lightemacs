@@ -22,10 +22,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package embark
+(use-package embark
   :commands (embark-act
              embark-export
              embark-collect

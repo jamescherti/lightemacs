@@ -28,10 +28,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package buffer-terminator
+(use-package buffer-terminator
   :commands (buffer-terminator-mode
              buffer-terminator-apply-rules)
 

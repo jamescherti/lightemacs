@@ -25,10 +25,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package vim-tab-bar
+(use-package vim-tab-bar
   :commands vim-tab-bar-mode
   :init
   (lightemacs-module-hooks vim-tab-bar

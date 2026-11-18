@@ -20,10 +20,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package shut-up
+(use-package shut-up
   :demand t)
 
 (provide 'le-shut-up)

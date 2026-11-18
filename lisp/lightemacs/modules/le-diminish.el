@@ -16,10 +16,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package diminish)
+(use-package diminish)
 
 (provide 'le-diminish)
 

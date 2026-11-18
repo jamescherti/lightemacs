@@ -59,7 +59,7 @@ If FORCE is non-nil, reload the current theme even if it is already active."
     (cond
      (lightemacs-theme-package
       (eval
-       `(lightemacs-use-package ,lightemacs-theme-package
+       `(use-package ,lightemacs-theme-package
           :demand t
           :config
           (lightemacs-theme--apply ',lightemacs-theme-name))

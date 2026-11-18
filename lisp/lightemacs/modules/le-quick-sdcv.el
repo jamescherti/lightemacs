@@ -19,10 +19,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package quick-sdcv
+(use-package quick-sdcv
   :commands (quick-sdcv-search-at-point
              quick-sdcv-search-input)
 

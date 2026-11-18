@@ -14,10 +14,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package evil-commentary
+(use-package evil-commentary
   :commands evil-commentary-mode
   :init
   (lightemacs-module-hooks evil-commentary

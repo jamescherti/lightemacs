@@ -17,11 +17,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package flymake-ansible-lint
+(use-package flymake-ansible-lint
   :commands flymake-ansible-lint-setup
   :init
   (lightemacs-module-hooks flymake-ansible-lint

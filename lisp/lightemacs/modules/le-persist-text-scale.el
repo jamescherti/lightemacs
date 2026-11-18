@@ -35,11 +35,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package persist-text-scale
+(use-package persist-text-scale
   :commands (persist-text-scale-mode
              persist-text-scale-restore)
   :init

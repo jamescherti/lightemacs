@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package magit
+(use-package magit
   :commands (magit-status
              magit-commit
              magit-commit-create

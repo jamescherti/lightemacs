@@ -17,10 +17,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package savehist
+(use-package savehist
   :ensure nil
   :commands savehist-mode
   :init

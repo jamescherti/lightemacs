@@ -19,10 +19,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package markdown-mode
+(use-package markdown-mode
   :commands (gfm-mode
              gfm-view-mode
              markdown-mode

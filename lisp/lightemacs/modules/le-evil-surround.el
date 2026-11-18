@@ -18,11 +18,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package evil-surround
+(use-package evil-surround
   :commands (evil-Surround-edit
              evil-surround-edit
              evil-surround-region

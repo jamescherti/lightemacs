@@ -19,8 +19,6 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 (eval-and-compile
   ;; This has to be defined before evil
@@ -38,7 +36,7 @@ Setting this variable to t deactivates these global overrides after
 initialization, allowing users to retain standard major-mode behaviors unless
 they explicitly opt out of the inhibition.")
 
-(lightemacs-use-package evil-collection
+(use-package evil-collection
   :if (not noninteractive)
   :functions (evil-collection-init
               global-evil-collection-unimpaired-mode)

@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package org-appear
+(use-package org-appear
   :commands org-appear-mode
   :init
   (lightemacs-module-hooks org-appear

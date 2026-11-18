@@ -16,10 +16,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package display-line-numbers
+(use-package display-line-numbers
   :ensure nil
   :commands (global-display-line-numbers-mode
              display-line-numbers-mode)

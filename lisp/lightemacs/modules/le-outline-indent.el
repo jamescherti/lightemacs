@@ -23,11 +23,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package outline-indent
+(use-package outline-indent
   :commands (outline-indent-minor-mode
              outline-indent-shift-left
              outline-indent-shift-right

@@ -31,10 +31,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package evil-matchit
+(use-package evil-matchit
   :commands (evil-matchit-mode
              global-evil-matchit-mode)
   :init

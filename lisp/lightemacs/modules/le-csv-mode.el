@@ -26,10 +26,8 @@
 ;;; Code:
 
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package csv-mode
+(use-package csv-mode
   :commands (csv-mode
              csv-guess-set-separator
              csv-align-mode)

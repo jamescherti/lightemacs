@@ -34,10 +34,8 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
-(lightemacs-use-package bufferfile
+(use-package bufferfile
   :commands (bufferfile-rename
              bufferfile-delete
              bufferfile-copy

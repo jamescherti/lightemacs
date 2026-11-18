@@ -22,11 +22,9 @@
 
 ;;; Code:
 
-(eval-and-compile
-  (require 'lightemacs-use-package))
 (require 'lightemacs-module)
 
-(lightemacs-use-package evil-snipe
+(use-package evil-snipe
   :commands (evil-snipe-mode
              evil-snipe-local-mode)
 

@@ -23,8 +23,6 @@
 
 (require 'lightemacs)
 (require 'lightemacs-module)
-(eval-and-compile
-  (require 'lightemacs-use-package))
 
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
 ;; Compilation of 'emacs-libvterm' module succeeded
@@ -46,7 +44,7 @@ When non-nil, `lightemacs--all-terminals-optimize' runs in `vterm-mode-hook'.")
       (advice-add #'vterm-module-compile :override #'ignore)
       (provide 'vterm-module))))
 
-(lightemacs-use-package vterm
+(use-package vterm
   :if (bound-and-true-p module-file-suffix)
   :commands (vterm
              vterm-send-string
