@@ -35,7 +35,8 @@
 
 (use-package evil-matchit
   :commands (evil-matchit-mode
-             global-evil-matchit-mode)
+             global-evil-matchit-mode
+             evilmi-load-plugin-rules)
   :init
   (lightemacs-module-hooks evil-matchit-global
     global-evil-matchit-mode
@@ -45,9 +46,8 @@
     evil-matchit-mode
     '())
 
-  (with-eval-after-load 'evil
-    (require 'evil-matchit)
-    (require 'evil-matchit-evil-setup)))
+  :config
+  (require 'evil-matchit-evil-setup))
 
 (provide 'le-evil-matchit)
 

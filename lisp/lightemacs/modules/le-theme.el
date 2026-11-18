@@ -25,6 +25,9 @@ Set to nil to disable loading a theme at startup.")
   "Theme package to install and use for `lightemacs-theme-name'.
 Set to nil to disable installing this package at startup.")
 
+(defvar lightemacs-theme--requested-packages nil
+  "Theme packages already requested through `use-package' in this session.")
+
 (defvar lightemacs-theme-default-font nil
   "Default fixed-pitch font to apply after the theme is loaded.
 Set to a string, such as \"Monospace-12\", or nil to keep the default font.")
@@ -37,39 +40,43 @@ default.")
 ;;; Theme
 
 (defun lightemacs-theme--apply (theme)
-  "Apply THEME, disabling previously enabled themes."
-  (if (memq theme (custom-available-themes))
-      (progn
+  "Load THEME and disable other enabled themes after it loads successfully."
+  (condition-case err
+      (when (load-theme theme t)
         (dolist (enabled-theme custom-enabled-themes)
           (unless (eq enabled-theme theme)
-            (disable-theme enabled-theme)))
-        (condition-case err
-            (load-theme theme t)
-          (error (display-warning 'lightemacs
-                                  (format "Failed to load theme '%s': %s"
-                                          theme (error-message-string err))
-                                  :warning))))
-    (warn "[lightemacs] The theme '%s' is not available" theme)))
+            (disable-theme enabled-theme))))
+    (error
+     (display-warning 'lightemacs
+                      (format "Failed to load theme '%s': %s"
+                              theme (error-message-string err))
+                      :warning))))
 
 (defun lightemacs-load-default-theme (&optional force)
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
-If FORCE is non-nil, reload the current theme even if it is already active."
-  (when (and lightemacs-theme-name
-             (or force
-                 (not (eq (car custom-enabled-themes) lightemacs-theme-name))))
-    (cond
-     (lightemacs-theme-package
-      (eval
-       `(use-package ,lightemacs-theme-package
-          :demand t
-          :config
-          (lightemacs-theme--apply ',lightemacs-theme-name))
-       ;; lexical-binding: t
-       t))
+If FORCE is non-nil, reload the current theme even if it is already active.
+Request each theme package through `use-package' at most once per session."
+  (let ((theme lightemacs-theme-name)
+        (package lightemacs-theme-package))
+    (when (and theme (or force (not (eq (car custom-enabled-themes) theme))))
+      (cond
+       ((or (null package) (featurep package))
+        (lightemacs-theme--apply theme))
 
-     (t
-      (lightemacs-theme--apply lightemacs-theme-name)))))
+       ((not (memq package lightemacs-theme--requested-packages))
+        ;; Record the request before a package manager can defer it.
+        (push package lightemacs-theme--requested-packages)
+        (eval
+         `(use-package ,package
+            :demand t
+            :config
+            ;; The user may have selected another theme while waiting.
+            (when (and (eq lightemacs-theme-package ',package)
+                       lightemacs-theme-name)
+              (lightemacs-theme--apply lightemacs-theme-name)))
+         ;; lexical-binding: t
+         t))))))
 
 ;;; Font
 (defun lightemacs-theme-load-default-font (&optional frame &rest _args)
@@ -83,9 +90,10 @@ This function is idempotent and ignores any additional arguments _ARGS for
                lightemacs-theme-default-font)
       (let* ((get-fam (lambda (font)
                         (when font
-                          (let* ((spec (font-spec :name (if (stringp font)
-                                                            font
-                                                          (font-xlfd-name font))))
+                          (let* ((spec (font-spec
+                                        :name (if (stringp font)
+                                                  font
+                                                (font-xlfd-name font))))
                                  (family (font-get spec :family)))
                             (cond
                              ;; A missing family must stay nil.
@@ -93,7 +101,8 @@ This function is idempotent and ignores any additional arguments _ARGS for
                              ((symbolp family) (symbol-name family))
                              ((stringp family) family)
                              (t nil))))))
-             (current-family (funcall get-fam (frame-parameter target-frame 'font)))
+             (current-family (funcall get-fam
+                                      (frame-parameter target-frame 'font)))
              (target-family (funcall get-fam lightemacs-theme-default-font))
              (variable-family (funcall get-fam lightemacs-theme-variable-font)))
 
@@ -137,25 +146,28 @@ This function is idempotent and ignores any additional arguments _ARGS for
                                       :height 1.0)))
             (error
              (display-warning 'lightemacs
-                              (format "Font error: %s" (error-message-string err))
+                              (format "Font error: %s"
+                                      (error-message-string err))
                               :warning))))))))
 
 ;;; Utility functions
 
 (defun lightemacs-theme-create-loader (name &optional package)
-  "Create an interactive function to load the Emacs theme specified by NAME.
-If PACKAGE is non-nil, require it before loading the theme."
+  "Create an interactive command to load the theme specified by NAME.
+If PACKAGE is non-nil, use it to supply the theme."
   (let* ((name-str (if (symbolp name) (symbol-name name) name))
          (theme-sym (intern name-str))
          (theme-fn-name (intern (format "color-%s" name-str)))
-         (docstring (format "Load the `%s' Emacs theme." name-str)))
+         (docstring (format "Load the `%s' Emacs theme.
+With prefix argument FORCE, reload the theme even if it is active."
+                            name-str)))
     (eval
-     `(defun ,theme-fn-name ()
+     `(defun ,theme-fn-name (&optional force)
         ,docstring
-        (interactive)
+        (interactive "P")
         (setq lightemacs-theme-package ',package)
         (setq lightemacs-theme-name ',theme-sym)
-        (lightemacs-load-default-theme t))
+        (lightemacs-load-default-theme force))
      t)))
 
 ;;; Main
