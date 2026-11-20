@@ -22,7 +22,7 @@ It also gives you the freedom to use one of the following package managers: pack
 
 - **Optimized startup:** Fast initialization times through carefully tuned default settings. (Based on minimal-emacs.d)
 - **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
-- **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow. By default, only essential features are active.
+- **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow.
 - **Lazy evaluation:** The majority of packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
 - **Preconfigured performance enhancements:** Improves the responsiveness of built-in and third-party packages out of the box. Adjustments to tools like *consult* or *show-paren* eliminate perceived input lag and ensure a highly efficient editing experience.
 - *Native compilation:* Developed with native compilation in mind. Every component, including initialization files and modules containing use-package declarations, can be natively compiled to maximize execution speed.
@@ -152,7 +152,7 @@ Notes:
 
 ### Example 2
 
-The default `~/.emacs.d/lisp/local/config.el` configuration only contains [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
+This `~/.emacs.d/lisp/local/config.el` configuration is based on [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el):
 
 ```elisp
 ;;; config.el --- Lightemacs Configuration -*- lexical-binding: t; -*-

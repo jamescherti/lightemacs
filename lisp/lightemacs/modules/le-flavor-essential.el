@@ -1,4 +1,4 @@
-;;; le-flavor-essential.el --- Group: Default modules -*- lexical-binding: t -*-
+;;; le-flavor-essential.el --- Essential modules -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -9,7 +9,7 @@
 
 ;;; Commentary:
 
-;; Default modules.
+;; Essential modules.
 
 ;;; Code:
 

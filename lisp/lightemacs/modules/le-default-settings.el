@@ -425,6 +425,44 @@ This function takes no arguments."
  ;; typing.
  flyspell-delay-use-timer t)
 
+;;; Remove stale early-init.elc
+
+;; At shutdown, remove early-init.elc if its source is newer so the next session
+;; picks up the edits. A current early-init.elc is kept.
+;;
+;; Tools that byte-compile an entire Emacs configuration can leave
+;; early-init.elc behind when the user edits early-init.el. By default, Emacs
+;; can load that older bytecode even when the source is newer. Setting
+;; `load-prefer-newer' inside early-init.el is too late to affect this choice
+;; because Emacs selects the file before evaluating its contents.
+;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2026-06/msg01711.html
+;;
+;; For example, if you edit early-init.el during an Emacs session, the next
+;; startup can still run the older early-init.elc. Emacs chooses which file to
+;; load before it evaluates load-prefer-newer or any stale-file check inside it.
+;; This is useful when the .elc file predates the early-init.el check, because
+;; it has no code to detect your edit. When registered on kill-emacs-hook, this
+;; function removes the .elc at normal shutdown only if the source is newer. The
+;; next session then loads your edited source, while a current .elc stays
+;; available for compiled startup.
+
+(defun lightemacs--delete-stale-early-init-elc ()
+  "Delete early-init.elc when early-init.el has a newer modification time."
+  (let* ((early-init-el (expand-file-name "early-init.el"
+                                          lightemacs-user-directory))
+         (early-init-elc (concat early-init-el "c")))
+    (condition-case err
+        (when
+            (and (file-regular-p early-init-elc)
+                 (file-newer-than-file-p early-init-el early-init-elc))
+          (delete-file early-init-elc)
+          (message "[Lightemacs] Deleted stale %s" early-init-elc))
+      (file-error
+       (message "[Lightemacs] Could not clean up %s: %s"
+                early-init-elc (error-message-string err))))))
+
+(add-hook 'kill-emacs-hook #'lightemacs--delete-stale-early-init-elc)
+
 ;;; Provide
 
 (provide 'le-default-settings)

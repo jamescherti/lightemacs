@@ -16,26 +16,17 @@
 ;;; Variables
 
 (defvar lightemacs-user-directory user-emacs-directory
-  "Directory beneath Lightemacs files are placed.
-Note that this should end with a directory separator.")
+  "Directory beneath Lightemacs files are placed.")
 
-(defvar lightemacs-local-directory
-  (expand-file-name "lisp/local/" lightemacs-user-directory))
-
-(defvar lightemacs-local-modules-directory
-  (expand-file-name "modules/" lightemacs-local-directory))
-
-(defvar lightemacs-core-directory
-  (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
-
-(defvar lightemacs-modules-directory
-  (expand-file-name "modules/" lightemacs-core-directory))
-
-(defvar lightemacs-var-directory
-  (expand-file-name "var/" lightemacs-user-directory))
+;; Will be updated in early-init.el
+(defvar lightemacs-local-directory user-emacs-directory)
+(defvar lightemacs-var-directory user-emacs-directory)
+(defvar lightemacs-core-directory user-emacs-directory)
+(defvar lightemacs-modules-directory user-emacs-directory)
+(defvar lightemacs-local-modules-directory user-emacs-directory)
 
 (defvar lightemacs-modules '(;; Default modules
-                             le-flavor-essential
+                             le-flavor-big
 
                              ;; Vim keybindings (DISABLED)
                              ;; --------------------------

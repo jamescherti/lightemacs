@@ -15,6 +15,14 @@
 
 (declare-function lightemacs-load-user-init "lightemacs" (file &optional no-error))
 
+(setq load-prefer-newer t)
+
+;; Update defaults
+(setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
+(setq minimal-emacs--backup-gc-cons-percentage gc-cons-percentage)
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 1.0)
+
 (let* ((source-file (expand-file-name "early-init.el" user-emacs-directory)))
   ;; Tools that byte-compile an entire Emacs configuration can leave
   ;; early-init.elc or .eln behind when the user edits early-init.el. By
@@ -25,80 +33,71 @@
   (when init-file-debug
     (message "[early-init] Source file: %s" source-file)
     (message "[early-init] Loaded file: %s" load-true-file-name))
-  (if (and (and load-true-file-name
-                (member (file-name-extension load-true-file-name)
-                        '("elc" "eln")))
+  (if (and load-true-file-name
+           (member (file-name-extension load-true-file-name)
+                   '("elc" "eln"))
            (file-newer-than-file-p source-file load-true-file-name))
       (progn
         (message "[Lightemacs] %s is stale. Loading %s"
                  load-true-file-name source-file)
-        (load-file source-file))
-    ;; early-init
-    (setq load-prefer-newer t)
+        (load source-file nil nil t))
+    ;; early-init.el starts here
 
-    (push (expand-file-name "lisp/lightemacs/" user-emacs-directory) load-path)
-    (require 'lightemacs)
-
-    ;; Update defaults
-    (setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
-    (defvar minimal-emacs--backup-gc-cons-percentage gc-cons-percentage)
-    (setq gc-cons-threshold most-positive-fixnum)
-    (setq gc-cons-percentage 1.0)
-
+    ;; Paths
     (setq lightemacs-user-directory user-emacs-directory)
+    (setq lightemacs-core-directory
+          (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
+    (setq lightemacs-var-directory
+          (expand-file-name "var/" lightemacs-user-directory))
+    (setq lightemacs-local-directory
+          (expand-file-name "lisp/local/" lightemacs-user-directory))
+    (setq lightemacs-local-modules-directory
+          (expand-file-name "modules/" lightemacs-local-directory))
+    (setq lightemacs-modules-directory
+          (expand-file-name "modules/" lightemacs-core-directory))
 
-    ;; Load defaults
-    (unless lightemacs-package-manager
-      (setq lightemacs-package-manager 'builtin-package))
+    (setq minimal-emacs-user-directory
+          (expand-file-name "init/" lightemacs-core-directory))
+    (setq custom-theme-directory
+          (expand-file-name "themes/" lightemacs-user-directory))
+
+    (push lightemacs-core-directory load-path)
+    (push lightemacs-modules-directory load-path)
+    (push lightemacs-local-modules-directory load-path)
+
+    (setq package-user-dir (expand-file-name "elpa" lightemacs-var-directory))
+    (setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
+
+    ;; Reduce cluttering
+    ;;
+    ;; Emacs, by default, stores various configuration files, caches, backups,
+    ;; and other data in the ~/.emacs.d directory. Over time, this directory can
+    ;; become cluttered with numerous files, making it difficult to manage and
+    ;; maintain.
+    ;;
+    ;; A common solution to is installing the no-littering package; however,
+    ;; this package is not essential. An alternative lightweight approach is to
+    ;; change the default ~/.emacs.d directory to ~/.emacs.d/var/, which will
+    ;; contain all the files that Emacs typically stores in the base directory.
+    (setq user-emacs-directory lightemacs-var-directory)
+    (require 'lightemacs)
+    (setq lightemacs-package-manager 'builtin-package)
 
     ;; Overwrite Minimal-emacs.d defaults
-    (defvaralias 'lightemacs-frame-title-format
-      'minimal-emacs-frame-title-format)
-    (defvaralias 'lightemacs-ui-features
-      'minimal-emacs-ui-features)
+    (defvaralias 'lightemacs-frame-title-format 'minimal-emacs-frame-title-format)
+    (defvaralias 'lightemacs-ui-features 'minimal-emacs-ui-features)
     (setq minimal-emacs-package-initialize-and-refresh nil)
     (setq minimal-emacs-gc-cons-percentage 0.1)
     (setq minimal-emacs-gc-cons-threshold (* 40 1024 1024))
-    (setq minimal-emacs-gc-cons-threshold-restore-delay 3)
-    (setq minimal-emacs-ui-features '())
-
     (setq minimal-emacs-load-pre-early-init nil)
     (setq minimal-emacs-load-post-early-init nil)
     (setq minimal-emacs-load-pre-init nil)
     (setq minimal-emacs-load-post-init nil)
-
-    (setq package-enable-at-startup nil)
-
     (setq minimal-emacs-load-compiled-init-files t)
 
-    (push lightemacs-modules-directory load-path)
-    (push lightemacs-local-modules-directory load-path)
-
-    ;; Reduce cluttering
-    ;;
-    ;; Emacs, by default, stores various configuration files, caches, backups, and
-    ;; other data in the ~/.emacs.d directory. Over time, this directory can
-    ;; become cluttered with numerous files, making it difficult to manage and
-    ;; maintain.
-    ;;
-    ;; A common solution to this issue is installing the no-littering package;
-    ;; however, this package is not essential.
-    ;;
-    ;; An alternative lightweight approach is to simply change the default
-    ;; ~/.emacs.d directory to ~/.emacs.d/var/, which will contain all the files
-    ;; that Emacs typically stores in the base directory.
-    (setq user-emacs-directory lightemacs-var-directory)
-    (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
-    (setq minimal-emacs-user-directory (expand-file-name
-                                        "init/" lightemacs-core-directory))
-
-    (setq custom-theme-directory
-          (expand-file-name "themes/" minimal-emacs-user-directory))
-
     ;; Load: config.el
-
     (load (expand-file-name "config" lightemacs-local-directory)
-          :no-error
+          nil
           (not (bound-and-true-p init-file-debug)))
 
     ;; Run hooks: `lightemacs-pre-early-init-hook'
@@ -110,17 +109,14 @@
       (unless (boundp 'trusted-content)
         (setq trusted-content nil))
 
-      (let ((dirs (list lightemacs-local-directory
-                        lightemacs-core-directory)))
-        (dolist (dir dirs)
-          ;; Ensure the path ends with a slash so it registers as a directory
-          (push (file-name-as-directory dir) trusted-content))))
+      (dolist (dir (list lightemacs-local-directory
+                         lightemacs-core-directory))
+        ;; Ensure the path ends with a slash so it registers as a directory
+        (push (file-name-as-directory dir) trusted-content)))
 
     ;; Load minimal-emacs.d early-init.el
     (lightemacs-load-user-init
      (expand-file-name "early-init.el" minimal-emacs-user-directory))
-
-    (setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
 
     ;; Run hooks: `lightemacs-post-early-init-hook'
     (run-hooks 'lightemacs-post-early-init-hook)))

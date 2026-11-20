@@ -23,9 +23,10 @@
 
 ;;; Load: init.el
 
-(when (boundp 'minimal-emacs-user-directory)
-  (lightemacs-load-user-init
-   (expand-file-name "init.el" minimal-emacs-user-directory)))
+(if (boundp 'minimal-emacs-user-directory)
+    (lightemacs-load-user-init
+     (expand-file-name "init.el" minimal-emacs-user-directory))
+  (error "Undefined: minimal-emacs-user-directory"))
 
 ;;; Configure the package manager
 
@@ -168,7 +169,6 @@
                (unless (fboundp 'straight-use-package)
                  ;; Disable all straight.el modification checks and builds
                  ;;
-                 ;; TODO: We do not need those two lines
                  ;; When I injected (setq straight-disable-compile t) into the
                  ;; async background workers, I created a configuration
                  ;; mismatch. When the background worker loaded straight.el, it
@@ -176,19 +176,6 @@
                  ;; against the existing build cache (compile = nil / enabled).
                  (setq straight-disable-compile t)
                  (setq straight-disable-native-compile t)
-
-                 ;; TODO is this still necessary?
-                 ;; Prevent the concurrent write attempts entirely, which fixes:
-                 ;; ■ Warning (native-compiler): Error: file-locked
-                 ;; ("~/.emacs.d/var/straight/build/straight/straight-autoloads.el"
-                 ;; "user@myhost (pid 111111)" "Cannot resolve lock conflict in
-                 ;; batch mode")
-                 ;;
-                 ;; This ensures the background compilation processes act
-                 ;; strictly as read-only environments regarding your package
-                 ;; manager state, eliminating the race condition on the
-                 ;; autoload file.
-                 ;; (setq straight-disable-autoloads t)
 
                  (setq straight-check-for-modifications nil)
                  (let ((lightemacs--no-package-manager-bootstrap t))
@@ -205,9 +192,7 @@
 
 (run-hooks 'lightemacs-after-modules-hook)
 
-;;; Provide
-
-(provide 'init)
+;;; End
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)
