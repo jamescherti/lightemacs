@@ -136,8 +136,7 @@
 
    ;; Development
    le-yasnippet
-   ;; TODO Move to huge
-   ;; le-yasnippet-snippets
+   le-yasnippet-snippets
    ;; TODO Move to huge
    ;; le-dumb-jump
    le-flymake
@@ -174,7 +173,8 @@
 
    ;; TODO move to flavor huge
    ;; le-stripspace
-   ))
+
+   le-which-key))
 
 ;;; Provide
 
