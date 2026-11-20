@@ -26,34 +26,6 @@
    ;;   le-recentf le-saveplace le-autorevert
    le-flavor-essential
 
-   ;; NOTE: le-group-evil configures Vim Keybindings (evil + evil-collection):
-   ;; le-group-evil
-   ;; le-evil-commentary
-   ;; le-evil-surround
-   ;; le-evil-visualstar
-
-   ;; le-display-line-numbers
-   ;; le-vim-tab-bar
-   ;; le-easysession  ;; Persist and restore session
-   ;; le-buffer-terminator
-   ;; le-buffer-guardian  ;; Auto save buffers
-   ;; le-apheleia
-   ;; le-diff-hl
-   ;; le-xclip
-   ;; le-quick-sdcv
-   ;; le-which-key
-   ;; le-indent-bars
-   ;; le-evil-matchit
-   ;; le-paredit
-   ;; le-enhanced-evil-paredit
-   ;; le-inhibit-mouse
-   ;; le-winner
-   ;; le-ace-window
-   ;; le-magit
-   ;; le-server
-   ;; le-rainbow-delimiters
-   ;; le-package-lint-flymake
-
    le-so-long
 
    ;; The Garbage Collector Magic Hack
@@ -75,7 +47,8 @@
    ;; current candidates, positioned either below or above the point. Candidates
    ;; can be selected by navigating up or down.
    le-corfu
-   le-corfu-popupinfo
+   ;; TODO move to huge
+   ;; le-corfu-popupinfo
    ;; le-nerd-icons-corfu
 
    ;; (Cape integrates with corfu)
@@ -138,10 +111,12 @@
    ;; le-corfu-prescient
 
    ;; Filetypes
-   le-csv-mode
-   le-markdown-mode
+   ;; TODO move to huge
+   ;; le-csv-mode
+   le-maybe-markdown-ts
    le-maybe-yaml-ts
-   le-git-modes
+   ;; TODO move to huge
+   ;; le-git-modes
 
    ;; The persist-text-scale Emacs package provides
    ;; `persist-text-scale-mode', which ensures that all
@@ -160,34 +135,45 @@
 
    ;; Development
    le-yasnippet
-   le-yasnippet-snippets
-   le-dumb-jump
+   ;; TODO Move to huge
+   ;; le-yasnippet-snippets
+   ;; TODO Move to huge
+   ;; le-dumb-jump
    le-flymake
 
    ;; Code Folding
    ;; Includes:
    ;;   le-outline le-outline-indent le-hideshow le-treesit-fold le-kirigami
-   le-group-code-folding
+   ;; TODO Move to huge
+   ;; le-group-code-folding
 
    ;; Development: Elisp
    ;; le-group-emacs-lisp includes:
    ;;   le-highlight-defined le-aggressive-indent le-elisp-refs le-easy-escape
    le-group-emacs-lisp
-   le-elisp-autofmt
+   ;; TODO Move to huge
+   ;; le-elisp-autofmt
    ;; TODO move to flavor huge
    ;; le-page-break-lines
 
    ;; The bufferfile package provides helper functions
    ;; to delete, rename, or copy buffer files.
-   le-bufferfile
+   ;; TODO Move to huge
+   ;; le-bufferfile
 
    ;; Misc
    le-helpful
    le-avy
-   le-expand-region
+
+   ;; TODO move to flavor huge
+   ;; le-expand-region
+
    ;; TODO move to flavor huge
    ;; le-org-appear
-   le-stripspace))
+
+   ;; TODO move to flavor huge
+   ;; le-stripspace
+   ))
 
 ;;; Provide
 
