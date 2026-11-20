@@ -29,7 +29,8 @@
    le-so-long
 
    ;; The Garbage Collector Magic Hack
-   le-gcmh
+   ;; TODO Move to huge
+   ;; le-gcmh
 
    ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
    ;; system, providing more convenient undo/redo functionality while preserving
