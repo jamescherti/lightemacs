@@ -83,6 +83,20 @@
     (require 'lightemacs)
     (setq lightemacs-package-manager 'builtin-package)
 
+    (if (and (fboundp 'lightemacs--on-run-first-input-hook)
+             (fboundp 'lightemacs--on-run-first-file-hook)
+             (fboundp 'lightemacs--on-run-first-buffer-hook))
+        (unless noninteractive
+          (add-hook 'pre-command-hook #'lightemacs--on-run-first-input-hook)
+
+          (add-hook 'find-file-hook #'lightemacs--on-run-first-file-hook)
+          (add-hook 'dired-initial-position-hook #'lightemacs--on-run-first-file-hook)
+
+          (add-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
+          (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
+          (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
+      (error "Undefined lightemacs--on-* functions"))
+
     ;; Overwrite Minimal-emacs.d defaults
     (defvaralias 'lightemacs-frame-title-format 'minimal-emacs-frame-title-format)
     (defvaralias 'lightemacs-ui-features 'minimal-emacs-ui-features)

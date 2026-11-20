@@ -16,6 +16,7 @@
 ;;; Require
 
 (require 'lightemacs)
+(require 'le-core-terminals)
 
 ;;; Variables
 
@@ -330,8 +331,6 @@ ARGS are the arguments passed to the original function."
 ;; terminal program such as `/bin/bash' and offers more accurate handling of
 ;; ANSI escape sequences, resulting in better compatibility with interactive
 ;; command-line programs like `top', `vim', or `htop'.
-
-(require 'le-core-terminals)
 
 (defvar lightemacs-term-optimize t
   "Non-nil means apply performance optimizations to `term-mode' buffers.

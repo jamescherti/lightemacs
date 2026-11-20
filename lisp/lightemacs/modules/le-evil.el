@@ -57,6 +57,40 @@ Key benefits:
           (setopt evil-undo-system undo-system)
         (customize-set-variable 'evil-undo-system undo-system)))))
 
+;;; Functions
+
+(defun lightemacs-evil-find-parent-directory ()
+  "Go to the parent directory or superior archive buffer of the current buffer.
+If the current buffer is a subfile of an archive or tar file, switch to the
+superior archive buffer. Otherwise, open a `dired' buffer for the current
+file's directory and select the file. If the buffer is not visiting a file,
+open `default-directory'."
+  (interactive)
+  (let ((superior-buffer
+         (let ((archive (bound-and-true-p archive-superior-buffer))
+               (tar (bound-and-true-p tar-superior-buffer)))
+           (cond ((and archive (buffer-live-p archive)) archive)
+                 ((and tar (buffer-live-p tar)) tar)))))
+    (cond
+     ;; Archive and tar superior buffer
+     (superior-buffer
+      (set-window-buffer nil superior-buffer))
+
+     ;; Files
+     (t
+      (let* ((buf (or (buffer-base-buffer) (current-buffer)))
+             (file (buffer-file-name buf))
+             (dir (if file (file-name-directory file) default-directory)))
+        (when dir
+          (when-let* ((dired-buf (find-file-noselect dir)))
+            (set-window-buffer nil dired-buf)
+            (when file
+              (with-current-buffer dired-buf
+                (when (derived-mode-p 'dired-mode)
+                  (when (fboundp 'dired-goto-file)
+                    (dired-goto-file file))
+                  (lightemacs-recenter-maybe)))))))))))
+
 ;;; Use-package evil
 
 (use-package evil
@@ -75,7 +109,7 @@ Key benefits:
     ;; current file, automatically selecting that file. This provides a fast way
     ;; to navigate and manage files without manually switching to the directory.
     (with-eval-after-load 'evil
-      (define-key evil-normal-state-map (kbd "-") #'lightemacs-find-parent-directory)))
+      (define-key evil-normal-state-map (kbd "-") #'lightemacs-evil-find-parent-directory)))
 
   (lightemacs-module-setq-maybe evil
     evil-search-wrap lightemacs-cycle

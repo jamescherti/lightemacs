@@ -24,6 +24,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-core-terminals)
 
 ;;; use-package diff-hl
 
@@ -46,7 +47,6 @@
     '(global-diff-hl-mode-hook))
 
   (lightemacs-module-setq-maybe diff-hl
-    diff-hl-flydiff-delay 0.4  ; Faster
     diff-hl-draw-borders nil
     diff-hl-show-staged-changes nil  ; Realtime feedback
     diff-hl-update-async t  ; Do not block Emacs

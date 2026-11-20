@@ -48,18 +48,21 @@ loaded only when needed, enabling exceptionally fast, deferred startup.")
   "When non-nil, reduce the verbosity of various Emacs packages.")
 
 (defvar lightemacs-ellipsis " ▼"
-  "String used to indicate folded sections in Org-mode and Outline-mode.
-This ellipsis appears at the end of a heading or section that has been
-collapsed. It provides a visual cue that more content is hidden. You can
-customize this variable to use a different character or string (such as '...',
-'▶', or other Unicode symbols) to match your visual preference or theme. This
-variable is buffer-local in Org-mode and Outline-mode, affecting only the
+  "String used to indicate folded sections.
+
+This string indicate folded sections in Org-mode, Outline-mode, treesit-fold...
+
+It appears at the end of a heading or section that has been collapsed. It
+provides a visual cue that more content is hidden. You can customize this
+variable to use a different character or string (such as '...', '▶', or other
+Unicode symbols) to match your visual preference or theme. This variable is
+buffer-local in Org-mode and Outline-mode, affecting only the
 display of folded text.")
 
 (defvar lightemacs-cycle t
   "If non-nil, enables cycling through candidates in supported plugins.
-This enabled or disable cycling in plugins such as Vertico and Consult.
-When nil, cycling is disabled, so selection stops at the first or last candidate
+This enabled or disable cycling in plugins such as Vertico and Consult. When
+nil, cycling is disabled, so selection stops at the first or last candidate
 instead of wrapping around.")
 
 (defvar lightemacs-package-manager nil
@@ -93,114 +96,7 @@ If `lightemacs-package-manager' is elpaca, this hook runs after
 `elpaca-after-init-hook'. Otherwise, it runs after `emacs-startup-hook', similar
 to Emacs standard behavior.")
 
-(defvar lightemacs-terminal-modes
-  '(vterm-mode
-    eat-mode
-    term-mode
-    ghostel-mode)
-  "List of terminal emulator major modes.")
-
-(defvar lightemacs-all-terminals-disabled-modes
-  '(;; Highlights the current line, which is generally unnecessary in a
-    ;; terminal buffer and can alter the appearance of terminal output.
-    ;; NOTE: This was disabled by le-default-settings
-    ;; hl-line-mode
-
-    ;; Displays line numbers in the window margin, which are not part of the
-    ;; terminal's character grid.
-    display-line-numbers-mode
-
-    ;; Draws a vertical indicator in the window, which is unrelated to the
-    ;; terminal's character grid.
-    ;; NOTE: This was disabled by le-default-settings
-    ;; display-fill-column-indicator-mode
-
-    ;; Enables Emacs visual-line wrapping rather than the terminal emulator's
-    ;; own line wrapping.
-    visual-line-mode
-
-    ;; Displays whitespace characters and related visual indicators, which are
-    ;; generally unnecessary in terminal buffers and can alter their appearance.
-    ;; NOTE: This was disabled by le-default-settings
-    ;; whitespace-mode
-
-    ;; Adds faces to matching delimiters, which is generally unnecessary in
-    ;; terminal buffers and can alter terminal output's appearance.
-    rainbow-delimiters-mode
-    ;; Requests contextual documentation, which is generally not useful in
-    ;; terminal emulator buffers.
-    eldoc-mode
-    ;; These modes perform Emacs editing actions such as inserting matching
-    ;; delimiters or indentation. Such behavior is generally undesirable when
-    ;; terminal input should be handled by the terminal application.
-    electric-pair-local-mode
-    electric-indent-local-mode
-    show-paren-local-mode
-    smartparens-mode
-    ;; These packages provide Emacs-side completion or expansion features that
-    ;; are generally unnecessary when completion is handled by the terminal
-    ;; application or shell.
-    yas-minor-mode
-    yas/minor-mode
-    company-mode
-    ;; NOTE: This was disabled by le-corfu
-    ;; corfu-mode
-    )
-  "List of minor modes to disable in terminal emulator buffers.")
-
-(defvar lightemacs-all-terminals-disabled-global-modes
-  '(;; Highlights the current line, which is generally unnecessary in a
-    ;; terminal buffer and can alter the appearance of terminal output.
-    ;; NOTE: This was disabled by le-default-settings
-    ;; global-hl-line-mode
-
-    ;; Displays line numbers in the window margin, which are not part of the
-    ;; terminal's character grid.
-    global-display-line-numbers-mode
-
-    ;; Draws a vertical indicator in the window, which is unrelated to the
-    ;; terminal's character grid.
-    ;; NOTE: This was disabled by le-default-settings
-    ;; global-display-fill-column-indicator-mode
-
-    ;; Enables Emacs visual-line wrapping rather than the terminal emulator's
-    ;; own line wrapping.
-    global-visual-line-mode
-
-    ;; Displays whitespace characters and related visual indicators, which are
-    ;; generally unnecessary in terminal buffers and can alter their appearance.
-    ;; NOTE: This was disabled by le-default-settings
-    ;; global-whitespace-mode
-
-    ;; These modes perform Emacs editing actions such as inserting matching
-    ;; delimiters or indentation. Such behavior is generally undesirable when
-    ;; terminal input should be handled by the terminal application.
-    electric-pair-mode
-    electric-indent-mode
-    show-paren-mode
-    smartparens-global-mode
-    ;; These packages provide Emacs-side completion or expansion features that
-    ;; are generally unnecessary when completion is handled by the terminal
-    ;; application or shell.
-    yas-global-mode
-    yas/global-mode
-    global-company-mode
-    ;; NOTE: This was disabled by le-corfu
-    ;; global-corfu-mode
-    )
-  "List of global minor modes to disable locally in terminal emulator buffers.
-
-Disabling a local minor mode directly is often insufficient because globalized
-minor modes may reactivate their local counterparts via hooks during buffer
-initialization. Listing the global mode variables here ensures the terminal
-setup function can make them buffer-local and set them to nil, which prevents
-the global modes from overriding the local configuration.
-
-This prevents, for example, `global-hl-line-mode' from automatically
-reactivating the local mode via hooks. Setting the global minor mode variable to
-nil locally acts as a shield for this specific buffer.")
-
-(defvar lightemacs-text-editing-modes '(prog-mode text-mode conf-mode)
+(defvar lightemacs-text-editing-modes '(prog-mode text-mode conf-mode diff-mode)
   "List of major modes in which text editing global modes should be enabled.")
 
 ;;; Hooks: Initializer hooks
@@ -220,21 +116,26 @@ nil locally acts as a shield for this specific buffer.")
 (defvar lightemacs-after-modules-hook nil
   "Hook run after loading modules in init.el.")
 
-;;; Misc
+;;; Misc functions
 
-(defmacro lightemacs-verbose-message (&rest args)
-  "Display a verbose message with the same ARGS arguments as `message'."
-  (declare (indent 0) (debug t))
-  `(progn
-     (when (or lightemacs-verbose lightemacs-debug)
-       (message (concat "[lightemacs] " ,(car args)) ,@(cdr args)))))
+(defun lightemacs--message (prefix format-string &rest args)
+  "Display FORMAT-STRING with PREFIX and ARGS using `message'.
+If FORMAT-STRING is nil, clear the echo area."
+  (apply #'message (and format-string (concat prefix format-string)) args))
 
-(defmacro lightemacs-debug-message (&rest args)
-  "Display a debug message with the same ARGS arguments as `message'."
-  (declare (indent 0) (debug t))
-  `(progn
-     (when lightemacs-debug
-       (message (concat "[lightemacs DEBUG] " ,(car args)) ,@(cdr args)))))
+(defmacro lightemacs-verbose-message (format-string &rest args)
+  "Display FORMAT-STRING with ARGS when verbose or debug logging is enabled.
+Evaluate FORMAT-STRING and ARGS only when logging is enabled."
+  (declare (indent 0) (debug (form &rest form)))
+  `(when (or lightemacs-verbose lightemacs-debug)
+     (lightemacs--message "[lightemacs] " ,format-string ,@args)))
+
+(defmacro lightemacs-debug-message (format-string &rest args)
+  "Display FORMAT-STRING with ARGS when debug logging is enabled.
+Evaluate FORMAT-STRING and ARGS only when debug logging is enabled."
+  (declare (indent 0) (debug (form &rest form)))
+  `(when lightemacs-debug
+     (lightemacs--message "[lightemacs DEBUG] " ,format-string ,@args)))
 
 (defun lightemacs-recenter-maybe (&optional arg adjust-arg)
   "Conditionally recenter the window around point.
@@ -283,29 +184,6 @@ buffer is not displayed in the selected window."
 
       (when do-recenter
         (recenter arg t)))))
-
-;; README:
-;; - `lightemacs-recenter-if-out-of-view` (macro): Execute BODY and recenter if
-;; point is outside the original window bounds.
-;;
-;; (defmacro lightemacs-recenter-if-out-of-view (&rest body)
-;;   "Execute BODY and recenter if point is off-screen.
-;;
-;; This checks if the point is visible in the selected window after
-;; execution. If the buffer changes or the window is deleted,
-;; recentering is skipped."
-;;   (declare (indent 0) (debug t))
-;;   (let ((win-sym (make-symbol "start-window")))
-;;     `(let ((,win-sym (selected-window)))
-;;        ;; use prog1 to return the result of body
-;;        (progn ,@body)
-;;        (when (and (>= scroll-conservatively 101)
-;;                   (window-live-p ,win-sym)
-;;                   (eq (current-buffer) (window-buffer ,win-sym))
-;;                   ;; pos-visible-in-window-p handles partial lines and
-;;                   ;; redisplay logic more robustly than manual arithmetic.
-;;                   (not (pos-visible-in-window-p (point) ,win-sym)))
-;;          (recenter)))))
 
 (defmacro lightemacs-save-window-scroll (&rest body)
   "Execute BODY while preserving the horizontal and vertical scroll."
@@ -389,38 +267,6 @@ cursor."
                                  ;; No force
                                  t))))))))
 
-(defun lightemacs-find-parent-directory ()
-  "Go to the parent directory or superior archive buffer of the current buffer.
-If the current buffer is a subfile of an archive or tar file, switch to the
-superior archive buffer. Otherwise, open a `dired' buffer for the current
-file's directory and select the file. If the buffer is not visiting a file,
-open `default-directory'."
-  (interactive)
-  (let ((superior-buffer
-         (let ((archive (bound-and-true-p archive-superior-buffer))
-               (tar (bound-and-true-p tar-superior-buffer)))
-           (cond ((and archive (buffer-live-p archive)) archive)
-                 ((and tar (buffer-live-p tar)) tar)))))
-    (cond
-     ;; Archive and tar superior buffer
-     (superior-buffer
-      (set-window-buffer nil superior-buffer))
-
-     ;; Files
-     (t
-      (let* ((buf (or (buffer-base-buffer) (current-buffer)))
-             (file (buffer-file-name buf))
-             (dir (if file (file-name-directory file) default-directory)))
-        (when dir
-          (when-let* ((dired-buf (find-file-noselect dir)))
-            (set-window-buffer nil dired-buf)
-            (when file
-              (with-current-buffer dired-buf
-                (when (derived-mode-p 'dired-mode)
-                  (when (fboundp 'dired-goto-file)
-                    (dired-goto-file file))
-                  (lightemacs-recenter-maybe)))))))))))
-
 ;;; early-init.el and init.el functions
 
 (defun lightemacs--remove-el-file-suffix (filename)
@@ -457,8 +303,10 @@ exist."
 
 (defvar lightemacs-on-first-input-hook nil
   "Transient hooks run before the first user input.")
+
 (defvar lightemacs-on-first-file-hook nil
   "Transient hooks run before the first interactively opened file.")
+
 (defvar lightemacs-on-first-buffer-hook nil
   "Transient hooks run before the first interactively opened buffer.")
 
@@ -487,16 +335,6 @@ exist."
     (remove-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
     (remove-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook)
     (run-hooks 'lightemacs-on-first-buffer-hook)))
-
-(unless noninteractive
-  (add-hook 'pre-command-hook #'lightemacs--on-run-first-input-hook)
-
-  (add-hook 'find-file-hook #'lightemacs--on-run-first-file-hook)
-  (add-hook 'dired-initial-position-hook #'lightemacs--on-run-first-file-hook)
-
-  (add-hook 'find-file-hook #'lightemacs--on-run-first-buffer-hook)
-  (add-hook 'window-buffer-change-functions #'lightemacs--on-run-first-buffer-hook)
-  (add-hook 'server-visit-hook #'lightemacs--on-run-first-buffer-hook))
 
 ;;; `lightemacs-keyboard-quit'
 
@@ -599,7 +437,8 @@ configuration for that func without modifying the macro definition itself."
        (unless ,inhibit-var
          ,@body))))
 
-;; TODO This is not the right approach. Some variables are not overwritten.
+;; TODO remove
+;; This is not the right approach. Some variables are not overwritten.
 ;; (defmacro lightemacs-module-setq-maybe (name &rest args)
 ;;   "Set default values for variables in module NAME.
 ;;
@@ -645,7 +484,7 @@ all settings in this block are skipped."
     (lightemacs-verbose-message "Load module: %s" feature-symbol)
     (require feature-symbol)))
 
-;; TODO Remove?
+;; TODO Remove
 ;; (defun lightemacs-module-load (modules)
 ;;   "Load the features in MODULES in order.
 ;; Search the bundled module directory before the local module directory.

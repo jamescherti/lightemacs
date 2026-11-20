@@ -24,6 +24,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-core-terminals)
 
 (use-package aggressive-indent
   :commands (aggressive-indent-mode

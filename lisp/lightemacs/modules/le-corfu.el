@@ -19,6 +19,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-core-terminals)
 
 (defvar lightemacs-corfu-add-to-savehist t)
 
