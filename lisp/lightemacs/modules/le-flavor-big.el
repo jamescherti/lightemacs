@@ -132,9 +132,10 @@
    ;; prescient.el is a library for sorting and
    ;; filtering lists of candidates, such as those
    ;; presented by packages like Vertico or Corfu.
-   le-prescient
-   le-vertico-prescient
-   le-corfu-prescient
+   ;; TODO move to huge
+   ;; le-prescient
+   ;; le-vertico-prescient
+   ;; le-corfu-prescient
 
    ;; Filetypes
    le-csv-mode
@@ -147,7 +148,8 @@
    ;; adjustments made with `text-scale-increase' and
    ;; `text-scale-decrease' are persisted and restored
    ;; across sessions.
-   le-persist-text-scale
+   ;; TODO Move to huge
+   ;; le-persist-text-scale
 
    ;; This package provides functions to detects the
    ;; indentation offset used in existing source code
@@ -172,7 +174,8 @@
    ;;   le-highlight-defined le-aggressive-indent le-elisp-refs le-easy-escape
    le-group-emacs-lisp
    le-elisp-autofmt
-   le-page-break-lines
+   ;; TODO move to flavor huge
+   ;; le-page-break-lines
 
    ;; The bufferfile package provides helper functions
    ;; to delete, rename, or copy buffer files.
@@ -182,7 +185,8 @@
    le-helpful
    le-avy
    le-expand-region
-   le-org-appear
+   ;; TODO move to flavor huge
+   ;; le-org-appear
    le-stripspace))
 
 ;;; Provide
