@@ -50,15 +50,7 @@
 
   (lightemacs-module-hooks outline-indent-minor
     outline-indent-minor-mode
-    '(;; Python
-      python-mode-hook
-
-      ;; Yaml
-      yaml-mode-hook
-      yaml-ts-mode-hook
-
-      ;; Haskell
-      haskell-mode-hook))
+    '())
 
   :config
   (lightemacs-module-bind outline-indent

@@ -367,7 +367,7 @@ This `~/.emacs.d/lisp/local/config.el` configuration is based on [le-flavor-esse
 
                            ;; Code Folding
                            ;; Includes:
-                           ;;   le-outline le-outline-indent
+                           ;;   le-outline-indent
                            ;;   le-hideshow le-treesit-fold le-kirigami
                            le-group-code-folding
 
@@ -540,15 +540,6 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-flymake**: Configures Flymake, a built-in on-the-fly syntax checking tool that analyzes source code buffers in the background and highlights errors or warnings as you type. It invokes external syntax checkers or compilers asynchronously and annotates the buffer with diagnostic messages, which can be navigated using dedicated commands. Unlike language servers, Flymake itself does not perform analysis but provides a flexible framework that integrates with various backends, making it lightweight, extensible, and adaptable across different programming languages. By default, the **le-flymake** module enables Flymake automatically in `prog-mode` and `text-mode`. The **le-flymake** defines the following keybindings for navigating Flymake diagnostics: `M-g n`: Move to the **next** error or warning in the current buffer, `M-g p`: Move to the **previous** error or warning in the current buffer. These keys are bound in `flymake-mode-map`, so they are active only when `flymake-mode` is enabled. The mnemonic follows Emacs' convention: `M-g` is the **goto** prefix, and `n`/`p` indicate **next** and **previous** respectively. (Additionally, the **le-flymake** module enhances Flymake for Emacs Lisp by ensuring that `elisp-flymake-byte-compile-load-path` includes all directories in the current `load-path`. This allows Flymake to locate and check all installed Emacs Lisp files during on-the-fly byte-compilation, improving accuracy of syntax checking in Emacs Lisp buffers.)
 
 - **le-kirigami**: Configure the [kirigami](https://github.com/jamescherti/kirigami.el) package, which unifies text folding across diverse Emacs modes (outline, outline-indent, org, markdown, hideshow, treesit, etc.), enabling a single configuration for fold operations. It also improves folding logic in `outline`, `markdown-mode`, and `org-mode` (handling deep folds, content-based closing, and sibling visibility) while fixing upstream issues.
-
-- **le-outline**: Fixes outline bugs, configure hooks, and updates the ellipsis in `outline-minor-mode` using the `lightemacs-ellipsis` variable. Below is an example of a configuration you can place in `~/.emacs.d/lisp/local/config.el` to automatically enable `outline-minor-mode`:
-  ```emacs-lisp
-  (setq lightemacs-outline-minor-target-hooks '(emacs-lisp-mode-hook
-                                                lisp-mode-hook
-                                                conf-mode-hook
-                                                markdown-mode-hook
-                                                diff-mode-hook))
-  ```
 
 - **le-hideshow**: Enables `hs-minor-mode` (Hideshow). This ensures consistent code-folding capabilities across various programming, web, and scripting modes.
 

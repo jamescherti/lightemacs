@@ -101,7 +101,7 @@
    ;; presented by packages like Vertico or Corfu.
 
    ;; Filetypes
-   le-maybe-markdown-ts
+   le-markdown-mode
    le-maybe-yaml-ts
 
    ;; This package provides functions to detects the

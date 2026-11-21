@@ -35,7 +35,7 @@
 
    ;; Code Folding
    ;; Includes:
-   ;;   le-outline le-outline-indent le-hideshow le-treesit-fold le-kirigami
+   ;;   le-outline-indent le-hideshow le-treesit-fold le-kirigami
    le-group-code-folding
 
    ;; Elisp

@@ -406,7 +406,7 @@ Suppress Auto Insert during the visit.  Display the buffer and return it."
 Insert a configuration template when creating config.el."
   (interactive)
   (let ((buffer (lightemacs--edit-file
-                 (expand-file-name "config2.el" lightemacs-local-lisp-directory)
+                 (expand-file-name "config.el" lightemacs-local-lisp-directory)
                  (concat ";;; config.el --- Lightemacs configuration "
                          "-*- lexical-binding: t; -*-\n\n"
                          ";;; Commentary:\n"

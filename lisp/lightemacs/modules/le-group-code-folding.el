@@ -16,14 +16,147 @@
 
 ;;; Code:
 
+;;; Require
+
 (require 'lightemacs)
 
-(lightemacs-module-load
- '(le-outline
-   le-outline-indent
-   le-hideshow
-   le-treesit-fold
-   le-kirigami))
+;;;  Outline indent
+
+(lightemacs-module-load '(le-outline-indent))
+
+(lightemacs-module-hooks outline-indent-minor
+  outline-indent-minor-mode
+  '(;; Python
+    python-mode-hook
+
+    ;; Yaml
+    yaml-mode-hook
+    yaml-ts-mode-hook
+
+    ;; Haskell
+    haskell-mode-hook))
+
+;;; Outline
+
+(lightemacs-module-hooks outline-minor
+  outline-minor-mode
+  '(emacs-lisp-mode-hook
+    lisp-interaction-mode-hook ; scratch
+    lisp-mode-hook
+    conf-mode-hook
+    markdown-mode-hook
+    markdown-ts-mode-hook
+    diff-mode-hook))
+
+;;; Hideshow
+
+(lightemacs-module-load '(le-hideshow))
+
+(lightemacs-module-hooks hideshow
+  hs-minor-mode
+  '(;; Systems and General Purpose
+    c-mode-hook
+    c++-mode-hook
+    java-mode-hook
+    rust-mode-hook
+    go-mode-hook
+    ruby-mode-hook
+    php-mode-hook
+    perl-mode-hook
+
+    ;; Web and Frontend
+    js-mode-hook
+    typescript-mode-hook
+    css-mode-hook
+
+    ;; Scripting, Data, and Infrastructure
+    sh-mode-hook
+    json-mode-hook
+    lua-mode-hook
+    nxml-mode-hook
+
+    ;; mhtml and html
+    html-mode-hook))
+
+;;; treesit-fold
+
+(lightemacs-module-load '(le-treesit-fold))
+
+(lightemacs-module-hooks treesit-fold-local
+  treesit-fold-mode
+  '(;; Systems and General Purpose
+    c-ts-mode-hook
+    c++-ts-mode-hook
+    java-ts-mode-hook
+    rust-ts-mode-hook
+    go-ts-mode-hook
+    ruby-ts-mode-hook
+    php-ts-mode-hook
+    csharp-ts-mode-hook
+    go-mod-ts-mode-hook
+    lua-ts-mode-hook
+    python-ts-mode-hook
+    bash-ts-mode-hook
+
+    ;; Web and Frontend
+    js-ts-mode-hook
+    typescript-ts-mode-hook
+    tsx-ts-mode-hook
+    css-ts-mode-hook
+    html-ts-mode-hook
+    heex-ts-mode-hook
+    xml-ts-mode-hook
+
+    ;; Scripting and Infrastructure
+    bash-ts-mode-hook
+    cmake-ts-mode-hook
+    dockerfile-ts-mode-hook
+    awk-ts-mode-hook
+    vimscript-ts-mode-hook
+    nix-ts-mode-hook
+
+    ;; Data and Configuration
+    json-ts-mode-hook
+    toml-ts-mode-hook
+    yaml-ts-mode-hook
+
+    ;; Build Systems and Makefiles
+    makefile-ts-mode-hook
+
+    ;; Hardware Description and Shaders
+    verilog-ts-mode-hook
+    vhdl-ts-mode-hook
+    hlsl-ts-mode-hook
+
+    ;; Scientific, Data Science, and Academic
+    latex-ts-mode-hook
+    beancount-ts-mode-hook
+
+    ;; Documentation and Diagrams
+    mermaid-ts-mode-hook
+
+    ;; Other
+    gdscript-ts-mode-hook
+    clojure-ts-mode-hook
+    caml-ts-mode-hook
+    ocaml-ts-mode-hook
+    erlang-ts-mode-hook
+    elixir-ts-mode-hook
+    scala-ts-mode-hook
+    dart-ts-mode-hook
+    haskell-ts-mode-hook
+    julia-ts-mode-hook
+    kotlin-ts-mode-hook
+    gleam-ts-mode-hook
+    noir-ts-mode-hook
+    swift-ts-mode-hook
+    zig-ts-mode-hook))
+
+;;; Kirigami
+
+(lightemacs-module-load '(le-kirigami))
+
+;;; Provide
 
 (provide 'le-group-code-folding)
 
