@@ -22,6 +22,8 @@
 ;;; Code:
 
 (require 'use-package)
+(require 'le-embark)
+(require 'le-consult)
 
 (use-package embark-consult
   :demand t

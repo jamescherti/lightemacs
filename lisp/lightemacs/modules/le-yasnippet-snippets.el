@@ -18,6 +18,7 @@
 ;;; Code:
 
 (require 'use-package)
+(require 'le-yasnippet)
 
 (use-package yasnippet-snippets
   :demand t

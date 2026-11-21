@@ -41,6 +41,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-corfu)
 
 (require 'le-nerd-icons)
 

@@ -23,6 +23,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-vertico)
 
 ;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
 ;; completion by dynamically reordering candidates based on frequency and
