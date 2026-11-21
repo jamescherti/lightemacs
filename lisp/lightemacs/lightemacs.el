@@ -382,13 +382,64 @@ The execution follows this priority:
 
 ;;; Interactive functions
 
+(defvar auto-insert)
+
+(defun lightemacs--edit-file (filename template)
+  "Visit FILENAME, creating its parent directory if necessary.
+If FILENAME is new and its buffer is empty, insert TEMPLATE and move point
+to the start of the third line, or to the end if it has fewer lines.
+Suppress Auto Insert during the visit.  Display the buffer and return it."
+  (let ((file (expand-file-name filename)))
+    (make-directory (file-name-directory file) t)
+    (let ((buffer (let ((auto-insert nil))
+                    (find-file-noselect file))))
+      (with-current-buffer buffer
+        (when (and (zerop (buffer-size))
+                   (not (file-exists-p file)))
+          (insert template)
+          (goto-char (point-min))))
+      (switch-to-buffer buffer)
+      buffer)))
+
 (defun lightemacs-edit-config ()
-  "Open the local lightemacs configuration file (config.el).
-Ensure the parent directory exists before opening the file."
+  "Open the local Lightemacs configuration file.
+Insert a configuration template when creating config.el."
   (interactive)
-  (let ((config-file (expand-file-name "config.el" lightemacs-local-lisp-directory)))
-    (make-directory lightemacs-local-lisp-directory t)
-    (find-file config-file)))
+  (let ((buffer (lightemacs--edit-file
+                 (expand-file-name "config2.el" lightemacs-local-lisp-directory)
+                 (concat ";;; config.el --- Lightemacs configuration "
+                         "-*- lexical-binding: t; -*-\n\n"
+                         ";;; Commentary:\n"
+                         ";; Lightemacs configuration.\n\n"
+                         ";;; Code:\n\n"
+                         "(setq lightemacs-modules '(le-flavor-big)\n\n"
+                         ";;; config.el ends here\n"))))
+    (when (buffer-live-p buffer)
+      (with-current-buffer buffer
+        (forward-line 7)))))
+
+(defun lightemacs-edit-local-module (module)
+  "Edit a local Lightemacs module named MODULE, with or without its .el suffix.
+Offer completion for modules in `lightemacs-local-modules-directory'.
+For a new module, insert a template with a matching `provide' form."
+  (interactive
+   (let* ((directory lightemacs-local-modules-directory)
+          (files (when (file-directory-p directory)
+                   (directory-files directory nil "\\.el\\'"))))
+     (list (completing-read "Edit local module: "
+                            (mapcar #'file-name-sans-extension files)))))
+  (let ((name (replace-regexp-in-string "\\.el\\'" "" module t t)))
+    (unless (string-match-p "\\`[[:alnum:]][[:alnum:]_-]*\\'" name)
+      (user-error "Invalid module name: %s" module))
+    (let ((filename (concat name ".el")))
+      (lightemacs--edit-file
+       (expand-file-name filename lightemacs-local-modules-directory)
+       (format (concat ";;; %s --- Lightemacs module "
+                       "-*- lexical-binding: t; -*-\n\n"
+                       "(require 'lightemacs)\n\n"
+                       "(provide '%s)\n\n"
+                       ";;; %s ends here\n")
+               filename name filename)))))
 
 ;;; Lightemacs modules
 
