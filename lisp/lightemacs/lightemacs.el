@@ -424,8 +424,9 @@ the specified key bindings."
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings"
                                      module))))
     `(progn
-       (defvar ,inhibit-var nil
-         ,(format "Prevent configuring `%s' keybindings.
+       (unless (special-variable-p ',inhibit-var)
+         (defvar ,inhibit-var nil
+           ,(format "Prevent configuring `%s' keybindings.
 
 When this variable is set to a non-nil value, any key bindings that would
 normally be defined through `lightemacs-define-*' macros are skipped
@@ -433,17 +434,15 @@ for `%s'.
 
 This allows users to disable or override the default Lightemacs key
 configuration for that func without modifying the macro definition itself."
-                  module module))
+                    module module)))
        (unless ,inhibit-var
          ,@body))))
 
 (defmacro lightemacs-module-setq-maybe (name &rest args)
-  "Set values for variables in module NAME.
-
+  "Set default settings for module NAME using ARGS.
 ARGS is a list of alternating variable-value pairs.
-
-This macro checks `lightemacs-NAME-inhibit-defaults'. If non-nil, all settings
-in this block are skipped."
+If `lightemacs-NAME-inhibit-defaults' is non-nil, skip all assignments
+without evaluating their value expressions."
   (declare (indent 1) (debug t))
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-defaults" name)))
         (pairs args)
@@ -451,10 +450,14 @@ in this block are skipped."
     (while pairs
       (push (car pairs) targets)
       (setq pairs (cddr pairs)))
-    ;; Runtime: Single optimized check
-    `(unless (bound-and-true-p ,inhibit-var)
-       (with-suppressed-warnings ((free-vars ,@targets))
-         (setq ,@args)))))
+    `(progn
+       (unless (special-variable-p ',inhibit-var)
+         (defvar ,inhibit-var nil
+           ,(format "When non-nil, skip default settings for module `%s'." name)))
+       ;; Runtime: Single optimized check
+       (unless ,inhibit-var
+         (with-suppressed-warnings ((free-vars ,@targets))
+           (setq ,@args))))))
 
 (defun lightemacs-module-load (modules)
   "Load the features in MODULES in order using `load-path'."

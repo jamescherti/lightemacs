@@ -9,14 +9,14 @@
 
 ;;; Commentary:
 
+;; `aggressive-indent-mode' is a minor mode that ensures code remains
+;; consistently indented. It automatically reindents after every modification,
+;; providing greater reliability than `electric-indent-mode'.
+;;
 ;; `electric-indent-mode' is sufficient to maintain proper code alignment during
 ;; straightforward typing. However, when you begin shifting code blocks,
 ;; transposing lines, or manipulating s-expressions, indentation inconsistencies
 ;; are likely to occur.
-;;
-;; `aggressive-indent-mode' is a minor mode that ensures code remains
-;; consistently indented. It automatically reindents after every modification,
-;; providing greater reliability than `electric-indent-mode'.
 ;;
 ;; URL: https://github.com/Malabarba/aggressive-indent-mode
 
