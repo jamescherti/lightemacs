@@ -69,8 +69,4 @@
 
 (provide 'le-corfu)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-corfu.el ends here

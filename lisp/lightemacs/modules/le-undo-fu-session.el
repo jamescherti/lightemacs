@@ -58,7 +58,7 @@ will only be logged to the *Messages* buffer, keeping the echo area clean.")
 
 (defun lightemacs--undo-fu-session-silence-a (orig-fn &rest args)
   "Advice to selectively inhibit `undo-fu-session' messages.
-If `lightemacs-undo-fu-session-quiet' is non-nil, the `inhibit-message' variable
+If `lightemacs-undo-fu-session-quiet' is non-nil, the variable `inhibit-message'
 is set to t.
 ORIG-FN is the original function and ARGS are its arguments."
   (let ((inhibit-message (or inhibit-message lightemacs-undo-fu-session-quiet)))

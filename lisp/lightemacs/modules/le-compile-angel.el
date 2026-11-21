@@ -59,11 +59,13 @@ specified file or directory is ignored during the compilation process managed by
   :config
   ;; TODO add support to compile-angel
   (with-eval-after-load 'savehist
-    (le-compile-angel-exclude savehist-file))
+    (with-suppressed-warnings ((free-vars savehist-file))
+      (le-compile-angel-exclude savehist-file)))
 
   ;; TODO add support to compile-angel
   (with-eval-after-load 'recentf
-    (le-compile-angel-exclude recentf-save-file))
+    (with-suppressed-warnings ((free-vars recentf-save-file))
+      (le-compile-angel-exclude recentf-save-file)))
 
   ;; TODO add support to compile-angel?
   (with-eval-after-load 'cus-edit

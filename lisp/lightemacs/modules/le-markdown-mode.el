@@ -41,12 +41,6 @@
   (lightemacs-module-setq-maybe markdown-mode
     markdown-fontify-code-blocks-natively t
 
-    ;; Other options
-    ;; markdown-asymmetric-header t
-    ;; markdown-italic-underscore t
-    ;; markdown-make-gfm-checkboxes-buttons t
-    ;; markdown-fontify-whole-heading-line t
-
     ;; Extra languages made available when inserting GFM code blocks.
     ;; Language strings must have be trimmed of whitespace and not
     ;; contain any curly braces. They may be of arbitrary

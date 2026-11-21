@@ -26,10 +26,12 @@
 
 ;;; Code:
 
+;;; Require
+
 (require 'lightemacs)
 (require 'use-package)
 
-;; Variables
+;;; Variables
 
 (defvar lightemacs-consult-dir-fasd-support t
   "If non-nil, enable integration of fasd with `consult-dir'.
@@ -72,7 +74,7 @@ customized."
              (new-dir (consult-dir--pick))
              (new-full-name (file-name-as-directory new-dir)))
         (when new-dir
-          (if consult-dir-shadow-filenames
+          (if (bound-and-true-p consult-dir-shadow-filenames)
               (insert "/" new-full-name)
             (insert new-full-name))))))
 
@@ -111,7 +113,8 @@ customized."
       "Fasd directory source for `consult-dir'.")
 
     ;; Adding to the list of consult-dir sources
-    (add-to-list 'consult-dir-sources 'consult-dir--source-fasd t)))
+    (with-suppressed-warnings ((free-vars consult-dir-sources))
+      (add-to-list 'consult-dir-sources 'consult-dir--source-fasd t))))
 
 (provide 'le-consult-dir)
 

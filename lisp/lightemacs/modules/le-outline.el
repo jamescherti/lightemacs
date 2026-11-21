@@ -115,6 +115,8 @@ the buffer remain visible when a fold is applied."
     (advice-add 'outline-end-of-subtree :after
                 #'le-outline--advice-backtrack-whitespace)))
 
+;;; Provide
+
 (provide 'le-outline)
 
 ;;; le-outline.el ends here

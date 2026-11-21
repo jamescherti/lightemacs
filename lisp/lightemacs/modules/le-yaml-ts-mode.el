@@ -21,6 +21,8 @@
 
 ;;; Code:
 
+;;; Require
+
 (require 'lightemacs)
 
 ;;; Fix `yaml-ts-mode' comment-start-skip
@@ -57,6 +59,8 @@ Versions affected by this bug: Emacs 30.1, 30.2, and <= 29.*."
   (setq-local tab-width 2))
 
 (add-hook 'yaml-ts-mode-hook #'lightemacs-yaml-ts-mode--setup-indentation)
+
+;;; Provide
 
 (provide 'le-yaml-ts-mode)
 

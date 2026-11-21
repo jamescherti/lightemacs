@@ -21,11 +21,10 @@
 
 ;;; Code:
 
-(require 'lightemacs)
-(require 'use-package)
-
 ;; Require
 
+(require 'lightemacs)
+(require 'use-package)
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
 (require 'le-core-cli-tools)
 
@@ -41,6 +40,7 @@
              consult-buffer-other-frame
              consult-buffer-other-tab
              consult-buffer-other-window
+             ;; TODO defer
              ;; consult-compile-error
              consult-complex-command
              consult-find
@@ -238,9 +238,5 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
 ;;; Provide
 
 (provide 'le-consult)
-
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
 
 ;;; le-consult.el ends here

@@ -31,10 +31,7 @@
              undo-fu-disable-checkpoint))
 
 (with-eval-after-load 'evil
-  (setq evil-undo-system 'undo-fu)
-  (if (fboundp 'evil-set-undo-system)
-      (evil-set-undo-system 'undo-fu)
-    (error "Undefined: evil-set-undo-system")))
+  (setopt evil-undo-system 'undo-fu))
 
 (provide 'le-undo-fu)
 

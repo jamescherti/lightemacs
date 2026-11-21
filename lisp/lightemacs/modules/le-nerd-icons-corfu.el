@@ -49,7 +49,8 @@
   :after corfu
   :commands nerd-icons-corfu-formatter
   :init
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  (with-suppressed-warnings ((free-vars corfu-margin-formatters))
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)))
 
 (provide 'le-nerd-icons-corfu)
 

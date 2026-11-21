@@ -53,8 +53,4 @@
 
 (provide 'le-dtrt-indent)
 
-;; Local variables:
-;; byte-compile-warnings: (not free-vars)
-;; End:
-
 ;;; le-dtrt-indent.el ends here

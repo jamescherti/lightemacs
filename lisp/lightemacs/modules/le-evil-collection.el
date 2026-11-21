@@ -20,6 +20,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-evil)
 
 (eval-and-compile
   ;; This has to be defined before evil
@@ -61,8 +62,9 @@ they explicitly opt out of the inhibition.")
   ;; Issue report: corfu: Add "<return>" to corfu-map when magic-return is enabled
   ;; URL: https://github.com/emacs-evil/evil-collection/pull/895
   (with-eval-after-load 'corfu
-    (when (memq 'magic-return evil-collection-corfu-key-themes)
-      (evil-define-key 'insert corfu-map (kbd "<return>") 'corfu-insert)))
+    (with-suppressed-warnings ((free-vars evil-collection-corfu-key-themes))
+      (when (memq 'magic-return evil-collection-corfu-key-themes)
+        (evil-define-key 'insert corfu-map (kbd "<return>") 'corfu-insert))))
 
   ;; Disable unimpaired mappings globally
   (when lightemacs-evil-collection-inhibit-unimpaired-mode

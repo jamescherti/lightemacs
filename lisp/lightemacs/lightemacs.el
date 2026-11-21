@@ -424,20 +424,13 @@ the specified key bindings."
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings"
                                      module))))
     `(progn
-       (unless (special-variable-p ',inhibit-var)
-         (defvar ,inhibit-var nil
-           ,(format "Prevent configuring `%s' keybindings.
-
-When this variable is set to a non-nil value, any key bindings that would
-normally be defined through `lightemacs-define-*' macros are skipped
-for `%s'.
-
-This allows users to disable or override the default Lightemacs key
-configuration for that func without modifying the macro definition itself."
-                    module module)))
-       (unless ,inhibit-var
+       (defvar ,inhibit-var nil
+         ,(format "When non-nil, skip the default key bindings for module `%s'."
+                  module))
+       (unless (bound-and-true-p ,inhibit-var)
          ,@body))))
 
+;; TODO remove
 (defmacro lightemacs-module-setq-maybe (name &rest args)
   "Set default settings for module NAME using ARGS.
 ARGS is a list of alternating variable-value pairs.
@@ -451,13 +444,25 @@ without evaluating their value expressions."
       (push (car pairs) targets)
       (setq pairs (cddr pairs)))
     `(progn
-       (unless (special-variable-p ',inhibit-var)
-         (defvar ,inhibit-var nil
-           ,(format "When non-nil, skip default settings for module `%s'." name)))
+       (defvar ,inhibit-var nil
+         ,(format "When non-nil, skip default settings for module `%s'." name))
        ;; Runtime: Single optimized check
-       (unless ,inhibit-var
+       (unless (bound-and-true-p ,inhibit-var)
          (with-suppressed-warnings ((free-vars ,@targets))
            (setq ,@args))))))
+
+(defmacro lightemacs-module-defaults (name &rest body)
+  "Evaluate BODY to configure defaults for module NAME.
+NAME is a module name given as an unquoted symbol or a string.
+If `lightemacs-NAME-inhibit-defaults' is non-nil, skip BODY."
+  (declare (indent 1) (debug (sexp body)))
+  (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-defaults" name))))
+    `(progn
+       (defvar ,inhibit-var nil
+         ,(format "When non-nil, skip default settings for module `%s'." name))
+       ;; Runtime: Single optimized check
+       (unless ,inhibit-var
+         ,@body))))
 
 (defun lightemacs-module-load (modules)
   "Load the features in MODULES in order using `load-path'."
