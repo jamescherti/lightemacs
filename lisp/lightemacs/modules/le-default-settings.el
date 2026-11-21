@@ -110,10 +110,6 @@
 
 ;;; Autosave
 
-;;; Tools (ripgrep and fd)
-
-(require 'le-core-cli-tools)
-
 (with-eval-after-load 'xref
   (with-eval-after-load 'le-core-cli-tools
     (if (fboundp 'lightemacs-core--load-cli-tools)

@@ -9,19 +9,6 @@
 
 ;;; Commentary:
 
-;; Evil is an extensible vi layer for Emacs. It emulates the main features of
-;; Vim, and provides facilities for writing custom extensions.
-;;
-;; This configures the packages evil and evil-collection.
-;;
-;; URL: https://github.com/emacs-evil/evil
-
-;;; Code:
-
-(require 'lightemacs)
-(require 'use-package)
-(require 'le-corfu)
-
 ;; When prescient.el is used with Corfu, prescient.el improves both in-buffer
 ;; completions and pop-up completion menus by making candidate ordering more
 ;; predictable and adaptive to recent usage, thus speeding up repeated
@@ -40,6 +27,11 @@
 
 ;; URL: https://github.com/radian-software/prescient.el
 
+;;; Code:
+
+(require 'lightemacs)
+(require 'use-package)
+(require 'le-corfu)
 (require 'le-prescient)
 
 (use-package corfu-prescient

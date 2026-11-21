@@ -22,7 +22,6 @@
 
 (require 'lightemacs)
 (require 'use-package)
-
 (require 'le-core-terminals)
 
 (defvar lightemacs-eat-optimize t

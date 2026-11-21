@@ -21,7 +21,6 @@
 
 (require 'lightemacs)
 (require 'use-package)
-
 (require 'le-nerd-icons)
 
 (use-package nerd-icons-dired

@@ -23,6 +23,7 @@
 
 (require 'lightemacs)
 (require 'use-package)
+(require 'le-evil)
 
 (use-package evil-visualstar
   :commands global-evil-visualstar-mode

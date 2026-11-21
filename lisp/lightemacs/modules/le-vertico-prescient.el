@@ -12,22 +12,6 @@
 ;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
 ;; completion by dynamically reordering candidates based on frequency and
 ;; recency, making it faster to select commonly used options while preserving
-;; consistent, predictable filtering. **Example:** When running `M-x` and
-;; repeatedly selecting the command `compile`, prescient.el will place `compile`
-;; near the top of the Vertico minibuffer list in future sessions, reducing the
-;; need to type its full name.
-
-;; URL: https://github.com/radian-software/prescient.el
-
-;;; Code:
-
-(require 'lightemacs)
-(require 'use-package)
-(require 'le-vertico)
-
-;; When prescient.el is used with Vertico, prescient.el enhances minibuffer
-;; completion by dynamically reordering candidates based on frequency and
-;; recency, making it faster to select commonly used options while preserving
 ;; consistent, predictable filtering.
 ;;
 ;; Example: When running M-x and repeatedly selecting the command `compile`,
@@ -42,6 +26,11 @@
 ;;
 ;; URL: https://github.com/radian-software/prescient.el
 
+;;; Code:
+
+(require 'lightemacs)
+(require 'use-package)
+(require 'le-vertico)
 (require 'le-prescient)
 
 (use-package vertico-prescient

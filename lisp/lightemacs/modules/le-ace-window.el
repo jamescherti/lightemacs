@@ -10,10 +10,10 @@
 ;;; Commentary:
 
 ;; Ace Window provides a fast and efficient method for switching between windows
-;; in a frame. Instead of cycling through windows sequentially or using more
-;; cumbersome key sequences, Ace Window displays a single-letter label on each
-;; visible window, allowing the user to jump directly to a target window by
-;; pressing the corresponding key.
+;; in a frame. Instead of cycling through windows sequentially or using more key
+;; sequences, Ace Window displays a single-letter label on each visible window,
+;; allowing the user to jump directly to a target window by pressing the
+;; corresponding key.
 ;;
 ;; URL: https://github.com/abo-abo/ace-window
 
