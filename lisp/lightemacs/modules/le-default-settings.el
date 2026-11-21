@@ -112,7 +112,7 @@
 
 ;;; Tools (ripgrep and fd)
 
-(lightemacs-module-load '(le-core-cli-tools))
+(require 'le-core-cli-tools)
 
 (with-eval-after-load 'xref
   (with-eval-after-load 'le-core-cli-tools

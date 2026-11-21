@@ -50,7 +50,7 @@ Key benefits:
   (with-eval-after-load 'evil
     (let ((undo-system (if (< emacs-major-version 31)
                            (progn
-                             (lightemacs-module-load '(le-undo-fu))
+                             (require 'le-undo-fu)
                              'undo-fu)
                          'undo-redo)))
       (if (>= emacs-major-version 29)

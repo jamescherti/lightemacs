@@ -40,8 +40,8 @@ forces `markdown-mode' to load even if Tree-sitter is available.")
            (treesit-ready-p 'markdown t))
       (progn
         (setq lightemacs-maybe-markdown-ts--tree-sitter t)
-        (lightemacs-module-load '(le-markdown-ts-mode)))
-    (lightemacs-module-load '(le-markdown-mode))))
+        (require 'le-markdown-ts-mode))
+    (require 'le-markdown-mode)))
 
 ;; Modules loaded after initialization have already missed this hook.
 (if after-init-time

@@ -27,7 +27,7 @@
 ;; Require
 
 ;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(lightemacs-module-load '(le-core-cli-tools))
+(require 'le-core-cli-tools)
 
 ;;; Use-package consult
 

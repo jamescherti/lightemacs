@@ -39,9 +39,9 @@ Tree-sitter is available.")
            (fboundp 'treesit-ready-p)
            (treesit-ready-p 'yaml t))
       ;; Configure `yaml-ts-mode'
-      (lightemacs-module-load '(le-yaml-ts-mode))
+      (require 'le-yaml-ts-mode)
     ;; Configure `yaml-mode'
-    (lightemacs-module-load '(le-yaml-mode))))
+    (require 'le-yaml-mode)))
 
 ;; Modules loaded after initialization have already missed this hook.
 (if after-init-time

@@ -22,7 +22,7 @@
 (require 'lightemacs)
 (require 'use-package)
 
-(lightemacs-module-load '(le-nerd-icons))
+(require 'le-nerd-icons)
 
 (use-package nerd-icons-dired
   :commands nerd-icons-dired-mode
