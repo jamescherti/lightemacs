@@ -41,6 +41,9 @@ Start Emacs and wait for the initial package installation to complete. Open your
 
 ;;; Code:
 
+(setq lightemacs-theme-name 'modus-vivendi)
+(setq lightemacs-theme-default-font "DejaVu Sans Mono")
+
 (setq lightemacs-modules '(le-flavor-big
 
                            ;; Uncomment le-group-evil to configure Vim Keybindings (evil + evil-collection)
