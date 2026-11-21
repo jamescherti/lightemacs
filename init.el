@@ -112,8 +112,8 @@
       `(progn
          (setq lightemacs-package-manager ',lightemacs-package-manager)
          (setq lightemacs-user-directory ,lightemacs-user-directory)
-         (setq lightemacs-local-directory ,lightemacs-local-directory)
-         (setq lightemacs-core-directory ,lightemacs-core-directory)
+         (setq lightemacs-local-lisp-directory ,lightemacs-local-lisp-directory)
+         (setq lightemacs-builtin-lisp-directory ,lightemacs-builtin-lisp-directory)
          (setq lightemacs-var-directory ,lightemacs-var-directory)
          (setq user-emacs-directory ,lightemacs-var-directory)
 
@@ -135,7 +135,7 @@
                (unless (fboundp 'elpaca)
                  (let ((lightemacs--no-package-manager-bootstrap t))
                    (load (expand-file-name "le-core-pm-elpaca.el"
-                                           ',lightemacs-core-directory)
+                                           ',lightemacs-builtin-lisp-directory)
                          nil
                          'nomessage)))))
 
@@ -180,7 +180,7 @@
                  (setq straight-check-for-modifications nil)
                  (let ((lightemacs--no-package-manager-bootstrap t))
                    (load (expand-file-name "le-core-pm-straight.el"
-                                           ',lightemacs-core-directory)
+                                           ',lightemacs-builtin-lisp-directory)
                          nil
                          'nomessage))))))))
 

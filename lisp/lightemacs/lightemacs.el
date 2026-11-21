@@ -19,10 +19,10 @@
   "Directory beneath Lightemacs files are placed.")
 
 ;; Will be updated in early-init.el
-(defvar lightemacs-local-directory user-emacs-directory)
+(defvar lightemacs-local-lisp-directory user-emacs-directory)
 (defvar lightemacs-var-directory user-emacs-directory)
-(defvar lightemacs-core-directory user-emacs-directory)
-(defvar lightemacs-modules-directory user-emacs-directory)
+(defvar lightemacs-builtin-lisp-directory user-emacs-directory)
+(defvar lightemacs-builtin-modules-directory user-emacs-directory)
 (defvar lightemacs-local-modules-directory user-emacs-directory)
 
 (defvar lightemacs-modules '(;; Default modules
@@ -386,8 +386,8 @@ The execution follows this priority:
   "Open the local lightemacs configuration file (config.el).
 Ensure the parent directory exists before opening the file."
   (interactive)
-  (let ((config-file (expand-file-name "config.el" lightemacs-local-directory)))
-    (make-directory lightemacs-local-directory t)
+  (let ((config-file (expand-file-name "config.el" lightemacs-local-lisp-directory)))
+    (make-directory lightemacs-local-lisp-directory t)
     (find-file config-file)))
 
 ;;; Lightemacs modules
@@ -475,7 +475,7 @@ If `lightemacs-NAME-inhibit-defaults' is non-nil, skip BODY."
 ;;   "Load the features in MODULES in order.
 ;; Search the bundled module directory before the local module directory.
 ;; Propagate any error raised while loading a module."
-;;   (let ((priority-path (cons lightemacs-modules-directory
+;;   (let ((priority-path (cons lightemacs-builtin-modules-directory
 ;;                              (cons lightemacs-local-modules-directory
 ;;                                    load-path))))
 ;;     (dolist (feature-symbol modules)

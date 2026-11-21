@@ -45,25 +45,32 @@
 
     ;; Paths
     (setq lightemacs-user-directory user-emacs-directory)
-    (setq lightemacs-core-directory
+    (setq lightemacs-builtin-lisp-directory
           (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
     (setq lightemacs-var-directory
           (expand-file-name "var/" lightemacs-user-directory))
-    (setq lightemacs-local-directory
+    (setq lightemacs-local-lisp-directory
           (expand-file-name "lisp/local/" lightemacs-user-directory))
     (setq lightemacs-local-modules-directory
-          (expand-file-name "modules/" lightemacs-local-directory))
-    (setq lightemacs-modules-directory
-          (expand-file-name "modules/" lightemacs-core-directory))
+          (expand-file-name "modules/" lightemacs-local-lisp-directory))
+    (setq lightemacs-builtin-modules-directory
+          (expand-file-name "modules/" lightemacs-builtin-lisp-directory))
 
     (setq minimal-emacs-user-directory
-          (expand-file-name "init/" lightemacs-core-directory))
+          (expand-file-name "init/" lightemacs-builtin-lisp-directory))
     (setq custom-theme-directory
           (expand-file-name "themes/" lightemacs-user-directory))
 
-    (push lightemacs-core-directory load-path)
-    (push lightemacs-modules-directory load-path)
+    (push lightemacs-builtin-lisp-directory load-path)
+
+    (push lightemacs-builtin-modules-directory load-path)
+    ;; (let ((default-directory lightemacs-builtin-modules-directory))
+    ;;   (normal-top-level-add-subdirs-to-load-path))
+
     (push lightemacs-local-modules-directory load-path)
+    (when (file-directory-p lightemacs-local-modules-directory)
+      (let ((default-directory lightemacs-local-modules-directory))
+        (normal-top-level-add-subdirs-to-load-path)))
 
     (setq package-user-dir (expand-file-name "elpa" lightemacs-var-directory))
     (setq custom-file (expand-file-name "custom.el" lightemacs-var-directory))
@@ -110,7 +117,7 @@
     (setq minimal-emacs-load-compiled-init-files t)
 
     ;; Load: config.el
-    (load (expand-file-name "config" lightemacs-local-directory)
+    (load (expand-file-name "config" lightemacs-local-lisp-directory)
           nil
           (not (bound-and-true-p init-file-debug)))
 
@@ -123,8 +130,8 @@
       (unless (boundp 'trusted-content)
         (setq trusted-content nil))
 
-      (dolist (dir (list lightemacs-local-directory
-                         lightemacs-core-directory))
+      (dolist (dir (list lightemacs-local-lisp-directory
+                         lightemacs-builtin-lisp-directory))
         ;; Ensure the path ends with a slash so it registers as a directory
         (push (file-name-as-directory dir) trusted-content)))
 
