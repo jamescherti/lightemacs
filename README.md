@@ -18,7 +18,29 @@ It also gives you the freedom to use one of the following package managers: pack
 <img src="https://jamescherti.com/misc/lightemacs-m.png" width="40%" />
 </p>
 
-**Features:**
+## Quick Start
+
+You need Emacs 29.1 or newer and Git. Clone the repository into `~/.emacs.d`:
+
+```sh
+git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.emacs.d
+```
+
+Start Emacs and wait for the initial package installation to complete. Open your user configuration with `M-x lightemacs-edit-config` and add the following to `config.el`:
+
+```elisp
+;;; config.el --- Lightemacs Configuration -*- lexical-binding: t; -*-
+
+;;; Code:
+
+(setq lightemacs-modules '(le-flavor-big))
+
+;;; config.el ends here
+```
+
+You can customize Emacs by adding ready-to-use modules to the `lightemacs-modules` list (see below). Lightemacs ships with over 108 built-in modules in the [lisp/lightemacs/modules/](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/) directory.
+
+## Features:
 
 - **Optimized startup:** Fast initialization times through carefully tuned default settings. (Based on minimal-emacs.d)
 - **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
