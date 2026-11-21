@@ -1,22 +1,30 @@
 # Lightemacs - Fast, Lightweight, Customizable Emacs framework
 
-- GitHub repository: [jamescherti/lightemacs](https://github.com/jamescherti/lightemacs)
 - Author: [James Cherti](https://www.jamescherti.com/)
 - License: GPL 3.0 or later
-
-## Introduction
-
-Lightemacs is a fast, lightweight, and customizable Emacs framework:
-
-- Fast: Your entire configuration is natively compiled.
-- Lightweight: You can define precisely which packages to include or exclude.
-- Customizable: Include only what you need. Passing an empty module list reduces the configuration directly to a base minimal Emacs setup.
-
-It also gives you the freedom to use one of the following package managers: package.el, straight.el, and elpaca.
 
 <p align="center">
 <img src="https://jamescherti.com/misc/lightemacs-m.png" width="40%" />
 </p>
+
+[Lightemacs](https://github.com/jamescherti/lightemacs) is a fast and lightweight Emacs configuration:
+
+- **Fast:** Your entire configuration is natively compiled, and most packages remain deferred until triggered by hooks, keybindings, or file associations. It also configures built-in and third-party settings to improve responsiveness out of the box.
+- **Lightweight:** Load only the modules you need. Passing an empty module list reduces the configuration directly to a base minimal-emacs.d setup.
+
+## Why choose Lightemacs?
+
+Unlike Doom Emacs and Spacemacs, which provide opinionated, batteries-included environments built around custom configuration DSLs, CLI tools, and deep evil-mode integration, Lightemacs starts from a `minimal-emacs.d` foundation and stays close to standard Emacs Lisp.
+
+Instead of imposing a proprietary macro system or locking you into a single package manager, Lightemacs lets you choose between `package.el`, `straight.el`, or `elpaca` and opt into individual features as needed, treating evil-mode and other tools as optional modules.
+
+|Feature                                     |Lightemacs                                                                                       |Doom Emacs                                                                                              |Spacemacs                                                                                         |
+|--------------------------------------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+|**Core Philosophy**                         |Minimalist base that scales up by adding Lightemacs modules.                                     |Curated, opinionated IDE focused on speed and Vim ergonomics.                                           |Batteries-included distribution focused on discoverability and layers.                            |
+|**Baseline Footprint**                      |Equivalent to `minimal-emacs.d` when no modules are enabled.                                     |Ships with its own custom CLI (`doom`), macro DSL (`package!`, `use-package!`), and heavy core defaults.|Heavy core with extensive abstraction layers, custom keybinding schemes, and pre-bundled packages.|
+|**Configuration Style**                     |Standard Emacs Lisp (`config.el`, `init.el`, `post-init.el`) built directly on `minimal-emacs.d`.|Custom declarative DSL (`init.el`, `config.el`, `packages.el`) requiring `doom sync` after changes.     |Layer-based configuration inside a `.spacemacs` dotfile.                                          |
+|**Package Management**                      |Supports `package.el`, `straight.el`, and `elpaca`.                                              |Custom wrapper around `straight.el`.                                                                    |Built primarily around `package.el` with custom layer recipes.                                    |
+|**Keybindings**                             |Standard Emacs bindings by default (evil-mode is optional).                                      |evil-mode (Vim) is central and deeply integrated across all modules.                                    |Holy (Emacs) or Evil (Vim) modes, centered around mnemonic `SPC` leader keys.                     |
 
 ## Quick Start
 
@@ -26,25 +34,29 @@ You need Emacs 29.1 or newer and Git. Clone the repository into `~/.emacs.d`:
 git clone --depth 1 https://github.com/jamescherti/lightemacs ~/.emacs.d
 ```
 
-Start Emacs and wait for the initial package installation to complete. Open your user configuration with `M-x lightemacs-edit-config` and add the following to `config.el`:
+Start Emacs and wait for the initial package installation to complete. Open your user configuration with `M-x lightemacs-edit-config` and add the following to your `config.el`:
 
 ```elisp
 ;;; config.el --- Lightemacs Configuration -*- lexical-binding: t; -*-
 
 ;;; Code:
 
-(setq lightemacs-modules '(le-flavor-big))
+(setq lightemacs-modules '(le-flavor-big
+
+                           ;; Uncomment le-group-evil to configure Vim Keybindings (evil + evil-collection)
+                           ;; le-group-evil
+                           ))
 
 ;;; config.el ends here
 ```
 
-You can customize Emacs by adding ready-to-use modules to the `lightemacs-modules` list (see below). Lightemacs ships with over 108 built-in modules in the [lisp/lightemacs/modules/](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/) directory.
+You can customize Emacs by adding ready-to-use modules to the `lightemacs-modules` list (see below). Lightemacs ships with over 109 built-in modules in the [lisp/lightemacs/modules/](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/) directory.
 
 ## Features:
 
-- **Optimized startup:** Fast initialization times through carefully tuned default settings. (Based on minimal-emacs.d)
+- **Optimized startup:** Fast initialization times through carefully tuned default settings. (Based on the optimized init files [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d))
 - **Minimalist user interface:** Provides a clean, distraction-free environment focused entirely on your buffer content.
-- **Modular architecture:** Offers a curated set of configurable modules that can be toggled individually to match your workflow.
+- **Modular architecture:** Offers a set of configurable modules that can be toggled individually to match your workflow.
 - **Lazy evaluation:** The majority of packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
 - **Preconfigured performance enhancements:** Improves the responsiveness of built-in and third-party packages out of the box. Adjustments to tools like *consult* or *show-paren* eliminate perceived input lag and ensure a highly efficient editing experience.
 - *Native compilation:* Developed with native compilation in mind. Every component, including initialization files and modules containing use-package declarations, can be natively compiled to maximize execution speed.
@@ -799,6 +811,8 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-save-window-scroll` (macro): Execute BODY while preserving the `window-hscroll` and `window-vscroll`.
 - `lightemacs-save-window-start` (macro): Execute BODY while preserving and restoring `window-start` relative to the lines above the cursor. This macro saves the first visible line in the selected window. After BODY executes, the window is restored so that the same lines remain visible above the cursor, maintaining the relative vertical position of the cursor within the window. To also restore the mark, this macro can be combined with `save-mark-and-excursion`. For preservation of horizontal scroll only (hscroll), consider using the `lightemacs-save-window-hscroll` macro.
+
+## Frequently asked questions
 
 ## Author and license
 
