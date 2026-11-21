@@ -47,22 +47,24 @@ buffer, followed by regular files.")
     ;; modification date, etc.)
     (add-hook 'dired-mode-hook #'dired-hide-details-mode))
 
-  (setq dired-omit-files
-        "\\`\\.[^.]")  ;; matches any file starting with . but not ..
+  (lightemacs-module-defaults dired
+    (with-suppressed-warnings ((free-vars dired-omit-files))
+      (setq dired-omit-files
+            "\\`\\.[^.]")  ;; matches any file starting with . but not ..
 
-  (setq dired-omit-files (concat
-                          "\\.\\(?:elc\\|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
-                          "\\|^\\.DS_Store\\'"
-                          "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
-                          "\\|^__pycache__\\'"
-                          "\\|^flycheck_.*"
-                          "\\|^flymake_.*"))
+      (setq dired-omit-files (concat
+                              "\\.\\(?:elc\\|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
+                              "\\|^\\.DS_Store\\'"
+                              "\\|^\\.\\(?:svn\\|git\\|hg\\)\\'"
+                              "\\|^__pycache__\\'"
+                              "\\|^flycheck_.*"
+                              "\\|^flymake_.*"))
 
-  (if lightemacs-dired-omit-parent-directory
-      ;; All dotfiles
-      (setq dired-omit-files (concat dired-omit-files "\\|^\\."))
-    ;; All dotfiles files except '..'
-    (setq dired-omit-files (concat dired-omit-files "\\|\\`\\.[^.]\\|\\`\\.$")))
+      (if lightemacs-dired-omit-parent-directory
+          ;; All dotfiles
+          (setq dired-omit-files (concat dired-omit-files "\\|^\\."))
+        ;; All dotfiles files except '..'
+        (setq dired-omit-files (concat dired-omit-files "\\|\\`\\.[^.]\\|\\`\\.$")))))
 
   :config
   ;; Group directories first
