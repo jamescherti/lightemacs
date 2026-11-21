@@ -403,6 +403,13 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
                            le-group-evil))
 ```
 
+## All the flavors
+
+- [le-flavor-micro](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-micro)
+- [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential)
+- [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)
+- [le-flavor-huge](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-huge.el)
+
 ## Modules that are part of le-flavor-micro
 
 - **le-default-settings**: Configure enhanced default settings, including improved defaults, backup files, warnings to ignore, a minibuffer depth indicator, scrolling, window behavior... *This is one of the most important modules. Keep it enabled.* This also enables default keybindings, such as "C--" (text-scale-decrease), "C-+" text-scale-increase, and "C-0" (text-scale-adjust).

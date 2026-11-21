@@ -28,10 +28,6 @@
 
    le-so-long
 
-   ;; The Garbage Collector Magic Hack
-   ;; TODO Move to huge
-   ;; le-gcmh
-
    ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
    ;; system, providing more convenient undo/redo functionality while preserving
    ;; access to the full undo history.
@@ -48,9 +44,6 @@
    ;; current candidates, positioned either below or above the point. Candidates
    ;; can be selected by navigating up or down.
    le-corfu
-   ;; TODO move to huge
-   ;; le-corfu-popupinfo
-   ;; le-nerd-icons-corfu
 
    ;; (Cape integrates with corfu)
    ;;
@@ -106,26 +99,10 @@
    ;; prescient.el is a library for sorting and
    ;; filtering lists of candidates, such as those
    ;; presented by packages like Vertico or Corfu.
-   ;; TODO move to huge
-   ;; le-prescient
-   ;; le-vertico-prescient
-   ;; le-corfu-prescient
 
    ;; Filetypes
-   ;; TODO move to huge
-   ;; le-csv-mode
    le-maybe-markdown-ts
    le-maybe-yaml-ts
-   ;; TODO move to huge
-   ;; le-git-modes
-
-   ;; The persist-text-scale Emacs package provides
-   ;; `persist-text-scale-mode', which ensures that all
-   ;; adjustments made with `text-scale-increase' and
-   ;; `text-scale-decrease' are persisted and restored
-   ;; across sessions.
-   ;; TODO Move to huge
-   ;; le-persist-text-scale
 
    ;; This package provides functions to detects the
    ;; indentation offset used in existing source code
@@ -137,42 +114,12 @@
    ;; Development
    le-yasnippet
    le-yasnippet-snippets
-   ;; TODO Move to huge
-   ;; le-dumb-jump
    le-flymake
-
-   ;; Code Folding
-   ;; Includes:
-   ;;   le-outline le-outline-indent le-hideshow le-treesit-fold le-kirigami
-   ;; TODO Move to huge
-   ;; le-group-code-folding
 
    ;; Development: Elisp
    ;; le-group-emacs-lisp includes:
    ;;   le-highlight-defined le-aggressive-indent le-elisp-refs le-easy-escape
    le-group-emacs-lisp
-   ;; TODO Move to huge
-   ;; le-elisp-autofmt
-   ;; TODO move to flavor huge
-   ;; le-page-break-lines
-
-   ;; The bufferfile package provides helper functions
-   ;; to delete, rename, or copy buffer files.
-   ;; TODO Move to huge
-   ;; le-bufferfile
-
-   ;; Misc
-   le-helpful
-   le-avy
-
-   ;; TODO move to flavor huge
-   ;; le-expand-region
-
-   ;; TODO move to flavor huge
-   ;; le-org-appear
-
-   ;; TODO move to flavor huge
-   ;; le-stripspace
 
    le-which-key))
 
