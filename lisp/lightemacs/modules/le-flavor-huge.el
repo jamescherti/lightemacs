@@ -21,6 +21,9 @@
    le-corfu-popupinfo
    le-nerd-icons-corfu
 
+   le-diff-hl
+   le-magit
+
    le-prescient
    le-vertico-prescient
    le-corfu-prescient
