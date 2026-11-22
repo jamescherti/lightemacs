@@ -541,6 +541,11 @@ the buffer remain visible when a fold is applied."
     (advice-add 'outline-end-of-subtree :after
                 #'le-outline--advice-backtrack-whitespace)))
 
+;;; ibuffer
+
+(with-eval-after-load 'ibuffer
+  (setq ibuffer-filter-group-name-face '(:inherit (success bold))))
+
 ;;; Provide
 
 (provide 'le-default-settings)

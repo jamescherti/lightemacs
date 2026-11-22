@@ -629,9 +629,6 @@ This should be called after changing `auto-save-list-file-prefix'."
 
 ;;; ibuffer
 
-(with-eval-after-load 'ibuffer
-  (setq ibuffer-filter-group-name-face '(:inherit (success bold))))
-
 (setq ibuffer-show-empty-filter-groups nil
       ibuffer-formats
       '((mark modified read-only locked
