@@ -17,8 +17,6 @@
 
 (lightemacs-module-load
  '(;; Auto compile all .el files
-   le-compile-angel
-
    le-exec-path-from-shell
 
    ;; le-flavor-essential enables:

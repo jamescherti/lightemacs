@@ -57,7 +57,7 @@ This string indicate folded sections in Org-mode, Outline-mode, treesit-fold...
 
 It appears at the end of a heading or section that has been collapsed. It
 provides a visual cue that more content is hidden. You can customize this
-variable to use a different character or string (such as '...', '▶', or other
+variable to use a different character or string (such as '...', '▶', or similar
 Unicode symbols) to match your visual preference or theme. This variable is
 buffer-local in Org-mode and Outline-mode, affecting only the
 display of folded text.")
@@ -160,7 +160,7 @@ Evaluate FORMAT-STRING and ARGS only when logging is enabled."
 
 (defmacro lightemacs-debug-message (format-string &rest args)
   "Display FORMAT-STRING with ARGS when debug logging is enabled.
-Evaluate FORMAT-STRING and ARGS only when debug logging is enabled."
+Evaluate FORMAT-STRING and ARGS only when logging is enabled."
   (declare (indent 0) (debug (form &rest form)))
   `(when lightemacs-debug
      (lightemacs--message "[lightemacs DEBUG] " ,format-string ,@args)))
@@ -333,10 +333,10 @@ exist."
   "Transient hooks run before the first user input.")
 
 (defvar lightemacs-on-first-file-hook nil
-  "Transient hooks run before the first interactively opened file.")
+  "Transient hooks run before the first opened file.")
 
 (defvar lightemacs-on-first-buffer-hook nil
-  "Transient hooks run before the first interactively opened buffer.")
+  "Transient hooks run before the first visible buffer.")
 
 ;; `permanent-local' ensures their values persist across major mode changes.
 (put 'lightemacs-on-first-input-hook 'permanent-local t)
@@ -370,22 +370,21 @@ exist."
   "Execute a context-aware cancel operation.
 
 This command acts as a replacement for the default `keyboard-quit'. It evaluates
-the current editor state to determine the correct cancellation action,
-specifically fixing the issue where the default function fails to close an
-unfocused minibuffer.
+the current editor state and applies conditional logic to handle buffer
+manipulation, keymap cancellation, and standard interruption operations.
 
 The execution follows this priority:
 1. If any minibuffer is open, it aborts the current recursive edit.
-2. If in Evil visual state, it exits to normal state.
+2. If the Evil visual state is active, it exits to the normal state.
 3. If a region is active, it deactivates the mark.
 4. If in a completion or help buffer, it closes that window.
-5. Otherwise, it executes the standard `keyboard-quit'.
+5. Otherwise, it executes the standard `keyboard-quit' command.
 
 :returns: nil
 :raises quit: When falling back to the standard `keyboard-quit' function."
   (interactive)
   (cond
-   ;; Handle minibuffer by aborting the current recursive level.
+   ;; Handle active minibuffer state to ensure state synchronization.
    ((> (minibuffer-depth) 0)
     (abort-recursive-edit))
 
@@ -440,7 +439,7 @@ Insert a configuration template when creating config.el."
                          ";;; Commentary:\n"
                          ";; Lightemacs configuration.\n\n"
                          ";;; Code:\n\n"
-                         "(setq lightemacs-modules '(le-flavor-big)\n\n"
+                         "(setq lightemacs-modules '(le-flavor-big))\n\n"
                          ";;; config.el ends here\n"))))
     (when (buffer-live-p buffer)
       (with-current-buffer buffer
@@ -471,49 +470,146 @@ For a new module, insert a template with a matching `provide' form."
 
 ;;; Byte compile
 
-(defun lightemacs--byte-compile-after-load (file)
-  "Byte-compile FILE if it is in an allowed directory and needs compilation.
-Return t on success, `no-byte-compile' if FILE disables compilation,
-nil if skipped, and `error' if compilation or a filesystem check fails."
+(defun lightemacs--elisp-native-compiled-p (el-file &optional eln-file elc-file)
+  "Return non-nil if EL-FILE has a matching native compilation.
+EL-FILE is the path to the Emacs Lisp source file.
+Check optional ELN-FILE first, then search `native-comp-eln-load-path'
+and its `preloaded' subdirectories.  An ordinary .eln file must be at
+least as new as EL-FILE and, when supplied, ELC-FILE.  A matching regular
+file found in a `preloaded' subdirectory is accepted regardless of its
+timestamp."
+  (let ((up-to-date-p (lambda (candidate)
+                        (and candidate
+                             (file-regular-p candidate)
+                             (not (file-newer-than-file-p el-file candidate))
+                             (or (null elc-file)
+                                 (not (file-newer-than-file-p
+                                       elc-file candidate)))))))
+    (or (funcall up-to-date-p eln-file)
+        (and (fboundp 'comp-eln-load-path-eff)
+             (when-let* ((eln-basename (if eln-file
+                                           (file-name-nondirectory eln-file)
+                                         (and (fboundp 'comp-el-to-eln-rel-filename)
+                                              (condition-case nil
+                                                  (comp-el-to-eln-rel-filename el-file)
+                                                (error nil))))))
+               (seq-some
+                (lambda (preload-dir)
+                  (or
+                   ;; It checks whether any effective native compilation
+                   ;; directory contains either: dir/eln-basename: a regular
+                   ;; .eln file newer than el-file.
+                   (funcall up-to-date-p (expand-file-name eln-basename preload-dir))
+                   ;; dir/preloaded/eln-basename: a matching regular .eln
+                   ;; file, regardless of its timestamp.
+                   ;;
+                   ;; This checks whether the matching .eln file exists as a
+                   ;; regular file inside dir/preloaded/.
+                   (file-regular-p (expand-file-name
+                                    eln-basename
+                                    (expand-file-name "preloaded" preload-dir)))))
+                (comp-eln-load-path-eff))))
+        (and (not eln-file)
+             (fboundp 'comp-el-to-eln-filename)
+             (funcall up-to-date-p
+                      (comp-el-to-eln-filename el-file))))))
+
+(defun lightemacs--byte-compile-file (el-file elc-file)
+  "Byte-compile EL-FILE and remove stale ELC-FILE if compilation fails."
+  (condition-case err
+      (or (byte-compile-file el-file)
+          (error "Byte compilation failed"))
+    (error
+     (when (and (file-regular-p elc-file)
+                (file-newer-than-file-p el-file elc-file))
+       (delete-file elc-file)
+       (lightemacs-debug-message "Deleted stale bytecode: %s" elc-file))
+     (signal (car err) (cdr err)))))
+
+(defun lightemacs--native-compile-async (el-file elc-file)
+  "Request asynchronous native compilation of EL-FILE for ELC-FILE.
+Invalidate an old native output if the worker would otherwise skip it."
+  (let ((eln-file (comp-el-to-eln-filename el-file)))
+    (when (and (file-regular-p eln-file)
+               (file-newer-than-file-p elc-file eln-file)
+               (not (file-newer-than-file-p el-file eln-file)))
+      (delete-file eln-file))
+    (native-compile-async el-file)))
+
+(defun lightemacs-byte-and-native-compile (file)
+  "Compile the Lisp source associated with FILE if compilation is needed.
+FILE is the loaded source or .elc filename.  Only compile sources in
+allowed directories.  If native compilation is available, request it
+after byte compilation succeeds or when current bytecode lacks a matching
+native compilation.
+
+Return t if byte compilation succeeds or a native compilation request
+returns normally, `no-byte-compile' if the source disables byte
+compilation, nil if skipped, and `error' on a synchronous failure.
+Errors in a native compiler subprocess occur after this function returns."
   (condition-case err
       (when (and lightemacs-byte-compile-after-load
                  (not (bound-and-true-p compile-angel-on-load-mode))
                  file
-                 (let ((case-fold-search nil))
-                   (and (not (string-match-p "\\.el[cn]\\'" file))
-                        (string-match-p
-                         (concat "\\.el" (regexp-opt load-file-rep-suffixes)
-                                 "\\'")
-                         file)))
-                 (or (file-in-directory-p file lightemacs-lisp-directory)
-                     (seq-some (lambda (directory)
-                                 (file-in-directory-p file directory))
-                               lightemacs-byte-compile-additional-directories)))
-        (let* ((resolver (if (bound-and-true-p byte-compile-dest-file-function)
-                             byte-compile-dest-file-function
-                           #'byte-compile-dest-file))
-               (compiled (funcall resolver file)))
-          (when (file-newer-than-file-p file compiled)
-            (if (not (file-writable-p compiled))
-                (progn
+                 (not (string-suffix-p ".eln" file)))
+        (let ((el-file file))
+          (when (string-suffix-p ".elc" file)
+            (setq el-file (locate-file
+                           (substring (file-name-nondirectory file) 0 -1)
+                           (list (file-name-directory file))
+                           load-file-rep-suffixes
+                           #'file-regular-p)))
+          (when (and el-file
+                     (let ((case-fold-search nil))
+                       (string-match-p
+                        (concat "\\.el" (regexp-opt load-file-rep-suffixes) "\\'")
+                        el-file))
+                     (or (file-in-directory-p el-file lightemacs-lisp-directory)
+                         (seq-some
+                          (lambda (directory)
+                            (file-in-directory-p el-file directory))
+                          lightemacs-byte-compile-additional-directories)))
+            (let* ((inhibit-message (not (or lightemacs-verbose
+                                             lightemacs-debug)))
+                   (resolver (if (bound-and-true-p
+                                  byte-compile-dest-file-function)
+                                 byte-compile-dest-file-function
+                               #'byte-compile-dest-file))
+                   (elc-file (funcall resolver el-file)))
+              (if (file-newer-than-file-p el-file elc-file)
+                  ;; .el file is newer
+                  (if (not (file-writable-p elc-file))
+                      (progn
+                        (lightemacs-verbose-message
+                          "Skipping byte compilation of %s: cannot write %s"
+                          el-file elc-file)
+                        nil)
+                    (pcase (lightemacs--byte-compile-file el-file elc-file)
+                      ('no-byte-compile
+                       (lightemacs-debug-message
+                         "[IGNORE] Byte-compile: %s" el-file)
+                       'no-byte-compile)
+
+                      (_
+                       (lightemacs-verbose-message "Byte-compiled: %s" el-file)
+                       (when (and (fboundp 'native-comp-available-p)
+                                  (native-comp-available-p))
+                         (lightemacs--native-compile-async el-file elc-file)
+                         (lightemacs-verbose-message
+                           "Requested native compilation: %s" el-file))
+                       t)))
+                ;; .elc file is newer: Check native compilation
+                (when (and (fboundp 'native-comp-available-p)
+                           (native-comp-available-p)
+                           (not (lightemacs--elisp-native-compiled-p
+                                 el-file nil elc-file)))
+                  (lightemacs--native-compile-async el-file elc-file)
                   (lightemacs-verbose-message
-                    "Skipping byte compilation of %s: cannot write %s"
-                    file compiled)
-                  nil)
-              (pcase (byte-compile-file file)
-                ('no-byte-compile
-                 (lightemacs-verbose-message "[IGNORE] Byte-compile: %s" file)
-                 'no-byte-compile)
-                ('nil
-                 (lightemacs-verbose-message
-                   "[ERROR] Failed to byte-compile: %s" file)
-                 'error)
-                (_
-                 (lightemacs-verbose-message "Byte-compiled: %s" file)
-                 t))))))
+                    "Requested native compilation: %s" el-file)
+                  t))))))
     (error
      (lightemacs-verbose-message
-       "[ERROR] Could not byte-compile %s: %s" file (error-message-string err))
+       "[ERROR] Could not compile %s: %s" file (error-message-string err))
      'error)))
 
 ;;; Lightemacs modules
@@ -545,7 +641,7 @@ This macro introduces an inhibition variable named:
 `lightemacs-MODULE-inhibit-keybindings'.
 
 When non-nil, BODY will not be evaluated, thereby preventing the installation of
-the specified key bindings."
+key bindings."
   (declare (indent 1) (debug t))
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings"
                                      module))))

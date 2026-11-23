@@ -17,6 +17,8 @@
 
 (lightemacs-module-load
  '(le-flavor-big
+   le-compile-angel
+
    le-gcmh ; The Garbage Collector Magic Hack
    le-corfu-popupinfo
    le-nerd-icons-corfu

@@ -121,11 +121,11 @@
     (let ((config-file (expand-file-name "config" lightemacs-local-lisp-directory)))
       (load config-file nil (not (bound-and-true-p init-file-debug)))
 
-      (if (fboundp 'lightemacs--byte-compile-after-load)
+      (if (fboundp 'lightemacs-byte-and-native-compile)
           (progn
-            (add-hook 'after-load-functions #'lightemacs--byte-compile-after-load)
-            (lightemacs--byte-compile-after-load config-file))
-        (error "Undefined: `lightemacs--byte-compile-after-load'")))
+            (add-hook 'after-load-functions #'lightemacs-byte-and-native-compile)
+            (lightemacs-byte-and-native-compile config-file))
+        (error "Undefined: `lightemacs-byte-and-native-compile'")))
 
     ;; Run hooks: `lightemacs-pre-early-init-hook'
 
