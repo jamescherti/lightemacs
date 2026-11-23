@@ -13,6 +13,7 @@
 
 ;;; Code:
 
+(require 'seq)
 (require 'lightemacs)
 
 ;;; Variables
@@ -172,6 +173,41 @@ With prefix argument FORCE, reload the theme even if it is active."
 
 ;;; Main
 
+(defun lightemacs-theme--frame-list ()
+  "Return a list of user frames, excluding utility and child frames."
+  (seq-filter
+   (lambda (frame)
+     (and
+      ;; The daemon runs in the background on the "initial_terminal". This frame
+      ;; has no display and is never interacted with by the user. Excluding it
+      ;; ensures we only count actual emacsclient connections.
+      (not (equal (terminal-name (frame-terminal frame)) "initial_terminal"))
+
+      ;; Packages like Corfu, Posframe, or Company create child frames to
+      ;; display floating popups or menus. These are attached to a main user
+      ;; frame and should not be counted as independent sessions.
+      (not (frame-parent frame))
+
+      ;; Tooltips can sometimes be implemented as separate native frames
+      ;; depending on the OS and Emacs build. We ignore them to prevent a
+      ;; transient hover effect from interfering with the frame count.
+      (not (frame-parameter frame 'tooltip))
+
+      ;; This visibility check handles specific edge cases: `frame-visible-p'
+      ;; returns t (visible), 'icon (minimized), or nil (hidden).
+      ;;
+      ;; 1. It keeps minimized GUI frames because 'icon evaluates as true in
+      ;;    Elisp.
+      ;; 2. It excludes completely hidden GUI frames, which are sometimes kept
+      ;;    invisible in the background as caches by certain packages.
+      ;; 3. It unconditionally keeps terminal (TUI) frames via the second
+      ;;    condition. Terminal frames can report as invisible when the terminal
+      ;;    emulator is suspended or backgrounded, but they still represent real
+      ;;    connections.
+      (or (frame-visible-p frame)
+          (not (display-graphic-p frame)))))
+   (frame-list)))
+
 (defun lightemacs-theme--load-theme ()
   "Load the default theme and font appropriately for GUI or TUI frames."
   (let ((inhibit-redisplay t))
@@ -183,7 +219,8 @@ With prefix argument FORCE, reload the theme even if it is active."
         ;; of face definitions (such as backgrounds, foregrounds, and syntax
         ;; colors). The headless daemon process retains this data in memory
         ;; permanently, even when zero client frames exist.
-        (lightemacs-load-default-theme)
+        (lightemacs-load-default-theme
+         (and (daemonp) (= (length (lightemacs-theme--frame-list)) 0)))
       ;; Apply the font
       ;;
       ;; Fonts are tied to display capabilities: While a font can be set
@@ -197,9 +234,15 @@ With prefix argument FORCE, reload the theme even if it is active."
       (lightemacs-theme-load-default-font))))
 
 (unless noninteractive
-  (advice-add 'load-theme :after #'lightemacs-theme-load-default-font)
-  (add-hook 'after-make-frame-functions #'lightemacs-theme-load-default-font)
-  (lightemacs-theme--load-theme))
+  (if (daemonp)
+      (progn
+        (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
+        (when (> (length (lightemacs-theme--frame-list)) 0)
+          (lightemacs-theme--load-theme)))
+    (add-hook 'after-make-frame-functions #'lightemacs-theme-load-default-font)
+    (lightemacs-theme--load-theme))
+
+  (advice-add 'load-theme :after #'lightemacs-theme-load-default-font))
 
 (provide 'le-theme)
 
