@@ -47,7 +47,9 @@
     '())
 
   :config
-  (require 'evil-matchit-evil-setup))
+  ;; TODO separate module?
+  (with-eval-after-load 'evil
+    (require 'evil-matchit-evil-setup)))
 
 (provide 'le-evil-matchit)
 
