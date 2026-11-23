@@ -87,8 +87,8 @@ nil, the currently selected frame is used instead.
 This function is idempotent and ignores any additional arguments _ARGS for
 `advice-add' and hook compatibility."
   (let ((target-frame (if (framep frame) frame (selected-frame))))
-    (when (and (display-graphic-p target-frame)
-               lightemacs-theme-default-font)
+    (when (and lightemacs-theme-default-font
+               (display-graphic-p target-frame))
       (let* ((get-fam (lambda (font)
                         (when font
                           (let* ((spec (font-spec
@@ -208,6 +208,11 @@ With prefix argument FORCE, reload the theme even if it is active."
           (not (display-graphic-p frame)))))
    (frame-list)))
 
+(defun lightemacs-theme--load-font ()
+  "Load the default font."
+  (dolist (frame (lightemacs-theme--frame-list))
+    (lightemacs-theme-load-default-font frame)))
+
 (defun lightemacs-theme--load-theme ()
   "Load the default theme and font appropriately for GUI or TUI frames."
   (let ((inhibit-redisplay t))
@@ -231,18 +236,21 @@ With prefix argument FORCE, reload the theme even if it is active."
       ;;
       ;; When you spawn a new client frame afterward, Emacs often resets the
       ;; font parameters.
-      (lightemacs-theme-load-default-font))))
+      (lightemacs-theme--load-font))))
 
 (unless noninteractive
+  ;; Not necessary
+  ;; (add-hook 'after-make-frame-functions #'lightemacs-theme-load-default-font)
+
+  (when lightemacs-theme-default-font
+    (setq default-frame-alist (assq-delete-all 'font default-frame-alist))
+    (add-to-list 'default-frame-alist (cons 'font lightemacs-theme-default-font)))
+
   (if (daemonp)
-      (progn
-        (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
-        (when (> (length (lightemacs-theme--frame-list)) 0)
-          (lightemacs-theme--load-theme)))
-    (add-hook 'after-make-frame-functions #'lightemacs-theme-load-default-font)
+      (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
     (lightemacs-theme--load-theme))
 
-  (advice-add 'load-theme :after #'lightemacs-theme-load-default-font))
+  (advice-add 'load-theme :after #'lightemacs-theme--load-font))
 
 (provide 'le-theme)
 
