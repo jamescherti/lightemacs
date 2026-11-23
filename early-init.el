@@ -13,15 +13,7 @@
 
 ;;; Code:
 
-(declare-function lightemacs-load-user-init "lightemacs" (file &optional no-error))
-
 (setq load-prefer-newer t)
-
-;; Update defaults
-(setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
-(setq minimal-emacs--backup-gc-cons-percentage gc-cons-percentage)
-(setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 1.0)
 
 (let* ((source-file (expand-file-name "early-init.el" user-emacs-directory)))
   ;; Tools that byte-compile an entire Emacs configuration can leave
@@ -34,13 +26,19 @@
     (message "[early-init] Source file: %s" source-file)
     (message "[early-init] Loaded file: %s" load-true-file-name))
   (if (and load-true-file-name
-           (member (file-name-extension load-true-file-name)
-                   '("elc" "eln"))
+           (member (file-name-extension load-true-file-name) '("elc" "eln"))
            (file-newer-than-file-p source-file load-true-file-name))
       (progn
         (message "[Lightemacs] %s is stale. Loading %s"
                  load-true-file-name source-file)
         (load source-file nil nil t))
+    (declare-function lightemacs-load-user-init "lightemacs" (file &optional no-error))
+    (setq minimal-emacs--backup-gc-cons-threshold gc-cons-threshold)
+    (setq minimal-emacs--backup-gc-cons-percentage gc-cons-percentage)
+    (setq gc-cons-threshold most-positive-fixnum)
+    (setq gc-cons-percentage 1.0)
+    (defvar lightemacs-byte-compile-additional-directories nil)
+
     ;; Paths
     (setq lightemacs-user-directory user-emacs-directory)
     (setq lightemacs-builtin-lisp-directory
@@ -88,6 +86,9 @@
     ;; contain all the files that Emacs typically stores in the base directory.
     (setq user-emacs-directory lightemacs-var-directory)
     (require 'lightemacs)
+    (if (fboundp 'lightemacs--byte-and-native-compile)
+        (add-hook 'after-load-functions #'lightemacs--byte-and-native-compile)
+      (error "Undefined: `lightemacs--byte-and-native-compile'"))
 
     (setq lightemacs-package-manager 'builtin-package)
 
@@ -118,35 +119,38 @@
     (setq minimal-emacs-load-compiled-init-files t)
 
     ;; Load: config.el
-    (let ((config-file (expand-file-name "config" lightemacs-local-lisp-directory)))
-      (load config-file nil (not (bound-and-true-p init-file-debug)))
-
-      (if (fboundp 'lightemacs-byte-and-native-compile)
+    (let ((config-file (expand-file-name "config" lightemacs-local-lisp-directory))
+          (minimal-emacs-early-init (expand-file-name "early-init.el" minimal-emacs-user-directory)))
+      (if (fboundp 'lightemacs--byte-and-native-compile)
           (progn
-            (add-hook 'after-load-functions #'lightemacs-byte-and-native-compile)
-            (lightemacs-byte-and-native-compile config-file))
-        (error "Undefined: `lightemacs-byte-and-native-compile'")))
+            (load config-file nil (not (bound-and-true-p init-file-debug)))
 
-    ;; Run hooks: `lightemacs-pre-early-init-hook'
+            (let ((lightemacs-byte-compile-additional-directories
+                   (list lightemacs-user-directory)))
+              (lightemacs--byte-and-native-compile
+               (expand-file-name "early-init.el" lightemacs-user-directory))
+              (lightemacs--byte-and-native-compile
+               (expand-file-name "init.el" lightemacs-user-directory))))
+        (error "Undefined: `lightemacs--byte-and-native-compile'"))
 
-    (run-hooks 'lightemacs-pre-early-init-hook)
+      ;; Run hooks: `lightemacs-pre-early-init-hook'
+      (run-hooks 'lightemacs-pre-early-init-hook)
 
-    ;; Add lightemacs directories to `trusted-content'
-    (unless (< emacs-major-version 30)
-      (unless (boundp 'trusted-content)
-        (setq trusted-content nil))
+      ;; Add lightemacs directories to `trusted-content'
+      (unless (< emacs-major-version 30)
+        (unless (boundp 'trusted-content)
+          (setq trusted-content nil))
 
-      (dolist (dir (list lightemacs-local-lisp-directory
-                         lightemacs-builtin-lisp-directory))
-        ;; Ensure the path ends with a slash so it registers as a directory
-        (push (file-name-as-directory dir) trusted-content)))
+        (dolist (dir (list lightemacs-local-lisp-directory
+                           lightemacs-builtin-lisp-directory))
+          ;; Ensure the path ends with a slash so it registers as a directory
+          (push (file-name-as-directory dir) trusted-content)))
 
-    ;; Load minimal-emacs.d early-init.el
-    (lightemacs-load-user-init
-     (expand-file-name "early-init.el" minimal-emacs-user-directory))
+      ;; Load minimal-emacs.d early-init.el
+      (lightemacs-load-user-init minimal-emacs-early-init)
 
-    ;; Run hooks: `lightemacs-post-early-init-hook'
-    (run-hooks 'lightemacs-post-early-init-hook)))
+      ;; Run hooks: `lightemacs-post-early-init-hook'
+      (run-hooks 'lightemacs-post-early-init-hook))))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not free-vars)

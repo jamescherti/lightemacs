@@ -23,10 +23,10 @@
 
 ;;; Load: init.el
 
-(if (boundp 'minimal-emacs-user-directory)
-    (lightemacs-load-user-init
-     (expand-file-name "init.el" minimal-emacs-user-directory))
-  (error "Undefined: minimal-emacs-user-directory"))
+(let ((minimal-emacs-init (expand-file-name "init.el" minimal-emacs-user-directory)))
+  (if (boundp 'minimal-emacs-user-directory)
+      (lightemacs-load-user-init minimal-emacs-init)
+    (error "Undefined: minimal-emacs-user-directory")))
 
 ;;; Configure the package manager
 

@@ -119,28 +119,9 @@ to Emacs standard behavior.")
 (defvar lightemacs-after-modules-hook nil
   "Hook run after loading modules in init.el.")
 
-(defvar lightemacs-byte-compile-after-load t
-  "Non-nil means byte-compile eligible Lisp source files after loading them.
-When non-nil, Files under `lightemacs-lisp-directory' are always byte-compiled,
-including those in subdirectories.
-Use `lightemacs-byte-compile-additional-directories' to allow source files in
-other directory trees.
-
-Byte compilation can improve execution speed on subsequent loads. When Emacs
-loads the resulting .elc file, its just-in-time (JIT) native compiler can
-compile the Lisp source to machine code for faster execution.
-
-Compilation runs only if the destination is writable and the bytecode is missing
-or older than the source.
-
-When `compile-angel-on-load-mode' is active, Lightemacs leaves compilation to
-Compile Angel.")
-
 (defvar lightemacs-byte-compile-additional-directories nil
   "Additional directories where Lightemacs may byte-compile loaded sources.
-This variable applies only when `lightemacs-byte-compile-after-load' is non-nil.
 Each entry must be an absolute directory name and includes its subdirectories.
-
 Lightemacs always allows `lightemacs-lisp-directory' and its subdirectories, so
 you only need to list directories outside that tree.")
 
@@ -536,7 +517,7 @@ Invalidate an old native output if the worker would otherwise skip it."
       (delete-file eln-file))
     (native-compile-async el-file)))
 
-(defun lightemacs-byte-and-native-compile (file)
+(defun lightemacs--byte-and-native-compile (file &optional any-directory)
   "Compile the Lisp source associated with FILE if compilation is needed.
 FILE is the loaded source or .elc filename.  Only compile sources in
 allowed directories.  If native compilation is available, request it
@@ -546,10 +527,13 @@ native compilation.
 Return t if byte compilation succeeds or a native compilation request
 returns normally, `no-byte-compile' if the source disables byte
 compilation, nil if skipped, and `error' on a synchronous failure.
-Errors in a native compiler subprocess occur after this function returns."
+Errors in a native compiler subprocess occur after this function returns.
+
+When ANY-DIRECTORY is non-nil, FILE is eligible for compilation even if it is
+outside `lightemacs-lisp-directory' and all directories listed in
+`lightemacs-byte-compile-additional-directories'."
   (condition-case err
-      (when (and lightemacs-byte-compile-after-load
-                 (not (bound-and-true-p compile-angel-on-load-mode))
+      (when (and (not (bound-and-true-p compile-angel-on-load-mode))
                  file
                  (not (string-suffix-p ".eln" file)))
         (let ((el-file file))
@@ -564,7 +548,8 @@ Errors in a native compiler subprocess occur after this function returns."
                        (string-match-p
                         (concat "\\.el" (regexp-opt load-file-rep-suffixes) "\\'")
                         el-file))
-                     (or (file-in-directory-p el-file lightemacs-lisp-directory)
+                     (or any-directory
+                         (file-in-directory-p el-file lightemacs-lisp-directory)
                          (seq-some
                           (lambda (directory)
                             (file-in-directory-p el-file directory))
@@ -681,7 +666,7 @@ If `lightemacs-NAME-inhibit-defaults' is non-nil, skip BODY."
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-defaults" name))))
     `(progn
        (defvar ,inhibit-var nil
-         ,(format "When non-nil, skip default settings for module `%s'." name))
+         ,(format "When non-nil, skip the default settings for module `%s'." name))
        ;; Runtime: Single optimized check
        (unless ,inhibit-var
          ,@body))))
