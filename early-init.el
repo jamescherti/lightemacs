@@ -38,6 +38,7 @@
     (setq gc-cons-threshold most-positive-fixnum)
     (setq gc-cons-percentage 1.0)
     (defvar lightemacs-byte-compile-additional-directories nil)
+    (defvar lightemacs-byte-and-native-compile-after-load)
 
     ;; Paths
     (setq lightemacs-user-directory user-emacs-directory)
@@ -86,9 +87,6 @@
     ;; contain all the files that Emacs typically stores in the base directory.
     (setq user-emacs-directory lightemacs-var-directory)
     (require 'lightemacs)
-    (if (fboundp 'lightemacs--byte-and-native-compile)
-        (add-hook 'after-load-functions #'lightemacs--byte-and-native-compile)
-      (error "Undefined: `lightemacs--byte-and-native-compile'"))
 
     (setq lightemacs-package-manager 'builtin-package)
 
@@ -119,19 +117,30 @@
     (setq minimal-emacs-load-compiled-init-files t)
 
     ;; Load: config.el
-    (let ((config-file (expand-file-name "config" lightemacs-local-lisp-directory))
-          (minimal-emacs-early-init (expand-file-name "early-init.el" minimal-emacs-user-directory)))
-      (if (fboundp 'lightemacs--byte-and-native-compile)
+    (let ((config-file (expand-file-name
+                        "config"
+                        lightemacs-local-lisp-directory))
+          (minimal-emacs-early-init (expand-file-name
+                                     "early-init.el"
+                                     minimal-emacs-user-directory)))
+      (if (fboundp 'lightemacs-byte-and-native-compile)
           (progn
             (load config-file nil (not (bound-and-true-p init-file-debug)))
+            (if (fboundp 'lightemacs-byte-and-native-compile)
+                (add-hook 'after-load-functions #'lightemacs-byte-and-native-compile)
+              (error "Undefined: `lightemacs-byte-and-native-compile'"))
 
-            (let ((lightemacs-byte-compile-additional-directories
-                   (list lightemacs-user-directory)))
-              (lightemacs--byte-and-native-compile
-               (expand-file-name "early-init.el" lightemacs-user-directory))
-              (lightemacs--byte-and-native-compile
-               (expand-file-name "init.el" lightemacs-user-directory))))
-        (error "Undefined: `lightemacs--byte-and-native-compile'"))
+            (when lightemacs-byte-and-native-compile-after-load
+              (lightemacs-byte-and-native-compile config-file)
+
+              (let ((early-init-file (expand-file-name "early-init.el"
+                                                       lightemacs-user-directory))
+                    (init-file (expand-file-name "init.el" lightemacs-user-directory)))
+                (let ((lightemacs-byte-compile-additional-directories
+                       (list lightemacs-user-directory)))
+                  (lightemacs-byte-and-native-compile early-init-file)
+                  (lightemacs-byte-and-native-compile init-file)))))
+        (error "Undefined: `lightemacs-byte-and-native-compile'"))
 
       ;; Run hooks: `lightemacs-pre-early-init-hook'
       (run-hooks 'lightemacs-pre-early-init-hook)

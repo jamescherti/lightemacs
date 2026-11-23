@@ -119,6 +119,23 @@ to Emacs standard behavior.")
 (defvar lightemacs-after-modules-hook nil
   "Hook run after loading modules in init.el.")
 
+(defvar lightemacs-byte-and-native-compile-after-load t
+  "Non-nil means byte-compile eligible Lisp source files after loading them.
+When non-nil, Files under `lightemacs-lisp-directory' are always byte-compiled,
+including those in subdirectories. Use
+`lightemacs-byte-compile-additional-directories' to allow source files in other
+directory trees.
+
+Byte compilation can improve execution speed on subsequent loads. When Emacs
+loads the resulting .elc file, its just-in-time (JIT) native compiler can
+compile the Lisp source to machine code for faster execution.
+
+Compilation runs only if the destination is writable and the bytecode is missing
+or older than the source.
+
+When `compile-angel-on-load-mode' is active, Lightemacs leaves compilation to
+Compile Angel.")
+
 (defvar lightemacs-byte-compile-additional-directories nil
   "Additional directories where Lightemacs may byte-compile loaded sources.
 Each entry must be an absolute directory name and includes its subdirectories.
@@ -296,7 +313,7 @@ FILENAME is the full or relative path of the file as a string."
 (defun lightemacs-load-user-init (file &optional no-error)
   "Load a file of Lisp init file named FILENAME.
 If optional second arg NO-ERROR is non-nil, report no error if FILE doesn't
-exist."
+  exist."
   (if lightemacs-load-compiled-init-files
       (progn
         ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
@@ -517,7 +534,7 @@ Invalidate an old native output if the worker would otherwise skip it."
       (delete-file eln-file))
     (native-compile-async el-file)))
 
-(defun lightemacs--byte-and-native-compile (file &optional any-directory)
+(defun lightemacs-byte-and-native-compile (file &optional any-directory)
   "Compile the Lisp source associated with FILE if compilation is needed.
 FILE is the loaded source or .elc filename.  Only compile sources in
 allowed directories.  If native compilation is available, request it
@@ -533,7 +550,8 @@ When ANY-DIRECTORY is non-nil, FILE is eligible for compilation even if it is
 outside `lightemacs-lisp-directory' and all directories listed in
 `lightemacs-byte-compile-additional-directories'."
   (condition-case err
-      (when (and (not (bound-and-true-p compile-angel-on-load-mode))
+      (when (and lightemacs-byte-and-native-compile-after-load
+                 (not (bound-and-true-p compile-angel-on-load-mode))
                  file
                  (not (string-suffix-p ".eln" file)))
         (let ((el-file file))
