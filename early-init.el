@@ -41,14 +41,14 @@
         (message "[Lightemacs] %s is stale. Loading %s"
                  load-true-file-name source-file)
         (load source-file nil nil t))
-    ;; early-init.el starts here
-
     ;; Paths
     (setq lightemacs-user-directory user-emacs-directory)
     (setq lightemacs-builtin-lisp-directory
           (expand-file-name "lisp/lightemacs/" lightemacs-user-directory))
     (setq lightemacs-var-directory
           (expand-file-name "var/" lightemacs-user-directory))
+    (setq lightemacs-lisp-directory
+          (expand-file-name "lisp/" lightemacs-user-directory))
     (setq lightemacs-local-lisp-directory
           (expand-file-name "lisp/local/" lightemacs-user-directory))
     (setq lightemacs-local-modules-directory
@@ -60,7 +60,7 @@
           (expand-file-name "init/" lightemacs-builtin-lisp-directory))
     (setq custom-theme-directory
           (expand-file-name "themes/" lightemacs-user-directory))
-
+    ;; early-init.el starts here
     (push lightemacs-builtin-lisp-directory load-path)
 
     (push lightemacs-builtin-modules-directory load-path)
@@ -88,6 +88,7 @@
     ;; contain all the files that Emacs typically stores in the base directory.
     (setq user-emacs-directory lightemacs-var-directory)
     (require 'lightemacs)
+
     (setq lightemacs-package-manager 'builtin-package)
 
     (if (and (fboundp 'lightemacs--on-run-first-input-hook)
@@ -117,9 +118,14 @@
     (setq minimal-emacs-load-compiled-init-files t)
 
     ;; Load: config.el
-    (load (expand-file-name "config" lightemacs-local-lisp-directory)
-          nil
-          (not (bound-and-true-p init-file-debug)))
+    (let ((config-file (expand-file-name "config" lightemacs-local-lisp-directory)))
+      (load config-file nil (not (bound-and-true-p init-file-debug)))
+
+      (if (fboundp 'lightemacs--byte-compile-after-load)
+          (progn
+            (add-hook 'after-load-functions #'lightemacs--byte-compile-after-load)
+            (lightemacs--byte-compile-after-load config-file))
+        (error "Undefined: `lightemacs--byte-compile-after-load'")))
 
     ;; Run hooks: `lightemacs-pre-early-init-hook'
 

@@ -13,6 +13,8 @@
 
 ;;; Code:
 
+(require 'bytecomp)
+
 ;;; Variables
 
 (defvar lightemacs-user-directory user-emacs-directory
@@ -24,6 +26,7 @@
 (defvar lightemacs-builtin-lisp-directory user-emacs-directory)
 (defvar lightemacs-builtin-modules-directory user-emacs-directory)
 (defvar lightemacs-local-modules-directory user-emacs-directory)
+(defvar lightemacs-lisp-directory user-emacs-directory)
 
 (defvar lightemacs-modules '(;; Default modules
                              le-flavor-big
@@ -115,6 +118,31 @@ to Emacs standard behavior.")
 
 (defvar lightemacs-after-modules-hook nil
   "Hook run after loading modules in init.el.")
+
+(defvar lightemacs-byte-compile-after-load t
+  "Non-nil means byte-compile eligible Lisp source files after loading them.
+When non-nil, Files under `lightemacs-lisp-directory' are always byte-compiled,
+including those in subdirectories.
+Use `lightemacs-byte-compile-additional-directories' to allow source files in
+other directory trees.
+
+Byte compilation can improve execution speed on subsequent loads. When Emacs
+loads the resulting .elc file, its just-in-time (JIT) native compiler can
+compile the Lisp source to machine code for faster execution.
+
+Compilation runs only if the destination is writable and the bytecode is missing
+or older than the source.
+
+When `compile-angel-on-load-mode' is active, Lightemacs leaves compilation to
+Compile Angel.")
+
+(defvar lightemacs-byte-compile-additional-directories nil
+  "Additional directories where Lightemacs may byte-compile loaded sources.
+This variable applies only when `lightemacs-byte-compile-after-load' is non-nil.
+Each entry must be an absolute directory name and includes its subdirectories.
+
+Lightemacs always allows `lightemacs-lisp-directory' and its subdirectories, so
+you only need to list directories outside that tree.")
 
 ;;; Misc functions
 
@@ -440,6 +468,53 @@ For a new module, insert a template with a matching `provide' form."
                        "(provide '%s)\n\n"
                        ";;; %s ends here\n")
                filename name filename)))))
+
+;;; Byte compile
+
+(defun lightemacs--byte-compile-after-load (file)
+  "Byte-compile FILE if it is in an allowed directory and needs compilation.
+Return t on success, `no-byte-compile' if FILE disables compilation,
+nil if skipped, and `error' if compilation or a filesystem check fails."
+  (condition-case err
+      (when (and lightemacs-byte-compile-after-load
+                 (not (bound-and-true-p compile-angel-on-load-mode))
+                 file
+                 (let ((case-fold-search nil))
+                   (and (not (string-match-p "\\.el[cn]\\'" file))
+                        (string-match-p
+                         (concat "\\.el" (regexp-opt load-file-rep-suffixes)
+                                 "\\'")
+                         file)))
+                 (or (file-in-directory-p file lightemacs-lisp-directory)
+                     (seq-some (lambda (directory)
+                                 (file-in-directory-p file directory))
+                               lightemacs-byte-compile-additional-directories)))
+        (let* ((resolver (if (bound-and-true-p byte-compile-dest-file-function)
+                             byte-compile-dest-file-function
+                           #'byte-compile-dest-file))
+               (compiled (funcall resolver file)))
+          (when (file-newer-than-file-p file compiled)
+            (if (not (file-writable-p compiled))
+                (progn
+                  (lightemacs-verbose-message
+                    "Skipping byte compilation of %s: cannot write %s"
+                    file compiled)
+                  nil)
+              (pcase (byte-compile-file file)
+                ('no-byte-compile
+                 (lightemacs-verbose-message "[IGNORE] Byte-compile: %s" file)
+                 'no-byte-compile)
+                ('nil
+                 (lightemacs-verbose-message
+                   "[ERROR] Failed to byte-compile: %s" file)
+                 'error)
+                (_
+                 (lightemacs-verbose-message "Byte-compiled: %s" file)
+                 t))))))
+    (error
+     (lightemacs-verbose-message
+       "[ERROR] Could not byte-compile %s: %s" file (error-message-string err))
+     'error)))
 
 ;;; Lightemacs modules
 
