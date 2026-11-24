@@ -31,6 +31,7 @@
 (use-package diff-hl
   :commands (diff-hl-mode
              global-diff-hl-mode
+             diff-hl-flydiff-mode
              diff-hl-flydiff
              diff-hl-update)
   :init
@@ -52,7 +53,10 @@
     diff-hl-update-async t  ; Do not block Emacs
     diff-hl-global-modes `(not pdf-view-mode
                                image-mode
-                               ,@lightemacs-terminal-modes)))
+                               ,@lightemacs-terminal-modes))
+  :config
+  ;; TODO separate module
+  (require 'diff-hl-flydiff))
 
 ;;; Bug fix: Update diff-hl after switching to a buffer
 

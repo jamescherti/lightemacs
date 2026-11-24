@@ -620,44 +620,38 @@ outside `lightemacs-lisp-directory' and all directories listed in
 (defmacro lightemacs-module-hooks (module-name mode-func target-hooks)
   "Register hooks where MODE-FUNC should be enabled for MODULE-NAME.
 
-Defines `lightemacs-MODULE-NAME-target-hooks' if unbound and adds
-MODE-FUNC to each hook in TARGET-HOOKS.
+MODULE-NAME is the module symbol, such as `flycheck'.
+MODE-FUNC is the function symbol, such as `flycheck-mode'.
+TARGET-HOOKS is a form evaluating to a hook symbol or a list of hooks.
 
-MODULE-NAME is the module symbol (e.g., flycheck).
-MODE-FUNC is the function symbol (e.g., flycheck-mode).
-TARGET-HOOKS is a form evaluating to a list of hook symbols."
-  (declare (indent 1) (debug t))
+Declare `lightemacs-MODULE-NAME-target-hooks' unless it is already
+globally special.  On each call, set its value to TARGET-HOOKS and
+register MODE-FUNC on each specified hook."
+  (declare (indent 1) (debug (symbolp symbolp form)))
   (let ((target-var (intern (format "lightemacs-%s-target-hooks" module-name)))
         (docstring (format "List of hooks where `%s' is enabled." mode-func)))
     `(progn
        (defvar ,target-var ,target-hooks ,docstring)
-       (dolist (target-hook (if (listp ,target-var)
-                                ,target-var
-                              (list ,target-var)))
-         (add-hook target-hook ',mode-func)))))
+       (dolist (target-hook (ensure-list ,target-var))
+         (add-hook target-hook #',mode-func)))))
 
 (defmacro lightemacs-module-bind (module &rest body)
-  "Define key bindings for MODULE with BODY, unless inhibited.
+  "Evaluate BODY to install key bindings for MODULE.
 
-This macro introduces an inhibition variable named:
-`lightemacs-MODULE-inhibit-keybindings'.
-
-When non-nil, BODY will not be evaluated, thereby preventing the installation of
-key bindings."
-  (declare (indent 1) (debug t))
+If `lightemacs-MODULE-inhibit-keybindings' is non-nil, skip BODY."
+  (declare (indent 1) (debug (sexp body)))
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-keybindings"
                                      module))))
     `(progn
        (defvar ,inhibit-var nil
-         ,(format "When non-nil, skip the default key bindings for module `%s'."
+         ,(format "When non-nil, skip default key bindings for `%s'."
                   module))
        (unless (bound-and-true-p ,inhibit-var)
          ,@body))))
 
-;; TODO remove
 (defmacro lightemacs-module-setq-maybe (name &rest args)
-  "Set default settings for module NAME using ARGS.
-ARGS is a list of alternating variable-value pairs.
+  "Apply the variable-value pairs in ARGS as defaults for module NAME.
+
 If `lightemacs-NAME-inhibit-defaults' is non-nil, skip all assignments
 without evaluating their value expressions."
   (declare (indent 1) (debug t))
@@ -669,7 +663,7 @@ without evaluating their value expressions."
       (setq pairs (cddr pairs)))
     `(progn
        (defvar ,inhibit-var nil
-         ,(format "When non-nil, skip default settings for module `%s'." name))
+         ,(format "When non-nil, skip default settings for `%s'." name))
        ;; Runtime: Single optimized check
        (unless (bound-and-true-p ,inhibit-var)
          (with-suppressed-warnings ((free-vars ,@targets))
@@ -677,15 +671,17 @@ without evaluating their value expressions."
 
 (defmacro lightemacs-module-defaults (name &rest body)
   "Evaluate BODY to configure defaults for module NAME.
-NAME is a module name given as an unquoted symbol or a string.
+
+NAME is an unquoted symbol or a string.
 If `lightemacs-NAME-inhibit-defaults' is non-nil, skip BODY."
   (declare (indent 1) (debug (sexp body)))
   (let ((inhibit-var (intern (format "lightemacs-%s-inhibit-defaults" name))))
     `(progn
-       (defvar ,inhibit-var nil
-         ,(format "When non-nil, skip the default settings for module `%s'." name))
+       (unless (special-variable-p ',inhibit-var)
+         (defvar ,inhibit-var nil
+           ,(format "When non-nil, skip default settings for `%s'." name)))
        ;; Runtime: Single optimized check
-       (unless ,inhibit-var
+       (unless (bound-and-true-p ,inhibit-var)
          ,@body))))
 
 (defun lightemacs-module-load (modules)
