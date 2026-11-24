@@ -57,17 +57,32 @@ default.")
   "Load the theme defined in `lightemacs-theme-name' if it is available.
 If the theme is not found in `custom-available-themes', a warning is issued.
 If FORCE is non-nil, reload the current theme even if it is already active.
-Request each theme package through `use-package' at most once per session."
-  (let ((theme lightemacs-theme-name)
-        (package lightemacs-theme-package))
-    (when (and theme (or force (not (eq (car custom-enabled-themes) theme))))
+With FORCE, retry an unloaded package unless its Elpaca order is active."
+  (let* ((theme lightemacs-theme-name)
+         (package lightemacs-theme-package)
+         ;; A forced reload must not resubmit an active Elpaca order.
+         (status nil
+                 ;; (and force
+                 ;;      package
+                 ;;      (bound-and-true-p elpaca-use-package-mode)
+                 ;;      (fboundp 'elpaca-get)
+                 ;;      (fboundp 'elpaca<-status)
+                 ;;      (let ((order (elpaca-get package)))
+                 ;;        (and order (elpaca<-status order)))
+                 ;;      )
+                 ))
+    (when (and theme
+               (or force
+                   (not (eq (car custom-enabled-themes) theme))))
       (cond
        ((or (null package) (featurep package))
         (lightemacs-theme--apply theme))
 
-       ((not (memq package lightemacs-theme--requested-packages))
+       ((or (not (memq package lightemacs-theme--requested-packages))
+            (and force
+                 (memq status '(nil failed finished))))
         ;; Record the request before a package manager can defer it.
-        (push package lightemacs-theme--requested-packages)
+        (add-to-list 'lightemacs-theme--requested-packages package)
         (eval
          `(use-package ,package
             :demand t
@@ -87,69 +102,70 @@ nil, the currently selected frame is used instead.
 This function is idempotent and ignores any additional arguments _ARGS for
 `advice-add' and hook compatibility."
   (let ((target-frame (if (framep frame) frame (selected-frame))))
-    (when (and lightemacs-theme-default-font
+    (when (and (or lightemacs-theme-default-font
+                   lightemacs-theme-variable-font)
                (display-graphic-p target-frame))
-      (let* ((get-fam (lambda (font)
-                        (when font
-                          (let* ((spec (font-spec
-                                        :name (if (stringp font)
-                                                  font
-                                                (font-xlfd-name font))))
-                                 (family (font-get spec :family)))
-                            (cond
-                             ;; A missing family must stay nil.
-                             ((null family) nil)
-                             ((symbolp family) (symbol-name family))
-                             ((stringp family) family)
-                             (t nil))))))
-             (current-family (funcall get-fam
-                                      (frame-parameter target-frame 'font)))
-             (target-family (funcall get-fam lightemacs-theme-default-font))
-             (variable-family (funcall get-fam lightemacs-theme-variable-font)))
-
-        ;; Only apply if the family has changed to prevent UI flicker
-        (unless (and current-family
-                     target-family
-                     (string-equal (downcase current-family)
-                                   (downcase target-family)))
-          (condition-case err
-              (progn
+      (condition-case err
+          (let* ((get-fam (lambda (font)
+                            (when font
+                              (let* ((name (if (stringp font)
+                                               font
+                                             (font-xlfd-name font)))
+                                     (spec (font-spec :name name))
+                                     (family (font-get spec :family)))
+                                (cond
+                                 ;; A missing family must stay nil.
+                                 ((null family) nil)
+                                 ((symbolp family) (symbol-name family))
+                                 ((stringp family) family)
+                                 (t nil))))))
+                 (font lightemacs-theme-default-font)
+                 (target-family (funcall get-fam font))
+                 (variable lightemacs-theme-variable-font)
+                 (variable-family (funcall get-fam variable)))
+            ;; Only apply if the family has changed to prevent UI flicker
+            ;; Include size and style, and account for resolved font names.
+            (when font
+              (unless (equal (cons font (face-font 'default target-frame))
+                             (frame-parameter target-frame 'le-theme-font))
                 ;; A new client frame should only update its own font.
-                (set-frame-font lightemacs-theme-default-font nil
-                                (list target-frame) :inhibit-customize)
+                (set-frame-font font nil (list target-frame) :inhibit-customize)
+                (set-frame-parameter
+                 target-frame 'le-theme-font
+                 (cons font (face-font 'default target-frame))))
+              (unless (equal font (alist-get 'font default-frame-alist))
                 (setq default-frame-alist
                       (assq-delete-all 'font default-frame-alist))
-                (add-to-list 'default-frame-alist
-                             (cons 'font lightemacs-theme-default-font))
+                (push (cons 'font lightemacs-theme-default-font) default-frame-alist)))
 
-                ;; Force fixed-pitch to mirror the default font family and scale.
-                ;; This must be explicitly defined; omitting it makes Emacs
-                ;; to drop back to system fallback monospaced fonts
-                ;; (e.g., Courier). This prevents layout breakage from font-family
-                ;; mismatches or size discrepancies in code blocks, Org tables,
-                ;; and alignment- sensitive UI elements. Setting ':height 1.0'
-                ;; ensures a strict 1:1 baseline rendering scale relative to the
-                ;; default frame text.
-                (set-face-attribute 'fixed-pitch target-frame
-                                    :family target-family
-                                    :height 1.0)
+            ;; Force fixed-pitch to mirror the default font family and scale.
+            ;; This must be explicitly defined; omitting it makes Emacs
+            ;; to drop back to system fallback monospaced fonts
+            ;; (e.g., Courier). This prevents layout breakage from font-family
+            ;; mismatches or size discrepancies in code blocks, Org tables,
+            ;; and alignment- sensitive UI elements. Setting ':height 1.0'
+            ;; ensures a strict 1:1 baseline rendering scale relative to the
+            ;; default frame text.
+            (when target-family
+              (set-face-attribute 'fixed-pitch target-frame
+                                  :family target-family
+                                  :height 1.0))
 
-                ;; Apply the variable-pitch configuration only if explicitly
-                ;; defined. When `lightemacs-theme-variable-font' is nil, we
-                ;; purposely leave this face unmodified. This allows Emacs to
-                ;; query native windowing system capabilities and automatically
-                ;; resolve to the standard system proportional font
-                ;; (e.g., Helvetica on macOS, Segoe UI on Windows, or fontconfig
-                ;; sans-serif aliases on Linux/BSD).
-                (when variable-family
-                  (set-face-attribute 'variable-pitch target-frame
-                                      :family variable-family
-                                      :height 1.0)))
-            (error
-             (display-warning 'lightemacs
-                              (format "Font error: %s"
-                                      (error-message-string err))
-                              :warning))))))))
+            ;; Apply the variable-pitch configuration only if explicitly
+            ;; defined. When `lightemacs-theme-variable-font' is nil, we
+            ;; purposely leave this face unmodified. This allows Emacs to
+            ;; query native windowing system capabilities and automatically
+            ;; resolve to the standard system proportional font
+            ;; (e.g., Helvetica on macOS, Segoe UI on Windows, or fontconfig
+            ;; sans-serif aliases on Linux/BSD).
+            (when variable-family
+              (set-face-attribute 'variable-pitch target-frame
+                                  :family variable-family
+                                  :height 1.0)))
+        (error
+         (display-warning 'lightemacs
+                          (format "Font error: %s" (error-message-string err))
+                          :warning))))))
 
 ;;; Utility functions
 
@@ -173,8 +189,9 @@ With prefix argument FORCE, reload the theme even if it is active."
 
 ;;; Main
 
-(defun lightemacs-theme--frame-list ()
-  "Return a list of user frames, excluding utility and child frames."
+(defun lightemacs-theme--frame-list (&optional frame)
+  "Return user frames, excluding utility and child frames.
+If FRAME is non-nil, consider only that frame."
   (seq-filter
    (lambda (frame)
      (and
@@ -206,12 +223,13 @@ With prefix argument FORCE, reload the theme even if it is active."
       ;;    connections.
       (or (frame-visible-p frame)
           (not (display-graphic-p frame)))))
-   (frame-list)))
+   (if frame (list frame) (frame-list))))
 
-(defun lightemacs-theme--load-font ()
-  "Load the default font."
-  (dolist (frame (lightemacs-theme--frame-list))
-    (lightemacs-theme-load-default-font frame)))
+(defun lightemacs-theme--load-font (&optional frame &rest _args)
+  "Load fonts on user FRAME, or all user frames if FRAME is not a frame.
+Ignore additional `load-theme' advice arguments _ARGS."
+  (dolist (target (lightemacs-theme--frame-list (and (framep frame) frame)))
+    (lightemacs-theme-load-default-font target)))
 
 (defun lightemacs-theme--load-theme ()
   "Load the default theme and font appropriately for GUI or TUI frames."
@@ -244,12 +262,17 @@ With prefix argument FORCE, reload the theme even if it is active."
 
   (when lightemacs-theme-default-font
     (setq default-frame-alist (assq-delete-all 'font default-frame-alist))
-    (add-to-list 'default-frame-alist (cons 'font lightemacs-theme-default-font)))
+    (push (cons 'font lightemacs-theme-default-font) default-frame-alist))
+
+  ;; Use the existing frame filter for the new frame's pitch faces.
+  (add-hook 'after-make-frame-functions #'lightemacs-theme--load-font)
 
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'lightemacs-theme--load-theme)
     (lightemacs-theme--load-theme))
 
+  ;; Disabling an old theme also recalculates frame-local faces.
+  (add-hook 'disable-theme-functions #'lightemacs-theme--load-font)
   (advice-add 'load-theme :after #'lightemacs-theme--load-font))
 
 (provide 'le-theme)
