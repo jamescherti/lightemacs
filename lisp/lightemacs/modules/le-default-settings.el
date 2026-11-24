@@ -546,6 +546,43 @@ the buffer remain visible when a fold is applied."
 (with-eval-after-load 'ibuffer
   (setq ibuffer-filter-group-name-face '(:inherit (success bold))))
 
+;;; Elisp
+
+;; TODO Setting use-package-enable-imenu-support to t doesn't work. Fix it.
+;; (with-eval-after-load 'use-package-core
+;;   (with-eval-after-load 'lisp-mode
+;;     (when (and (boundp 'use-package-form-regexp-eval)
+;;                (boundp 'lisp-imenu-generic-expression))
+;;       (add-to-list 'lisp-imenu-generic-expression
+;;                    (list "Packages" (eval use-package-form-regexp-eval) 2)))))
+
+(defcustom lightemacs-use-package-form-regexp-eval
+  `(concat ,(eval-when-compile
+              (concat "^\\s-*("
+                      (regexp-opt '("use-package" "require") t)
+                      "\\s-+\\("))
+           (or (bound-and-true-p lisp-mode-symbol-regexp)
+               "\\(?:\\sw\\|\\s_\\|\\\\.\\)+") "\\)")
+  "Sexp providing regexp for finding `use-package' forms in user files.
+This is used by `use-package-jump-to-package-form' and
+`use-package-enable-imenu-support'."
+  :type 'sexp
+  :group 'use-package
+  :version "29.1")
+
+(defvar lightemacs-use-package-enable-imenu-support t
+  "When non-nil, add a Packages section to Imenu in Emacs Lisp buffers.")
+
+(defun my-elisp-imenu-add-packages ()
+  "Index package declarations when Lightemacs Imenu support is enabled."
+  (when lightemacs-use-package-enable-imenu-support
+    (add-to-list 'imenu-generic-expression
+                 (list "Packages"
+                       (eval lightemacs-use-package-form-regexp-eval t) 2))
+    (setq imenu--index-alist nil)))
+
+(add-hook 'emacs-lisp-mode-hook #'my-elisp-imenu-add-packages 90)
+
 ;;; Provide
 
 (provide 'le-default-settings)
