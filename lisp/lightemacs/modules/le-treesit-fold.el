@@ -43,14 +43,13 @@
     treesit-fold-line-count-show t
     treesit-fold-line-count-format lightemacs-ellipsis)
 
-  ;; Fix declaring more than once lightemacs-module-setq-maybe
-  ;; (lightemacs-module-hooks treesit-fold-global
-  ;;   global-treesit-fold-mode
-  ;;   '())
-  ;;
-  ;; (lightemacs-module-hooks treesit-fold-local
-  ;;   treesit-fold-mode
-  ;;   '())
+  (lightemacs-module-hooks treesit-fold-global
+    global-treesit-fold-mode
+    '())
+
+  (lightemacs-module-hooks treesit-fold-local
+    treesit-fold-mode
+    '())
 
   :config
   (set-face-attribute 'treesit-fold-replacement-face nil

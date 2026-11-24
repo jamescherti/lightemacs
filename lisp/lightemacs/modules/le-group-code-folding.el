@@ -26,7 +26,7 @@
 
 ;;;  Outline indent
 
-(lightemacs-module-load '(le-outline-indent))
+(declare-function outline-indent-minor-mode "outline-indent" (&optional arg))
 
 (lightemacs-module-hooks outline-indent-minor
   outline-indent-minor-mode
@@ -44,6 +44,10 @@
      (list 'python-ts-mode-hook
            'haskell-ts-mode-hook))))
 
+;; Declare this after `lightemacs-module-hooks' to ensure defvar contains the
+;; default values above
+(lightemacs-module-load '(le-outline-indent))
+
 ;;; Outline
 
 (lightemacs-module-hooks outline-minor
@@ -57,8 +61,6 @@
     diff-mode-hook))
 
 ;;; Hideshow
-
-(lightemacs-module-load '(le-hideshow))
 
 (lightemacs-module-hooks hideshow
   hs-minor-mode
@@ -91,11 +93,15 @@
      (list
       'bash-ts-mode-hook))))
 
+;; Declare this after `lightemacs-module-hooks' to ensure defvar contains the
+;; default values above
+(lightemacs-module-load '(le-hideshow))
+
 ;;; treesit-fold
 
-(when lightemacs-code-folding-enable-treesit-fold
-  (lightemacs-module-load '(le-treesit-fold))
+(declare-function treesit-fold-mode "treesit-fold" (&optional arg))
 
+(when lightemacs-code-folding-enable-treesit-fold
   (lightemacs-module-hooks treesit-fold-local
     treesit-fold-mode
     '(;; Systems and General Purpose
@@ -163,7 +169,11 @@
       gleam-ts-mode-hook
       noir-ts-mode-hook
       swift-ts-mode-hook
-      zig-ts-mode-hook)))
+      zig-ts-mode-hook))
+
+  ;; Declare this after `lightemacs-module-hooks' to ensure defvar contains the
+  ;; default values above
+  (lightemacs-module-load '(le-treesit-fold)))
 
 ;;; Kirigami
 
