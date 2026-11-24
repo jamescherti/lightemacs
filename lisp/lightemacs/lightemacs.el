@@ -617,25 +617,24 @@ outside `lightemacs-lisp-directory' and all directories listed in
 
 ;;; Lightemacs modules
 
-(defmacro lightemacs-module-hooks (name func hooks)
-  "Register hooks where FUNC should be enabled for the package NAME.
+(defmacro lightemacs-module-hooks (module-name mode-func target-hooks)
+  "Register hooks where MODE-FUNC should be enabled for MODULE-NAME.
 
-This defines a variable named `lightemacs-NAME-target-hooks' (if it does not
-already exist) initialized with HOOKS. It then iterates over that variable,
-adding FUNC to each hook found.
+Defines `lightemacs-MODULE-NAME-target-hooks' if unbound and adds
+MODE-FUNC to each hook in TARGET-HOOKS.
 
-NAME should be the package symbol (e.g., \='flycheck).
-FUNC should be the function symbol (e.g., \='flycheck-mode).
-HOOKS should be a list of hook symbols (e.g., \='(prog-mode-hook))."
+MODULE-NAME is the module symbol (e.g., flycheck).
+MODE-FUNC is the function symbol (e.g., flycheck-mode).
+TARGET-HOOKS is a form evaluating to a list of hook symbols."
   (declare (indent 1) (debug t))
-  (let ((var (intern (format "lightemacs-%s-target-hooks" name)))
-        (docstring (format "List of hooks where `%s' is enabled." func)))
+  (let ((target-var (intern (format "lightemacs-%s-target-hooks" module-name)))
+        (docstring (format "List of hooks where `%s' is enabled." mode-func)))
     `(progn
-       (defvar ,var ,hooks ,docstring)
-       ;; Ensure we treat the variable as a list, even if the user set it to a
-       ;; single symbol
-       (dolist (hook (if (listp ,var) ,var (list ,var)))
-         (add-hook hook ',func)))))
+       (defvar ,target-var ,target-hooks ,docstring)
+       (dolist (target-hook (if (listp ,target-var)
+                                ,target-var
+                              (list ,target-var)))
+         (add-hook target-hook ',mode-func)))))
 
 (defmacro lightemacs-module-bind (module &rest body)
   "Define key bindings for MODULE with BODY, unless inhibited.
