@@ -116,7 +116,7 @@
 
    ;; Development: Elisp
    ;; le-group-emacs-lisp includes:
-   ;;   le-highlight-defined le-aggressive-indent le-elisp-refs le-easy-escape
+   ;;   le-highlight-defined le-aggressive-indent le-easy-escape
    le-group-emacs-lisp
 
    le-which-key))

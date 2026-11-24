@@ -68,7 +68,8 @@
 
     (push lightemacs-local-modules-directory load-path)
     (when (file-directory-p lightemacs-local-modules-directory)
-      (let ((default-directory lightemacs-local-modules-directory))
+      (let ((default-directory lightemacs-local-modules-directory)
+            (normal-top-level-add-subdirs-inode-list nil))
         (normal-top-level-add-subdirs-to-load-path)))
 
     (setq package-user-dir (expand-file-name "elpa" lightemacs-var-directory))

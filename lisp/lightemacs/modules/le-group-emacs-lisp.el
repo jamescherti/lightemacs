@@ -26,14 +26,6 @@
    ;; le-group-emacs-lisp
    le-aggressive-indent
 
-   ;; elisp-refs provides an advanced code search for Emacs Lisp.
-   ;;
-   ;; It locates references to functions, macros, or variables by parsing the
-   ;; code rather than performing a simple text search. This ensures accuracy,
-   ;; avoiding false matches caused by comments or variables sharing names with
-   ;; functions.
-   le-elisp-refs
-
    ;; `easy-escape-minor-mode' improves the readability of Emacs Lisp regular
    ;; expressions through syntax highlighting and character composition.
    ;; Specifically, it hides double backslashes before regexp special characters

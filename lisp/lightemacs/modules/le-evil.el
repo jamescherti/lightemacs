@@ -270,6 +270,62 @@ pressing `C-h', since it is prefixed with `evil-delete'."
       ;; Add yank commands (`evil-yank' and `evil-yank-line')
       (eldoc-add-command-completions "evil-yank"))))
 
+;;; Enhance `evil-goto-definition'
+
+(setq evil-goto-definition-functions
+      '(;; Delegates the jump to the Emacs 'xref' API. This is the modern
+        ;; standard that can cross file boundaries and hooking directly into
+        ;; Language Server Protocols (eglot/lsp-mode) or dumb-jump.
+        evil-goto-definition-xref
+
+        ;; Uses the standard Emacs 'imenu' index. It relies on regular
+        ;; expressions defined by the current major mode to find definitions
+        ;; within the active buffer.
+        evil-goto-definition-imenu
+
+        ;; DISABLED: evil-goto-definition-semantic
+        ;; Hooks into the CEDET/Semantic framework. This is an older parsing
+        ;; engine that attempts to understand code syntax trees. Disabled. This
+        ;; belongs to a legacy era of Emacs (the CEDET/Semantic project) which
+        ;; attempted to parse C/C++ and other languages entirely in Elisp. In
+        ;; the modern landscape of Language Server Protocols (LSP) and
+        ;; Tree-sitter, CEDET is obsolete, slow, and abandoned.
+        ;; evil-goto-definition-semantic
+
+        ;; The fallback mechanism. If all else fails, it executes a primitive
+        ;; text search inside the current buffer for the exact string matching
+        ;; the symbol under your cursor.
+        evil-goto-definition-search))
+
+;; TODO evil patch
+;; Fix: C-t when jumping using imenu. `evil-goto-definition-search' and
+;; `evil-goto-definition-imenu' does not push the pre-jump location onto the
+;; xref marker stack, so C-t (xref-go-back) cannot return here after a jump.
+
+(defun lightemacs-push-xref-on-imenu-jump (orig-fn &rest args)
+  "Push pre-jump location to `xref' stack if goto definition function moves.
+
+ORIG-FN is the original goto definition function.
+ARGS are the arguments passed to ORIG-FN."
+  (let ((start-buffer (current-buffer))
+        (start-point (point))
+        (start-marker (point-marker))
+        result)
+    (setq result (apply orig-fn args))
+    (when (or (not (eq (current-buffer) start-buffer))
+              (not (eql (point) start-point)))
+      (require 'xref)
+      (if (fboundp 'xref-push-marker-stack)
+          (xref-push-marker-stack start-marker)
+        (error "Undefined: `xref-push-marker-stack'")))
+    result))
+
+(with-eval-after-load 'evil
+  (advice-add 'evil-goto-definition-search :around
+              #'lightemacs-push-xref-on-imenu-jump)
+  (advice-add 'evil-goto-definition-imenu :around
+              #'lightemacs-push-xref-on-imenu-jump))
+
 ;;; Provide
 
 (provide 'le-evil)

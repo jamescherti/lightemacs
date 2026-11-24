@@ -374,7 +374,7 @@ This `~/.emacs.d/lisp/local/config.el` configuration is based on [le-flavor-esse
                            ;; Development: Elisp
                            ;; le-group-emacs-lisp includes:
                            ;;   le-highlight-defined le-aggressive-indent
-                           ;;   le-elisp-refs le-easy-escape
+                           ;;   le-easy-escape
                            le-group-emacs-lisp
                            le-elisp-autofmt
                            le-page-break-lines
