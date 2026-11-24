@@ -30,29 +30,19 @@
 
 (lightemacs-module-hooks outline-indent-minor
   outline-indent-minor-mode
-  `(;; Python
-    python-mode-hook
-
+  (append
+   (list
+    ;; Python
+    'python-mode-hook
     ;; Yaml
-    yaml-mode-hook
-    yaml-ts-mode-hook
-
+    'yaml-mode-hook
+    'yaml-ts-mode-hook
     ;; Haskell
-    haskell-mode-hook
-
-    ;; Use indentation-based folding as a fallback in these modes.
-    ,@(unless lightemacs-code-folding-enable-treesit-fold
-        '(python-ts-mode-hook
-          haskell-ts-mode-hook
-          ;; TODO
-          ;; coffee-mode-hook
-          ;; fsharp-mode-hook
-          ;; gdscript-mode-hook
-          ;; nim-mode-hook
-          ;; haml-mode-hook
-          ;; pug-mode-hook
-          ;; sass-mode-hook
-          ))))
+    'haskell-mode-hook)
+   (when (not lightemacs-code-folding-enable-treesit-fold)
+     ;; Use indentation-based folding as a fallback in these modes.
+     (list 'python-ts-mode-hook
+           'haskell-ts-mode-hook))))
 
 ;;; Outline
 
@@ -72,32 +62,34 @@
 
 (lightemacs-module-hooks hideshow
   hs-minor-mode
-  '(;; Systems and General Purpose
-    c-mode-hook
-    c++-mode-hook
-    java-mode-hook
-    rust-mode-hook
-    go-mode-hook
-    ruby-mode-hook
-    php-mode-hook
-    perl-mode-hook
+  (append
+   (list
+    ;; Systems and General Purpose
+    'c-mode-hook
+    'c++-mode-hook
+    'java-mode-hook
+    'rust-mode-hook
+    'go-mode-hook
+    'ruby-mode-hook
+    'php-mode-hook
+    'perl-mode-hook
 
     ;; Web and Frontend
-    js-mode-hook
-    typescript-mode-hook
-    css-mode-hook
+    'js-mode-hook
+    'typescript-mode-hook
+    'css-mode-hook
 
     ;; Scripting, Data, and Infrastructure
-    sh-mode-hook
-    json-mode-hook
-    lua-mode-hook
-    nxml-mode-hook
+    'sh-mode-hook
+    'json-mode-hook
+    'lua-mode-hook
+    'nxml-mode-hook
 
     ;; mhtml and html
-    html-mode-hook
-
-    ,@(unless lightemacs-code-folding-enable-treesit-fold
-        '(bash-ts-mode-hook))))
+    'html-mode-hook)
+   (unless lightemacs-code-folding-enable-treesit-fold
+     (list
+      'bash-ts-mode-hook))))
 
 ;;; treesit-fold
 

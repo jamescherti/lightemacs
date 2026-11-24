@@ -44,13 +44,14 @@
              outline-indent-open-folds
              outline-indent-close-folds
              outline-indent-toggle-level-at-point)
-  :init
-  (lightemacs-module-setq-maybe outline-indent
-    outline-indent-ellipsis lightemacs-ellipsis)
-
-  (lightemacs-module-hooks outline-indent-minor
-    outline-indent-minor-mode
-    '())
+  ;; Fix declaring more than once lightemacs-module-setq-maybe
+  ;; :init
+  ;; (lightemacs-module-setq-maybe outline-indent
+  ;;   outline-indent-ellipsis lightemacs-ellipsis)
+  ;;
+  ;; (lightemacs-module-hooks outline-indent-minor
+  ;;   outline-indent-minor-mode
+  ;;   '())
 
   :config
   (lightemacs-module-bind outline-indent
