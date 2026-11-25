@@ -126,7 +126,9 @@
                                      minimal-emacs-user-directory)))
       (if (fboundp 'lightemacs-byte-and-native-compile)
           (progn
-            (load config-file nil (not (bound-and-true-p init-file-debug)))
+            ;; config.el is user-created flow) and is legitimately absent on a
+            ;; fresh install, so skip it instead of crashing startup.
+            (load config-file t (not (bound-and-true-p init-file-debug)))
             (if (fboundp 'lightemacs-byte-and-native-compile)
                 (add-hook 'after-load-functions #'lightemacs-byte-and-native-compile)
               (error "Undefined: `lightemacs-byte-and-native-compile'"))
