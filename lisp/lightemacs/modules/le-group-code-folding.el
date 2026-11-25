@@ -75,6 +75,7 @@
     'ruby-mode-hook
     'php-mode-hook
     'perl-mode-hook
+    'ultisnips-mode-hook
 
     ;; Web and Frontend
     'js-mode-hook
