@@ -53,7 +53,7 @@ Start Emacs and wait for the initial package installation to complete. Open your
 ;;; config.el ends here
 ```
 
-You can customize Emacs by adding ready-to-use modules to the `lightemacs-modules` list (see below). Lightemacs ships with over 109 built-in modules in the [lisp/lightemacs/modules/](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/) directory.
+You can customize Emacs by adding ready-to-use modules to the `lightemacs-modules` list (see below). Lightemacs ships with over 100 built-in modules in the [lisp/lightemacs/modules/](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/) directory.
 
 ## Features:
 
@@ -442,10 +442,10 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 ## All the flavors
 
-- [le-flavor-micro](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-micro)
-- [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential)
-- [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el)
-- [le-flavor-huge](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-huge.el)
+- [le-flavor-micro](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-micro): A minimal setup that includes the default theme and font, improved default settings, and Dired. Always include *le-flavor-micro* when creating your own flavor.
+- [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential): Everyday essentials built on `le-flavor-micro`, adding minibuffer history, automatic delimiter pairing, which-key, and a recent-files list.
+- [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el): A complete setup for software development and prose writing, including a modern completion and search stack, code formatting, Flymake, snippets, code folding, and dedicated major modes.
+- [le-flavor-huge](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-huge.el): The most comprehensive setup. Everything in `le-flavor-big`, plus prescient-ranked completion, Git tooling (Magit and diff-hl), compile-angel, and other productivity extras.
 
 ## Modules that are part of le-flavor-micro
 
@@ -498,6 +498,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-embark**: Configures [Embark](https://github.com/oantolin/embark), a tool that provides context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive environment for managing completions and interactions. *(While searching with `M-x consult-rg` or `M-x consult-fd`, you can use `M-x embark-export` to act on the search results. This allows you to export the matches to another buffer, perform batch operations, or open multiple files at once, providing an excellent way to manipulate and navigate large sets of results.)*
 
+- **le-embark-consult**: Integrates [Embark](https://github.com/oantolin/embark) with [Consult](https://github.com/minad/consult), so that consult commands (such as `consult-rg` or `consult-fd`) can be acted on directly with Embark actions (for example, via `embark-export`). This binds the completion and search stack into a cohesive workflow for acting on result lists.
+
 - **le-marginalia**: Configures [Marginalia](https://github.com/minad/marginalia), a package that enriches minibuffer completions with contextual annotations. It enhances Vertico by adding rich annotations to completion candidates, such as file sizes, documentation, or metadata.
 
 - **le-orderless**: Enable flexible, unordered matching (Orderless) for Vertico. This allows you to type multiple parts of a candidate in any order, making it easier to find functions, variables, or files even if you only remember fragments. It speeds up navigation by removing the need to type exact prefixes. For example, typing "main test" matches "test_main.py", "read me" matches "README.md".
@@ -523,7 +525,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-undo-fu**: Configures [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu), a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. (If you use Evil mode, the `le-undo-fu` module will replace Evil's undo system with `undo-fu`.)
 
-- **undo-fu-session**: Configures [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session), which complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting. The default undo system in Emacs has two main issues that undo-fu fixes:
+- **le-undo-fu-session**: Configures [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session), which complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting. The default undo system in Emacs has two main issues that undo-fu fixes:
   1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
   2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
 
@@ -545,18 +547,23 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-treesit-fold**: Configures [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser (available in Emacs 29+). Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
 
+- **le-group-code-folding**: A convenience group that configures code folding across several modes (such as Python, YAML, and Haskell). It enables `outline-indent` based folding and works alongside the `hideshow`, `treesit-fold`, and `kirigami` modules, providing consistent folding behavior across languages. When Tree-sitter folding is unavailable, it falls back to `outline-indent`-based folding.
+
 - **le-vim-tab-bar**: Enhances Emacs' built-in tab bar with a minimalist, Vim-inspired design that automatically adapts to the current Emacs theme.
+
 - **le-wgrep**: The [wgrep](https://github.com/mhayashi1120/Emacs-wgrep) (Writable Grep) package enables you to convert a grep, consult-ripgrep, or Embark Export buffers into an editable interface. It allows in-place modification of matched lines within the results buffer, which can then be propagated back to the corresponding files upon confirmation. This facilitates precise, bulk edits across multiple files efficiently, eliminating the need to open each file individually, and effectively transforms the grep results buffer into a controlled, multi-file editing environment.
-- **le-org**: Configures Org mode and Org Agenda, a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
+
 - **le-org-appear**: Org-appear temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves.
 
-- **le-theme**: The `le-theme` module loads the default theme. It can be configured via the `lightemacs-theme-name` variable. To customize this theme, modify the variable in your `~/.emacs.d/lisp/local/config.el` as follows:
+- **le-group-evil**: Enables Vim Keybindings ([evil-mode](https://github.com/emacs-evil/evil)). The `le-group-evil` group of modules includes: le-evil, le-evil-collection, and le-goto-chg.
 
-- **le-group-evil**: Enables Vim Keybindings ([evil-mode](https://github.com/emacs-evil/evil)). The `le-group-evil` group of modules includes:
-  - **le-evil** and *le-evil-collection**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file's directory with the file preselected by pressing the `-` key, and includes additional enhancements. Here are a few interesting features that Lightemacs provides: Pressing `-` opens a dired buffer for the directory containing the current file, automatically selecting that file. This provides a fast way to navigate and manage files without manually switching to the directory.
-  - le-evil-commentary: Configures [evil-commentary](https://github.com/linktohack/evil-commentary/), which allows commenting or uncommenting text in Normal or Visual mode by pressing `gc`.
-  - le-evil-surround: Configures [evil-surround](https://github.com/emacs-evil/evil-surround/), which enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
-  - **le-goto-chg**: Configures [goto-chg](https://github.com/emacs-evil/goto-chg), which allows navigating to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
+- **le-evil** and **le-evil-collection**: Vim keybindings (evil and evil-collection). This module also extends Evil with several improvements: it resolves an Eldoc issue where help text would persist after deleting with Evil, synchronizes `evil-shift-width` with `tab-width`, provides refined Evil defaults, enables opening a Dired buffer for the current file's directory with the file preselected by pressing the `-` key, and includes additional enhancements.
+
+- **le-evil-commentary**: Configures [evil-commentary](https://github.com/linktohack/evil-commentary/), which allows commenting or uncommenting text in Normal or Visual mode by pressing `gc`.
+
+- **le-evil-surround**: Configures [evil-surround](https://github.com/emacs-evil/evil-surround/), which enables text surrounding in visual state using `S<textobject>` or `gS<textobject>`. For example, selecting text and pressing `S"` will wrap it in double quotes.
+
+- **le-goto-chg**: Configures [goto-chg](https://github.com/emacs-evil/goto-chg), which allows navigating to the most recent edit in the buffer using `goto-last-change` or `goto-last-change-reverse`. Commonly used in `evil-mode` for the motions `g;` and `g,`, as well as for the last-change register `.`.
 
 - The **le-stripspace** module configures the [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package, which automatically removes trailing whitespace and blank lines at the end of the buffer when saving. Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure Stripspace for `prog-mode`, `text-mode` and `conf-mode`:
   ```emacs-lisp
@@ -584,7 +591,7 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 - **le-yasnippet-snippets**: Configures the [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package, which provides a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
 
-- The le-vterm configures [vterm](https://github.com/akermu/emacs-libvterm) is an Emacs terminal emulator that provides a fully interactive shell experience within Emacs, supporting features such as color, cursor movement, and advanced terminal capabilities. Unlike simpler Emacs terminal modes, `vterm` leverages the underlying libvterm C library for high-performance, accurate terminal emulation, allowing users to run shell programs, text-based applications, and REPLs. **You can launch `vterm` using:** `M-x vterm`.
+- **le-vterm**: Configures [vterm](https://github.com/akermu/emacs-libvterm), an Emacs terminal emulator that provides a fully interactive shell experience within Emacs, supporting features such as color, cursor movement, and advanced terminal capabilities. Unlike simpler Emacs terminal modes, `vterm` leverages the underlying libvterm C library for high-performance, accurate terminal emulation, allowing users to run shell programs, text-based applications, and REPLs. **You can launch `vterm` using:** `M-x vterm`.
 
 - **le-highlight-defined**: Configures [highlight-defined](https://github.com/Fanael/highlight-defined), a minor mode that highlights defined Emacs Lisp symbols. To enable the module, add the following to `~/.emacs.d/lisp/local/config.el`:
 
@@ -603,6 +610,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 - **le-easy-escape**: Configures [easy-escape](https://github.com/cpitclaudel/easy-escape) improves the readability of Emacs Lisp regular expressions through syntax highlighting and character composition. Specifically, it hides double backslashes before regexp special characters `()|`, renders other doubled backslashes as single ones, and highlights them with a distinct face. These transformations affect only the visual presentation; the underlying buffer text remains unchanged. (The **le-easy-escape** module enables `easy-escape-minor-mode` whenever `emacs-lisp-mode-hook` is triggered.)
 
 - **le-elisp-refs**: Configures [elisp-refs](https://github.com/Wilfred/elisp-refs), an advanced code search for Emacs Lisp. It identifies references to functions, macros, variables, specials, and symbols by parsing the code instead of relying on plain text search. This guarantees precise results, eliminating false matches from comments or from identifiers that merely share the same name. The following commands are available: `elisp-refs-function`, `elisp-refs-macro`, `elisp-refs-variable`, `elisp-refs-special`, and `elisp-refs-symbol`.
+
+- **le-group-emacs-lisp**: A convenience group that bundles Emacs Lisp editing improvements: it enables `le-highlight-defined` (highlighting defined Elisp symbols), `le-aggressive-indent` (keeping indentation consistent), and `le-easy-escape` (improving the readability of regular expressions by rendering and highlighting escaped characters).
 
 - The **le-indent-bars** configures the [indent-bars](https://github.com/jdtsmith/indent-bars) packages, which enhances code readability by providing visual indentation guides, optimized for speed and customization. (Useful for Yaml or Python files.) It supports both space and tab-based indentation and offers optional tree-sitter integration, which includes features like scope focus. The appearance of the guide bars is highly customizable, allowing you to adjust their color, blending, width, position, and even apply a zigzag pattern. It can be enabled interactively with `M-x indent-bars-mode` or set to load automatically. For instance, add the following to your `~/.emacs.d/lisp/local/config.el` to enable it for Python and YAML files. (By default, Lightemacs sets `indent-bars-prefer-character` to `t` because it is more reliable and compatible with a wider range of configurations. If [stipples](https://github.com/jdtsmith/indent-bars?tab=readme-ov-file#stipples) render correctly on your system, you can set `indent-bars-prefer-character` to `nil`.)
   ```emacs-lisp
@@ -636,13 +645,11 @@ Here are a few other modules disabled by default:
 
 - **le-gcmh**: [Gcmh](https://gitlab.com/koral/gcmh) (Garbage Collector Magic Hack) optimizes Emacs' garbage collection behavior by adjusting the garbage collection threshold dynamically. During active use, it raises the threshold to reduce the frequency of garbage collections and minimize interruptions. When Emacs becomes idle, it lowers the threshold and triggers a collection, reclaiming memory at a convenient time. This improves perceived responsiveness while keeping memory usage under control.
 
-- **le-package-lint-flymake**: Configures [package-lint](https://github.com/purcell/package-lint) to integrate with Flymake, providing real-time evaluation of Emacs Lisp package metadata and formatting. It assists in identifying packaging errors, verifying required headers, and ensuring adherence to standard archive guidelines directly within the buffer. The **le-package-lint-flymake** module activates automatically for `emacs-lisp-mode`. You must also add the **le-flymake** module to your `config.el` to ensure Flymake starts when editing source code.
+- **le-package-lint**: Configures [package-lint](https://github.com/purcell/package-lint), a static analysis tool that validates Emacs Lisp package metadata and structural conventions (headers, dependencies, naming, keybindings). It catches issues that could prevent installation or cause incompatibilities, and is particularly useful for package maintainers. (For real-time linting integrated with Flymake, see **le-package-lint-flymake**.)
 
-- **le-flymake-ansible-lint**: Configures [flymake-ansible-lint](https://github.com/jamescherti/flymake-ansible-lint.el), a package that provides a Flymake backend for ansible-lint, enabling real-time syntax and style checking for Ansible playbooks and roles within Emacs. Here is an example you could place in `~/.emacs.d/lisp/local/config.el` to configure it:
-  ```emacs-lisp
-  ;; By default, `lightemacs-flymake-ansible-lint-target-hooks' is set to '(ansible-mode-hook)
-  (setq lightemacs-flymake-ansible-lint-target-hooks '(ansible-mode-hook))
-  ```
+- **le-package-lint-flymake**: Configures [package-lint-flymake](https://github.com/purcell/package-lint) to integrate with Flymake, providing real-time evaluation of Emacs Lisp package metadata and formatting. It assists in identifying packaging errors, verifying required headers, and ensuring adherence to standard archive guidelines directly within the buffer. The **le-package-lint-flymake** module activates automatically for `emacs-lisp-mode`.
+
+- **le-flymake-ansible-lint**: Configures [flymake-ansible-lint](https://github.com/jamescherti/flymake-ansible-lint.el), a package that provides a Flymake backend for ansible-lint, enabling real-time syntax and style checking for Ansible playbooks and roles within Emacs.
 
 - **le-magit**: Configures [Magit](https://github.com/magit/magit/) provides a comprehensive interface to the Git version control system. **Usage:** Press `C-x g`.
 
@@ -669,6 +676,20 @@ Here are a few other modules disabled by default:
 
 - **le-eat**: Eat (Emulate A Terminal) is a terminal emulator implemented entirely in Emacs Lisp. It supports full-screen terminal applications such as Emacs itself and offers high performance, operating over three times faster than Term. Eat provides advanced features like Sixel graphics, complete mouse support, shell integration, and reduced screen flicker for smoother performance.
 
+- **le-edit-indirect**: Enables [edit-indirect](https://github.com/Fanael/edit-indirect), which lets you edit individual fenced code blocks within a Markdown buffer in separate, isolated buffers. When editing a code block, it opens it in a buffer with the appropriate major mode (for example, `python-mode` for Python), giving full syntax highlighting, indentation, and language-specific features without disturbing the surrounding Markdown.
+
+- **le-markdown-mode**: Provides [markdown-mode](https://github.com/jrblevin/markdown-mode), a major mode for editing Markdown with syntax highlighting, editing commands, and preview support. It supports core Markdown and GitHub Flavored Markdown (GFM) extensions, natively fontifies code blocks, and is enabled for `*.md`, `*.markdown`, `*.mdx`, and `README.md` files.
+
+- **le-markdown-toc**: Provides [markdown-toc](https://github.com/ardumont/markdown-toc) for generating and updating a table of contents in Markdown files.
+
+- **le-markdown-ts-mode**: Enables the built-in `markdown-ts-mode` (Tree-sitter) for editing Markdown documents with accurate syntax highlighting, improved parsing, and navigation. Available on Emacs 32 and later.
+
+- **le-maybe-markdown-ts**: Automatically uses `markdown-ts-mode` (Tree-sitter) when available on Emacs 32 or later, and otherwise falls back to the third-party `markdown-mode`. This is the Markdown equivalent of **le-maybe-yaml-ts**, giving consistent Markdown behavior regardless of whether Tree-sitter is present.
+
+- **le-yaml-mode**: Provides [yaml-mode](https://github.com/yoshiki/yaml-mode), a major mode for editing YAML files with syntax highlighting and indentation rules, enabled for `*.yaml` and `*.yml` files. For more advanced syntax support, use `yaml-ts-mode` via **le-yaml-ts-mode** or **le-maybe-yaml-ts**.
+
+- **le-yaml-ts-mode**: Enables Tree-sitter's `yaml-ts-mode` for YAML editing, providing more advanced syntax support than `yaml-mode`, and fixes `comment-start-skip` so that `comment-or-uncomment-region` works correctly with indented YAML sections.
+
 - **le-maybe-yaml-ts**: Configures `yaml-ts-mode` if available; otherwise, it configures [yaml-mode](https://github.com/yoshiki/yaml-mode). The variable `lightemacs-yaml-prefer-treesitter` defaults to `t`, indicating a preference for Tree-sitter. Setting this variable to `nil` forces `yaml-mode` to load even if Tree-sitter is available. This module also ensures that indentation adheres to the YAML standard by using two spaces and no tabs.
 
 - **le-paredit**: Configures [Paredit](https://paredit.org/), a package that assists in editing Lisp code by enforcing the structural integrity of s-expressions. Instead of treating parentheses as ordinary characters, Paredit ensures that every edit operation, such as inserting, deleting, or moving expressions, preserves balanced parentheses and valid Lisp syntax. It provides structured editing commands for navigating, wrapping, splicing, or reformatting code, making it significantly easier to manipulate nested expressions without introducing syntactic errors. (The **le-paredit** module activates `paredit-mode` when any of the following hooks is triggered: `emacs-lisp-mode-hook`, `lisp-interaction-mode-hook`, `ielm-mode-hook`, `lisp-mode-hook`, `eval-expression-minibuffer-setup-hook`, `cider-repl-mode-hook`, `clojure-mode-hook`, `geiser-repl-mode-hook`, `racket-mode-hook`, `racket-repl-mode-hook`, `scheme-mode-hook`, or `slime-repl-mode-hook`.)
@@ -689,7 +710,7 @@ Here are a few other modules disabled by default:
 
 - **le-evil-visualstar**: Enables [evil-visualstar](https://github.com/bling/evil-visualstar), which allows searching for the current visual selection using `*` or `#`. **Usage:** Create a visual selection with `v` or `V`, then press `*` to search forward or `#` to search backward. When `evil-visualstar/persistent` is non-nil, visual state remains active, enabling repeated searches without reselecting the text.
 
-- **so-long**: Configures the built-in *so-long* package, which helps Emacs reduce performance degradation and unresponsiveness when opening files with exceptionally long lines, such as minified source code or large datasets. It detects such files and disables various minor modes and font-locking features that are known to cause performance issues in these situations.
+- **le-so-long**: Configures the built-in *so-long* package, which helps Emacs reduce performance degradation and unresponsiveness when opening files with exceptionally long lines, such as minified source code or large datasets. It detects such files and disables various minor modes and font-locking features that are known to cause performance issues in these situations.
 
 ## The hierarchy of Lightemacs files
 

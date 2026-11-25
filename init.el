@@ -9,7 +9,45 @@
 
 ;;; Commentary:
 
-;; Lightemacs is a Fast and Lightweight Emacs Framework.
+;; Lightemacs is a fast and lightweight Emacs framework. The init.el file is the
+;; second stage of configuration: Emacs evaluates it after early-init.el,
+;; finishing startup after the package manager and the user's config.el are in
+;; place.
+;;
+;; What it does, in order:
+;;
+;; 1. Hooks. `lightemacs-pre-init-hook' runs before anything else, giving you a
+;;    chance to influence the rest of this stage.
+;;
+;; 2. Builtin init. The minimal-emacs.d init.el (in lisp/lightemacs/init/) is
+;;    loaded, providing the runtime lightemacs core that the rest of this file
+;;    builds on.
+;;
+;; 3. Package manager. `lightemacs-package-manager' selects the package backend:
+;;    'straight, 'elpaca, or the built-in 'builtin-package. The chosen backend
+;;    is loaded here. Its variables (e.g. `use-package-*', `package-user-dir')
+;;    were pre-configured during the early-init stage, so package declarations
+;;    expand correctly no matter when they are evaluated.
+;;
+;; 4. Startup hooks. `lightemacs-after-init-hook' and
+;;    `lightemacs-emacs-startup-hook' are wired to run at the appropriate time
+;;    (elpaca-after-init-hook for Elpaca, after-init-hook and emacs-startup-hook
+;;    otherwise).
+;;
+;; 5. Native compiler environment. The directory layout, package-manager choice,
+;;    and package variables are injected into a modifier form so that async
+;;    native-compilation workers see the same configuration as the interactive
+;;    session. For Straight and Elpaca the workers also bootstrap the manager
+;;    read-only, avoiding lock conflicts on autoload files when several workers
+;;    start at once.
+;;
+;; 6. Modules. The modules listed in `lightemacs-modules' are loaded, then
+;;    `lightemacs-after-modules-hook' runs.
+;;
+;; Customization: do not modify the init.el file. Put your own settings in
+;; config.el, add entries to `lightemacs-modules', or use the
+;; `lightemacs-pre-init-hook' and `lightemacs-after-init-hook' hooks. Internal
+;; symbols are prefixed with `lightemacs-' to avoid collisions with your code.
 
 ;;; Code:
 

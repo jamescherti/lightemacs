@@ -9,7 +9,53 @@
 
 ;;; Commentary:
 
-;; Lightemacs is a Fast and Lightweight Emacs Framework.
+;; Lightemacs is a fast and lightweight Emacs framework. The early-init.el file
+;; is the entry point of the configuration: Emacs evaluates it before init.el,
+;; so it establishes every setting that must be in place before the rest of the
+;; configuration is loaded.
+;;
+;; What it does, in order:
+;;
+;; 1. Stale bytecode guard. Tools that byte or native-compile an entire Emacs
+;;    configuration can leave an early-init.elc or .eln behind when
+;;    early-init.el is edited. Emacs may select that older bytecode before this
+;;    file's body runs, so this guard re-loads the source when it is newer than
+;;    the loaded file.
+;;
+;; 2. Startup optimizations. `gc-cons-threshold' and `gc-cons-percentage' are
+;;    raised to their maximum values for the duration of startup to reduce
+;;    garbage-collection pauses.
+;;
+;; 3. Directory layout. Lightemacs splits the Emacs configuration into
+;;    directories so that generated files stay out of the way:
+;;
+;;    - lisp/lightemacs/  builtin Lisp code and modules
+;;    - lisp/             user Lisp code (your config.el lives here)
+;;    - lisp/local/       local packages and user modules
+;;    - var/              caches, package downloads (elpa/), custom.el,
+;;                        themes, and other generated files
+;;
+;;    `user-emacs-directory' is pointed at var/, so Emacs no longer scatters
+;;    these files across the top-level configuration directory.
+;;
+;; 4. Deferral hooks. Expensive initialization is deferred until the first user
+;;    action or buffer visit via the lightemacs--on-run-first-* functions,
+;;    keeping interactive startup fast.
+;;
+;; 5. User configuration. config.el is loaded if present (a fresh install may
+;;    legitimately lack it), then minimal-emacs.d early-init.el (in
+;;    lisp/lightemacs/init/) is loaded, providing the runtime lightemacs core
+;;    that the rest of this file builds on. The hooks
+;;    `lightemacs-pre-early-init-hook' and `lightemacs-post-early-init-hook' run
+;;    around the load of the built-in early-init.el.
+;;
+;; 6. Compilation. When available, lightemacs byte- and native-compiles
+;;    config.el, early-init.el, and init.el after load.
+;;
+;; Customization: do not modify 'early-init.el'. Put your own settings in
+;; config.el or in the `lightemacs-pre-early-init-hook' and
+;; `lightemacs-post-early-init-hook' hooks. Internal symbols are prefixed with
+;; `lightemacs-' to avoid collisions with your code.
 
 ;;; Code:
 
