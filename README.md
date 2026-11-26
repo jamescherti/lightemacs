@@ -63,6 +63,7 @@ You can customize Emacs by adding ready-to-use modules to the `lightemacs-module
 - **Lazy evaluation:** The majority of packages remain completely inactive until explicitly triggered by specific hooks, key mappings, or file associations. This minimizes memory usage and keeps the runtime footprint small.
 - **Preconfigured performance enhancements:** Improves the responsiveness of built-in and third-party packages out of the box. Adjustments to tools like *consult* or *show-paren* eliminate perceived input lag and ensure a highly efficient editing experience.
 - *Native compilation:* Developed with native compilation in mind. Every component, including initialization files and modules containing use-package declarations, can be natively compiled to maximize execution speed.
+- Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 
@@ -739,7 +740,7 @@ By default, `lightemacs-package-manager` is set to `'builtin-package`, which use
 
 #### Supported package managers
 
-- **`'use-package`** (default): Uses Emacs' native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
+- **`'builtin-package`** (default): Uses Emacs' native `package.el` and the `use-package` macro. This backend is suitable for users who prefer relying on the standard Emacs ecosystem, without additional package management layers. To update all packages, run `M-x package-upgrade-all`
 
 - **`'straight`**: Uses `straight.el`, providing fully reproducible builds, precise control over package recipes, and integration with `use-package` via the `:straight` keyword. This is ideal for users who need deterministic environments or advanced package customization. To update all packages, run `M-x straight-pull-all`; to rebuild all packages, run `M-x straight-rebuild-all`.
 
@@ -753,7 +754,7 @@ Add the following to `~/.emacs.d/lisp/local/config.el`:
 (setq lightemacs-package-manager 'builtin-package)
 ```
 
-This guarantees that the built-in `use-package` will manage package installation, loading, and configuration according to the semantics of the selected package manager.
+This guarantees that the built-in `package.el` will manage package installation, loading, and configuration according to the semantics of the selected package manager.
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
@@ -768,12 +769,6 @@ To customize your Emacs setup to include various user interface elements, you ca
 ```
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
-
-## Other features
-
-In addition to modules, Lightemacs provides the following features:
-- Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
-- Lightemacs configures `use-package` to automatically refresh Emacs package archives once per session when installing a package that isn't already present. This allows missing packages to be installed without manually running `package-refresh-contents` and prevents repeated refreshes in the same session, resolving issues such as invalid GPG keys when installing packages after the package list has become outdated.
 
 ## Useful variables, functions, and macros
 
@@ -826,8 +821,6 @@ To enable cycling (default: enabled), add the following to your `~/.emacs.d/lisp
 
 - `lightemacs-save-window-scroll` (macro): Execute BODY while preserving the `window-hscroll` and `window-vscroll`.
 - `lightemacs-save-window-start` (macro): Execute BODY while preserving and restoring `window-start` relative to the lines above the cursor. This macro saves the first visible line in the selected window. After BODY executes, the window is restored so that the same lines remain visible above the cursor, maintaining the relative vertical position of the cursor within the window. To also restore the mark, this macro can be combined with `save-mark-and-excursion`. For preservation of horizontal scroll only (hscroll), consider using the `lightemacs-save-window-hscroll` macro.
-
-## Frequently asked questions
 
 ## Author and license
 
