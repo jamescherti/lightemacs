@@ -16,7 +16,6 @@
 ;;; Require
 
 (require 'lightemacs)
-(require 'le-core-terminals)
 
 ;;; Variables
 
@@ -111,13 +110,12 @@
 ;;; Autosave
 
 (with-eval-after-load 'xref
-  (with-eval-after-load 'le-core-cli-tools
-    (if (fboundp 'lightemacs-core--load-cli-tools)
-        (lightemacs-core--load-cli-tools)
-      (error "Undefined: lightemacs-core--load-cli-tools"))
+  (if (fboundp 'lightemacs--load-cli-tools)
+      (lightemacs--load-cli-tools)
+    (error "Undefined: lightemacs--load-cli-tools"))
 
-    (when lightemacs--ripgrep-executable
-      (setq xref-search-program 'ripgrep))))
+  (when lightemacs--ripgrep-executable
+    (setq xref-search-program 'ripgrep)))
 
 ;;; VC
 
@@ -330,24 +328,25 @@ ARGS are the arguments passed to the original function."
 
 (defvar lightemacs-term-optimize t
   "Non-nil means apply performance optimizations to `term-mode' buffers.
-When non-nil, `lightemacs--all-terminals-optimize' runs in `term-mode-hook'.")
+When non-nil, `lightemacs--lightemacs-process-buffers-optimize' runs in
+`term-mode-hook'.")
 
-(add-hook 'term-mode-hook #'lightemacs--all-terminals-disable-kill-prompt)
+(add-hook 'term-mode-hook #'lightemacs--process-buffers-disable-kill-prompt)
 
 (when lightemacs-term-optimize
-  (add-hook 'term-mode-hook #'lightemacs--all-terminals-optimize t))
+  (add-hook 'term-mode-hook #'lightemacs--lightemacs-process-buffers-optimize t))
 
 ;;; Disable terminal in some global modes
 
-(setq whitespace-global-modes `(not ,@lightemacs-terminal-modes))
+(setq whitespace-global-modes `(not ,@lightemacs-process-buffers-modes))
 
 (with-eval-after-load 'display-fill-column-indicator
   (add-to-list 'global-display-fill-column-indicator-modes
-               (cons 'not lightemacs-terminal-modes)))
+               (cons 'not lightemacs-process-buffers-modes)))
 
 (with-eval-after-load 'loaddefs
   (add-to-list 'global-completion-preview-modes
-               (cons 'not lightemacs-terminal-modes)))
+               (cons 'not lightemacs-process-buffers-modes)))
 
 ;;; Python
 
@@ -370,11 +369,11 @@ This function takes no arguments."
 
 ;;; hl-line
 
-(defun lightemacs-terminal--buffer-p (buf)
+(defun lightemacs-process-buffers--buffer-p (buf)
   "Return non-nil if BUF is a terminal emulator buffer."
   (when (buffer-live-p buf)
     (with-current-buffer buf
-      (apply #'derived-mode-p lightemacs-terminal-modes))))
+      (apply #'derived-mode-p lightemacs-process-buffers-modes))))
 
 ;; Configure `global-hl-line-buffers' with a predicate evaluated by
 ;; `buffer-match-p' to control where global line highlighting is active.
@@ -388,12 +387,12 @@ This function takes no arguments."
              (lambda (b) (string-match-p "\\` " (buffer-name b)))
              ;; `minibufferp': Prevents line highlighting inside the minibuffer.
              minibufferp
-             ;; `lightemacs-terminal--buffer-p': Excludes terminal emulators
-             ;; defined in lightemacs-terminal-modes (vterm, eat, term, and
+             ;; `lightemacs-process-buffers--buffer-p': Excludes terminal emulators
+             ;; defined in lightemacs-process-buffers-modes (vterm, eat, term, and
              ;; ghostel). Terminal buffers manage their own display and cursor
              ;; rendering; disabling highlighting prevents visual artifacts and
              ;; performance overhead during rapid output updates.
-             lightemacs-terminal--buffer-p)))
+             lightemacs-process-buffers--buffer-p)))
 
 ;;; Flymake
 

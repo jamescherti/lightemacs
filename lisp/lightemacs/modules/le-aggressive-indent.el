@@ -24,7 +24,6 @@
 
 (require 'lightemacs)
 (require 'use-package)
-(require 'le-core-terminals)
 
 (use-package aggressive-indent
   :commands (aggressive-indent-mode
@@ -53,7 +52,7 @@
 
   ;; Exclude modes
   (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-  (dolist (mode lightemacs-terminal-modes)
+  (dolist (mode lightemacs-process-buffers-modes)
     (add-to-list 'aggressive-indent-excluded-modes mode)))
 
 (provide 'le-aggressive-indent)

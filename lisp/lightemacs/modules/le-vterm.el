@@ -24,8 +24,6 @@
 (require 'lightemacs)
 (require 'use-package)
 
-(require 'le-core-terminals)
-
 ;; Vterm needs `vterm-module' to work.  Compile it now? (y or n) y
 ;; Compilation of 'emacs-libvterm' module succeeded
 ;; Debugger entered--Lisp error: (error "Loading file
@@ -35,7 +33,8 @@
 
 (defvar lightemacs-vterm-optimize t
   "Non-nil means apply performance optimizations to `vterm-mode' buffers.
-When non-nil, `lightemacs--all-terminals-optimize' runs in `vterm-mode-hook'.")
+When non-nil, `lightemacs--lightemacs-process-buffers-optimize' runs in
+`vterm-mode-hook'.")
 
 (when noninteractive
   (with-eval-after-load 'eval
@@ -61,8 +60,8 @@ When non-nil, `lightemacs--all-terminals-optimize' runs in `vterm-mode-hook'.")
     ;; Set the amount of lines retained by `vterm'.
     vterm-max-scrollback 5000)
 
-  (add-hook 'vterm-mode-hook #'lightemacs--all-terminals-disable-kill-prompt)
+  (add-hook 'vterm-mode-hook #'lightemacs--process-buffers-disable-kill-prompt)
   (when lightemacs-vterm-optimize
-    (add-hook 'vterm-mode-hook #'lightemacs--all-terminals-optimize)))
+    (add-hook 'vterm-mode-hook #'lightemacs--lightemacs-process-buffers-optimize)))
 
 ;;; le-vterm.el ends here

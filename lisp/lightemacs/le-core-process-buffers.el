@@ -1,4 +1,4 @@
-;;; le-core-terminals.el --- le-core-terminals -*- lexical-binding: t -*-
+;;; le-core-process-buffers.el --- le-core-process-buffers -*- lexical-binding: t -*-
 
 ;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/lightemacs
@@ -9,11 +9,12 @@
 
 ;;; Commentary:
 
-;; Useful functions for terminals.
+;; Useful functions for process buffers such as terminals or `compilation-mode'
+;; buffers.
 
 ;;; Code:
 
-(defvar lightemacs-terminal-modes
+(defvar lightemacs-process-buffers-modes
   '(vterm-mode
     eat-mode
     term-mode
@@ -21,11 +22,11 @@
     compilation-mode)
   "List of terminal emulator major modes.")
 
-(defvar lightemacs-terminal-compilation-modes
+(defvar lightemacs-process-buffers-compilation-modes
   '(compilation-mode)
   "List of compilation modes.")
 
-(defvar lightemacs-terminal-compilation-modes-never-disable
+(defvar lightemacs-process-buffers-compilation-modes-never-disable
   '(;; Build logs often contain long file paths, compiler flags, linker
     ;; commands, and stack traces. Keeping visual-line-mode active wraps long
     ;; lines within the window so output stays readable without forcing
@@ -38,9 +39,9 @@
     hl-line-mode)
   "List of minor modes to keep enabled in compilation buffers.
 These modes are exempt from being disabled in buffers matching
-`lightemacs-terminal-compilation-modes'.")
+`lightemacs-process-buffers-compilation-modes'.")
 
-(defvar lightemacs-all-terminals-disabled-modes
+(defvar lightemacs-process-buffers-disabled-modes
   '(;; Highlights the current line, which is generally unnecessary in a
     ;; terminal buffer and can alter the appearance of terminal output.
     ;; NOTE: This was disabled by le-default-settings
@@ -88,7 +89,7 @@ These modes are exempt from being disabled in buffers matching
     )
   "List of minor modes to disable in terminal emulator buffers.")
 
-(defvar lightemacs-all-terminals-disabled-global-modes
+(defvar lightemacs-process-buffers-disabled-global-modes
   '(;; Highlights the current line, which is generally unnecessary in a
     ;; terminal buffer and can alter the appearance of terminal output.
     ;; NOTE: This was disabled by le-default-settings
@@ -140,12 +141,12 @@ This prevents, for example, `global-hl-line-mode' from automatically
 reactivating the local mode via hooks. Setting the global minor mode variable to
 nil locally acts as a shield for this specific buffer.")
 
-(defun lightemacs--all-terminals-optimize ()
+(defun lightemacs--lightemacs-process-buffers-optimize ()
   "Configure terminal and compilation buffers."
   (let ((eat-p (derived-mode-p 'eat-mode))
         (vterm-p (derived-mode-p 'vterm-mode))
         (term-p (derived-mode-p 'term-mode))
-        (comp-p (apply #'derived-mode-p lightemacs-terminal-compilation-modes))
+        (comp-p (apply #'derived-mode-p lightemacs-process-buffers-compilation-modes))
         (inhibit-redisplay t)
         (inhibit-message t))
     (when eat-p
@@ -169,9 +170,9 @@ nil locally acts as a shield for this specific buffer.")
 
     (setq-local nobreak-char-display nil)
 
-    (dolist (mode-fn lightemacs-all-terminals-disabled-modes)
+    (dolist (mode-fn lightemacs-process-buffers-disabled-modes)
       (unless (and comp-p
-                   (memq mode-fn lightemacs-terminal-compilation-modes-never-disable))
+                   (memq mode-fn lightemacs-process-buffers-compilation-modes-never-disable))
         (when (and (boundp mode-fn)
                    (fboundp mode-fn))
           ;; Using (symbol-value mode) doesn't work. What works is to
@@ -185,17 +186,17 @@ nil locally acts as a shield for this specific buffer.")
     ;; Prevent globalized minor modes from reactivating the mode by setting
     ;; their global variable to nil locally. This fixes modes such as
     ;; `global-hl-line-mode' that activate anyway.
-    (dolist (global-var lightemacs-all-terminals-disabled-global-modes)
+    (dolist (global-var lightemacs-process-buffers-disabled-global-modes)
       (when (boundp global-var)
         (set (make-local-variable global-var) nil)))))
 
-(defun lightemacs--all-terminals-disable-process-query-on-exit ()
+(defun lightemacs--process-buffers-disable-process-query-on-exit ()
   "Disable the query-on-exit flag for the process in the current buffer."
   (let ((proc (get-buffer-process (current-buffer))))
     (when proc
       (set-process-query-on-exit-flag proc nil))))
 
-(defun lightemacs--all-terminals-disable-kill-prompt ()
+(defun lightemacs--process-buffers-disable-kill-prompt ()
   "Prevent Emacs from prompting: Buffer has a running process; kill it?"
   ;; Prevent Emacs from prompting "Buffer has a running process; kill it?" when
   ;; closing the buffer or exiting the editor by silently disabling the
@@ -203,12 +204,12 @@ nil locally acts as a shield for this specific buffer.")
   (cond
    ;; Vterm creates the process during mode init, so it exists now.
    ((derived-mode-p 'vterm-mode)
-    (lightemacs--all-terminals-disable-process-query-on-exit))
+    (lightemacs--process-buffers-disable-process-query-on-exit))
    ;; Term create the process AFTER the mode hook runs. We must defer
    ;; the flag change using their respective exec hooks.
    ((derived-mode-p 'term-mode)
-    (add-hook 'term-exec-hook #'lightemacs--all-terminals-disable-process-query-on-exit nil t))))
+    (add-hook 'term-exec-hook #'lightemacs--process-buffers-disable-process-query-on-exit nil t))))
 
-(provide 'le-core-terminals)
+(provide 'le-core-process-buffers)
 
-;;; le-core-terminals.el ends here
+;;; le-core-process-buffers.el ends here

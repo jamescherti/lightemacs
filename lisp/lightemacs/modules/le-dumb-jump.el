@@ -25,9 +25,6 @@
 (require 'lightemacs)
 (require 'use-package)
 
-;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-core-cli-tools)
-
 (use-package dumb-jump
   :commands dumb-jump-xref-activate
   :init
@@ -54,14 +51,13 @@
   ;; significantly faster and more accurate than the default searchers (grep,
   ;; ag, etc.).
   ;; Fix `elpaca' with `with-eval-after-load'
-  (with-eval-after-load 'le-core-cli-tools
-    (if (fboundp 'lightemacs-core--load-cli-tools)
-        (lightemacs-core--load-cli-tools)
-      (error "Undefined: lightemacs-core--load-cli-tools"))
+  (if (fboundp 'lightemacs--load-cli-tools)
+      (lightemacs--load-cli-tools)
+    (error "Undefined: lightemacs--load-cli-tools"))
 
-    (when lightemacs--ripgrep-executable
-      (setq dumb-jump-force-searcher 'rg)
-      (setq dumb-jump-prefer-searcher 'rg)))
+  (when lightemacs--ripgrep-executable
+    (setq dumb-jump-force-searcher 'rg)
+    (setq dumb-jump-prefer-searcher 'rg))
 
   ;; Make `dumb-jump' use the same project root markers as `project.el' for
   ;; consistent project detection.

@@ -19,7 +19,6 @@
 
 (require 'lightemacs)
 (require 'use-package)
-(require 'le-core-terminals)
 
 (defvar lightemacs-corfu-add-to-savehist t)
 
@@ -34,7 +33,7 @@
                                   circe-mode
                                   help-mode
                                   gud-mode
-                                  ,@lightemacs-terminal-modes)
+                                  ,@lightemacs-process-buffers-modes)
                              t))
   (lightemacs-module-setq-maybe corfu
     corfu-preselect 'directory

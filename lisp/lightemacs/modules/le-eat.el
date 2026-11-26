@@ -22,11 +22,11 @@
 
 (require 'lightemacs)
 (require 'use-package)
-(require 'le-core-terminals)
 
 (defvar lightemacs-eat-optimize t
   "Non-nil means apply performance optimizations to `eat-mode' buffers.
-When non-nil, `lightemacs--all-terminals-optimize' runs in `eat-mode-hook'.")
+When non-nil, `lightemacs--lightemacs-process-buffers-optimize' runs in
+`eat-mode-hook'.")
 
 (use-package eat
   :commands (eat
@@ -50,7 +50,7 @@ When non-nil, `lightemacs--all-terminals-optimize' runs in `eat-mode-hook'.")
     eat-term-scrollback-size (* 64 1024))
 
   (when lightemacs-eat-optimize
-    (add-hook 'eat-mode-hook #'lightemacs--all-terminals-optimize))
+    (add-hook 'eat-mode-hook #'lightemacs--lightemacs-process-buffers-optimize))
 
   ;; straight.el symlinks or copies only Elisp files into the build/ directory,
   ;; leaving non-Elisp resources (such as terminfo data and shell integration

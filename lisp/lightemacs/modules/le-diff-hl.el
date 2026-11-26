@@ -24,7 +24,6 @@
 
 (require 'lightemacs)
 (require 'use-package)
-(require 'le-core-terminals)
 
 ;;; use-package diff-hl
 
@@ -53,7 +52,7 @@
     diff-hl-update-async t  ; Do not block Emacs
     diff-hl-global-modes `(not pdf-view-mode
                                image-mode
-                               ,@lightemacs-terminal-modes))
+                               ,@lightemacs-process-buffers-modes))
   :config
   ;; TODO separate module
   (require 'diff-hl-flydiff))

@@ -25,8 +25,6 @@
 
 (require 'lightemacs)
 (require 'use-package)
-;; Load `lightemacs--ripgrep-executable' and `lightemacs--fdfind-executable'
-(require 'le-core-cli-tools)
 
 ;;; Use-package consult
 
@@ -137,36 +135,35 @@ them. Ensures this runs only when `crm` is loaded and Consult is in use."
    :preview-key '(:debounce 0.1 any))
 
   ;; Fix `elpaca' with `with-eval-after-load'
-  (with-eval-after-load 'le-core-cli-tools
-    (if (fboundp 'lightemacs-core--load-cli-tools)
-        (lightemacs-core--load-cli-tools)
-      (error "Undefined: lightemacs-core--load-cli-tools"))
+  (if (fboundp 'lightemacs--load-cli-tools)
+      (lightemacs--load-cli-tools)
+    (error "Undefined: lightemacs--load-cli-tools"))
 
-    (setq consult-fd-args
-          (concat (if lightemacs--fdfind-executable
-                      lightemacs--fdfind-executable
-                    "fd")
-                  ;; Lightemacs
-                  " --hidden --absolute-path "
-                  " --exclude=.git --exclude=.svn --exclude=.hg "
-                  (if (memq system-type '(cygwin windows-nt ms-dos))
-                      " --path-separator=/"
-                    "")
+  (setq consult-fd-args
+        (concat (if lightemacs--fdfind-executable
+                    lightemacs--fdfind-executable
+                  "fd")
+                ;; Lightemacs
+                " --hidden --absolute-path "
+                " --exclude=.git --exclude=.svn --exclude=.hg "
+                (if (memq system-type '(cygwin windows-nt ms-dos))
+                    " --path-separator=/"
+                  "")
 
-                  ;; Default
-                  " --full-path --color=never"))
+                ;; Default
+                " --full-path --color=never"))
 
-    (setq consult-ripgrep-args
-          (concat (if lightemacs--ripgrep-executable
-                      lightemacs--ripgrep-executable
-                    "rg")
-                  ;; Lightemacs
-                  " --hidden -g !.git -g !.svn -g !.hg"
+  (setq consult-ripgrep-args
+        (concat (if lightemacs--ripgrep-executable
+                    lightemacs--ripgrep-executable
+                  "rg")
+                ;; Lightemacs
+                " --hidden -g !.git -g !.svn -g !.hg"
 
-                  ;; Default
-                  " --null --line-buffered --color=never --max-columns=1000"
-                  " --path-separator / --smart-case --no-heading"
-                  " --with-filename --line-number"))))
+                ;; Default
+                " --null --line-buffered --color=never --max-columns=1000"
+                " --path-separator / --smart-case --no-heading"
+                " --with-filename --line-number")))
 
 ;;; Keybindings
 
