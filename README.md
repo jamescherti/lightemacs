@@ -731,7 +731,7 @@ If you install Lightemacs in `~/.emacs.d/`, the directory structure is as follow
 
 ## Customizations
 
-### Package Manager Selection
+### Package manager selection
 
 Lightemacs allows choosing the package manager through the `lightemacs-package-manager` variable. This variable determines the underlying system used for installation, dependency resolution, and configuration of packages.
 
@@ -745,7 +745,7 @@ By default, `lightemacs-package-manager` is set to `'builtin-package`, which use
 
 - **`'elpaca`**: Leverages `elpaca` for asynchronous, dependency-aware package management. Elpaca simplifies recipe handling and integrates with `use-package` through the `:elpaca` keyword.
 
-#### Configuration Example for the package manager
+#### Configuration example for the package manager
 
 Add the following to `~/.emacs.d/lisp/local/config.el`:
 
@@ -769,7 +769,7 @@ To customize your Emacs setup to include various user interface elements, you ca
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
-## Other Features
+## Other features
 
 In addition to modules, Lightemacs provides the following features:
 - Reduced clutter: A `var/` directory (e.g., `~/.emacs.d/var/`) is used to store all files that Emacs normally places in the base directory (e.g., `~/.emacs.d`). By default, Emacs stores configuration files, caches, backups, and other data within `~/.emacs.d`, which can accumulate over time and complicate management.
