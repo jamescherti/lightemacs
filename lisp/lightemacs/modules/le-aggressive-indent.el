@@ -28,7 +28,7 @@
 
 (use-package aggressive-indent
   :commands (aggressive-indent-mode
-             global-aggressive-indent-mode)
+             aggressive-indent-global-mode)
 
   :init
   (lightemacs-module-hooks aggressive-indent-local

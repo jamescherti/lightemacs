@@ -17,8 +17,28 @@
   '(vterm-mode
     eat-mode
     term-mode
-    ghostel-mode)
+    ghostel-mode
+    compilation-mode)
   "List of terminal emulator major modes.")
+
+(defvar lightemacs-terminal-compilation-modes
+  '(compilation-mode)
+  "List of compilation modes.")
+
+(defvar lightemacs-terminal-compilation-modes-never-disable
+  '(;; Build logs often contain long file paths, compiler flags, linker
+    ;; commands, and stack traces. Keeping visual-line-mode active wraps long
+    ;; lines within the window so output stays readable without forcing
+    ;; horizontal scrolling or cutting off text at the right edge.
+    visual-line-mode
+
+    ;; Highlighting the current line helps you track which diagnostic, warning,
+    ;; or error line you are inspecting as you step through build output or jump
+    ;; between errors.
+    hl-line-mode)
+  "List of minor modes to keep enabled in compilation buffers.
+These modes are exempt from being disabled in buffers matching
+`lightemacs-terminal-compilation-modes'.")
 
 (defvar lightemacs-all-terminals-disabled-modes
   '(;; Highlights the current line, which is generally unnecessary in a
@@ -121,10 +141,11 @@ reactivating the local mode via hooks. Setting the global minor mode variable to
 nil locally acts as a shield for this specific buffer.")
 
 (defun lightemacs--all-terminals-optimize ()
-  "Configure `vterm', `eat', or `term'/`ansi-term'."
+  "Configure terminal and compilation buffers."
   (let ((eat-p (derived-mode-p 'eat-mode))
         (vterm-p (derived-mode-p 'vterm-mode))
         (term-p (derived-mode-p 'term-mode))
+        (comp-p (apply #'derived-mode-p lightemacs-terminal-compilation-modes))
         (inhibit-redisplay t)
         (inhibit-message t))
     (when eat-p
@@ -140,31 +161,33 @@ nil locally acts as a shield for this specific buffer.")
     (when (or term-p eat-p vterm-p)
       (setq-local line-spacing 0))
 
-    ;; Disallows automatic horizontal scrolling of windows.
-    (setq-local auto-hscroll-mode nil)
+    (unless comp-p
+      (setq-local auto-hscroll-mode nil))
 
-    ;; Prevents Emacs from drawing highlight boxes over non-breaking spaces and
-    ;; soft hyphens.
+    (when comp-p
+      (visual-line-mode 1))
+
     (setq-local nobreak-char-display nil)
 
-    ;; Disable modes
-    (dolist (mode lightemacs-all-terminals-disabled-modes)
-      (when (and (boundp mode)
-                 (fboundp mode))
-        ;; Using (symbol-value mode) doesn't work. What works is to
-        ;; unconditionally disable the mode if the function exists. Explicitly
-        ;; calling (funcall mode -1) is the standard practice, as it sets a
-        ;; local state that causes globalized modes not to reactivate in that
-        ;; specific buffer.
-        (ignore-errors
-          (funcall mode -1))))
+    (dolist (mode-fn lightemacs-all-terminals-disabled-modes)
+      (unless (and comp-p
+                   (memq mode-fn lightemacs-terminal-compilation-modes-never-disable))
+        (when (and (boundp mode-fn)
+                   (fboundp mode-fn))
+          ;; Using (symbol-value mode) doesn't work. What works is to
+          ;; unconditionally disable the mode if the function exists. Explicitly
+          ;; calling (funcall mode -1) is the standard practice, as it sets a
+          ;; local state that causes globalized modes not to reactivate in that
+          ;; specific buffer.
+          (ignore-errors
+            (funcall mode-fn -1)))))
 
     ;; Prevent globalized minor modes from reactivating the mode by setting
     ;; their global variable to nil locally. This fixes modes such as
     ;; `global-hl-line-mode' that activate anyway.
-    (dolist (global-mode lightemacs-all-terminals-disabled-global-modes)
-      (when (boundp global-mode)
-        (set (make-local-variable global-mode) nil)))))
+    (dolist (global-var lightemacs-all-terminals-disabled-global-modes)
+      (when (boundp global-var)
+        (set (make-local-variable global-var) nil)))))
 
 (defun lightemacs--all-terminals-disable-process-query-on-exit ()
   "Disable the query-on-exit flag for the process in the current buffer."
