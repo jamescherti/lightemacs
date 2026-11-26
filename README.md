@@ -442,8 +442,8 @@ Next, register the module in your `~/.emacs.d/lisp/local/config.el` file by appe
 
 ## All the flavors
 
-- [le-flavor-micro](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-micro): A minimal setup that includes the default theme and font, improved default settings, and Dired. Always include *le-flavor-micro* when creating your own flavor.
-- [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential): Everyday essentials built on `le-flavor-micro`, adding minibuffer history, automatic delimiter pairing, which-key, and a recent-files list.
+- [le-flavor-micro](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-micro.el): A minimal setup that includes the default theme and font, improved default settings, and Dired. Always include *le-flavor-micro* when creating your own flavor.
+- [le-flavor-essential](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-essential.el): Everyday essentials built on `le-flavor-micro`, adding minibuffer history, automatic delimiter pairing, which-key, and a recent-files list.
 - [le-flavor-big](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-big.el): A complete setup for software development and prose writing, including a modern completion and search stack, code formatting, Flymake, snippets, code folding, and dedicated major modes.
 - [le-flavor-huge](https://github.com/jamescherti/lightemacs/blob/main/lisp/lightemacs/modules/le-flavor-huge.el): The most comprehensive setup. Everything in `le-flavor-big`, plus prescient-ranked completion, Git tooling (Magit and diff-hl), compile-angel, and other productivity extras.
 
