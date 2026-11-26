@@ -61,14 +61,14 @@
 
 ;;; Load: init.el
 
-(let ((minimal-emacs-init (expand-file-name "init.el" minimal-emacs-user-directory)))
-  (if (boundp 'minimal-emacs-user-directory)
-      (lightemacs-load-user-init minimal-emacs-init)
-    (error "Undefined: minimal-emacs-user-directory")))
+(if (boundp 'minimal-emacs-user-directory)
+    (lightemacs-load-user-init
+     (expand-file-name "init.el" minimal-emacs-user-directory))
+  (error "Undefined: minimal-emacs-user-directory"))
 
 ;;; Configure the package manager
 
-(unless (memq lightemacs-package-manager '(straight elpaca builtin-package))
+(unless (memq lightemacs-package-manager '(builtin-package straight elpaca))
   (error "The value '%s' is not a valid `lightemacs-package-manager'"
          lightemacs-package-manager))
 
@@ -86,15 +86,14 @@
       (require 'le-core-pm-elpaca))
 
      ;; use-package (built-in)
-     ((or (eq lightemacs-package-manager 'builtin-package)
-          (eq lightemacs-package-manager 'use-package))
+     ((eq lightemacs-package-manager 'builtin-package)
       (require 'le-core-pm-use-package))
 
      (t
       (error
-       (concat "[lightemacs]"
-               "Invalid value for `lightemacs-package-manager': '%S'. Valid "
-               "choices are: 'straight, 'elpaca, or 'use-package.")
+       (concat
+        "[lightemacs] Invalid value for `lightemacs-package-manager': %S. "
+        "Valid choices are: 'builtin-package, 'straight, 'elpaca.")
        lightemacs-package-manager))))
 
   (setq lightemacs--package-manager-loaded t))
