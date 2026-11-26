@@ -542,6 +542,9 @@ the buffer remain visible when a fold is applied."
 
 ;;; ibuffer
 
+;; If non-nil, then forward and backwards movement commands cycle.
+(setq ibuffer-movement-cycle lightemacs-cycle)
+
 (with-eval-after-load 'ibuffer
   (setq ibuffer-filter-group-name-face '(:inherit (success bold))))
 
