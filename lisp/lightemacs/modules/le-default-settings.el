@@ -55,6 +55,8 @@
   ;; Insert the alist into the core Emacs input resolution system
   (add-to-list 'emulation-mode-map-alists 'lightemacs--keymap-override-alist))
 
+(setq text-scale-mode-step 1.06)
+
 ;;; Misc
 
 (setq package-native-compile t)
